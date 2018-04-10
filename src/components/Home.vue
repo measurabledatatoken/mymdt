@@ -4,7 +4,25 @@
   </div>
 </template>
 
-<script type="text/javascript" src="./home.js"></script>
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  name: 'Home',
+  data() {
+    return {
+      msg: 'Current MDT Price:',
+    };
+  },
+  computed: mapState({
+    mdtPrice: state => state.mdtPrice,
+  }),
+  created() {
+    this.$store.dispatch('getMDTPrice');
+  },
+};
+
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
