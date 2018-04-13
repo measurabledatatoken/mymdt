@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
@@ -14,9 +14,11 @@ export default {
       msg: 'Current MDT Price:',
     };
   },
-  computed: mapState({
-    mdtPrice: state => state.mdtPrice,
-  }),
+  computed: {
+    ...mapGetters({
+      mdtPrice: 'mdtPrice',
+    }),
+  },
   created() {
     this.$store.dispatch('getMDTPrice');
   },
