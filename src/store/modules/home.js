@@ -1,9 +1,7 @@
-
-import axios from 'axios';
+import api from './../../api';
 
 const state = {
   mdtPrice: 0,
-
 };
 
 const getters = {
@@ -18,15 +16,9 @@ const mutations = {
 
 const actions = {
   getMDTPrice(context) {
-    axios.get('http://localhost:8080/api/mdtprice')
-      .then((response) => {
-        if (response.data) {
-          context.commit('setMDTPrice', response.data.price_usd);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    api.getMDTUSDPrice(
+      priceInUSD => context.commit('setMDTPrice', priceInUSD),
+    );
   },
 };
 
