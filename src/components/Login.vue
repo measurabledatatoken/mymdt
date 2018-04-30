@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <h1>Login Page</h1>
-    
     <atom-spinner
       :animation-duration="1000"
       :size="60"

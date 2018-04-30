@@ -19,9 +19,17 @@ const mutations = {
 
 const actions = {
   getMDTPrice(context) {
-    api.getMDTUSDPrice(
-      priceInUSD => context.commit('setMDTPrice', priceInUSD),
-    );
+    api.getMDTUSDPrice()
+      .then(
+        (priceInUSD) => {
+          context.commit('setMDTPrice', priceInUSD);
+        },
+      )
+      .catch(
+        (error) => {
+          console.log('getMDTUSDPrice failed', error);
+        },
+      );
   },
 };
 

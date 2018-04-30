@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from '@/components/Home';
 import Login from '@/components/Login';
 import Register from '@/components/Register';
-import ForgetPassword from '@/components/ForgetPassword'
+import ForgetPassword from '@/components/ForgetPassword';
 
 Vue.use(Router);
 
