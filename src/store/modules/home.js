@@ -2,10 +2,13 @@ import api from './../../api';
 
 const state = {
   mdtPrice: 0,
+  apiKey: '',
+  userAccounts: [],
 };
 
 const getters = {
   mdtPrice: state => state.mdtPrice,
+
 };
 
 const mutations = {
