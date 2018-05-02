@@ -4,7 +4,7 @@
     <input v-model="emailAddress" placeholder="Email Address">
     <button v-on:click="confirmForgetPassword">Confirm</button>
     <p>{{
-      forgetPasswordMessage
+      errorMessage
       }}</p>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
     ...mapGetters({
       forgetSuccess: 'forgetSuccess',
     }),
-    forgetPasswordMessage() {
+    errorMessage() {
       if (this.forgetSuccess === null) {
         return '';
       }
