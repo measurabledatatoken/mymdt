@@ -20,27 +20,34 @@ export default {
   data() {
     return {
       emailAddress: '',
-      requested: false,
+      lastEmailAddress: '',
     };
+  },
+  watch: {
+    emailAddress: function emailChanged(newEmailAddress, oldEmailAddress) {
+      // TODO: Do real time validation
+      this.$store.commit('setForgetSuccess', null);
+      console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
+    },
   },
   computed: {
     ...mapGetters({
       forgetSuccess: 'forgetSuccess',
     }),
     forgetPasswordMessage() {
-      if (this.requested === false) {
+      if (this.forgetSuccess === null) {
         return '';
       }
 
       if (this.forgetSuccess) {
-        return `success, please check the email associated with ${this.emailAddress}`;
+        return `success, please check the email associated with ${this.lastEmailAddress}`;
       }
       return 'failed, please try again';
     },
   },
   methods: {
     confirmForgetPassword() {
-      this.requested = true;
+      this.lastEmailAddress = this.emailAddress;
       this.$store.dispatch('confirmForgetPassword', this.emailAddress);
     },
   },

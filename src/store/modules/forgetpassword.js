@@ -1,7 +1,7 @@
 import api from './../../api';
 
 const state = {
-  forgetSuccess: false,
+  forgetSuccess: null,
 };
 
 const getters = {

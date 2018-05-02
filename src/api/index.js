@@ -4,9 +4,22 @@ import axios from 'axios';
 const apiEndPoint = process.env.API_ENDPOINT;
 const apiScheme = process.env.API_Scheme;
 
+
+const handleGeneralResponse = (promise, emptyDataMsg) => {
+  promise
+    .then((response) => {
+      if (response.data) {
+        promise.resolve(response.data);
+      }
+      promise.reject(Error(emptyDataMsg));
+    })
+    .catch((error) => {
+      promise.reject(error);
+    });
+};
+
+
 export default {
-
-
   getMDTUSDPrice() {
     return axios.get(`${apiScheme}://${apiEndPoint}/api/mdtprice`)
       .then((response) => {
@@ -20,19 +33,12 @@ export default {
       });
   },
   forgetPassword(emailAddress) {
-    return axios.post(`${apiScheme}://${apiEndPoint}/api/account/forgetpw`,
+    const promise = axios.post(`${apiScheme}://${apiEndPoint}/api/account/forgetpw`,
       {
         email_address: emailAddress,
       },
-    )
-    .then((response) => {
-      if (response.data) {
-        return Promise.resolve(null);
-      }
-      return Promise.reject(Error('forgetPassword data should not be null if the request is successed'));
-    })
-    .catch((error) => {
-        Promise.reject(error);
-      });
+    );
+    return handleGeneralResponse(promise, 'forgetPassword data should not be null if the request is successed');
+  },
   },
 };
