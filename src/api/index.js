@@ -5,18 +5,14 @@ const apiEndPoint = process.env.API_ENDPOINT;
 const apiScheme = process.env.API_Scheme;
 
 
-const handleGeneralResponse = (promise, emptyDataMsg) => {
-  promise
-    .then((response) => {
-      if (response.data) {
-        promise.resolve(response.data);
-      }
-      promise.reject(Error(emptyDataMsg));
-    })
-    .catch((error) => {
-      promise.reject(error);
-    });
-};
+const handleGeneralResponse = (promise, emptyDataMsg) => promise
+  .then((response) => {
+    if (response.data) {
+      return Promise.resolve(response.data);
+    }
+    return Promise.reject(Error(emptyDataMsg));
+  })
+  .catch(error => Promise.reject(error));
 
 
 export default {
@@ -40,5 +36,14 @@ export default {
     );
     return handleGeneralResponse(promise, 'forgetPassword data should not be null if the request is successed');
   },
+  login(emailAddress, password, apiKey) {
+    const promise = axios.post(`${apiScheme}://${apiEndPoint}/api/account/login`,
+      {
+        email_address: emailAddress,
+        password,
+        api_key: apiKey,
+      },
+    );
+    return handleGeneralResponse(promise, 'login data should not be null if the request is successed');
   },
 };

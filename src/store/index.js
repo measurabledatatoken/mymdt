@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
+import createPersistedState from 'vuex-persistedstate';
 
 import home from './modules/home';
 import forgetPassword from './modules/forgetpassword';
+import login from './modules/login';
 
 Vue.use(Vuex);
 
@@ -13,7 +15,8 @@ export default new Vuex.Store({
   modules: {
     home,
     forgetPassword,
+    login,
   },
   strict: debug,
-  plugins: debug ? [createLogger()] : [],
+  plugins: debug ? [createLogger(), createPersistedState()] : [],
 });

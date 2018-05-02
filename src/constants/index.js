@@ -24,3 +24,7 @@ const ErrorCode = {
 
   UnknownError: 99999,
 };
+
+export default {
+  ErrorCode,
+};
