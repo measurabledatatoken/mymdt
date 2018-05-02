@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <h1>{{ msg + mdtPrice}}</h1>
+    <h1>{{ mdtBalanceMsg }}</h1>
   </div>
 </template>
 
@@ -17,7 +18,11 @@ export default {
   computed: {
     ...mapGetters({
       mdtPrice: 'mdtPrice',
+      credential: 'credential',
     }),
+    mdtBalanceMsg() {
+      return `Hello ${this.credential.userName}. You have MDT balance: ${this.credential.mdtbalance}`;
+    },
   },
   created() {
     this.$store.dispatch('getMDTPrice');
