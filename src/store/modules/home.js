@@ -19,7 +19,7 @@ const mutations = {
 
 const actions = {
   getMDTPrice(context) {
-    api.getMDTUSDPrice()
+    api.misc.getMDTUSDPrice()
       .then(
         (priceInUSD) => {
           context.commit('setMDTPrice', priceInUSD);

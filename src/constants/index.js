@@ -22,8 +22,11 @@ const ErrorCode = {
   PasswordResetCodeExpired: 14,
   PasswordResetCodeInvalid: 15,
 
+  GetAutoLoginTokenValidateFailedError: 16,
+
   UnknownError: 99999,
 };
+
 
 export default {
   ErrorCode,

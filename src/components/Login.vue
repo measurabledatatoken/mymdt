@@ -31,11 +31,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      errorCode: 'errorCode',
-      credential: 'credential',
+      loginErrorCode: 'loginErrorCode',
+      loginSuccess: 'loginSuccess',
     }),
     errorMessage() {
-      switch (this.errorCode) {
+      switch (this.loginErrorCode) {
         case Constants.ErrorCode.NoApplicationFound: {
           return 'Application not exist.';
         }
@@ -63,9 +63,6 @@ export default {
   components: {
     AtomSpinner,
   },
-  created() {
-    console.log(`props: ${this.query}`);
-  },
   methods: {
     confirmLogin() {
       this.requested = true;
@@ -74,7 +71,12 @@ export default {
         {
           emailAddress: this.emailAddress,
           password: this.password,
-        });
+        },
+      ).then(() => {
+        if (this.loginSuccess) {
+          this.$router.push({ path: 'home' });
+        }
+      }).catch(() => ({}));
     },
   },
 };

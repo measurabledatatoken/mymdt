@@ -24,7 +24,7 @@ export default {
     };
   },
   watch: {
-    emailAddress: function emailChanged(newEmailAddress, oldEmailAddress) {
+    emailChanged(newEmailAddress, oldEmailAddress) {
       // TODO: Do real time validation
       this.$store.commit('setForgetSuccess', null);
       console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);

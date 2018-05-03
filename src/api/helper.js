@@ -11,7 +11,5 @@ function handleGeneralResponse(promise, emptyDataMsg) {
 }
 
 
-export default {
-  handleGeneralResponse,
-};
+export default handleGeneralResponse;
 
