@@ -34,6 +34,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getMDTPrice');
+    this.$store.dispatch('getUserAccounts');
   },
 };
 

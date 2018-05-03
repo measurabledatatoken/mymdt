@@ -3,36 +3,15 @@ import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  convertDataToAppCredential(userName, emailAddress, token) {
-    return { user_name: userName, email_address: emailAddress, token };
-  },
-  forgetPassword(emailAddress) {
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/forgetpw`,
+  getUserAccountsData(accounts, accessToken) {
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/api/getusersdata`,
+      accounts,
       {
-        email_address: emailAddress,
+        headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    return handleGeneralResponse(promise, 'forgetPassword data should not be null if the request is successed');
-  },
-  login(emailAddress, password, apiKey) {
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/login`,
-      {
-        email_address: emailAddress,
-        password,
-        api_key: apiKey,
-      },
-    );
-    return handleGeneralResponse(promise, 'login data should not be null if the request is successed');
-  },
-  // App Credentials should included user_name, email_address, token
-  autoLogin(appCredentials, apiKey) {
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/autologinmulti`,
-      {
-        api_key: apiKey,
-        app_credentials: appCredentials,
-      },
-    );
-    return handleGeneralResponse(promise, 'autologinmulti data should not be null if the request is successed');
+    return handleGeneralResponse(promise, 'getUsersAccountData data should not be null if the request is successed');
   },
 };
 

@@ -7,7 +7,8 @@ const state = {
 
   // the credential selected by user, single account will default to the first one.
   selectedCredential: {
-    accessToken: null,
+    email_address: null,
+    access_token: null,
   },
   credentials: [],
 };
@@ -15,7 +16,7 @@ const state = {
 const getters = {
   loginSuccess: state => state.loginSuccess,
   loginErrorCode: state => state.loginErrorCode,
-  credential: state => state.credential,
+  selectedCredential: state => state.selectedCredential,
 };
 
 const mutations = {
@@ -36,15 +37,16 @@ const mutations = {
 const actions = {
   confirmLogin(context, { emailAddress, password, apikey }) {
     return new Promise((resolve, reject) => {
-      api.account.login(emailAddress, password, apikey)
+      api.auth.login(emailAddress, password, apikey)
         .then(
           (data) => {
             context.commit('setLoginErrorCode', null);
             context.commit('setLoginSuccess', true);
 
-            if (data != null) {
+            if (data.length > 0) {
               const credential = {
-                accessToken: data.access_token,
+                email_address: emailAddress,
+                access_token: data.access_token,
               };
               const credentials = [credential];
               context.commit('setCredentials', credentials);
@@ -62,6 +64,7 @@ const actions = {
               context.commit('setLoginErrorCode', Constants.ErrorCode.UnknownError);
             }
             context.commit('setLoginSuccess', false);
+
             reject();
           },
         );
@@ -81,7 +84,7 @@ const actions = {
       }
       const appCredentials = [];
       for (let i = 0; i < userNames.length; i += 1) {
-        const appCredential = api.account.convertDataToAppCredential(
+        const appCredential = api.auth.convertDataToAppCredential(
           userNames[i],
           emailAddresses[i],
           authTokens[i],
@@ -89,17 +92,19 @@ const actions = {
         appCredentials.push(appCredential);
       }
 
-      api.account.autoLogin(appCredentials, apiKey)
+      api.auth.autoLogin(appCredentials, apiKey)
         .then(
           (data) => {
             context.commit('setLoginErrorCode', null);
             context.commit('setLoginSuccess', true);
 
-            if (data != null && data.length > 0) {
-              console.log(`data:${JSON.stringify(data)}`);
+            if (data.length > 0) {
               const credentials = [];
               data.forEach((dataItem) => {
-                const credential = { accessToken: dataItem.access_token };
+                const credential = {
+                  email_address: dataItem.email_address,
+                  access_token: dataItem.access_token,
+                };
                 credentials.push(credential);
               });
               context.commit('setCredentials', credentials);
