@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <h1>{{ msg + mdtPrice}}</h1>
-    <h1>{{ mdtBalanceMsg }}</h1>
+    <p>Total Balance</p>
+    <h1>{{ totalMDTBalance }}</h1>
+    <p>≈ {{ totalMDTValues }} USD</p>
   </div>
 </template>
 
@@ -18,10 +19,17 @@ export default {
   computed: {
     ...mapGetters({
       mdtPrice: 'mdtPrice',
-      credential: 'credential',
+      userAccounts: 'userAccounts',
     }),
-    mdtBalanceMsg() {
-      return `Hello ${this.credential.userName}. You have MDT balance: ${this.credential.mdtbalance}`;
+    totalMDTBalance() {
+      let totalMDTBalance = 0;
+      this.userAccounts.forEach((userAccount) => {
+        totalMDTBalance += userAccount.mdtBalance;
+      });
+      return totalMDTBalance;
+    },
+    totalMDTValues() {
+      return this.totalMDTBalance * this.mdtPrice;
     },
   },
   created() {

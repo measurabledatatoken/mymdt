@@ -8,7 +8,7 @@ const state = {
 
 const getters = {
   mdtPrice: state => state.mdtPrice,
-
+  userAccounts: state => state.userAccounts,
 };
 
 const mutations = {

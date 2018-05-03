@@ -6,12 +6,10 @@ const state = {
   errorCode: null,
 
   // the credential selected by user, single account will defailt to the first one.
-  credential: {
-    userName: null,
-    emailAddress: null,
-    mdtbalance: null,
+  selectedCredential: {
     accessToken: null,
   },
+  credentials: [],
 };
 
 const getters = {
@@ -27,11 +25,11 @@ const mutations = {
   setErrorCode(state, errorCode) {
     state.errorCode = errorCode;
   },
-  setCredential(state, { userName, emailAddress, mdtbalance, accessToken }) {
-    state.credential.userName = userName;
-    state.credential.emailAddress = emailAddress;
-    state.credential.mdtbalance = mdtbalance;
-    state.credential.accessToken = accessToken;
+  setSelectedCredential(state, credential) {
+    state.selectedCredential = credential;
+  },
+  setCredentials(state, credentials) {
+    state.credentials = credentials;
   },
 };
 
@@ -44,13 +42,12 @@ const actions = {
           context.commit('setLoginSuccess', true);
 
           if (data != null) {
-            context.commit('setCredential',
-              {
-                userName: data.user_name,
-                emailAddress: data.email_address,
-                mdtbalance: data.mdtbalance,
-                accessToken: data.access_token,
-              });
+            const credential = {
+              accessToken: data.access_token,
+            };
+            const credentials = [credential];
+            context.commit('setCredentials', credentials);
+            context.commit('setSelectedCredential', credential);
           }
         },
       )
