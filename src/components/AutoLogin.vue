@@ -53,6 +53,14 @@ export default {
     const emailAddressesStr = this.$route.query.emailaddresses;
     const tokensStr = this.$route.query.tokens;
 
+    if (
+      apiKey === undefined || userNamesStr === undefined
+      || emailAddressesStr === undefined || tokensStr === undefined
+    ) {
+      this.$router.push({ path: 'login' });
+      return;
+    }
+
     const userNames = userNamesStr.split(',');
     const emailAddresses = emailAddressesStr.split(',');
     const authTokens = tokensStr.split(',');
@@ -68,7 +76,11 @@ export default {
       if (this.loginSuccess) {
         this.$router.push({ path: 'home' });
       }
-    }).catch(() => ({}));
+    }).catch(
+      () => {
+        this.$router.push({ path: 'login' });
+      },
+    );
   },
 };
 </script>

@@ -71,11 +71,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       if (!Array.isArray(userNames) || !Array.isArray(emailAddresses) || !Array.isArray(authTokens)) {
         console.error('userNames, userEmails, authTokens should all be array');
+        reject();
       }
 
       if (
         userNames.length !== emailAddresses.length || emailAddresses.length !== authTokens.length) {
         console.error('userNames, userEmails, authTokens should all be array with same length');
+        reject();
       }
       const appCredentials = [];
       for (let i = 0; i < userNames.length; i += 1) {
