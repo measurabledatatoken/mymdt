@@ -3,6 +3,13 @@
     <p>Total Balance</p>
     <h1>{{ totalMDTBalance }}</h1>
     <p>≈ {{ totalMDTValues }} USD</p>
+    <div v-for="entry in userAccounts" :key="entry.emailAddress">
+      <hr>
+      <p> {{ entry["userName"] }}</p>
+      <p> {{ entry["emailAddress"] }}</p>
+      <p> {{ entry["mdtBalance"] }}</p>
+      <hr>
+    </div>
   </div>
 </template>
 
