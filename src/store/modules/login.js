@@ -95,8 +95,15 @@ const actions = {
             context.commit('setLoginErrorCode', null);
             context.commit('setLoginSuccess', true);
 
-            if (data != null) {
+            if (data != null && data.length > 0) {
               console.log(`data:${JSON.stringify(data)}`);
+              const credentials = [];
+              data.forEach((dataItem) => {
+                const credential = { accessToken: dataItem.access_token };
+                credentials.push(credential);
+              });
+              context.commit('setCredentials', credentials);
+              context.commit('setSelectedCredential', credentials[0]);
             }
 
             resolve();
