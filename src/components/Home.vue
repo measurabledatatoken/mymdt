@@ -1,11 +1,12 @@
 <template>
   <div class="home">
+    <button v-on:click="returnCallback">Back</button>
     <p>Total Balance</p>
     <h1>{{ totalMDTBalance }}</h1>
     <p>≈ {{ totalMDTValues }} USD</p>
     <div v-for="entry in userAccounts" :key="entry.emailAddress">
       <hr>
-      <p> {{ entry["userName"] }}</p>
+      <p> {{ entry["displayName"] }}</p>
       <p> {{ entry["emailAddress"] }}</p>
       <p> {{ entry["mdtBalance"] }}</p>
       <hr>
@@ -15,6 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import Constants from '@/constants';
 
 export default {
   name: 'Home',
@@ -39,9 +41,14 @@ export default {
       return this.totalMDTBalance * this.mdtPrice;
     },
   },
-  created() {
+  mounted() {
     this.$store.dispatch('getMDTPrice');
     this.$store.dispatch('getUserAccounts');
+  },
+  methods: {
+    returnCallback() {
+      window.location = Constants.ReturnFromWalletURL;
+    },
   },
 };
 

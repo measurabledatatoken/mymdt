@@ -48,27 +48,17 @@ export default {
   },
   created() {
     const apiKey = this.$route.query.apikey;
-
-    const userNamesStr = this.$route.query.usernames;
-    const emailAddressesStr = this.$route.query.emailaddresses;
     const tokensStr = this.$route.query.tokens;
 
-    if (
-      apiKey === undefined || userNamesStr === undefined
-      || emailAddressesStr === undefined || tokensStr === undefined
-    ) {
+    if (apiKey === undefined || tokensStr === undefined) {
       this.$router.push({ path: 'login' });
       return;
     }
 
-    const userNames = userNamesStr.split(',');
-    const emailAddresses = emailAddressesStr.split(',');
     const authTokens = tokensStr.split(',');
 
     this.$store.dispatch('autoLogin',
       {
-        userNames,
-        emailAddresses,
         authTokens,
         apiKey,
       },

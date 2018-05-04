@@ -70,25 +70,16 @@ const actions = {
         );
     });
   },
-  autoLogin(context, { userNames, emailAddresses, authTokens, apiKey }) {
+  autoLogin(context, { authTokens, apiKey }) {
     return new Promise((resolve, reject) => {
-      if (!Array.isArray(userNames) || !Array.isArray(emailAddresses) || !Array.isArray(authTokens)) {
-        console.error('userNames, userEmails, authTokens should all be array');
+      if (!Array.isArray(authTokens)) {
+        console.error('authTokens should all be array');
         reject();
       }
 
-      if (
-        userNames.length !== emailAddresses.length || emailAddresses.length !== authTokens.length) {
-        console.error('userNames, userEmails, authTokens should all be array with same length');
-        reject();
-      }
       const appCredentials = [];
-      for (let i = 0; i < userNames.length; i += 1) {
-        const appCredential = api.auth.convertDataToAppCredential(
-          userNames[i],
-          emailAddresses[i],
-          authTokens[i],
-        );
+      for (let i = 0; i < authTokens.length; i += 1) {
+        const appCredential = { token: authTokens[i] };
         appCredentials.push(appCredential);
       }
 

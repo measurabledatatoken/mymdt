@@ -4,7 +4,7 @@ const state = {
   mdtPrice: 0,
   apiKey: '',
   selectedUser: {
-    userName: null,
+    displayName: null,
     emailAddress: null,
     isEmailConfirmed: null,
     phoneNumber: null,
@@ -58,7 +58,7 @@ const actions = {
             const userAccountsData = [];
             data.forEach((dataItem) => {
               const userAccountData = {
-                userName: dataItem.user_name,
+                displayName: dataItem.display_name,
                 emailAddress: dataItem.email_address,
                 isEmailConfirmed: dataItem.is_email_confirmed,
                 phoneNumber: dataItem.phone_number,

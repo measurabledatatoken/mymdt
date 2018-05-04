@@ -28,6 +28,9 @@ const ErrorCode = {
 };
 
 
+const ReturnFromWalletURL = 'mdtwallet://back';
+
 export default {
   ErrorCode,
+  ReturnFromWalletURL,
 };
