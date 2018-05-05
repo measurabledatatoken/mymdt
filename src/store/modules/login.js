@@ -20,11 +20,13 @@ const getters = {
 };
 
 const mutations = {
-  setLoginSuccess(state, loginSuccess) {
-    state.loginSuccess = loginSuccess;
-  },
   setLoginErrorCode(state, loginErrorCode) {
     state.loginErrorCode = loginErrorCode;
+    if (loginErrorCode == null) {
+      state.loginSuccess = true;
+    } else {
+      state.loginSuccess = false;
+    }
   },
   setSelectedCredential(state, credential) {
     state.selectedCredential = credential;
@@ -41,7 +43,6 @@ const actions = {
         .then(
           (data) => {
             context.commit('setLoginErrorCode', null);
-            context.commit('setLoginSuccess', true);
 
             if (data.length > 0) {
               const credential = {
@@ -63,7 +64,6 @@ const actions = {
             } else {
               context.commit('setLoginErrorCode', Constants.ErrorCode.UnknownError);
             }
-            context.commit('setLoginSuccess', false);
 
             reject();
           },
@@ -87,7 +87,6 @@ const actions = {
         .then(
           (data) => {
             context.commit('setLoginErrorCode', null);
-            context.commit('setLoginSuccess', true);
 
             if (data.length > 0) {
               const credentials = [];
@@ -112,8 +111,6 @@ const actions = {
             } else {
               context.commit('setLoginErrorCode', Constants.ErrorCode.UnknownError);
             }
-            context.commit('setLoginSuccess', false);
-
             reject();
           },
         );
