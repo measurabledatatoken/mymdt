@@ -13,7 +13,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AtomSpinner } from 'epic-spinners';
-import Constants from '@/constants';
+import { ErrorCode } from '@/constants';
 
 export default {
   props: [],
@@ -25,13 +25,13 @@ export default {
     }),
     errorMessage() {
       switch (this.loginErrorCode) {
-        case Constants.ErrorCode.NoApplicationFound: {
+        case ErrorCode.NoApplicationFound: {
           return 'Application not exist.';
         }
-        case Constants.ErrorCode.NoEndpointForApplication: {
+        case ErrorCode.NoEndpointForApplication: {
           return 'Application Endpoint not set yet.';
         }
-        case Constants.ErrorCode.GetAutoLoginTokenValidateFailedError: {
+        case ErrorCode.GetAutoLoginTokenValidateFailedError: {
           return 'Token validate failed.';
         }
         case null: {

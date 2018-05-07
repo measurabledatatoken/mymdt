@@ -21,7 +21,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AtomSpinner } from 'epic-spinners';
-import Constants from '@/constants';
+import { ErrorCode } from '@/constants';
 
 export default {
   props: [],
@@ -39,19 +39,19 @@ export default {
     }),
     errorMessage() {
       switch (this.loginErrorCode) {
-        case Constants.ErrorCode.NoApplicationFound: {
+        case ErrorCode.NoApplicationFound: {
           return 'Application not exist.';
         }
-        case Constants.ErrorCode.UserEmailAddressNotConfirmed: {
+        case ErrorCode.UserEmailAddressNotConfirmed: {
           return 'Email address is not confirmed. Resend confirmation email. Press here';
         }
-        case Constants.ErrorCode.UserPasswordNotExist: {
+        case ErrorCode.UserPasswordNotExist: {
           return 'You have not set any password yet. Please set';
         }
-        case Constants.ErrorCode.UserCredentailWrong: {
+        case ErrorCode.UserCredentailWrong: {
           return 'This email passowrd combination do not exist';
         }
-        case Constants.ErrorCode.UserDisabled: {
+        case ErrorCode.UserDisabled: {
           return 'User disabled, please contact admin at support@matiltime.com.';
         }
         case null: {

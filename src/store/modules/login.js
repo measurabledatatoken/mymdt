@@ -1,5 +1,5 @@
 import api from '@/api';
-import Constants from '@/constants';
+import { ErrorCode } from '@/constants';
 
 const state = {
   loginSuccess: null,
@@ -62,7 +62,7 @@ const actions = {
             if (error.response && error.response.data) {
               context.commit('setLoginErrorCode', error.response.data.error_code);
             } else {
-              context.commit('setLoginErrorCode', Constants.ErrorCode.UnknownError);
+              context.commit('setLoginErrorCode', ErrorCode.UnknownError);
             }
 
             reject();
@@ -109,7 +109,7 @@ const actions = {
             if (error.response && error.response.data) {
               context.commit('setLoginErrorCode', error.response.data.error_code);
             } else {
-              context.commit('setLoginErrorCode', Constants.ErrorCode.UnknownError);
+              context.commit('setLoginErrorCode', ErrorCode.UnknownError);
             }
             reject();
           },

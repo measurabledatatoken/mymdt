@@ -6,13 +6,13 @@
 
 
 <script>
-import Constants from '@/constants';
+import { ErrorCode } from '@/constants';
 
 export default {
   name: 'header',
   methods: {
     returnCallback() {
-      window.location = Constants.ReturnFromWalletURL;
+      window.location = ErrorCode.ReturnFromWalletURL;
     },
   },
 };

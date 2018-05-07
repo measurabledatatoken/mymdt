@@ -28,9 +28,22 @@ const ErrorCode = {
 };
 
 
+const RouteDef = {
+  Home: 'home',
+  Login: 'login',
+  AutoLogin: 'autologin',
+  Register: 'register',
+  ForgetPassword: 'forgetpasswordfo',
+  TransactionHistory: 'transactionhistory',
+  Settings: 'settings',
+  Tutorial: 'tutorial',
+};
+
+
 const ReturnFromWalletURL = 'mdtwallet://back';
 
-export default {
+export {
   ErrorCode,
+  RouteDef,
   ReturnFromWalletURL,
 };
