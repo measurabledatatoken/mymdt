@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id='navigation-bar'>
-          <button v-on:click="returnCallback">Back</button>
+          <button v-on:click="goBack">Back</button>
           Navigation Bar
         </div>
     </div>
@@ -12,6 +12,11 @@
 
 export default {
   name: 'NavigationHeader',
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+  },
 };
 
 

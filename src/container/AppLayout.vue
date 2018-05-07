@@ -1,8 +1,8 @@
 <template>
     <div id="layout">
         <div id='header'>
-            <HomeHeader></HomeHeader>
-            <NavigationHeader> </NavigationHeader>
+            <HomeHeader v-if="isHome"></HomeHeader>
+            <NavigationHeader v-if="!isHome"> </NavigationHeader>
         </div>
         <div id='content'>
             <router-view></router-view>
@@ -17,10 +17,24 @@ import NavigationHeader from '@/components/header/NavigationHeader';
 import { RouteDef } from '@/constants';
 
 export default {
+  data() {
+    return {
+      isHome: true,
+    };
+  },
   components: {
     HomeHeader,
     NavigationHeader,
   },
+  watch: {
+    $route(to, from) {
+      const toPath = to.path.replace('/', '');
+      if (toPath === RouteDef.Home) {
+        this.isHome = true;
+      } else {
+        this.isHome = false;
+      }
+    },
   },
 };
 </script>

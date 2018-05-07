@@ -29,7 +29,7 @@ const ErrorCode = {
 
 
 const RouteDef = {
-  Home: 'home',
+  Home: '',
   Login: 'login',
   AutoLogin: 'autologin',
   Register: 'register',
