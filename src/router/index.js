@@ -44,6 +44,18 @@ export default new Router({
           path: RouteDef.ForgetPassword,
           component: ForgetPassword,
         },
+        {
+          path: RouteDef.TransactionHistory,
+          component: TransactionHistory,
+        },
+        {
+          path: RouteDef.Settings,
+          component: Settings,
+        },
+        {
+          path: RouteDef.Tutorial,
+          component: Tutorial,
+        },
         { // Route to Home page for route not defined
           path: '*', component: Home,
         },

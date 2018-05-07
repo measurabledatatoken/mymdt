@@ -1,18 +1,33 @@
 <template>
     <div>
-        <button v-on:click="returnCallback">Back</button>
+        <div id="home-header">
+            <button v-on:click="returnCallback">Back</button>
+            <button v-on:click="clickedMenuButton( TutorialURL )">Tutorial</button>
+            <button v-on:click="clickedMenuButton( TransactionHistoryURL )">Transaction History</button>
+            <button v-on:click="clickedMenuButton( SettingURL )">Setting</button>
+        </div>
     </div>
 </template>
 
 
 <script>
-import { ErrorCode } from '@/constants';
+import { RouteDef, ReturnFromWalletURL } from '@/constants';
 
 export default {
   name: 'header',
+  data() {
+    return {
+      TutorialURL: `${RouteDef.Tutorial}`,
+      TransactionHistoryURL: `/${RouteDef.TransactionHistory}`,
+      SettingURL: `/${RouteDef.Settings}`,
+    };
+  },
   methods: {
     returnCallback() {
-      window.location = ErrorCode.ReturnFromWalletURL;
+      window.location = ReturnFromWalletURL;
+    },
+    clickedMenuButton(url) {
+      this.$router.push(url);
     },
   },
 };
