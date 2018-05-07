@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <button v-on:click="returnCallback">Back</button>
     <p>Total Balance</p>
     <h1>{{ totalMDTBalance }}</h1>
     <p>≈ {{ totalMDTValues }} USD</p>
@@ -16,7 +15,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Constants from '@/constants';
 
 export default {
   name: 'Home',
@@ -46,9 +44,7 @@ export default {
     this.$store.dispatch('getUserAccounts');
   },
   methods: {
-    returnCallback() {
-      window.location = Constants.ReturnFromWalletURL;
-    },
+
   },
 };
 

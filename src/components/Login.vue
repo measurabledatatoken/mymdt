@@ -4,6 +4,9 @@
     <input v-model="emailAddress" placeholder="Email Address">
     <input type="password" v-model="password" placeholder="Password">
     <button v-on:click="confirmLogin">Login</button>
+
+    <div><router-link to="/register">Register</router-link></div>
+    <div><router-link to="/forgetpassword">Forget Password</router-link></div>
     <p>{{errorMessage}}</p>
     <atom-spinner
       :animation-duration="1000"
