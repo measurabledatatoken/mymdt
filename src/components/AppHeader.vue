@@ -2,9 +2,9 @@
     <div>
         <div id="home-header">
             <button v-on:click="returnCallback">Back</button>
-            <button v-on:click="clickedMenuButton( TutorialURL )">Tutorial</button>
-            <button v-on:click="clickedMenuButton( TransactionHistoryURL )">Transaction History</button>
-            <button v-on:click="clickedMenuButton( SettingURL )">Setting</button>
+            <button v-on:click="clickedMenuButton( tutorialURL )">Tutorial</button>
+            <button v-on:click="clickedMenuButton( transactionHistoryURL )">Transaction History</button>
+            <button v-on:click="clickedMenuButton( settingURL )">Setting</button>
         </div>
     </div>
 </template>
@@ -17,9 +17,9 @@ export default {
   name: 'AppHeader',
   data() {
     return {
-      TutorialURL: `${RouteDef.Tutorial}`,
-      TransactionHistoryURL: `/${RouteDef.TransactionHistory}`,
-      SettingURL: `/${RouteDef.Settings}`,
+      tutorialURL: `${RouteDef.Tutorial}`,
+      transactionHistoryURL: `/${RouteDef.TransactionHistory}`,
+      settingURL: `/${RouteDef.Settings}`,
     };
   },
   methods: {
