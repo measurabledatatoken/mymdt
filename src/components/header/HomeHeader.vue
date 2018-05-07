@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="home-header">
-            <button v-on:click="returnCallback">Back</button>
+            <button v-on:click="returnCallback">Back to App</button>
             <button v-on:click="clickedMenuButton( tutorialURL )">Tutorial</button>
             <button v-on:click="clickedMenuButton( transactionHistoryURL )">Transaction History</button>
             <button v-on:click="clickedMenuButton( settingURL )">Setting</button>
@@ -38,5 +38,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+/* .slide-left-enter {
+  vue
+} */
 
 </style>

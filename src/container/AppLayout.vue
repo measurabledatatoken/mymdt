@@ -1,7 +1,8 @@
 <template>
     <div id="layout">
         <div id='header'>
-            <AppHeader></AppHeader>
+            <HomeHeader></HomeHeader>
+            <NavigationHeader> </NavigationHeader>
         </div>
         <div id='content'>
             <router-view></router-view>
@@ -10,11 +11,16 @@
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader';
+import HomeHeader from '@/components/header/HomeHeader';
+import NavigationHeader from '@/components/header/NavigationHeader';
+
+import { RouteDef } from '@/constants';
 
 export default {
   components: {
-    AppHeader,
+    HomeHeader,
+    NavigationHeader,
+  },
   },
 };
 </script>
