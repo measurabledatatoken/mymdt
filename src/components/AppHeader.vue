@@ -14,7 +14,7 @@
 import { RouteDef, ReturnFromWalletURL } from '@/constants';
 
 export default {
-  name: 'header',
+  name: 'AppHeader',
   data() {
     return {
       TutorialURL: `${RouteDef.Tutorial}`,
