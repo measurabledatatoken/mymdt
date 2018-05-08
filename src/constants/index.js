@@ -34,9 +34,9 @@ const RouteDef = {
   AutoLogin: 'autologin',
   Register: 'register',
   ForgetPassword: 'forgetpasswordfo',
-  TransactionHistory: 'transactionhistory',
-  Settings: 'settings',
-  Tutorial: 'tutorial',
+  TransactionHistory: 'account/:id/transactionhistory',
+  Settings: 'home/settings',
+  Tutorial: 'home/tutorial',
 };
 
 

@@ -14,7 +14,7 @@ export default {
   name: 'NavigationHeader',
   methods: {
     goBack() {
-      history.back();
+      this.$router.back();
     },
   },
 };
