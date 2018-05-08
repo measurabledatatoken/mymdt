@@ -3,7 +3,6 @@
         <div id="home-header">
             <button v-on:click="returnCallback">Back to App</button>
             <button v-on:click="clickedMenuButton( tutorialURL )">Tutorial</button>
-            <button v-on:click="clickedMenuButton( transactionHistoryURL )">Transaction History</button>
             <button v-on:click="clickedMenuButton( settingURL )">Setting</button>
         </div>
     </div>
