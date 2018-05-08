@@ -14,7 +14,7 @@
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 
-import { RouteDef } from '@/constants';
+import isRouteHomePath from '@/utils';
 
 export default {
   data() {
@@ -27,9 +27,9 @@ export default {
     NavigationHeader,
   },
   watch: {
-    $route(to, from) {
+    $route(to) {
       const toPath = to.path.replace('/', '');
-      if (toPath === RouteDef.Home) {
+      if (isRouteHomePath(toPath)) {
         this.isHome = true;
       } else {
         this.isHome = false;
