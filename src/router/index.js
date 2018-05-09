@@ -25,7 +25,6 @@ export default new Router({
   routes: [
     {
       path: '',
-      name: 'layout',
       component: AppLayout,
       children: [
         {
