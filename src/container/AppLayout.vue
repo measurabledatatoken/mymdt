@@ -46,7 +46,8 @@ export default {
     },
   },
   created() {
-
+    const locale = this.$route.query.lang;
+    this.$i18n.locale = locale;
   },
 };
 </script>

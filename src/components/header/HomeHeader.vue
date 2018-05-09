@@ -2,8 +2,8 @@
     <div>
         <div id="home-header">
             <button v-on:click="returnCallback">Back to App</button>
-            <button v-on:click="clickedMenuButton( tutorialURL )">Tutorial</button>
-            <button v-on:click="clickedMenuButton( settingURL )">Setting</button>
+            <button v-on:click="clickedMenuButton( tutorialURL )">{{ $t('message.home.tutorial') }}</button>
+            <button v-on:click="clickedMenuButton( settingURL )">{{ $t('message.home.settings') }}</button>
         </div>
     </div>
 </template>

@@ -20,6 +20,7 @@
     "normalize.css": "^8.0.0",
     "underscore": "^1.9.0",
     "vue": "^2.5.2",
+    "vue-i18n": "^7.6.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.2"
