@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     goToTransfer(user) {
-      this.$store.commit('setSelectedCredentialForEmail', user.emailAddress);
+      this.$store.commit('setSelectedUserAccountForEmail', user.emailAddress);
       this.$router.push(RouteDef.TransferList);
     },
   },

@@ -5,18 +5,12 @@ const state = {
   loginSuccess: null,
   loginErrorCode: null,
 
-  // the credential selected by user, single account will default to the first one.
-  selectedCredential: {
-    email_address: null,
-    access_token: null,
-  },
   credentials: [],
 };
 
 const getters = {
   loginSuccess: state => state.loginSuccess,
   loginErrorCode: state => state.loginErrorCode,
-  selectedCredential: state => state.selectedCredential,
   credentials: state => state.credentials,
 };
 
@@ -28,16 +22,6 @@ const mutations = {
     } else {
       state.loginSuccess = false;
     }
-  },
-  setSelectedCredential(state, credential) {
-    state.selectedCredential = credential;
-  },
-  setSelectedCredentialForEmail(state, emailAddress) {
-    state.credentials.forEach((credential) => {
-      if (credential.email_address === emailAddress) {
-        this.commit('setSelectedCredential', credential);
-      }
-    });
   },
   setCredentials(state, credentials) {
     state.credentials = credentials;
@@ -59,7 +43,6 @@ const actions = {
               };
               const credentials = [credential];
               context.commit('setCredentials', credentials);
-              context.commit('setSelectedCredential', credential);
             }
 
             resolve();
@@ -106,7 +89,6 @@ const actions = {
                 credentials.push(credential);
               });
               context.commit('setCredentials', credentials);
-              context.commit('setSelectedCredential', credentials[0]);
             }
 
             resolve();

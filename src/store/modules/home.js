@@ -11,6 +11,7 @@ const state = {
     isPhoneConfirmed: null,
     mdtBalance: null,
     isEnabled: null,
+    accessToken: null,
   },
   userAccounts: [],
 };
@@ -27,6 +28,13 @@ const mutations = {
   },
   setSelectedUser(state, selectedUser) {
     state.selectedUser = selectedUser;
+  },
+  setSelectedUserAccountForEmail(state, emailAddress) {
+    state.userAccounts.forEach((userAccount) => {
+      if (userAccount.email_address === emailAddress) {
+        this.commit('setSelectedUser', userAccount);
+      }
+    });
   },
   setUserAccounts(state, userAccounts) {
     state.userAccounts = userAccounts;
@@ -48,15 +56,21 @@ const actions = {
       );
   },
   getUserAccounts(context) {
-    const accessToken = context.rootState.login.selectedCredential.access_token;
     const credentials = context.rootState.login.credentials;
 
-    api.account.getUserAccountsData(credentials, accessToken)
+    api.account.getUserAccountsData(credentials)
       .then(
         (data) => {
           if (data.length > 0) {
             const userAccountsData = [];
             data.forEach((dataItem) => {
+              let tempAccessToken = null;
+              credentials.forEach((credential) => {
+                if (credential.email_address === dataItem.email_address) {
+                  tempAccessToken = credential.access_token;
+                }
+              });
+
               const userAccountData = {
                 displayName: dataItem.display_name,
                 emailAddress: dataItem.email_address,
@@ -65,7 +79,9 @@ const actions = {
                 isPhoneConfirmed: dataItem.is_phone_confirmed,
                 mdtBalance: dataItem.mdtbalance,
                 isEnabled: dataItem.is_enabled,
+                accessToken: tempAccessToken,
               };
+
               userAccountsData.push(userAccountData);
             });
 

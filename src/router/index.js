@@ -59,6 +59,8 @@ export default new Router({
           path: RouteDef.TransactionHistory,
           component: TransactionHistory,
         },
+
+        // Transfer Route
         {
           path: RouteDef.TransferList,
           component: TransferList,
