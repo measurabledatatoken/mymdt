@@ -10,7 +10,7 @@
 
 
 <script>
-import { RouteDef, ReturnFromWalletURL } from '@/constants';
+import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
 
 export default {
   name: 'AppHeader',
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     returnCallback() {
-      window.location = ReturnFromWalletURL;
+      window.location = ExitFromWalletWebviewURL;
     },
     clickedMenuButton(url) {
       this.$router.push(url);

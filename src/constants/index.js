@@ -45,10 +45,10 @@ const RouteDef = {
 };
 
 
-const ReturnFromWalletURL = 'mdtwallet://back';
+const ExitFromWalletWebviewURL = 'mdtwallet://exit';
 
 export {
   ErrorCode,
   RouteDef,
-  ReturnFromWalletURL,
+  ExitFromWalletWebviewURL,
 };
