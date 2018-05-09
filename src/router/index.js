@@ -14,13 +14,17 @@ import Settings from '@/components/Settings';
 import TransactionHistory from '@/components/TransactionHistory';
 import Tutorial from '@/components/Tutorial';
 
+import TransferList from '@/components/transfer/TransferList';
+import TransferEmail from '@/components/transfer/TransferEmail';
+import TransferEthWallet from '@/components/transfer/TransferEthWallet';
+
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '',
       name: 'layout',
       component: AppLayout,
       children: [
@@ -55,6 +59,18 @@ export default new Router({
         {
           path: RouteDef.TransactionHistory,
           component: TransactionHistory,
+        },
+        {
+          path: RouteDef.TransferList,
+          component: TransferList,
+        },
+        {
+          path: RouteDef.TransferEmail,
+          component: TransferEmail,
+        },
+        {
+          path: RouteDef.TransferEthWallet,
+          component: TransferEthWallet,
         },
         { // Route to Home page for route not defined
           path: '*', component: Home,

@@ -17,8 +17,8 @@ export default {
   data() {
     return {
       tutorialURL: `${RouteDef.Tutorial}`,
-      transactionHistoryURL: `/${RouteDef.TransactionHistory}`,
-      settingURL: `/${RouteDef.Settings}`,
+      transactionHistoryURL: `${RouteDef.TransactionHistory}`,
+      settingURL: `${RouteDef.Settings}`,
     };
   },
   methods: {

@@ -5,9 +5,10 @@
     <p>≈ {{ totalMDTValues }} USD</p>
     <div v-for="entry in userAccounts" :key="entry.emailAddress">
       <hr>
-      <p> {{ entry["displayName"] }}</p>
-      <p> {{ entry["emailAddress"] }}</p>
-      <p> {{ entry["mdtBalance"] }}</p>
+      <div> {{ entry.displayName }}</div>
+      <div> {{ entry.emailAddress }}</div>
+      <div> {{ entry.mdtBalance }}</div>
+      <div> <button v-on:click="goToTransfer(entry)">Transfer</button></div>
       <hr>
     </div>
   </div>
@@ -15,6 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { RouteDef } from '@/constants';
 
 export default {
   name: 'Home',
@@ -44,7 +46,10 @@ export default {
     this.$store.dispatch('getUserAccounts');
   },
   methods: {
-
+    goToTransfer(user) {
+      this.$store.commit('setSelectedCredentialForEmail', user.emailAddress);
+      this.$router.push(RouteDef.TransferList);
+    },
   },
 };
 

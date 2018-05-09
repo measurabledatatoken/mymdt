@@ -17,6 +17,7 @@ const getters = {
   loginSuccess: state => state.loginSuccess,
   loginErrorCode: state => state.loginErrorCode,
   selectedCredential: state => state.selectedCredential,
+  credentials: state => state.credentials,
 };
 
 const mutations = {
@@ -30,6 +31,13 @@ const mutations = {
   },
   setSelectedCredential(state, credential) {
     state.selectedCredential = credential;
+  },
+  setSelectedCredentialForEmail(state, emailAddress) {
+    state.credentials.forEach((credential) => {
+      if (credential.email_address === emailAddress) {
+        this.commit('setSelectedCredential', credential);
+      }
+    });
   },
   setCredentials(state, credentials) {
     state.credentials = credentials;

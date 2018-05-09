@@ -29,14 +29,19 @@ const ErrorCode = {
 
 
 const RouteDef = {
-  Home: '',
-  Login: 'login',
-  AutoLogin: 'autologin',
-  Register: 'register',
-  ForgetPassword: 'forgetpasswordfo',
-  TransactionHistory: 'account/:id/transactionhistory',
-  Settings: 'home/settings',
-  Tutorial: 'home/tutorial',
+  Login: '/login',
+  AutoLogin: '/autologin',
+  Register: '/register',
+  ForgetPassword: '/forgetpasswordfo',
+  TransactionHistory: '/account/:id/transactionhistory',
+
+  Home: '/',
+  Settings: '/home/settings',
+  Tutorial: '/home/tutorial',
+
+  TransferList: '/home/transfer',
+  TransferEmail: '/home/transfer/email',
+  TransferEthWallet: '/home/transfer/ethwallet',
 };
 
 

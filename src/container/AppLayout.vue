@@ -35,7 +35,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      const toPath = to.path.replace('/', '');
+      const toPath = to.path;
       if (isRouteHomePath(toPath)) {
         this.isHome = true;
       } else {
