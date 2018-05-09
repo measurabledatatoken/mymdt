@@ -13,7 +13,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AtomSpinner } from 'epic-spinners';
-import { ErrorCode } from '@/constants';
+import { ErrorCode, RouteDef } from '@/constants';
 
 export default {
   props: [],
@@ -51,7 +51,7 @@ export default {
     const tokensStr = this.$route.query.tokens;
 
     if (apiKey === undefined || tokensStr === undefined) {
-      this.$router.push({ path: 'login' });
+      this.$router.push(RouteDef.Login);
       return;
     }
 
@@ -64,11 +64,11 @@ export default {
       },
     ).then(() => {
       if (this.loginSuccess) {
-        this.$router.push({ path: 'home' });
+        this.$router.push(RouteDef.Home);
       }
     }).catch(
       () => {
-        this.$router.push({ path: 'login' });
+        this.$router.push(RouteDef.Login);
       },
     );
   },

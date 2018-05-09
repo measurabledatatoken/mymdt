@@ -21,7 +21,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AtomSpinner } from 'epic-spinners';
-import { ErrorCode } from '@/constants';
+import { ErrorCode, RouteDef } from '@/constants';
 
 export default {
   props: [],
@@ -77,7 +77,7 @@ export default {
         },
       ).then(() => {
         if (this.loginSuccess) {
-          this.$router.push({ path: 'home' });
+          this.$router.push(RouteDef.Home);
         }
       }).catch(() => ({}));
     },
