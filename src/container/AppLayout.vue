@@ -51,7 +51,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+
+@mixin animation-active (){
+  will-change: transform;
+  transition: all 500ms;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
 
 .header-view {
   padding: 1em;
@@ -63,16 +74,12 @@ export default {
   width: 100%;
 }
 
+
 .header-pop-out-enter-active,
 .header-pop-out-leave-active,
 .header-pop-in-enter-active,
 .header-pop-in-leave-active {
-  will-change: transform;
-  transition: all 500ms;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden;
-  perspective: 1000;
+  @include animation-active();
 }
 
 .header-pop-out-enter {
@@ -92,13 +99,8 @@ export default {
 .content-pop-out-leave-active,
 .content-pop-in-enter-active,
 .content-pop-in-leave-active {
-  will-change: transform;
-  transition: all 500ms;
-  height: 100%;
+ @include animation-active;
   Top: 5em;
-  position: absolute;
-  backface-visibility: hidden;
-  perspective: 1000;
 }
 
 .content-pop-out-enter {
