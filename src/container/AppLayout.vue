@@ -2,8 +2,8 @@
     <div id="layout">
         <div id='header'>
             <transition :name=" 'header-' + transitionName">
-              <HomeHeader v-if="isHome" class="header-view"></HomeHeader>
-              <NavigationHeader v-if="!isHome" :title="navigationTitle" class="header-view"> </NavigationHeader>
+              <HomeHeader v-if="showHomeHeader" class="header-view"></HomeHeader>
+              <NavigationHeader v-if="!showHomeHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
             </transition>
         </div>
           <div id='content'>
@@ -19,12 +19,12 @@ import { mapGetters } from 'vuex';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 
-import { isRouteHomePath, isRouteChangeBack } from '@/utils';
+import { isRouteChangeBack } from '@/utils';
 
 export default {
   data() {
     return {
-      isHome: true,
+      showHomeHeader: true,
       transitionName: 'pop-in',
     };
   },
@@ -39,11 +39,11 @@ export default {
   },
   watch: {
     $route(to, from) {
-      const toPath = to.path;
-      if (isRouteHomePath(toPath)) {
-        this.isHome = true;
+      const toDepth = to.path.split('/').length;
+      if (toDepth === undefined || toDepth <= 2) {
+        this.showHomeHeader = true;
       } else {
-        this.isHome = false;
+        this.showHomeHeader = false;
       }
 
       this.transitionName = isRouteChangeBack(to, from) ? 'pop-out' : 'pop-in';
