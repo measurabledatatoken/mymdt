@@ -76,6 +76,7 @@ export default {
   position: absolute;
   backface-visibility: hidden;
   perspective: 1000;
+   background-color: $app-bgcolor;
 }
 
 

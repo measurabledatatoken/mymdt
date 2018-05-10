@@ -4,12 +4,18 @@
     <h1>{{ totalMDTBalance }}</h1>
     <p>≈ {{ totalMDTValues }} USD</p>
     <div v-for="entry in userAccounts" :key="entry.emailAddress">
-      <hr>
-      <div> {{ entry.displayName }}</div>
-      <div> {{ entry.emailAddress }}</div>
-      <div> {{ entry.mdtBalance }}</div>
-      <div> <button v-on:click="goToTransfer(entry)">Transfer</button></div>
-      <hr>
+      <md-card md-with-hover>
+        <md-card-content>
+          <div> {{ entry.displayName }}</div>
+          <div> {{ entry.emailAddress }}</div>
+          <div> {{ entry.mdtBalance }}</div>
+          </md-card-content>
+
+        <md-card-actions md-alignment="center">
+            <md-button class="actionbtn" v-on:click="goToTransfer(entry)">Transfer</md-button>
+        </md-card-actions>
+
+      </md-card>
     </div>
   </div>
 </template>
@@ -57,12 +63,12 @@ export default {
     },
   },
 };
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
@@ -76,4 +82,9 @@ li {
 a {
   color: #42b983;
 }
+
+.md-card-actions {
+  justify-content: center;
+}
+
 </style>
