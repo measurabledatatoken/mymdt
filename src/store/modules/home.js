@@ -15,6 +15,7 @@ const state = {
     accessToken: null,
   },
   userAccounts: [],
+  locale: null,
 };
 
 const getters = {
@@ -22,6 +23,7 @@ const getters = {
   navigationTitle: state => state.navigationTitle,
   selectedUser: state => state.selectedUser,
   userAccounts: state => state.userAccounts,
+  locale: state => state.locale,
 };
 
 const mutations = {
@@ -43,6 +45,9 @@ const mutations = {
   },
   setUserAccounts(state, userAccounts) {
     state.userAccounts = userAccounts;
+  },
+  setLocale(state, locale) {
+    state.locale = locale;
   },
 };
 

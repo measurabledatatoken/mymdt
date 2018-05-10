@@ -52,7 +52,14 @@ export default {
   created() {
     let locale = this.$route.query.lang;
     if (locale === undefined) {
-      locale = 'en-us';
+      const storeState = this.$store.state.home.locale;
+      if (storeState !== null) {
+        locale = storeState;
+      } else {
+        locale = 'en-us';
+      }
+    } else {
+      this.$store.commit('setLocale', locale);
     }
     this.$i18n.locale = locale;
   },
