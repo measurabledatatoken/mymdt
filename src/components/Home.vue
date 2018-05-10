@@ -20,6 +20,11 @@ import { RouteDef } from '@/constants';
 
 export default {
   name: 'Home',
+  metaInfo() {
+    return {
+      title: this.$t('message.home.title'),
+    };
+  },
   data() {
     return {
       msg: 'Current MDT Price:',

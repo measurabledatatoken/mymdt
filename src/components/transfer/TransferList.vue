@@ -17,6 +17,14 @@ export default {
       RouteDef,
     };
   },
+  metaInfo() {
+    return {
+      title: this.$t('message.transfer.title'),
+    };
+  },
+  created() {
+    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
+  },
 };
 </script>
 

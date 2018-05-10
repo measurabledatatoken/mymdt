@@ -1,6 +1,12 @@
 {
     "home" : {
+        "title": "MDT 钱包",
         "settings": "设定",
         "tutorial": "教学"
+    },
+    "transfer" : {
+        "title" : "转帐",
+        "ethtitle" : "转帐至以太钱包",
+        "emailtitle" : "转帐至电邮地址"
     }
 }

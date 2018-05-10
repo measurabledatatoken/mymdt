@@ -2,6 +2,7 @@ import api from './../../api';
 
 const state = {
   mdtPrice: 0,
+  navigationTitle: '',
   apiKey: '',
   selectedUser: {
     displayName: null,
@@ -18,6 +19,7 @@ const state = {
 
 const getters = {
   mdtPrice: state => state.mdtPrice,
+  navigationTitle: state => state.navigationTitle,
   selectedUser: state => state.selectedUser,
   userAccounts: state => state.userAccounts,
 };
@@ -25,6 +27,9 @@ const getters = {
 const mutations = {
   setMDTPrice(state, mdtPrice) {
     state.mdtPrice = mdtPrice;
+  },
+  setNavigationTitle(state, navigationTitle) {
+    state.navigationTitle = navigationTitle;
   },
   setSelectedUser(state, selectedUser) {
     state.selectedUser = selectedUser;

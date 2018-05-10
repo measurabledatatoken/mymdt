@@ -1,6 +1,12 @@
 {
     "home" : {
+        "title": "MDT Wallet",
         "settings": "Settings",
         "tutorial": "Tutorial"
+    },
+    "transfer" : {
+        "title": "Transfer Out",
+        "ethtitle" : "Transfer to ETH Wallet",
+        "emailtitle" : "Transfer to Email Address"
     }
 }

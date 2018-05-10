@@ -4,7 +4,14 @@
 
 <script>
 export default {
-
+  metaInfo() {
+    return {
+      title: this.$t('message.transfer.ethtitle'),
+    };
+  },
+  created() {
+    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
+  },
 };
 </script>
 

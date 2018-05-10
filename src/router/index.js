@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Meta from 'vue-meta';
 
 import { RouteDef } from '@/constants';
 
@@ -19,6 +20,7 @@ import TransferEmail from '@/components/transfer/TransferEmail';
 import TransferEthWallet from '@/components/transfer/TransferEthWallet';
 
 Vue.use(Router);
+Vue.use(Meta);
 
 export default new Router({
   mode: 'history',

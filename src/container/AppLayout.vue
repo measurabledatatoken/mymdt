@@ -3,7 +3,7 @@
         <div id='header'>
             <transition :name=" 'header-' + transitionName">
               <HomeHeader v-if="isHome" class="header-view"></HomeHeader>
-              <NavigationHeader v-if="!isHome" class="header-view"> </NavigationHeader>
+              <NavigationHeader v-if="!isHome" :title="navigationTitle" class="header-view"> </NavigationHeader>
             </transition>
         </div>
           <div id='content'>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 
@@ -27,11 +28,14 @@ export default {
       transitionName: 'pop-in',
     };
   },
+  computed: {
+    ...mapGetters({
+      navigationTitle: 'navigationTitle',
+    }),
+  },
   components: {
     HomeHeader,
     NavigationHeader,
-  },
-  computed: {
   },
   watch: {
     $route(to, from) {
@@ -46,7 +50,10 @@ export default {
     },
   },
   created() {
-    const locale = this.$route.query.lang;
+    let locale = this.$route.query.lang;
+    if (locale === undefined) {
+      locale = 'en-us';
+    }
     this.$i18n.locale = locale;
   },
 };

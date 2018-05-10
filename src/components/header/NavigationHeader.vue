@@ -2,7 +2,7 @@
     <div>
         <div id='navigation-bar'>
           <button v-on:click="goBack">Back</button>
-          Navigation Bar
+          {{ title }}
         </div>
     </div>
 </template>
@@ -12,6 +12,7 @@
 
 export default {
   name: 'NavigationHeader',
+  props: ['title'],
   methods: {
     goBack() {
       this.$router.back();
