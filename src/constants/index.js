@@ -32,7 +32,7 @@ const RouteDef = {
   Login: '/login',
   AutoLogin: '/autologin',
   Register: '/register',
-  ForgetPassword: '/forgetpasswordfo',
+  ForgetPassword: '/forgetpassword',
   TransactionHistory: '/account/:id/transactionhistory',
 
   Home: '/',
