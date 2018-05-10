@@ -2,7 +2,9 @@
     "home" : {
         "title": "MDT Wallet",
         "settings": "Settings",
-        "tutorial": "Tutorial"
+        "tutorial": "Tutorial",
+        "transferbtn": "Transfer",
+        "accountnum": "{num} Account | {num} Accounts"
     },
     "transfer" : {
         "title": "Transfer Out",

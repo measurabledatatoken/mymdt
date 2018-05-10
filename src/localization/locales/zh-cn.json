@@ -2,7 +2,9 @@
     "home" : {
         "title": "MDT 钱包",
         "settings": "设定",
-        "tutorial": "教学"
+        "tutorial": "教学",
+        "transferbtn": "转帐",
+        "accountnum": "{num} 个帐号"
     },
     "transfer" : {
         "title" : "转帐",

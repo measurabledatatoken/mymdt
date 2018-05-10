@@ -1,5 +1,5 @@
 <template>
-    <div id="layout">
+    <div class="appcontainer">
         <div id='header'>
             <transition :name=" 'header-' + transitionName">
               <HomeHeader v-if="showHomeHeader" class="header-view"></HomeHeader>
@@ -76,12 +76,11 @@ export default {
   position: absolute;
   backface-visibility: hidden;
   perspective: 1000;
-   background-color: $app-bgcolor;
 }
 
 
 .header-view {
-  padding: 1em;
+  padding-bottom: 1em;
   width: 100%;
   height: 3em;
 }
@@ -116,7 +115,7 @@ export default {
 .content-pop-in-enter-active,
 .content-pop-in-leave-active {
  @include animation-active;
-  Top: 5em;
+  Top: 4em;
 }
 
 .content-pop-out-enter {

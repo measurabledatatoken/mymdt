@@ -1,11 +1,19 @@
 <template>
-    <div>
-        <div id="home-header">
-            <button v-on:click="returnCallback">Back to App</button>
-            <button v-on:click="clickedMenuButton( tutorialURL )">{{ $t('message.home.tutorial') }}</button>
-            <button v-on:click="clickedMenuButton( settingURL )">{{ $t('message.home.settings') }}</button>
-        </div>
+  <div>
+
+    <div id="home-header">
+      <md-button class="md-icon-button closebtn" v-on:click="returnCallback">
+        <md-icon md-src="/static/icons/close-white.svg"></md-icon>
+      </md-button>
+
+      <md-button class="md-icon-button settingsbtn" v-on:click="clickedMenuButton( settingURL )">
+        <md-icon>*</md-icon>
+      </md-button>
+      <md-button class="md-icon-button tutorialbtn" v-on:click="clickedMenuButton( tutorialURL )">
+        <md-icon>?</md-icon>
+      </md-button>
     </div>
+  </div>
 </template>
 
 
@@ -37,9 +45,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.closebtn {
+  float: left;
+}
 
-/* .slide-left-enter {
-  vue
-} */
+.tutorialbtn, .settingsbtn {
+  float: right;
+}
 
+.md-icon {
+  color: white;
+
+}
 </style>

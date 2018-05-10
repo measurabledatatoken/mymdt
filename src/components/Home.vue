@@ -3,16 +3,19 @@
     <p>Total Balance</p>
     <h1>{{ totalMDTBalance }}</h1>
     <p>≈ {{ totalMDTValues }} USD</p>
+
+    <div class="accountnum">{{ $t('message.home.accountnum', userAccounts.length, {num: userAccounts.length}) }}</div>
     <div v-for="entry in userAccounts" :key="entry.emailAddress">
       <md-card md-with-hover>
         <md-card-content>
           <div> {{ entry.displayName }}</div>
           <div> {{ entry.emailAddress }}</div>
           <div> {{ entry.mdtBalance }}</div>
-          </md-card-content>
+        </md-card-content>
 
-        <md-card-actions md-alignment="center">
-            <md-button class="actionbtn" v-on:click="goToTransfer(entry)">Transfer</md-button>
+        <md-divider></md-divider>
+        <md-card-actions md-alignment="space-between">
+          <md-button v-on:click="goToTransfer(entry)">{{ $t('message.home.transferbtn') }}</md-button>
         </md-card-actions>
 
       </md-card>
@@ -66,7 +69,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 h1,
 h2 {
   font-weight: normal;
@@ -83,8 +86,34 @@ a {
   color: #42b983;
 }
 
+.accountnum {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 16px;
+  text-align: left;
+  color: white;
+}
+
+.md-card {
+  border-radius: 8px;
+  background-color: white;
+  margin: 8px;
+}
+
 .md-card-actions {
   justify-content: center;
+}
+
+.md-divider {
+  background-color: #eef3f8;
+  width: 80%;
+  margin-left: 10%;
+}
+
+.md-button {
+  color: $plainbtn-wordcolor;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 </style>
