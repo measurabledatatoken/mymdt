@@ -12,5 +12,8 @@
         "title": "Transfer Out",
         "ethtitle" : "Transfer to ETH Wallet",
         "emailtitle" : "Transfer to Email Address"
+    },
+    "earn" : {
+        "title": "Earn MDT"
     }
 }

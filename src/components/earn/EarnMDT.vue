@@ -6,7 +6,14 @@
 
 <script>
 export default {
-
+  metaInfo() {
+    return {
+      title: this.$t('message.earn.title'),
+    };
+  },
+  created() {
+    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
+  },
 };
 </script>
 
