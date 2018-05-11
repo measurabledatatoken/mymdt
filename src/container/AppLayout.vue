@@ -69,9 +69,8 @@ export default {
 <style lang="scss" scoped>
 @mixin animation-active () {
   will-change: transform;
-  transition: transform 500ms;
+  @include transition(transform 500ms);
   position: absolute;
-
 }
 
 .appcontainer {

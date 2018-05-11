@@ -14,3 +14,11 @@ $header-height: 4em;
   top: 50%;
   transform: translateY(-50%);
 }
+
+
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
