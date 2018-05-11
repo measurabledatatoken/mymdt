@@ -82,7 +82,7 @@ export default {
 .header-view {
   padding-bottom: 1em;
   width: 100%;
-  height: 3em;
+  height: 4em;
 }
 
 .content-router-view, .header-view {

@@ -1,10 +1,12 @@
 {
     "home" : {
+        "total_balance": "结余",
         "title": "MDT 钱包",
         "settings": "设定",
         "tutorial": "教学",
         "transferbtn": "转帐",
-        "accountnum": "{num} 个帐号"
+        "accountnum": "{num} 个帐号",
+        "earn_mdt": "赚取 MDT"
     },
     "transfer" : {
         "title" : "转帐",

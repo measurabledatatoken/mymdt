@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <g fill="none" fill-rule="evenodd" transform="translate(-2 -2)">
+        <circle cx="12" cy="12" r="9" fill="#FFF" stroke="#FFF"/>
+        <text fill="#0A224E" font-family="SanFranciscoText-Bold, San Francisco Text" font-size="14" font-weight="bold">
+            <tspan x="8.466" y="16.529">?</tspan>
+        </text>
+        <path d="M0 0h24v24H0z"/>
+    </g>
+</svg>

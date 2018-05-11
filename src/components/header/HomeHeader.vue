@@ -1,16 +1,16 @@
 <template>
   <div>
 
-    <div id="home-header">
+    <div class="home-header">
       <md-button class="md-icon-button closebtn" v-on:click="returnCallback">
         <md-icon md-src="/static/icons/close-white.svg"></md-icon>
       </md-button>
 
-      <md-button class="md-icon-button settingsbtn" v-on:click="clickedMenuButton( settingURL )">
-        <md-icon>*</md-icon>
+      <md-button :to="settingURL" class="md-icon-button settingsbtn">
+        <md-icon md-src="/static/icons/settings-white.svg"></md-icon>
       </md-button>
-      <md-button class="md-icon-button tutorialbtn" v-on:click="clickedMenuButton( tutorialURL )">
-        <md-icon>?</md-icon>
+      <md-button :to="tutorialURL" class="md-icon-button tutorialbtn">
+        <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
       </md-button>
     </div>
   </div>
@@ -33,9 +33,6 @@ export default {
     returnCallback() {
       window.location = ExitFromWalletWebviewURL;
     },
-    clickedMenuButton(url) {
-      this.$router.push(url);
-    },
   },
 };
 
@@ -45,6 +42,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.home-header {
+  margin-top: 1em;
+}
+
 .closebtn {
   float: left;
 }

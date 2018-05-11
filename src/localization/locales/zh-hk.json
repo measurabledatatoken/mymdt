@@ -1,10 +1,12 @@
 {
     "home" : {
+        "total_balance": "結餘",
         "title": "MDT 錢包",
         "settings": "設定",
         "tutorial": "教學",
         "transferbtn": "轉帳",
-        "accountnum": "{num} 個帳號"
+        "accountnum": "{num} 個帳號",
+        "earn_mdt": "賺取 MDT"
     },
     "transfer" : {
         "title" : "轉帳",

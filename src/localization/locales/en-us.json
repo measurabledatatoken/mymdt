@@ -1,10 +1,12 @@
 {
     "home" : {
+        "total_balance": "Total Balance",
         "title": "MDT Wallet",
         "settings": "Settings",
         "tutorial": "Tutorial",
         "transferbtn": "Transfer",
-        "accountnum": "{num} Account | {num} Accounts"
+        "accountnum": "{num} Account | {num} Accounts",
+        "earn_mdt": "Earn MDT"
     },
     "transfer" : {
         "title": "Transfer Out",

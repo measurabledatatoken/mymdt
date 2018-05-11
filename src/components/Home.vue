@@ -1,29 +1,23 @@
 <template>
   <div class="home">
-    <p>Total Balance</p>
-    <h1>{{ totalMDTBalance }}</h1>
-    <p>≈ {{ totalMDTValues }} USD</p>
+    <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
+    <div class="balance-count">{{ totalMDTBalance }} MDT</div>
 
-    <div class="accountnum">{{ $t('message.home.accountnum', userAccounts.length, {num: userAccounts.length}) }}</div>
-    <div v-for="entry in userAccounts" :key="entry.emailAddress">
-      <md-card md-with-hover>
-        <md-card-content>
-          <div> {{ entry.displayName }}</div>
-          <div> {{ entry.emailAddress }}</div>
-          <div> {{ entry.mdtBalance }}</div>
-        </md-card-content>
-
-        <md-divider></md-divider>
-        <md-card-actions md-alignment="space-between">
-          <md-button v-on:click="goToTransfer(entry)">{{ $t('message.home.transferbtn') }}</md-button>
-        </md-card-actions>
-
-      </md-card>
+    <div class="content">
+      <div class="balance-value">≈ {{ totalMDTValues.toFixed(2) }} USD</div>
+      <div class="accountnum">{{ $t('message.home.accountnum', userAccounts.length, {num: userAccounts.length}) }}</div>
     </div>
+
+    <div v-for="user in userAccounts" :key="user.emailAddress">
+      <UserCard v-bind:user="user"></UserCard>
+    </div>
+
+    <md-button :to="earnMDTUrl" class="earn-mdt md-raised md-primary">{{ $t('message.home.earn_mdt') }} </md-button>
   </div>
 </template>
 
 <script>
+import UserCard from '@/components/common/UserCard';
 import { mapGetters } from 'vuex';
 import { RouteDef } from '@/constants';
 
@@ -36,6 +30,7 @@ export default {
   },
   data() {
     return {
+      earnMDTUrl: `${RouteDef.EarnMDT}`,
       msg: 'Current MDT Price:',
     };
   },
@@ -54,6 +49,9 @@ export default {
     totalMDTValues() {
       return this.totalMDTBalance * this.mdtPrice;
     },
+  },
+  components: {
+    UserCard,
   },
   mounted() {
     this.$store.dispatch('getMDTPrice');
@@ -86,34 +84,55 @@ a {
   color: #42b983;
 }
 
+.content {
+  background-image: url("/static/background/sub-header-background.svg");
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  margin-top: -1em;
+  margin-bottom: -3em;
+}
+
+.balance-title {
+  font-size: 16px;
+  color: white;
+  line-height: 40px;
+}
+
+.balance-count {
+  font-size: 28px;
+  color: white;
+  line-height: 50px;
+  font-weight: bold;
+}
+
+.balance-value {
+  font-size: 16px;
+  color: white;
+  line-height: 70px;
+}
+
 .accountnum {
   font-size: 14px;
   font-weight: bold;
   margin-left: 16px;
+  padding-bottom: 3em;
   text-align: left;
   color: white;
 }
 
-.md-card {
+.md-button.earn-mdt{
+  width: 312px;
+  height: 48px;
+  position: absolute;
+  background-color: $bluebtn-backgroundcolor;
+  color: $bluebtn-wordcolor;
   border-radius: 8px;
-  background-color: white;
-  margin: 8px;
-}
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.25);
+  bottom: 1.5em;
+  font-size: 20px;
 
-.md-card-actions {
-  justify-content: center;
+  @include center_horizontal;
 }
-
-.md-divider {
-  background-color: #eef3f8;
-  width: 80%;
-  margin-left: 10%;
-}
-
-.md-button {
-  color: $plainbtn-wordcolor;
-  font-size: 16px;
-  font-weight: bold;
-}
-
 </style>

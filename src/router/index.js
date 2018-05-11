@@ -19,6 +19,8 @@ import TransferList from '@/components/transfer/TransferList';
 import TransferEmail from '@/components/transfer/TransferEmail';
 import TransferEthWallet from '@/components/transfer/TransferEthWallet';
 
+import EarnMDT from '@/components/earn/EarnMDT';
+
 Vue.use(Router);
 Vue.use(Meta);
 
@@ -75,6 +77,13 @@ export default new Router({
           path: RouteDef.TransferEthWallet,
           component: TransferEthWallet,
         },
+
+        // Earn MDT Route
+        {
+          path: RouteDef.EarnMDT,
+          component: EarnMDT,
+        },
+
         { // Route to Home page for route not defined
           path: '*', component: Home,
         },
