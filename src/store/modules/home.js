@@ -102,8 +102,7 @@ const actions = {
       )
       .catch(
         () => {
-          context.commit('setUserAccounts', []);
-          context.commit('setSelectedUser', null);
+
         },
       );
   },
