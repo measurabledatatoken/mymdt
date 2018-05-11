@@ -78,11 +78,9 @@ export default {
   perspective: 1000;
 }
 
-
 .header-view {
-  padding-bottom: 1em;
   width: 100%;
-  height: 4em;
+  height: $header-height;
 }
 
 .content-router-view, .header-view {
@@ -115,7 +113,7 @@ export default {
 .content-pop-in-enter-active,
 .content-pop-in-leave-active {
  @include animation-active;
-  Top: 4em;
+  Top: $header-height;
 }
 
 .content-pop-out-enter {

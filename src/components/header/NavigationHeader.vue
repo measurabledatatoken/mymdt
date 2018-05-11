@@ -1,8 +1,10 @@
 <template>
     <div>
-        <div id='navigation-bar'>
-          <button v-on:click="goBack">Back</button>
-          {{ title }}
+        <div class='navigation-bar'>
+          <md-button v-on:click="goBack">
+            <md-icon md-src="/static/icons/arrow-back-white.svg">
+            </md-icon></md-button>
+          <div class="title"><p>{{ title }}</p></div>
         </div>
     </div>
 </template>
@@ -25,6 +27,19 @@ export default {
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+
+.md-button {
+  position: absolute;
+  left: 0;
+  height: $header-height;
+}
+
+.title {
+  float: left;
+  color: white;
+  width: 100%;
+  font-size: 20px;
+}
 
 </style>

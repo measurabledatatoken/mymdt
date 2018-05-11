@@ -3,7 +3,15 @@ $plainbtn-wordcolor: #4187f7;
 $bluebtn-backgroundcolor: #4187f7;
 $bluebtn-wordcolor: #ffffff;
 
+
+$header-height: 4em;
 @mixin center_horizontal {
   left: 50%;
   transform: translateX(-50%);
 }
+
+@mixin center_vertical {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
