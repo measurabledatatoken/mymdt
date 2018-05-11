@@ -1,7 +1,7 @@
 <template>
 
     <div class="home-header">
-      <md-button class="md-icon-button closebtn" v-on:click="returnCallback">
+      <md-button v-if="needExit" class="md-icon-button closebtn" v-on:click="returnCallback">
         <md-icon md-src="/static/icons/close-white.svg"></md-icon>
       </md-button>
 
@@ -18,6 +18,7 @@
 
 <script>
 import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AppHeader',
@@ -27,6 +28,11 @@ export default {
       transactionHistoryURL: `${RouteDef.TransactionHistory}`,
       settingURL: `${RouteDef.Settings}`,
     };
+  },
+  computed: {
+    ...mapGetters({
+      needExit: 'needExit',
+    }),
   },
   methods: {
     returnCallback() {

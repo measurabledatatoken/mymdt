@@ -3,6 +3,7 @@ import api from './../../api';
 const state = {
   mdtPrice: 0,
   navigationTitle: '',
+  needExit: false,
   apiKey: '',
   selectedUser: {
     displayName: null,
@@ -21,6 +22,7 @@ const state = {
 const getters = {
   mdtPrice: state => state.mdtPrice,
   navigationTitle: state => state.navigationTitle,
+  needExit: state => state.needExit,
   selectedUser: state => state.selectedUser,
   userAccounts: state => state.userAccounts,
   locale: state => state.locale,
@@ -32,6 +34,9 @@ const mutations = {
   },
   setNavigationTitle(state, navigationTitle) {
     state.navigationTitle = navigationTitle;
+  },
+  setNeedExit(state, needExit) {
+    state.needExit = needExit;
   },
   setSelectedUser(state, selectedUser) {
     state.selectedUser = selectedUser;

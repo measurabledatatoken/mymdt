@@ -49,6 +49,9 @@ export default {
   created() {
     const apiKey = this.$route.query.apikey;
     const tokensStr = this.$route.query.tokens;
+    const needExit = this.$route.query.needexit;
+
+    this.$store.commit('setNeedExit', needExit);
 
     if (apiKey === undefined || tokensStr === undefined) {
       this.$router.push(RouteDef.Login);
