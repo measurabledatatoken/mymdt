@@ -1,12 +1,12 @@
 <template>
     <div class="appcontainer">
-        <div id='header'>
+        <div class='header'>
             <transition :name=" 'header-' + transitionName">
               <HomeHeader v-if="showHomeHeader" class="header-view"></HomeHeader>
               <NavigationHeader v-if="!showHomeHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
             </transition>
         </div>
-          <div id='content'>
+          <div class='content'>
             <transition :name="'content-' + transitionName">
               <router-view class="content-router-view"></router-view>
             </transition>
@@ -78,6 +78,10 @@ export default {
   perspective: 1000;
 }
 
+.appcontainer {
+  height: inherit;
+}
+
 .header-view {
   width: 100%;
   height: $header-height;
@@ -87,6 +91,9 @@ export default {
   width: 100%;
 }
 
+.content {
+  height: inherit;
+}
 
 .header-pop-out-enter-active,
 .header-pop-out-leave-active,

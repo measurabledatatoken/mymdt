@@ -84,10 +84,15 @@ a {
   color: #42b983;
 }
 
+.home {
+  background-color: $home-bgcolor;
+  bottom: 0;
+  height: inherit;
+}
+
 .content {
   background-image: url("/static/background/sub-header-background.svg");
   background-size: cover;
-  height: 100%;
   width: 100%;
   bottom: 0;
   margin-top: -1em;
@@ -122,7 +127,7 @@ a {
   color: white;
 }
 
-.md-button.earn-mdt{
+.md-button.earn-mdt {
   width: 312px;
   height: 48px;
   position: absolute;

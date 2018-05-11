@@ -1,5 +1,4 @@
 <template>
-  <div>
 
     <div class="home-header">
       <md-button class="md-icon-button closebtn" v-on:click="returnCallback">
@@ -13,7 +12,7 @@
         <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
       </md-button>
     </div>
-  </div>
+
 </template>
 
 
@@ -41,9 +40,10 @@ export default {
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .home-header {
-  margin-top: 1em;
+  padding-top: 1em;
+  background-color: $home-bgcolor;
 }
 
 .closebtn {

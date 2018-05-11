@@ -1,8 +1,8 @@
-$app-bgcolor: #0a224e;
+$app-bgcolor: white;
+$home-bgcolor:#0a224e;
 $plainbtn-wordcolor: #4187f7;
 $bluebtn-backgroundcolor: #4187f7;
-$bluebtn-wordcolor: #ffffff;
-
+$bluebtn-wordcolor: white;
 
 $header-height: 4em;
 @mixin center_horizontal {
@@ -11,7 +11,6 @@ $header-height: 4em;
 }
 
 @mixin center_vertical {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
+  top: 50%;
+  transform: translateY(-50%);
+}
