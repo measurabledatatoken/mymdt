@@ -1,17 +1,17 @@
 <template>
-    <div class="appcontainer">
-        <div class='header'>
-            <transition :name=" 'header-' + transitionName">
-              <HomeHeader v-if="showHomeHeader" class="header-view"></HomeHeader>
-              <NavigationHeader v-if="!showHomeHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
-            </transition>
-        </div>
-          <div class='content'>
-            <transition :name="'content-' + transitionName">
-              <router-view class="content-router-view"></router-view>
-            </transition>
-          </div>
+  <div class="appcontainer">
+    <div class='header'>
+      <transition :name=" 'header-' + transitionName">
+        <HomeHeader v-if="showHomeHeader" class="header-view"></HomeHeader>
+        <NavigationHeader v-if="!showHomeHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
+      </transition>
     </div>
+    <div class='content'>
+      <transition :name="'content-' + transitionName">
+        <router-view class="content-router-view"></router-view>
+      </transition>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -67,15 +67,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-@mixin animation-active (){
+@mixin animation-active () {
   will-change: transform;
-  transition: all 500ms;
-  height: 100%;
+  transition: transform 500ms;
   position: absolute;
-  backface-visibility: hidden;
-  perspective: 1000;
+
 }
 
 .appcontainer {
@@ -87,7 +83,8 @@ export default {
   height: $header-height;
 }
 
-.content-router-view, .header-view {
+.content-router-view,
+.header-view {
   width: 100%;
 }
 
@@ -119,7 +116,7 @@ export default {
 .content-pop-out-leave-active,
 .content-pop-in-enter-active,
 .content-pop-in-leave-active {
- @include animation-active;
+  @include animation-active;
   Top: $header-height;
 }
 
