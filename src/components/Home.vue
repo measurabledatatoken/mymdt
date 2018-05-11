@@ -9,7 +9,7 @@
     </div>
 
     <div v-for="user in userAccounts" :key="user.emailAddress">
-      <UserCard v-bind:user="user"></UserCard>
+      <UserCard v-on:transfer="goToTransfer(user)" v-bind:user="user"></UserCard>
     </div>
 
     <md-button :to="earnMDTUrl" class="earn-mdt md-raised md-primary">{{ $t('message.home.earn_mdt') }} </md-button>

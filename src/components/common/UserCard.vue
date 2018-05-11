@@ -14,7 +14,7 @@
 
         <md-divider></md-divider>
         <md-card-actions md-alignment="space-between">
-            <md-button v-on:click="goToTransfer(user)">{{ $t('message.home.transferbtn') }}</md-button>
+            <md-button v-on:click="$emit('transfer')">{{ $t('message.home.transferbtn') }}</md-button>
         </md-card-actions>
 
     </md-card>
