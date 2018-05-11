@@ -1,16 +1,14 @@
 <template>
     <md-card md-with-hover>
-        <md-card-header>
-            <md-avatar class="md-avatar-icon">
+        <div v-on:click="$emit('goToAccountDetail')" class="md-card-header">
+            <div class="md-avatar md-avatar-icon">
                 <p class="md-ripple avatar">NT</p>
-            </md-avatar>
+            </div>
             <div class="md-title"> {{ user.displayName }}</div>
             <div class="md-subtitle"> {{ user.emailAddress }}</div>
-        </md-card-header>
 
-        <md-card-content>
             <div class="mdt-count"> {{ user.mdtBalance.toFixed(4) }} MDT</div>
-        </md-card-content>
+        </div>
 
         <md-divider></md-divider>
         <md-card-actions md-alignment="space-between">
@@ -23,6 +21,8 @@
 <script>
 export default {
   props: ['user'],
+  methods: {
+  },
 };
 </script>
 
@@ -46,17 +46,13 @@ export default {
 }
 
 .md-card-header {
-    height: 5em;
+    height: 8em;
 }
 
 .md-title, .md-subtitle {
     float: left;
     color: #4a4a4a;
     font-size: 1em;
-}
-
-.md-card-content {
-    height: 3em;
 }
 
 .md-card-actions {
@@ -75,6 +71,7 @@ export default {
   color: #4a4a4a;
   font-size: 20px;
   font-weight: bold;
+  margin-top: 28px;
   line-height: 40px;
 }
 

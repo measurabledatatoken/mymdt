@@ -44,6 +44,7 @@ const RouteDef = {
   TransferEthWallet: '/home/transfer/ethwallet',
 
   EarnMDT: '/home/earn',
+  AccountDetail: '/home/accountdetail',
 };
 
 

@@ -9,7 +9,8 @@
     </div>
 
     <div v-for="user in userAccounts" :key="user.emailAddress">
-      <UserCard v-on:transfer="goToTransfer(user)" v-bind:user="user"></UserCard>
+      <UserCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
+      </UserCard>
     </div>
 
     <md-button :to="earnMDTUrl" class="earn-mdt md-raised md-primary">{{ $t('message.home.earn_mdt') }} </md-button>
@@ -61,6 +62,10 @@ export default {
     goToTransfer(user) {
       this.$store.commit('setSelectedUserAccountForEmail', user.emailAddress);
       this.$router.push(RouteDef.TransferList);
+    },
+    goToAccountDetail(user) {
+      this.$store.commit('setSelectedUserAccountForEmail', user.emailAddress);
+      this.$router.push(RouteDef.AccountDetail);
     },
   },
 };
@@ -130,7 +135,7 @@ a {
 .md-button.earn-mdt {
   width: 312px;
   height: 48px;
-  position: absolute;
+  position: fixed;
   background-color: $bluebtn-backgroundcolor;
   color: $bluebtn-wordcolor;
   border-radius: 8px;

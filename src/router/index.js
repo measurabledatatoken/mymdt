@@ -15,6 +15,8 @@ import Settings from '@/components/Settings';
 import TransactionHistory from '@/components/TransactionHistory';
 import Tutorial from '@/components/Tutorial';
 
+import AccountDetail from '@/components/AccountDetail';
+
 import TransferList from '@/components/transfer/TransferList';
 import TransferEmail from '@/components/transfer/TransferEmail';
 import TransferEthWallet from '@/components/transfer/TransferEthWallet';
@@ -63,6 +65,13 @@ export default new Router({
           path: RouteDef.TransactionHistory,
           component: TransactionHistory,
         },
+
+
+        {
+          path: RouteDef.AccountDetail,
+          component: AccountDetail,
+        },
+
 
         // Transfer Route
         {
