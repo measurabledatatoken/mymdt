@@ -1,9 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
     <g fill="none" fill-rule="evenodd" transform="translate(-2 -2)">
         <circle cx="12" cy="12" r="9" fill="#FFF" stroke="#FFF"/>
-        <text fill="#0A224E" font-family="SanFranciscoText-Bold, San Francisco Text" font-size="14" font-weight="bold">
-            <tspan x="8.466" y="16.529">?</tspan>
-        </text>
+        <path fill="#0A224E" d="M10.571 15.58c0-.664.5-1.101 1.244-1.101.766 0 1.265.437 1.265 1.1 0 .65-.492 1.087-1.265 1.087-.745 0-1.244-.437-1.244-1.087zm-1.66-5.75c-.07-2.03 1.544-2.81 3.13-2.81 1.634 0 3.056.828 3.056 2.53 0 1.203-.704 1.736-1.368 2.194-.8.56-1.107.773-1.107 1.518v.342H10.9l-.013-.363c-.075-1.039.417-1.715 1.203-2.242.642-.43 1.053-.724 1.053-1.347 0-.745-.588-1.06-1.21-1.06-.82 0-1.245.54-1.251 1.238H8.91z"/>
         <path d="M0 0h24v24H0z"/>
     </g>
 </svg>
