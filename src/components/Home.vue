@@ -133,7 +133,8 @@ a {
 }
 
 .md-button.earn-mdt {
-  width: 312px;
+  width: 86%;
+  margin: 0px;
   height: 48px;
   position: fixed;
   background-color: $bluebtn-backgroundcolor;
@@ -142,6 +143,7 @@ a {
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.25);
   bottom: 1.5em;
   font-size: 20px;
+  z-index: 1;
 
   @include center_horizontal;
 }
