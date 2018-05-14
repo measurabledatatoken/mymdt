@@ -50,8 +50,12 @@ const RouteDef = {
 
 const ExitFromWalletWebviewURL = 'mdtwallet://exit';
 
+// in px, please also change $header-height in scss
+const HeaderHeight = 64;
+
 export {
   ErrorCode,
   RouteDef,
   ExitFromWalletWebviewURL,
+  HeaderHeight,
 };

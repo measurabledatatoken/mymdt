@@ -4,7 +4,7 @@ $plainbtn-wordcolor: #4187f7;
 $bluebtn-backgroundcolor: #4187f7;
 $bluebtn-wordcolor: white;
 
-$header-height: 4em;
+$header-height: 64px;
 @mixin center_horizontal {
   left: 50%;
   transform: translateX(-50%);

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-bind:style=" {'min-height': pageHeight }">
     <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
     <div class="balance-count">{{ totalMDTBalance }} MDT</div>
 
@@ -20,7 +20,7 @@
 <script>
 import UserCard from '@/components/common/UserCard';
 import { mapGetters } from 'vuex';
-import { RouteDef } from '@/constants';
+import { RouteDef, HeaderHeight } from '@/constants';
 
 export default {
   name: 'Home',
@@ -33,6 +33,7 @@ export default {
     return {
       earnMDTUrl: `${RouteDef.EarnMDT}`,
       msg: 'Current MDT Price:',
+      pageHeight: '0px',
     };
   },
   computed: {
@@ -57,6 +58,9 @@ export default {
   mounted() {
     this.$store.dispatch('getMDTPrice');
     this.$store.dispatch('getUserAccounts');
+
+    this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
+    console.log(`this.pageHeight${this.pageHeight}`);
   },
   methods: {
     goToTransfer(user) {
@@ -135,14 +139,14 @@ a {
   width: 86%;
   margin: 0px;
   height: 48px;
-  position: absolute;
+  position: fixed;
   background-color: $bluebtn-backgroundcolor;
   color: $bluebtn-wordcolor;
   border-radius: 8px;
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.25);
   bottom: 1.5em;
   font-size: 20px;
-  z-index: 1;
+  z-index: 9;
 
   @include center_horizontal;
 }
