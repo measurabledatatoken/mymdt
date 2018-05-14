@@ -3,7 +3,7 @@
     <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
     <div class="balance-count">{{ totalMDTBalance }} MDT</div>
 
-    <div class="content">
+    <div class="account-content">
       <div class="balance-value">≈ {{ totalMDTValues.toFixed(2) }} USD</div>
       <div class="accountnum">{{ $t('message.home.accountnum', userAccounts.length, {num: userAccounts.length}) }}</div>
     </div>
@@ -92,10 +92,10 @@ a {
 .home {
   background-color: $home-bgcolor;
   bottom: 0;
-  height: inherit;
+  height: 100%;
 }
 
-.content {
+.account-content {
   background-image: url("/static/background/sub-header-background.svg");
   background-size: cover;
   width: 100%;

@@ -82,13 +82,17 @@ export default {
   height: $header-height;
 }
 
-.content-router-view,
+.content-router-view {
+  width: 100%;
+  height: 100%;
+}
+
 .header-view {
   width: 100%;
 }
 
 .content {
-  height: inherit;
+  height: calc(100% - #{$header-height});
 }
 
 .header-pop-out-enter-active,
