@@ -81,7 +81,9 @@ export default {
   position: sticky;
   top: 0;
   z-index: 3;
+  height: $header-height;
 }
+
 .header-view {
   z-index: 1;
   width: 100%;
@@ -91,6 +93,7 @@ export default {
 .content-router-view {
   width: 100%;
   flex: 1;
+  bottom: 0;
 }
 
 .header-view {
