@@ -135,7 +135,7 @@ a {
   width: 86%;
   margin: 0px;
   height: 48px;
-  position: fixed;
+  position: absolute;
   background-color: $bluebtn-backgroundcolor;
   color: $bluebtn-wordcolor;
   border-radius: 8px;

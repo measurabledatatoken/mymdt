@@ -92,8 +92,8 @@ export default {
 
 .content-router-view {
   width: 100%;
-  flex: 1;
   bottom: 0;
+  min-height: calc(100% - #{$header-height});
 }
 
 .header-view {
@@ -102,7 +102,6 @@ export default {
 
 .content {
   min-height: calc(100% - #{$header-height});
-  display: flex;
 }
 
 .header-pop-out-enter-active,
