@@ -77,6 +77,11 @@ export default {
   height: inherit;
 }
 
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
 .header-view {
   width: 100%;
   height: $header-height;
