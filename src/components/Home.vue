@@ -91,6 +91,7 @@ a {
 
 .home {
   background-color: $home-bgcolor;
+  padding-bottom: 6em;
 }
 
 .account-content {
