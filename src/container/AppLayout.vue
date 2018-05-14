@@ -83,13 +83,14 @@ export default {
   z-index: 3;
 }
 .header-view {
+  z-index: 1;
   width: 100%;
   height: $header-height;
 }
 
 .content-router-view {
   width: 100%;
-  height: 100%;
+  flex: 1;
 }
 
 .header-view {
@@ -97,7 +98,8 @@ export default {
 }
 
 .content {
-  height: calc(100% - #{$header-height});
+  min-height: calc(100% - #{$header-height});
+  display: flex;
 }
 
 .header-pop-out-enter-active,
