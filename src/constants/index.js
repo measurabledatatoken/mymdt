@@ -42,6 +42,8 @@ const RouteDef = {
   TransferList: '/home/transfer',
   TransferEmail: '/home/transfer/email',
   TransferEthWallet: '/home/transfer/ethwallet',
+  TransferEthWalletReview: '/home/transfer/ethwallet/review',
+  TransferEmailReview: '/home/transfer/ethwallet/review',
 
   EarnMDT: '/home/earn',
   AccountDetail: '/home/accountdetail',

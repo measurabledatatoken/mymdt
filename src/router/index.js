@@ -20,6 +20,7 @@ import AccountDetail from '@/components/AccountDetail';
 import TransferList from '@/components/transfer/TransferList';
 import TransferEmail from '@/components/transfer/TransferEmail';
 import TransferEthWallet from '@/components/transfer/TransferEthWallet';
+import TransferReview from '@/components/transfer/TransferReview';
 
 import EarnMDT from '@/components/earn/EarnMDT';
 
@@ -87,6 +88,11 @@ const router = new Router({
           path: RouteDef.TransferEthWallet,
           component: TransferEthWallet,
         },
+        {
+          path: RouteDef.TransferEthWalletReview,
+          component: TransferReview,
+        },
+
 
         // Earn MDT Route
         {

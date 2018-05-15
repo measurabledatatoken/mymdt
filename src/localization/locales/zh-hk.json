@@ -11,7 +11,8 @@
     "transfer" : {
         "title" : "轉帳",
         "ethtitle" : "轉帳至以太錢包",
-        "emailtitle" : "轉帳至電郵地址"
+        "emailtitle" : "轉帳至電郵地址",
+        "nextbtn": "下一步"
     },
     "earn" : {
         "title": "賺取 MDT"

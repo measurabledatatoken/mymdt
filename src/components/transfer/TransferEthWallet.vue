@@ -1,12 +1,23 @@
 <template>
-  <div>Transfer EthWallet</div>
+  <div>
+    <h1>Transfer EthWallet</h1>
+    <md-button :to="transferEthReviewUrl" class="next md-raised md-primary">{{ $t('message.transfer.nextbtn') }} </md-button>
+  </div>
+
 </template>
 
 <script>
+import { RouteDef } from '@/constants';
+
 export default {
   metaInfo() {
     return {
       title: this.$t('message.transfer.ethtitle'),
+    };
+  },
+  data() {
+    return {
+      transferEthReviewUrl: RouteDef.TransferEthWalletReview,
     };
   },
   created() {
