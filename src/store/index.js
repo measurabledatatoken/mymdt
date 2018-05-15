@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate';
 import home from './modules/home';
 import forgetPassword from './modules/forgetpassword';
 import login from './modules/login';
+import transfer from './modules/transfer';
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     home,
     forgetPassword,
     login,
+    transfer,
   },
   strict: debug,
   plugins: debug ? [createLogger(), createPersistedState()] : [],

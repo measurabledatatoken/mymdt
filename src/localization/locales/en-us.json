@@ -12,6 +12,9 @@
         "title": "Transfer Out",
         "ethtitle" : "Transfer to ETH Wallet",
         "emailtitle" : "Transfer to Email Address",
+        "amountlbl": "Amount",
+        "fromlbl": "From",
+        "tolbl": "To",
         "nextbtn": "Next"
     },
     "earn" : {

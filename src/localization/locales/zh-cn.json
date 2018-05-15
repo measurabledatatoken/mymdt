@@ -12,6 +12,9 @@
         "title" : "转帐",
         "ethtitle" : "转帐至以太钱包",
         "emailtitle" : "转帐至电邮地址",
+        "fromlbl": "由",
+        "tolbl": "至",
+        "amountlbl": "数量",
         "nextbtn": "下一步"
     },
     "earn" : {
