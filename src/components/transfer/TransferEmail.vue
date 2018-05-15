@@ -1,8 +1,10 @@
 <template>
   <div>
     <h1>Transfer Email</h1>
-    <md-button :to="transferEmailReviewUrl" class="next md-raised md-primary">{{ $t('message.transfer.nextbtn') }} </md-button>
-    </div>
+    <md-button :to="transferEmailReviewUrl" class="next md-raised md-primary">
+      {{ $t('message.transfer.nextbtn') }}
+    </md-button>
+  </div>
 </template>
 
 <script>
@@ -25,6 +27,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.md-button.next {
+  @include primaryButtonStyle;
+  @include center_horizontal;
+}
 </style>

@@ -90,18 +90,15 @@ export default {
   height: $header-height;
 }
 
+.content {
+  min-height: calc(100% - #{$header-height});
+  display: flex;
+}
+
 .content-router-view {
   width: 100%;
   bottom: 0;
-  min-height: calc(100% - #{$header-height});
-}
-
-.header-view {
-  width: 100%;
-}
-
-.content {
-  min-height: calc(100% - #{$header-height});
+  flex:1;
 }
 
 .header-pop-out-enter-active,
