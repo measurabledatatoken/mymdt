@@ -29,13 +29,23 @@
             </div>
           </div>
           <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
-            <md-icon md-src="/static/icons/done.svg"></md-icon>
+            <md-icon class="done" md-src="/static/icons/done.svg"></md-icon>
           </div>
 
+        </md-menu-item>
+
+        <md-menu-item class="other" v-if="enableOther" @click="selectOther()">
+          <md-divider></md-divider>
+          <div> {{ $t('message.transfer.other_emailaddress') }} </div>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
 
+
+    <md-field md-variant="bottom-line" v-if="selectedOther" md-dense md-inline>
+      <label>Inline</label>
+      <md-input></md-input>
+    </md-field>
   </div>
 
 </template>
@@ -48,9 +58,10 @@ export default {
       isMenuOpened: false,
       accountInfoPaddingLeft: 0,
       accountButtonStyle: '',
+      selectedOther: false,
     };
   },
-  props: ['label', 'accounts', 'selectedAccount', 'enableOtherEmail'],
+  props: ['label', 'accounts', 'selectedAccount', 'enableOther'],
   computed: {
     selectedAccountEmail() {
       if (!this.selectedAccount) {
@@ -79,6 +90,9 @@ export default {
     selectAccount(account) {
       this.$emit('accountSelected', account);
     },
+    selectOther() {
+      this.selectedOther = true;
+    },
     menuOpened() {
       this.isMenuOpened = true;
       this.accountInfoPaddingLeft = 16;
@@ -94,12 +108,49 @@ export default {
 </script>
 
 
+<style lang="scss">
+
+$mdtAmountColor: #9b9b9b;
+$selectedEmailColor: #4187f7;
+$menuItemCellHeight: 56px;
+
+.account-selector .md-ripple,
+.account-selector .md-button-content {
+  width: 100%;
+}
+
+.account-selector .md-ripple {
+  padding: 0px;
+}
+
+.account-selector-menu-content .md-menu-content-container .md-list {
+  padding: 0px;
+}
+
+.account-selector .md-button {
+  height: $menuItemCellHeight;
+}
+
+.md-icon.md-theme-default.md-icon-image svg{
+  fill: $selectedEmailColor;
+}
+
+.md-list.md-theme-default {
+  background-color: #f4f6f8;
+  border-radius: 0px 0px 4px 4px !important;
+}
+
+</style>
+
+
 <style lang="scss" scoped>
 $mdtAmountColor: #9b9b9b;
 $selectedEmailColor: #4187f7;
+$menuItemCellHeight: 56px;
+
 .account-selector {
   height: 80px;
-  margin: 20px 0px;
+  margin: 16px 0px;
 }
 
 .label {
@@ -159,8 +210,7 @@ $selectedEmailColor: #4187f7;
 }
 
 .md-menu-content {
-  background-color: #f4f6f8;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px 4px 4px !important;
   width: 100%;
   left: 0;
   max-height: 45vh;
@@ -169,15 +219,20 @@ $selectedEmailColor: #4187f7;
 
 .md-divider {
   position: absolute;
-  background-color: $divider-color;
+  background-color: transparent;
   border: solid 1px #eeeeee;
   width: 96%;
-  top: 0;
+  top: -1px;
   left: 2%;
 }
 
 //Menu Item Style
 .md-menu-item {
+  height: $menuItemCellHeight;
+  &.other {
+    height: 48px;
+  }
+
   .account-balance {
     font-size: 14px;
     color: $mdtAmountColor;
@@ -187,16 +242,15 @@ $selectedEmailColor: #4187f7;
     color: #4a4a4a;
 
     &.selected {
-      color: $selectedEmailColor;
+      color: $selectedEmailColor !important;
     }
   }
 }
 
 
-.md-icon {
+.closed, .opened, .done {
   float: right;
   height: 52px;
-  fill: $selectedEmailColor;
 }
 
 .icon-container {
@@ -204,22 +258,3 @@ $selectedEmailColor: #4187f7;
 }
 </style>
 
-
-<style lang="scss">
-.account-selector .md-ripple,
-.account-selector .md-button-content {
-  width: 100%;
-}
-
-.account-selector .md-ripple {
-  padding: 0px;
-}
-
-.account-selector-menu-content .md-menu-content-container .md-list {
-  padding: 0px;
-}
-
-.account-selector .md-button {
-  height: 60px;
-}
-</style>

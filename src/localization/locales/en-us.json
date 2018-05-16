@@ -17,7 +17,8 @@
         "tolbl": "To",
         "nextbtn": "Next",
         "select_account_placeholder": "Please Select Account",
-        "other_emailaddress": "Other email address..."
+        "other_emailaddress": "Other email address...",
+        "enter_emailaddress": "Enter email address"
     },
     "earn" : {
         "title": "Earn MDT"

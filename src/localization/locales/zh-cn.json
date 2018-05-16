@@ -17,7 +17,8 @@
         "amountlbl": "数量",
         "nextbtn": "下一步",
         "select_account_placeholder": "请选择帐号",
-        "other_emailaddress": "其他电邮地址..."
+        "other_emailaddress": "其他电邮地址...",
+        "enter_emailaddress": "输人电邮地址"
     },
     "earn" : {
         "title": "赚取 MDT"

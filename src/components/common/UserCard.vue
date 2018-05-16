@@ -76,7 +76,7 @@ export default {
 }
 
 .md-button {
-  color: $plainbtn-wordcolor;
+  color: $plainbtn-wordcolor !important;
   font-size: 16px;
   font-weight: bold;
 }
