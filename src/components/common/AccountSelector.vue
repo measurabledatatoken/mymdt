@@ -3,7 +3,8 @@
     <div class="label">{{ label }}</div>
 
     <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
-      <md-button class="trigger" :md-ripple="false" v-bind:style="accountButtonStyle" md-menu-trigger>
+      <!-- Button -->
+      <md-button class="open-menu-button" :md-ripple="false" v-bind:style="accountButtonStyle" md-menu-trigger>
         <div class="account-info" v-bind:style="{ 'padding-left': accountInfoPaddingLeft + 'px' }">
           <div class="account-email">
             {{ selectedAccountEmail }}
@@ -13,10 +14,13 @@
           </div>
           <div v-if="!selectedAccount" class="placeholder"> {{ $t('message.transfer.select_account_placeholder') }} </div>
         </div>
-        <md-icon v-if="!isMenuOpened" class="closed" md-src="/static/icons/keyboard_arrow_down.svg"></md-icon>
-        <md-icon v-if="isMenuOpened" class="opened" md-src="/static/icons/keyboard_arrow_up.svg"></md-icon>
+        <md-icon v-if="!isMenuOpened" v-bind:class="{ 'other': selectedOther }" class="closed" md-src="/static/icons/keyboard_arrow_down.svg">
+        </md-icon>
+        <md-icon v-if="isMenuOpened" v-bind:class="{ 'other': selectedOther }" class="opened" md-src="/static/icons/keyboard_arrow_up.svg">
+        </md-icon>
       </md-button>
 
+      <!-- Content -->
       <md-menu-content class="account-selector-menu-content">
         <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
           <md-divider></md-divider>
@@ -34,6 +38,7 @@
 
         </md-menu-item>
 
+        <!-- Other email address. Only show if the props  enableOther is true-->
         <md-menu-item class="other" v-if="enableOther" @click="selectOther()">
           <md-divider></md-divider>
           <div> {{ $t('message.transfer.other_emailaddress') }} </div>
@@ -41,10 +46,10 @@
       </md-menu-content>
     </md-menu>
 
-
-    <md-field md-variant="bottom-line" v-if="selectedOther" md-dense md-inline>
-      <label>Inline</label>
-      <md-input></md-input>
+    <!-- Input field for user after pressed other email -->
+    <md-field class="other-email" v-if="selectedOther" md-dense md-inline md-clearable>
+      <label>{{ $t('message.transfer.enter_emailaddress') }}</label>
+      <md-input v-model="otherEmailAddress"></md-input>
     </md-field>
   </div>
 
@@ -63,15 +68,28 @@ export default {
   },
   props: ['label', 'accounts', 'selectedAccount', 'enableOther'],
   computed: {
+    otherEmailAddress: {
+      set(value) {
+        this.$emit('accountSelected', { emailAddress: value, mdtBalance: 0 });
+      },
+    },
     selectedAccountEmail() {
       if (!this.selectedAccount) {
         return '';
+      }
+
+      if (this.selectedOther) {
+        return this.$t('message.transfer.other_emailaddress');
       }
       const emailAddress = this.selectedAccount.emailAddress;
       return emailAddress;
     },
     selectedAccountBalance() {
       if (!this.selectedAccount) {
+        return '';
+      }
+
+      if (this.selectedOther) {
         return '';
       }
       const balance = this.selectedAccount.mdtBalance;
@@ -89,6 +107,7 @@ export default {
   methods: {
     selectAccount(account) {
       this.$emit('accountSelected', account);
+      this.selectedOther = false;
     },
     selectOther() {
       this.selectedOther = true;
@@ -109,10 +128,8 @@ export default {
 
 
 <style lang="scss">
-
 $mdtAmountColor: #9b9b9b;
 $selectedEmailColor: #4187f7;
-$menuItemCellHeight: 56px;
 
 .account-selector .md-ripple,
 .account-selector .md-button-content {
@@ -127,11 +144,11 @@ $menuItemCellHeight: 56px;
   padding: 0px;
 }
 
-.account-selector .md-button {
-  height: $menuItemCellHeight;
+.account-selector .open-menu-button {
+  height: 100%;
 }
 
-.md-icon.md-theme-default.md-icon-image svg{
+.md-icon.md-theme-default.md-icon-image svg {
   fill: $selectedEmailColor;
 }
 
@@ -139,7 +156,6 @@ $menuItemCellHeight: 56px;
   background-color: #f4f6f8;
   border-radius: 0px 0px 4px 4px !important;
 }
-
 </style>
 
 
@@ -147,6 +163,7 @@ $menuItemCellHeight: 56px;
 $mdtAmountColor: #9b9b9b;
 $selectedEmailColor: #4187f7;
 $menuItemCellHeight: 56px;
+$marginLeftRight: 16px;
 
 .account-selector {
   height: 80px;
@@ -155,12 +172,12 @@ $menuItemCellHeight: 56px;
 
 .label {
   text-align: left;
-  margin: 8px 16px 0px 16px;
+  margin: 8px $marginLeftRight 0px $marginLeftRight;
 }
 
 .md-menu {
-  width: calc(100% - 32px);
-  margin: 0px 16px;
+  width: calc(100% - 2 *#{$marginLeftRight});
+  margin: 0px $marginLeftRight;
 
   .md-button {
     width: 100%;
@@ -176,13 +193,18 @@ $menuItemCellHeight: 56px;
 
   .md-button .md-icon {
     width: 16%;
-    transform: scale(0.6);
+    height: 26px;
+    margin-top: 13px;
+  }
+
+  .md-button .md-icon.other {
+    margin-top: 0px;
   }
 }
 
 .account-info {
   width: 70%;
-  height: 52px;
+  height: 100%;
   float: left;
 
   .account-email {
@@ -197,7 +219,7 @@ $menuItemCellHeight: 56px;
 
   .placeholder {
     color: $mdtAmountColor;
-    line-height: 52px;
+    line-height: 100%;
     font-size: 16px;
     text-align: left;
   }
@@ -247,14 +269,24 @@ $menuItemCellHeight: 56px;
   }
 }
 
-
-.closed, .opened, .done {
+.closed,
+.opened,
+.done {
   float: right;
-  height: 52px;
+  height: 100%;
 }
 
 .icon-container {
   flex: 1;
+}
+
+.other-email {
+  margin: -20px $marginLeftRight;
+  width: calc(100% - 2 * #{$marginLeftRight});
+
+  .md-button {
+    right: 12px;
+  }
 }
 </style>
 
