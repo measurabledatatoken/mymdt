@@ -181,7 +181,6 @@ $marginLeftRight: 16px;
 
   .md-button {
     width: 100%;
-    margin-right: 24px;
   }
 
   .md-button:not([disabled]).md-focused:before,
