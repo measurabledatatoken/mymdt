@@ -16,7 +16,8 @@
         "fromlbl": "From",
         "tolbl": "To",
         "nextbtn": "Next",
-        "select_account_placeholder": "Please Select Account"
+        "select_account_placeholder": "Please Select Account",
+        "other_emailaddress": "Other email address..."
     },
     "earn" : {
         "title": "Earn MDT"

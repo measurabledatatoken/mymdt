@@ -6,7 +6,7 @@
       :selectedAccount="transferFromAccount">
     </AccountSelector>
     <AccountSelector v-on:accountSelected="selectedToAccount" :label="$t('message.transfer.tolbl')" :accounts="toAccounts"
-    :selectedAccount="transferToAccount">
+    :selectedAccount="transferToAccount" :enableOther="true">
     </AccountSelector>
 
     <md-button :to="transferEthReviewUrl" class="next md-raised md-primary">
@@ -68,6 +68,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
 .md-button.next {
   @include primaryButtonStyle;
   @include center_horizontal;

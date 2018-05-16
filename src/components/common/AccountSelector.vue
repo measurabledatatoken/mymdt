@@ -21,10 +21,10 @@
         <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
           <md-divider></md-divider>
           <div>
-            <div class="email" v-bind:class="{ 'selected' : account.emailAddress === selectedAccountEmail }">
+            <div class="account-email" v-bind:class="{ 'selected' : account.emailAddress === selectedAccountEmail }">
               {{ account.emailAddress }}
             </div>
-            <div class="mdtamount">
+            <div class="account-balance">
               {{ `${$t('message.transfer.amountlbl')}: ${parseFloat(account.mdtBalance).toFixed(4)}` }} MDT
             </div>
           </div>
@@ -97,71 +97,65 @@ export default {
 <style lang="scss" scoped>
 $mdtAmountColor: #9b9b9b;
 $selectedEmailColor: #4187f7;
-.label {
-  text-align: left;
-  margin: 8px 16px 0px 16px;
-}
-
 .account-selector {
   height: 80px;
   margin: 20px 0px;
 }
 
+.label {
+  text-align: left;
+  margin: 8px 16px 0px 16px;
+}
+
 .md-menu {
   width: calc(100% - 32px);
   margin: 0px 16px;
+
+  .md-button {
+    width: 100%;
+    margin-right: 24px;
+  }
+
+  .md-button:not([disabled]).md-focused:before,
+  .md-button:not([disabled]):active:before,
+  .md-button:not([disabled]):hover:before {
+    background-color: white;
+    opacity: 1;
+  }
+
+  .md-button .md-icon {
+    width: 16%;
+    transform: scale(0.6);
+  }
 }
 
 .account-info {
   width: 70%;
   height: 52px;
   float: left;
-}
 
-.md-button {
-  width: 100%;
-  margin-right: 24px;
-}
+  .account-email {
+    color: $selectedEmailColor;
+    text-transform: none;
+    font-size: 16px;
+  }
 
-.md-button:not([disabled]).md-focused:before,
-.md-button:not([disabled]):active:before,
-.md-button:not([disabled]):hover:before {
-  background-color: white;
-  opacity: 1;
-}
+  .account-balance {
+    color: $mdtAmountColor;
+  }
 
-.trigger .md-icon {
-  width: 16%;
-  transform: scale(0.6);
-}
+  .placeholder {
+    color: $mdtAmountColor;
+    line-height: 52px;
+    font-size: 16px;
+    text-align: left;
+  }
 
-.md-icon {
-  float: right;
-  height: 52px;
-  fill: $selectedEmailColor;
-}
-
-.account-email {
-  color: $selectedEmailColor;
-  text-transform: none;
-  font-size: 16px;
-}
-
-.account-balance {
-  color: $mdtAmountColor;
-}
-
-.placeholder {
-  color: $mdtAmountColor;
-  line-height: 52px;
-  font-size: 16px;
-  text-align: left;
-}
-
-.account-email,
-.account-balance {
-  text-align: left;
-  margin: 4px 0px;
+  .account-email,
+  .account-balance {
+    text-align: left;
+    margin: 4px 0px;
+  }
 }
 
 .md-menu-content {
@@ -169,6 +163,8 @@ $selectedEmailColor: #4187f7;
   border-radius: 0px 0px 4px 4px;
   width: 100%;
   left: 0;
+  max-height: 45vh;
+  z-index: 9;
 }
 
 .md-divider {
@@ -182,22 +178,29 @@ $selectedEmailColor: #4187f7;
 
 //Menu Item Style
 .md-menu-item {
-  .mdtamount {
+  .account-balance {
     font-size: 14px;
     color: $mdtAmountColor;
   }
 
-  .email {
+  .account-email {
     color: #4a4a4a;
 
     &.selected {
       color: $selectedEmailColor;
     }
   }
+}
 
-  .icon-container {
-    flex: 1;
-  }
+
+.md-icon {
+  float: right;
+  height: 52px;
+  fill: $selectedEmailColor;
+}
+
+.icon-container {
+  flex: 1;
 }
 </style>
 
