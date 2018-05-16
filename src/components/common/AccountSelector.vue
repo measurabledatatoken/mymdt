@@ -9,7 +9,7 @@
             {{ selectedAccountEmail }}
           </div>
           <div class="account-balance">
-            {{ selectedAccountBalance }} MDT
+            {{ selectedAccountBalance }}
           </div>
         </div>
         <md-icon v-if="!isMenuOpened" class="closed" md-src="/static/icons/keyboard_arrow_down.svg"></md-icon>
@@ -49,21 +49,21 @@ export default {
       accountButtonStyle: '',
     };
   },
-  props: ['label', 'accounts', 'selectedAccount'],
+  props: ['label', 'accounts', 'selectedAccount', 'enableOtherEmail'],
   computed: {
     selectedAccountEmail() {
-      if (this.selectedAccount !== undefined) {
-        const emailAddress = this.selectedAccount.emailAddress;
-        return emailAddress;
+      if (!this.selectedAccount) {
+        return '';
       }
-      return '';
+      const emailAddress = this.selectedAccount.emailAddress;
+      return emailAddress;
     },
     selectedAccountBalance() {
-      if (this.selectedAccount !== undefined) {
-        const balance = this.selectedAccount.mdtBalance;
-        return balance;
+      if (!this.selectedAccount) {
+        return '';
       }
-      return '';
+      const balance = this.selectedAccount.mdtBalance;
+      return `${balance}MDT`;
     },
     filteredAccounts() {
       if (this.accounts === undefined) {
