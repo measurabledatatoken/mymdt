@@ -15,7 +15,8 @@
         "amountlbl": "Amount",
         "fromlbl": "From",
         "tolbl": "To",
-        "nextbtn": "Next"
+        "nextbtn": "Next",
+        "select_account_placeholder": "Please Select Account"
     },
     "earn" : {
         "title": "Earn MDT"

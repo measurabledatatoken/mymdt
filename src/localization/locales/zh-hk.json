@@ -15,7 +15,8 @@
         "fromlbl": "由",
         "tolbl": "至",
         "amountlbl": "數量",
-        "nextbtn": "下一步"
+        "nextbtn": "下一步",
+        "select_account_placeholder": "請選擇帳號"
     },
     "earn" : {
         "title": "賺取 MDT"

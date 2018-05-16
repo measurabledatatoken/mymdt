@@ -11,6 +11,7 @@
           <div class="account-balance">
             {{ selectedAccountBalance }}
           </div>
+          <div v-if="!selectedAccount" class="placeholder"> {{ $t('message.transfer.select_account_placeholder') }} </div>
         </div>
         <md-icon v-if="!isMenuOpened" class="closed" md-src="/static/icons/keyboard_arrow_down.svg"></md-icon>
         <md-icon v-if="isMenuOpened" class="opened" md-src="/static/icons/keyboard_arrow_up.svg"></md-icon>
@@ -143,6 +144,13 @@ export default {
 
 .account-balance {
   color: #9b9b9b;
+}
+
+.placeholder {
+  color: #9b9b9b;
+  line-height: 52px;
+  font-size: 16px;
+  text-align: left;
 }
 
 .account-email,
