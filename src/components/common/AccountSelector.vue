@@ -99,7 +99,7 @@ $mdtAmountColor: #9b9b9b;
 $selectedEmailColor: #4187f7;
 .label {
   text-align: left;
-  margin: 8px 16px;
+  margin: 8px 16px 0px 16px;
 }
 
 .account-selector {
