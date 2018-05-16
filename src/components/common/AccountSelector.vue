@@ -1,45 +1,54 @@
 <template>
-    <div class="account-selector">
-        <div class="label">{{ label }}</div>
+  <div class="account-selector">
+    <div class="label">{{ label }}</div>
 
-        <md-menu md-size="auto" mdFullWidth mdCloseOnSelect>
-            <md-button md-menu-trigger>
-                <div class="account-info">
-                    <div class="account-email">
-                        {{ selectedAccountEmail }}
-                    </div>
-                    <div class="account-balance">
-                        {{ selectedAccountBalance }} MDT
-                    </div>
-                </div>
-                <md-icon md-src="/static/icons/keyboard_arrow_down.svg"></md-icon>
+    <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
+      <md-button class="trigger" :md-ripple="false" v-bind:style="accountButtonStyle" md-menu-trigger>
+        <div class="account-info" v-bind:style="{ 'padding-left': accountInfoPaddingLeft + 'px' }">
+          <div class="account-email">
+            {{ selectedAccountEmail }}
+          </div>
+          <div class="account-balance">
+            {{ selectedAccountBalance }} MDT
+          </div>
+        </div>
+        <md-icon v-if="!isMenuOpened" class="closed" md-src="/static/icons/keyboard_arrow_down.svg"></md-icon>
+        <md-icon v-if="isMenuOpened" class="opened" md-src="/static/icons/keyboard_arrow_up.svg"></md-icon>
+      </md-button>
 
-            </md-button>
-            <md-menu-content>
-                <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
-                    <div>
-                        <div>
-                            {{ account.emailAddress }}
-                        </div>
-                        <div>
-                            {{ `${$t('message.transfer.amountlbl')}: ${account.mdtBalance}` }} MDT
-                        </div>
-                    </div>
-                    <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
-                        <md-icon md-src="/static/icons/done.svg"></md-icon>
-                    </div>
+      <md-menu-content class="account-selector-menu-content">
+        <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
+          <md-divider></md-divider>
+          <div>
+            <div>
+              {{ account.emailAddress }}
+            </div>
+            <div>
+              {{ `${$t('message.transfer.amountlbl')}: ${account.mdtBalance}` }} MDT
+            </div>
+          </div>
+          <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
+            <md-icon md-src="/static/icons/done.svg"></md-icon>
+          </div>
 
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
 
-    </div>
+  </div>
 
 </template>
 
 <script>
 export default {
   name: 'AccountSelector',
+  data() {
+    return {
+      isMenuOpened: false,
+      accountInfoPaddingLeft: 0,
+      accountButtonStyle: '',
+    };
+  },
   props: ['label', 'accounts', 'selectedAccount'],
   computed: {
     selectedAccountEmail() {
@@ -68,6 +77,16 @@ export default {
     selectAccount(account) {
       this.$emit('accountSelected', account);
     },
+    menuOpened() {
+      this.isMenuOpened = true;
+      this.accountInfoPaddingLeft = 16;
+      this.accountButtonStyle = 'box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2); border-radius: 4px 4px 0px 0px; background-color: white;';
+    },
+    menuClosed() {
+      this.isMenuOpened = false;
+      this.accountInfoPaddingLeft = 0;
+      this.accountButtonStyle = '';
+    },
   },
 };
 </script>
@@ -76,7 +95,12 @@ export default {
 <style lang="scss" scoped>
 .label {
   text-align: left;
-  margin: 16px;
+  margin: 8px 16px;
+}
+
+.account-selector {
+  height: 80px;
+  margin: 20px 0px;
 }
 
 .md-menu {
@@ -95,7 +119,20 @@ export default {
   margin-right: 24px;
 }
 
+.md-button:not([disabled]).md-focused:before,
+.md-button:not([disabled]):active:before,
+.md-button:not([disabled]):hover:before {
+  background-color: white;
+  opacity: 1;
+}
+
+.trigger .md-icon {
+  width: 20%;
+  transform: scale(0.6);
+}
+
 .md-icon {
+  float: right;
   height: 52px;
   fill: #4187f7;
 }
@@ -114,19 +151,21 @@ export default {
   margin: 4px 0px;
 }
 
-.md-icon {
-  float: right;
-}
-
-.account-selector {
-  height: 80px;
-  margin-top: 16px;
-}
 
 .md-menu-content {
   background-color: #f4f6f8;
+  border-radius: 0px 0px 4px 4px;
   width: 100%;
   left: 0;
+}
+
+.md-divider {
+  position: absolute;
+  background-color: $divider-color;
+  border: solid 1px #eeeeee;
+  width: 96%;
+  top: 0;
+  left: 2%;
 }
 
 //Menu Item Style
@@ -144,5 +183,13 @@ export default {
 
 .account-selector .md-ripple {
   padding: 0px;
+}
+
+.account-selector-menu-content .md-menu-content-container .md-list {
+  padding: 0px;
+}
+
+.account-selector .md-button {
+  height: 60px;
 }
 </style>

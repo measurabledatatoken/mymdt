@@ -50,6 +50,6 @@ module.exports = {
     'no-shadow': ['error', {
       "allow": ['state']
     }],
-    'max-len':  [1, 120, 4]
+    'max-len':  [1, 150, 4]
   }
 }

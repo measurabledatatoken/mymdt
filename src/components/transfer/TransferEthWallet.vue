@@ -2,9 +2,11 @@
   <div>
     <MDTInputField v-on:amountEntered="transferAmountEntered"></MDTInputField>
 
-    <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts" :selectedAccount="transferFormAccount" >
+    <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts"
+      :selectedAccount="transferFromAccount">
     </AccountSelector>
-    <AccountSelector :label="$t('message.transfer.tolbl')" :accounts="toAccounts">
+    <AccountSelector v-on:accountSelected="selectedToAccount" :label="$t('message.transfer.tolbl')" :accounts="toAccounts"
+    :selectedAccount="transferToAccount">
     </AccountSelector>
 
     <md-button :to="transferEthReviewUrl" class="next md-raised md-primary">
@@ -15,6 +17,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import { RouteDef } from '@/constants';
@@ -31,15 +34,14 @@ export default {
     };
   },
   computed: {
-    transferFormAccount() {
-      return this.$store.state.transfer.transferFromAccount;
-    },
-    accounts() {
-      return this.$store.state.home.userAccounts;
-    },
+    ...mapGetters({
+      transferFromAccount: 'transferFromAccount',
+      transferToAccount: 'transferToAccount',
+      accounts: 'userAccounts',
+    }),
     toAccounts() {
       return this.accounts.filter(
-        account => account.emailAddress !== this.transferFormAccount.emailAddress,
+        account => account.emailAddress !== this.transferFromAccount.emailAddress,
       );
     },
   },
@@ -58,13 +60,14 @@ export default {
     selectedFromAccount(account) {
       this.$store.commit('setTransferFromAccount', account);
     },
+    selectedToAccount(account) {
+      this.$store.commit('setTransferToAccount', account);
+    },
   },
 };
 </script>
 
 <style lang='scss' scoped>
-
-
 .md-button.next {
   @include primaryButtonStyle;
   @include center_horizontal;
