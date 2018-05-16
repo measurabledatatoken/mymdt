@@ -21,11 +21,11 @@
         <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
           <md-divider></md-divider>
           <div>
-            <div>
+            <div class="email" v-bind:class="{ 'selected' : account.emailAddress === selectedAccountEmail }">
               {{ account.emailAddress }}
             </div>
-            <div>
-              {{ `${$t('message.transfer.amountlbl')}: ${account.mdtBalance}` }} MDT
+            <div class="mdtamount">
+              {{ `${$t('message.transfer.amountlbl')}: ${parseFloat(account.mdtBalance).toFixed(4)}` }} MDT
             </div>
           </div>
           <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
@@ -64,7 +64,8 @@ export default {
         return '';
       }
       const balance = this.selectedAccount.mdtBalance;
-      return `${balance}MDT`;
+      const balanceStr = parseFloat(balance.toFixed(4));
+      return `${balanceStr} MDT`;
     },
     filteredAccounts() {
       if (this.accounts === undefined) {
@@ -94,6 +95,8 @@ export default {
 
 
 <style lang="scss" scoped>
+$mdtAmountColor: #9b9b9b;
+$selectedEmailColor: #4187f7;
 .label {
   text-align: left;
   margin: 8px 16px;
@@ -128,26 +131,28 @@ export default {
 }
 
 .trigger .md-icon {
-  width: 20%;
+  width: 16%;
   transform: scale(0.6);
 }
 
 .md-icon {
   float: right;
   height: 52px;
-  fill: #4187f7;
+  fill: $selectedEmailColor;
 }
 
 .account-email {
-  color: #4187f7;
+  color: $selectedEmailColor;
+  text-transform: none;
+  font-size: 16px;
 }
 
 .account-balance {
-  color: #9b9b9b;
+  color: $mdtAmountColor;
 }
 
 .placeholder {
-  color: #9b9b9b;
+  color: $mdtAmountColor;
   line-height: 52px;
   font-size: 16px;
   text-align: left;
@@ -158,7 +163,6 @@ export default {
   text-align: left;
   margin: 4px 0px;
 }
-
 
 .md-menu-content {
   background-color: #f4f6f8;
@@ -177,8 +181,23 @@ export default {
 }
 
 //Menu Item Style
-.md-menu-item .icon-container {
-  flex: 1;
+.md-menu-item {
+  .mdtamount {
+    font-size: 14px;
+    color: $mdtAmountColor;
+  }
+
+  .email {
+    color: #4a4a4a;
+
+    &.selected {
+      color: $selectedEmailColor;
+    }
+  }
+
+  .icon-container {
+    flex: 1;
+  }
 }
 </style>
 
