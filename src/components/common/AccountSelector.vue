@@ -48,7 +48,7 @@
 
     <!-- Input field for user after pressed other email -->
     <md-field class="other-email" v-if="selectedOther" md-dense md-inline md-clearable>
-      <label>{{ $t('message.transfer.enter_emailaddress') }}</label>
+      <label class="placeholder">{{ $t('message.transfer.enter_emailaddress') }}</label>
       <md-input v-model="otherEmailAddress"></md-input>
     </md-field>
   </div>
@@ -69,8 +69,14 @@ export default {
   props: ['label', 'accounts', 'selectedAccount', 'enableOther'],
   computed: {
     otherEmailAddress: {
+      get() {
+        if (!this.selectedAccount) {
+          return '';
+        }
+        return this.selectedAccount.emailAddress;
+      },
       set(value) {
-        this.$emit('accountSelected', { emailAddress: value, mdtBalance: 0 });
+        this.$emit('accountSelected', { emailAddress: value });
       },
     },
     selectedAccountEmail() {
@@ -85,7 +91,7 @@ export default {
       return emailAddress;
     },
     selectedAccountBalance() {
-      if (!this.selectedAccount) {
+      if (!this.selectedAccount || this.selectedAccount.mdtBalance === undefined) {
         return '';
       }
 
@@ -123,12 +129,21 @@ export default {
       this.accountButtonStyle = '';
     },
   },
+  created() {
+    this.selectedOther = true;
+    if (this.accounts) {
+      this.accounts.forEach((account) => {
+        if (account.emailAddress === this.selectedAccount.emailAddress) {
+          this.selectedOther = false;
+        }
+      });
+    }
+  },
 };
 </script>
 
 
 <style lang="scss">
-$mdtAmountColor: #9b9b9b;
 $selectedEmailColor: #4187f7;
 
 .account-selector .md-ripple,
@@ -156,15 +171,16 @@ $selectedEmailColor: #4187f7;
   background-color: #f4f6f8;
   border-radius: 0px 0px 4px 4px !important;
 }
+
+.other-email .md-button {
+  right: 12px;
+}
 </style>
 
 
 <style lang="scss" scoped>
-$mdtAmountColor: #9b9b9b;
 $selectedEmailColor: #4187f7;
 $menuItemCellHeight: 56px;
-$marginLeftRight: 16px;
-
 .account-selector {
   height: 80px;
   margin: 16px 0px;
@@ -172,12 +188,12 @@ $marginLeftRight: 16px;
 
 .label {
   text-align: left;
-  margin: 8px $marginLeftRight 0px $marginLeftRight;
+  margin: 8px $transferMarginLeftRight 0px $transferMarginLeftRight;
 }
 
 .md-menu {
-  width: calc(100% - 2 *#{$marginLeftRight});
-  margin: 0px $marginLeftRight;
+  width: calc(100% - 2 *#{$transferMarginLeftRight});
+  margin: 0px $transferMarginLeftRight;
 
   .md-button {
     width: 100%;
@@ -280,11 +296,11 @@ $marginLeftRight: 16px;
 }
 
 .other-email {
-  margin: -20px $marginLeftRight;
-  width: calc(100% - 2 * #{$marginLeftRight});
+  margin: -20px $transferMarginLeftRight;
+  width: calc(100% - 2 * #{$transferMarginLeftRight});
 
-  .md-button {
-    right: 12px;
+  label.placeholder {
+    color: $placeholderColor;
   }
 }
 </style>
