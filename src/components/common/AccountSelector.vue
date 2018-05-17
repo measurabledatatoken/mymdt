@@ -6,10 +6,10 @@
       <!-- Button -->
       <md-button class="open-menu-button" :md-ripple="false" v-bind:class="{ 'open': isMenuOpened }" md-menu-trigger>
         <div class="account-info" v-bind:class="{ 'other': selectedOther, 'open': isMenuOpened }">
-          <div class="account-email">
+          <div v-if="selectedAccount" class="account-email">
             {{ selectedAccountEmail }}
           </div>
-          <div class="account-balance">
+          <div v-if="selectedAccount" class="account-balance">
             {{ selectedAccountBalance }}
           </div>
           <div v-if="!selectedAccount" class="placeholder"> {{ $t('message.transfer.select_account_placeholder') }} </div>
@@ -140,7 +140,12 @@ export default {
   },
   created() {
     this.selectedOther = true;
-    if (this.accounts) {
+
+    if (!this.selectedAccount) {
+      this.selectedOther = false;
+    }
+
+    if (this.accounts && this.selectedAccount) {
       this.accounts.forEach((account) => {
         if (account.emailAddress === this.selectedAccount.emailAddress) {
           this.selectedOther = false;
@@ -190,6 +195,7 @@ $selectedEmailColor: #4187f7;
 <style lang="scss" scoped>
 $selectedEmailColor: #4187f7;
 $menuItemCellHeight: 56px;
+$menuItemOtherCellHeight: 44px;
 
 .label {
   text-align: left;
@@ -232,7 +238,7 @@ $menuItemCellHeight: 56px;
 .account-info {
   width: 70%;
   height: 100%;
-  height: 56px;
+  height: $menuItemCellHeight;
   float: left;
 
   &.open {
@@ -241,7 +247,7 @@ $menuItemCellHeight: 56px;
 
   &.other {
     padding-top: 7px;
-    height: 44px;
+    height: $menuItemOtherCellHeight;
   }
 
   .account-email {
@@ -256,7 +262,7 @@ $menuItemCellHeight: 56px;
 
   .placeholder {
     color: $mdtAmountColor;
-    line-height: 100%;
+    line-height: $menuItemCellHeight;
     font-size: 16px;
     text-align: left;
   }
@@ -288,7 +294,7 @@ $menuItemCellHeight: 56px;
 .md-menu-item {
   height: $menuItemCellHeight;
   &.other {
-    height: 44px;
+    height: $menuItemOtherCellHeight;
   }
 
   .account-balance {
