@@ -18,7 +18,9 @@
         "nextbtn": "下一步",
         "select_account_placeholder": "請選擇帳號",
         "other_emailaddress": "其他電郵地址...",
-        "enter_emailaddress": "輸人電郵地址"
+        "enter_emailaddress": "輸人電郵地址",
+        "note_label": "備註",
+        "note_placeholder": "選填. 最多{num}字"
     },
     "earn" : {
         "title": "賺取 MDT"

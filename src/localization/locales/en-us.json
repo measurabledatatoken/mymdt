@@ -18,7 +18,9 @@
         "nextbtn": "Next",
         "select_account_placeholder": "Please Select Account",
         "other_emailaddress": "Other email address...",
-        "enter_emailaddress": "Type email address"
+        "enter_emailaddress": "Type email address",
+        "note_label": "Note",
+        "note_placeholder": "Optional note. Up to {num} charater"
     },
     "earn" : {
         "title": "Earn MDT"

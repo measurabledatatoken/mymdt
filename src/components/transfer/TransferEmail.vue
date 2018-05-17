@@ -1,17 +1,20 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="transferAmountEntered"></MDTInputField>
+    <MDTInputField v-on:amountEntered="transferAmountEntered" :amount="transferAmount"></MDTInputField>
 
     <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts"
       :selectedAccount="transferFromAccount">
     </AccountSelector>
-    <AccountSelector v-on:accountSelected="selectedToAccount" :label="$t('message.transfer.tolbl')" :accounts="toAccounts"
-    :selectedAccount="transferToAccount" :enableOther="true">
+    <AccountSelector v-on:accountSelected="selectedToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true" :accounts="toAccounts"
+      :selectedAccount="transferToAccount">
     </AccountSelector>
 
-    <md-button :to="transferEthReviewUrl" class="next md-raised md-primary">
+    <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
+
+    <md-button :to="transferEthReviewUrl" class="next md-raised md-primary" :disabled="disableNextBtn">
       {{ $t('message.transfer.nextbtn') }}
     </md-button>
+
   </div>
 
 </template>
@@ -20,6 +23,7 @@
 import { mapGetters } from 'vuex';
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
+import NoteInputField from '@/components/common/NoteInputField';
 import { RouteDef } from '@/constants';
 
 export default {
@@ -35,8 +39,10 @@ export default {
   },
   computed: {
     ...mapGetters({
+      transferAmount: 'transferAmount',
       transferFromAccount: 'transferFromAccount',
       transferToAccount: 'transferToAccount',
+      transferNote: 'transferNote',
       accounts: 'userAccounts',
     }),
     toAccounts() {
@@ -44,10 +50,17 @@ export default {
         account => account.emailAddress !== this.transferFromAccount.emailAddress,
       );
     },
+    disableNextBtn() {
+      if (this.transferAmount > 0 && this.transferToAccount) {
+        return false;
+      }
+      return true;
+    },
   },
   components: {
     AccountSelector,
     MDTInputField,
+    NoteInputField,
   },
   created() {
     this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
@@ -56,6 +69,9 @@ export default {
   methods: {
     transferAmountEntered(value) {
       this.$store.commit('setTransferAmount', value);
+    },
+    noteInfoEntered(value) {
+      this.$store.commit('setTransferNote', value);
     },
     selectedFromAccount(account) {
       this.$store.commit('setTransferFromAccount', account);
@@ -71,5 +87,10 @@ export default {
 .md-button.next {
   @include primaryButtonStyle;
   @include center_horizontal;
+
+  &[disabled] {
+    background-color: $bluebtn-backgroundcolor-disabled;
+    color: $bluebtn-wordcolor-disabled;
+  }
 }
 </style>

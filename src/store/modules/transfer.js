@@ -9,8 +9,10 @@ const state = {
 };
 
 const getters = {
+  transferAmount: state => state.transferAmount,
   transferFromAccount: state => state.transferFromAccount,
   transferToAccount: state => state.transferToAccount,
+  transferNote: state => state.transferNote,
 };
 
 const mutations = {

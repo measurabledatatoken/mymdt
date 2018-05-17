@@ -1,15 +1,22 @@
+//Background Color
 $app-bgcolor: white;
 $home-bgcolor:#0a224e;
+
+//Button Color
 $plainbtn-wordcolor: #4187f7;
+
 $bluebtn-backgroundcolor: #4187f7;
 $bluebtn-wordcolor: white;
 
+$bluebtn-backgroundcolor-disabled: rgba(65, 135, 247, 0.6);
+$bluebtn-wordcolor-disabled: white;
+
+//Other component Color
 $label-color: #4a4a4a;
 $divider-color: #bdbdbd;
-
-$header-height: 64px;
-
 $mdtAmountColor: #9b9b9b;
 $placeholderColor: $mdtAmountColor;
 
+// Height and margin
+$header-height: 64px;
 $transferMarginLeftRight: 16px;
