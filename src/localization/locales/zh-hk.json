@@ -1,10 +1,13 @@
 {
+
+    "common": {
+        "transferbtn": "轉帳"
+    },
     "home" : {
         "total_balance": "結餘",
         "title": "MDT 錢包",
         "settings": "設定",
         "tutorial": "教學",
-        "transferbtn": "轉帳",
         "accountnum": "{num} 個帳號",
         "earn_mdt": "賺取 MDT"
     },
@@ -20,7 +23,9 @@
         "other_emailaddress": "其他電郵地址...",
         "enter_emailaddress": "輸人電郵地址",
         "note_label": "備註",
-        "note_placeholder": "選填. 最多{num}字"
+        "note_placeholder": "選填. 最多{num}字",
+        "transferlist_emailtitle": "發送 MDT 到電郵地址",
+        "transferlist_ethtitle": "發送 MDT 到以太錢包"
     },
     "earn" : {
         "title": "賺取 MDT"

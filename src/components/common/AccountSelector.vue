@@ -1,6 +1,6 @@
 <template>
   <div class="account-selector">
-    <div class="label">{{ label }}</div>
+    <div v-if="label.length !== 0" class="label">{{ label }}</div>
 
     <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
       <!-- Button -->
@@ -64,7 +64,22 @@ export default {
       selectedOther: false,
     };
   },
-  props: ['label', 'accounts', 'selectedAccount', 'enableOther'],
+  props: {
+    label: {
+      default: '',
+      type: String,
+    },
+    accounts: {
+      type: Array,
+      required: true,
+    },
+    selectedAccount: {
+      type: Object,
+    },
+    enableOther: {
+      type: Boolean,
+    },
+  },
   computed: {
     otherEmailAddress: {
       get() {
@@ -175,10 +190,6 @@ $selectedEmailColor: #4187f7;
 <style lang="scss" scoped>
 $selectedEmailColor: #4187f7;
 $menuItemCellHeight: 56px;
-.account-selector {
-  height: 80px;
-  margin: 16px 0px;
-}
 
 .label {
   text-align: left;
@@ -194,7 +205,9 @@ $menuItemCellHeight: 56px;
     width: 100%;
 
     &.open {
-      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2); border-radius: 4px 4px 0px 0px; background-color: white;
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 4px 4px 0px 0px;
+      background-color: white;
     }
   }
 
@@ -292,7 +305,8 @@ $menuItemCellHeight: 56px;
   }
 }
 
-.open-menu-button, .md-menu-item {
+.open-menu-button,
+.md-menu-item {
   .md-icon {
     float: right;
     height: 100%;

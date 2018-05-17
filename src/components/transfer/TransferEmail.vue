@@ -83,6 +83,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.account-selector {
+  height: 80px;
+  margin: 16px 0px;
+}
+
 .md-button.next {
   @include primaryButtonStyle;
   @include center_horizontal;

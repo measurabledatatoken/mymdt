@@ -1,10 +1,12 @@
 {
+    "common": {
+        "transferbtn": "Transfer"
+    },
     "home" : {
         "total_balance": "Total Balance",
         "title": "MDT Wallet",
         "settings": "Settings",
         "tutorial": "Tutorial",
-        "transferbtn": "Transfer",
         "accountnum": "{num} Account | {num} Accounts",
         "earn_mdt": "Earn MDT"
     },
@@ -20,7 +22,9 @@
         "other_emailaddress": "Other email address...",
         "enter_emailaddress": "Type email address",
         "note_label": "Note",
-        "note_placeholder": "Optional note. Up to {num} charater"
+        "note_placeholder": "Optional note. Up to {num} charater",
+        "transferlist_emailtitle": "Transfer MDT to Email Account",
+        "transferlist_ethtitle": "Transfer MDT to External ETH Wallet"
     },
     "earn" : {
         "title": "Earn MDT"

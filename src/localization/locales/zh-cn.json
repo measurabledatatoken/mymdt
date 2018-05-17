@@ -1,29 +1,32 @@
 {
-    "home" : {
-        "total_balance": "结余",
-        "title": "MDT 钱包",
-        "settings": "设定",
-        "tutorial": "教学",
-        "transferbtn": "转帐",
-        "accountnum": "{num} 个帐号",
-        "earn_mdt": "赚取 MDT"
-    },
-    "transfer" : {
-        "title" : "转帐",
-        "ethtitle" : "转帐至以太钱包",
-        "emailtitle" : "转帐至电邮地址",
-        "fromlbl": "由",
-        "tolbl": "至",
-        "amountlbl": "数量",
-        "nextbtn": "下一步",
-        "select_account_placeholder": "请选择帐号",
-        "other_emailaddress": "其他电邮地址...",
-        "enter_emailaddress": "输人电邮地址",
-        
-"note": "备注",
-        "note_placeholder": "选填. 最多{num}字"
-    },
-    "earn" : {
-        "title": "赚取 MDT"
-    }
+  "common": {
+    "transferbtn": "转帐"
+  },
+  "home": {
+    "total_balance": "结余",
+    "title": "MDT 钱包",
+    "settings": "设定",
+    "tutorial": "教学",
+    "accountnum": "{num} 个帐号",
+    "earn_mdt": "赚取 MDT"
+  },
+  "transfer": {
+    "title": "转帐",
+    "ethtitle": "转帐至以太钱包",
+    "emailtitle": "转帐至电邮地址",
+    "fromlbl": "由",
+    "tolbl": "至",
+    "amountlbl": "数量",
+    "nextbtn": "下一步",
+    "select_account_placeholder": "请选择帐号",
+    "other_emailaddress": "其他电邮地址...",
+    "enter_emailaddress": "输人电邮地址",
+    "note_label": "备注",
+    "note_placeholder": "选填. 最多{num}字",
+    "transferlist_emailtitle": "发送 MDT 到电邮地址",
+    "transferlist_ethtitle": "发送 MDT 到以太钱包"
+  },
+  "earn": {
+    "title": "赚取 MDT"
+  }
 }

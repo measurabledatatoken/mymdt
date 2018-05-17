@@ -14,7 +14,7 @@
 
         <md-divider></md-divider>
         <md-card-actions md-alignment="space-between">
-            <md-button v-on:click="$emit('transfer')">{{ $t('message.home.transferbtn') }}</md-button>
+            <md-button v-on:click="$emit('transfer')">{{ $t('message.common.transferbtn') }}</md-button>
         </md-card-actions>
 
     </md-card>
@@ -84,16 +84,6 @@ export default {
   }
 }
 
-.md-card-actions {
-  justify-content: center;
-  height: 3em;
-}
-
-.md-divider {
-  background-color: #eef3f8;
-  width: 80%;
-  margin-left: 10%;
-}
 
 .mdt-count {
   float: right;
@@ -102,6 +92,18 @@ export default {
   font-weight: bold;
   padding-top: 10px;
   line-height: 40px;
+}
+
+.md-divider {
+  background-color: #eef3f8;
+  width: 80%;
+  margin-left: 10%;
+}
+
+
+.md-card-actions {
+  justify-content: center;
+  height: 3em;
 }
 
 .md-button {
