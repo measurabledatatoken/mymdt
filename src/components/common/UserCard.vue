@@ -4,8 +4,10 @@
             <div class="md-avatar md-avatar-icon">
                 <p class="md-ripple avatar">NT</p>
             </div>
-            <div class="md-title"> {{ user.displayName }}</div>
-            <div class="md-subtitle"> {{ user.emailAddress }}</div>
+            <div class="user-info">
+                <div v-bind:class="{ onlytitle : subTitle.length === 0} " class="md-title"> {{ title }}</div>
+                <div class="md-sutitle"> {{ subTitle }}</div>
+            </div>
 
             <div class="mdt-count"> {{ user.mdtBalance.toFixed(4) }} MDT</div>
         </div>
@@ -21,7 +23,19 @@
 <script>
 export default {
   props: ['user'],
-  methods: {
+  computed: {
+    title() {
+      if (this.user.displayName.length === 0) {
+        return this.user.emailAddress;
+      }
+      return this.user.displayName;
+    },
+    subTitle() {
+      if (this.user.displayName.length === 0) {
+        return '';
+      }
+      return this.user.emailAddress;
+    },
   },
 };
 </script>
@@ -38,21 +52,36 @@ export default {
   background-color: #fad689;
 
   .md-ripple {
-      font-size: 0.7em;
-      letter-spacing: 0.08em;
-      color: white;
-      font-weight: bold;
+    font-size: 0.7em;
+    letter-spacing: 0.08em;
+    color: white;
+    font-weight: bold;
   }
 }
 
 .md-card-header {
-    height: 8em;
+  height: 8em;
 }
 
-.md-title, .md-subtitle {
-    float: left;
+.user-info {
+  min-height: 40px;
+
+  .md-title,
+  .md-sutitle {
     color: #4a4a4a;
-    font-size: 1em;
+    text-align: left;
+  }
+  .md-title {
+    line-height: 20px;
+    font-size: 16px;
+
+    &.onlytitle {
+      line-height: 40px;
+    }
+  }
+  .md-sutitle {
+    font-size: 14px;
+  }
 }
 
 .md-card-actions {
@@ -71,7 +100,7 @@ export default {
   color: #4a4a4a;
   font-size: 20px;
   font-weight: bold;
-  margin-top: 28px;
+  padding-top: 10px;
   line-height: 40px;
 }
 
