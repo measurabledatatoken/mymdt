@@ -73,11 +73,11 @@ export default {
   },
   methods: {
     goToTransfer(user) {
-      this.$store.commit('setSelectedUserAccountForEmail', user.emailAddress);
+      this.$store.commit('setSelectedUser', user);
       this.$router.push(RouteDef.TransferList);
     },
     goToAccountDetail(user) {
-      this.$store.commit('setSelectedUserAccountForEmail', user.emailAddress);
+      this.$store.commit('setSelectedUser', user);
       this.$router.push(RouteDef.AccountDetail);
     },
   },

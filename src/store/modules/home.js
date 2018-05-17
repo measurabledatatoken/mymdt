@@ -41,13 +41,6 @@ const mutations = {
   setSelectedUser(state, selectedUser) {
     state.selectedUser = selectedUser;
   },
-  setSelectedUserAccountForEmail(state, emailAddress) {
-    state.userAccounts.forEach((userAccount) => {
-      if (userAccount.email_address === emailAddress) {
-        this.commit('setSelectedUser', userAccount);
-      }
-    });
-  },
   setUserAccounts(state, userAccounts) {
     state.userAccounts = userAccounts;
   },
