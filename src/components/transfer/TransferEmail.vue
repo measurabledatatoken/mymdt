@@ -63,7 +63,6 @@ export default {
     NoteInputField,
   },
   created() {
-    this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
   methods: {
