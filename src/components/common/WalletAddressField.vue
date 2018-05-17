@@ -6,14 +6,25 @@
             <md-input :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
                 :value="walletAddress">
             </md-input>
+            <md-button :to="RouteDef.TransferEthWalletQrCode">
+                <md-icon md-src="/static/icons/keyboard_arrow_down.svg"></md-icon>
+            </md-button>
         </md-field>
+
     </div>
 
 </template>
 
 <script>
+import { RouteDef } from '@/constants';
+
 export default {
   name: 'WalletAddressField',
+  data() {
+    return {
+      RouteDef,
+    };
+  },
   props: {
     label: {
       type: String,

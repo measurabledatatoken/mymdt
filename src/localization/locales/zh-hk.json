@@ -1,34 +1,37 @@
 {
 
-    "common": {
-        "transferbtn": "轉帳"
-    },
-    "home" : {
-        "total_balance": "結餘",
-        "title": "MDT 錢包",
-        "settings": "設定",
-        "tutorial": "教學",
-        "accountnum": "{num} 個帳號",
-        "earn_mdt": "賺取 MDT"
-    },
-    "transfer" : {
-        "title" : "轉帳",
-        "ethtitle" : "轉帳至以太錢包",
-        "emailtitle" : "轉帳至電郵地址",
-        "fromlbl": "由",
-        "tolbl": "至",
-        "amountlbl": "數量",
-        "nextbtn": "下一步",
-        "select_account_placeholder": "請選擇帳號",
-        "wallet_address_placeholder": "貼上錢包地址",
-        "other_emailaddress": "其他電郵地址...",
-        "enter_emailaddress": "輸人電郵地址",
-        "note_label": "備註",
-        "note_placeholder": "選填. 最多{num}字",
-        "transferlist_emailtitle": "發送 MDT 到電郵地址",
-        "transferlist_ethtitle": "發送 MDT 到以太錢包"
-    },
-    "earn" : {
-        "title": "賺取 MDT"
-    }
+  "common": {
+    "transferbtn": "轉帳"
+  },
+  "home": {
+    "total_balance": "結餘",
+    "title": "MDT 錢包",
+    "settings": "設定",
+    "tutorial": "教學",
+    "accountnum": "{num} 個帳號",
+    "earn_mdt": "賺取 MDT"
+  },
+  "transfer": {
+    "title": "轉帳",
+    "ethtitle": "轉帳至以太錢包",
+    "emailtitle": "轉帳至電郵地址",
+    "fromlbl": "由",
+    "tolbl": "至",
+    "amountlbl": "數量",
+    "nextbtn": "下一步",
+    "select_account_placeholder": "請選擇帳號",
+    "wallet_address_placeholder": "貼上錢包地址",
+    "other_emailaddress": "其他電郵地址...",
+    "enter_emailaddress": "輸人電郵地址",
+    "note_label": "備註",
+    "note_placeholder": "選填. 最多{num}字",
+    "transferlist_emailtitle": "發送 MDT 到電郵地址",
+    "transferlist_ethtitle": "發送 MDT 到以太錢包"
+  },
+  "earn": {
+    "title": "賺取 MDT"
+  },
+  "qrcode": {
+    "title": "掃描二維碼"
+  }
 }

@@ -30,5 +30,8 @@
     },
     "earn" : {
         "title": "Earn MDT"
+    },
+    "qrcode": {
+        "title": "Scan QR Code"
     }
 }

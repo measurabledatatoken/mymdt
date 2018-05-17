@@ -22,6 +22,8 @@ import TransferEmail from '@/components/transfer/TransferEmail';
 import TransferEthWallet from '@/components/transfer/TransferEthWallet';
 import TransferReview from '@/components/transfer/TransferReview';
 
+import QrCodeScanPage from '@/components/QRCodeScanPage';
+
 import EarnMDT from '@/components/earn/EarnMDT';
 
 Vue.use(Router);
@@ -92,7 +94,10 @@ const router = new Router({
           path: RouteDef.TransferEthWalletReview,
           component: TransferReview,
         },
-
+        {
+          path: RouteDef.TransferEthWalletQrCode,
+          component: QrCodeScanPage,
+        },
 
         // Earn MDT Route
         {

@@ -29,5 +29,8 @@
   },
   "earn": {
     "title": "赚取 MDT"
+  },
+  "qrcode": {
+    "title": "扫描二维码"
   }
 }
