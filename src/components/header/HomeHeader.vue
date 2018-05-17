@@ -1,17 +1,17 @@
 <template>
 
-    <div class="home-header">
-      <md-button v-if="needExit" class="md-icon-button closebtn" v-on:click="returnCallback">
-        <md-icon md-src="/static/icons/close-white.svg"></md-icon>
-      </md-button>
+  <div class="home-header">
+    <md-button v-if="needExit" class="md-icon-button closebtn" v-on:click="returnCallback">
+      <md-icon md-src="/static/icons/close-white.svg"></md-icon>
+    </md-button>
 
-      <md-button :to="settingURL" class="md-icon-button settingsbtn">
-        <md-icon md-src="/static/icons/settings-white.svg"></md-icon>
-      </md-button>
-      <md-button :to="tutorialURL" class="md-icon-button tutorialbtn">
-        <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
-      </md-button>
-    </div>
+    <md-button :to="settingURL" class="md-icon-button settingsbtn">
+      <md-icon md-src="/static/icons/settings-white.svg"></md-icon>
+    </md-button>
+    <md-button :to="tutorialURL" class="md-icon-button tutorialbtn">
+      <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
+    </md-button>
+  </div>
 
 </template>
 
@@ -48,20 +48,21 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .home-header {
-  padding-top: 1em;
   background-color: $home-bgcolor;
 }
 
 .closebtn {
   float: left;
+  height: 100%;
 }
 
-.tutorialbtn, .settingsbtn {
+.tutorialbtn,
+.settingsbtn {
   float: right;
+  height: 100%;
 }
 
 .md-icon {
   color: white;
-
 }
 </style>
