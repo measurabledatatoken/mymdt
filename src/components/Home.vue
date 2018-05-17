@@ -6,7 +6,7 @@
 
       <div class="account-content">
         <div class="balance-value">≈ {{ totalMDTValues.toFixed(2) }} USD</div>
-        <div class="accountnum">{{ $t('message.home.accountnum', userAccounts.length, {num: userAccounts.length}) }}</div>
+        <div class="accountnum">{{ accountNumStr }}</div>
       </div>
     </div>
 
@@ -54,6 +54,12 @@ export default {
     },
     totalMDTValues() {
       return this.totalMDTBalance * this.mdtPrice;
+    },
+    accountNumStr() {
+      if (this.userAccounts.length <= 1) {
+        return '';
+      }
+      return this.$t('message.home.accountnum', this.userAccounts.length, { num: this.userAccounts.length });
     },
   },
   components: {
@@ -131,6 +137,7 @@ export default {
 
 .accountnum {
   font-size: 14px;
+  min-height: 24px;
   font-weight: bold;
   margin-left: 16px;
   padding-bottom: 4px;
