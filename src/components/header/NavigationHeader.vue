@@ -5,7 +5,7 @@
       </md-icon>
     </md-button>
     <div class="title">
-      <p>{{ title }}</p>
+      {{ title }}
     </div>
   </div>
 </template>
@@ -44,6 +44,8 @@ export default {
   float: left;
   color: white;
   width: 100%;
+  height: $header-height;
+  line-height: $header-height;
   font-size: 20px;
 }
 </style>
