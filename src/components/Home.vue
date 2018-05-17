@@ -1,16 +1,20 @@
 <template>
-  <div class="home" v-bind:style=" {'min-height': pageHeight }">
-    <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
-    <div class="balance-count">{{ totalMDTBalance }} MDT</div>
+  <div class="home" v-bind:style=" {'height': pageHeight }">
+    <div class="top-content">
+      <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
+      <div class="balance-count">{{ totalMDTBalance }} MDT</div>
 
-    <div class="account-content">
-      <div class="balance-value">≈ {{ totalMDTValues.toFixed(2) }} USD</div>
-      <div class="accountnum">{{ $t('message.home.accountnum', userAccounts.length, {num: userAccounts.length}) }}</div>
+      <div class="account-content">
+        <div class="balance-value">≈ {{ totalMDTValues.toFixed(2) }} USD</div>
+        <div class="accountnum">{{ $t('message.home.accountnum', userAccounts.length, {num: userAccounts.length}) }}</div>
+      </div>
     </div>
 
-    <div v-for="user in userAccounts" :key="user.emailAddress">
-      <UserCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
-      </UserCard>
+    <div class="bottom-content">
+      <div v-for="user in userAccounts" :key="user.emailAddress">
+        <UserCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
+        </UserCard>
+      </div>
     </div>
 
     <md-button :to="earnMDTUrl" class="earn-mdt md-raised md-primary">{{ $t('message.home.earn_mdt') }} </md-button>
@@ -60,7 +64,6 @@ export default {
     this.$store.dispatch('getUserAccounts');
 
     this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
-    console.log(`this.pageHeight${this.pageHeight}`);
   },
   methods: {
     goToTransfer(user) {
@@ -77,34 +80,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-
 .home {
   background-color: $home-bgcolor;
-  padding-bottom: 6em;
 }
 
-.account-content {
-  background-image: url("/static/background/sub-header-background.svg");
-  background-size: cover;
-  width: 100%;
-  bottom: 0;
-  margin-top: -1em;
-  margin-bottom: -3em;
+.top-content {
+  position: sticky;
+  top: $header-height;
+  z-index: 9;
+  background-color: $home-bgcolor;
+  height: 28%;
+}
+
+.bottom-content {
+  z-index: 1;
+  background-color: $home-bgcolor;
+  height: 72%;
+  overflow-y: scroll;
+  padding-bottom: 80px;
 }
 
 .balance-title {
@@ -116,21 +109,31 @@ a {
 .balance-count {
   font-size: 28px;
   color: white;
-  line-height: 50px;
+  line-height: 60px;
   font-weight: bold;
+}
+
+
+.account-content {
+  background-image: url("/static/background/sub-header-background.svg");
+  background-size: cover;
+  width: 100%;
+  bottom: 0;
+  margin-top: -40px; //To make the background image to move upward
 }
 
 .balance-value {
   font-size: 16px;
   color: white;
   line-height: 70px;
+  padding-top: 20px;
 }
 
 .accountnum {
   font-size: 14px;
   font-weight: bold;
   margin-left: 16px;
-  padding-bottom: 3em;
+  padding-bottom: 4px;
   text-align: left;
   color: white;
 }

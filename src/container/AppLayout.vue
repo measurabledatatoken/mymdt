@@ -85,7 +85,6 @@ export default {
 }
 
 .header-view {
-  z-index: 1;
   width: 100%;
   height: $header-height;
 }
