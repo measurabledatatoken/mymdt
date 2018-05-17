@@ -14,9 +14,9 @@
           </div>
           <div v-if="!selectedAccount" class="placeholder"> {{ $t('message.transfer.select_account_placeholder') }} </div>
         </div>
-        <md-icon v-if="!isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_down.svg">
+        <md-icon v-show="!isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_down.svg">
         </md-icon>
-        <md-icon v-if="isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_up.svg">
+        <md-icon v-show="isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_up.svg">
         </md-icon>
       </md-button>
 
