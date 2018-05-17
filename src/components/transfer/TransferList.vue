@@ -46,7 +46,10 @@ export default {
   },
   created() {
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
-    this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
+
+    if (this.$store.state.transfer.transferFromAccount == null) {
+      this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
+    }
     this.$store.commit('setTransferToAccount', null);
   },
   methods: {
