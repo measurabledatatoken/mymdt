@@ -4,8 +4,8 @@
 
     <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
       <!-- Button -->
-      <md-button class="open-menu-button" :md-ripple="false" v-bind:style="accountButtonStyle" md-menu-trigger>
-        <div class="account-info" v-bind:style="{ 'padding-left': accountInfoPaddingLeft + 'px' }">
+      <md-button class="open-menu-button" :md-ripple="false" v-bind:class="{ 'open': isMenuOpened }" md-menu-trigger>
+        <div class="account-info" v-bind:class="{ 'other': selectedOther, 'open': isMenuOpened }">
           <div class="account-email">
             {{ selectedAccountEmail }}
           </div>
@@ -61,8 +61,6 @@ export default {
   data() {
     return {
       isMenuOpened: false,
-      accountInfoPaddingLeft: 0,
-      accountButtonStyle: '',
       selectedOther: false,
     };
   },
@@ -120,13 +118,9 @@ export default {
     },
     menuOpened() {
       this.isMenuOpened = true;
-      this.accountInfoPaddingLeft = 16;
-      this.accountButtonStyle = 'box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2); border-radius: 4px 4px 0px 0px; background-color: white;';
     },
     menuClosed() {
       this.isMenuOpened = false;
-      this.accountInfoPaddingLeft = 0;
-      this.accountButtonStyle = '';
     },
   },
   created() {
@@ -197,6 +191,10 @@ $menuItemCellHeight: 56px;
 
   .md-button {
     width: 100%;
+
+    &.open {
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2); border-radius: 4px 4px 0px 0px; background-color: white;
+    }
   }
 
   .md-button:not([disabled]).md-focused:before,
@@ -210,17 +208,27 @@ $menuItemCellHeight: 56px;
     width: 16%;
     height: 26px;
     margin-top: 13px;
-  }
 
-  .md-button .md-icon.other {
-    margin-top: 0px;
+    &.other {
+      margin-top: 9px;
+    }
   }
 }
 
 .account-info {
   width: 70%;
   height: 100%;
+  height: 56px;
   float: left;
+
+  &.open {
+    padding-left: 16px;
+  }
+
+  &.other {
+    padding-top: 7px;
+    height: 44px;
+  }
 
   .account-email {
     color: $selectedEmailColor;
