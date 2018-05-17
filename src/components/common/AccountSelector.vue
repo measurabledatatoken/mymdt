@@ -250,7 +250,6 @@ $menuItemCellHeight: 56px;
   border-radius: 0px 0px 4px 4px !important;
   width: 100%;
   left: 0;
-  max-height: 45vh;
   z-index: 9;
 }
 
