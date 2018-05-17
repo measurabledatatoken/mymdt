@@ -182,6 +182,7 @@ $menuItemCellHeight: 56px;
 
 .label {
   text-align: left;
+  font-weight: bold;
   margin: 8px $transferMarginLeftRight 0px $transferMarginLeftRight;
 }
 
