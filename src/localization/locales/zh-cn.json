@@ -19,6 +19,7 @@
     "amountlbl": "数量",
     "nextbtn": "下一步",
     "select_account_placeholder": "请选择帐号",
+    "wallet_address_placeholder": "贴上钱包地址",
     "other_emailaddress": "其他电邮地址...",
     "enter_emailaddress": "输人电邮地址",
     "note_label": "备注",

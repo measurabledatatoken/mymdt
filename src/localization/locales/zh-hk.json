@@ -20,6 +20,7 @@
         "amountlbl": "數量",
         "nextbtn": "下一步",
         "select_account_placeholder": "請選擇帳號",
+        "wallet_address_placeholder": "貼上錢包地址",
         "other_emailaddress": "其他電郵地址...",
         "enter_emailaddress": "輸人電郵地址",
         "note_label": "備註",

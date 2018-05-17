@@ -5,6 +5,7 @@ const state = {
   transferType: null,
   transferFromAccount: null,
   transferToAccount: null,
+  transferToWalletAddress: null,
   transferNote: null,
 };
 
@@ -12,6 +13,7 @@ const getters = {
   transferAmount: state => state.transferAmount,
   transferFromAccount: state => state.transferFromAccount,
   transferToAccount: state => state.transferToAccount,
+  transferToWalletAddress: state => state.transferToWalletAddress,
   transferNote: state => state.transferNote,
 };
 
@@ -27,6 +29,9 @@ const mutations = {
   },
   setTransferToAccount(state, transferToAccount) {
     state.transferToAccount = transferToAccount;
+  },
+  setTransferToWalletAddress(state, transferToWalletAddress) {
+    state.transferToWalletAddress = transferToWalletAddress;
   },
   setTransferNote(state, transferNote) {
     state.transferNote = transferNote;
