@@ -266,7 +266,7 @@ $menuItemCellHeight: 56px;
 .md-menu-item {
   height: $menuItemCellHeight;
   &.other {
-    height: 48px;
+    height: 44px;
   }
 
   .account-balance {
