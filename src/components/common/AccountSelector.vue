@@ -156,42 +156,6 @@ export default {
 };
 </script>
 
-
-<style lang="scss">
-$selectedEmailColor: #4187f7;
-
-.account-selector .md-ripple,
-.account-selector .md-button-content {
-  width: 100%;
-}
-
-.account-selector .md-ripple {
-  padding: 0px;
-}
-
-.account-selector-menu-content .md-menu-content-container .md-list {
-  padding: 0px;
-}
-
-.account-selector .open-menu-button {
-  height: 100%;
-}
-
-.md-icon.md-theme-default.md-icon-image svg {
-  fill: $selectedEmailColor;
-}
-
-.md-list.md-theme-default {
-  background-color: #f4f6f8;
-  border-radius: 0px 0px 4px 4px !important;
-}
-
-.other-email .md-button {
-  right: 12px;
-}
-</style>
-
-
 <style lang="scss" scoped>
 $selectedEmailColor: #4187f7;
 $menuItemCellHeight: 56px;
