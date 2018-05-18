@@ -30,7 +30,7 @@ export default {
   name: 'TransferEmail',
   metaInfo() {
     return {
-      title: this.$t('message.transfer.ethtitle'),
+      title: this.$t('message.transfer.emailtitle'),
     };
   },
   data() {
