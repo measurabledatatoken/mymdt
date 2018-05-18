@@ -1,12 +1,12 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="transferAmountEntered"></MDTInputField>
+    <MDTInputField v-on:amountEntered="transferAmountEntered" :amount="transferAmount"></MDTInputField>
 
     <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts"
       :selectedAccount="transferFromAccount">
     </AccountSelector>
-    <WalletAddressField v-on:walletAddressEntered="walletAddressEntered" :label="$t('message.transfer.tolbl')"
-      :walletAddress="transferToWalletAddress">
+    <WalletAddressField v-on:walletAddressEntered="walletAddressEntered" v-on:walletAddressInvalid="walletAddressInvalid"
+      :label="$t('message.transfer.tolbl')" :walletAddress="transferToWalletAddress">
     </WalletAddressField>
     <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
 
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       transferEthReviewUrl: RouteDef.TransferEthWalletReview,
+      isWalletAddressValid: false,
     };
   },
   computed: {
@@ -51,7 +52,7 @@ export default {
       );
     },
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToAccount) {
+      if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid) {
         return false;
       }
       return true;
@@ -82,14 +83,17 @@ export default {
       this.$store.commit('setTransferFromAccount', account);
     },
     walletAddressEntered(address) {
+      this.isWalletAddressValid = true;
       this.$store.commit('setTransferToWalletAddress', address);
+    },
+    walletAddressInvalid() {
+      this.isWalletAddressValid = false;
     },
   },
 };
 </script>
 
 <style lang='scss' scoped>
-
 .md-button.next {
   @include primaryButtonStyle;
   @include center_horizontal;
