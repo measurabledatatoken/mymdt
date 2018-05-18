@@ -7,7 +7,7 @@
                 :value="walletAddress">
             </md-input>
             <md-button :to="RouteDef.TransferEthWalletQrCode">
-                <md-icon md-src="/static/icons/keyboard_arrow_down.svg"></md-icon>
+                <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>
             </md-button>
         </md-field>
 
