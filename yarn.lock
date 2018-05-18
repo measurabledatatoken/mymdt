@@ -7975,9 +7975,9 @@ vue-meta@^1.5.0:
     lodash.isplainobject "^4.0.6"
     object-assign "^4.1.1"
 
-vue-qrcode-reader@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/vue-qrcode-reader/-/vue-qrcode-reader-0.7.3.tgz#1910253ef94658c915e500aae8e85317612ac8d6"
+"vue-qrcode-reader@https://github.com/measurabledatatoken/vue-qrcode-reader.git":
+  version "0.7.4"
+  resolved "https://github.com/measurabledatatoken/vue-qrcode-reader.git#d0bf5c55feb559e1900c84d8d85baaff6bc07254"
   dependencies:
     babel-runtime "^6.26.0"
     jsqr "^1.0.4"

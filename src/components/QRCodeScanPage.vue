@@ -1,34 +1,34 @@
 <template>
-    <div class="qrcode-scan">
-        <div class="overlay">
-            <div class="instruction">
-                {{ $t('message.qrcode.align_description') }}
-            </div>
-            <div class="photolibbtn-container">
-                <label for="photolibbtn">
-                    {{ $t('message.qrcode.my_photo_library') }}
-                </label>
-            </div>
-            <input id="photolibbtn" type="file">
+  <div class="qrcode-scan">
+    <div class="overlay">
+      <div class="instruction">
+        {{ $t('message.qrcode.align_description') }}
+      </div>
+      <div class="photolibbtn-container">
+        <label for="photolibbtn">
+          {{ $t('message.qrcode.my_photo_library') }}
+        </label>
+      </div>
+      <input v-on:change="onFileSelected($event)" id="photolibbtn" type="file">
 
-        </div>
-        <div class="overlay-border">
-            <div class="frame topleft"></div>
-            <div class="frame topright"></div>
-            <div class="frame bottomleft"></div>
-            <div class="frame bottomright"></div>
-        </div>
-
-        <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
-        </qrcode-reader>
-
-        <md-dialog-alert :md-active.sync="wrongEthAddress" :md-content="$t('message.qrcode.eth_scan_wrong_type')"
-            :md-confirm-text="$t('message.common.okay')" />
     </div>
+    <div class="overlay-border">
+      <div class="frame topleft"></div>
+      <div class="frame topright"></div>
+      <div class="frame bottomleft"></div>
+      <div class="frame bottomright"></div>
+    </div>
+
+    <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
+    </qrcode-reader>
+
+    <md-dialog-alert :md-active.sync="wrongEthAddress" :md-content="$t('message.qrcode.eth_scan_wrong_type')"
+      :md-confirm-text="$t('message.common.okay')" />
+  </div>
 </template>
 
 <script>
-import { QrcodeReader } from 'vue-qrcode-reader';
+import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reader';
 import { getEthAddressFromString } from '@/utils';
 
 export default {
@@ -52,6 +52,9 @@ export default {
   components: {
     QrcodeReader,
   },
+  mounted() {
+    this.$store.commit('setEthAddressScanned', null);
+  },
   methods: {
     onDecode(content) {
       const ethAddress = getEthAddressFromString(content);
@@ -61,7 +64,21 @@ export default {
         this.$store.commit('setEthAddressScanned', ethAddress);
         this.$router.back();
       }
-      console.log(`QRCode onDecode content:${content} eth:${ethAddress}`);
+    },
+    onFileSelected(event) {
+      const imgFile = event.target.files[0];
+      console.log(`imgFile:${imgFile}`);
+      imageDataFromFile(imgFile).then((imageData) => {
+        const result = scanImageData(imageData);
+        const ethAddress = getEthAddressFromString(result.data);
+
+        if (ethAddress === null) {
+          this.wrongEthAddress = true;
+        } else {
+          this.$store.commit('setEthAddressScanned', ethAddress);
+          this.$router.back();
+        }
+      });
     },
   },
   created() {
