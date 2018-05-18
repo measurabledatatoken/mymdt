@@ -10,7 +10,7 @@
     </WalletAddressField>
     <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
 
-    <md-button :to="transferEthReviewUrl" class="next md-raised md-primary">
+    <md-button :to="transferEthReviewUrl" class="next md-raised md-primary" :disabled="disableNextBtn">
       {{ $t('message.transfer.nextbtn') }}
     </md-button>
   </div>
@@ -50,6 +50,12 @@ export default {
         account => account.emailAddress !== this.transferFromAccount.emailAddress,
       );
     },
+    disableNextBtn() {
+      if (this.transferAmount > 0 && this.transferToAccount) {
+        return false;
+      }
+      return true;
+    },
   },
   components: {
     AccountSelector,
@@ -83,6 +89,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
 .md-button.next {
   @include primaryButtonStyle;
   @include center_horizontal;

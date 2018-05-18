@@ -92,10 +92,5 @@ export default {
 .md-button.next {
   @include primaryButtonStyle;
   @include center_horizontal;
-
-  &[disabled] {
-    background-color: $bluebtn-backgroundcolor-disabled;
-    color: $bluebtn-wordcolor-disabled;
-  }
 }
 </style>
