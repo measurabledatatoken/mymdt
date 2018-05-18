@@ -95,13 +95,13 @@ export default {
   top: $header-height;
   z-index: 9;
   background-color: $home-bgcolor;
-  height: 28%;
+  height: 174px;
 }
 
 .bottom-content {
   z-index: 1;
   background-color: $home-bgcolor;
-  height: 72%;
+  height: calc(100% - 174px);
   overflow-y: scroll;
   padding-bottom: 80px;
 }
