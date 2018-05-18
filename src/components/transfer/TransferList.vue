@@ -24,6 +24,11 @@ import ActionCard from '@/components/common/ActionCard';
 
 export default {
   name: 'TransferListing',
+  metaInfo() {
+    return {
+      title: this.$t('message.transfer.title'),
+    };
+  },
   data() {
     return {
       RouteDef,
@@ -34,11 +39,6 @@ export default {
       transferFromAccount: 'transferFromAccount',
       accounts: 'userAccounts',
     }),
-  },
-  metaInfo() {
-    return {
-      title: this.$t('message.transfer.title'),
-    };
   },
   components: {
     AccountSelector,

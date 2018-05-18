@@ -58,12 +58,6 @@
 <script>
 export default {
   name: 'AccountSelector',
-  data() {
-    return {
-      isMenuOpened: false,
-      selectedOther: false,
-    };
-  },
   props: {
     label: {
       default: '',
@@ -79,6 +73,12 @@ export default {
     enableOther: {
       type: Boolean,
     },
+  },
+  data() {
+    return {
+      isMenuOpened: false,
+      selectedOther: false,
+    };
   },
   computed: {
     otherEmailAddress: {

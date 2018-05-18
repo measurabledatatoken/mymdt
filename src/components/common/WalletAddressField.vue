@@ -20,11 +20,6 @@ import { RouteDef } from '@/constants';
 
 export default {
   name: 'WalletAddressField',
-  data() {
-    return {
-      RouteDef,
-    };
-  },
   props: {
     label: {
       type: String,
@@ -34,6 +29,11 @@ export default {
       type: String,
       default: '',
     },
+  },
+  data() {
+    return {
+      RouteDef,
+    };
   },
   methods: {
     valueChanged(value) {

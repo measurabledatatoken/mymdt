@@ -27,6 +27,7 @@ import NoteInputField from '@/components/common/NoteInputField';
 import { RouteDef } from '@/constants';
 
 export default {
+  name: 'TransferEmail',
   metaInfo() {
     return {
       title: this.$t('message.transfer.ethtitle'),

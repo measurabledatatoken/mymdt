@@ -26,6 +26,7 @@ import WalletAddressField from '@/components/common/WalletAddressField';
 import { RouteDef } from '@/constants';
 
 export default {
+  name: 'TransferEthWallet',
   metaInfo() {
     return {
       title: this.$t('message.transfer.ethtitle'),

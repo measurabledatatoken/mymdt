@@ -16,8 +16,8 @@ import { AtomSpinner } from 'epic-spinners';
 import { ErrorCode, RouteDef } from '@/constants';
 
 export default {
-  props: [],
   name: 'AutoLogin',
+  props: [],
   computed: {
     ...mapGetters({
       loginErrorCode: 'loginErrorCode',

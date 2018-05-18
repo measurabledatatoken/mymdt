@@ -15,8 +15,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'forgetpassword',
-  created() {
-  },
   data() {
     return {
       emailAddress: '',
@@ -29,6 +27,8 @@ export default {
       this.$store.commit('setForgetSuccess', null);
       console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
     },
+  },
+  created() {
   },
   computed: {
     ...mapGetters({

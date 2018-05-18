@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'EarnMDT',
   metaInfo() {
     return {
       title: this.$t('message.earn.title'),
