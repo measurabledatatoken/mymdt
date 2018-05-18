@@ -1,7 +1,8 @@
 {
 
   "common": {
-    "transferbtn": "轉帳"
+    "transferbtn": "轉帳",
+    "okay": "OK"
   },
   "home": {
     "total_balance": "結餘",
@@ -32,6 +33,10 @@
     "title": "賺取 MDT"
   },
   "qrcode": {
-    "title": "掃描二維碼"
+    "title": "掃描二維碼",
+    "my_photo_library": "我的相簿",
+    "align_description": "請把二維碼放在框中掃描",
+    "eth_scan_wrong_type": "請只掃描以太錢包地址的二维码",
+    "eth_address_invalid": "不是正確的二維碼地址"
   }
 }

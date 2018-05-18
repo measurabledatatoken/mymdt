@@ -60,6 +60,10 @@ export default {
   created() {
     this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
+
+    if (this.$store.state.qrcode.ethAddressScanned != null) {
+      this.$store.commit('setTransferToWalletAddress', this.$store.state.qrcode.ethAddressScanned);
+    }
   },
   methods: {
     transferAmountEntered(value) {

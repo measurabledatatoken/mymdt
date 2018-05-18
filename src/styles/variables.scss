@@ -1,15 +1,20 @@
+$theme-color: #4187f7;
+$theme-font-color-btn: #4187f7;
+$theme-font-color-msg: white;
+
+
 //Background Color
 $app-bgcolor: white;
 $home-bgcolor:#0a224e;
 
 //Button Color
-$plainbtn-wordcolor: #4187f7;
+$plainbtn-wordcolor: $theme-color;
 
-$bluebtn-backgroundcolor: #4187f7;
-$bluebtn-wordcolor: white;
+$bluebtn-backgroundcolor: $theme-color;
+$bluebtn-wordcolor: $theme-font-color-msg;
 
 $bluebtn-backgroundcolor-disabled: rgba(65, 135, 247, 0.6);
-$bluebtn-wordcolor-disabled: white;
+$bluebtn-wordcolor-disabled: $theme-font-color-msg;
 
 //Other component Color
 $label-color: #4a4a4a;

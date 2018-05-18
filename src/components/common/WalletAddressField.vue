@@ -3,9 +3,9 @@
         <div class="label">{{ label }}</div>
 
         <md-field>
-            <md-input :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
+            <md-textarea md-autogrow :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
                 :value="walletAddress">
-            </md-input>
+            </md-textarea>
             <md-button :to="RouteDef.TransferEthWalletQrCode">
                 <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>
             </md-button>
@@ -56,5 +56,9 @@ export default {
   margin-left: $transferMarginLeftRight;
   min-height: 32px;
   padding-top: 0px;
+}
+
+.md-button {
+  min-width: 0;
 }
 </style>
