@@ -4,7 +4,7 @@
 
     <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
       <!-- Button -->
-      <md-button class="open-menu-button" :md-ripple="false" v-bind:class="{ 'open': isMenuOpened }" md-menu-trigger>
+      <md-button :md-ripple="false" v-bind:class="{ 'open': isMenuOpened }" md-menu-trigger>
         <div class="account-info" v-bind:class="{ 'other': selectedOther, 'open': isMenuOpened }">
           <div v-if="selectedAccount" class="account-email">
             {{ selectedAccountEmail }}
@@ -21,7 +21,7 @@
       </md-button>
 
       <!-- Content -->
-      <md-menu-content class="account-selector-menu-content">
+      <md-menu-content>
         <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
           <md-divider></md-divider>
           <div>
@@ -173,11 +173,30 @@ $menuItemOtherCellHeight: 44px;
 
   .md-button {
     width: 100%;
+    height: 100%;
 
     &.open {
       box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
       border-radius: 4px 4px 0px 0px;
       background-color: white;
+    }
+
+    /deep/ .md-button-content {
+      width: 100%;
+    }
+
+    /deep/ .md-ripple {
+      padding: 0px;
+    }
+
+    .md-icon {
+      width: 16%;
+      height: 26px;
+      margin-top: 13px;
+
+      &.other {
+        margin-top: 9px;
+      }
     }
   }
 
@@ -186,16 +205,6 @@ $menuItemOtherCellHeight: 44px;
   .md-button:not([disabled]):hover:before {
     background-color: white;
     opacity: 1;
-  }
-
-  .md-button .md-icon {
-    width: 16%;
-    height: 26px;
-    margin-top: 13px;
-
-    &.other {
-      margin-top: 9px;
-    }
   }
 }
 
@@ -243,6 +252,11 @@ $menuItemOtherCellHeight: 44px;
   width: 100%;
   left: 0;
   z-index: 9;
+
+  /deep/ .md-list {
+    background-color: #f4f6f8;
+    border-radius: 0px 0px 4px 4px !important;
+  }
 }
 
 .md-divider {
@@ -275,11 +289,15 @@ $menuItemOtherCellHeight: 44px;
   }
 }
 
-.open-menu-button,
+.md-button,
 .md-menu-item {
-  .md-icon {
+  /deep/ .md-icon {
     float: right;
     height: 100%;
+
+    svg {
+      fill: $selectedEmailColor;
+    }
   }
 }
 
@@ -293,6 +311,10 @@ $menuItemOtherCellHeight: 44px;
 
   label.placeholder {
     color: $placeholderColor;
+  }
+
+  /deep/ .md-button {
+    right: 12px;
   }
 }
 </style>

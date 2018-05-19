@@ -177,6 +177,13 @@ $clip_bottom: 60%;
   }
 }
 
+.reader {
+  /deep/ .qrcode-reader__camera {
+    object-fit: cover;
+    height: 100% !important;
+  }
+}
+
 .md-dialog {
   font-size: 20px;
   font-weight: bold;
