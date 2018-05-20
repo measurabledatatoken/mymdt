@@ -19,8 +19,8 @@
       <div class="frame bottomright"></div>
     </div>
 
-    <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
-    </qrcode-reader>
+    <!-- <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
+    </qrcode-reader> -->
 
     <md-dialog-alert :md-active.sync="wrongEthAddress" :md-content="$t('message.qrcode.eth_scan_wrong_type')"
       :md-confirm-text="$t('message.common.okay')" />
@@ -90,13 +90,17 @@ export default {
 <style lang="scss" scoped>
 $clip_left: 15%;
 $clip_right: 85%;
-$clip_top: 20%;
-$clip_bottom: 60%;
+$clip_top: 25%;
+$clip_bottom: 65%;
+
+.qrcode-scan {
+  height: calc(100vh - #{$header-height});
+}
 
 .overlay {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - #{$header-height});
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 
@@ -115,7 +119,7 @@ $clip_bottom: 60%;
 
   .instruction {
     position: absolute;
-    top: 62%;
+    top: calc(#{$clip_bottom} + 2%);
     width: 100%;
     color: $theme-font-color-msg;
   }
@@ -123,7 +127,7 @@ $clip_bottom: 60%;
   .photolibbtn-container {
     color: $theme-font-color-btn;
     position: absolute;
-    top: 70%;
+    top: calc(#{$clip_bottom} + 10%);
     width: 100%;
   }
 
@@ -133,11 +137,9 @@ $clip_bottom: 60%;
 }
 
 .overlay-border {
-  width: 70%;
-  height: 40%;
+  width: 100%;
+  height: calc(100vh - #{$header-height});
   position: absolute;
-  left: $clip_left;
-  top: calc(#{$clip_top} + #{$header-height});
   background-color: transparent;
   z-index: 2;
 
@@ -149,28 +151,32 @@ $clip_bottom: 60%;
 
     &.topleft {
       position: absolute;
+      top: $clip_top;
+      left: $clip_left;
       border-right: none;
       border-bottom: none;
     }
 
     &.topright {
       position: absolute;
-      right: 0;
+      top: $clip_top;
+      right: calc(100% - #{$clip_right});
       border-left: none;
       border-bottom: none;
     }
 
     &.bottomleft {
       position: absolute;
-      bottom: 0;
+      bottom: calc(100% - #{$clip_bottom});
+      left: $clip_left;
       border-right: none;
       border-top: none;
     }
 
     &.bottomright {
       position: absolute;
-      bottom: 0;
-      right: 0;
+      bottom: calc(100% - #{$clip_bottom});
+      right: calc(100% - #{$clip_right});
       border-left: none;
       border-top: none;
     }
