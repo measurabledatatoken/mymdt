@@ -164,12 +164,12 @@ $menuItemOtherCellHeight: 44px;
 .label {
   text-align: left;
   font-weight: bold;
-  margin: 8px $transferMarginLeftRight 0px $transferMarginLeftRight;
+  margin: 8px $defaultPageMargin 0px $defaultPageMargin;
 }
 
 .md-menu {
-  width: calc(100% - 2 *#{$transferMarginLeftRight});
-  margin: 0px $transferMarginLeftRight;
+  width: calc(100% - 2 *#{$defaultPageMargin});
+  margin: 0px $defaultPageMargin;
 
   .md-button {
     width: 100%;
@@ -306,8 +306,8 @@ $menuItemOtherCellHeight: 44px;
 }
 
 .other-email {
-  margin: -20px $transferMarginLeftRight;
-  width: calc(100% - 2 * #{$transferMarginLeftRight});
+  margin: -20px $defaultPageMargin;
+  width: calc(100% - 2 * #{$defaultPageMargin});
 
   label.placeholder {
     color: $placeholderColor;

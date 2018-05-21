@@ -33,7 +33,7 @@ export default {
 
 .label {
   text-align: left;
-  margin: 16px $transferMarginLeftRight 10px $transferMarginLeftRight;
+  margin: 16px $defaultPageMargin 10px $defaultPageMargin;
 
   font-size: 14px;
   font-weight: bold;
@@ -41,8 +41,8 @@ export default {
 }
 
 .md-field {
-  width: calc(100% - #{2 * $transferMarginLeftRight});
-  margin-left: $transferMarginLeftRight;
+  width: calc(100% - #{2 * $defaultPageMargin});
+  margin-left: $defaultPageMargin;
 
   .md-suffix {
     margin-left: 16px;

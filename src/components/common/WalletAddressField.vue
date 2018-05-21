@@ -67,13 +67,13 @@ export default {
 .label {
   text-align: left;
   font-weight: bold;
-  margin: 16px $transferMarginLeftRight 10px $transferMarginLeftRight;
+  margin: 16px $defaultPageMargin 10px $defaultPageMargin;
   color: $label-color;
 }
 
 .md-field {
-  width: calc(100% - #{2 * $transferMarginLeftRight});
-  margin-left: $transferMarginLeftRight;
+  width: calc(100% - #{2 * $defaultPageMargin});
+  margin-left: $defaultPageMargin;
   min-height: 32px;
   padding-top: 0px;
 
