@@ -4,7 +4,7 @@
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
@@ -28,3 +28,27 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Contribution Guideline (Draft)
+
+* All scss in Vue Component should be scoped
+* For child component that do not have acess, should use /deep/ instead of use a global.scss
+* All elements in a vuejs component should be ordered in following order
+
+```javascript
+  metaInfo() {
+  },
+  data() {
+  },
+  computed: {
+  },
+  components: {
+  },
+  created() {
+  },
+  mounted() {
+  },
+  methods: {
+  },
+```
+* Always fix the warning and errors from eslint
