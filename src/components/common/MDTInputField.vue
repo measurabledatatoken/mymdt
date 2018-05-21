@@ -70,11 +70,4 @@ export default {
   margin-top: 14px;
 }
 
-.md-divider {
-  background-color: $divider-color;
-  width: 90%;
-  margin-left: 5%;
-  height: 2px;
-  margin-top: 10px;
-}
 </style>
