@@ -23,7 +23,7 @@ import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
-import { RouteDef } from '@/constants';
+import { RouteDef, TransferType } from '@/constants';
 
 export default {
   name: 'TransferEthWallet',
@@ -66,8 +66,8 @@ export default {
   },
   created() {
     this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
+    this.$store.commit('setTransferType', TransferType.EthWallet);
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
-
     if (this.$store.state.qrcode.ethAddressScanned != null) {
       this.$store.commit('setTransferToWalletAddress', this.$store.state.qrcode.ethAddressScanned);
     }

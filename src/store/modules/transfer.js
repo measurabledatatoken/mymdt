@@ -11,6 +11,7 @@ const state = {
 
 const getters = {
   transferAmount: state => state.transferAmount,
+  transferType: state => state.transferType,
   transferFromAccount: state => state.transferFromAccount,
   transferToAccount: state => state.transferToAccount,
   transferToWalletAddress: state => state.transferToWalletAddress,

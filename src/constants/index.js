@@ -27,6 +27,10 @@ const ErrorCode = {
   UnknownError: 99999,
 };
 
+const TransferType = {
+  Email: 0,
+  EthWallet: 1,
+};
 
 const RouteDef = {
   Login: '/login',
@@ -58,6 +62,7 @@ const HeaderHeight = 52;
 
 export {
   ErrorCode,
+  TransferType,
   RouteDef,
   ExitFromWalletWebviewURL,
   HeaderHeight,

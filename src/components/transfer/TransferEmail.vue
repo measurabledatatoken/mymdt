@@ -24,7 +24,7 @@ import { mapGetters } from 'vuex';
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
-import { RouteDef } from '@/constants';
+import { RouteDef, TransferType } from '@/constants';
 
 export default {
   name: 'TransferEmail',
@@ -65,6 +65,7 @@ export default {
   },
   created() {
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
+    this.$store.commit('setTransferType', TransferType.Email);
   },
   methods: {
     transferAmountEntered(value) {
