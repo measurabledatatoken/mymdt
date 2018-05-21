@@ -23,7 +23,7 @@
     "wallet_address_placeholder": "Paste wallet address here",
     "other_emailaddress": "Other email address...",
     "enter_emailaddress": "Type email address",
-    "note_label": "Note",
+    "notelbl": "Note",
     "note_placeholder": "Optional note. Up to {num} charater",
 
     "transferlist_emailtitle": "Transfer MDT to Email Account",

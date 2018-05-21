@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="label">{{ $t('message.transfer.note_label') }}</div>
+    <div class="label">{{ $t('message.transfer.notelbl') }}</div>
 
     <md-field>
       <md-input :placeholder="$t('message.transfer.note_placeholder',{num: maxNum})" v-on:change="valueChanged($event.target.value)"
