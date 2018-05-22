@@ -68,6 +68,7 @@ export default {
   mounted() {
     this.$store.dispatch('getMDTPrice');
     this.$store.dispatch('getUserAccounts');
+    this.$store.dispatch('getAppConfig');
 
     this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
   },

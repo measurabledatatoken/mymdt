@@ -17,6 +17,10 @@ const state = {
   },
   userAccounts: [],
   locale: null,
+
+
+  // AppConfig
+  appConfig: null,
 };
 
 const getters = {
@@ -26,6 +30,8 @@ const getters = {
   selectedUser: state => state.selectedUser,
   userAccounts: state => state.userAccounts,
   locale: state => state.locale,
+
+  appConfig: state => state.appConfig,
 };
 
 const mutations = {
@@ -47,6 +53,9 @@ const mutations = {
   setLocale(state, locale) {
     state.locale = locale;
   },
+  setAppConfig(state, appConfig) {
+    state.appConfig = appConfig;
+  },
 };
 
 const actions = {
@@ -60,6 +69,19 @@ const actions = {
       .catch(
         (error) => {
           console.log('getMDTUSDPrice failed', error);
+        },
+      );
+  },
+  getAppConfig(context) {
+    api.misc.getAppConfig()
+      .then(
+        (data) => {
+          context.commit('setAppConfig', data);
+        },
+      )
+      .catch(
+        (error) => {
+          console.log('getAppConfig failed', error);
         },
       );
   },
@@ -107,7 +129,7 @@ const actions = {
 };
 
 
-export default{
+export default {
   state,
   getters,
   actions,

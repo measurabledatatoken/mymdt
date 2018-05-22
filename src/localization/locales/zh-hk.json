@@ -28,7 +28,9 @@
     "note_placeholder": "選填. 最多{num}字",
     "transferlist_emailtitle": "發送 MDT 到電郵地址",
     "transferlist_ethtitle": "發送 MDT 到以太錢包",
-    "transfer": "轉帳"
+    "transfer": "轉帳",
+    "transaction_fee": "手續費",
+    "final_amount": "最終數量"
   },
   "earn": {
     "title": "賺取 MDT"

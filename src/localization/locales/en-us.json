@@ -27,8 +27,9 @@
     "note_placeholder": "Optional note. Up to {num} charater",
     "transferlist_emailtitle": "Transfer MDT to Email Account",
     "transferlist_ethtitle": "Transfer MDT to External ETH Wallet",
-    "transfer": "transfer"
-
+    "transfer": "transfer",
+    "transaction_fee": "Transaction Fee",
+    "final_amount": "Final Amount"
   },
   "earn": {
     "title": "Earn MDT"

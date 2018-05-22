@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
@@ -14,5 +15,9 @@ export default {
       .catch((error) => {
         Promise.reject(error);
       });
+  },
+  getAppConfig() {
+    const promise = axios.get(`${APIScheme}://${APIEndPoint}/api/appconfig`);
+    return handleGeneralResponse(promise, 'getAppConfig data should not be null if the request is successed');
   },
 };
