@@ -3,9 +3,9 @@
     <div class="label">{{ $t('message.transfer.notelbl') }}</div>
 
     <md-field>
-      <md-input :placeholder="$t('message.transfer.note_placeholder',{num: maxNum})" v-on:change="valueChanged($event.target.value)"
-        :value="note">
-      </md-input>
+      <md-textarea :placeholder="$t('message.transfer.note_placeholder',{num: maxNum})" v-on:change="valueChanged($event.target.value)"
+        :value="note" md-autogrow :md-counter="maxNum" :maxlength="maxNum">
+      </md-textarea>
     </md-field>
   </div>
 
