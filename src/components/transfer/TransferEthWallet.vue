@@ -1,6 +1,7 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="transferAmountEntered" :amount="transferAmount"></MDTInputField>
+    <MDTInputField v-on:amountEntered="transferAmountEntered" v-on:amountInvalid="transferAmountInvalid"
+      :amount="transferAmount" :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
     <div class="transaction-fee">
       <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
       <div class="transaction-fee-value"> {{ transactionFee }} MDT</div>
@@ -61,7 +62,7 @@ export default {
       );
     },
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0) {
+      if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0 && this.isWalletAmountValid) {
         return false;
       }
       return true;
@@ -80,6 +81,9 @@ export default {
     },
     finalAmountStr() {
       return this.finalAmount <= 0 ? '--' : this.finalAmount;
+    },
+    isWalletAmountValid() {
+      return this.transferAmount < this.transferFromAccount.mdtBalance;
     },
     isFinalAmountSmallerThanZero() {
       console.log(`this.finalAmount${this.finalAmount}`);
@@ -106,6 +110,10 @@ export default {
   methods: {
     transferAmountEntered(value) {
       this.$store.commit('setTransferAmount', value);
+      this.isWalletAmountValid = true;
+    },
+    transferAmountInvalid() {
+      this.isWalletAmountValid = false;
     },
     noteInfoEntered(value) {
       this.$store.commit('setTransferNote', value);
@@ -125,8 +133,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
-.transaction-fee, .final-amount {
+.transaction-fee,
+.final-amount {
   margin-left: $defaultPageMargin;
   margin-right: $defaultPageMargin;
   min-height: 20px;
@@ -149,7 +157,7 @@ export default {
 }
 
 .final-amount-value.negative {
-  color: red;
+  color: $theme-warning-color;
 }
 
 .extra-space {

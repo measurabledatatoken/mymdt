@@ -29,7 +29,8 @@
     "transferlist_ethtitle": "发送 MDT 到以太钱包",
     "transfer": "转帐",
     "transaction_fee": "手续费",
-    "final_amount": "最终数量"
+    "final_amount": "最终数量",
+    "insufficient_fund": "帐号MDT数量不够，请减才少数量或另选帐号。"
   },
   "earn": {
     "title": "赚取 MDT"

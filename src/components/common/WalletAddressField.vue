@@ -84,7 +84,7 @@ export default {
   }
 
   .md-helper-text {
-    color: red;
+    color: $theme-warning-color
   }
 }
 </style>

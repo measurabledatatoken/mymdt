@@ -1,12 +1,13 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="transferAmountEntered" :amount="transferAmount"></MDTInputField>
+    <MDTInputField v-on:amountEntered="transferAmountEntered" v-on:amountInvalid="transferAmountInvalid"
+      :amount="transferAmount" :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
 
     <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts"
       :selectedAccount="transferFromAccount">
     </AccountSelector>
-    <AccountSelector v-on:accountSelected="selectedToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true" :accounts="toAccounts"
-      :selectedAccount="transferToAccount">
+    <AccountSelector v-on:accountSelected="selectedToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true"
+      :accounts="toAccounts" :selectedAccount="transferToAccount">
     </AccountSelector>
 
     <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
@@ -57,6 +58,9 @@ export default {
       }
       return true;
     },
+    isWalletAmountValid() {
+      return this.transferAmount < this.transferFromAccount.mdtBalance;
+    },
   },
   components: {
     AccountSelector,
@@ -70,6 +74,10 @@ export default {
   methods: {
     transferAmountEntered(value) {
       this.$store.commit('setTransferAmount', value);
+      this.isWalletAmountValid = true;
+    },
+    transferAmountInvalid() {
+      this.isWalletAmountValid = false;
     },
     noteInfoEntered(value) {
       this.$store.commit('setTransferNote', value);

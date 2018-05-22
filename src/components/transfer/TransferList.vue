@@ -50,7 +50,6 @@ export default {
     if (this.$store.state.transfer.transferFromAccount == null) {
       this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
     }
-    this.$store.commit('setTransferToAccount', null);
   },
   methods: {
     selectedFromAccount(user) {

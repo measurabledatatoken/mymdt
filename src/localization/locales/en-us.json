@@ -29,7 +29,8 @@
     "transferlist_ethtitle": "Transfer MDT to External ETH Wallet",
     "transfer": "transfer",
     "transaction_fee": "Transaction Fee",
-    "final_amount": "Final Amount"
+    "final_amount": "Final Amount",
+    "insufficient_fund": "Insufficient fund. Please enter another amount or change an account." 
   },
   "earn": {
     "title": "Earn MDT"
