@@ -6,7 +6,7 @@
         :value="enteredAmount">
       </md-input>
       <div class="md-suffix">MDT</div>
-      <span v-show="isInSufficientFund" class="md-helper-text">{{ $t('message.transfer.insufficient_fund') }}</span>
+      <span v-if="isInSufficientFund" class="md-helper-text">{{ $t('message.transfer.insufficient_fund') }}</span>
     </md-field>
   </div>
 </template>

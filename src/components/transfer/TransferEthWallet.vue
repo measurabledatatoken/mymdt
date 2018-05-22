@@ -11,6 +11,7 @@
       <div class="final-amount-lbl">{{ $t('message.transfer.final_amount') }}</div>
       <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }} MDT</div>
     </div>
+
     <div class="extra-space"> </div>
     <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts"
       :selectedAccount="transferFromAccount">
@@ -76,7 +77,6 @@ export default {
     },
     finalAmount() {
       const finalAmount = this.transferAmount - this.transactionFee;
-
       return finalAmount;
     },
     finalAmountStr() {
