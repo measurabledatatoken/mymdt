@@ -25,9 +25,10 @@
     "enter_emailaddress": "Type email address",
     "notelbl": "Note",
     "note_placeholder": "Optional note. Up to {num} charater",
-
     "transferlist_emailtitle": "Transfer MDT to Email Account",
-    "transferlist_ethtitle": "Transfer MDT to External ETH Wallet"
+    "transferlist_ethtitle": "Transfer MDT to External ETH Wallet",
+    "transfer": "transfer"
+
   },
   "earn": {
     "title": "Earn MDT"
