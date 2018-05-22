@@ -61,7 +61,7 @@ export default {
       );
     },
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid) {
+      if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0) {
         return false;
       }
       return true;
