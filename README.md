@@ -52,3 +52,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
   },
 ```
 * Always fix the warning and errors from eslint
+* We are using Material UI library. Try to check out the component in the library first before use other library. https://vuematerial.io/components/input
