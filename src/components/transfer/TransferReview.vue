@@ -10,9 +10,11 @@
 
             <div v-if="transferType === TransferType.Email" class='amount-container-email'>
                 <md-divider></md-divider>
-                <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
-                <div class='amount-unit'>MDT</div>
-                <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
+                <div class="amount-container">
+                    <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
+                    <div class='amount-unit'>MDT</div>
+                    <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
+                </div>
             </div>
 
             <div v-if="transferType === TransferType.EthWallet" class='amount-container-eth'>
@@ -141,27 +143,33 @@ export default {
   margin-top: 8px;
 }
 
+$amountMinHeight: 20px;
 .amount-container-email {
-  .amount-lbl {
-    float: left;
-    width: 30%;
-  }
+  .amount-container {
+    margin-top: $defaultPageMargin;
+    min-height: $amountMinHeight;
 
-  .amount-value {
-    float: right;
-    font-size: 28px;
-    width: 55%;
-    text-align: right;
-    line-height: 40px;
-  }
+    .amount-lbl {
+      float: left;
+      width: 30%;
+    }
 
-  .amount-unit {
-    float: right;
-    font-size: 16px;
-    width: 15%;
-    padding-left: 16px;
-    padding-top: 12px;
-    line-height: 40px;
+    .amount-value {
+      float: right;
+      font-size: 28px;
+      width: 55%;
+      text-align: right;
+      line-height: 40px;
+    }
+
+    .amount-unit {
+      float: right;
+      font-size: 16px;
+      width: 15%;
+      padding-left: 16px;
+      padding-top: 4px;
+      line-height: 40px;
+    }
   }
 }
 
@@ -172,7 +180,6 @@ export default {
     width: 15%;
     padding-left: 16px;
   }
-  $amountMinHeight: 20px;
 
   .amount-container {
     margin-top: $defaultPageMargin;

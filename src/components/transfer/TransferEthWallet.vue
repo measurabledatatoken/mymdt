@@ -86,7 +86,6 @@ export default {
       return this.transferAmount < this.transferFromAccount.mdtBalance;
     },
     isFinalAmountSmallerThanZero() {
-      console.log(`this.finalAmount${this.finalAmount}`);
       if (this.finalAmount <= 0) {
         return true;
       }
