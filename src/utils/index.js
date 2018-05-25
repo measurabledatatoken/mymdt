@@ -22,7 +22,7 @@ const isRouteChangeBack = (to, from) => {
   return toDepth < fromDepth;
 };
 
-const isValidEthAddress = address => new RegExp('0x[a-fA-F0-9]{40}').test(address);
+const isValidEthAddress = address => new RegExp('^0x[a-fA-F0-9]{40}$').test(address);
 
 const getEthAddressFromString = (str) => {
   const index = str.indexOf('0x');
