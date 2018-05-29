@@ -38,5 +38,8 @@
     "align_description": "请把二维码放在框中扫描",
     "eth_scan_wrong_type": "请只扫描以太钱包地址的二维码",
     "eth_address_invalid": "不是正确的以太钱包地址"
+  },
+  "account": {
+    "transactions": "交易"
   }
 }

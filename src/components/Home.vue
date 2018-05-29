@@ -17,12 +17,13 @@
       </div>
     </div>
 
-    <md-button :to="earnMDTUrl" class="earn-mdt md-raised md-primary">{{ $t('message.home.earn_mdt') }} </md-button>
+    <earn-m-d-t-button />
   </div>
 </template>
 
 <script>
 import UserCard from '@/components/common/UserCard';
+import EarnMDTButton from '@/components/common/EarnMDTButton';
 import { mapGetters } from 'vuex';
 import { RouteDef, HeaderHeight } from '@/constants';
 
@@ -64,6 +65,7 @@ export default {
   },
   components: {
     UserCard,
+    EarnMDTButton,
   },
   mounted() {
     this.$store.dispatch('getMDTPrice');

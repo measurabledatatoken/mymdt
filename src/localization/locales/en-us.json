@@ -39,5 +39,8 @@
     "align_description": "Align QR code within frame to scan",
     "eth_scan_wrong_type": "Please scan ETH address QR code only",
     "eth_address_invalid": "Invalid Ethereum Address"
+  },
+  "account": {
+    "transactions": "Transactions"
   }
 }
