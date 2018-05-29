@@ -53,6 +53,11 @@ import { TransferType, ErrorCode, RouteDef } from '@/constants';
 
 export default {
   name: 'TransferReview',
+  metaInfo() {
+    return {
+      title: this.$t('message.transfer.reviewtitle'),
+    };
+  },
   data() {
     return {
       disableTransferBtn: true,
@@ -113,6 +118,10 @@ export default {
       return false;
     },
   },
+  created() {
+    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
+  },
+
   methods: {
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
