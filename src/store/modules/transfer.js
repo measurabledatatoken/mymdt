@@ -1,5 +1,5 @@
 import api from '@/api';
-import { ErrorCode, TransferType } from '@/constants';
+import { TransferType } from '@/constants';
 
 const state = {
   transferAmount: 0,
@@ -9,7 +9,6 @@ const state = {
   transferToWalletAddress: null,
   transferNote: null,
   transferSuccess: null,
-  transferErrorCode: null,
 };
 
 const getters = {
@@ -20,7 +19,6 @@ const getters = {
   transferToWalletAddress: state => state.transferToWalletAddress,
   transferNote: state => state.transferNote,
   transferSuccess: state => state.transferSuccess,
-  transferErrorCode: state => state.transferErrorCode,
 };
 
 const mutations = {
@@ -45,18 +43,10 @@ const mutations = {
   setTransferSuccess(state, transferSuccess) {
     state.transferSuccess = transferSuccess;
   },
-  setTransferErrorCode(state, transferErrorCode) {
-    state.transferErrorCode = transferErrorCode;
-    if (transferErrorCode == null) {
-      state.transferSuccess = true;
-    } else {
-      state.transferSuccess = false;
-    }
-  },
 };
 
 const actions = {
-  startTransfer(context) {
+  startTransfer() {
     return new Promise((resolve, reject) => {
       const selectedUser = this.state.home.selectedUser;
       const transferType = this.state.transfer.transferType;
@@ -69,17 +59,11 @@ const actions = {
 
       api.transfer.transfer(toAddress, transferType, amount, selectedUser.accessToken)
         .then(() => {
-          context.commit('setTransferErrorCode', null);
           resolve();
         })
         .catch(
           (error) => {
-            if (error.response && error.response.data) {
-              context.commit('setTransferErrorCode', error.response.data.error_code);
-            } else {
-              context.commit('setTransferErrorCode', ErrorCode.UnknownError);
-            }
-            reject();
+            reject(error);
           },
         );
     });

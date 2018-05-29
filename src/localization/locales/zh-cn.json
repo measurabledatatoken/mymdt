@@ -2,7 +2,8 @@
   "common": {
     "transferbtn": "转帐",
     "okay": "OK",
-    "unknow_error": "出错了......请稍后再试"
+    "unknow_error": "出错了......请稍后再试",
+    "error_title": "出错了"
   },
   "home": {
     "total_balance": "结余",

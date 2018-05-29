@@ -37,10 +37,6 @@
           <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }}</div>
         </div>
       </div>
-
-      <md-dialog-alert :md-active.sync="showAlert" :md-content="errorMessage" :md-confirm-text="$t('message.common.okay')"
-      >
-      </md-dialog-alert>
     </div>
 
     <vue-recaptcha class="recaptcha" v-on:verify="onRecaptchaVerified" sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"></vue-recaptcha>
@@ -87,25 +83,6 @@ export default {
         }
       },
     },
-    errorMessage() {
-      switch (this.transferErrorCode) {
-        case ErrorCode.InvalidEmail: {
-          return this.$t('message.transfer.invalid_email');
-        }
-        case ErrorCode.InvalidEthAddress: {
-          return this.$t('message.transfer.invalid_ethaddress');
-        }
-        case ErrorCode.InsufficientFund: {
-          return this.$t('message.transfer.insufficient_fund');
-        }
-        case null: {
-          return '';
-        }
-        default: {
-          return 'Unknown error, please try again';
-        }
-      }
-    },
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
         return this.transferToWalletAddress;
@@ -142,10 +119,37 @@ export default {
     },
     transferMDT() {
       this.$store.dispatch('startTransfer').then(() => {
-        if (this.transferSuccess) {
-          this.$router.push(RouteDef.TransferSuccess);
-        }
-      }).catch(() => ({}));
+        this.$router.push(RouteDef.TransferSuccess);
+      }).catch(
+        (error) => {
+          const errorCode = error.response.data.error_code;
+          let errorMsg = '';
+          switch (errorCode) {
+            case ErrorCode.InvalidEmail: {
+              errorMsg = this.$t('message.transfer.invalid_email');
+              break;
+            }
+            case ErrorCode.InvalidEthAddress: {
+              errorMsg = this.$t('message.transfer.invalid_ethaddress');
+              break;
+            }
+            case ErrorCode.InsufficientFund: {
+              errorMsg = this.$t('message.transfer.insufficient_fund');
+              break;
+            }
+            case null: {
+              errorMsg = '';
+              break;
+            }
+            default: {
+              errorMsg = this.$t('message.common.unknow_error');
+              break;
+            }
+          }
+          this.$store.commit('setErrorMessage', errorMsg);
+          this.$store.commit('setErrorTitle', this.$t('message.common.error_title'));
+          this.$store.commit('setShowErrorPrompt', true);
+        });
     },
   },
 };

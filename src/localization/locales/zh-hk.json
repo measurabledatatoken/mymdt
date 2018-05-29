@@ -3,7 +3,8 @@
   "common": {
     "transferbtn": "轉帳",
     "okay": "OK",
-    "unknow_error": "出錯了......請稍後再試"
+    "unknow_error": "出錯了......請稍後再試",
+    "error_title": "出錯了"
   },
   "home": {
     "total_balance": "結餘",

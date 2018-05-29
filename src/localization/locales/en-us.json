@@ -2,7 +2,8 @@
   "common": {
     "transferbtn": "Transfer",
     "okay": "okay",
-    "unknow_error": "Somthing went wrong... <br> Please try again later"
+    "unknow_error": "Somthing went wrong... <br> Please try again later",
+    "error_title": "Something is wrong"
   },
   "home": {
     "total_balance": "Total Balance",

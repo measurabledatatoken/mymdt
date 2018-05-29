@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 import createPersistedState from 'vuex-persistedstate';
 
+import common from './modules/common';
 import home from './modules/home';
 import forgetPassword from './modules/forgetpassword';
 import login from './modules/login';
@@ -16,6 +17,7 @@ const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
   modules: {
+    common,
     home,
     forgetPassword,
     login,

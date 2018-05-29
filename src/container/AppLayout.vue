@@ -11,6 +11,10 @@
         <router-view class="content-router-view"></router-view>
       </transition>
     </div>
+
+    <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
+      :md-confirm-text="$t('message.common.okay')" />
+
   </div>
 </template>
 
@@ -31,7 +35,17 @@ export default {
   computed: {
     ...mapGetters({
       navigationTitle: 'navigationTitle',
+      errorMessage: 'errorMessage',
+      errorTitle: 'errorTitle',
     }),
+    showErrorPrompt: {
+      get() {
+        return this.$store.state.common.showErrorPrompt;
+      },
+      set(newValue) {
+        this.$store.commit('setShowErrorPrompt', newValue);
+      },
+    },
   },
   components: {
     HomeHeader,
@@ -67,7 +81,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@mixin animation-active () {
+@mixin animation-active() {
   will-change: transform;
   @include transition(transform 500ms);
   position: absolute;
@@ -97,7 +111,7 @@ export default {
 .content-router-view {
   width: 100%;
   bottom: 0;
-  flex:1;
+  flex: 1;
 }
 
 .header-pop-out-enter-active,
@@ -125,7 +139,7 @@ export default {
 .content-pop-in-enter-active,
 .content-pop-in-leave-active {
   @include animation-active;
-  Top: $header-height;
+  top: $header-height;
 }
 
 .content-pop-out-enter {
