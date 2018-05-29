@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       transferEthReviewUrl: RouteDef.TransferEthWalletReview,
-      isValidEmailAddress: false,
     };
   },
   computed: {
@@ -53,6 +52,9 @@ export default {
       return this.accounts.filter(
         account => account.emailAddress !== this.transferFromAccount.emailAddress,
       );
+    },
+    isValidEmailAddress() {
+      return isValidEmailAddress(this.transferToAccount.emailAddress);
     },
     disableNextBtn() {
       if (this.transferAmount > 0 && this.transferToAccount && this.isWalletAmountValid && this.isValidEmailAddress) {
@@ -88,10 +90,7 @@ export default {
       this.$store.commit('setTransferFromAccount', account);
     },
     selectedToAccount(account) {
-      this.isValidEmailAddress = isValidEmailAddress(account.emailAddress);
-      if (this.isValidEmailAddress) {
-        this.$store.commit('setTransferToAccount', account);
-      }
+      this.$store.commit('setTransferToAccount', account);
     },
   },
 };
