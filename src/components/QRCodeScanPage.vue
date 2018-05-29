@@ -48,6 +48,9 @@ export default {
   components: {
     QrcodeReader,
   },
+  created() {
+    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
+  },
   mounted() {
     this.$store.commit('setEthAddressScanned', null);
   },
@@ -78,9 +81,6 @@ export default {
         }
       });
     },
-  },
-  created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
 };
 </script>
