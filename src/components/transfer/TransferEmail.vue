@@ -26,6 +26,7 @@ import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import { RouteDef, TransferType } from '@/constants';
+import { isValidEmailAddress } from '@/utils';
 
 export default {
   name: 'TransferEmail',
@@ -37,6 +38,7 @@ export default {
   data() {
     return {
       transferEthReviewUrl: RouteDef.TransferEthWalletReview,
+      isValidEmailAddress: false,
     };
   },
   computed: {
@@ -53,7 +55,7 @@ export default {
       );
     },
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToAccount) {
+      if (this.transferAmount > 0 && this.transferToAccount && this.isWalletAmountValid && this.isValidEmailAddress) {
         return false;
       }
       return true;
@@ -86,7 +88,10 @@ export default {
       this.$store.commit('setTransferFromAccount', account);
     },
     selectedToAccount(account) {
-      this.$store.commit('setTransferToAccount', account);
+      this.isValidEmailAddress = isValidEmailAddress(account.emailAddress);
+      if (this.isValidEmailAddress) {
+        this.$store.commit('setTransferToAccount', account);
+      }
     },
   },
 };

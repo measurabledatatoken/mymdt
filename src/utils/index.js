@@ -23,6 +23,10 @@ const isRouteChangeBack = (to, from) => {
 };
 
 const isValidEthAddress = address => new RegExp('^0x[a-fA-F0-9]{40}$').test(address);
+const isValidEmailAddress = (email) => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+};
 
 const getEthAddressFromString = (str) => {
   const index = str.indexOf('0x');
@@ -42,5 +46,6 @@ export {
   isRouteChangeBack,
 
   isValidEthAddress,
+  isValidEmailAddress,
   getEthAddressFromString,
 };
