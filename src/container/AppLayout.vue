@@ -154,5 +154,20 @@ export default {
 .content-pop-in-leave-active {
   transform: translateX(-100%);
 }
+
+.md-dialog {
+  text-align: left;
+
+  /deep/ .md-dialog-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  /deep/ .md-button {
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
 </style>
 
