@@ -78,10 +78,9 @@ export default {
   methods: {
     transferAmountEntered(value) {
       this.$store.commit('setTransferAmount', value);
-      this.isWalletAmountValid = true;
     },
     transferAmountInvalid() {
-      this.isWalletAmountValid = false;
+      this.$store.commit('setTransferAmount', 0);
     },
     noteInfoEntered(value) {
       this.$store.commit('setTransferNote', value);
