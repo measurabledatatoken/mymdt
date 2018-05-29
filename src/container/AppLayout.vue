@@ -83,7 +83,7 @@ export default {
 <style lang="scss" scoped>
 @mixin animation-active() {
   will-change: transform;
-  @include transition(transform 500ms);
+  transition: transform 500ms ease-in-out;
   position: absolute;
 }
 
@@ -96,6 +96,7 @@ export default {
   top: 0;
   z-index: 3;
   height: $header-height;
+  background: $home-bgcolor;
 }
 
 .header-view {
