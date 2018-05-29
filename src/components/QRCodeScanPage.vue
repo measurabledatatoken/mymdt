@@ -19,11 +19,8 @@
       <div class="frame bottomright"></div>
     </div>
 
-    <!-- <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
-    </qrcode-reader> -->
-
-    <md-dialog-alert :md-active.sync="wrongEthAddress" :md-content="$t('message.qrcode.eth_scan_wrong_type')"
-      :md-confirm-text="$t('message.common.okay')" />
+    <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
+    </qrcode-reader>
   </div>
 </template>
 
@@ -40,7 +37,6 @@ export default {
   },
   data() {
     return {
-      wrongEthAddress: false,
       videoConstraints: {
         audio: false, // don't request microphone access
         video: {
@@ -59,7 +55,8 @@ export default {
     onDecode(content) {
       const ethAddress = getEthAddressFromString(content);
       if (ethAddress === null) {
-        this.wrongEthAddress = true;
+        this.$store.commit('setErrorMessage', this.$t('message.qrcode.eth_scan_wrong_type'));
+        this.$store.commit('setShowErrorPrompt', true);
       } else {
         this.$store.commit('setEthAddressScanned', ethAddress);
         this.$router.back();
@@ -73,7 +70,8 @@ export default {
         const ethAddress = getEthAddressFromString(result.data);
 
         if (ethAddress === null) {
-          this.wrongEthAddress = true;
+          this.$store.commit('setErrorMessage', this.$t('message.qrcode.eth_scan_wrong_type'));
+          this.$store.commit('setShowErrorPrompt', true);
         } else {
           this.$store.commit('setEthAddressScanned', ethAddress);
           this.$router.back();
@@ -190,19 +188,4 @@ $clip_bottom: 65%;
   }
 }
 
-.md-dialog {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-
-  /deep/ .md-dialog-content {
-    padding-top: 40px;
-  }
-
-  /deep/ .md-button {
-    width: 100%;
-    font-size: 16px;
-    font-weight: bold;
-  }
-}
 </style>
