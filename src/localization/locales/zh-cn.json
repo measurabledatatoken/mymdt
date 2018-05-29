@@ -31,6 +31,8 @@
     "transfer": "转帐",
     "transaction_fee": "手续费",
     "final_amount": "最终数量",
+    "invalid_email": "无效的电邮地址",
+    "invalid_ethaddress": "无效的以太钱包地址",
     "insufficient_fund": "帐号MDT数量不够，请减才少数量或另选帐号。"
   },
   "earn": {

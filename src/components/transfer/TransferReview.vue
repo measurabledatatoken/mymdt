@@ -90,10 +90,10 @@ export default {
     errorMessage() {
       switch (this.transferErrorCode) {
         case ErrorCode.InvalidEmail: {
-          return this.$t('message.transfer.insufficient_fund');
+          return this.$t('message.transfer.invalid_email');
         }
         case ErrorCode.InvalidEthAddress: {
-          return this.$t('message.transfer.insufficient_fund');
+          return this.$t('message.transfer.invalid_ethaddress');
         }
         case ErrorCode.InsufficientFund: {
           return this.$t('message.transfer.insufficient_fund');

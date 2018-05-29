@@ -31,6 +31,8 @@
     "transfer": "transfer",
     "transaction_fee": "Transaction Fee",
     "final_amount": "Final Amount",
+    "invalid_email": "Invalid Email Address",
+    "invalid_ethaddress": "Invalid Eth Address",
     "insufficient_fund": "Insufficient fund. Please enter another amount or change an account." 
   },
   "earn": {
