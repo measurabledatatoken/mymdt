@@ -30,7 +30,7 @@ export default {
       selectedUser: state => state.home.selectedUser,
     }),
   },
-  mounted() {
+  created() {
     this.getAccountTransactions();
   },
   methods: {
