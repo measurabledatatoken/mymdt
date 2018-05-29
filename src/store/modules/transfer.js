@@ -1,4 +1,5 @@
-
+import api from '@/api';
+import { ErrorCode, TransferType } from '@/constants';
 
 const state = {
   transferAmount: 0,
@@ -7,6 +8,8 @@ const state = {
   transferToAccount: null,
   transferToWalletAddress: null,
   transferNote: null,
+  transferSuccess: null,
+  transferErrorCode: null,
 };
 
 const getters = {
@@ -16,6 +19,8 @@ const getters = {
   transferToAccount: state => state.transferToAccount,
   transferToWalletAddress: state => state.transferToWalletAddress,
   transferNote: state => state.transferNote,
+  transferSuccess: state => state.transferSuccess,
+  transferErrorCode: state => state.transferErrorCode,
 };
 
 const mutations = {
@@ -37,10 +42,48 @@ const mutations = {
   setTransferNote(state, transferNote) {
     state.transferNote = transferNote;
   },
+  setTransferSuccess(state, transferSuccess) {
+    state.transferSuccess = transferSuccess;
+  },
+  setTransferErrorCode(state, transferErrorCode) {
+    state.transferErrorCode = transferErrorCode;
+    if (transferErrorCode == null) {
+      state.transferSuccess = true;
+    } else {
+      state.transferSuccess = false;
+    }
+  },
 };
 
 const actions = {
+  startTransfer(context) {
+    return new Promise((resolve, reject) => {
+      const selectedUser = this.state.home.selectedUser;
+      const transferType = this.state.transfer.transferType;
+      const amount = this.state.transfer.transferAmount;
 
+      let toAddress = this.state.transfer.transferToAccount.emailAddress;
+      if (transferType === TransferType.EthWallet) {
+        toAddress = this.state.transfer.transferToWalletAddress;
+      }
+
+      api.transfer.transfer(toAddress, transferType, amount, selectedUser.accessToken)
+        .then(() => {
+          context.commit('setTransferErrorCode', null);
+          resolve();
+        })
+        .catch(
+          (error) => {
+            if (error.response && error.response.data) {
+              context.commit('setTransferErrorCode', error.response.data.error_code);
+            } else {
+              context.commit('setTransferErrorCode', ErrorCode.UnknownError);
+            }
+            reject();
+          },
+        );
+    });
+  },
 };
 
 

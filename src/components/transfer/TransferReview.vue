@@ -37,6 +37,10 @@
           <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }}</div>
         </div>
       </div>
+
+      <md-dialog-alert :md-active.sync="showAlert" :md-content="errorMessage" :md-confirm-text="$t('message.common.okay')"
+      >
+      </md-dialog-alert>
     </div>
 
     <vue-recaptcha class="recaptcha" v-on:verify="onRecaptchaVerified" sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"></vue-recaptcha>
@@ -49,7 +53,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
-import { TransferType } from '@/constants';
+import { TransferType, ErrorCode, RouteDef } from '@/constants';
 
 export default {
   name: 'TransferReview',
@@ -70,7 +74,38 @@ export default {
       transferToAccount: 'transferToAccount',
       transferToWalletAddress: 'transferToWalletAddress',
       transferNote: 'transferNote',
+      transferErrorCode: 'transferErrorCode',
+      transferSuccess: 'transferSuccess',
     }),
+    showAlert: {
+      get() {
+        return this.transferSuccess == null ? false : !this.transferSuccess;
+      },
+      set(newValue) {
+        if (newValue === false) {
+          this.$store.commit('setTransferSuccess', null);
+        }
+      },
+    },
+    errorMessage() {
+      switch (this.transferErrorCode) {
+        case ErrorCode.InvalidEmail: {
+          return this.$t('message.transfer.insufficient_fund');
+        }
+        case ErrorCode.InvalidEthAddress: {
+          return this.$t('message.transfer.insufficient_fund');
+        }
+        case ErrorCode.InsufficientFund: {
+          return this.$t('message.transfer.insufficient_fund');
+        }
+        case null: {
+          return '';
+        }
+        default: {
+          return 'Unknown error, please try again';
+        }
+      }
+    },
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
         return this.transferToWalletAddress;
@@ -106,7 +141,11 @@ export default {
       this.disableTransferBtn = false;
     },
     transferMDT() {
-
+      this.$store.dispatch('startTransfer').then(() => {
+        if (this.transferSuccess) {
+          this.$router.push(RouteDef.TransferSuccess);
+        }
+      }).catch(() => ({}));
     },
   },
 };

@@ -21,7 +21,7 @@ import TransferList from '@/components/transfer/TransferList';
 import TransferEmail from '@/components/transfer/TransferEmail';
 import TransferEthWallet from '@/components/transfer/TransferEthWallet';
 import TransferReview from '@/components/transfer/TransferReview';
-
+import TransferSuccess from '@/components/transfer/TransferSuccess';
 import QrCodeScanPage from '@/components/QRCodeScanPage';
 
 import EarnMDT from '@/components/earn/EarnMDT';
@@ -97,6 +97,10 @@ const router = new Router({
         {
           path: RouteDef.TransferEthWalletQrCode,
           component: QrCodeScanPage,
+        },
+        {
+          path: RouteDef.TransferSuccess,
+          component: TransferSuccess,
         },
 
         // Earn MDT Route
