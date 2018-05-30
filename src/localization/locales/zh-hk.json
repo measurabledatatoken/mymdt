@@ -41,6 +41,7 @@
     "eth_address_invalid": "不是正確的以太錢包地址"
   },
   "account": {
+    "title": "帳戶",
     "transactions": "交易"
   }
 }

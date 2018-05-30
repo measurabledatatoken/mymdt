@@ -41,6 +41,7 @@
     "eth_address_invalid": "Invalid Ethereum Address"
   },
   "account": {
+    "title": "Account",
     "transactions": "Transactions"
   }
 }

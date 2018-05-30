@@ -19,6 +19,11 @@ import { RouteDef } from '@/constants';
 
 export default {
   name: 'AccountDetail',
+  metaInfo() {
+    return {
+      title: this.$t('message.account.title'),
+    };
+  },
   components: {
     UserCard,
     TransactionList,
@@ -48,7 +53,7 @@ export default {
   $header-padding-top: 2rem;
 
   .app-view {
-    height: calc(100vh - 52px);
+    height: calc(100vh - #{$header-height});
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
