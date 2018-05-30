@@ -42,5 +42,9 @@
     "align_description": "請把二維碼放在框中掃描",
     "eth_scan_wrong_type": "請只掃描以太錢包地址的二维码",
     "eth_address_invalid": "不是正確的以太錢包地址"
+  },
+  "account": {
+    "title": "帳戶",
+    "transactions": "交易"
   }
 }

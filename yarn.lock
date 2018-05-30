@@ -7977,7 +7977,7 @@ vue-meta@^1.5.0:
 
 "vue-qrcode-reader@https://github.com/measurabledatatoken/vue-qrcode-reader.git":
   version "0.7.4"
-  resolved "https://github.com/measurabledatatoken/vue-qrcode-reader.git#d0bf5c55feb559e1900c84d8d85baaff6bc07254"
+  resolved "https://github.com/measurabledatatoken/vue-qrcode-reader.git#18872ba1890ea8673c1f4bf4886b7fb85ec6b8b8"
   dependencies:
     babel-runtime "^6.26.0"
     jsqr "^1.0.4"
