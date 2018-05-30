@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="transferAmountEntered" v-on:amountInvalid="transferAmountInvalid"
+    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid"
       :amount="transferAmount" :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
     <div class="transaction-fee">
       <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
@@ -13,13 +13,13 @@
     </div>
 
     <div class="extra-space"> </div>
-    <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts"
+    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="fromUserAccounts"
       :selectedAccount="transferFromAccount">
     </AccountSelector>
     <WalletAddressField v-on:walletAddressEntered="walletAddressEntered" v-on:walletAddressInvalid="walletAddressInvalid"
       :label="$t('message.transfer.tolbl')" :walletAddress="transferToWalletAddress">
     </WalletAddressField>
-    <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
+    <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
 
     <md-button :to="RouteDef.TransferEthWalletReview" class="next md-raised md-primary" :disabled="disableNextBtn">
       {{ $t('message.transfer.nextbtn') }}
@@ -29,7 +29,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import {
+  SET_TRANSFER_AMOUNT,
+  SET_TRANSFER_TYPE,
+  SET_TRANSFER_FROM_ACCOUNT,
+  SET_TRANSFER_TO_WALLETADDRESS,
+  SET_TRANSFER_NOTE,
+} from '@/store/modules/transfer';
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
@@ -43,6 +50,12 @@ export default {
       title: this.$t('message.transfer.ethtitle'),
     };
   },
+  components: {
+    AccountSelector,
+    MDTInputField,
+    NoteInputField,
+    WalletAddressField,
+  },
   data() {
     return {
       RouteDef,
@@ -50,18 +63,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      transferAmount: 'transferAmount',
-      transferFromAccount: 'transferFromAccount',
-      transferToWalletAddress: 'transferToWalletAddress',
-      transferNote: 'transferNote',
-      accounts: 'userAccounts',
+    ...mapState({
+      transferAmount: state => state.transfer.transferAmount,
+      transferFromAccount: state => state.transfer.transferFromAccount,
+      transferToWalletAddress: state => state.transfer.transferToWalletAddress,
+      transferNote: state => state.transfer.transferNote,
+      fromUserAccounts: state => state.home.userAccounts,
+      ethAddressScanned: state => state.qrcode.ethAddressScanned,
     }),
-    toAccounts() {
-      return this.accounts.filter(
-        account => account.emailAddress !== this.transferFromAccount.emailAddress,
-      );
-    },
     disableNextBtn() {
       if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0 && this.isWalletAmountValid) {
         return false;
@@ -92,36 +101,30 @@ export default {
       return false;
     },
   },
-  components: {
-    AccountSelector,
-    MDTInputField,
-    NoteInputField,
-    WalletAddressField,
-  },
   created() {
-    this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
-    this.$store.commit('setTransferType', TransferType.EthWallet);
+    this.setTransferType(TransferType.EthWallet);
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
-    if (this.$store.state.qrcode.ethAddressScanned != null) {
-      this.$store.commit('setTransferToWalletAddress', this.$store.state.qrcode.ethAddressScanned);
+
+    if (this.ethAddressScanned != null) {
+      this.setTransferToWalletAddress(this.ethAddressScanned);
     }
   },
   methods: {
-    transferAmountEntered(value) {
-      this.$store.commit('setTransferAmount', value);
-    },
+    ...mapMutations(
+      {
+        setTransferAmount: SET_TRANSFER_AMOUNT,
+        setTransferType: SET_TRANSFER_TYPE,
+        setTransferNote: SET_TRANSFER_NOTE,
+        setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+        setTransferToWalletAddress: SET_TRANSFER_TO_WALLETADDRESS,
+      },
+    ),
     transferAmountInvalid() {
-      this.$store.commit('setTransferAmount', 0);
+      this.setTransferAmount(0);
     },
-    noteInfoEntered(value) {
-      this.$store.commit('setTransferNote', value);
-    },
-    selectedFromAccount(account) {
-      this.$store.commit('setTransferFromAccount', account);
-    },
-    walletAddressEntered(address) {
+    walletAddressEntered(value) {
       this.isWalletAddressValid = true;
-      this.$store.commit('setTransferToWalletAddress', address);
+      this.setTransferToWalletAddress(value);
     },
     walletAddressInvalid() {
       this.isWalletAddressValid = false;

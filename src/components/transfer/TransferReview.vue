@@ -47,8 +47,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
+import {
+  START_TRANSFER,
+} from '@/store/modules/transfer';
 import { TransferType, ErrorCode, RouteDef } from '@/constants';
 
 export default {
@@ -68,15 +71,13 @@ export default {
     VueRecaptcha,
   },
   computed: {
-    ...mapGetters({
-      transferAmount: 'transferAmount',
-      transferType: 'transferType',
-      transferFromAccount: 'transferFromAccount',
-      transferToAccount: 'transferToAccount',
-      transferToWalletAddress: 'transferToWalletAddress',
-      transferNote: 'transferNote',
-      transferErrorCode: 'transferErrorCode',
-      transferSuccess: 'transferSuccess',
+    ...mapState({
+      transferAmount: state => state.transfer.transferAmount,
+      transferType: state => state.transfer.transferType,
+      transferFromAccount: state => state.transfer.transferFromAccount,
+      transferToAccount: state => state.transfer.transferToAccount,
+      transferNote: state => state.transfer.transferNote,
+      transferToWalletAddress: state => state.transfer.transferToWalletAddress,
     }),
     showAlert: {
       get() {
@@ -121,13 +122,17 @@ export default {
   created() {
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
-
   methods: {
+    ...mapActions(
+      {
+        startTransfer: START_TRANSFER,
+      },
+    ),
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
     },
     transferMDT() {
-      this.$store.dispatch('startTransfer').then(() => {
+      this.startTransfer().then(() => {
         this.$router.push(RouteDef.TransferSuccess);
       }).catch(
         (error) => {

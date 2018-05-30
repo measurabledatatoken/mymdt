@@ -1,16 +1,16 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="transferAmountEntered" v-on:amountInvalid="transferAmountInvalid"
+    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid"
       :amount="transferAmount" :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
 
-    <AccountSelector v-on:accountSelected="selectedFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="accounts"
+    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="fromUserAccounts"
       :selectedAccount="transferFromAccount">
     </AccountSelector>
-    <AccountSelector v-on:accountSelected="selectedToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true"
-      :accounts="toAccounts" :selectedAccount="transferToAccount">
+    <AccountSelector v-on:accountSelected="setTransferToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true"
+      :accounts="toUserAccounts" :selectedAccount="transferToAccount">
     </AccountSelector>
 
-    <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
+    <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
 
     <md-button :to="RouteDef.TransferEmailReview" class="next md-raised md-primary" :disabled="disableNextBtn">
       {{ $t('message.transfer.nextbtn') }}
@@ -21,7 +21,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+
+
+import { mapState, mapMutations } from 'vuex';
+import {
+  SET_TRANSFER_AMOUNT,
+  SET_TRANSFER_TYPE,
+  SET_TRANSFER_FROM_ACCOUNT,
+  SET_TRANSFER_TO_ACCOUNT,
+  SET_TRANSFER_NOTE,
+} from '@/store/modules/transfer';
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
@@ -35,24 +44,30 @@ export default {
       title: this.$t('message.transfer.emailtitle'),
     };
   },
+  components: {
+    AccountSelector,
+    MDTInputField,
+    NoteInputField,
+  },
   data() {
     return {
       RouteDef,
     };
   },
   computed: {
-    ...mapGetters({
-      transferAmount: 'transferAmount',
-      transferFromAccount: 'transferFromAccount',
-      transferToAccount: 'transferToAccount',
-      transferNote: 'transferNote',
-      accounts: 'userAccounts',
+    ...mapState({
+      transferAmount: state => state.transfer.transferAmount,
+      transferFromAccount: state => state.transfer.transferFromAccount,
+      transferToAccount: state => state.transfer.transferToAccount,
+      transferNote: state => state.transfer.transferNote,
+      fromUserAccounts: state => state.home.userAccounts,
+      toUserAccounts(state) {
+        const accounts = state.home.userAccounts;
+        return accounts.filter(
+          account => account.emailAddress !== this.transferFromAccount.emailAddress,
+        );
+      },
     }),
-    toAccounts() {
-      return this.accounts.filter(
-        account => account.emailAddress !== this.transferFromAccount.emailAddress,
-      );
-    },
     isValidEmailAddress() {
       return isValidEmailAddress(this.transferToAccount.emailAddress);
     },
@@ -66,30 +81,22 @@ export default {
       return this.transferAmount < this.transferFromAccount.mdtBalance;
     },
   },
-  components: {
-    AccountSelector,
-    MDTInputField,
-    NoteInputField,
-  },
   created() {
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
-    this.$store.commit('setTransferType', TransferType.Email);
+    this.setTransferType(TransferType.Email);
   },
   methods: {
-    transferAmountEntered(value) {
-      this.$store.commit('setTransferAmount', value);
-    },
+    ...mapMutations(
+      {
+        setTransferAmount: SET_TRANSFER_AMOUNT,
+        setTransferType: SET_TRANSFER_TYPE,
+        setTransferNote: SET_TRANSFER_NOTE,
+        setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+        setTransferToAccount: SET_TRANSFER_TO_ACCOUNT,
+      },
+    ),
     transferAmountInvalid() {
-      this.$store.commit('setTransferAmount', 0);
-    },
-    noteInfoEntered(value) {
-      this.$store.commit('setTransferNote', value);
-    },
-    selectedFromAccount(account) {
-      this.$store.commit('setTransferFromAccount', account);
-    },
-    selectedToAccount(account) {
-      this.$store.commit('setTransferToAccount', account);
+      this.setTransferAmount(0);
     },
   },
 };

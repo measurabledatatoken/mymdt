@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 
 export default {
@@ -28,8 +28,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      transferAmount: 'transferAmount',
+    ...mapState({
+      transferAmount: state => state.transfer.transferAmount,
     }),
   },
   created() {
