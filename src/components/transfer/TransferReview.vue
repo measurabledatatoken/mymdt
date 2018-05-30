@@ -79,16 +79,6 @@ export default {
       transferNote: state => state.transfer.transferNote,
       transferToWalletAddress: state => state.transfer.transferToWalletAddress,
     }),
-    showAlert: {
-      get() {
-        return this.transferSuccess == null ? false : !this.transferSuccess;
-      },
-      set(newValue) {
-        if (newValue === false) {
-          this.$store.commit('setTransferSuccess', null);
-        }
-      },
-    },
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
         return this.transferToWalletAddress;
