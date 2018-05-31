@@ -110,15 +110,13 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(
-      {
-        setTransferAmount: SET_TRANSFER_AMOUNT,
-        setTransferType: SET_TRANSFER_TYPE,
-        setTransferNote: SET_TRANSFER_NOTE,
-        setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
-        setTransferToWalletAddress: SET_TRANSFER_TO_WALLETADDRESS,
-      },
-    ),
+    ...mapMutations({
+      setTransferAmount: SET_TRANSFER_AMOUNT,
+      setTransferType: SET_TRANSFER_TYPE,
+      setTransferNote: SET_TRANSFER_NOTE,
+      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+      setTransferToWalletAddress: SET_TRANSFER_TO_WALLETADDRESS,
+    }),
     transferAmountInvalid() {
       this.setTransferAmount(0);
     },

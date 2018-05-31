@@ -50,11 +50,9 @@ export default {
     ...mapMutations({
       setForgetSuccess: SET_FORGET_SUCCESS,
     }),
-    ...mapActions(
-      {
-        requestForgetPassword: REQUEST_FORGET_PASSWORD,
-      },
-    ),
+    ...mapActions({
+      requestForgetPassword: REQUEST_FORGET_PASSWORD,
+    }),
     confirmForgetPassword() {
       this.lastEmailAddress = this.emailAddress;
       this.requestForgetPassword(this.emailAddress);

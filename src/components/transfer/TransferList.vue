@@ -54,11 +54,9 @@ export default {
     this.setTransferFromAccount(this.selectedUser);
   },
   methods: {
-    ...mapMutations(
-      {
-        setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
-      },
-    ),
+    ...mapMutations({
+      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+    }),
   },
 };
 </script>

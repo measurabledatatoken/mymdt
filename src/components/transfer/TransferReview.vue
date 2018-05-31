@@ -113,11 +113,9 @@ export default {
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
   methods: {
-    ...mapActions(
-      {
-        startTransfer: START_TRANSFER,
-      },
-    ),
+    ...mapActions({
+      startTransfer: START_TRANSFER,
+    }),
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
     },

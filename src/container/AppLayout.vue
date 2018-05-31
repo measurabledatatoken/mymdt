@@ -90,12 +90,10 @@ export default {
     this.$i18n.locale = locale;
   },
   methods: {
-    ...mapMutations(
-      {
-        setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
-        setLocale: SET_LOCALE,
-      },
-    ),
+    ...mapMutations({
+      setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
+      setLocale: SET_LOCALE,
+    }),
   },
 };
 </script>

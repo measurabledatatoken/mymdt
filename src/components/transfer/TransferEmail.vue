@@ -86,15 +86,13 @@ export default {
     this.setTransferType(TransferType.Email);
   },
   methods: {
-    ...mapMutations(
-      {
-        setTransferAmount: SET_TRANSFER_AMOUNT,
-        setTransferType: SET_TRANSFER_TYPE,
-        setTransferNote: SET_TRANSFER_NOTE,
-        setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
-        setTransferToAccount: SET_TRANSFER_TO_ACCOUNT,
-      },
-    ),
+    ...mapMutations({
+      setTransferAmount: SET_TRANSFER_AMOUNT,
+      setTransferType: SET_TRANSFER_TYPE,
+      setTransferNote: SET_TRANSFER_NOTE,
+      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+      setTransferToAccount: SET_TRANSFER_TO_ACCOUNT,
+    }),
     transferAmountInvalid() {
       this.setTransferAmount(0);
     },
