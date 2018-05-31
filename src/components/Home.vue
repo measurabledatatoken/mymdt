@@ -22,9 +22,10 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex';
+import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_USER_ACCOUNTS, REQUEST_APP_CONFIG } from '@/store/modules/home';
 import UserCard from '@/components/common/UserCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
-import { mapState } from 'vuex';
 import { RouteDef, HeaderHeight } from '@/constants';
 
 export default {
@@ -68,19 +69,27 @@ export default {
     EarnMDTButton,
   },
   mounted() {
-    this.$store.dispatch('getMDTPrice');
-    this.$store.dispatch('getUserAccounts');
-    this.$store.dispatch('getAppConfig');
+    this.requstMDTPrice();
+    this.requestUserAccounts();
+    this.requestAppConfig();
 
     this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
   },
   methods: {
+    ...mapMutations({
+      setSelectedUser: SET_SELECTED_USER,
+    }),
+    ...mapActions({
+      requstMDTPrice: REQUEST_MDT_PRICE,
+      requestUserAccounts: REQUEST_USER_ACCOUNTS,
+      requestAppConfig: REQUEST_APP_CONFIG,
+    }),
     goToTransfer(user) {
-      this.$store.commit('setSelectedUser', user);
+      this.setSelectedUser(user);
       this.$router.push(RouteDef.TransferList);
     },
     goToAccountDetail(user) {
-      this.$store.commit('setSelectedUser', user);
+      this.setSelectedUser(user);
       this.$router.push(RouteDef.AccountDetail);
     },
   },

@@ -1,4 +1,15 @@
 import api from '@/api';
+// Mutations
+export const SET_MDT_PRICE = 'home/SET_MDT_PRICE';
+export const SET_NEED_EXIT = 'home/SET_NEED_EXIT';
+export const SET_SELECTED_USER = 'home/SET_SELECTED_USER';
+export const SET_USER_ACCOUNTS = 'home/SET_USER_ACCOUNTS';
+export const SET_APP_CONFIG = 'home/SET_APP_CONFIG';
+
+// Actions
+export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
+export const REQUEST_APP_CONFIG = 'home/REQUEST_APP_CONFIG';
+export const REQUEST_USER_ACCOUNTS = 'home/REQUEST_USER_ACCOUNTS';
 
 const state = {
   mdtPrice: 0,
@@ -32,29 +43,29 @@ const getters = {
 };
 
 const mutations = {
-  setMDTPrice(state, mdtPrice) {
+  [SET_MDT_PRICE](state, mdtPrice) {
     state.mdtPrice = mdtPrice;
   },
-  setNeedExit(state, needExit) {
+  [SET_NEED_EXIT](state, needExit) {
     state.needExit = needExit;
   },
-  setSelectedUser(state, selectedUser) {
+  [SET_SELECTED_USER](state, selectedUser) {
     state.selectedUser = selectedUser;
   },
-  setUserAccounts(state, userAccounts) {
+  [SET_USER_ACCOUNTS](state, userAccounts) {
     state.userAccounts = userAccounts;
   },
-  setAppConfig(state, appConfig) {
+  [SET_APP_CONFIG](state, appConfig) {
     state.appConfig = appConfig;
   },
 };
 
 const actions = {
-  getMDTPrice(context) {
+  [REQUEST_MDT_PRICE](context) {
     api.misc.getMDTUSDPrice()
       .then(
         (priceInUSD) => {
-          context.commit('setMDTPrice', priceInUSD);
+          context.commit(SET_MDT_PRICE, priceInUSD);
         },
       )
       .catch(
@@ -63,11 +74,11 @@ const actions = {
         },
       );
   },
-  getAppConfig(context) {
+  [REQUEST_APP_CONFIG](context) {
     api.misc.getAppConfig()
       .then(
         (data) => {
-          context.commit('setAppConfig', data);
+          context.commit(SET_APP_CONFIG, data);
         },
       )
       .catch(
@@ -76,7 +87,7 @@ const actions = {
         },
       );
   },
-  getUserAccounts(context) {
+  [REQUEST_USER_ACCOUNTS](context) {
     const credentials = context.rootState.login.credentials;
 
     api.account.getUserAccountsData(credentials)
@@ -106,8 +117,8 @@ const actions = {
               userAccountsData.push(userAccountData);
             });
 
-            context.commit('setUserAccounts', userAccountsData);
-            context.commit('setSelectedUser', userAccountsData[0]);
+            context.commit(SET_USER_ACCOUNTS, userAccountsData);
+            context.commit(SET_SELECTED_USER, userAccountsData[0]);
           }
         },
       )
