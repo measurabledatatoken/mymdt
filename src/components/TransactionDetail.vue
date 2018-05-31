@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import BasePage from '@/components/BasePage';
 import TransactionItem from '@/components/transaction/TransactionItem';
 import TransactionItemDivider from '@/components/transaction/TransactionItemDivider';
 import TransactionDetailItem from '@/components/transaction/TransactionDetailItem';
@@ -37,7 +38,7 @@ import { transactionType } from '@/enum';
 import { formatAmount } from '@/utils';
 
 export default {
-  name: 'TransactionDetail',
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transaction.title'),

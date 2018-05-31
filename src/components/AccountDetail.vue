@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import BasePage from '@/components/BasePage';
 import UserCard from '@/components/common/UserCard';
 import TransactionList from '@/components/transaction/TransactionList';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
@@ -18,6 +19,7 @@ import { mapState, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.account.title'),
