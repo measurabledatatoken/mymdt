@@ -1,5 +1,5 @@
 <template>
-  <div class="home" v-bind:style=" {'height': pageHeight }">
+  <div class="home">
     <div class="top-content">
       <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
       <div class="balance-count">{{ totalMDTBalance }} MDT</div>
@@ -41,7 +41,6 @@ export default {
     return {
       RouteDef,
       msg: 'Current MDT Price:',
-      pageHeight: '0px',
     };
   },
   computed: {
@@ -83,8 +82,6 @@ export default {
     }
     this.requstMDTPrice();
     this.requestAppConfig();
-
-    this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
   },
   methods: {
     ...mapMutations({
@@ -148,6 +145,7 @@ export default {
 <style lang="scss" scoped>
 .home {
   background-color: $home-bgcolor;
+  height: calc(100vh - #{$header-height});
 }
 
 .top-content {
