@@ -12,7 +12,7 @@
 
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
 
-    <md-button :to="RouteDef.TransferEmailReview" class="next md-raised md-primary" :disabled="disableNextBtn">
+    <md-button :to="RouteDef.TransferEmailReview.path" class="next md-raised md-primary" :disabled="disableNextBtn">
       {{ $t('message.transfer.nextbtn') }}
     </md-button>
 

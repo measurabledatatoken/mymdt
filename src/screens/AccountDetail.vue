@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     goToTransfer() {
-      this.$router.push(RouteDef.TransferList);
+      this.$router.push(RouteDef.TransferList.path);
     },
     ...mapActions([
       'getAccountTransactions',

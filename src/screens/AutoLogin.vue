@@ -55,7 +55,7 @@ export default {
     this.setNeedExitBtn(needExit);
 
     if (apiKey === undefined || tokensStr === undefined) {
-      this.$router.push(RouteDef.Login);
+      this.$router.push(RouteDef.Login.path);
       return;
     }
 
@@ -68,11 +68,11 @@ export default {
       },
     ).then(() => {
       if (this.loginSuccess) {
-        this.$router.push(RouteDef.Home);
+        this.$router.push(RouteDef.Home.path);
       }
     }).catch(
       () => {
-        this.$router.push(RouteDef.Login);
+        this.$router.push(RouteDef.Login.path);
       },
     );
   },

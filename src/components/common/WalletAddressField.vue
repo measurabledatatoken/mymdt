@@ -6,7 +6,7 @@
       <md-textarea md-autogrow :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
         :value="walletAddress">
       </md-textarea>
-      <md-button :to="RouteDef.TransferEthWalletQrCode">
+      <md-button :to="RouteDef.TransferEthWalletQrCode.path">
         <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>
       </md-button>
       <span v-if="!isAddressValid" class="md-helper-text">{{ $t('message.qrcode.eth_address_invalid') }}</span>

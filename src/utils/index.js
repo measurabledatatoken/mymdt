@@ -8,8 +8,8 @@ const isRouteHomePath = (routePath) => {
   const keys = Object.keys(RouteDef);
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
-    if (routePath !== RouteDef.Home) {
-      if (routePath === RouteDef[key]) {
+    if (routePath !== RouteDef.Home.path) {
+      if (routePath === RouteDef[key].path) {
         return false;
       }
     }

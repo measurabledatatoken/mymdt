@@ -38,74 +38,74 @@ const router = new Router({
       component: AppLayout,
       children: [
         {
-          path: RouteDef.Home,
+          path: RouteDef.Home.path,
           component: Home,
         },
         {
-          path: RouteDef.Login,
+          path: RouteDef.Login.path,
           component: Login,
         },
         {
-          path: RouteDef.AutoLogin,
+          path: RouteDef.AutoLogin.path,
           component: AutoLogin,
         },
         {
-          path: RouteDef.Register,
+          path: RouteDef.Register.path,
           component: Register,
         },
         {
-          path: RouteDef.ForgetPassword,
+          path: RouteDef.ForgetPassword.path,
           component: ForgetPassword,
         },
         {
-          path: RouteDef.Settings,
+          path: RouteDef.Settings.path,
           component: Settings,
         },
         {
-          path: RouteDef.Tutorial,
+          path: RouteDef.Tutorial.path,
           component: Tutorial,
         },
         {
-          path: RouteDef.AccountDetail,
-          name: 'accountDetail',
+          path: RouteDef.AccountDetail.path,
+          name: RouteDef.AccountDetail.name,
           component: AccountDetail,
         },
         {
-          path: RouteDef.TransactionDetail,
-          name: 'transactionDetail',
+          path: RouteDef.TransactionDetail.path,
+          name: RouteDef.TransactionDetail.name,
           component: TransactionDetail,
           props: true,
         },
 
         // Transfer Route
         {
-          path: RouteDef.TransferList,
+          path: RouteDef.TransferList.path,
           component: TransferList,
         },
         {
-          path: RouteDef.TransferEmail,
+          path: RouteDef.TransferEmail.path,
           component: TransferEmail,
         },
         {
-          path: RouteDef.TransferEthWallet,
+          path: RouteDef.TransferEthWallet.path,
           component: TransferEthWallet,
         },
         {
-          path: RouteDef.TransferEthWalletReview,
+          path: RouteDef.TransferEthWalletReview.path,
           component: TransferReview,
         },
         {
-          path: RouteDef.TransferEthWalletQrCode,
+          path: RouteDef.TransferEthWalletQrCode.path,
           component: QrCodeScanPage,
         },
         {
-          path: RouteDef.TransferSuccess,
+          path: RouteDef.TransferSuccess.path,
           component: TransferSuccess,
         },
 
         // Earn MDT Route
         {
-          path: RouteDef.EarnMDT,
+          path: RouteDef.EarnMDT.path,
           component: EarnMDT,
         },
 

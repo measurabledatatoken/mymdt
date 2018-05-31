@@ -81,7 +81,7 @@ export default {
         },
       ).then(() => {
         if (this.loginSuccess) {
-          this.$router.push(RouteDef.Home);
+          this.$router.push(RouteDef.Home.path);
         }
       }).catch(() => ({}));
     },

@@ -41,27 +41,30 @@ const TransferType = {
 };
 
 const RouteDef = {
-  Login: '/login',
-  AutoLogin: '/autologin',
-  Register: '/register',
-  ForgetPassword: '/forgetpassword',
-  TransactionHistory: '/account/:id/transactionhistory',
-
-  Home: '/',
-  Settings: '/home/settings',
-  Tutorial: '/home/tutorial',
-
-  TransferList: '/home/transfer',
-  TransferEmail: '/home/transfer/email',
-  TransferEthWallet: '/home/transfer/ethwallet',
-  TransferEthWalletReview: '/home/transfer/ethwallet/review',
-  TransferEmailReview: '/home/transfer/ethwallet/review',
-  TransferEthWalletQrCode: '/home/transfer/ethwallet/qrcode',
-  TransferSuccess: '/home/transfer/ethwallet/review/success',
-
-  EarnMDT: '/home/earn',
-  AccountDetail: '/home/accounts/:account_id',
-  TransactionDetail: '/home/accounts/:account_id/transactions/:transaction_id',
+  Login: { path: '/login' },
+  AutoLogin: { path: '/autologin' },
+  Register: { path: '/register' },
+  ForgetPassword: { path: '/forgetpassword' },
+  TransactionHistory: { path: '/account/:id/transactionhistory' },
+  Home: { path: '/' },
+  Settings: { path: '/home/settings' },
+  Tutorial: { path: '/home/tutorial' },
+  TransferList: { path: '/home/transfer' },
+  TransferEmail: { path: '/home/transfer/email' },
+  TransferEthWallet: { path: '/home/transfer/ethwallet' },
+  TransferEthWalletReview: { path: '/home/transfer/ethwallet/review' },
+  TransferEmailReview: { path: '/home/transfer/ethwallet/review' },
+  TransferEthWalletQrCode: { path: '/home/transfer/ethwallet/qrcode' },
+  TransferSuccess: { path: '/home/transfer/ethwallet/review/success' },
+  EarnMDT: { path: '/home/earn' },
+  AccountDetail: {
+    path: '/home/accounts/:account_id',
+    name: 'accountDetail',
+  },
+  TransactionDetail: {
+    path: '/home/accounts/:account_id/transactions/:transaction_id',
+    name: 'transactionDetail',
+  },
 };
 
 

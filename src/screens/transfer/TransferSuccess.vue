@@ -7,7 +7,7 @@
             {{ $t('message.transfer.successdetail')}}
         </div>
 
-        <md-button :to="RouteDef.Home" class="md-raised md-primary">{{ $t('message.common.done') }} </md-button>
+        <md-button :to="RouteDef.Home.path" class="md-raised md-primary">{{ $t('message.common.done') }} </md-button>
     </div>
 </template>
 

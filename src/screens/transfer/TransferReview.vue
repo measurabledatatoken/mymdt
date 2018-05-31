@@ -119,7 +119,7 @@ export default {
     },
     transferMDT() {
       this.startTransfer().then(() => {
-        this.$router.push(RouteDef.TransferSuccess);
+        this.$router.push(RouteDef.TransferSuccess.path);
       }).catch(() => {});
     },
   },

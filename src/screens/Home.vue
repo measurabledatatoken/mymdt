@@ -85,12 +85,12 @@ export default {
     }),
     goToTransfer(user) {
       this.setSelectedUser(user);
-      this.$router.push(RouteDef.TransferList);
+      this.$router.push(RouteDef.TransferList.path);
     },
     goToAccountDetail(user) {
       this.setSelectedUser(user);
       this.$router.push({
-        name: 'accountDetail',
+        name: RouteDef.AccountDetail.name,
         params: {
           account_id: user.emailAddress, // TODO: change to user id when API is ready
         },

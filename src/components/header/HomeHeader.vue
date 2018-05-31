@@ -5,10 +5,10 @@
       <md-icon md-src="/static/icons/close-white.svg"></md-icon>
     </md-button>
 
-    <md-button :to="RouteDef.Settings" class="md-icon-button settingsbtn">
+    <md-button :to="RouteDef.Settings.path" class="md-icon-button settingsbtn">
       <md-icon md-src="/static/icons/settings-white.svg"></md-icon>
     </md-button>
-    <md-button :to="RouteDef.Tutorial" class="md-icon-button tutorialbtn">
+    <md-button :to="RouteDef.Tutorial.path" class="md-icon-button tutorialbtn">
       <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
     </md-button>
   </div>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       RouteDef,
-      transactionHistoryURL: `${RouteDef.TransactionHistory}`,
+      transactionHistoryURL: `${RouteDef.TransactionHistory.path}`,
     };
   },
   computed: {

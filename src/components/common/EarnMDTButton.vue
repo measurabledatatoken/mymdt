@@ -8,7 +8,7 @@ import { RouteDef } from '@/constants';
 export default {
   data() {
     return {
-      earnMDTUrl: `${RouteDef.EarnMDT}`,
+      earnMDTUrl: `${RouteDef.EarnMDT.path}`,
     };
   },
 };

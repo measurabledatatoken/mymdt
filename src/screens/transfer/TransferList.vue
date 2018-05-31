@@ -5,10 +5,10 @@
       </AccountSelector>
     </div>
     <div class="action-card-list">
-      <ActionCard :to="RouteDef.TransferEmail" class="left" :title="$t('message.transfer.transferlist_emailtitle')"
+      <ActionCard :to="RouteDef.TransferEmail.path" class="left" :title="$t('message.transfer.transferlist_emailtitle')"
         :actionName="$t('message.common.transferbtn')" imgSrc="/static/icons/transfer-to-email.svg">
       </ActionCard>
-      <ActionCard :to="RouteDef.TransferEthWallet" class="right" :title="$t('message.transfer.transferlist_ethtitle')"
+      <ActionCard :to="RouteDef.TransferEthWallet.path" class="right" :title="$t('message.transfer.transferlist_ethtitle')"
         :actionName="$t('message.common.transferbtn')" imgSrc="/static/icons/transfer-to-eth.svg">
       </ActionCard>
     </div>

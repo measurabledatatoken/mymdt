@@ -5,7 +5,7 @@
     <template v-for="transaction in transactions">
       <transaction-item
         :key="transaction.id"
-        :to="{ name: 'transactionDetail', params: { transaction_id: transaction.id, transaction } }"
+        :to="{ name: RouteDef.TransactionDetail.name, params: { transaction_id: transaction.id, transaction } }"
         :avatar="transaction.avatar"
         :line1="transaction.name"
         :line2="transaction.datetime"
@@ -21,7 +21,14 @@
 import TransactionItem from '@/components/transaction/TransactionItem';
 import TransactionItemDivider from '@/components/transaction/TransactionItemDivider';
 
+import { RouteDef } from '@/constants';
+
 export default {
+  data() {
+    return {
+      RouteDef,
+    };
+  },
   props: ['transactions'],
   components: {
     TransactionItem,
