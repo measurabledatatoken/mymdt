@@ -24,6 +24,12 @@ const state = {
   transferSuccess: null,
 };
 
+const getters = {
+  transferToAccounts: (state, getterlist, rootState) => rootState.home.userAccounts.filter(
+    account => account.emailAddress !== state.transferFromAccount.emailAddress,
+  ),
+};
+
 const mutations = {
   [SET_TRANSFER_AMOUNT](state, transferAmount) {
     state.transferAmount = transferAmount;
@@ -104,6 +110,7 @@ const actions = {
 
 export default{
   state,
-  actions,
+  getters,
   mutations,
+  actions,
 };

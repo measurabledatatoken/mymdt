@@ -7,7 +7,7 @@
       :selectedAccount="transferFromAccount">
     </AccountSelector>
     <AccountSelector v-on:accountSelected="setTransferToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true"
-      :accounts="toUserAccounts" :selectedAccount="transferToAccount">
+      :accounts="transferToAccounts" :selectedAccount="transferToAccount">
     </AccountSelector>
 
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
@@ -23,7 +23,7 @@
 <script>
 
 
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 import {
   SET_TRANSFER_AMOUNT,
   SET_TRANSFER_TYPE,
@@ -61,13 +61,10 @@ export default {
       transferToAccount: state => state.transfer.transferToAccount,
       transferNote: state => state.transfer.transferNote,
       fromUserAccounts: state => state.home.userAccounts,
-      toUserAccounts(state) {
-        const accounts = state.home.userAccounts;
-        return accounts.filter(
-          account => account.emailAddress !== this.transferFromAccount.emailAddress,
-        );
-      },
     }),
+    ...mapGetters([
+      'transferToAccounts',
+    ]),
     isValidEmailAddress() {
       return isValidEmailAddress(this.transferToAccount.emailAddress);
     },
