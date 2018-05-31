@@ -52,7 +52,7 @@ import VueRecaptcha from 'vue-recaptcha';
 import {
   START_TRANSFER,
 } from '@/store/modules/transfer';
-import { TransferType, ErrorCode, RouteDef } from '@/constants';
+import { TransferType, RouteDef } from '@/constants';
 
 export default {
   name: 'TransferReview',
@@ -124,36 +124,7 @@ export default {
     transferMDT() {
       this.startTransfer().then(() => {
         this.$router.push(RouteDef.TransferSuccess);
-      }).catch(
-        (error) => {
-          const errorCode = error.response.data.error_code;
-          let errorMsg = '';
-          switch (errorCode) {
-            case ErrorCode.InvalidEmail: {
-              errorMsg = this.$t('message.transfer.invalid_email');
-              break;
-            }
-            case ErrorCode.InvalidEthAddress: {
-              errorMsg = this.$t('message.transfer.invalid_ethaddress');
-              break;
-            }
-            case ErrorCode.InsufficientFund: {
-              errorMsg = this.$t('message.transfer.insufficient_fund');
-              break;
-            }
-            case null: {
-              errorMsg = '';
-              break;
-            }
-            default: {
-              errorMsg = this.$t('message.common.unknow_error');
-              break;
-            }
-          }
-          this.$store.commit('setErrorMessage', errorMsg);
-          this.$store.commit('setErrorTitle', this.$t('message.common.error_title'));
-          this.$store.commit('setShowErrorPrompt', true);
-        });
+      }).catch(() => {});
     },
   },
 };

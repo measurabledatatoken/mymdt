@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import { SET_SHOW_ERROR_PROMPT, SET_LOCALE } from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 
@@ -33,17 +34,28 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      navigationTitle: 'navigationTitle',
-      errorMessage: 'errorMessage',
-      errorTitle: 'errorTitle',
+    ...mapState({
+      navigationTitle: state => state.common.navigationTitle,
+      errorMessage(state) {
+        if (state.common.errorMessage instanceof String) {
+          return state.common.errorMessage;
+        }
+        return this.$t(state.common.errorMessage.messageId);
+      },
+      errorTitle(state) {
+        if (state.common.errorTitle instanceof String) {
+          return state.common.errorTitle;
+        }
+        return this.$t(state.common.errorTitle.messageId);
+      },
+      locale: state => state.common.locale,
     }),
     showErrorPrompt: {
       get() {
         return this.$store.state.common.showErrorPrompt;
       },
       set(newValue) {
-        this.$store.commit('setShowErrorPrompt', newValue);
+        this.setShowErrorPrompt(newValue);
       },
     },
   },
@@ -66,16 +78,24 @@ export default {
   created() {
     let locale = this.$route.query.lang;
     if (locale === undefined) {
-      const storeState = this.$store.state.home.locale;
+      const storeState = this.locale;
       if (storeState !== null) {
         locale = storeState;
       } else {
         locale = 'en-us';
       }
     } else {
-      this.$store.commit('setLocale', locale);
+      this.setLocale(locale);
     }
     this.$i18n.locale = locale;
+  },
+  methods: {
+    ...mapMutations(
+      {
+        setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
+        setLocale: SET_LOCALE,
+      },
+    ),
   },
 };
 </script>

@@ -2,7 +2,6 @@ import api from '@/api';
 
 const state = {
   mdtPrice: 0,
-  navigationTitle: '',
   needExit: false,
   apiKey: '',
   selectedUser: {
@@ -16,8 +15,6 @@ const state = {
     accessToken: null,
   },
   userAccounts: [],
-  locale: null,
-
 
   // AppConfig
   appConfig: null,
@@ -38,9 +35,6 @@ const mutations = {
   setMDTPrice(state, mdtPrice) {
     state.mdtPrice = mdtPrice;
   },
-  setNavigationTitle(state, navigationTitle) {
-    state.navigationTitle = navigationTitle;
-  },
   setNeedExit(state, needExit) {
     state.needExit = needExit;
   },
@@ -49,9 +43,6 @@ const mutations = {
   },
   setUserAccounts(state, userAccounts) {
     state.userAccounts = userAccounts;
-  },
-  setLocale(state, locale) {
-    state.locale = locale;
   },
   setAppConfig(state, appConfig) {
     state.appConfig = appConfig;

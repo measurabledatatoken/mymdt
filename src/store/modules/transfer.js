@@ -1,5 +1,6 @@
 import api from '@/api';
-import { TransferType } from '@/constants';
+import { TransferType, ErrorCode } from '@/constants';
+import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from './common';
 
 // mutation
 export const SET_TRANSFER_AMOUNT = 'transfer/SET_TRANSFER_AMOUNT';
@@ -48,7 +49,7 @@ const mutations = {
 };
 
 const actions = {
-  [START_TRANSFER]() {
+  [START_TRANSFER](context) {
     return new Promise((resolve, reject) => {
       const selectedUser = this.state.home.selectedUser;
       const transferType = this.state.transfer.transferType;
@@ -65,7 +66,35 @@ const actions = {
         })
         .catch(
           (error) => {
-            reject(error);
+            const errorCode = error.response.data.error_code;
+            let errorMsgID = '';
+            switch (errorCode) {
+              case ErrorCode.InvalidEmail: {
+                errorMsgID = 'message.transfer.invalid_email';
+                break;
+              }
+              case ErrorCode.InvalidEthAddress: {
+                errorMsgID = 'message.transfer.invalid_ethaddress';
+                break;
+              }
+              case ErrorCode.InsufficientFund: {
+                errorMsgID = 'message.transfer.insufficient_fund';
+                break;
+              }
+              case null: {
+                errorMsgID = '';
+                break;
+              }
+              default: {
+                errorMsgID = 'message.common.unknow_error';
+                break;
+              }
+            }
+
+            context.commit(SET_ERROR_MESSAGE, { messageId: errorMsgID });
+            context.commit(SET_ERROR_TITLE, { messageId: 'message.common.error_title' });
+            context.commit(SET_SHOW_ERROR_PROMPT, true);
+            reject();
           },
         );
     });

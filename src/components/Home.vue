@@ -24,7 +24,7 @@
 <script>
 import UserCard from '@/components/common/UserCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import { RouteDef, HeaderHeight } from '@/constants';
 
 export default {
@@ -42,9 +42,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      mdtPrice: 'mdtPrice',
-      userAccounts: 'userAccounts',
+    ...mapState({
+      mdtPrice: state => state.home.mdtPrice,
+      userAccounts: state => state.home.userAccounts,
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;

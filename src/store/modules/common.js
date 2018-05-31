@@ -1,35 +1,36 @@
+export const SET_ERROR_MESSAGE = 'common/SET_ERROR_MESSAGE';
+export const SET_ERROR_TITLE = 'common/SET_ERROR_TITLE';
+export const SET_SHOW_ERROR_PROMPT = 'common/SET_SHOW_ERROR_PROMPT';
+export const SET_NAVIGATION_TITLE = 'common/SET_NAVIGATION_TITLE';
+export const SET_LOCALE = 'common/SET_LOCALE';
+
 const state = {
   errorMessage: null,
   errorTitle: null,
   showErrorPrompt: null,
-};
-
-const getters = {
-  errorMessage: state => state.errorMessage,
-  errorTitle: state => state.errorTitle,
-  showErrorPrompt: state => state.showErrorPrompt,
+  navigationTitle: '',
+  locale: null,
 };
 
 const mutations = {
-  setErrorMessage(state, errorMessage) {
+  [SET_ERROR_MESSAGE](state, errorMessage) {
     state.errorMessage = errorMessage;
   },
-  setErrorTitle(state, errorTitle) {
+  [SET_ERROR_TITLE](state, errorTitle) {
     state.errorTitle = errorTitle;
   },
-  setShowErrorPrompt(state, showErrorPrompt) {
+  [SET_SHOW_ERROR_PROMPT](state, showErrorPrompt) {
     state.showErrorPrompt = showErrorPrompt;
   },
+  [SET_NAVIGATION_TITLE](state, navigationTitle) {
+    state.navigationTitle = navigationTitle;
+  },
+  [SET_LOCALE](state, locale) {
+    state.locale = locale;
+  },
 };
-
-const actions = {
-
-};
-
 
 export default{
   state,
-  getters,
-  actions,
   mutations,
 };

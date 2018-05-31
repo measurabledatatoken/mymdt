@@ -11,7 +11,7 @@
     "title": "MDT Wallet",
     "settings": "Settings",
     "tutorial": "Tutorial",
-    "accountnum": "{num} Account | {num} Accounts",
+    "accountnum": "{num} Accounts",
     "earn_mdt": "Earn MDT"
   },
   "transfer": {
