@@ -53,5 +53,21 @@
   "account": {
     "title": "Account",
     "transactions": "Transactions"
+  },
+  "transaction": {
+    "title": "Transaction",
+    "reward": "Reward",
+    "pending": "Pending...",
+    "processing": "Processing...",
+    "successful": "Successful",
+    "failed": "Failed",
+    "type": "Type",
+    "time": "Time",
+    "detail": "Detail",
+    "from": "From",
+    "to": "To",
+    "note": "Note",
+    "transactionFee": "Transaction Fee",
+    "accountBalance": "Account Balance"
   }
 }

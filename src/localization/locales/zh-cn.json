@@ -53,5 +53,21 @@
   "account": {
     "title": "帐户",
     "transactions": "交易"
+  },
+  "transaction": {
+    "title": "交易",
+    "reward": "奖励",
+    "pending": "等候处理...",
+    "processing": "处理中...",
+    "successful": "完成",
+    "failed": "失败",
+    "type": "类别",
+    "time": "时间",
+    "detail": "内容",
+    "from": "由",
+    "to": "至",
+    "note": "备注",
+    "transactionFee": "手续费",
+    "accountBalance": "帐户结余"
   }
 }
