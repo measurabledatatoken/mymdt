@@ -30,8 +30,10 @@ import { SET_ETHADDRESS_SCANNED } from '@/store/modules/qrcode';
 import { SET_ERROR_MESSAGE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reader';
 import { getEthAddressFromString } from '@/utils';
+import BasePage from '@/components/BasePage';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.qrcode.title'),
@@ -49,9 +51,6 @@ export default {
   },
   components: {
     QrcodeReader,
-  },
-  created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
   mounted() {
     this.setEthAddressScanned(null);

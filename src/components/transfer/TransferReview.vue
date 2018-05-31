@@ -53,8 +53,10 @@ import {
   START_TRANSFER,
 } from '@/store/modules/transfer';
 import { TransferType, RouteDef } from '@/constants';
+import BasePage from '@/components/BasePage';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transfer.reviewtitle'),
@@ -107,9 +109,6 @@ export default {
       }
       return false;
     },
-  },
-  created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
   methods: {
     ...mapActions({

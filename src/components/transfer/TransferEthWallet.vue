@@ -42,9 +42,10 @@ import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
 import { RouteDef, TransferType } from '@/constants';
+import BasePage from '@/components/BasePage';
 
 export default {
-  name: 'TransferEthWallet',
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transfer.ethtitle'),
@@ -103,7 +104,6 @@ export default {
   },
   created() {
     this.setTransferType(TransferType.EthWallet);
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
 
     if (this.ethAddressScanned != null) {
       this.setTransferToWalletAddress(this.ethAddressScanned);

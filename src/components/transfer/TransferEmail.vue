@@ -36,8 +36,10 @@ import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import { RouteDef, TransferType } from '@/constants';
 import { isValidEmailAddress } from '@/utils';
+import BasePage from '@/components/BasePage';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transfer.emailtitle'),
@@ -78,7 +80,6 @@ export default {
     },
   },
   created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
     this.setTransferType(TransferType.Email);
   },
   methods: {

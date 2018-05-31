@@ -25,7 +25,10 @@ import { RouteDef } from '@/constants';
 import AccountSelector from '@/components/common/AccountSelector';
 import ActionCard from '@/components/common/ActionCard';
 
+import BasePage from '@/components/BasePage';
+
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transfer.title'),
@@ -48,8 +51,6 @@ export default {
     ActionCard,
   },
   created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
-
     this.setTransferFromAccount(this.selectedUser);
   },
   methods: {

@@ -14,8 +14,10 @@
 <script>
 import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
+import BasePage from '@/components/BasePage';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transfer.successtitle'),
@@ -30,9 +32,6 @@ export default {
     ...mapState({
       transferAmount: state => state.transfer.transferAmount,
     }),
-  },
-  created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
 };
 </script>

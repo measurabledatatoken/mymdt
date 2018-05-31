@@ -5,14 +5,14 @@
 </template>
 
 <script>
+import BasePage from '@/components/BasePage';
+
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.earn.title'),
     };
-  },
-  created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
 };
 </script>
