@@ -19,7 +19,8 @@
 
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { REQUEST_LOGIN } from '@/store/modules/login';
 import { AtomSpinner } from 'epic-spinners';
 import { ErrorCode, RouteDef } from '@/constants';
 
@@ -33,9 +34,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      loginErrorCode: 'loginErrorCode',
-      loginSuccess: 'loginSuccess',
+    ...mapState({
+      loginErrorCode: state => state.login.loginErrorCode,
+      loginSuccess: state => state.login.loginSuccess,
     }),
     errorMessage() {
       switch (this.loginErrorCode) {
@@ -67,10 +68,12 @@ export default {
     AtomSpinner,
   },
   methods: {
+    ...mapActions({
+      requestLogin: REQUEST_LOGIN,
+    }),
     confirmLogin() {
       this.requested = true;
-      this.$store.dispatch(
-        'confirmLogin',
+      this.requestLogin(
         {
           emailAddress: this.emailAddress,
           password: this.password,

@@ -25,6 +25,9 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+import { SET_ETHADDRESS_SCANNED } from '@/store/modules/qrcode';
+import { SET_ERROR_MESSAGE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reader';
 import { getEthAddressFromString } from '@/utils';
 
@@ -52,16 +55,21 @@ export default {
     this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
   mounted() {
-    this.$store.commit('setEthAddressScanned', null);
+    this.setEthAddressScanned(null);
   },
   methods: {
+    ...mapMutations({
+      setEthAddressScanned: SET_ETHADDRESS_SCANNED,
+      setErrorMessage: SET_ERROR_MESSAGE,
+      setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
+    }),
     onDecode(content) {
       const ethAddress = getEthAddressFromString(content);
       if (ethAddress === null) {
-        this.$store.commit('setErrorMessage', this.$t('message.qrcode.eth_scan_wrong_type'));
-        this.$store.commit('setShowErrorPrompt', true);
+        this.setErrorMessage(this.$t('message.qrcode.eth_scan_wrong_type'));
+        this.setShowErrorPrompt(true);
       } else {
-        this.$store.commit('setEthAddressScanned', ethAddress);
+        this.setEthAddressScanned(ethAddress);
         this.$router.back();
       }
     },
@@ -73,10 +81,10 @@ export default {
         const ethAddress = getEthAddressFromString(result.data);
 
         if (ethAddress === null) {
-          this.$store.commit('setErrorMessage', this.$t('message.qrcode.eth_scan_wrong_type'));
-          this.$store.commit('setShowErrorPrompt', true);
+          this.setErrorMessage(this.$t('message.qrcode.eth_scan_wrong_type'));
+          this.setShowErrorPrompt(true);
         } else {
-          this.$store.commit('setEthAddressScanned', ethAddress);
+          this.setEthAddressScanned(ethAddress);
           this.$router.back();
         }
       });

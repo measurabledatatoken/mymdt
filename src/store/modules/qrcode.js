@@ -1,25 +1,17 @@
+export const SET_ETHADDRESS_SCANNED = 'qrcode/SET_ETHADDRESS_SCANNED';
+
 const state = {
   ethAddressScanned: null,
 };
 
-const getters = {
-  ethAddressScanned: state => state.ethAddressScanned,
-};
-
 const mutations = {
-  setEthAddressScanned(state, ethAddressScanned) {
+  [SET_ETHADDRESS_SCANNED](state, ethAddressScanned) {
     state.ethAddressScanned = ethAddressScanned;
   },
-};
-
-const actions = {
-
 };
 
 
 export default{
   state,
-  getters,
-  actions,
   mutations,
 };

@@ -18,7 +18,7 @@
 
 <script>
 import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'AppHeader',
@@ -29,8 +29,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      needExit: 'needExit',
+    ...mapState({
+      needExit: state => state.home.needExit,
     }),
   },
   methods: {

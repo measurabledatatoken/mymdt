@@ -1,7 +1,7 @@
 import api from '@/api';
 // Mutations
 export const SET_MDT_PRICE = 'home/SET_MDT_PRICE';
-export const SET_NEED_EXIT = 'home/SET_NEED_EXIT';
+export const SET_NEED_EXIT_BTN = 'home/SET_NEED_EXIT_BTN';
 export const SET_SELECTED_USER = 'home/SET_SELECTED_USER';
 export const SET_USER_ACCOUNTS = 'home/SET_USER_ACCOUNTS';
 export const SET_APP_CONFIG = 'home/SET_APP_CONFIG';
@@ -31,22 +31,11 @@ const state = {
   appConfig: null,
 };
 
-const getters = {
-  mdtPrice: state => state.mdtPrice,
-  navigationTitle: state => state.navigationTitle,
-  needExit: state => state.needExit,
-  selectedUser: state => state.selectedUser,
-  userAccounts: state => state.userAccounts,
-  locale: state => state.locale,
-
-  appConfig: state => state.appConfig,
-};
-
 const mutations = {
   [SET_MDT_PRICE](state, mdtPrice) {
     state.mdtPrice = mdtPrice;
   },
-  [SET_NEED_EXIT](state, needExit) {
+  [SET_NEED_EXIT_BTN](state, needExit) {
     state.needExit = needExit;
   },
   [SET_SELECTED_USER](state, selectedUser) {
@@ -133,7 +122,6 @@ const actions = {
 
 export default {
   state,
-  getters,
-  actions,
   mutations,
+  actions,
 };

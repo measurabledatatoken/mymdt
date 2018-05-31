@@ -1,6 +1,14 @@
 import api from '@/api';
 import { ErrorCode } from '@/constants';
 
+// mutations
+export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
+export const SET_CREDENTIALS = 'login/SET_CREDENTIALS';
+
+// actions
+export const REQUEST_LOGIN = 'login/REQUEST_LOGIN';
+export const REQUEST_AUTO_LOGIN = 'login/REQUEST_AUTO_LOGIN';
+
 const state = {
   loginSuccess: null,
   loginErrorCode: null,
@@ -8,14 +16,8 @@ const state = {
   credentials: [],
 };
 
-const getters = {
-  loginSuccess: state => state.loginSuccess,
-  loginErrorCode: state => state.loginErrorCode,
-  credentials: state => state.credentials,
-};
-
 const mutations = {
-  setLoginErrorCode(state, loginErrorCode) {
+  [SET_LOGIN_ERRORCODE](state, loginErrorCode) {
     state.loginErrorCode = loginErrorCode;
     if (loginErrorCode == null) {
       state.loginSuccess = true;
@@ -23,18 +25,18 @@ const mutations = {
       state.loginSuccess = false;
     }
   },
-  setCredentials(state, credentials) {
+  [SET_CREDENTIALS](state, credentials) {
     state.credentials = credentials;
   },
 };
 
 const actions = {
-  confirmLogin(context, { emailAddress, password, apikey }) {
+  [REQUEST_LOGIN](context, { emailAddress, password, apikey }) {
     return new Promise((resolve, reject) => {
       api.auth.login(emailAddress, password, apikey)
         .then(
           (data) => {
-            context.commit('setLoginErrorCode', null);
+            context.commit(SET_LOGIN_ERRORCODE, null);
 
             if (data.length > 0) {
               const credential = {
@@ -42,7 +44,7 @@ const actions = {
                 access_token: data.access_token,
               };
               const credentials = [credential];
-              context.commit('setCredentials', credentials);
+              context.commit(SET_CREDENTIALS, credentials);
             }
 
             resolve();
@@ -51,9 +53,9 @@ const actions = {
         .catch(
           (error) => {
             if (error.response && error.response.data) {
-              context.commit('setLoginErrorCode', error.response.data.error_code);
+              context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
             } else {
-              context.commit('setLoginErrorCode', ErrorCode.UnknownError);
+              context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
             }
 
             reject();
@@ -61,7 +63,7 @@ const actions = {
         );
     });
   },
-  autoLogin(context, { authTokens, apiKey }) {
+  [REQUEST_AUTO_LOGIN](context, { authTokens, apiKey }) {
     return new Promise((resolve, reject) => {
       if (!Array.isArray(authTokens)) {
         console.error('authTokens should all be array');
@@ -77,7 +79,7 @@ const actions = {
       api.auth.autoLogin(appCredentials, apiKey)
         .then(
           (data) => {
-            context.commit('setLoginErrorCode', null);
+            context.commit(SET_LOGIN_ERRORCODE, null);
 
             if (data.length > 0) {
               const credentials = [];
@@ -88,7 +90,7 @@ const actions = {
                 };
                 credentials.push(credential);
               });
-              context.commit('setCredentials', credentials);
+              context.commit(SET_CREDENTIALS, credentials);
             }
 
             resolve();
@@ -97,9 +99,9 @@ const actions = {
         .catch(
           (error) => {
             if (error.response && error.response.data) {
-              context.commit('setLoginErrorCode', error.response.data.error_code);
+              context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
             } else {
-              context.commit('setLoginErrorCode', ErrorCode.UnknownError);
+              context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
             }
             reject();
           },
@@ -111,7 +113,6 @@ const actions = {
 
 export default{
   state,
-  getters,
-  actions,
   mutations,
+  actions,
 };
