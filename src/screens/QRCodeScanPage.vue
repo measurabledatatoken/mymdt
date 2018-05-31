@@ -30,7 +30,7 @@ import { SET_ETHADDRESS_SCANNED } from '@/store/modules/qrcode';
 import { SET_ERROR_MESSAGE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reader';
 import { getEthAddressFromString } from '@/utils';
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,

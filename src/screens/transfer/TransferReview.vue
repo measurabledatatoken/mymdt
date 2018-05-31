@@ -53,7 +53,7 @@ import {
   START_TRANSFER,
 } from '@/store/modules/transfer';
 import { TransferType, RouteDef } from '@/constants';
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,

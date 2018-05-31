@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 import UserCard from '@/components/common/UserCard';
 import TransactionList from '@/components/transaction/TransactionList';
 import EarnMDTButton from '@/components/common/EarnMDTButton';

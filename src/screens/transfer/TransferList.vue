@@ -25,7 +25,7 @@ import { RouteDef } from '@/constants';
 import AccountSelector from '@/components/common/AccountSelector';
 import ActionCard from '@/components/common/ActionCard';
 
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,

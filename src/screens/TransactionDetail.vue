@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 import TransactionItem from '@/components/transaction/TransactionItem';
 import TransactionItemDivider from '@/components/transaction/TransactionItemDivider';
 import TransactionDetailItem from '@/components/transaction/TransactionDetailItem';

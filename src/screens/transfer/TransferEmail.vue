@@ -36,7 +36,7 @@ import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import { RouteDef, TransferType } from '@/constants';
 import { isValidEmailAddress } from '@/utils';
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,

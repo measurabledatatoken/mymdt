@@ -42,7 +42,7 @@ import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
 import { RouteDef, TransferType } from '@/constants';
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,

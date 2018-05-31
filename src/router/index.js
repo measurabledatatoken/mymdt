@@ -6,26 +6,25 @@ import { RouteDef } from '@/constants';
 
 import AppLayout from '@/container/AppLayout';
 
-import Home from '@/components/Home';
-import Login from '@/components/Login';
-import AutoLogin from '@/components/AutoLogin';
-import Register from '@/components/Register';
-import ForgetPassword from '@/components/ForgetPassword';
-import Settings from '@/components/Settings';
-import TransactionHistory from '@/components/TransactionHistory';
-import Tutorial from '@/components/Tutorial';
+import Home from '@/screens/Home';
+import Login from '@/screens/Login';
+import AutoLogin from '@/screens/AutoLogin';
+import Register from '@/screens/Register';
+import ForgetPassword from '@/screens/ForgetPassword';
+import Settings from '@/screens/Settings';
+import Tutorial from '@/screens/Tutorial';
 
-import AccountDetail from '@/components/AccountDetail';
-import TransactionDetail from '@/components/TransactionDetail';
+import AccountDetail from '@/screens/AccountDetail';
+import TransactionDetail from '@/screens/TransactionDetail';
 
-import TransferList from '@/components/transfer/TransferList';
-import TransferEmail from '@/components/transfer/TransferEmail';
-import TransferEthWallet from '@/components/transfer/TransferEthWallet';
-import TransferReview from '@/components/transfer/TransferReview';
-import TransferSuccess from '@/components/transfer/TransferSuccess';
-import QrCodeScanPage from '@/components/QRCodeScanPage';
+import TransferList from '@/screens/transfer/TransferList';
+import TransferEmail from '@/screens/transfer/TransferEmail';
+import TransferEthWallet from '@/screens/transfer/TransferEthWallet';
+import TransferReview from '@/screens/transfer/TransferReview';
+import TransferSuccess from '@/screens/transfer/TransferSuccess';
+import QrCodeScanPage from '@/screens/QRCodeScanPage';
 
-import EarnMDT from '@/components/earn/EarnMDT';
+import EarnMDT from '@/screens/EarnMDT';
 
 Vue.use(Router);
 Vue.use(Meta);
@@ -66,11 +65,6 @@ const router = new Router({
           path: RouteDef.Tutorial,
           component: Tutorial,
         },
-        {
-          path: RouteDef.TransactionHistory,
-          component: TransactionHistory,
-        },
-
         {
           path: RouteDef.AccountDetail,
           name: 'accountDetail',

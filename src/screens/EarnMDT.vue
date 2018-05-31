@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,

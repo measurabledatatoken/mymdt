@@ -13,8 +13,10 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
 import { SET_FORGET_SUCCESS, REQUEST_FORGET_PASSWORD } from '@/store/modules/forgetpassword';
+import BasePage from '@/screens/BasePage';
 
 export default {
+  extends: BasePage,
   data() {
     return {
       emailAddress: '',

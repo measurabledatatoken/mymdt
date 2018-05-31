@@ -14,7 +14,7 @@
 <script>
 import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
-import BasePage from '@/components/BasePage';
+import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,
