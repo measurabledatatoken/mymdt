@@ -11,17 +11,18 @@
 
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
+import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
+import { SET_NEED_EXIT_BTN } from '@/store/modules/home';
 import { AtomSpinner } from 'epic-spinners';
 import { ErrorCode, RouteDef } from '@/constants';
 
 export default {
-  name: 'AutoLogin',
   props: [],
   computed: {
-    ...mapGetters({
-      loginErrorCode: 'loginErrorCode',
-      loginSuccess: 'loginSuccess',
+    ...mapState({
+      loginErrorCode: state => state.login.loginErrorCode,
+      loginSuccess: state => state.login.loginSuccess,
     }),
     errorMessage() {
       switch (this.loginErrorCode) {
@@ -51,7 +52,7 @@ export default {
     const tokensStr = this.$route.query.tokens;
     const needExit = this.$route.query.needexit;
 
-    this.$store.commit('setNeedExit', needExit);
+    this.setNeedExitBtn(needExit);
 
     if (apiKey === undefined || tokensStr === undefined) {
       this.$router.push(RouteDef.Login);
@@ -60,7 +61,7 @@ export default {
 
     const authTokens = tokensStr.split(',');
 
-    this.$store.dispatch('autoLogin',
+    this.requestAutoLogin(
       {
         authTokens,
         apiKey,
@@ -74,6 +75,15 @@ export default {
         this.$router.push(RouteDef.Login);
       },
     );
+  },
+  methods: {
+    ...mapMutations({
+      setNeedExitBtn: SET_NEED_EXIT_BTN,
+
+    }),
+    ...mapActions({
+      requestAutoLogin: REQUEST_AUTO_LOGIN,
+    }),
   },
 };
 </script>

@@ -17,18 +17,18 @@
       </div>
     </div>
 
-    <earn-m-d-t-button />
+    <EarnMDTButton />
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex';
+import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_USER_ACCOUNTS, REQUEST_APP_CONFIG } from '@/store/modules/home';
 import UserCard from '@/components/common/UserCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
-import { mapGetters } from 'vuex';
 import { RouteDef, HeaderHeight } from '@/constants';
 
 export default {
-  name: 'Home',
   metaInfo() {
     return {
       title: this.$t('message.home.title'),
@@ -36,15 +36,15 @@ export default {
   },
   data() {
     return {
-      earnMDTUrl: `${RouteDef.EarnMDT}`,
+      RouteDef,
       msg: 'Current MDT Price:',
       pageHeight: '0px',
     };
   },
   computed: {
-    ...mapGetters({
-      mdtPrice: 'mdtPrice',
-      userAccounts: 'userAccounts',
+    ...mapState({
+      mdtPrice: state => state.home.mdtPrice,
+      userAccounts: state => state.home.userAccounts,
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
@@ -68,19 +68,27 @@ export default {
     EarnMDTButton,
   },
   mounted() {
-    this.$store.dispatch('getMDTPrice');
-    this.$store.dispatch('getUserAccounts');
-    this.$store.dispatch('getAppConfig');
+    this.requstMDTPrice();
+    this.requestUserAccounts();
+    this.requestAppConfig();
 
     this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
   },
   methods: {
+    ...mapMutations({
+      setSelectedUser: SET_SELECTED_USER,
+    }),
+    ...mapActions({
+      requstMDTPrice: REQUEST_MDT_PRICE,
+      requestUserAccounts: REQUEST_USER_ACCOUNTS,
+      requestAppConfig: REQUEST_APP_CONFIG,
+    }),
     goToTransfer(user) {
-      this.$store.commit('setSelectedUser', user);
+      this.setSelectedUser(user);
       this.$router.push(RouteDef.TransferList);
     },
     goToAccountDetail(user) {
-      this.$store.commit('setSelectedUser', user);
+      this.setSelectedUser(user);
       this.$router.push(RouteDef.AccountDetail);
     },
   },
@@ -107,6 +115,7 @@ export default {
   height: calc(100% - 174px);
   overflow-y: scroll;
   padding-bottom: 80px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .balance-title {

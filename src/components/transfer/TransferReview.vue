@@ -1,59 +1,67 @@
 <template>
-    <div class="transfer-review">
-        <div class="review-content">
-            <div class='from-lbl'>{{ $t('message.transfer.fromlbl') }}</div>
-            <div class='from-value'>{{ transferFromAccount.emailAddress }}</div>
-            <div class='to-lbl'>{{ $t('message.transfer.tolbl') }}</div>
-            <div class='to-value'>{{ transferToStr }}</div>
-            <div class='note-lbl'>{{ $t('message.transfer.notelbl') }}</div>
-            <div class='note-value'>{{ transferNote }}</div>
+  <div class="transfer-review">
+    <div class="review-content">
+      <div class='from-lbl'>{{ $t('message.transfer.fromlbl') }}</div>
+      <div class='from-value'>{{ transferFromAccount.emailAddress }}</div>
+      <div class='to-lbl'>{{ $t('message.transfer.tolbl') }}</div>
+      <div class='to-value'>{{ transferToStr }}</div>
+      <div class='note-lbl'>{{ $t('message.transfer.notelbl') }}</div>
+      <div class='note-value'>{{ transferNote }}</div>
 
-            <div v-if="transferType === TransferType.Email" class='amount-container-email'>
-                <md-divider></md-divider>
-                <div class="amount-container">
-                    <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
-                    <div class='amount-unit'>MDT</div>
-                    <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
-                </div>
-            </div>
+      <div v-if="transferType === TransferType.Email" class='amount-container-email'>
+        <md-divider></md-divider>
+        <div class="amount-container">
+          <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
+          <div class='amount-unit'>MDT</div>
+          <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
+        </div>
+      </div>
 
-            <div v-if="transferType === TransferType.EthWallet" class='amount-container-eth'>
-                <div class="amount-container">
-                    <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
-                    <div class='amount-unit'>MDT</div>
-                    <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
-                </div>
-
-                <div class="transaction-fee-container">
-                    <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
-                    <div class='amount-unit'>MDT</div>
-                    <div class="transaction-fee-value"> {{ transactionFee }}</div>
-                </div>
-
-                <md-divider></md-divider>
-                <div class="final-amount-container">
-                    <div class="final-amount-lbl">{{ $t('message.transfer.final_amount') }}</div>
-                    <div class='amount-unit'>MDT</div>
-                    <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }}</div>
-                </div>
-
-            </div>
+      <div v-if="transferType === TransferType.EthWallet" class='amount-container-eth'>
+        <div class="amount-container">
+          <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
+          <div class='amount-unit'>MDT</div>
+          <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
         </div>
 
-        <vue-recaptcha class="recaptcha" v-on:verify="onRecaptchaVerified" sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"></vue-recaptcha>
-        <md-button v-on:click="transferMDT" class="transfer md-raised md-primary" :disabled="disableTransferBtn">
-            {{ $t('message.transfer.transfer') }}
-        </md-button>
+        <div class="transaction-fee-container">
+          <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
+          <div class='amount-unit'>MDT</div>
+          <div class="transaction-fee-value"> {{ transactionFee }}</div>
+        </div>
+
+        <md-divider></md-divider>
+        <div class="final-amount-container">
+          <div class="final-amount-lbl">{{ $t('message.transfer.final_amount') }}</div>
+          <div class='amount-unit'>MDT</div>
+          <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }}</div>
+        </div>
+      </div>
     </div>
+
+    <vue-recaptcha class="recaptcha" v-on:verify="onRecaptchaVerified" sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"></vue-recaptcha>
+    <md-button v-on:click="transferMDT" class="transfer md-raised md-primary" :disabled="disableTransferBtn">
+      {{ $t('message.transfer.transfer') }}
+    </md-button>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
-import { TransferType } from '@/constants';
+import {
+  START_TRANSFER,
+} from '@/store/modules/transfer';
+import { TransferType, RouteDef } from '@/constants';
+import BasePage from '@/components/BasePage';
 
 export default {
-  name: 'TransferReview',
+  extends: BasePage,
+  metaInfo() {
+    return {
+      title: this.$t('message.transfer.reviewtitle'),
+    };
+  },
   data() {
     return {
       disableTransferBtn: true,
@@ -64,13 +72,13 @@ export default {
     VueRecaptcha,
   },
   computed: {
-    ...mapGetters({
-      transferAmount: 'transferAmount',
-      transferType: 'transferType',
-      transferFromAccount: 'transferFromAccount',
-      transferToAccount: 'transferToAccount',
-      transferToWalletAddress: 'transferToWalletAddress',
-      transferNote: 'transferNote',
+    ...mapState({
+      transferAmount: state => state.transfer.transferAmount,
+      transferType: state => state.transfer.transferType,
+      transferFromAccount: state => state.transfer.transferFromAccount,
+      transferToAccount: state => state.transfer.transferToAccount,
+      transferNote: state => state.transfer.transferNote,
+      transferToWalletAddress: state => state.transfer.transferToWalletAddress,
     }),
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
@@ -103,11 +111,16 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      startTransfer: START_TRANSFER,
+    }),
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
     },
     transferMDT() {
-
+      this.startTransfer().then(() => {
+        this.$router.push(RouteDef.TransferSuccess);
+      }).catch(() => {});
     },
   },
 };

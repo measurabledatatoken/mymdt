@@ -2,7 +2,10 @@
 
   "common": {
     "transferbtn": "轉帳",
-    "okay": "OK"
+    "okay": "OK",
+    "unknow_error": "出錯了......請稍後再試",
+    "error_title": "出錯了",
+    "done": "完成"
   },
   "home": {
     "total_balance": "結餘",
@@ -16,6 +19,9 @@
     "title": "轉帳",
     "ethtitle": "轉帳至以太錢包",
     "emailtitle": "轉帳至電郵地址",
+    "reviewtitle": "確認",
+    "successtitle": "成功",
+    "successdetail": "成功轉帳！",
     "fromlbl": "由",
     "tolbl": "至",
     "amountlbl": "數量",
@@ -31,6 +37,8 @@
     "transfer": "轉帳",
     "transaction_fee": "手續費",
     "final_amount": "最終數量",
+    "invalid_email": "無效的電郵地址",
+    "invalid_ethaddress": "無效的以太錢包地址",
     "insufficient_fund": "帳號MDT數量不夠，請減才少數量或另選帳號。" 
   },
   "earn": {

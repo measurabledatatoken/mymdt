@@ -22,7 +22,6 @@
 
 <script>
 export default {
-  name: 'UserCard',
   props: ['user'],
   computed: {
     title() {

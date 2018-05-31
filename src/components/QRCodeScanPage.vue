@@ -19,20 +19,21 @@
       <div class="frame bottomright"></div>
     </div>
 
-    <!-- <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
-    </qrcode-reader> -->
-
-    <md-dialog-alert :md-active.sync="wrongEthAddress" :md-content="$t('message.qrcode.eth_scan_wrong_type')"
-      :md-confirm-text="$t('message.common.okay')" />
+    <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
+    </qrcode-reader>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+import { SET_ETHADDRESS_SCANNED } from '@/store/modules/qrcode';
+import { SET_ERROR_MESSAGE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reader';
 import { getEthAddressFromString } from '@/utils';
+import BasePage from '@/components/BasePage';
 
 export default {
-  name: 'QRCodeScanPage',
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.qrcode.title'),
@@ -40,7 +41,6 @@ export default {
   },
   data() {
     return {
-      wrongEthAddress: false,
       videoConstraints: {
         audio: false, // don't request microphone access
         video: {
@@ -53,15 +53,21 @@ export default {
     QrcodeReader,
   },
   mounted() {
-    this.$store.commit('setEthAddressScanned', null);
+    this.setEthAddressScanned(null);
   },
   methods: {
+    ...mapMutations({
+      setEthAddressScanned: SET_ETHADDRESS_SCANNED,
+      setErrorMessage: SET_ERROR_MESSAGE,
+      setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
+    }),
     onDecode(content) {
       const ethAddress = getEthAddressFromString(content);
       if (ethAddress === null) {
-        this.wrongEthAddress = true;
+        this.setErrorMessage(this.$t('message.qrcode.eth_scan_wrong_type'));
+        this.setShowErrorPrompt(true);
       } else {
-        this.$store.commit('setEthAddressScanned', ethAddress);
+        this.setEthAddressScanned(ethAddress);
         this.$router.back();
       }
     },
@@ -73,16 +79,14 @@ export default {
         const ethAddress = getEthAddressFromString(result.data);
 
         if (ethAddress === null) {
-          this.wrongEthAddress = true;
+          this.setErrorMessage(this.$t('message.qrcode.eth_scan_wrong_type'));
+          this.setShowErrorPrompt(true);
         } else {
-          this.$store.commit('setEthAddressScanned', ethAddress);
+          this.setEthAddressScanned(ethAddress);
           this.$router.back();
         }
       });
     },
-  },
-  created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
   },
 };
 </script>
@@ -190,19 +194,4 @@ $clip_bottom: 65%;
   }
 }
 
-.md-dialog {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-
-  /deep/ .md-dialog-content {
-    padding-top: 40px;
-  }
-
-  /deep/ .md-button {
-    width: 100%;
-    font-size: 16px;
-    font-weight: bold;
-  }
-}
 </style>

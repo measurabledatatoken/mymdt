@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="account">
-      <AccountSelector v-on:accountSelected="selectedFromAccount" :accounts="accounts" :selectedAccount="transferFromAccount">
+      <AccountSelector v-on:accountSelected="setTransferFromAccount" :accounts="userAccounts" :selectedAccount="transferFromAccount">
       </AccountSelector>
     </div>
     <div class="action-card-list">
@@ -17,13 +17,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import {
+  SET_TRANSFER_FROM_ACCOUNT,
+} from '@/store/modules/transfer';
 import { RouteDef } from '@/constants';
 import AccountSelector from '@/components/common/AccountSelector';
 import ActionCard from '@/components/common/ActionCard';
 
+import BasePage from '@/components/BasePage';
+
 export default {
-  name: 'TransferListing',
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transfer.title'),
@@ -35,9 +40,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      transferFromAccount: 'transferFromAccount',
-      accounts: 'userAccounts',
+    ...mapState({
+      transferFromAccount: state => state.transfer.transferFromAccount,
+      selectedUser: state => state.home.selectedUser,
+      userAccounts: state => state.home.userAccounts,
     }),
   },
   components: {
@@ -45,16 +51,12 @@ export default {
     ActionCard,
   },
   created() {
-    this.$store.commit('setNavigationTitle', this.$metaInfo.title);
-
-    if (this.$store.state.transfer.transferFromAccount == null) {
-      this.$store.commit('setTransferFromAccount', this.$store.state.home.selectedUser);
-    }
+    this.setTransferFromAccount(this.selectedUser);
   },
   methods: {
-    selectedFromAccount(user) {
-      this.$store.commit('setTransferFromAccount', user);
-    },
+    ...mapMutations({
+      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+    }),
   },
 };
 </script>

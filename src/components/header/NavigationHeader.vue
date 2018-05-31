@@ -14,7 +14,6 @@
 <script>
 
 export default {
-  name: 'NavigationHeader',
   props: ['title'],
   methods: {
     goBack() {

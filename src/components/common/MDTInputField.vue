@@ -13,7 +13,6 @@
 
 <script>
 export default {
-  name: 'MDTInputField',
   props: { amount: Number, maxAmount: Number },
   data() {
     return {

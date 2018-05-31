@@ -24,6 +24,14 @@ const ErrorCode = {
 
   GetAutoLoginTokenValidateFailedError: 16,
 
+  EmailAlreadyConfirmed: 17,
+  EmailConfirmedRequestTooFrequent: 18,
+
+  // Transfer Related
+  InvalidEmail: 19,
+  InvalidEthAddress: 20,
+  InsufficientFund: 21,
+
   UnknownError: 99999,
 };
 
@@ -49,6 +57,7 @@ const RouteDef = {
   TransferEthWalletReview: '/home/transfer/ethwallet/review',
   TransferEmailReview: '/home/transfer/ethwallet/review',
   TransferEthWalletQrCode: '/home/transfer/ethwallet/qrcode',
+  TransferSuccess: '/home/transfer/ethwallet/review/success',
 
   EarnMDT: '/home/earn',
   AccountDetail: '/home/accountdetail',

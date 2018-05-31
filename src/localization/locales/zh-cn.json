@@ -1,7 +1,10 @@
 {
   "common": {
     "transferbtn": "转帐",
-    "okay": "OK"
+    "okay": "OK",
+    "unknow_error": "出错了......请稍后再试",
+    "error_title": "出错了",
+    "done": "完成"
   },
   "home": {
     "total_balance": "结余",
@@ -15,6 +18,9 @@
     "title": "转帐",
     "ethtitle": "转帐至以太钱包",
     "emailtitle": "转帐至电邮地址",
+    "reviewtitle": "确认",
+    "successtitle": "成功",
+    "successdetail": "成功转帐！",
     "fromlbl": "由",
     "tolbl": "至",
     "amountlbl": "数量",
@@ -30,6 +36,8 @@
     "transfer": "转帐",
     "transaction_fee": "手续费",
     "final_amount": "最终数量",
+    "invalid_email": "无效的电邮地址",
+    "invalid_ethaddress": "无效的以太钱包地址",
     "insufficient_fund": "帐号MDT数量不够，请减才少数量或另选帐号。"
   },
   "earn": {

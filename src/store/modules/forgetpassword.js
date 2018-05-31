@@ -1,28 +1,30 @@
-import api from './../../api';
+import api from '@/api';
+
+// Mutations
+export const SET_FORGET_SUCCESS = 'forgetPassword/SET_FORGET_SUCCESS';
+
+// Actions
+export const REQUEST_FORGET_PASSWORD = 'forgetPassword/REQUEST_FORGET_PASSWORD';
 
 const state = {
   forgetSuccess: null,
 };
 
-const getters = {
-  forgetSuccess: state => state.forgetSuccess,
-};
-
 const mutations = {
-  setForgetSuccess(state, forgetSuccess) {
+  [SET_FORGET_SUCCESS](state, forgetSuccess) {
     state.forgetSuccess = forgetSuccess;
   },
 };
 
 const actions = {
-  confirmForgetPassword(context, emailAddress) {
-    api.forgetPassword(emailAddress)
+  [REQUEST_FORGET_PASSWORD](context, emailAddress) {
+    api.auth.forgetPassword(emailAddress)
       .then(
-        () => context.commit('setForgetSuccess', true),
+        () => context.commit([SET_FORGET_SUCCESS], true),
       )
       .catch(
         () => {
-          context.commit('setForgetSuccess', false);
+          context.commit([SET_FORGET_SUCCESS], false);
         },
       );
   },
@@ -31,7 +33,6 @@ const actions = {
 
 export default{
   state,
-  getters,
-  actions,
   mutations,
+  actions,
 };

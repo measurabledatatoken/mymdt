@@ -30,26 +30,4 @@ npm test
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## Contribution Guideline (Draft)
-
-* All scss in Vue Component should be scoped
-* For child component that do not have acess, should use /deep/ instead of use a global.scss
-* All elements in a vuejs component should be ordered in following order
-
-```javascript
-  metaInfo() {
-  },
-  data() {
-  },
-  computed: {
-  },
-  components: {
-  },
-  created() {
-  },
-  mounted() {
-  },
-  methods: {
-  },
-```
-* Always fix the warning and errors from eslint
-* We are using Material UI library. Try to check out the component in the library first before use other library. https://vuematerial.io/components/input
+Refer to Vue readme in https://bitbucket.org/mailtimeapp/devwelcomekit/commits/73d55f350a3a19c76671d73558014621e2edc066

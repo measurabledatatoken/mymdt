@@ -11,11 +11,16 @@
         <router-view class="content-router-view"></router-view>
       </transition>
     </div>
+
+    <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
+      :md-confirm-text="$t('message.common.okay')" />
+
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import { SET_SHOW_ERROR_PROMPT, SET_LOCALE } from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 
@@ -29,9 +34,30 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      navigationTitle: 'navigationTitle',
+    ...mapState({
+      navigationTitle: state => state.common.navigationTitle,
+      errorMessage(state) {
+        if (state.common.errorMessage instanceof String) {
+          return state.common.errorMessage;
+        }
+        return this.$t(state.common.errorMessage.messageId);
+      },
+      errorTitle(state) {
+        if (state.common.errorTitle instanceof String) {
+          return state.common.errorTitle;
+        }
+        return this.$t(state.common.errorTitle.messageId);
+      },
+      locale: state => state.common.locale,
     }),
+    showErrorPrompt: {
+      get() {
+        return this.$store.state.common.showErrorPrompt;
+      },
+      set(newValue) {
+        this.setShowErrorPrompt(newValue);
+      },
+    },
   },
   components: {
     HomeHeader,
@@ -52,24 +78,30 @@ export default {
   created() {
     let locale = this.$route.query.lang;
     if (locale === undefined) {
-      const storeState = this.$store.state.home.locale;
+      const storeState = this.locale;
       if (storeState !== null) {
         locale = storeState;
       } else {
         locale = 'en-us';
       }
     } else {
-      this.$store.commit('setLocale', locale);
+      this.setLocale(locale);
     }
     this.$i18n.locale = locale;
+  },
+  methods: {
+    ...mapMutations({
+      setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
+      setLocale: SET_LOCALE,
+    }),
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@mixin animation-active () {
+@mixin animation-active() {
   will-change: transform;
-  @include transition(transform 500ms);
+  transition: transform 500ms ease-out;
   position: absolute;
 }
 
@@ -82,6 +114,7 @@ export default {
   top: 0;
   z-index: 3;
   height: $header-height;
+  background: $home-bgcolor;
 }
 
 .header-view {
@@ -97,7 +130,7 @@ export default {
 .content-router-view {
   width: 100%;
   bottom: 0;
-  flex:1;
+  flex: 1;
 }
 
 .header-pop-out-enter-active,
@@ -125,7 +158,7 @@ export default {
 .content-pop-in-enter-active,
 .content-pop-in-leave-active {
   @include animation-active;
-  Top: $header-height;
+  top: $header-height;
 }
 
 .content-pop-out-enter {
@@ -139,6 +172,21 @@ export default {
 }
 .content-pop-in-leave-active {
   transform: translateX(-100%);
+}
+
+.md-dialog {
+  text-align: left;
+
+  /deep/ .md-dialog-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  /deep/ .md-button {
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+  }
 }
 </style>
 
