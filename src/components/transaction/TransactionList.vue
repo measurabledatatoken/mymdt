@@ -5,6 +5,7 @@
     <template v-for="transaction in transactions">
       <transaction-item
         :key="transaction.id"
+        :to="{ name: 'transactionDetail', params: { transaction_id: transaction.id, transaction } }"
         :avatar="transaction.avatar"
         :line1="transaction.name"
         :line2="transaction.datetime"
