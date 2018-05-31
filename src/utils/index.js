@@ -1,3 +1,5 @@
+import numeral from 'numeral';
+
 import {
   RouteDef,
 } from '@/constants';
@@ -41,6 +43,28 @@ const getEthAddressFromString = (str) => {
   return substr;
 };
 
+function formatAmount(amount, options) {
+  if (typeof amount !== 'number') {
+    return '';
+  }
+
+  // eslint-disable-next-line
+  options = {
+    type: 'long',
+    ...options,
+  };
+
+  switch (options.type) {
+    case 'short': {
+      return numeral(amount).format('0,0.00');
+    }
+    default: {
+      return numeral(amount).format('0,0.0000[00000000000000]');
+    }
+  }
+}
+
+
 export {
   isRouteHomePath,
   isRouteChangeBack,
@@ -48,4 +72,6 @@ export {
   isValidEthAddress,
   isValidEmailAddress,
   getEthAddressFromString,
+
+  formatAmount,
 };
