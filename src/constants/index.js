@@ -60,7 +60,8 @@ const RouteDef = {
   TransferSuccess: '/home/transfer/ethwallet/review/success',
 
   EarnMDT: '/home/earn',
-  AccountDetail: '/home/accountdetail',
+  AccountDetail: '/home/accounts/:account_id',
+  TransactionDetail: '/home/accounts/:account_id/transactions/:transaction_id',
 };
 
 

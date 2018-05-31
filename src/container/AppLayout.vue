@@ -40,13 +40,23 @@ export default {
         if (state.common.errorMessage instanceof String) {
           return state.common.errorMessage;
         }
-        return this.$t(state.common.errorMessage.messageId);
+
+        if (state.common.errorMessage && state.common.errorMessage.messageId) {
+          return this.$t(state.common.errorMessage.messageId);
+        }
+
+        return '';
       },
       errorTitle(state) {
         if (state.common.errorTitle instanceof String) {
           return state.common.errorTitle;
         }
-        return this.$t(state.common.errorTitle.messageId);
+
+        if (state.common.errorTitle && state.common.errorTitle.messageId) {
+          return this.$t(state.common.errorTitle.messageId);
+        }
+
+        return '';
       },
       locale: state => state.common.locale,
     }),

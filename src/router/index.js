@@ -16,6 +16,7 @@ import TransactionHistory from '@/components/TransactionHistory';
 import Tutorial from '@/components/Tutorial';
 
 import AccountDetail from '@/components/AccountDetail';
+import TransactionDetail from '@/components/TransactionDetail';
 
 import TransferList from '@/components/transfer/TransferList';
 import TransferEmail from '@/components/transfer/TransferEmail';
@@ -70,12 +71,17 @@ const router = new Router({
           component: TransactionHistory,
         },
 
-
         {
           path: RouteDef.AccountDetail,
+          name: 'accountDetail',
           component: AccountDetail,
         },
-
+        {
+          path: RouteDef.TransactionDetail,
+          name: 'transactionDetail',
+          component: TransactionDetail,
+          props: true,
+        },
 
         // Transfer Route
         {

@@ -89,7 +89,12 @@ export default {
     },
     goToAccountDetail(user) {
       this.setSelectedUser(user);
-      this.$router.push(RouteDef.AccountDetail);
+      this.$router.push({
+        name: 'accountDetail',
+        params: {
+          account_id: user.emailAddress, // TODO: change to user id when API is ready
+        },
+      });
     },
   },
 };

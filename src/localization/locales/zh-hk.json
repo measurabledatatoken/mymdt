@@ -1,5 +1,4 @@
 {
-
   "common": {
     "transferbtn": "轉帳",
     "okay": "OK",
@@ -54,5 +53,21 @@
   "account": {
     "title": "帳戶",
     "transactions": "交易"
+  },
+  "transaction": {
+    "title": "交易",
+    "reward": "獎勵",
+    "pending": "等候處理...",
+    "processing": "處理中...",
+    "successful": "完成",
+    "failed": "失敗",
+    "type": "類別",
+    "time": "時間",
+    "detail": "內容",
+    "from": "由",
+    "to": "至",
+    "note": "備註",
+    "transactionFee": "手續費",
+    "accountBalance": "帳戶結餘"
   }
 }
