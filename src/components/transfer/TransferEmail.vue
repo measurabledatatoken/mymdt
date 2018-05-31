@@ -12,7 +12,7 @@
 
     <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
 
-    <md-button :to="transferEthReviewUrl" class="next md-raised md-primary" :disabled="disableNextBtn">
+    <md-button :to="RouteDef.TransferEmailReview" class="next md-raised md-primary" :disabled="disableNextBtn">
       {{ $t('message.transfer.nextbtn') }}
     </md-button>
 
@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      transferEthReviewUrl: RouteDef.TransferEthWalletReview,
+      RouteDef,
     };
   },
   computed: {

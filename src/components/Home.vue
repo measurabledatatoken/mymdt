@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <earn-m-d-t-button />
+    <EarnMDTButton />
   </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      earnMDTUrl: `${RouteDef.EarnMDT}`,
+      RouteDef,
       msg: 'Current MDT Price:',
       pageHeight: '0px',
     };

@@ -21,7 +21,7 @@
     </WalletAddressField>
     <NoteInputField v-on:infoEntered="noteInfoEntered" :note="transferNote"></NoteInputField>
 
-    <md-button :to="transferEthReviewUrl" class="next md-raised md-primary" :disabled="disableNextBtn">
+    <md-button :to="RouteDef.TransferEthWalletReview" class="next md-raised md-primary" :disabled="disableNextBtn">
       {{ $t('message.transfer.nextbtn') }}
     </md-button>
   </div>
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      transferEthReviewUrl: RouteDef.TransferEthWalletReview,
+      RouteDef,
       isWalletAddressValid: false,
     };
   },

@@ -5,10 +5,10 @@
       <md-icon md-src="/static/icons/close-white.svg"></md-icon>
     </md-button>
 
-    <md-button :to="settingURL" class="md-icon-button settingsbtn">
+    <md-button :to="RouteDef.Settings" class="md-icon-button settingsbtn">
       <md-icon md-src="/static/icons/settings-white.svg"></md-icon>
     </md-button>
-    <md-button :to="tutorialURL" class="md-icon-button tutorialbtn">
+    <md-button :to="RouteDef.Tutorial" class="md-icon-button tutorialbtn">
       <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
     </md-button>
   </div>
@@ -24,9 +24,8 @@ export default {
   name: 'AppHeader',
   data() {
     return {
-      tutorialURL: `${RouteDef.Tutorial}`,
+      RouteDef,
       transactionHistoryURL: `${RouteDef.TransactionHistory}`,
-      settingURL: `${RouteDef.Settings}`,
     };
   },
   computed: {
