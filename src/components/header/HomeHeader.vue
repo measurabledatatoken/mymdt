@@ -21,7 +21,6 @@ import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
 import { mapState } from 'vuex';
 
 export default {
-  name: 'AppHeader',
   data() {
     return {
       RouteDef,

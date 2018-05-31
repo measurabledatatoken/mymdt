@@ -15,7 +15,6 @@ import { mapState, mapMutations, mapActions } from 'vuex';
 import { SET_FORGET_SUCCESS, REQUEST_FORGET_PASSWORD } from '@/store/modules/forgetpassword';
 
 export default {
-  name: 'forgetpassword',
   data() {
     return {
       emailAddress: '',

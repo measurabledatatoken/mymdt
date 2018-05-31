@@ -26,7 +26,6 @@ import AccountSelector from '@/components/common/AccountSelector';
 import ActionCard from '@/components/common/ActionCard';
 
 export default {
-  name: 'TransferListing',
   metaInfo() {
     return {
       title: this.$t('message.transfer.title'),

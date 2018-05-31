@@ -18,7 +18,6 @@ import { mapState, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
 
 export default {
-  name: 'AccountDetail',
   metaInfo() {
     return {
       title: this.$t('message.account.title'),

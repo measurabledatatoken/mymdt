@@ -38,7 +38,6 @@ import { RouteDef, TransferType } from '@/constants';
 import { isValidEmailAddress } from '@/utils';
 
 export default {
-  name: 'TransferEmail',
   metaInfo() {
     return {
       title: this.$t('message.transfer.emailtitle'),

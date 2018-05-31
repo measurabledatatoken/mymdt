@@ -25,7 +25,6 @@ import { AtomSpinner } from 'epic-spinners';
 import { ErrorCode, RouteDef } from '@/constants';
 
 export default {
-  name: 'Login',
   props: [],
   data() {
     return {

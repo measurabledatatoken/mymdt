@@ -15,7 +15,6 @@
 
 <script>
 export default {
-  name: 'ActionCard',
   props: {
     actionName: {
       type: String,

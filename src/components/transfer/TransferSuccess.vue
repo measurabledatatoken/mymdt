@@ -16,7 +16,6 @@ import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 
 export default {
-  name: 'TransferSuccess',
   metaInfo() {
     return {
       title: this.$t('message.transfer.successtitle'),

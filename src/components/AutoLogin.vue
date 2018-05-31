@@ -18,7 +18,6 @@ import { AtomSpinner } from 'epic-spinners';
 import { ErrorCode, RouteDef } from '@/constants';
 
 export default {
-  name: 'AutoLogin',
   props: [],
   computed: {
     ...mapState({

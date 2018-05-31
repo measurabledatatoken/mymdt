@@ -57,7 +57,6 @@
 
 <script>
 export default {
-  name: 'AccountSelector',
   props: {
     label: {
       default: '',

@@ -29,7 +29,6 @@ import EarnMDTButton from '@/components/common/EarnMDTButton';
 import { RouteDef, HeaderHeight } from '@/constants';
 
 export default {
-  name: 'Home',
   metaInfo() {
     return {
       title: this.$t('message.home.title'),

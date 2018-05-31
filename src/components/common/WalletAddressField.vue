@@ -21,7 +21,6 @@ import { getEthAddressFromString } from '@/utils';
 import { RouteDef } from '@/constants';
 
 export default {
-  name: 'WalletAddressField',
   props: {
     label: {
       type: String,

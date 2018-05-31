@@ -32,7 +32,6 @@ import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reade
 import { getEthAddressFromString } from '@/utils';
 
 export default {
-  name: 'QRCodeScanPage',
   metaInfo() {
     return {
       title: this.$t('message.qrcode.title'),

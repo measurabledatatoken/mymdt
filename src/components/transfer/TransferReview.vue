@@ -55,7 +55,6 @@ import {
 import { TransferType, RouteDef } from '@/constants';
 
 export default {
-  name: 'TransferReview',
   metaInfo() {
     return {
       title: this.$t('message.transfer.reviewtitle'),
