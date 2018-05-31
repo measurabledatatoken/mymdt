@@ -23,12 +23,15 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_USER_ACCOUNTS, REQUEST_APP_CONFIG } from '@/store/modules/home';
+import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_USER_ACCOUNTS, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
+import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserCard from '@/components/common/UserCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
-import { RouteDef, HeaderHeight } from '@/constants';
+import { RouteDef } from '@/constants';
+import BasePage from '@/screens/BasePage';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.home.title'),
@@ -45,6 +48,7 @@ export default {
     ...mapState({
       mdtPrice: state => state.home.mdtPrice,
       userAccounts: state => state.home.userAccounts,
+      loginSuccess: state => state.login.loginSuccess,
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
@@ -68,17 +72,27 @@ export default {
     EarnMDTButton,
   },
   mounted() {
+    const redirectFrom = this.$route.redirectedFrom;
+    if (redirectFrom !== undefined && redirectFrom.indexOf('autologin') >= 0) {
+      const apiKey = this.$route.query.apikey;
+      const tokensStr = this.$route.query.tokens;
+      const needExit = this.$route.query.needexit;
+
+      this.setNeedExitBtn(needExit);
+      this.autoLogin(apiKey, tokensStr);
+    }
     this.requstMDTPrice();
-    this.requestUserAccounts();
     this.requestAppConfig();
 
     this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
   },
   methods: {
     ...mapMutations({
+      setNeedExitBtn: SET_NEED_EXIT_BTN,
       setSelectedUser: SET_SELECTED_USER,
     }),
     ...mapActions({
+      requestAutoLogin: REQUEST_AUTO_LOGIN,
       requstMDTPrice: REQUEST_MDT_PRICE,
       requestUserAccounts: REQUEST_USER_ACCOUNTS,
       requestAppConfig: REQUEST_APP_CONFIG,
@@ -95,6 +109,36 @@ export default {
           account_id: user.emailAddress, // TODO: change to user id when API is ready
         },
       });
+    },
+    autoLogin(apiKey, tokensStr) {
+      if (apiKey === undefined || tokensStr === undefined) {
+        this.$router.push(RouteDef.Login);
+        return;
+      }
+
+      const authTokens = tokensStr.split(',');
+      this.setIsLoading(true);
+      this.requestAutoLogin(
+        {
+          authTokens,
+          apiKey,
+        },
+      ).then(() => {
+        if (this.loginSuccess) {
+          this.requestData();
+        }
+      }).catch(
+        () => {
+          this.$router.push(RouteDef.Login);
+        },
+      );
+    },
+    requestData() {
+      this.requestUserAccounts().then(
+        () => {
+          this.setIsLoading(false);
+        },
+      );
     },
   },
 };

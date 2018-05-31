@@ -15,6 +15,9 @@
     <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')" />
 
+    <div v-if="isLoading" class="spinner-cointainer">
+      <atom-spinner :animation-duration="1000" :size="60" :color="'#5d9bec'" />
+    </div>
   </div>
 </template>
 
@@ -23,7 +26,7 @@ import { mapState, mapMutations } from 'vuex';
 import { SET_SHOW_ERROR_PROMPT, SET_LOCALE } from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
-
+import { AtomSpinner } from 'epic-spinners';
 import { isRouteChangeBack } from '@/utils';
 
 export default {
@@ -59,6 +62,7 @@ export default {
         return '';
       },
       locale: state => state.common.locale,
+      isLoading: state => state.common.isLoading,
     }),
     showErrorPrompt: {
       get() {
@@ -72,6 +76,7 @@ export default {
   components: {
     HomeHeader,
     NavigationHeader,
+    AtomSpinner,
   },
   watch: {
     $route(to, from) {
@@ -197,6 +202,20 @@ export default {
     font-size: 16px;
     font-weight: bold;
   }
+}
+
+.spinner-cointainer {
+  position: fixed;
+  top: 0;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.atom-spinner {
+  position: fixed;
+  @include center_horizontal_and_Vertical;
 }
 </style>
 

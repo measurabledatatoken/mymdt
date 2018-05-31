@@ -1,6 +1,7 @@
 export const SET_ERROR_MESSAGE = 'common/SET_ERROR_MESSAGE';
 export const SET_ERROR_TITLE = 'common/SET_ERROR_TITLE';
 export const SET_SHOW_ERROR_PROMPT = 'common/SET_SHOW_ERROR_PROMPT';
+export const SET_IS_LOADING = 'common/SET_IS_LOADING';
 export const SET_NAVIGATION_TITLE = 'common/SET_NAVIGATION_TITLE';
 export const SET_LOCALE = 'common/SET_LOCALE';
 
@@ -8,6 +9,7 @@ const state = {
   errorMessage: null,
   errorTitle: null,
   showErrorPrompt: null,
+  isLoading: true,
   navigationTitle: '',
   locale: null,
 };
@@ -21,6 +23,9 @@ const mutations = {
   },
   [SET_SHOW_ERROR_PROMPT](state, showErrorPrompt) {
     state.showErrorPrompt = showErrorPrompt;
+  },
+  [SET_IS_LOADING](state, isLoading) {
+    state.isLoading = isLoading;
   },
   [SET_NAVIGATION_TITLE](state, navigationTitle) {
     state.navigationTitle = navigationTitle;

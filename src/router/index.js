@@ -8,7 +8,6 @@ import AppLayout from '@/container/AppLayout';
 
 import Home from '@/screens/Home';
 import Login from '@/screens/Login';
-import AutoLogin from '@/screens/AutoLogin';
 import Register from '@/screens/Register';
 import ForgetPassword from '@/screens/ForgetPassword';
 import Settings from '@/screens/Settings';
@@ -47,7 +46,7 @@ const router = new Router({
         },
         {
           path: RouteDef.AutoLogin,
-          component: AutoLogin,
+          redirect: RouteDef.Home,
         },
         {
           path: RouteDef.Register,

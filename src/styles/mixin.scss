@@ -9,6 +9,13 @@
   transform: translateY(-50%);
 }
 
+@mixin center_horizontal_and_Vertical {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+
 @mixin primaryButtonStyle {
   width: 86%;
   height: 48px;
