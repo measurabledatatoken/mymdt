@@ -16,7 +16,7 @@
       :md-confirm-text="$t('message.common.okay')" />
 
     <div v-if="isLoading" class="spinner-cointainer">
-      <atom-spinner :animation-duration="1000" :size="60" :color="'#5d9bec'" />
+      <img class="spinner" src="static/loading.gif"/>
     </div>
   </div>
 </template>
@@ -213,8 +213,11 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.atom-spinner {
+.spinner {
   position: fixed;
+  width: 160px;
+  height: 155px;
+  border-radius: 4px;
   @include center_horizontal_and_Vertical;
 }
 </style>
