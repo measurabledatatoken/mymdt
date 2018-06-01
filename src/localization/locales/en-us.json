@@ -69,5 +69,12 @@
     "note": "Note",
     "transactionFee": "Transaction Fee",
     "accountBalance": "Account Balance"
+  },
+  "settings": {
+    "martketPriceUnit": "MDT Market Price Unit",
+    "security": "Security",
+    "help": "Help",
+    "reportProblem": "Report Problem",
+    "legalAndPrivary": "Legal & Privacy"
   }
 }

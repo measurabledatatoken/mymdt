@@ -69,5 +69,12 @@
     "note": "备注",
     "transactionFee": "手续费",
     "accountBalance": "帐户结余"
+  },
+  "settings": {
+    "martketPriceUnit": "MDT市场价格单位",
+    "security": "安全",
+    "help": "帮助",
+    "reportProblem": "报告问题",
+    "legalAndPrivary": "法律和隐私"
   }
 }
