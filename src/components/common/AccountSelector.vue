@@ -33,7 +33,7 @@
             </div>
           </div>
           <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
-            <md-icon class="done" md-src="/static/icons/done.svg"></md-icon>
+            <md-icon md-src="/static/icons/done.svg"></md-icon>
           </div>
 
         </md-menu-item>
@@ -156,7 +156,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$selectedEmailColor: #4187f7;
+$selectedEmailColor: $theme-color;
 $menuItemCellHeight: 56px;
 $menuItemOtherCellHeight: 44px;
 
@@ -253,7 +253,7 @@ $menuItemOtherCellHeight: 44px;
   z-index: 9;
 
   /deep/ .md-list {
-    background-color: #f4f6f8;
+    background-color: $theme-listing-bgcolor;
     border-radius: 0px 0px 4px 4px !important;
   }
 }

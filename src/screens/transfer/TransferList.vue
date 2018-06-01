@@ -70,7 +70,7 @@ export default {
 }
 
 .action-card-list {
-  background-color: #f4f6f8;
+  background-color: $theme-listing-bgcolor;
   height: calc(100% - 72px);
 }
 
