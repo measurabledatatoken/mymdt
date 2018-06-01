@@ -64,6 +64,22 @@ function formatAmount(amount, options) {
   }
 }
 
+function extractNameInitials(name) {
+  if (typeof name !== 'string' || name === '') {
+    return '';
+  }
+
+  const parts = name.split(' ');
+
+  switch (parts.length) {
+    case 1: {
+      return parts[0][0].toUpperCase();
+    }
+    default: {
+      return `${parts[0][0].toUpperCase()}${parts[parts.length - 1][0].toUpperCase()}`;
+    }
+  }
+}
 
 export {
   isRouteHomePath,
@@ -74,4 +90,5 @@ export {
   getEthAddressFromString,
 
   formatAmount,
+  extractNameInitials,
 };
