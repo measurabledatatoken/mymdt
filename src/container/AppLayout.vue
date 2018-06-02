@@ -15,9 +15,7 @@
     <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')" />
 
-    <div v-if="isLoading" class="spinner-cointainer">
-      <img class="spinner" src="static/loading.gif"/>
-    </div>
+    <LoadingPopup v-if="isLoading" src="static/threedotsloader.gif"/>
   </div>
 </template>
 
@@ -26,7 +24,7 @@ import { mapState, mapMutations } from 'vuex';
 import { SET_SHOW_ERROR_PROMPT, SET_LOCALE } from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
-import { AtomSpinner } from 'epic-spinners';
+import LoadingPopup from '@/components/common/LoadingPopup';
 import { isRouteChangeBack } from '@/utils';
 
 export default {
@@ -76,7 +74,7 @@ export default {
   components: {
     HomeHeader,
     NavigationHeader,
-    AtomSpinner,
+    LoadingPopup,
   },
   watch: {
     $route(to, from) {
@@ -204,21 +202,5 @@ export default {
   }
 }
 
-.spinner-cointainer {
-  position: fixed;
-  top: 0;
-  z-index: 9;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.spinner {
-  position: fixed;
-  width: 160px;
-  height: 155px;
-  border-radius: 4px;
-  @include center_horizontal_and_Vertical;
-}
 </style>
 
