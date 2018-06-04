@@ -26,16 +26,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .md-list-action {
-    display: flex;
-    align-items: center;
-    line-height: 1.5rem;
-    color: $theme-color;
+.md-list-item-text {
+  color: $label-color;
+}
 
-    .action-icon {
-      height: 1.5rem;
-      width: 1.5rem;
-    }
+.md-list-action {
+  display: flex;
+  align-items: center;
+  line-height: 1.5rem;
+  color: $theme-color;
+
+  .action-icon {
+    height: 1.5rem;
+    width: 1.5rem;
   }
+}
 </style>
 
