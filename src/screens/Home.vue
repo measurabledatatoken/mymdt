@@ -198,8 +198,7 @@ export default {
   color: white;
 }
 
-.md-button.earn-mdt {
-  @include primaryButtonStyle;
-  @include center_horizontal;
+.earn-mdt {
+  bottom: 24px;
 }
 </style>

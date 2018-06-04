@@ -1,10 +1,10 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid"
-      :amount="transferAmount" :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
+    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid" :amount="transferAmount"
+      :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
 
-    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="fromUserAccounts"
-      :selectedAccount="transferFromAccount">
+    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')"
+      :accounts="fromUserAccounts" :selectedAccount="transferFromAccount">
     </AccountSelector>
     <AccountSelector v-on:accountSelected="setTransferToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true"
       :accounts="transferToAccounts" :selectedAccount="transferToAccount">
@@ -12,10 +12,7 @@
 
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
 
-    <md-button :to="RouteDef.TransferEmailReview.path" class="next md-raised md-primary" :disabled="disableNextBtn">
-      {{ $t('message.transfer.nextbtn') }}
-    </md-button>
-
+    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn" :label="$t('message.common.next')"></MDTPrimaryButton>
   </div>
 
 </template>
@@ -37,6 +34,7 @@ import NoteInputField from '@/components/common/NoteInputField';
 import { RouteDef, TransferType } from '@/constants';
 import { isValidEmailAddress } from '@/utils';
 import BasePage from '@/screens/BasePage';
+import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
 
 export default {
   extends: BasePage,
@@ -49,6 +47,7 @@ export default {
     AccountSelector,
     MDTInputField,
     NoteInputField,
+    MDTPrimaryButton,
   },
   data() {
     return {
@@ -103,8 +102,7 @@ export default {
   margin: 16px 0px;
 }
 
-.md-button.next {
-  @include primaryButtonStyle;
-  @include center_horizontal;
+.primary-btn {
+  bottom: 24px;
 }
 </style>

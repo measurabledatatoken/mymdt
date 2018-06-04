@@ -72,4 +72,8 @@ export default {
       top: 0;
     }
   }
+
+  .earn-mdt {
+    bottom: 24px;
+  }
 </style>

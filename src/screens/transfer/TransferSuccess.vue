@@ -7,7 +7,7 @@
             {{ $t('message.transfer.successdetail')}}
         </div>
 
-        <md-button :to="RouteDef.Home.path" class="md-raised md-primary">{{ $t('message.common.done') }} </md-button>
+        <MDTPrimaryButton :to="RouteDef.Home.path" :label="$t('message.common.done')"></MDTPrimaryButton>
     </div>
 </template>
 
@@ -15,6 +15,7 @@
 import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
+import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
 
 export default {
   extends: BasePage,
@@ -27,6 +28,9 @@ export default {
     return {
       RouteDef,
     };
+  },
+  components: {
+    MDTPrimaryButton,
   },
   computed: {
     ...mapState({
@@ -50,8 +54,7 @@ export default {
     line-height: 30px;
 }
 
-.md-button {
-  @include primaryButtonStyle;
-  @include center_horizontal;
+.primary-btn {
+  bottom: 24px;
 }
 </style>

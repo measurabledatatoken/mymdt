@@ -7,7 +7,8 @@
     "done": "完成",
     "cancel": "取消",
     "skip": "跳過",
-    "edit": "更改"
+    "edit": "更改",
+    "next": "下一步"
   },
   "home": {
     "total_balance": "結餘",
@@ -27,7 +28,6 @@
     "fromlbl": "由",
     "tolbl": "至",
     "amountlbl": "數量",
-    "nextbtn": "下一步",
     "select_account_placeholder": "請選擇帳號",
     "wallet_address_placeholder": "貼上錢包地址",
     "other_emailaddress": "其他電郵地址...",
@@ -91,7 +91,7 @@
     "yes_skip": "是,跳過",
     "phone_setup_success": "電話號碼成功設置！",
     "add_phone_title": "添加您的電話號碼",
-    "add_phone_content": "在您的帳戶中添加電話號碼,我們會要求您輸入驗證碼。",
+    "add_phone_content": "在您的帳戶中添加電話號碼，我們會要求您輸入驗證碼。",
     "country_code_placeholder": "國家代碼",
     "phone_number_placeholder": "電話號碼",
     "verify_phone_title": "驗證您的手機",

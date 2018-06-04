@@ -43,6 +43,7 @@
     <md-button v-on:click="transferMDT" class="transfer md-raised md-primary" :disabled="disableTransferBtn">
       {{ $t('message.transfer.transfer') }}
     </md-button>
+
   </div>
 </template>
 
@@ -269,6 +270,7 @@ $amountMinHeight: 20px;
 }
 
 .md-button.transfer {
+  bottom: 24px;
   @include primaryButtonStyle;
   @include center_horizontal;
 }

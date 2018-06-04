@@ -15,9 +15,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .md-button.earn-mdt {
-    @include primaryButtonStyle;
-    @include center_horizontal;
-  }
+.md-button.earn-mdt {
+  @include primaryButtonStyle;
+  @include center_horizontal;
+}
 </style>
 
