@@ -23,7 +23,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_USER_ACCOUNTS, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
+import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserCard from '@/components/common/UserCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
@@ -47,7 +47,6 @@ export default {
     ...mapState({
       mdtPrice: state => state.home.mdtPrice,
       userAccounts: state => state.home.userAccounts,
-      loginSuccess: state => state.login.loginSuccess,
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
@@ -91,7 +90,6 @@ export default {
     ...mapActions({
       requestAutoLogin: REQUEST_AUTO_LOGIN,
       requstMDTPrice: REQUEST_MDT_PRICE,
-      requestUserAccounts: REQUEST_USER_ACCOUNTS,
       requestAppConfig: REQUEST_APP_CONFIG,
     }),
     goToTransfer(user) {
@@ -112,28 +110,11 @@ export default {
         this.$router.push(RouteDef.Login);
         return;
       }
-
       const authTokens = tokensStr.split(',');
-      this.setIsLoading(true);
       this.requestAutoLogin(
         {
           authTokens,
           apiKey,
-        },
-      ).then(() => {
-        if (this.loginSuccess) {
-          this.requestData();
-        }
-      }).catch(
-        () => {
-          this.$router.push(RouteDef.Login);
-        },
-      );
-    },
-    requestData() {
-      this.requestUserAccounts().then(
-        () => {
-          this.setIsLoading(false);
         },
       );
     },
