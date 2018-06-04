@@ -1,8 +1,8 @@
 <template>
   <div>
-    <md-list>
-      <base-setting-list-item :title="$t('message.settings.martketPriceUnit')">
-        <span slot="action-data">USD</span>
+    <md-list class="top-list">
+      <base-setting-list-item :title="$t('message.settings.martketPriceUnit')" :to="RouteDef.PriceUnits.path">
+        <span slot="action-data">{{ priceUnit }}</span>
       </base-setting-list-item>
       <md-divider />
     </md-list>
@@ -34,6 +34,8 @@ import SettingListSectionHeader from '@/components/setting/SettingListSectionHea
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListUserItem from '@/components/setting/SettingListUserItem';
 
+import { RouteDef } from '@/constants';
+
 export default {
   extends: BasePage,
   metaInfo() {
@@ -41,9 +43,15 @@ export default {
       title: this.$t('message.settings.title'),
     };
   },
+  data() {
+    return {
+      RouteDef,
+    };
+  },
   computed: {
     ...mapState({
       userAccounts: state => state.home.userAccounts,
+      priceUnit: state => state.home.priceUnit,
     }),
   },
   components: {
@@ -54,3 +62,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.top-list {
+  padding-top: 0;
+}
+</style>
