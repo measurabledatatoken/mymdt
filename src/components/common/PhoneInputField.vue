@@ -1,34 +1,34 @@
 <template>
-    <div class="phone-input">
-        <md-menu class="country-code-selector" md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened"
-            v-on:md-closed="menuClosed">
-            <md-field md-inline md-menu-trigger>
-                <label>{{ $t('message.phone.country_code_placeholder')}}</label>
-                <md-input v-model="typedCountryCode"></md-input>
-                <md-icon v-show="!isMenuOpened" md-src="/static/icons/keyboard_arrow_down.svg">
-                </md-icon>
-                <md-icon v-show="isMenuOpened" md-src="/static/icons/keyboard_arrow_up.svg">
-                </md-icon>
-            </md-field>
+  <div class="phone-input">
+    <md-menu class="country-code-selector" md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened"
+      v-on:md-closed="menuClosed">
+      <md-field md-inline md-menu-trigger v-bind:class="{ 'open': isMenuOpened }">
+        <label>{{ $t('message.phone.country_code_placeholder')}}</label>
+        <md-input v-model="typedCountryCode"></md-input>
+        <md-icon v-show="!isMenuOpened" md-src="/static/icons/keyboard_arrow_down.svg">
+        </md-icon>
+        <md-icon v-show="isMenuOpened" md-src="/static/icons/keyboard_arrow_up.svg">
+        </md-icon>
+      </md-field>
 
-            <md-menu-content>
-                <md-menu-item @click="selectCountryCode(countryCodeItem)" v-for="countryCodeItem in filteredCountryCodeList"
-                    :key="countryCodeItem.code">
-                    <div class="country-code">{{countryCodeItem.code}}</div>
-                    <div class="dial-code">{{countryCodeItem.dial_code}}</div>
-                    <div class="icon-container">
-                        <md-icon v-if="countryCodeItem.dial_code === selectedCountryCode" class="done" md-src="/static/icons/done.svg"></md-icon>
-                    </div>
-                    <md-divider></md-divider>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
+      <md-menu-content>
+        <md-menu-item @click="selectCountryCode(countryCodeItem)" v-for="countryCodeItem in filteredCountryCodeList"
+          :key="countryCodeItem.code">
+          <div class="country-code">{{countryCodeItem.code}}</div>
+          <div class="dial-code">{{countryCodeItem.dial_code}}</div>
+          <div class="icon-container">
+            <md-icon v-if="countryCodeItem.dial_code === selectedCountryCode" class="done" md-src="/static/icons/done.svg"></md-icon>
+          </div>
+          <md-divider></md-divider>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
 
-        <md-field class="phone-number-input" md-inline>
-            <label>{{ $t('message.phone.phone_number_placeholder')}}</label>
-            <md-input type="number" v-model="phoneNumber"></md-input>
-        </md-field>
-    </div>
+    <md-field class="phone-number-input" md-inline>
+      <label>{{ $t('message.phone.phone_number_placeholder')}}</label>
+      <md-input type="number" v-model="phoneNumber"></md-input>
+    </md-field>
+  </div>
 </template>
 
 <script>
@@ -90,7 +90,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$inputItemHeight: 48px;
 $menuItemHeight: 36px;
 
 .phone-input {
@@ -101,7 +100,7 @@ $menuItemHeight: 36px;
 .country-code-selector {
   float: left;
   width: 35%;
-  height: $inputItemHeight;
+  height: $menuItemHeight;
   margin-right: 5%;
 
   .md-input {
@@ -111,9 +110,16 @@ $menuItemHeight: 36px;
   .md-icon {
     width: 30%;
     height: 26px;
-    margin-top: 12px;
+    margin-top: calc(#{$menuItemHeight} - 26px) / 2;
+    background-color: transparent;
   }
 }
+
+.phone-number-input {
+  width: 55%;
+  height: $menuItemHeight;
+}
+
 
 .md-menu-content {
   border-radius: 0px 0px 4px 4px !important;
@@ -160,18 +166,13 @@ $menuItemHeight: 36px;
     }
 
     .md-divider {
-        position: absolute;
-        bottom: 0;
-        width: 85%;
-        height: 0px;
-        border: solid 1px #eeeeee;
+      position: absolute;
+      bottom: 0;
+      width: 85%;
+      height: 0px;
+      border: solid 1px #eeeeee;
     }
   }
-}
-
-.phone-number-input {
-  width: 55%;
-  height: $inputItemHeight;
 }
 
 // icon color for country code selector and phone input
@@ -181,6 +182,10 @@ $menuItemHeight: 36px;
     svg {
       fill: $theme-color;
     }
+
+    &:after {
+      content: none;
+    }
   }
 }
 
@@ -188,19 +193,35 @@ $menuItemHeight: 36px;
 .md-field.md-focused {
   margin: 0px;
   padding-top: 0px;
+  min-height: $menuItemHeight;
 
   .md-input {
     width: 100%;
-    height: $inputItemHeight;
+    height: $menuItemHeight;
   }
 
   label {
     color: $theme-placehoder-color;
-    top: 16px;
+    top: 8px;
+    padding-left: 8px;
   }
 
   &:after {
     border: solid 1px #bdbdbd;
+  }
+
+  &.open {
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 4px 4px 0px 0px;
+    background-color: white;
+
+    &:after {
+      border: solid 1px #eeeeee;
+    }
+
+    &:before {
+      border: solid 1px #eeeeee;
+    }
   }
 }
 </style>
