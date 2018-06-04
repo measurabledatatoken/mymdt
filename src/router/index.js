@@ -10,7 +10,7 @@ import Home from '@/screens/Home';
 import Login from '@/screens/Login';
 import Register from '@/screens/Register';
 import ForgetPassword from '@/screens/ForgetPassword';
-import Settings from '@/screens/Settings';
+import Settings from '@/screens/setting/Settings';
 import Tutorial from '@/screens/Tutorial';
 
 import AccountDetail from '@/screens/AccountDetail';
