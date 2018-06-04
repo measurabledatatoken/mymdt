@@ -4,7 +4,10 @@
     "okay": "okay",
     "unknow_error": "Somthing went wrong... <br> Please try again later",
     "error_title": "Something is wrong",
-    "done": "Done"
+    "done": "Done",
+    "cancel": "Cancel",
+    "skip": "Skip",
+    "edit": "Edit"
   },
   "home": {
     "total_balance": "Total Balance",
@@ -38,7 +41,7 @@
     "final_amount": "Final Amount",
     "invalid_email": "Invalid Email Address",
     "invalid_ethaddress": "Invalid Eth Address",
-    "insufficient_fund": "Insufficient fund. Please enter another amount or change an account." 
+    "insufficient_fund": "Insufficient fund. Please enter another amount or change an account."
   },
   "earn": {
     "title": "Earn MDT"
@@ -80,5 +83,22 @@
   },
   "priceUnit": {
     "title": "Price Unit"
+  },
+  "phone": {
+    "title": "Phone Setup",
+    "skip_setup_title": "Skip Phone Setup?",
+    "skip_setup_content": "Are you sure? Adding a phone number will make your account more secure. If you skip now, you can always add your phone number in Settings -> Security.",
+    "yes_skip": "Yes, skip",
+    "phone_setup_success": "Phone Number Successfylly Set!",
+    "add_phone_title": "Add Your Phone Number",
+    "add_phone_content": "Add a phone number to your account. We will ask you to enter a verification code.",
+    "country_code_placeholder": "Country Code",
+    "phone_number_placeholder": "Phone Number",
+    "verify_phone_title": "Verify Your Phone",
+    "verify_phone_content": "A verification code has been sent to your registered phone number:",
+    "verification_code": "Verification Code",
+    "verification_code_placeholder": "6-digit Number",
+    "resend": "Resend after {second}s",
+    "cant_receive": "Can't receive code?"
   }
 }

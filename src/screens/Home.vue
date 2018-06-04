@@ -12,8 +12,8 @@
 
     <div class="bottom-content">
       <div v-for="user in userAccounts" :key="user.emailAddress">
-        <UserCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
-        </UserCard>
+        <UserInfoCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
+        </UserInfoCard>
       </div>
     </div>
     <LoadingPopup v-if="showHomeLoadingEnd" src="static/loadersecondhalf.gif" />
@@ -25,7 +25,7 @@
 import { mapState, mapMutations, mapActions } from 'vuex';
 import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
-import UserCard from '@/components/common/UserCard';
+import UserInfoCard from '@/components/common/UserInfoCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
 import LoadingPopup from '@/components/common/LoadingPopup';
 import { RouteDef } from '@/constants';
@@ -68,7 +68,7 @@ export default {
     },
   },
   components: {
-    UserCard,
+    UserInfoCard,
     EarnMDTButton,
     LoadingPopup,
   },

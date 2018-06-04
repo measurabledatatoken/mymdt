@@ -10,8 +10,12 @@ import Home from '@/screens/Home';
 import Login from '@/screens/Login';
 import Register from '@/screens/Register';
 import ForgetPassword from '@/screens/ForgetPassword';
+
 import Settings from '@/screens/setting/Settings';
 import PriceUnits from '@/screens/setting/PriceUnits';
+import PhoneNumberAdd from '@/screens/phone/PhoneNumberAdd';
+import PhoneNumberVerify from '@/screens/phone/PhoneNumberVerify';
+
 import Tutorial from '@/screens/Tutorial';
 
 import AccountDetail from '@/screens/AccountDetail';
@@ -61,6 +65,17 @@ const router = new Router({
           path: RouteDef.Settings.path,
           component: Settings,
         },
+        // phone
+        {
+          path: RouteDef.PhoneNumberAdd.path,
+          component: PhoneNumberAdd,
+        },
+        {
+          path: RouteDef.PhoneNumberVerify.path,
+          component: PhoneNumberVerify,
+        },
+
+
         {
           path: RouteDef.PriceUnits.path,
           component: PriceUnits,
@@ -112,6 +127,7 @@ const router = new Router({
           path: RouteDef.EarnMDT.path,
           component: EarnMDT,
         },
+
 
         { // Route to Home page for route not defined
           path: '*', component: Home,
