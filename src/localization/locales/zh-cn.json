@@ -71,6 +71,7 @@
     "accountBalance": "帐户结余"
   },
   "settings": {
+    "title": "设定",
     "martketPriceUnit": "MDT市场价格单位",
     "security": "安全",
     "help": "帮助",

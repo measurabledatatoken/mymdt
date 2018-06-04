@@ -28,12 +28,19 @@
 <script>
 import { mapState } from 'vuex';
 
+import BasePage from '@/screens/BasePage';
 import UserAvatar from '@/components/common/UserAvatar';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListUserItem from '@/components/setting/SettingListUserItem';
 
 export default {
+  extends: BasePage,
+  metaInfo() {
+    return {
+      title: this.$t('message.settings.title'),
+    };
+  },
   computed: {
     ...mapState({
       userAccounts: state => state.home.userAccounts,

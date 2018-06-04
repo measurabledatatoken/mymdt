@@ -71,6 +71,7 @@
     "accountBalance": "Account Balance"
   },
   "settings": {
+    "title": "Settings",
     "martketPriceUnit": "MDT Market Price Unit",
     "security": "Security",
     "help": "Help",
