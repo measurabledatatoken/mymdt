@@ -12,16 +12,19 @@
 @mixin center_horizontal_and_Vertical {
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-
-@mixin primaryButtonStyle {
+@mixin BaseButtonStyle {
   width: 86%;
   height: 48px;
   margin: 0px;
   position: absolute;
-  z-index: 9;
+  z-index: 4;
+}
+
+@mixin primaryButtonStyle {
+  @include BaseButtonStyle;
   background-color: $bluebtn-backgroundcolor;
   color: $bluebtn-wordcolor;
   border-radius: 8px;
@@ -33,12 +36,18 @@
   }
 }
 
+@mixin secondaryButtonSyle {
+  @include BaseButtonStyle;
+  font-size: 16px;
+  color: $plainbtn-wordcolor;
+}
+
 @mixin transferButton {
   width: 86%;
   margin: 0px;
   height: 48px;
   bottom: 1.5em;
-  z-index: 9;
+  z-index: 4;
   @include center_horizontal;
   @include primaryButtonStyle;
 }

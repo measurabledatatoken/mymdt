@@ -26,13 +26,15 @@
 
     <md-field class="phone-number-input" md-inline>
       <label>{{ $t('message.phone.phone_number_placeholder')}}</label>
-      <md-input type="number" v-model="phoneNumber"></md-input>
+      <md-input type="number" v-on:keydown="phoneNumberEntered($event.target.value)"></md-input>
+      <span v-if="isFullPhoneNumberEntered && !isFullPhoneNumberValid" class="md-helper-text">{{ $t('message.phone.invalid_phonenumber') }}</span>
     </md-field>
   </div>
 </template>
 
 <script>
 import CountryCodeList from '@/data/CountryCode';
+import { isValidPhoneNumber } from '@/utils';
 
 export default {
   data() {
@@ -73,6 +75,19 @@ export default {
     fullPhoneNumber() {
       return this.selectedCountryCode + this.phoneNumber;
     },
+    isFullPhoneNumberEntered() {
+      if (this.selectedCountryCode == null || this.phoneNumber == null) {
+        return false;
+      }
+
+      return this.selectedCountryCode.length > 0 && this.phoneNumber.length > 0;
+    },
+    isFullPhoneNumberValid() {
+      if (this.isFullPhoneNumberEntered) {
+        return isValidPhoneNumber(this.fullPhoneNumber);
+      }
+      return false;
+    },
   },
   methods: {
     menuOpened() {
@@ -84,6 +99,19 @@ export default {
     selectCountryCode(countryCodeItem) {
       this.selectedCountryCode = countryCodeItem.dial_code;
       this.typedCountryCode = this.selectedCountryCode;
+      this.processFullPhoneEntered();
+    },
+    phoneNumberEntered(phoneNumber) {
+      this.phoneNumber = phoneNumber;
+      this.processFullPhoneEntered();
+    },
+    processFullPhoneEntered() {
+      if (this.isFullPhoneNumberValid) {
+        this.$emit('phoneNumberEntered', this.fullPhoneNumber);
+      } else {
+        // TODO: display error
+        this.$emit('phoneNumberInvalid', this.fullPhoneNumber);
+      }
     },
   },
 };
@@ -119,7 +147,6 @@ $menuItemHeight: 36px;
   width: 55%;
   height: $menuItemHeight;
 }
-
 
 .md-menu-content {
   border-radius: 0px 0px 4px 4px !important;
@@ -222,6 +249,10 @@ $menuItemHeight: 36px;
     &:before {
       border: solid 1px #eeeeee;
     }
+  }
+
+  .md-helper-text {
+    color: $theme-warning-color;
   }
 }
 </style>

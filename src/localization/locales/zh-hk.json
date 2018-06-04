@@ -99,6 +99,7 @@
     "verification_code": "驗證碼",
     "verification_code_placeholder": "6位數字驗證碼",
     "重新發送": "在{num}秒之後重新發送",
-    "cant_receive": "無法接收代碼？"
+    "cant_receive": "無法接收代碼？",
+    "invalid_phonenumber": "無效的電話號碼"
   }
 }

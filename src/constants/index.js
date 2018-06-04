@@ -67,10 +67,10 @@ const RouteDef = {
     name: 'transactionDetail',
   },
   PhoneNumberAdd: {
-    path: 'home/settings/phone/add',
+    path: '/home/settings/phone/add',
   },
   PhoneNumberVerify: {
-    path: 'home/settings/phone/add/verify',
+    path: '/home/settings/phone/add/verify',
   },
 };
 

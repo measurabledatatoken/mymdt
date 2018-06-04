@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.md-button {
+.md-button.md-primary {
   @include primaryButtonStyle;
   @include center_horizontal;
 }

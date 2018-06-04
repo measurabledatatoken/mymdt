@@ -99,6 +99,7 @@
     "verification_code": "验证码",
     "verification_code_placeholder": "6位数字验证码",
     "重新发送": "在{num}秒之后重新发送",
-    "cant_receive": "无法接收代码？"
+    "cant_receive": "无法接收代码？",
+    "invalid_phonenumber": "无效的电话号码"
   }
 }
