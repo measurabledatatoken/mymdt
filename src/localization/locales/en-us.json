@@ -77,5 +77,8 @@
     "help": "Help",
     "reportProblem": "Report Problem",
     "legalAndPrivary": "Legal & Privacy"
+  },
+  "priceUnit": {
+    "title": "Price Unit"
   }
 }

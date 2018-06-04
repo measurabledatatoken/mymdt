@@ -5,6 +5,7 @@ export const SET_NEED_EXIT_BTN = 'home/SET_NEED_EXIT_BTN';
 export const SET_SELECTED_USER = 'home/SET_SELECTED_USER';
 export const SET_USER_ACCOUNTS = 'home/SET_USER_ACCOUNTS';
 export const SET_APP_CONFIG = 'home/SET_APP_CONFIG';
+export const SET_PRICE_UNIT = 'home/SET_PRICE_UNIT';
 
 // Actions
 export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -26,6 +27,7 @@ const state = {
     accessToken: null,
   },
   userAccounts: [],
+  priceUnit: 'USD',
 
   // AppConfig
   appConfig: null,
@@ -46,6 +48,9 @@ const mutations = {
   },
   [SET_APP_CONFIG](state, appConfig) {
     state.appConfig = appConfig;
+  },
+  [SET_PRICE_UNIT](state, priceUnit) {
+    state.priceUnit = priceUnit;
   },
 };
 

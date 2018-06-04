@@ -48,6 +48,7 @@ const RouteDef = {
   TransactionHistory: { path: '/account/:id/transactionhistory' },
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
+  PriceUnits: { path: '/home/settings/price-units' },
   Tutorial: { path: '/home/tutorial' },
   TransferList: { path: '/home/transfer' },
   TransferEmail: { path: '/home/transfer/email' },

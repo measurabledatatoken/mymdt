@@ -77,5 +77,8 @@
     "help": "帮助",
     "reportProblem": "报告问题",
     "legalAndPrivary": "法律和隐私"
+  },
+  "priceUnit": {
+    "title": "价格单位"
   }
 }
