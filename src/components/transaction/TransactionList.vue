@@ -52,7 +52,6 @@ export default {
 
   .list-item-divider {
     margin: 0 16px;
-    flex: none;
   }
 </style>
 
