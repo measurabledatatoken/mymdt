@@ -6,6 +6,7 @@ import Vue from 'vue';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
+import { sync } from 'vuex-router-sync';
 
 import App from './App';
 import router from './router';
@@ -13,6 +14,7 @@ import router from './router';
 import store from './store';
 import i18n from './localization';
 
+const unsync = sync(store, router);
 
 Vue.config.productionTip = false;
 Vue.use(VueMaterial);
@@ -26,3 +28,5 @@ new Vue({
   components: { App },
   template: '<App/>',
 });
+
+unsync();

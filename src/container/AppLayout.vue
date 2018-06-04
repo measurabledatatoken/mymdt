@@ -15,6 +15,7 @@
     <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')" />
 
+    <LoadingPopup v-if="isLoading" src="static/threedotsloader.gif"/>
   </div>
 </template>
 
@@ -23,7 +24,7 @@ import { mapState, mapMutations } from 'vuex';
 import { SET_SHOW_ERROR_PROMPT, SET_LOCALE } from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
-
+import LoadingPopup from '@/components/common/LoadingPopup';
 import { isRouteChangeBack } from '@/utils';
 
 export default {
@@ -59,6 +60,7 @@ export default {
         return '';
       },
       locale: state => state.common.locale,
+      isLoading: state => state.common.isLoading,
     }),
     showErrorPrompt: {
       get() {
@@ -72,6 +74,7 @@ export default {
   components: {
     HomeHeader,
     NavigationHeader,
+    LoadingPopup,
   },
   watch: {
     $route(to, from) {
@@ -198,5 +201,6 @@ export default {
     font-weight: bold;
   }
 }
+
 </style>
 

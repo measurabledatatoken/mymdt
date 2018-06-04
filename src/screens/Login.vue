@@ -21,7 +21,6 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { REQUEST_LOGIN } from '@/store/modules/login';
-import { AtomSpinner } from 'epic-spinners';
 import { ErrorCode, RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 
@@ -64,9 +63,6 @@ export default {
         }
       }
     },
-  },
-  components: {
-    AtomSpinner,
   },
   methods: {
     ...mapActions({

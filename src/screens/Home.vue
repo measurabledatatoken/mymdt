@@ -1,5 +1,5 @@
 <template>
-  <div class="home" v-bind:style=" {'height': pageHeight }">
+  <div class="home">
     <div class="top-content">
       <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
       <div class="balance-count">{{ totalMDTBalance }} MDT</div>
@@ -16,19 +16,23 @@
         </UserCard>
       </div>
     </div>
-
+    <LoadingPopup v-if="showHomeLoadingEnd" src="static/loadersecondhalf.gif" />
     <EarnMDTButton />
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_USER_ACCOUNTS, REQUEST_APP_CONFIG } from '@/store/modules/home';
+import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
+import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserCard from '@/components/common/UserCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
-import { RouteDef, HeaderHeight } from '@/constants';
+import LoadingPopup from '@/components/common/LoadingPopup';
+import { RouteDef } from '@/constants';
+import BasePage from '@/screens/BasePage';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.home.title'),
@@ -38,7 +42,7 @@ export default {
     return {
       RouteDef,
       msg: 'Current MDT Price:',
-      pageHeight: '0px',
+      showHomeLoadingEnd: false,
     };
   },
   computed: {
@@ -66,21 +70,29 @@ export default {
   components: {
     UserCard,
     EarnMDTButton,
+    LoadingPopup,
   },
   mounted() {
-    this.requstMDTPrice();
-    this.requestUserAccounts();
-    this.requestAppConfig();
+    const redirectFrom = this.$route.redirectedFrom;
+    if (redirectFrom !== undefined && redirectFrom.indexOf('autologin') >= 0) {
+      const apiKey = this.$route.query.apikey;
+      const tokensStr = this.$route.query.tokens;
+      const needExit = this.$route.query.needexit;
 
-    this.pageHeight = `${window.innerHeight - HeaderHeight}px`;
+      this.setNeedExitBtn(needExit);
+      this.autoLogin(apiKey, tokensStr);
+    }
+    this.requstMDTPrice();
+    this.requestAppConfig();
   },
   methods: {
     ...mapMutations({
+      setNeedExitBtn: SET_NEED_EXIT_BTN,
       setSelectedUser: SET_SELECTED_USER,
     }),
     ...mapActions({
+      requestAutoLogin: REQUEST_AUTO_LOGIN,
       requstMDTPrice: REQUEST_MDT_PRICE,
-      requestUserAccounts: REQUEST_USER_ACCOUNTS,
       requestAppConfig: REQUEST_APP_CONFIG,
     }),
     goToTransfer(user) {
@@ -96,6 +108,30 @@ export default {
         },
       });
     },
+    autoLogin(apiKey, tokensStr) {
+      if (apiKey === undefined || tokensStr === undefined) {
+        this.$router.push(RouteDef.Login);
+        return;
+      }
+      const authTokens = tokensStr.split(',');
+      this.requestAutoLogin(
+        {
+          authTokens,
+          apiKey,
+        },
+      ).then(
+        () => {
+          this.showHomeLoadingEnd = true;
+
+          setTimeout(
+            () => {
+              this.showHomeLoadingEnd = false;
+            },
+            1000,
+          );
+        },
+      );
+    },
   },
 };
 </script>
@@ -104,6 +140,7 @@ export default {
 <style lang="scss" scoped>
 .home {
   background-color: $home-bgcolor;
+  height: calc(100vh - #{$header-height});
 }
 
 .top-content {
@@ -135,7 +172,6 @@ export default {
   line-height: 60px;
   font-weight: bold;
 }
-
 
 .account-content {
   background-image: url("/static/background/sub-header-background.svg");

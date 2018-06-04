@@ -1,5 +1,15 @@
 import api from '@/api';
-import { ErrorCode } from '@/constants';
+import {
+  ErrorCode,
+  RouteDef,
+} from '@/constants';
+import {
+  REQUEST_USER_ACCOUNTS,
+} from '@/store/modules/home';
+import {
+  SET_IS_LOADING,
+} from '@/store/modules/common';
+import router from '@/router';
 
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
@@ -31,7 +41,11 @@ const mutations = {
 };
 
 const actions = {
-  [REQUEST_LOGIN](context, { emailAddress, password, apikey }) {
+  [REQUEST_LOGIN](context, {
+    emailAddress,
+    password,
+    apikey,
+  }) {
     return new Promise((resolve, reject) => {
       api.auth.login(emailAddress, password, apikey)
         .then(
@@ -63,7 +77,12 @@ const actions = {
         );
     });
   },
-  [REQUEST_AUTO_LOGIN](context, { authTokens, apiKey }) {
+  [REQUEST_AUTO_LOGIN](context, {
+    authTokens,
+    apiKey,
+  }) {
+    context.commit(SET_IS_LOADING, true);
+
     return new Promise((resolve, reject) => {
       if (!Array.isArray(authTokens)) {
         console.error('authTokens should all be array');
@@ -72,7 +91,9 @@ const actions = {
 
       const appCredentials = [];
       for (let i = 0; i < authTokens.length; i += 1) {
-        const appCredential = { token: authTokens[i] };
+        const appCredential = {
+          token: authTokens[i],
+        };
         appCredentials.push(appCredential);
       }
 
@@ -91,8 +112,15 @@ const actions = {
                 credentials.push(credential);
               });
               context.commit(SET_CREDENTIALS, credentials);
+
+              return context.dispatch(REQUEST_USER_ACCOUNTS);
             }
 
+            return new Promise(resolve());
+          },
+        ).then(
+          () => {
+            context.commit(SET_IS_LOADING, false);
             resolve();
           },
         )
@@ -104,6 +132,8 @@ const actions = {
               context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
             }
             reject();
+            router.push(RouteDef.Login);
+            context.commit(SET_IS_LOADING, false);
           },
         );
     });
@@ -111,7 +141,7 @@ const actions = {
 };
 
 
-export default{
+export default {
   state,
   mutations,
   actions,
