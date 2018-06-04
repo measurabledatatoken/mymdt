@@ -16,7 +16,7 @@
         </UserCard>
       </div>
     </div>
-
+    <LoadingPopup v-if="showHomeLoadingEnd" src="static/loadersecondhalf.gif" />
     <EarnMDTButton />
   </div>
 </template>
@@ -27,6 +27,7 @@ import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_APP_CONFIG, SET_NEED_EXIT
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserCard from '@/components/common/UserCard';
 import EarnMDTButton from '@/components/common/EarnMDTButton';
+import LoadingPopup from '@/components/common/LoadingPopup';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 
@@ -41,6 +42,7 @@ export default {
     return {
       RouteDef,
       msg: 'Current MDT Price:',
+      showHomeLoadingEnd: false,
     };
   },
   computed: {
@@ -68,6 +70,7 @@ export default {
   components: {
     UserCard,
     EarnMDTButton,
+    LoadingPopup,
   },
   mounted() {
     const redirectFrom = this.$route.redirectedFrom;
@@ -116,6 +119,17 @@ export default {
           authTokens,
           apiKey,
         },
+      ).then(
+        () => {
+          this.showHomeLoadingEnd = true;
+
+          setTimeout(
+            () => {
+              this.showHomeLoadingEnd = false;
+            },
+            1000,
+          );
+        },
       );
     },
   },
@@ -158,7 +172,6 @@ export default {
   line-height: 60px;
   font-weight: bold;
 }
-
 
 .account-content {
   background-image: url("/static/background/sub-header-background.svg");
