@@ -1,5 +1,5 @@
 <template>
-    <md-button :to="to" class="primary-btn md-raised md-primary">{{ label }} </md-button>
+    <md-button :to="to" v-on:click="onClick()" class="primary-btn md-raised md-primary">{{ label }} </md-button>
 </template>
 
 <script>
@@ -11,6 +11,11 @@ export default {
     },
     label: {
       type: String,
+    },
+  },
+  methods: {
+    onClick() {
+      this.$emit('click');
     },
   },
 };
