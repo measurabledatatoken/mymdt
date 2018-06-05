@@ -1,7 +1,7 @@
 <template>
   <md-list class="transaction-list md-double-line">
     <md-subheader>{{ $t('message.account.transactions') }}</md-subheader>
-    <transaction-item-divider />
+    <md-divider />
     <template v-for="transaction in transactions">
       <transaction-item
         :key="transaction.id"
@@ -12,14 +12,13 @@
         :amount="transaction.delta"
         :status="transaction.status"
       />
-      <transaction-item-divider :key="`${transaction.id}-divider`" class="list-item-divider" />
+      <md-divider :key="`${transaction.id}-divider`" class="list-item-divider" />
     </template>
   </md-list>
 </template>
 
 <script>
 import TransactionItem from '@/components/transaction/TransactionItem';
-import TransactionItemDivider from '@/components/transaction/TransactionItemDivider';
 
 import { RouteDef } from '@/constants';
 
@@ -32,7 +31,6 @@ export default {
   props: ['transactions'],
   components: {
     TransactionItem,
-    TransactionItemDivider,
   },
 };
 </script>
@@ -54,7 +52,6 @@ export default {
 
   .list-item-divider {
     margin: 0 16px;
-    flex: none;
   }
 </style>
 

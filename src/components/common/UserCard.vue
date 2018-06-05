@@ -1,9 +1,7 @@
 <template>
     <md-card md-with-hover>
         <div v-on:click="$emit('goToAccountDetail')" class="md-card-header">
-            <div class="md-avatar md-avatar-icon">
-                <p class="md-ripple avatar">NT</p>
-            </div>
+            <UserAvatar :user="user" />
             <div class="user-info">
                 <div v-bind:class="{ onlytitle : subTitle.length === 0} " class="md-title"> {{ title }}</div>
                 <div class="md-sutitle"> {{ subTitle }}</div>
@@ -21,6 +19,8 @@
 </template>
 
 <script>
+import UserAvatar from '@/components/common/UserAvatar';
+
 export default {
   props: ['user'],
   computed: {
@@ -37,6 +37,9 @@ export default {
       return this.user.emailAddress;
     },
   },
+  components: {
+    UserAvatar,
+  },
 };
 </script>
 
@@ -47,17 +50,6 @@ export default {
   margin: 0.5em;
 }
 
-.md-avatar-icon {
-  float: left;
-  background-color: #fad689;
-
-  .md-ripple {
-    font-size: 0.7em;
-    letter-spacing: 0.08em;
-    color: white;
-    font-weight: bold;
-  }
-}
 
 .md-card-header {
   height: 8em;

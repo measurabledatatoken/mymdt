@@ -6,7 +6,7 @@
       :amount="transaction.delta"
       :status="transaction.status"
     />
-    <transaction-item-divider />
+    <md-divider />
     <transaction-detail-item :title="$t('message.transaction.type')" :description="$t(transactionType.properties[transaction.type].messageId)" />
     <transaction-detail-item :title="$t('message.transaction.time')" :description="transaction.datetime" />
     <transaction-detail-item v-if="!!transaction.detail" :title="$t('message.transaction.detail')" :description="transaction.detail" />
@@ -31,7 +31,6 @@
 <script>
 import BasePage from '@/screens/BasePage';
 import TransactionItem from '@/components/transaction/TransactionItem';
-import TransactionItemDivider from '@/components/transaction/TransactionItemDivider';
 import TransactionDetailItem from '@/components/transaction/TransactionDetailItem';
 
 import { transactionType } from '@/enum';
@@ -56,7 +55,6 @@ export default {
   },
   components: {
     TransactionItem,
-    TransactionItemDivider,
     TransactionDetailItem,
   },
   methods: {

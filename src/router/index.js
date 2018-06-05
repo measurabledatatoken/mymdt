@@ -10,7 +10,8 @@ import Home from '@/screens/Home';
 import Login from '@/screens/Login';
 import Register from '@/screens/Register';
 import ForgetPassword from '@/screens/ForgetPassword';
-import Settings from '@/screens/Settings';
+import Settings from '@/screens/setting/Settings';
+import PriceUnits from '@/screens/setting/PriceUnits';
 import Tutorial from '@/screens/Tutorial';
 
 import AccountDetail from '@/screens/AccountDetail';
@@ -59,6 +60,10 @@ const router = new Router({
         {
           path: RouteDef.Settings.path,
           component: Settings,
+        },
+        {
+          path: RouteDef.PriceUnits.path,
+          component: PriceUnits,
         },
         {
           path: RouteDef.Tutorial.path,

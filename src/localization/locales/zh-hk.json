@@ -69,5 +69,16 @@
     "note": "備註",
     "transactionFee": "手續費",
     "accountBalance": "帳戶結餘"
+  },
+  "settings": {
+    "title": "設定",
+    "martketPriceUnit": "MDT市場價格單位",
+    "security": "安全",
+    "help": "幫助",
+    "reportProblem": "報告問題",
+    "legalAndPrivary": "法律和隱私"
+  },
+  "priceUnit": {
+    "title": "價格單位"
   }
 }

@@ -1,5 +1,15 @@
 @include md-register-theme("default", (
     text-primary-on-background: #4a4a4a,
     text-accent-on-background: #999999,
-    divider: #eef3f8
+    divider: #eef3f8,
+    icon-disabled: '#fad689'
 ));
+
+.md-divider {
+    margin: 0 16px;
+    flex-shrink: 0;
+}
+
+.md-avatar {
+    font-size: 1rem;
+}
