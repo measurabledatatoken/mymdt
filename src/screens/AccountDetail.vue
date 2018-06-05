@@ -2,8 +2,8 @@
   <div class="app-view">
     <div class="header">
       <div class="header__background"></div>
-      <user-card v-on:transfer="goToTransfer()" v-bind:user="selectedUser">
-      </user-card>
+      <user-info-card v-on:transfer="goToTransfer()" v-bind:user="selectedUser">
+      </user-info-card>
     </div>
     <transaction-list v-bind:transactions="transactions" />
     <earn-m-d-t-button />
