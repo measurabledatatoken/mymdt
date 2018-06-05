@@ -11,7 +11,6 @@
 import { extractNameInitials } from '@/utils';
 
 export default {
-  name: 'MdSubheader',
   props: ['user', 'src', 'name'],
   computed: {
     imageSrc() {
