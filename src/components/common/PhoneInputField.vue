@@ -4,7 +4,7 @@
       v-on:md-closed="menuClosed">
       <md-field md-inline md-menu-trigger v-bind:class="{ 'open': isMenuOpened }">
         <label>{{ $t('message.phone.country_code_placeholder')}}</label>
-        <md-input ref="countryCodeInput" v-model="typedCountryCode"></md-input>
+        <md-input ref="countryCodeInput" v-model="countryCodeSearchText"></md-input>
         <md-icon v-show="!isMenuOpened" md-src="/static/icons/keyboard_arrow_down.svg">
         </md-icon>
         <md-icon v-show="isMenuOpened" md-src="/static/icons/keyboard_arrow_up.svg">
@@ -17,7 +17,7 @@
           <div class="country-code">{{countryCodeItem.code}}</div>
           <div class="dial-code">{{countryCodeItem.dial_code}}</div>
           <div class="icon-container">
-            <md-icon v-if="countryCodeItem.dial_code === selectedCountryCode" class="done" md-src="/static/icons/done.svg"></md-icon>
+            <md-icon v-if="countryCodeItem.dial_code === countryDailCode" class="done" md-src="/static/icons/done.svg"></md-icon>
           </div>
           <md-divider></md-divider>
         </md-menu-item>
@@ -26,7 +26,7 @@
 
     <md-field class="phone-number-input" md-inline>
       <label>{{ $t('message.phone.phone_number_placeholder')}}</label>
-      <md-input type="number" v-on:keydown="phoneNumberEntered($event.target.value)"></md-input>
+      <md-input type="number" v-model="phoneNumber" v-on:keydown="phoneNumberEntered($event.target.value)"></md-input>
       <span v-if="isFullPhoneNumberEntered && !isFullPhoneNumberValid" class="md-helper-text">{{ $t('message.phone.invalid_phonenumber') }}</span>
     </md-field>
   </div>
@@ -37,50 +37,64 @@ import CountryCodeList from '@/data/CountryCode';
 import { isValidPhoneNumber } from '@/utils';
 
 export default {
+  props: {
+    initCountryDailCode: {
+      default: null,
+      type: String,
+    },
+    initPhoneNumber: {
+      default: null,
+      type: String,
+    },
+  },
   data() {
     return {
       countryCodeList: CountryCodeList,
-      // for filter only
-      typedCountryCode: null,
-      // final selected code
-      selectedCountryCode: null,
-      phoneNumber: null,
+      countryCodeSearchText: this.initCountryDailCode,
+      phoneNumber: this.initPhoneNumber,
+      countryDailCode: this.initCountryDailCode,
       isMenuOpened: false,
     };
   },
   computed: {
     // filter by dail code, country name or country code
     filteredCountryCodeList() {
-      if (this.typedCountryCode === null || this.typedCountryCode.length === 0 || this.selectedCountryCode === this.typedCountryCode) {
+      if (
+        this.countryCodeSearchText === null || this.countryCodeSearchText.length === 0 ||
+        this.countryDailCode === this.countryCodeSearchText
+      ) {
         return this.countryCodeList;
       }
 
       let tempCountryCodeList = this.countryCodeList.filter(
-        countryCodeItem => countryCodeItem.dial_code.indexOf(this.typedCountryCode) >= 0,
+        countryCodeItem => countryCodeItem.dial_code.indexOf(this.countryCodeSearchText) >= 0,
       );
 
       if (tempCountryCodeList.length === 0) {
         tempCountryCodeList = this.countryCodeList.filter(
-          countryCodeItem => countryCodeItem.code.toLowerCase().indexOf(this.typedCountryCode.toLowerCase()) >= 0,
+          countryCodeItem => countryCodeItem.code.toLowerCase().indexOf(this.countryCodeSearchText.toLowerCase()) >= 0,
         );
       }
 
       if (tempCountryCodeList.length === 0) {
         tempCountryCodeList = this.countryCodeList.filter(
-          countryCodeItem => countryCodeItem.name.toLowerCase().indexOf(this.typedCountryCode.toLowerCase()) >= 0,
+          countryCodeItem => countryCodeItem.name.toLowerCase().indexOf(this.countryCodeSearchText.toLowerCase()) >= 0,
         );
       }
       return tempCountryCodeList;
     },
     fullPhoneNumber() {
-      return this.selectedCountryCode + this.phoneNumber;
+      if (this.countryDailCode == null || this.phoneNumber == null) {
+        return '';
+      }
+      return this.countryDailCode.replace(/\s/g, '') + this.phoneNumber;
     },
     isFullPhoneNumberEntered() {
-      if (this.selectedCountryCode == null || this.phoneNumber == null) {
+      if (this.countryDailCode == null || this.phoneNumber == null) {
         return false;
       }
 
-      return this.selectedCountryCode.length > 0 && this.phoneNumber.length > 0;
+      return this.countryDailCode.length > 0 && this.phoneNumber.length > 0;
     },
     isFullPhoneNumberValid() {
       if (this.isFullPhoneNumberEntered) {
@@ -91,7 +105,6 @@ export default {
   },
   methods: {
     menuOpened() {
-      console.log('menuOpened');
       this.isMenuOpened = true;
       this.$refs.countryCodeInput.$el.focus();
     },
@@ -100,20 +113,24 @@ export default {
       this.$refs.countryCodeInput.$el.blur();
     },
     selectCountryCode(countryCodeItem) {
-      this.selectedCountryCode = countryCodeItem.dial_code.replace(/\s/g, '');
-      this.typedCountryCode = this.selectedCountryCode;
+      this.countryCodeSearchText = countryCodeItem.dial_code;
+      this.countryDailCode = countryCodeItem.dial_code;
       this.processFullPhoneEntered();
     },
-    phoneNumberEntered(phoneNumber) {
-      this.phoneNumber = phoneNumber;
+    phoneNumberEntered() {
       this.processFullPhoneEntered();
     },
     processFullPhoneEntered() {
+      const phoneNumberObj = {
+        countryDailCode: this.countryDailCode,
+        phoneNumber: this.phoneNumber,
+        fullPhoneNumber: this.fullPhoneNumber,
+      };
+
       if (this.isFullPhoneNumberValid) {
-        this.$emit('phoneNumberEntered', this.fullPhoneNumber);
+        this.$emit('phoneNumberEntered', phoneNumberObj);
       } else {
-        // TODO: display error
-        this.$emit('phoneNumberInvalid', this.fullPhoneNumber);
+        this.$emit('phoneNumberInvalid', phoneNumberObj);
       }
     },
   },

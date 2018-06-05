@@ -68,9 +68,11 @@ const RouteDef = {
   },
   PhoneNumberAdd: {
     path: '/home/settings/phone/add',
+    name: 'phoneNumberAdd',
   },
   PhoneNumberVerify: {
     path: '/home/settings/phone/add/verify',
+    name: 'phoneNumberVerify',
   },
 };
 

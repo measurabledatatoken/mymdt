@@ -68,13 +68,16 @@ const router = new Router({
         // phone
         {
           path: RouteDef.PhoneNumberAdd.path,
+          name: RouteDef.PhoneNumberAdd.name,
           component: PhoneNumberAdd,
+          props: true,
         },
         {
           path: RouteDef.PhoneNumberVerify.path,
+          name: RouteDef.PhoneNumberVerify.name,
           component: PhoneNumberVerify,
+          props: true,
         },
-
 
         {
           path: RouteDef.PriceUnits.path,

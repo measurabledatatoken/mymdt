@@ -1,16 +1,32 @@
 <template>
   <div>
-    <UserInfo :user="selectedAccount" :showMDT="false" />
-    <div class="title">{{ $t('message.phone.add_phone_title') }}</div>
-    <div class="content" v-html="$t('message.phone.add_phone_content')"></div>
-    <PhoneInputField v-on:phoneNumberEntered="onPhoneNumberEntered" v-on:phoneNumberInvalid="onPhonenNumberInvalid"/>
+    <BasePhoneNumberPage>
+      <template slot="title">
+        {{ $t('message.phone.add_phone_title') }}
+      </template>
 
-    <MDTPrimaryButton :to="RouteDef.PhoneNumberVerify.path" :label="$t('message.common.next')" :disabled="phoneNumber == null"/>
-    <button v-on:click="skipClicked()" class="skip-btn">{{ $t('message.common.skip') }}</button>
+      <template slot="content">
+        {{ $t('message.phone.add_phone_content') }}
+      </template>
 
-    <md-dialog-confirm :md-active.sync="showWarningPrompt" :md-title="$t('message.phone.skip_setup_title')"
-      :md-content="$t('message.phone.skip_setup_content')" :md-cancel-text="$t('message.common.cancel')"
-      :md-confirm-text="$t('message.phone.yes_skip')" @md-confirm="confirmSkip"/>
+      <template slot="action-area">
+        <keep-alive>
+          <PhoneInputField :initCountryDailCode="countryDailCode" :initPhoneNumber="phoneNumber" v-on:phoneNumberEntered="onPhoneNumberEntered" v-on:phoneNumberInvalid="onPhonenNumberInvalid"
+          />
+        </keep-alive>
+      </template>
+
+      <template slot="buttons">
+        <MDTPrimaryButton v-on:click="nextClicked()" :label="$t('message.common.next')" :disabled="phoneNumberObj == null"
+        />
+        <button v-on:click="skipClicked()" class="skip-btn">{{ $t('message.common.skip') }}</button>
+      </template>
+
+      <md-dialog-confirm :md-active.sync="showWarningPrompt" :md-title="$t('message.phone.skip_setup_title')"
+        :md-content="$t('message.phone.skip_setup_content')" :md-cancel-text="$t('message.common.cancel')"
+        :md-confirm-text="$t('message.phone.yes_skip')" @md-confirm="confirmSkip" />
+
+    </BasePhoneNumberPage>
 
   </div>
 </template>
@@ -19,17 +35,40 @@
 import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
-import UserInfo from '@/components/common/UserInfo';
+import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import PhoneInputField from '@/components/common/PhoneInputField';
 import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
 
 export default {
   extends: BasePage,
+  metaInfo() {
+    return {
+      title: this.$t('message.phone.title'),
+    };
+  },
+  components: {
+    BasePhoneNumberPage,
+    PhoneInputField,
+    MDTPrimaryButton,
+  },
+  props: {
+    countryDailCode: {
+      type: String,
+    },
+    phoneNumber: {
+      type: String,
+    },
+    fullPhoneNumber: {
+      type: String,
+    },
+    doneCallBackPath: {
+      type: String,
+    },
+  },
   data() {
     return {
       showWarningPrompt: false,
-      phoneNumber: null,
-      RouteDef,
+      phoneNumberObj: null,
     };
   },
   computed: {
@@ -37,72 +76,54 @@ export default {
       selectedAccount: state => state.home.selectedUser,
     }),
   },
-  metaInfo() {
-    return {
-      title: this.$t('message.phone.title'),
-    };
-  },
-  components: {
-    UserInfo,
-    PhoneInputField,
-    MDTPrimaryButton,
-  },
   methods: {
     skipClicked() {
       this.showWarningPrompt = true;
     },
+    nextClicked() {
+      this.$router.push(
+        {
+          name: RouteDef.PhoneNumberVerify.name,
+          params: {
+            countryDailCode: this.phoneNumberObj.countryDailCode,
+            phoneNumber: this.phoneNumberObj.phoneNumber,
+            doneCallBackPath: this.doneCallBackPath,
+          },
+        },
+      );
+    },
     confirmSkip() {
       // TODO: skip the setting
-
     },
-    onPhoneNumberEntered(phoneNumber) {
-      this.phoneNumber = phoneNumber;
+    onPhoneNumberEntered(phoneNumberObj) {
+      this.phoneNumberObj = phoneNumberObj;
     },
     onPhonenNumberInvalid() {
-      this.phoneNumber = null;
+      this.phoneNumberObj = null;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.user-info {
-  margin: 16px;
-}
-
-.title {
-  font-size: 16px;
-  font-weight: bold;
-  color: $label-color;
-  margin: 24px 0px;
-}
-.content {
-  font-size: 16px;
-  text-align: left;
-  color: $label-color;
-  margin: 0px $defaultPageMargin 40px;
-}
-
 .primary-btn {
-  bottom: 100px;
+  bottom: 72px;
 }
 
 .skip-btn {
   @include center_horizontal;
   @include secondaryButtonSyle;
-  bottom: 28px;
+  bottom: 12px;
 }
 
 .md-dialog {
   /deep/ .md-dialog-actions {
     justify-content: space-between;
 
-    .md-button .md-ripple{
+    .md-button .md-ripple {
       justify-content: left;
       padding-left: 0;
     }
   }
-
-
 }
 </style>
