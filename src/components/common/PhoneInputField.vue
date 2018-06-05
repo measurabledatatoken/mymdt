@@ -4,7 +4,7 @@
       v-on:md-closed="menuClosed">
       <md-field md-inline md-menu-trigger v-bind:class="{ 'open': isMenuOpened }">
         <label>{{ $t('message.phone.country_code_placeholder')}}</label>
-        <md-input v-model="typedCountryCode"></md-input>
+        <md-input ref="countryCodeInput" v-model="typedCountryCode"></md-input>
         <md-icon v-show="!isMenuOpened" md-src="/static/icons/keyboard_arrow_down.svg">
         </md-icon>
         <md-icon v-show="isMenuOpened" md-src="/static/icons/keyboard_arrow_up.svg">
@@ -91,10 +91,13 @@ export default {
   },
   methods: {
     menuOpened() {
+      console.log('menuOpened');
       this.isMenuOpened = true;
+      this.$refs.countryCodeInput.$el.focus();
     },
     menuClosed() {
       this.isMenuOpened = false;
+      this.$refs.countryCodeInput.$el.blur();
     },
     selectCountryCode(countryCodeItem) {
       this.selectedCountryCode = countryCodeItem.dial_code.replace(/\s/g, '');
