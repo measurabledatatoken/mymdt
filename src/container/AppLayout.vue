@@ -1,16 +1,16 @@
 <template>
   <div class="appcontainer">
-    <div class='header'>
+    <header class="header">
       <transition :name=" 'header-' + transitionName">
         <HomeHeader v-if="showHomeHeader" class="header-view"></HomeHeader>
         <NavigationHeader v-if="!showHomeHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
       </transition>
-    </div>
-    <div class='content'>
+    </header>
+    <main class="content">
       <transition :name="'content-' + transitionName">
         <router-view class="content-router-view"></router-view>
       </transition>
-    </div>
+    </main>
 
     <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')" />
@@ -116,10 +116,14 @@ export default {
   will-change: transform;
   transition: transform 500ms ease-out;
   position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 .appcontainer {
   height: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -136,14 +140,15 @@ export default {
 }
 
 .content {
-  min-height: calc(100% - #{$header-height});
+  flex: 1;
   display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 .content-router-view {
-  width: 100%;
-  bottom: 0;
   flex: 1;
+  overflow-y: scroll;
 }
 
 .header-pop-out-enter-active,

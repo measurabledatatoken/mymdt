@@ -1,26 +1,28 @@
 <template>
-  <div class="qrcode-scan">
-    <div class="overlay">
-      <div class="instruction">
-        {{ $t('message.qrcode.align_description') }}
-      </div>
-      <div class="photolibbtn-container">
-        <label for="photolibbtn">
-          {{ $t('message.qrcode.my_photo_library') }}
-        </label>
-      </div>
-      <input v-on:change="onFileSelected($event)" id="photolibbtn" type="file">
+  <div>
+    <div class="qrcode-scan">
+      <div class="overlay">
+        <div class="instruction">
+          {{ $t('message.qrcode.align_description') }}
+        </div>
+        <div class="photolibbtn-container">
+          <label for="photolibbtn">
+            {{ $t('message.qrcode.my_photo_library') }}
+          </label>
+        </div>
+        <input v-on:change="onFileSelected($event)" id="photolibbtn" type="file">
 
-    </div>
-    <div class="overlay-border">
-      <div class="frame topleft"></div>
-      <div class="frame topright"></div>
-      <div class="frame bottomleft"></div>
-      <div class="frame bottomright"></div>
-    </div>
+      </div>
+      <div class="overlay-border">
+        <div class="frame topleft"></div>
+        <div class="frame topright"></div>
+        <div class="frame bottomleft"></div>
+        <div class="frame bottomright"></div>
+      </div>
 
-    <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
-    </qrcode-reader>
+      <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
+      </qrcode-reader>
+    </div>
   </div>
 </template>
 
@@ -98,13 +100,14 @@ $clip_top: 25%;
 $clip_bottom: 65%;
 
 .qrcode-scan {
-  height: calc(100vh - #{$header-height});
+  position: relative;
+  height: 100%;
 }
 
 .overlay {
   position: absolute;
   width: 100%;
-  height: calc(100vh - #{$header-height});
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 
@@ -142,7 +145,7 @@ $clip_bottom: 65%;
 
 .overlay-border {
   width: 100%;
-  height: calc(100vh - #{$header-height});
+  height: 100%;
   position: absolute;
   background-color: transparent;
   z-index: 2;
