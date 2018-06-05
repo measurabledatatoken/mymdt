@@ -157,7 +157,7 @@ export default {
   height: calc(100% - 174px);
   overflow-y: scroll;
   padding-bottom: 80px;
-  -webkit-overflow-scrolling: touch;
+
 }
 
 .balance-title {
