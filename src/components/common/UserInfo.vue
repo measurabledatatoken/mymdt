@@ -1,8 +1,6 @@
 <template>
   <div class="user-info">
-    <div class="md-avatar md-avatar-icon">
-      <p class="md-ripple avatar">NT</p>
-    </div>
+    <UserAvatar :user="user" />
     <div class="user-data">
       <div v-bind:class="{ onlytitle : subTitle.length === 0} " class="md-title"> {{ title }}</div>
       <div class="md-sutitle"> {{ subTitle }}</div>
@@ -15,7 +13,12 @@
 </template>
 
 <script>
+import UserAvatar from '@/components/common/UserAvatar';
+
 export default {
+  components: {
+    UserAvatar,
+  },
   props: {
     user: {
       type: Object,
@@ -43,17 +46,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.md-avatar-icon {
-  float: left;
+.md-avatar {
   margin-right: 16px;
-  background-color: #fad689;
-
-  .md-ripple {
-    font-size: 0.7em;
-    letter-spacing: 0.08em;
-    color: white;
-    font-weight: bold;
-  }
+  float: left;
 }
 
 .user-data {
@@ -91,7 +86,7 @@ export default {
   background-color: #eef3f8;
   width: 100%;
   margin-top: 14px;
-
+  margin-left: 0px;
   &.show-mdt {
     margin-top: 0px;
   }
