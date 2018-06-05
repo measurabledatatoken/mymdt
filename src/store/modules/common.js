@@ -9,7 +9,7 @@ const state = {
   errorMessage: null,
   errorTitle: null,
   showErrorPrompt: null,
-  isLoading: true,
+  isLoading: false,
   navigationTitle: '',
   locale: null,
 };
