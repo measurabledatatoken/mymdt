@@ -97,7 +97,7 @@ export default {
       this.isMenuOpened = false;
     },
     selectCountryCode(countryCodeItem) {
-      this.selectedCountryCode = countryCodeItem.dial_code;
+      this.selectedCountryCode = countryCodeItem.dial_code.replace(/\s/g, '');
       this.typedCountryCode = this.selectedCountryCode;
       this.processFullPhoneEntered();
     },
