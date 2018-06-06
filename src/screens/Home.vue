@@ -140,21 +140,20 @@ export default {
 <style lang="scss" scoped>
 .home {
   background-color: $home-bgcolor;
-  height: calc(100vh - #{$header-height});
+  display: flex;
+  flex-direction: column;
 }
 
 .top-content {
   position: sticky;
-  top: $header-height;
+  top: 0;
   z-index: 9;
   background-color: $home-bgcolor;
-  height: 174px;
 }
 
 .bottom-content {
   z-index: 1;
   background-color: $home-bgcolor;
-  height: calc(100% - 174px);
   overflow-y: scroll;
   padding-bottom: 80px;
   -webkit-overflow-scrolling: touch;

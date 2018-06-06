@@ -1,5 +1,5 @@
 <template>
-  <md-list class="app-view">
+  <md-list class="price-unit-list">
     <template v-for="currency in currencyList">
       <price-unit-lis-item :key="currency" :title="currency" :selected="currency === priceUnit" v-on:click="setPriceUnit(currency)" />
       <md-divider :key="`${currency}-divider`" />
@@ -44,9 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-view {
-    height: calc(100vh - #{$header-height});
-    overflow-y: scroll;
+.price-unit-list {
     padding-top: 0;
 }
 </style>
