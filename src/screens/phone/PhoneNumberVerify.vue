@@ -83,7 +83,6 @@ export default {
   },
   methods: {
     onEditClick() {
-      console.log('onEditClick');
       this.$router.push(
         {
           name: RouteDef.PhoneNumberAdd.name,
