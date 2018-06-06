@@ -69,8 +69,7 @@ const actions = {
             } else {
               context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
             }
-
-            reject();
+            reject(error);
           },
         );
     });
@@ -130,7 +129,7 @@ const actions = {
               context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
             }
             context.commit(SET_IS_LOADING, false);
-            reject();
+            reject(error);
           },
         );
     });

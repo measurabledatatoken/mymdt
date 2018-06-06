@@ -23,6 +23,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
+import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserInfoCard from '@/components/common/UserInfoCard';
@@ -89,6 +90,9 @@ export default {
     ...mapMutations({
       setNeedExitBtn: SET_NEED_EXIT_BTN,
       setSelectedUser: SET_SELECTED_USER,
+      setErrorMessage: SET_ERROR_MESSAGE,
+      setErrorTitle: SET_ERROR_TITLE,
+      setErrorPrompt: SET_SHOW_ERROR_PROMPT,
     }),
     ...mapActions({
       requestAutoLogin: REQUEST_AUTO_LOGIN,
@@ -110,7 +114,9 @@ export default {
     },
     autoLogin(appID, tokensStr) {
       if (appID === undefined || tokensStr === undefined) {
-        this.$router.push(RouteDef.Login);
+        this.setErrorTitle(this.$t('message.common.unknown_error'));
+        this.setErrorMessage('AppID is undefined');
+        this.setErrorPrompt(true);
         return;
       }
       const authTokens = tokensStr.split(',');
@@ -129,6 +135,12 @@ export default {
             },
             1000,
           );
+        },
+      ).catch(
+        (error) => {
+          this.setErrorTitle(this.$t('message.common.unknown_error'));
+          this.setErrorMessage(`Error Code:${error.response.data.error_code}`);
+          this.setErrorPrompt(true);
         },
       );
     },

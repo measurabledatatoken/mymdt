@@ -37,8 +37,8 @@ export default {
   computed: {
     ...mapState({
       navigationTitle: state => state.common.navigationTitle,
-      errorMessage(state) {
-        if (state.common.errorMessage instanceof String) {
+      errorMessage: (state) => {
+        if (typeof state.common.errorMessage === 'string') {
           return state.common.errorMessage;
         }
 
@@ -48,8 +48,8 @@ export default {
 
         return '';
       },
-      errorTitle(state) {
-        if (state.common.errorTitle instanceof String) {
+      errorTitle: (state) => {
+        if (typeof state.common.errorTitle === 'string') {
           return state.common.errorTitle;
         }
 
