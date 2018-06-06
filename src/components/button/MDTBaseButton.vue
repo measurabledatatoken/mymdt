@@ -1,5 +1,5 @@
 <template>
-    <md-button v-bind="$attrs" :to="to" v-on:click="onClick()" class="md-raised">
+    <md-button v-bind="$attrs" :to="to" @click="$emit('click')" class="md-raised">
         <slot></slot>
     </md-button>
 </template>
@@ -10,11 +10,6 @@ export default {
   props: {
     to: {
       type: String,
-    },
-  },
-  methods: {
-    onClick() {
-      this.$emit('click');
     },
   },
 };
