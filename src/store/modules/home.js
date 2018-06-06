@@ -22,8 +22,11 @@ const state = {
     isEmailConfirmed: null,
     phoneNumber: null,
     isPhoneConfirmed: null,
+    isAccountConfirmed: null,
+    isTwofaEnabled: null,
+    ethWalletAddress: null,
     mdtBalance: null,
-    isEnabled: null,
+    isWalletEnabled: null,
     accessToken: null,
   },
   userAccounts: [],
@@ -58,8 +61,8 @@ const actions = {
   [REQUEST_MDT_PRICE](context) {
     api.misc.getMDTUSDPrice()
       .then(
-        (priceInUSD) => {
-          context.commit(SET_MDT_PRICE, priceInUSD);
+        (data) => {
+          context.commit(SET_MDT_PRICE, data.price_usd);
         },
       )
       .catch(
@@ -103,8 +106,11 @@ const actions = {
                 isEmailConfirmed: dataItem.is_email_confirmed,
                 phoneNumber: dataItem.phone_number,
                 isPhoneConfirmed: dataItem.is_phone_confirmed,
+                isAccountConfirmed: dataItem.is_account_enabled,
+                isTwofaEnabled: dataItem.is_twofa_enabled,
+                ethWalletAddress: dataItem.eth_wallet_address,
                 mdtBalance: dataItem.mdtbalance,
-                isEnabled: dataItem.is_enabled,
+                isWalletEnabled: dataItem.is_wallet_enabled,
                 accessToken: tempAccessToken,
               };
 
@@ -117,8 +123,8 @@ const actions = {
         },
       )
       .catch(
-        () => {
-
+        (err) => {
+          console.log(`Error in REQUEST_USER_ACCOUNTS${err}`);
         },
       );
   },

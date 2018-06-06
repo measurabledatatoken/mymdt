@@ -11,21 +11,21 @@ export default {
     );
     return handleGeneralResponse(promise, 'forgetPassword data should not be null if the request is successed');
   },
-  login(emailAddress, password, apiKey) {
+  login(emailAddress, password, appID) {
     const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/login`,
       {
         email_address: emailAddress,
         password,
-        api_key: apiKey,
+        app_id: appID,
       },
     );
     return handleGeneralResponse(promise, 'login data should not be null if the request is successed');
   },
   // App Credentials should included display_name, email_address, token
-  autoLogin(appCredentials, apiKey) {
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/autologinmulti`,
+  autoLogin(appCredentials, appID) {
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/autologin`,
       {
-        api_key: apiKey,
+        app_id: appID,
         app_credentials: appCredentials,
       },
     );

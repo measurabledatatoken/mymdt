@@ -3,13 +3,10 @@ import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  getUserAccountsData(accounts, accessToken) {
+  getUserAccountsData(accounts) {
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/api/getusersdata`,
+      `${APIScheme}://${APIEndPoint}/api/usersdata`,
       accounts,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      },
     );
     return handleGeneralResponse(promise, 'getUsersAccountData data should not be null if the request is successed');
   },

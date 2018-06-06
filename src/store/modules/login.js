@@ -1,7 +1,6 @@
 import api from '@/api';
 import {
   ErrorCode,
-  RouteDef,
 } from '@/constants';
 import {
   REQUEST_USER_ACCOUNTS,
@@ -9,7 +8,6 @@ import {
 import {
   SET_IS_LOADING,
 } from '@/store/modules/common';
-import router from '@/router';
 
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
@@ -131,9 +129,8 @@ const actions = {
             } else {
               context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
             }
-            reject();
-            router.push(RouteDef.Login);
             context.commit(SET_IS_LOADING, false);
+            reject();
           },
         );
     });
