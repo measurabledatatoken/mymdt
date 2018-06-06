@@ -8,11 +8,6 @@
     <div><router-link to="/register">Register</router-link></div>
     <div><router-link to="/forgetpassword">Forget Password</router-link></div>
     <p>{{errorMessage}}</p>
-    <atom-spinner
-      :animation-duration="1000"
-      :size="60"
-      :color="'#5d9bec'"
-    />
 
   </div>
 </template>
