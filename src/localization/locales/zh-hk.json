@@ -98,7 +98,8 @@
     "verify_phone_content": "驗證碼已發送至您註冊的電話號碼:",
     "verification_code": "驗證碼",
     "verification_code_placeholder": "6位數字驗證碼",
-    "重新發送": "在{num}秒之後重新發送",
+    "resend_counting": "在{num}秒之後可以重新發送",
+    "resend": "重發驗證碼",
     "cant_receive": "無法接收代碼？",
     "invalid_phonenumber": "無效的電話號碼"
   }

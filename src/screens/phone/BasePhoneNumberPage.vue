@@ -44,7 +44,7 @@ export default {
   font-size: 16px;
   text-align: left;
   color: $label-color;
-  margin: 0px $defaultPageMargin 40px;
+  margin: 0px $defaultPageMargin 10px;
 }
 
 </style>

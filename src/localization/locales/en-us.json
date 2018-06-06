@@ -98,7 +98,8 @@
     "verify_phone_content": "A verification code has been sent to your registered phone number:",
     "verification_code": "Verification Code",
     "verification_code_placeholder": "6-digit Number",
-    "resend": "Resend after {second}s",
+    "resend_counting": "Can Resend after {second}s",
+    "resend": "Resend Verification Code",
     "cant_receive": "Can't receive code?",
     "invalid_phonenumb er": "Invalid Phone number"
   }

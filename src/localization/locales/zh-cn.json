@@ -98,7 +98,8 @@
     "verify_phone_content": "验证码已发送至您注册的电话号码:",
     "verification_code": "验证码",
     "verification_code_placeholder": "6位数字验证码",
-    "重新发送": "在{num}秒之后重新发送",
+    "resend_counting":"在{num}秒之后可以重新发送",
+    "重发":"重发验证码",
     "cant_receive": "无法接收代码？",
     "invalid_phonenumber": "无效的电话号码"
   }
