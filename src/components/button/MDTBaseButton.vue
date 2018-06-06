@@ -1,19 +1,8 @@
 <template>
-    <md-button v-bind="$attrs" :to="to" @click="$emit('click')" class="md-raised">
+    <md-button v-bind="$attrs" @click="$emit('click')" class="md-raised">
         <slot></slot>
     </md-button>
 </template>
-
-<script>
-
-export default {
-  props: {
-    to: {
-      type: String,
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .md-button.md-raised {
