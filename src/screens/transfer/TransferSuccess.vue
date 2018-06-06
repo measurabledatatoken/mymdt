@@ -15,7 +15,7 @@
 import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
-import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
 export default {
   extends: BasePage,
@@ -55,6 +55,7 @@ export default {
 }
 
 .primary-btn {
+  position: absolute;
   bottom: 24px;
 }
 </style>

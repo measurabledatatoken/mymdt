@@ -11,15 +11,14 @@
 
       <template slot="action-area">
         <keep-alive>
-          <PhoneInputField :initCountryDailCode="countryDailCode" :initPhoneNumber="phoneNumber" v-on:phoneNumberEntered="onPhoneNumberEntered" v-on:phoneNumberInvalid="onPhonenNumberInvalid"
-          />
+          <PhoneInputField :initCountryDailCode="countryDailCode" :initPhoneNumber="phoneNumber" v-on:phoneNumberEntered="onPhoneNumberEntered"
+            v-on:phoneNumberInvalid="onPhonenNumberInvalid" />
         </keep-alive>
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton v-on:click="nextClicked()" :label="$t('message.common.next')" :disabled="phoneNumberObj == null"
-        />
-        <button v-on:click="skipClicked()" class="skip-btn">{{ $t('message.common.skip') }}</button>
+        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null">{{ $t('message.common.next') }}</MDTPrimaryButton>
+        <MDTSubtleButton v-on:click="skipClicked()" class="skip-btn">{{ $t('message.common.skip') }}</MDTSubtleButton>
       </template>
 
       <md-dialog-confirm :md-active.sync="showWarningPrompt" :md-title="$t('message.phone.skip_setup_title')"
@@ -37,7 +36,8 @@ import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import PhoneInputField from '@/components/common/PhoneInputField';
-import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
   extends: BasePage,
@@ -50,6 +50,7 @@ export default {
     BasePhoneNumberPage,
     PhoneInputField,
     MDTPrimaryButton,
+    MDTSubtleButton,
   },
   props: {
     countryDailCode: {
@@ -106,13 +107,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.primary-btn {
+.md-button {
+  position: absolute;
   bottom: 72px;
 }
 
 .skip-btn {
-  @include center_horizontal;
-  @include secondaryButtonSyle;
+  position: absolute;
   bottom: 12px;
 }
 

@@ -28,12 +28,12 @@
         <CountDownUnlockButton v-on:click="onResendClick()" :secondsToCount="60" countingTranslateKey="message.phone.resend_counting"
           countDoneTranslateKey="message.phone.resend" class="resend-btn" />
         <br style="clear:both" />
-        <md-button v-on:click="onResendClick()" :md-ripple="false" class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</md-button>
 
+        <MDTSubtleButton v-on:click="onResendClick()" class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton to="/" :label="$t('message.common.done')" :disabled="!verifyDone" />
+        <MDTPrimaryButton to="/" :disabled="!verifyDone" class="done"> {{ $t('message.common.done') }}</MDTPrimaryButton>
       </template>
     </BasePhoneNumberPage>
   </div>
@@ -43,7 +43,8 @@
 import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
-import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
 
 export default {
@@ -52,6 +53,7 @@ export default {
   components: {
     BasePhoneNumberPage,
     MDTPrimaryButton,
+    MDTSubtleButton,
     CountDownUnlockButton,
   },
   props: {
@@ -132,12 +134,18 @@ export default {
   color: $plainbtn-wordcolor;
 }
 
-.resend-btn,
-.cant-receive-btn {
-  font-size: 16px;
-  color: $plainbtn-wordcolor;
-  text-align: left;
-  float: left;
+.md-button.md-raised {
+  &.resend-btn,
+  &.cant-receive-btn {
+    width: auto;
+    font-size: 16px;
+    float: left;
+    margin-left: $defaultPageMargin;
+
+    /deep/ .md-ripple {
+      padding-left: 0px;
+    }
+  }
 }
 
 .md-field {
@@ -148,6 +156,7 @@ export default {
     top: 0;
     opacity: 1;
     font-size: 14px;
+    font-weight: bold;
   }
 
   .md-input {
@@ -156,7 +165,8 @@ export default {
   }
 }
 
-.primary-btn {
+.md-button.done {
+  position: absolute;
   bottom: 24px;
 }
 </style>

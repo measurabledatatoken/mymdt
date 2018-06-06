@@ -17,7 +17,7 @@
       </div>
     </div>
     <LoadingPopup v-if="showHomeLoadingEnd" src="static/loadersecondhalf.gif" />
-    <EarnMDTButton />
+    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" class="earn-mdt-btn">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ import { mapState, mapMutations, mapActions } from 'vuex';
 import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserInfoCard from '@/components/common/UserInfoCard';
-import EarnMDTButton from '@/components/common/EarnMDTButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import LoadingPopup from '@/components/common/LoadingPopup';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
@@ -37,6 +37,11 @@ export default {
     return {
       title: this.$t('message.home.title'),
     };
+  },
+  components: {
+    UserInfoCard,
+    MDTPrimaryButton,
+    LoadingPopup,
   },
   data() {
     return {
@@ -67,20 +72,15 @@ export default {
       return this.$t('message.home.accountnum', this.userAccounts.length, { num: this.userAccounts.length });
     },
   },
-  components: {
-    UserInfoCard,
-    EarnMDTButton,
-    LoadingPopup,
-  },
   mounted() {
     const redirectFrom = this.$route.redirectedFrom;
     if (redirectFrom !== undefined && redirectFrom.indexOf('autologin') >= 0) {
-      const apiKey = this.$route.query.apikey;
+      const appID = this.$route.query.appid;
       const tokensStr = this.$route.query.tokens;
       const needExit = this.$route.query.needexit;
 
       this.setNeedExitBtn(needExit);
-      this.autoLogin(apiKey, tokensStr);
+      this.autoLogin(appID, tokensStr);
     }
     this.requstMDTPrice();
     this.requestAppConfig();
@@ -108,8 +108,8 @@ export default {
         },
       });
     },
-    autoLogin(apiKey, tokensStr) {
-      if (apiKey === undefined || tokensStr === undefined) {
+    autoLogin(appID, tokensStr) {
+      if (appID === undefined || tokensStr === undefined) {
         this.$router.push(RouteDef.Login);
         return;
       }
@@ -117,7 +117,7 @@ export default {
       this.requestAutoLogin(
         {
           authTokens,
-          apiKey,
+          appID,
         },
       ).then(
         () => {
@@ -198,7 +198,8 @@ export default {
   color: white;
 }
 
-.earn-mdt {
+.earn-mdt-btn {
+  position: absolute;
   bottom: 24px;
 }
 </style>

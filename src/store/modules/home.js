@@ -15,7 +15,7 @@ export const REQUEST_USER_ACCOUNTS = 'home/REQUEST_USER_ACCOUNTS';
 const state = {
   mdtPrice: 0,
   needExit: false,
-  apiKey: '',
+  appID: '',
   selectedUser: {
     displayName: null,
     emailAddress: null,

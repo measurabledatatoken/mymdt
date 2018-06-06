@@ -20,7 +20,7 @@
       :label="$t('message.transfer.tolbl')" :walletAddress="transferToWalletAddress">
     </WalletAddressField>
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
-    <MDTPrimaryButton :to="RouteDef.TransferEthWalletReview.path" :label="$t('message.common.next')" :disabled="disableNextBtn"></MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.TransferEthWalletReview.path" :disabled="disableNextBtn">{{ $t('message.common.next') }}</MDTPrimaryButton>
   </div>
 
 </template>
@@ -40,7 +40,7 @@ import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
 import { RouteDef, TransferType } from '@/constants';
 import BasePage from '@/screens/BasePage';
-import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
 export default {
   extends: BasePage,
@@ -162,7 +162,8 @@ export default {
   height: 10px;
 }
 
-.primary-btn {
+.md-button {
+  position: absolute;
   bottom: 24px;
 }
 </style>

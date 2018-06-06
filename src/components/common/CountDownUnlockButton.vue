@@ -1,17 +1,21 @@
 <template>
-    <md-button :md-ripple="false" v-on:click="onClick()" :disabled="!enabled">
+    <MDTSubtleButton v-on:click="onClick()" :disabled="!enabled">
         <template v-if="enabled">
             {{ $t(countDoneTranslateKey) }}
         </template>
         <template v-else>
             {{ $t(countingTranslateKey, { num: curCountDownSecond}) }}
         </template>
-    </md-button>
+    </MDTSubtleButton>
 </template>
 
 <script>
+import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
+  components: {
+    MDTSubtleButton,
+  },
   props: {
     secondsToCount: {
       type: Number,

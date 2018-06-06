@@ -6,7 +6,7 @@
       </user-info-card>
     </div>
     <transaction-list v-bind:transactions="transactions" />
-    <earn-m-d-t-button />
+    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" class="earn-mdt-btn">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -14,7 +14,7 @@
 import BasePage from '@/screens/BasePage';
 import UserInfoCard from '@/components/common/UserInfoCard';
 import TransactionList from '@/components/transaction/TransactionList';
-import EarnMDTButton from '@/components/common/EarnMDTButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import { mapState, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
 
@@ -28,7 +28,12 @@ export default {
   components: {
     UserInfoCard,
     TransactionList,
-    EarnMDTButton,
+    MDTPrimaryButton,
+  },
+  data() {
+    return {
+      RouteDef,
+    };
   },
   computed: {
     ...mapState({
@@ -73,7 +78,8 @@ export default {
     }
   }
 
-  .earn-mdt {
+  .earn-mdt-btn {
+    position: absolute;
     bottom: 24px;
   }
 </style>

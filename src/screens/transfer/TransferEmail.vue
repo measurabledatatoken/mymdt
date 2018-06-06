@@ -12,7 +12,7 @@
 
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
 
-    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn" :label="$t('message.common.next')"></MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn">{{ $t('message.common.next') }}</MDTPrimaryButton>
   </div>
 
 </template>
@@ -34,7 +34,7 @@ import NoteInputField from '@/components/common/NoteInputField';
 import { RouteDef, TransferType } from '@/constants';
 import { isValidEmailAddress } from '@/utils';
 import BasePage from '@/screens/BasePage';
-import MDTPrimaryButton from '@/components/common/MDTPrimaryButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
 export default {
   extends: BasePage,
@@ -102,7 +102,8 @@ export default {
   margin: 16px 0px;
 }
 
-.primary-btn {
+.md-button {
+  position: absolute;
   bottom: 24px;
 }
 </style>
