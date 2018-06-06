@@ -66,6 +66,14 @@ const RouteDef = {
     path: '/home/accounts/:account_id/transactions/:transaction_id',
     name: 'transactionDetail',
   },
+  PhoneNumberAdd: {
+    path: '/home/settings/phone/add',
+    name: 'phoneNumberAdd',
+  },
+  PhoneNumberVerify: {
+    path: '/home/settings/phone/add/verify',
+    name: 'phoneNumberVerify',
+  },
 };
 
 

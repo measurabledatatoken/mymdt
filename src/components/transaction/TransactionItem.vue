@@ -70,7 +70,7 @@ export default {
     text-align: right;
 
     &.action--pending {
-      color: #aaaaaa;
+      color: $theme-placehoder-color;
       font-style: italic;
     }
 

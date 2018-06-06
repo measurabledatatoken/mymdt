@@ -1,7 +1,10 @@
 $theme-color: #4187f7;
+$theme-placehoder-color: #aaaaaa;
 $theme-font-color-btn: #4187f7;
 $theme-font-color-msg: white;
+$theme-disable-color-font: #aaaaaa;
 $theme-warning-color: #ff3b30;
+$theme-listing-bgcolor: #f4f6f8;
 
 $defaultPageMargin: 16px;
 
@@ -11,6 +14,7 @@ $home-bgcolor:#0a224e;
 
 //Button Color
 $plainbtn-wordcolor: $theme-color;
+$plainbtn-wordcolor-disabled: $theme-disable-color-font;
 
 $bluebtn-backgroundcolor: $theme-color;
 $bluebtn-wordcolor: $theme-font-color-msg;

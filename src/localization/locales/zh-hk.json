@@ -4,7 +4,11 @@
     "okay": "OK",
     "unknow_error": "出錯了......請稍後再試",
     "error_title": "出錯了",
-    "done": "完成"
+    "done": "完成",
+    "cancel": "取消",
+    "skip": "跳過",
+    "edit": "更改",
+    "next": "下一步"
   },
   "home": {
     "total_balance": "結餘",
@@ -24,7 +28,6 @@
     "fromlbl": "由",
     "tolbl": "至",
     "amountlbl": "數量",
-    "nextbtn": "下一步",
     "select_account_placeholder": "請選擇帳號",
     "wallet_address_placeholder": "貼上錢包地址",
     "other_emailaddress": "其他電郵地址...",
@@ -80,5 +83,24 @@
   },
   "priceUnit": {
     "title": "價格單位"
+  },
+  "phone": {
+    "title": "電話設置",
+    "skip_setup_title": "跳過手機設置？",
+    "skip_setup_content": "你確定嗎？添加電話號碼會讓你的帳號更安全。如果你現在跳過,你可以隨時在設置->安全中添加你的電話號碼。",
+    "yes_skip": "是,跳過",
+    "phone_setup_success": "電話號碼成功設置！",
+    "add_phone_title": "添加您的電話號碼",
+    "add_phone_content": "在您的帳戶中添加電話號碼，我們會要求您輸入驗證碼。",
+    "country_code_placeholder": "國家代碼",
+    "phone_number_placeholder": "電話號碼",
+    "verify_phone_title": "驗證您的手機",
+    "verify_phone_content": "驗證碼已發送至您註冊的電話號碼:",
+    "verification_code": "驗證碼",
+    "verification_code_placeholder": "6位數字驗證碼",
+    "resend_counting": "在{num}秒之後可以重新發送",
+    "resend": "重發驗證碼",
+    "cant_receive": "無法接收代碼？",
+    "invalid_phonenumber": "無效的電話號碼"
   }
 }

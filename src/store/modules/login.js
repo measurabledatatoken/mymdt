@@ -44,10 +44,10 @@ const actions = {
   [REQUEST_LOGIN](context, {
     emailAddress,
     password,
-    apikey,
+    appID,
   }) {
     return new Promise((resolve, reject) => {
-      api.auth.login(emailAddress, password, apikey)
+      api.auth.login(emailAddress, password, appID)
         .then(
           (data) => {
             context.commit(SET_LOGIN_ERRORCODE, null);
@@ -79,7 +79,7 @@ const actions = {
   },
   [REQUEST_AUTO_LOGIN](context, {
     authTokens,
-    apiKey,
+    appID,
   }) {
     context.commit(SET_IS_LOADING, true);
 
@@ -97,7 +97,7 @@ const actions = {
         appCredentials.push(appCredential);
       }
 
-      api.auth.autoLogin(appCredentials, apiKey)
+      api.auth.autoLogin(appCredentials, appID)
         .then(
           (data) => {
             context.commit(SET_LOGIN_ERRORCODE, null);

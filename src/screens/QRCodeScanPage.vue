@@ -75,7 +75,6 @@ export default {
     },
     onFileSelected(event) {
       const imgFile = event.target.files[0];
-      console.log(`imgFile:${imgFile}`);
       imageDataFromFile(imgFile).then((imageData) => {
         const result = scanImageData(imageData);
         const ethAddress = getEthAddressFromString(result.data);

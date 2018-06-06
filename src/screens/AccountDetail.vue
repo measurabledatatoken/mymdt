@@ -2,19 +2,19 @@
   <div class="app-view">
     <div class="header">
       <div class="header__background"></div>
-      <user-card v-on:transfer="goToTransfer()" v-bind:user="selectedUser">
-      </user-card>
+      <user-info-card v-on:transfer="goToTransfer()" v-bind:user="selectedUser">
+      </user-info-card>
     </div>
     <transaction-list v-bind:transactions="transactions" />
-    <earn-m-d-t-button />
+    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" class="earn-mdt-btn">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
 <script>
 import BasePage from '@/screens/BasePage';
-import UserCard from '@/components/common/UserCard';
+import UserInfoCard from '@/components/common/UserInfoCard';
 import TransactionList from '@/components/transaction/TransactionList';
-import EarnMDTButton from '@/components/common/EarnMDTButton';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import { mapState, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
 
@@ -26,9 +26,14 @@ export default {
     };
   },
   components: {
-    UserCard,
+    UserInfoCard,
     TransactionList,
-    EarnMDTButton,
+    MDTPrimaryButton,
+  },
+  data() {
+    return {
+      RouteDef,
+    };
   },
   computed: {
     ...mapState({
@@ -66,10 +71,15 @@ export default {
 
     .header__background {
       background-color: $home-bgcolor;
-      height: calc(8em + 0.5em + #{$header-padding-top}); // height of UserCard content + UserCard margin top + header padding
+      height: calc(8em + 0.5em + #{$header-padding-top}); // height of UserInfoCard content + UserInfoCard margin top + header padding
       width: 100%;
       position: absolute;
       top: 0;
     }
+  }
+
+  .earn-mdt-btn {
+    position: absolute;
+    bottom: 24px;
   }
 </style>

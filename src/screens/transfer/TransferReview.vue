@@ -40,9 +40,7 @@
     </div>
 
     <vue-recaptcha class="recaptcha" v-on:verify="onRecaptchaVerified" sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"></vue-recaptcha>
-    <md-button v-on:click="transferMDT" class="transfer md-raised md-primary" :disabled="disableTransferBtn">
-      {{ $t('message.transfer.transfer') }}
-    </md-button>
+    <MDTPrimaryButton v-on:click="transferMDT" class="transfer">{{ $t('message.transfer.transfer') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -53,6 +51,7 @@ import {
   START_TRANSFER,
 } from '@/store/modules/transfer';
 import { TransferType, RouteDef } from '@/constants';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
 
 export default {
@@ -70,6 +69,7 @@ export default {
   },
   components: {
     VueRecaptcha,
+    MDTPrimaryButton,
   },
   computed: {
     ...mapState({
@@ -269,7 +269,7 @@ $amountMinHeight: 20px;
 }
 
 .md-button.transfer {
-  @include primaryButtonStyle;
-  @include center_horizontal;
+  position: absolute;
+  bottom: 24px;
 }
 </style>

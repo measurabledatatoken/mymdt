@@ -80,7 +80,7 @@ export default {
 
   &::placeholder {
     font-size: 28px;
-    color: #aaaaaa;
+    color: $theme-placehoder-color;
   }
 }
 
