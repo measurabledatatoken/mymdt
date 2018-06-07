@@ -19,6 +19,7 @@ const state = {
   selectedUser: {
     displayName: null,
     emailAddress: null,
+    avatarURL: null,
     isEmailConfirmed: null,
     phoneNumber: null,
     isPhoneConfirmed: null,
@@ -103,6 +104,7 @@ const actions = {
               const userAccountData = {
                 displayName: dataItem.display_name,
                 emailAddress: dataItem.email_address,
+                avatarURL: dataItem.avatar_url,
                 isEmailConfirmed: dataItem.is_email_confirmed,
                 phoneNumber: dataItem.phone_number,
                 isPhoneConfirmed: dataItem.is_phone_confirmed,
