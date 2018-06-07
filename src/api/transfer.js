@@ -1,16 +1,34 @@
 import axios from 'axios';
+import { TransferType } from '@/constants';
 import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  transfer(toAddress, transferType, amount, accessToken) {
-    const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/api/transfer`,
-      {
-        transfer_type: transferType,
-        to_address: toAddress,
+  transfer(toAddress, transferType, amount, passcode, note, accessToken) {
+    let transferEndpoint = '';
+    let body = {};
+
+    if (transferType === TransferType.EthWallet) {
+      transferEndpoint = 'transfer/eth-address';
+      body = {
+        eth_address: toAddress,
+        passcode,
         amount,
-      },
+        note,
+      };
+    } else if (transferType === TransferType.Email) {
+      transferEndpoint = 'transfer/email';
+      body = {
+        email_address: toAddress,
+        passcode,
+        amount,
+        note,
+      };
+    }
+
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/${transferEndpoint}`,
+      body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       },

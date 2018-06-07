@@ -4,7 +4,7 @@ import { APIEndPoint, APIScheme } from './constants';
 
 export default {
   forgetPassword(emailAddress) {
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/forgetpw`,
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/account/forgetpw`,
       {
         email_address: emailAddress,
       },
@@ -12,7 +12,7 @@ export default {
     return handleGeneralResponse(promise, 'forgetPassword data should not be null if the request is successed');
   },
   login(emailAddress, password, appID) {
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/login`,
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/account/login`,
       {
         email_address: emailAddress,
         password,
@@ -23,7 +23,7 @@ export default {
   },
   // App Credentials should included display_name, email_address, token
   autoLogin(appCredentials, appID) {
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/api/account/autologin`,
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/account/autologin`,
       {
         app_id: appID,
         app_credentials: appCredentials,
