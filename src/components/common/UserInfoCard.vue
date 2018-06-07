@@ -44,6 +44,10 @@ export default {
   color: $plainbtn-wordcolor !important;
   font-size: 16px;
   font-weight: bold;
+
+  /deep/ .md-button-content {
+    text-transform: none;
+  }
 }
 </style>
 

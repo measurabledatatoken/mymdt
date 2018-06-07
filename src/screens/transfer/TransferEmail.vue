@@ -12,7 +12,7 @@
 
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
 
-    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn">{{ $t('message.common.next') }}</MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
   </div>
 
 </template>

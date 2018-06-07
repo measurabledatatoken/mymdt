@@ -68,5 +68,6 @@ export default {
   border-radius: 16px;
   font-weight: bold;
   letter-spacing: 0.1px;
+  text-transform: none;
 }
 </style>
