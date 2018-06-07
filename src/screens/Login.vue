@@ -17,7 +17,7 @@
 import { mapState, mapActions } from 'vuex';
 import { REQUEST_LOGIN } from '@/store/modules/login';
 import { RouteDef } from '@/constants';
-import ErrorCode from '@/enum/errorCode';
+import { ErrorCode } from '@/enum';
 import BasePage from '@/screens/BasePage';
 
 export default {

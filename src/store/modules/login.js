@@ -1,7 +1,5 @@
 import api from '@/api';
-import {
-  ErrorCode,
-} from '@/constants';
+import { ErrorCode } from '@/enum';
 import {
   REQUEST_USER_ACCOUNTS,
 } from '@/store/modules/home';
@@ -80,59 +78,54 @@ const actions = {
   }) {
     context.commit(SET_IS_LOADING, true);
 
-    return new Promise((resolve, reject) => {
-      if (!Array.isArray(authTokens)) {
-        console.error('authTokens should all be array');
-        reject();
-      }
+    if (!Array.isArray(authTokens)) {
+      return Promise.reject(new Error('authTokens should all be array'));
+    }
 
-      const appCredentials = [];
-      for (let i = 0; i < authTokens.length; i += 1) {
-        const appCredential = {
-          token: authTokens[i],
-        };
-        appCredentials.push(appCredential);
-      }
+    const appCredentials = [];
+    for (let i = 0; i < authTokens.length; i += 1) {
+      const appCredential = {
+        token: authTokens[i],
+      };
+      appCredentials.push(appCredential);
+    }
 
-      api.auth.autoLogin(appCredentials, appID)
-        .then(
-          (data) => {
-            context.commit(SET_LOGIN_ERRORCODE, null);
+    return api.auth.autoLogin(appCredentials, appID)
+      .then(
+        (data) => {
+          context.commit(SET_LOGIN_ERRORCODE, null);
 
-            if (data.length > 0) {
-              const credentials = [];
-              data.forEach((dataItem) => {
-                const credential = {
-                  email_address: dataItem.email_address,
-                  access_token: dataItem.access_token,
-                };
-                credentials.push(credential);
-              });
-              context.commit(SET_CREDENTIALS, credentials);
+          if (data.length > 0) {
+            const credentials = [];
+            data.forEach((dataItem) => {
+              const credential = {
+                email_address: dataItem.email_address,
+                access_token: dataItem.access_token,
+              };
+              credentials.push(credential);
+            });
+            context.commit(SET_CREDENTIALS, credentials);
 
-              return context.dispatch(REQUEST_USER_ACCOUNTS);
-            }
-
-            return new Promise(resolve());
-          },
-        ).then(
-          () => {
-            context.commit(SET_IS_LOADING, false);
-            resolve();
-          },
-        )
-        .catch(
-          (error) => {
-            if (error.response && error.response.data) {
-              context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
-            } else {
-              context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
-            }
-            context.commit(SET_IS_LOADING, false);
-            reject(error);
-          },
-        );
-    });
+            return context.dispatch(REQUEST_USER_ACCOUNTS);
+          }
+          throw (new Error('Data length is 0'));
+        },
+      ).then(
+        () => {
+          context.commit(SET_IS_LOADING, false);
+        },
+      )
+      .catch(
+        (error) => {
+          if (error.response && error.response.data) {
+            context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
+          } else {
+            context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
+          }
+          context.commit(SET_IS_LOADING, false);
+          throw (error);
+        },
+      );
   },
 };
 

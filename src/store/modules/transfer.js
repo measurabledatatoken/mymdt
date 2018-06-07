@@ -1,5 +1,5 @@
 import api from '@/api';
-import ErrorCode from '@/enum/errorCode';
+import { ErrorCode } from '@/enum';
 import { TransferType } from '@/constants';
 import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from './common';
 

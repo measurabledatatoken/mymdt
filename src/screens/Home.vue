@@ -92,7 +92,7 @@ export default {
       setSelectedUser: SET_SELECTED_USER,
       setErrorMessage: SET_ERROR_MESSAGE,
       setErrorTitle: SET_ERROR_TITLE,
-      setErrorPrompt: SET_SHOW_ERROR_PROMPT,
+      setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
     }),
     ...mapActions({
       requestAutoLogin: REQUEST_AUTO_LOGIN,
@@ -116,7 +116,7 @@ export default {
       if (appID === undefined || tokensStr === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
         this.setErrorMessage('AppID is undefined');
-        this.setErrorPrompt(true);
+        this.setShowErrorPrompt(true);
         return;
       }
       const authTokens = tokensStr.split(',');
@@ -139,8 +139,8 @@ export default {
       ).catch(
         (error) => {
           this.setErrorTitle(this.$t('message.common.unknown_error'));
-          this.setErrorMessage(`Error Code:${error.response.data.error_code}`);
-          this.setErrorPrompt(true);
+          this.setErrorMessage(`Error Code:${error.message}`);
+          this.setShowErrorPrompt(true);
         },
       );
     },
