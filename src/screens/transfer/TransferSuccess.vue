@@ -7,7 +7,7 @@
             {{ $t('message.transfer.successdetail')}}
         </div>
 
-        <MDTPrimaryButton :to="RouteDef.Home.path" :label="$t('message.common.done')"></MDTPrimaryButton>
+        <MDTPrimaryButton :to="RouteDef.Home.path">{{ $t('message.common.done') }}</MDTPrimaryButton>
     </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
     line-height: 30px;
 }
 
-.primary-btn {
+.md-button{
   position: absolute;
   bottom: 24px;
 }
