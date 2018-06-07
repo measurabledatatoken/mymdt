@@ -1,5 +1,6 @@
 import api from '@/api';
-import { TransferType, ErrorCode } from '@/constants';
+import ErrorCode from '@/enum/errorCode';
+import { TransferType } from '@/constants';
 import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from './common';
 
 // mutation
@@ -73,31 +74,8 @@ const actions = {
         .catch(
           (error) => {
             const errorCode = error.response.data.error_code;
-            let errorMsgID = '';
-            switch (errorCode) {
-              case ErrorCode.InvalidEmail: {
-                errorMsgID = 'message.transfer.invalid_email';
-                break;
-              }
-              case ErrorCode.InvalidEthAddress: {
-                errorMsgID = 'message.transfer.invalid_ethaddress';
-                break;
-              }
-              case ErrorCode.InsufficientFund: {
-                errorMsgID = 'message.transfer.insufficient_fund';
-                break;
-              }
-              case null: {
-                errorMsgID = '';
-                break;
-              }
-              default: {
-                errorMsgID = 'message.common.unknow_error';
-                break;
-              }
-            }
 
-            context.commit(SET_ERROR_MESSAGE, { messageId: errorMsgID });
+            context.commit(SET_ERROR_MESSAGE, ErrorCode.properties[errorCode].messageId);
             context.commit(SET_ERROR_TITLE, { messageId: 'message.common.error_title' });
             context.commit(SET_SHOW_ERROR_PROMPT, true);
             reject();

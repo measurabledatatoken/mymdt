@@ -14,7 +14,7 @@ export default {
   props: ['user', 'src', 'name'],
   computed: {
     imageSrc() {
-      return this.src || this.user.imageSrc; // TODO: user should contain profile pic url. But not sure if the field is imageSrc
+      return this.src || this.user.avatarURL;
     },
     displayName() {
       return extractNameInitials(this.name || this.user.displayName || this.user.emailAddress);
