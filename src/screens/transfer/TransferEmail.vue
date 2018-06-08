@@ -12,7 +12,7 @@
 
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
 
-    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
   </div>
 
 </template>
@@ -100,10 +100,5 @@ export default {
 .account-selector {
   height: 80px;
   margin: 16px 0px;
-}
-
-.md-button {
-  position: absolute;
-  bottom: 24px;
 }
 </style>

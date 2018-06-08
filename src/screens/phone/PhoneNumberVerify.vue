@@ -33,7 +33,7 @@
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton to="/" :disabled="!verifyDone" class="done"> {{ $t('message.common.done') }}</MDTPrimaryButton>
+        <MDTPrimaryButton to="/" :disabled="!verifyDone" class="done" :bottom="true"> {{ $t('message.common.done') }}</MDTPrimaryButton>
       </template>
     </BasePhoneNumberPage>
   </div>
@@ -162,10 +162,5 @@ export default {
     margin-top: 8px;
     margin-bottom: 8px;
   }
-}
-
-.md-button.done {
-  position: absolute;
-  bottom: 24px;
 }
 </style>

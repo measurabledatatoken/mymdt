@@ -63,7 +63,7 @@ export default {
   }
 
   .md-button {
-    bottom: 24px;
+    bottom: 1.5rem;
   }
 }
 

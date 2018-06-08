@@ -40,7 +40,7 @@
     </div>
 
     <vue-recaptcha class="recaptcha" v-on:verify="onRecaptchaVerified" sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"></vue-recaptcha>
-    <MDTPrimaryButton v-on:click="transferMDT" class="transfer" :disabled="disableTransferBtn">{{ $t('message.common.transferbtn') }}</MDTPrimaryButton>
+    <MDTPrimaryButton v-on:click="transferMDT" :disabled="disableTransferBtn" :bottom="true">{{ $t('message.common.transferbtn') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -264,10 +264,5 @@ $amountMinHeight: 20px;
   position: absolute;
   bottom: 7em;
   @include center_horizontal;
-}
-
-.md-button.transfer {
-  position: absolute;
-  bottom: 24px;
 }
 </style>
