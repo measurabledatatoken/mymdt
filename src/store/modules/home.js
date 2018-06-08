@@ -6,6 +6,7 @@ export const SET_SELECTED_USER = 'home/SET_SELECTED_USER';
 export const SET_USER_ACCOUNTS = 'home/SET_USER_ACCOUNTS';
 export const SET_APP_CONFIG = 'home/SET_APP_CONFIG';
 export const SET_PRICE_UNIT = 'home/SET_PRICE_UNIT';
+export const SET_IS_USER_ACCOUNTS_DIRTY = 'home/SET_IS_USER_ACCOUNTS_DIRTY';
 
 // Actions
 export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -31,6 +32,7 @@ const state = {
     accessToken: null,
   },
   userAccounts: [],
+  isUserAccountsDirty: false,
   priceUnit: 'USD',
 
   // AppConfig
@@ -49,6 +51,9 @@ const mutations = {
   },
   [SET_USER_ACCOUNTS](state, userAccounts) {
     state.userAccounts = userAccounts;
+  },
+  [SET_IS_USER_ACCOUNTS_DIRTY](state, isUserAccountsDirty) {
+    state.isUserAccountsDirty = isUserAccountsDirty;
   },
   [SET_APP_CONFIG](state, appConfig) {
     state.appConfig = appConfig;
