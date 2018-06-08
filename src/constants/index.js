@@ -12,6 +12,8 @@ const RouteDef = {
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
   PriceUnits: { path: '/home/settings/price-units' },
+  ReportProblem: { path: '/home/settings/problems' },
+  ReportProblemSuccess: { path: '/home/settings/problems/success' },
   Tutorial: { path: '/home/tutorial' },
   TransferList: { path: '/home/transfer' },
   TransferEmail: { path: '/home/transfer/email' },
