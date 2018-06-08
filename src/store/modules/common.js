@@ -72,9 +72,6 @@ const actions = {
     const depth = context.state.navigationStack.length;
     router.go(-depth);
   },
-};
-
-const actions = {
   [OPEN_ERROR_PROMPT]({ commit }, { message, title }) {
     commit(SET_ERROR_MESSAGE, message);
     commit(SET_ERROR_TITLE, title);
