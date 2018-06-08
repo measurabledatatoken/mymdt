@@ -25,13 +25,13 @@ import { SET_SHOW_ERROR_PROMPT, SET_LOCALE } from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 import LoadingPopup from '@/components/common/LoadingPopup';
-import { isRouteChangeBack } from '@/utils';
 
 export default {
   data() {
     return {
       showHomeHeader: true,
       transitionName: 'pop-in',
+      navigationStack: [],
     };
   },
   computed: {
@@ -78,6 +78,19 @@ export default {
   },
   watch: {
     $route(to, from) {
+      let lastPath = '';
+      const navigationStackLength = this.navigationStack.length;
+      if (navigationStackLength > 0) {
+        lastPath = this.navigationStack[this.navigationStack.length - 1];
+      }
+      let isBack = false;
+      if (to.path === lastPath) {
+        isBack = true;
+        this.navigationStack.pop();
+      } else {
+        this.navigationStack.push(from.path);
+      }
+
       const toDepth = to.path.split('/').length;
       if (toDepth === undefined || toDepth <= 2) {
         this.showHomeHeader = true;
@@ -85,7 +98,7 @@ export default {
         this.showHomeHeader = false;
       }
 
-      this.transitionName = isRouteChangeBack(to, from) ? 'pop-out' : 'pop-in';
+      this.transitionName = isBack ? 'pop-out' : 'pop-in';
     },
   },
   created() {
