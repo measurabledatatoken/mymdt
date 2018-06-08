@@ -2,7 +2,7 @@
 function handleGeneralResponse(promise, emptyDataMsg) {
   return promise
     .then((response) => {
-      if (response.data) {
+      if (response.data && response.data.data) {
         return Promise.resolve(response.data.data);
       }
       return Promise.reject(Error(emptyDataMsg));
