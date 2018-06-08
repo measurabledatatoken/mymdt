@@ -24,7 +24,11 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
 import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
-import { SET_SELECTED_USER, REQUEST_MDT_PRICE, REQUEST_APP_CONFIG, SET_NEED_EXIT_BTN } from '@/store/modules/home';
+import {
+  SET_SELECTED_USER, REQUEST_MDT_PRICE,
+  REQUEST_APP_CONFIG, REQUEST_USER_ACCOUNTS,
+  SET_IS_USER_ACCOUNTS_DIRTY, SET_NEED_EXIT_BTN,
+} from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserInfoCard from '@/components/common/UserInfoCard';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -55,6 +59,7 @@ export default {
     ...mapState({
       mdtPrice: state => state.home.mdtPrice,
       userAccounts: state => state.home.userAccounts,
+      isUserAccountsDirty: state => state.home.isUserAccountsDirty,
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
@@ -85,6 +90,11 @@ export default {
     }
     this.requstMDTPrice();
     this.requestAppConfig();
+
+    if (this.isUserAccountsDirty) {
+      this.requestUserAccounts();
+      this.setIsUserAcctionsDirty(false);
+    }
   },
   methods: {
     ...mapMutations({
@@ -93,11 +103,13 @@ export default {
       setErrorMessage: SET_ERROR_MESSAGE,
       setErrorTitle: SET_ERROR_TITLE,
       setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
+      setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
     }),
     ...mapActions({
       requestAutoLogin: REQUEST_AUTO_LOGIN,
       requstMDTPrice: REQUEST_MDT_PRICE,
       requestAppConfig: REQUEST_APP_CONFIG,
+      requestUserAccounts: REQUEST_USER_ACCOUNTS,
     }),
     goToTransfer(user) {
       this.setSelectedUser(user);
@@ -168,7 +180,6 @@ export default {
   background-color: $home-bgcolor;
   overflow-y: scroll;
   padding-bottom: 80px;
-
 }
 
 .balance-title {

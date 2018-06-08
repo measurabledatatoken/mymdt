@@ -47,9 +47,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
-import {
-  START_TRANSFER,
-} from '@/store/modules/transfer';
+import { START_TRANSFER } from '@/store/modules/transfer';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
