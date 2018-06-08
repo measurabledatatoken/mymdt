@@ -15,14 +15,14 @@
     <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')" />
 
-    <LoadingPopup v-if="isLoading" src="static/threedotsloader.gif"/>
+    <LoadingPopup v-if="isLoading" src="/static/threedotsloader.gif"/>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import {
-  SET_SHOW_ERROR_PROMPT, SET_LOCALE,
+  DISMISS_ERROR_PROMPT, SET_LOCALE,
   ADD_NAVIGATION_STACK, POP_NAVIGATION_STACK,
   POP_NAVIGATION_STACK_TO_PATH, FLUSH_NAVIGATION_STACK } from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
@@ -69,8 +69,8 @@ export default {
       get() {
         return this.$store.state.common.showErrorPrompt;
       },
-      set(newValue) {
-        this.setShowErrorPrompt(newValue);
+      set() {
+        this.dismissErrorPrompt();
       },
     },
   },
@@ -124,12 +124,14 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
       setLocale: SET_LOCALE,
       addNavigationStack: ADD_NAVIGATION_STACK,
       popNavigationStack: POP_NAVIGATION_STACK,
       popNavigationStackToPath: POP_NAVIGATION_STACK_TO_PATH,
       flushNavigationStack: FLUSH_NAVIGATION_STACK,
+    }),
+    ...mapActions({
+      dismissErrorPrompt: DISMISS_ERROR_PROMPT,
     }),
   },
 };
