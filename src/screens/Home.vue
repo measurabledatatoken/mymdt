@@ -139,7 +139,7 @@ export default {
       ).catch(
         (error) => {
           this.setErrorTitle(this.$t('message.common.unknown_error'));
-          this.setErrorMessage(`Error Code:${error.message}`);
+          this.setErrorMessage(`Error Code:${error.response.data.error_message}`);
           this.setShowErrorPrompt(true);
         },
       );
