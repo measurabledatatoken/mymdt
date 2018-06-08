@@ -70,7 +70,7 @@ const actions = {
       toAddress = rootState.transfer.transferToWalletAddress;
     }
 
-    return api.transfer.transfer(toAddress, transferType, amount, transferPasscode, transferNote, selectedUser.accessToken)
+    return api.transfer.transfer(toAddress, transferType, amount, transferPasscode, transferNote, transferFromAccount.accessToken)
       .then(() => '')
       .catch(
         (error) => {
