@@ -175,6 +175,7 @@ export default {
 .content-router-view {
   flex: 1;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .header-pop-out-enter-active,
