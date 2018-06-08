@@ -21,6 +21,8 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.25);
   font-size: 20px;
+  text-transform: none;
+
   &[disabled] {
     background-color: $bluebtn-backgroundcolor-disabled;
     color: $bluebtn-wordcolor-disabled;

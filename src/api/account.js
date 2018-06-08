@@ -5,7 +5,7 @@ import { APIEndPoint, APIScheme } from './constants';
 export default {
   getUserAccountsData(accounts) {
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/api/usersdata`,
+      `${APIScheme}://${APIEndPoint}/usersdata`,
       accounts,
     );
     return handleGeneralResponse(promise, 'getUsersAccountData data should not be null if the request is successed');

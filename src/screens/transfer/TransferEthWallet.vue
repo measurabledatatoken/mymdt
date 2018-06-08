@@ -20,7 +20,7 @@
       :label="$t('message.transfer.tolbl')" :walletAddress="transferToWalletAddress">
     </WalletAddressField>
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
-    <MDTPrimaryButton :to="RouteDef.TransferEthWalletReview.path" :disabled="disableNextBtn">{{ $t('message.common.next') }}</MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.TransferEthWalletReview.path" :disabled="disableNextBtn">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
   </div>
 
 </template>

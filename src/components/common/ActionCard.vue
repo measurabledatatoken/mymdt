@@ -1,16 +1,16 @@
 <template>
-    <md-card class="action-card">
-        <md-card-media>
-            <img :src="imgSrc">
-        </md-card-media>
-        <md-card-header>
-            <div class="md-title">{{ title }}</div>
-        </md-card-header>
+  <md-card class="action-card">
+    <md-card-media>
+      <img :src="imgSrc">
+    </md-card-media>
+    <md-card-header>
+      <div class="md-title">{{ title }}</div>
+    </md-card-header>
 
-        <md-card-actions>
-            <md-button :to="to">{{ actionName }}</md-button>
-        </md-card-actions>
-    </md-card>
+    <md-card-actions>
+      <md-button :to="to">{{ actionName }}</md-button>
+    </md-card-actions>
+  </md-card>
 </template>
 
 <script>
@@ -36,7 +36,11 @@ export default {
 
 <style lang="scss" scoped>
 .md-card {
-    padding: 16px;
+  padding: 16px;
+}
+
+.md-card-header {
+  padding: 16px 0px 0px;
 }
 
 .md-card-media {
@@ -62,7 +66,8 @@ export default {
   height: 24px;
   width: 105px;
   border-radius: 16px;
-  font-size: 16px;
   font-weight: bold;
+  letter-spacing: 0.1px;
+  text-transform: none;
 }
 </style>

@@ -22,6 +22,7 @@ const state = {
   transferToAccount: null,
   transferToWalletAddress: null,
   transferNote: null,
+  transferPasscode: null,
   transferSuccess: null,
 };
 
@@ -57,31 +58,29 @@ const mutations = {
 
 const actions = {
   [START_TRANSFER](context) {
-    return new Promise((resolve, reject) => {
-      const selectedUser = this.state.home.selectedUser;
-      const transferType = this.state.transfer.transferType;
-      const amount = this.state.transfer.transferAmount;
+    const selectedUser = this.state.home.selectedUser;
+    const transferType = this.state.transfer.transferType;
+    const amount = this.state.transfer.transferAmount;
+    const transferPasscode = this.state.transfer.transferPasscode;
+    const transferNote = this.state.transfer.transferNote;
 
-      let toAddress = this.state.transfer.transferToAccount.emailAddress;
-      if (transferType === TransferType.EthWallet) {
-        toAddress = this.state.transfer.transferToWalletAddress;
-      }
+    let toAddress = this.state.transfer.transferToAccount.emailAddress;
+    if (transferType === TransferType.EthWallet) {
+      toAddress = this.state.transfer.transferToWalletAddress;
+    }
 
-      api.transfer.transfer(toAddress, transferType, amount, selectedUser.accessToken)
-        .then(() => {
-          resolve();
-        })
-        .catch(
-          (error) => {
-            const errorCode = error.response.data.error_code;
+    return api.transfer.transfer(toAddress, transferType, amount, transferPasscode, transferNote, selectedUser.accessToken)
+      .then(() => '')
+      .catch(
+        (error) => {
+          const errorCode = error.response.data.error_code;
 
-            context.commit(SET_ERROR_MESSAGE, ErrorCode.properties[errorCode].messageId);
-            context.commit(SET_ERROR_TITLE, { messageId: 'message.common.error_title' });
-            context.commit(SET_SHOW_ERROR_PROMPT, true);
-            reject();
-          },
-        );
-    });
+          context.commit(SET_ERROR_MESSAGE, ErrorCode.properties[errorCode].messageId);
+          context.commit(SET_ERROR_TITLE, { messageId: 'message.common.error_title' });
+          context.commit(SET_SHOW_ERROR_PROMPT, true);
+          throw (error);
+        },
+      );
   },
 };
 

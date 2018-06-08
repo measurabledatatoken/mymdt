@@ -17,7 +17,7 @@
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null">{{ $t('message.common.next') }}</MDTPrimaryButton>
+        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
         <MDTSubtleButton v-on:click="skipClicked()" class="skip-btn">{{ $t('message.common.skip') }}</MDTSubtleButton>
       </template>
 

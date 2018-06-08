@@ -5,68 +5,54 @@ export default {
   InvalidParameterValue: 102,
   InvalidJSONBody: 103,
   UnAuthorizedAccess: 104,
-
   ApplicationNotFound: 105,
   ApplicationInsufficientFund: 106,
   ValidationEndpointNotSet: 107,
-
-  UserAlreadyExist: 108,
-  UserNotExist: 109,
-  UserPasswordNotSet: 110,
-  UserEmailAddressNotConfirmed: 111,
-  UserCredentialInvalid: 112,
-  UserDisabled: 113,
-
-  EmailConfirmCodeExpired: 114,
-  EmailConfirmCodeInvalid: 115,
-  EmailConfirmCodeUserNotFound: 116,
-  EmailConfirmCodeAlreadyConfirmed: 117,
-
-  ConfirmedPasswordNotMatch: 118,
-  PasswordResetCodeExpired: 119,
-  PasswordResetCodeInvalid: 120,
-
-  AutoLoginValidationFailed: 121,
-
-  APIKeyNotFound: 122,
-
-  TaskNotFound: 123,
-  TaskExpired: 124,
-  TaskAlreadyFinished: 125,
-
-  RedeemableItemNotFound: 126,
-  RedeemableItemExpired: 127,
-
-  RewardNotFound: 128,
-  RewardExpired: 129,
-  RewardAlreadyClaimed: 130,
-
-  ProblemNotFound: 131,
-  CommentsExceedMaxLength: 132,
-
-  InvalidEmailAddress: 133,
-  InvalidEthAddress: 134,
-  InvalidPasscode: 135,
-  InsufficientFund: 136,
-  ContentTooLong: 137,
-
-  InvalidPhoneNumberFormat: 138,
-  SMSRequestTooFrequent: 139,
-  OTPNotMatch: 140,
-  OTPExpired: 141,
-
-  InvalidExpiryTime: 142,
-
-  TransactionNotFound: 143,
-
-  TwofaAlreadyEnabled: 144,
-  TwofaSecretNotGenerated: 145,
-  TwofaTokenInvalid: 146,
+  ValidationEndpointInvalid: 108,
+  UserAlreadyExist: 109,
+  UserNotExist: 110,
+  UserPasswordNotSet: 111,
+  UserEmailAddressNotConfirmed: 112,
+  UserCredentialInvalid: 113,
+  UserDisabled: 114,
+  EmailConfirmCodeExpired: 115,
+  EmailConfirmCodeInvalid: 116,
+  EmailConfirmCodeUserNotFound: 117,
+  EmailConfirmCodeAlreadyConfirmed: 118,
+  ConfirmedPasswordNotMatch: 119,
+  PasswordResetCodeExpired: 120,
+  PasswordResetCodeInvalid: 121,
+  AutoLoginValidationFailed: 122,
+  APIKeyNotFound: 123,
+  TaskNotFound: 124,
+  TaskExpired: 125,
+  TaskAlreadyFinished: 126,
+  RedeemableItemNotFound: 127,
+  RedeemableItemExpired: 128,
+  RewardNotFound: 129,
+  RewardExpired: 130,
+  RewardAlreadyClaimed: 131,
+  ProblemNotFound: 132,
+  CommentsExceedMaxLength: 133,
+  InvalidEmailAddress: 134,
+  InvalidEthAddress: 135,
+  InvalidPasscode: 136,
+  InsufficientFund: 137,
+  ContentTooLong: 138,
+  InvalidPhoneNumberFormat: 139,
+  SMSRequestTooFrequent: 140,
+  OTPNotMatch: 141,
+  OTPExpired: 142,
+  InvalidExpiryTime: 143,
+  TransactionNotFound: 144,
+  TwofaAlreadyEnabled: 145,
+  TwofaSecretNotGenerated: 146,
+  TwofaTokenInvalid: 147,
   properties: {
-    133: {
+    134: {
       messageId: 'message.transfer.invalid_email',
     },
-    134: {
+    135: {
       messageId: 'message.transfer.invalid_ethaddress',
     },
     136: {
