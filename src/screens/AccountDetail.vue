@@ -59,7 +59,6 @@ export default {
   $header-padding-top: 2rem;
 
   .app-view {
-    height: calc(100vh - #{$header-height});
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
