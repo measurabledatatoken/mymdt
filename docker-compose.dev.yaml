@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  mdtwallet-app:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    image: mdtwallet/app:dev
+    hostname: mdtwallet-app
+    networks:
+      - mdtwallet-api_api
+    ports:
+      - "8080:80"
+    restart: always
+
+networks:
+  mdtwallet-api_api:
+    external: true
