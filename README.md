@@ -1,8 +1,8 @@
-# mdtwallet-webapp
+# MDT Wallet Web App
 
-> Measurable Data Token Wallet Web Application
+> Measurable Data Token Wallet is a VueJS app for earning MDT, transfering MDT and redeeming items. It is integrated into mobile app or being used as a web application.
 
-## Build Setup
+## Localhost Setup
 
 ```bash
 # install dependencies
@@ -31,3 +31,45 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## Contribution Guideline (Draft)
 Refer to Vue readme in https://bitbucket.org/mailtimeapp/devwelcomekit/commits/73d55f350a3a19c76671d73558014621e2edc066
+
+## Docker Setup
+
+1. Install the latest docker community version
+2. Git clone this repository
+3. Setup Letsencrypt SSL certificate for production
+
+## Docker Development Environment
+
+``` bash
+# build docker images
+make build-dev
+
+# run docker containers
+make run-dev
+
+# cleanup
+make clean-dev
+```
+
+## Docker Staging Environment
+
+``` bash
+# build docker images
+make build-staging
+
+# run docker containers
+make run-staging
+
+# cleanup
+make clean-staging
+```
+
+## View Logs
+
+``` bash
+# view staging logs
+make staging-logs
+
+# view app logs
+make app-logs
+```
