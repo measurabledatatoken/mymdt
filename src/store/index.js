@@ -10,6 +10,7 @@ import login from './modules/login';
 import transfer from './modules/transfer';
 import qrcode from './modules/qrcode';
 import transactions from './modules/transactions';
+import reportProblem from './modules/reportProblem';
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     transfer,
     qrcode,
     transactions,
+    reportProblem,
   },
   strict: debug,
   plugins: debug ? [createLogger(), createPersistedState()] : [],

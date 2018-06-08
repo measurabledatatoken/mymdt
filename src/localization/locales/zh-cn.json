@@ -79,7 +79,7 @@
     "martketPriceUnit": "MDT市场价格单位",
     "security": "安全",
     "help": "帮助",
-    "reportProblem": "报告问题",
+    "reportProblem": "回报问题",
     "legalAndPrivary": "法律和隐私"
   },
   "priceUnit": {
@@ -103,5 +103,22 @@
     "重发":"重发验证码",
     "cant_receive": "无法接收代码？",
     "invalid_phonenumber": "无效的电话号码"
+  },
+  "reportProblem": {
+    "title": "回报问题",
+    "description": "请使用下面的表格向我们发送您的意见。请尽可能详细地描述问题。例如，请列出您遇到问题的哪个帐户，您做了什么以及发生了什么。\n如果您提供了您的电子邮件地址，则表示您同意我们可能会与您联系，以便更好地理解您提交的意见。",
+    "emailAddress": "电邮地址",
+    "optional": "选填",
+    "comments": "意见",
+    "upTo500Characters": "最多输入五百个字元",
+    "submit": "提交",
+    "pleaseInputValidEmailAddress": "请输入正确的电邮地址",
+    "thisFieldIsMandatory": "此栏为必填",
+    "recaptchaFailed": "reCAPTCHA验证失败，请重新验证",
+    "errorMessage": "很抱歉，您的评论无法立即提交。<br />你可以联系 <a href=\"mailto:token@mdt.co\">token@mdt.co</a> 寻求帮助"
+  },
+  "reportProblemSuccess": {
+    "title": "成功",
+    "message": "您的意见已提交！"
   }
 }
