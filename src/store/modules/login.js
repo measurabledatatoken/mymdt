@@ -1,5 +1,7 @@
 import api from '@/api';
-import { ErrorCode } from '@/enum';
+import {
+  ErrorCode,
+} from '@/enum';
 import {
   REQUEST_USER_ACCOUNTS,
   SET_APP_ID,
@@ -43,36 +45,34 @@ const actions = {
     password,
     appID,
   }) {
-    return new Promise((resolve, reject) => {
-      api.auth.login(emailAddress, password, appID)
-        .then(
-          (data) => {
-            context.commit(SET_LOGIN_ERRORCODE, null);
+    return api.auth.login(emailAddress, password, appID)
+      .then(
+        (data) => {
+          context.commit(SET_LOGIN_ERRORCODE, null);
 
-            if (data.length > 0) {
-              const credential = {
-                email_address: emailAddress,
-                access_token: data.access_token,
-              };
-              const credentials = [credential];
-              context.commit(SET_CREDENTIALS, credentials);
-            }
+          if (data.length > 0) {
+            const credential = {
+              email_address: emailAddress,
+              access_token: data.access_token,
+            };
+            const credentials = [credential];
+            context.commit(SET_CREDENTIALS, credentials);
+          }
+          context.commit(SET_APP_ID, appID);
 
-            context.commit(SET_APP_ID, appID);
-            resolve();
-          },
-        )
-        .catch(
-          (error) => {
-            if (error.response && error.response.data) {
-              context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
-            } else {
-              context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
-            }
-            reject(error);
-          },
-        );
-    });
+          return null;
+        },
+      )
+      .catch(
+        (error) => {
+          if (error.response && error.response.data) {
+            context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
+          } else {
+            context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
+          }
+          throw (error);
+        },
+      );
   },
   [REQUEST_AUTO_LOGIN](context, {
     authTokens,
