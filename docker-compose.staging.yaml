@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  mdtwallet-app:
+    build:
+      context: .
+      dockerfile: docker/staging/Dockerfile
+    image: mdtwallet/app:staging
+    hostname: mdtwallet-app
+    networks:
+      - mdtwallet-api_api
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-volumes/etc/letsencrypt/live/staging.mdt.app/fullchain.pem:/etc/letsencrypt/live/staging.mdt.app/fullchain.pem
+      - /docker-volumes/etc/letsencrypt/live/staging.mdt.app/privkey.pem:/etc/letsencrypt/live/staging.mdt.app/privkey.pem
+    restart: always
+
+networks:
+  mdtwallet-api_api:
+    external: true

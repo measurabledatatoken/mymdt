@@ -29,7 +29,7 @@ export default {
         app_credentials: appCredentials,
       },
     );
-    return handleGeneralResponse(promise, 'autologinmulti data should not be null if the request is successed');
+    return handleGeneralResponse(promise, 'autologin data should not be null if the request is successed');
   },
 };
 
