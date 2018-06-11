@@ -1,17 +1,14 @@
 <template>
   <div>
     <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid" :amount="transferAmount"
-      :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
-
+      :max-amount="transferFromAccount.mdtBalance" />
     <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')"
       :accounts="fromUserAccounts" :selectedAccount="transferFromAccount">
     </AccountSelector>
     <AccountSelector v-on:accountSelected="setTransferToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true"
       :accounts="transferToAccounts" :selectedAccount="transferToAccount">
     </AccountSelector>
-
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
-
     <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
   </div>
 
@@ -95,10 +92,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.account-selector {
-  height: 80px;
-  margin: 16px 0px;
-}
-</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="base-field">
     <div class="label" v-if="!!label">{{ label }}</div>
-    <md-field :class="{ 'md-invalid': !!error}" md-inline md-clearable v-bind="$attrs">
+    <md-field :class="{ 'md-invalid': !!error}" v-bind="$attrs">
       <slot />
       <span class="md-error" v-if="!!error">{{ error }}</span>
     </md-field>
