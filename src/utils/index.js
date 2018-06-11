@@ -38,6 +38,10 @@ const isValidPhoneNumber = (phoneNumber) => {
 
 
 const getEthAddressFromString = (str) => {
+  if (typeof str !== 'string') {
+    return null;
+  }
+
   const index = str.indexOf('0x');
   if (index < 0) {
     return null;
