@@ -6,7 +6,7 @@
       <br> {{ $t('message.transfer.successdetail')}}
     </div>
 
-    <MDTPrimaryButton @click="onDoneClick">{{ $t('message.common.done') }}</MDTPrimaryButton>
+    <MDTPrimaryButton @click="onDoneClick" :bottom="true">{{ $t('message.common.done') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -68,10 +68,5 @@ export default {
   margin-top: 20px;
   font-size: 20px;
   line-height: 30px;
-}
-
-.md-button {
-  position: absolute;
-  bottom: 24px;
 }
 </style>

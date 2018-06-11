@@ -1,17 +1,23 @@
 <template>
-  <div class="mdtinput">
-    <div class="label">{{ $t('message.transfer.amountlbl') }}</div>
-    <md-field>
-      <md-input class="amount" type="number" placeholder="0.0000" min="0" v-on:change="numberChanged($event.target.value)"
-        :value="enteredAmount">
-      </md-input>
-      <div class="md-suffix">MDT</div>
-      <span v-if="isInSufficientFund" class="md-helper-text">{{ $t('message.transfer.insufficient_fund') }}</span>
-    </md-field>
-  </div>
+  <BaseField
+    :label="$t('message.transfer.amountlbl')"
+    :error="isInSufficientFund && $t('message.transfer.insufficient_fund')"
+  >
+    <md-input
+      class="amount"
+      type="number"
+      placeholder="0.0000"
+      min="0"
+      v-on:change="numberChanged($event.target.value)"
+      :value="enteredAmount">
+    </md-input>
+    <span class="md-suffix">MDT</span>
+  </BaseField>
 </template>
 
 <script>
+import BaseField from '@/components/input/BaseField';
+
 export default {
   props: { amount: Number, maxAmount: Number },
   data() {
@@ -39,56 +45,34 @@ export default {
         this.$emit('amountInvalid', this.enteredAmount);
       }
     },
-
+  },
+  components: {
+    BaseField,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.mdtinput {
-  height: auto;
-}
+.base-field {
+  /deep/ .md-field {
+    justify-content: flex-end;
+    padding-bottom: 1rem;
+  }
 
-.label {
-  text-align: left;
-  margin: 16px $defaultPageMargin 10px $defaultPageMargin;
+  .md-input {
+    text-align: right;
 
-  font-size: 14px;
-  font-weight: bold;
-  color: $label-color;
-}
+    &.amount, &::placeholder {
+      font-size: 1.75rem;
+    }
 
-.md-field {
-  width: calc(100% - #{2 * $defaultPageMargin});
-  margin-left: $defaultPageMargin;
+    &::placeholder {
+      color: $theme-placehoder-color;
+    }
+  }
 
   .md-suffix {
-    margin-left: 16px;
-    margin-bottom: 10px;
+    margin-left: 1rem;
   }
-
-  .md-helper-text {
-    color: $theme-warning-color
-  }
-}
-
-.md-input.amount {
-  font-size: 28px;
-  text-align: right;
-  width: 80%;
-  margin-bottom: 20px;
-
-  &::placeholder {
-    font-size: 28px;
-    color: $theme-placehoder-color;
-  }
-}
-
-.symbol {
-  font-size: 16px;
-  color: #4a4a4a;
-  float: right;
-  margin-right: 32px;
-  margin-top: 14px;
 }
 </style>

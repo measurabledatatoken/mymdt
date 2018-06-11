@@ -14,6 +14,9 @@ export const FLUSH_NAVIGATION_STACK = 'common./FLUSH_NAVIGATION_STACK';
 // Actions
 export const BACK_TO_HOME = 'common/BACK_TO_HOME';
 
+export const OPEN_ERROR_PROMPT = 'common/OPEN_ERROR_PROMPT';
+export const DISMISS_ERROR_PROMPT = 'common/DISMISS_ERROR_PROMPT';
+
 const state = {
   errorMessage: null,
   errorTitle: null,
@@ -68,6 +71,16 @@ const actions = {
   [BACK_TO_HOME](context) {
     const depth = context.state.navigationStack.length;
     router.go(-depth);
+  },
+  [OPEN_ERROR_PROMPT]({ commit }, { message, title }) {
+    commit(SET_ERROR_MESSAGE, message);
+    commit(SET_ERROR_TITLE, title);
+    commit(SET_SHOW_ERROR_PROMPT, true);
+  },
+  [DISMISS_ERROR_PROMPT]({ commit }) {
+    commit(SET_ERROR_MESSAGE, null);
+    commit(SET_ERROR_TITLE, null);
+    commit(SET_SHOW_ERROR_PROMPT, false);
   },
 };
 

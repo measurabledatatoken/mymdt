@@ -17,7 +17,7 @@
     <md-list>
       <setting-list-section-header>{{ $t('message.settings.help') }}</setting-list-section-header>
       <md-divider />
-      <base-setting-list-item :title="$t('message.settings.reportProblem')" :showAction="false" />
+      <base-setting-list-item :title="$t('message.settings.reportProblem')" :showAction="false" :to="RouteDef.ReportProblem.path" />
       <md-divider />
       <base-setting-list-item :title="$t('message.settings.legalAndPrivary')" :showAction="false" />
       <md-divider />

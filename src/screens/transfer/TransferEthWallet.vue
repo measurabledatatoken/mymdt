@@ -20,7 +20,7 @@
       :label="$t('message.transfer.tolbl')" :walletAddress="transferToWalletAddress">
     </WalletAddressField>
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
-    <MDTPrimaryButton :to="RouteDef.TransferEthWalletReview.path" :disabled="disableNextBtn">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.TransferEthWalletReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
   </div>
 
 </template>
@@ -160,10 +160,5 @@ export default {
 
 .extra-space {
   height: 10px;
-}
-
-.md-button {
-  position: absolute;
-  bottom: 24px;
 }
 </style>

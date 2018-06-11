@@ -7,6 +7,7 @@ export const SET_USER_ACCOUNTS = 'home/SET_USER_ACCOUNTS';
 export const SET_APP_CONFIG = 'home/SET_APP_CONFIG';
 export const SET_PRICE_UNIT = 'home/SET_PRICE_UNIT';
 export const SET_IS_USER_ACCOUNTS_DIRTY = 'home/SET_IS_USER_ACCOUNTS_DIRTY';
+export const SET_APP_ID = 'home/SET_APP_ID';
 
 // Actions
 export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -60,6 +61,9 @@ const mutations = {
   },
   [SET_PRICE_UNIT](state, priceUnit) {
     state.priceUnit = priceUnit;
+  },
+  [SET_APP_ID](state, appID) {
+    state.appID = appID;
   },
 };
 

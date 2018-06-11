@@ -1,22 +1,19 @@
 <template>
-  <div>
-    <div class="label">{{ label }}</div>
-
-    <md-field>
-      <md-textarea md-autogrow :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
-        :value="walletAddress">
-      </md-textarea>
-      <md-button :to="RouteDef.TransferEthWalletQrCode.path">
-        <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>
-      </md-button>
-      <span v-if="!isAddressValid" class="md-helper-text">{{ $t('message.qrcode.eth_address_invalid') }}</span>
-    </md-field>
-
-  </div>
-
+  <BaseField
+    :label="label"
+    :error="!isAddressValid && $t('message.qrcode.eth_address_invalid')"
+  >
+    <md-textarea md-autogrow :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
+      :value="walletAddress">
+    </md-textarea>
+    <md-button class="md-icon-button" :to="RouteDef.TransferEthWalletQrCode.path">
+      <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>
+    </md-button>
+  </BaseField>
 </template>
 
 <script>
+import BaseField from '@/components/input/BaseField';
 import { getEthAddressFromString } from '@/utils';
 import { RouteDef } from '@/constants';
 
@@ -59,31 +56,14 @@ export default {
       }
     },
   },
+  components: {
+    BaseField,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.label {
-  text-align: left;
-  font-weight: bold;
-  margin: 16px $defaultPageMargin 10px $defaultPageMargin;
-  color: $label-color;
-}
-
-.md-field {
-  width: calc(100% - #{2 * $defaultPageMargin});
-  margin-left: $defaultPageMargin;
-  min-height: 32px;
-  padding-top: 0px;
-
-  .md-button {
-    min-width: 0;
-    margin-top: 0px;
-    margin-bottom: 0px;
-  }
-
-  .md-helper-text {
-    color: $theme-warning-color
-  }
+.md-icon-button {
+  height: 36px;
 }
 </style>
