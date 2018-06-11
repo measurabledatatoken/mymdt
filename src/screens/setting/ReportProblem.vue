@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha';
 import { required, email, helpers } from 'vuelidate/lib/validators';
 
 import BasePage from '@/screens/BasePage';
@@ -62,7 +61,6 @@ export default {
   },
   components: {
     BaseField,
-    VueRecaptcha,
     Recaptcha,
     MDTPrimaryButton,
   },
