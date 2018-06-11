@@ -1,10 +1,18 @@
 <template>
   <form class="form" @submit.prevent="handleSubmit">
     <p class="description">{{ $t('message.reportProblem.description')}}</p>
-    <BaseField :label="$t('message.reportProblem.emailAddress')" :error="$v.email.$error && $t('message.reportProblem.pleaseInputValidEmailAddress')">
+    <BaseField
+      :label="$t('message.reportProblem.emailAddress')"
+      :error="$v.email.$error && $t('message.reportProblem.pleaseInputValidEmailAddress')"
+      md-clearable
+    >
       <md-input :placeholder="$t('message.reportProblem.optional')" v-model="$v.email.$model"></md-input>
     </BaseField>
-    <BaseField :label="$t('message.reportProblem.comments')" :error="$v.comments.$error && $t('message.reportProblem.thisFieldIsMandatory')">
+    <BaseField
+      :label="$t('message.reportProblem.comments')"
+      :error="$v.comments.$error && $t('message.reportProblem.thisFieldIsMandatory')"
+      md-clearable
+    >
       <md-textarea
         md-autogrow
         :placeholder="$t('message.reportProblem.upTo500Characters')"

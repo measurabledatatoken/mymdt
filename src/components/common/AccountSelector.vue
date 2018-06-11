@@ -1,61 +1,62 @@
 <template>
   <div class="account-selector">
-    <div v-if="label.length !== 0" class="label">{{ label }}</div>
-
-    <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
-      <!-- Button -->
-      <md-button :md-ripple="false" v-bind:class="{ 'open': isMenuOpened }" md-menu-trigger>
-        <div class="account-info" v-bind:class="{ 'other': selectedOther, 'open': isMenuOpened }">
-          <div v-if="selectedAccount" class="account-email">
-            {{ selectedAccountEmail }}
-          </div>
-          <div v-if="selectedAccount" class="account-balance">
-            {{ selectedAccountBalance }}
-          </div>
-          <div v-if="!selectedAccount" class="placeholder"> {{ $t('message.transfer.select_account_placeholder') }} </div>
-        </div>
-        <md-icon v-show="!isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_down.svg">
-        </md-icon>
-        <md-icon v-show="isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_up.svg">
-        </md-icon>
-      </md-button>
-
-      <!-- Content -->
-      <md-menu-content>
-        <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
-          <md-divider></md-divider>
-          <div>
-            <div class="account-email" v-bind:class="{ 'selected' : account.emailAddress === selectedAccountEmail }">
-              {{ account.emailAddress }}
+    <BaseField :label="label" class="selector-menu">
+      <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
+        <!-- Button -->
+        <md-button :md-ripple="false" v-bind:class="{ 'open': isMenuOpened }" md-menu-trigger>
+          <div class="account-info" v-bind:class="{ 'other': selectedOther, 'open': isMenuOpened }">
+            <div v-if="selectedAccount" class="account-email">
+              {{ selectedAccountEmail }}
             </div>
-            <div class="account-balance">
-              {{ `${$t('message.transfer.amountlbl')}: ${parseFloat(account.mdtBalance).toFixed(4)}` }} MDT
+            <div v-if="selectedAccount" class="account-balance">
+              {{ selectedAccountBalance }}
             </div>
+            <div v-if="!selectedAccount" class="placeholder"> {{ $t('message.transfer.select_account_placeholder') }} </div>
           </div>
-          <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
-            <md-icon md-src="/static/icons/done.svg"></md-icon>
-          </div>
+          <md-icon v-show="!isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_down.svg">
+          </md-icon>
+          <md-icon v-show="isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_up.svg">
+          </md-icon>
+        </md-button>
 
-        </md-menu-item>
+        <!-- Content -->
+        <md-menu-content>
+          <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
+            <md-divider></md-divider>
+            <div>
+              <div class="account-email" v-bind:class="{ 'selected' : account.emailAddress === selectedAccountEmail }">
+                {{ account.emailAddress }}
+              </div>
+              <div class="account-balance">
+                {{ `${$t('message.transfer.amountlbl')}: ${parseFloat(account.mdtBalance).toFixed(4)}` }} MDT
+              </div>
+            </div>
+            <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
+              <md-icon md-src="/static/icons/done.svg"></md-icon>
+            </div>
 
-        <!-- Other email address. Only show if the props  enableOther is true-->
-        <md-menu-item class="other" v-if="enableOther" @click="selectOther()">
-          <md-divider></md-divider>
-          <div> {{ $t('message.transfer.other_emailaddress') }} </div>
-        </md-menu-item>
-      </md-menu-content>
-    </md-menu>
+          </md-menu-item>
 
+          <!-- Other email address. Only show if the props  enableOther is true-->
+          <md-menu-item class="other" v-if="enableOther" @click="selectOther()">
+            <md-divider></md-divider>
+            <div> {{ $t('message.transfer.other_emailaddress') }} </div>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+
+    </BaseField>
     <!-- Input field for user after pressed other email -->
-    <md-field class="other-email" v-if="selectedOther" md-dense md-inline md-clearable>
-      <label class="placeholder">{{ $t('message.transfer.enter_emailaddress') }}</label>
-      <md-input v-model="otherEmailAddress"></md-input>
-    </md-field>
+    <BaseField class="other-email" v-if="selectedOther" md-dense md-inline md-clearable>
+      <md-input v-model="otherEmailAddress" :placeholder="$t('message.transfer.enter_emailaddress')"></md-input>
+    </BaseField>
   </div>
 
 </template>
 
 <script>
+import BaseField from '@/components/input/BaseField';
+
 export default {
   props: {
     label: {
@@ -152,6 +153,9 @@ export default {
       });
     }
   },
+  components: {
+    BaseField,
+  },
 };
 </script>
 
@@ -160,15 +164,22 @@ $selectedEmailColor: $theme-color;
 $menuItemCellHeight: 56px;
 $menuItemOtherCellHeight: 44px;
 
-.label {
-  text-align: left;
-  font-weight: bold;
-  margin: 8px $defaultPageMargin 0px $defaultPageMargin;
+.account-selector {
+  margin: 0.5rem 0;
+
+  .selector-menu {
+    /deep/ .md-field {
+      margin-bottom: 0px;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
 }
 
 .md-menu {
-  width: calc(100% - 2 *#{$defaultPageMargin});
-  margin: 0px $defaultPageMargin;
+  width: 100%;
 
   .md-button {
     width: 100%;
@@ -305,15 +316,8 @@ $menuItemOtherCellHeight: 44px;
 }
 
 .other-email {
-  margin: -20px $defaultPageMargin;
-  width: calc(100% - 2 * #{$defaultPageMargin});
-
-  label.placeholder {
-    color: $placeholderColor;
-  }
-
-  /deep/ .md-button {
-    right: 12px;
+  &.base-field {
+    margin-top: -0.5rem;
   }
 }
 </style>
