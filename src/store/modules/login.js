@@ -2,6 +2,7 @@ import api from '@/api';
 import { ErrorCode } from '@/enum';
 import {
   REQUEST_USER_ACCOUNTS,
+  SET_APP_ID,
 } from '@/store/modules/home';
 import {
   SET_IS_LOADING,
@@ -57,6 +58,7 @@ const actions = {
               context.commit(SET_CREDENTIALS, credentials);
             }
 
+            context.commit(SET_APP_ID, appID);
             resolve();
           },
         )
@@ -112,6 +114,7 @@ const actions = {
         },
       ).then(
         () => {
+          context.commit(SET_APP_ID, appID);
           context.commit(SET_IS_LOADING, false);
         },
       )

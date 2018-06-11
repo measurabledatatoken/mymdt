@@ -103,5 +103,22 @@
     "resend": "Resend Verification Code",
     "cant_receive": "Can't receive code?",
     "invalid_phonenumb er": "Invalid Phone number"
+  },
+  "reportProblem": {
+    "title": "回報問題",
+    "description": "Use the form below to send us your comments.\nPlease descirbe the problem as specific as possible. For example, please include which account you are having trouble with, what did you do and what happened.\nIf you provide your email address, you agree that we may contact you to better understand the comments you submitted.",
+    "emailAddress": "電郵地址",
+    "optional": "選填",
+    "comments": "意見",
+    "upTo500Characters": "Up to 500 characters",
+    "submit": "Submit",
+    "pleaseInputValidEmailAddress": "Please input valid email address",
+    "thisFieldIsMandatory": "This field is mandatory",
+    "recaptchaFailed": "reCAPTCHA verification failed. Please retry",
+    "errorMessage": "Sorry your comments cannot be submitted now.<br />You can contact <a href=\"mailto:token@mdt.co\">token@mdt.co</a> for help."
+  },
+  "reportProblemSuccess": {
+    "title": "Success",
+    "message": "Your comments are submitted!"
   }
 }

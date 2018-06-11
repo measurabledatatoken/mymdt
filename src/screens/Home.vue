@@ -17,7 +17,7 @@
       </div>
     </div>
     <LoadingPopup v-if="showHomeLoadingEnd" src="static/loadersecondhalf.gif" />
-    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" class="earn-mdt-btn">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" :bottom="true">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -218,10 +218,5 @@ export default {
   padding-bottom: 4px;
   text-align: left;
   color: white;
-}
-
-.earn-mdt-btn {
-  position: absolute;
-  bottom: 24px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <MDTBaseButton v-bind="$attrs" v-on="$listeners" class="primary">
+  <MDTBaseButton v-bind="$attrs" v-on="$listeners" :class="['primary', { 'primary--bottom': bottom }]">
     <slot></slot>
   </MDTBaseButton>
 </template>
@@ -8,6 +8,7 @@
 import MDTBaseButton from '@/components/button/MDTBaseButton';
 
 export default {
+  props: ['bottom'],
   components: {
     MDTBaseButton,
   },
@@ -27,7 +28,12 @@ export default {
     background-color: $bluebtn-backgroundcolor-disabled;
     color: $bluebtn-wordcolor-disabled;
   }
-  @include center_horizontal;
+
+  &.primary--bottom {
+    position: fixed;
+    bottom: 1.5rem;
+    @include center_horizontal;
+  }
 }
 </style>
 

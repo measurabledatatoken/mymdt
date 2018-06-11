@@ -17,7 +17,7 @@
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null" class="next-button">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
         <MDTSubtleButton v-on:click="skipClicked()" class="skip-btn">{{ $t('message.common.skip') }}</MDTSubtleButton>
       </template>
 
@@ -115,6 +115,10 @@ export default {
 .skip-btn {
   position: absolute;
   bottom: 12px;
+}
+
+.next-button, .skip-btn {
+  @include center_horizontal();
 }
 
 .md-dialog {

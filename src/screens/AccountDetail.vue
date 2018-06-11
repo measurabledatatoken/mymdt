@@ -6,7 +6,7 @@
       </user-info-card>
     </div>
     <transaction-list v-bind:transactions="transactions" />
-    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" class="earn-mdt-btn">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" :bottom="true">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -59,7 +59,6 @@ export default {
   $header-padding-top: 2rem;
 
   .app-view {
-    height: calc(100vh - #{$header-height});
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
@@ -76,10 +75,5 @@ export default {
       position: absolute;
       top: 0;
     }
-  }
-
-  .earn-mdt-btn {
-    position: absolute;
-    bottom: 24px;
   }
 </style>

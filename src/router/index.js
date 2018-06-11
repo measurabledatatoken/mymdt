@@ -13,6 +13,8 @@ import ForgetPassword from '@/screens/ForgetPassword';
 
 import Settings from '@/screens/setting/Settings';
 import PriceUnits from '@/screens/setting/PriceUnits';
+import ReportProblem from '@/screens/setting/ReportProblem';
+import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
 import PhoneNumberAdd from '@/screens/phone/PhoneNumberAdd';
 import PhoneNumberVerify from '@/screens/phone/PhoneNumberVerify';
 
@@ -82,6 +84,14 @@ const router = new Router({
         {
           path: RouteDef.PriceUnits.path,
           component: PriceUnits,
+        },
+        {
+          path: RouteDef.ReportProblem.path,
+          component: ReportProblem,
+        },
+        {
+          path: RouteDef.ReportProblemSuccess.path,
+          component: ReportProblemSuccess,
         },
         {
           path: RouteDef.Tutorial.path,
