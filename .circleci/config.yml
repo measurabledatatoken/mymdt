@@ -27,7 +27,7 @@ jobs:
 
   test-dev:
     docker:
-      - image: circleci/node:9.11.1-browsers
+      - image: buildpack-deps:trusty
 
     working_directory: ~/app
 
@@ -75,7 +75,7 @@ jobs:
 
   deploy-staging:
     docker:
-      - image: circleci/node:9.11.1-browsers
+      - image: buildpack-deps:trusty
     steps:
       - run:
           name: Deploy to staging server
