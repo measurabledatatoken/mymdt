@@ -88,7 +88,7 @@ workflows:
     jobs:
       - unit-test:
           filters:
-            branchs:
+            branches:
               only:
                 - development
                 # - staging
@@ -97,7 +97,7 @@ workflows:
           requires:
             - unit-test
           filters:
-            branchs:
+            branches:
               only:
                 - development
                 # - staging
@@ -106,5 +106,5 @@ workflows:
           requires:
             - test-dev
           filters:
-            branchs:
+            branches:
               only: dev/gary/circleci # staging
