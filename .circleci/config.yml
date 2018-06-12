@@ -1,0 +1,110 @@
+version: 2
+jobs:
+  unit-test:
+    docker:
+      - image: circleci/node:9.11.1-browsers
+
+    working_directory: ~/app
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+
+      - run:
+          name: Install node modules
+          command: npm install
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+
+      - run:
+          name: Run unit tests
+          command: npm run unit
+
+  test-dev:
+    docker:
+      - image: circleci/node:9.11.1-browsers
+
+    working_directory: ~/app
+
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          version: 17.05.0-ce
+          docker_layer_caching: true # paid feature
+
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="17.05.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+
+      - run:
+          name: Build Docker images
+          command: make build-dev
+
+      - run:
+          name: Run containers
+          command: make run-dev background=true
+
+      - run:
+          name: Verify web app
+          command: |
+            set -x
+            docker run --network container:mdtwallet-webapp_mdtwallet-app_1 \
+              appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost/
+
+      - run:
+          name: Cleanup Docker containers
+          command: make clean-dev
+
+  deploy-staging:
+    docker:
+      - image: circleci/node:9.11.1-browsers
+    steps:
+      - run:
+          name: Deploy to staging server
+          command: |
+            ssh -o "StrictHostKeyChecking no" mailtime@staging.mdt.app "cd mdtwallet-webapp && git fetch --all && git checkout --force $CIRCLE_SHA1 && make build-staging && make run-staging"
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - unit-test:
+          filters:
+            branchs:
+              only:
+                # - development
+                # - staging
+                - dev/gary/circleci
+      - test-dev:
+          requires:
+            - unit-test
+          filters:
+            branchs:
+              only:
+                # - development
+                # - staging
+                - dev/gary/circleci
+      - deploy-staging:
+          requires:
+            - test-dev
+          filters:
+            branchs:
+              only: dev/gary/circleci # staging
