@@ -90,7 +90,7 @@ workflows:
           filters:
             branchs:
               only:
-                # - development
+                - development
                 # - staging
                 - dev/gary/circleci
       - test-dev:
@@ -99,7 +99,7 @@ workflows:
           filters:
             branchs:
               only:
-                # - development
+                - development
                 # - staging
                 - dev/gary/circleci
       - deploy-staging:
