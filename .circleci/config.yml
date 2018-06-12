@@ -58,18 +58,18 @@ jobs:
           name: Build Docker images
           command: make build-dev
 
-      - run:
-          name: Run containers
-          command: |
-            docker network create mdtwallet-api_api # for testing only
-            make run-dev background=true
+      # - run:
+      #     name: Run containers
+      #     command: |
+      #       docker network create mdtwallet-api_api # for testing only
+      #       make run-dev background=true
 
-      - run:
-          name: Verify web app
-          command: |
-            set -x
-            docker run --network container:mdtwallet-webapp_mdtwallet-app_1 \
-              appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost/
+      # - run:
+      #     name: Verify web app
+      #     command: |
+      #       set -x
+      #       docker run --network container:mdtwallet-webapp_mdtwallet-app_1 \
+      #         appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost/
 
       - run:
           name: Cleanup Docker containers
@@ -95,18 +95,18 @@ workflows:
                 - development
                 # - staging
                 - dev/gary/circleci
-      - test-dev:
-          requires:
-            - unit-test
-          filters:
-            branches:
-              only:
-                - development
-                # - staging
-                - dev/gary/circleci
+      # - test-dev:
+      #     requires:
+      #       - unit-test
+      #     filters:
+      #       branches:
+      #         only:
+      #           - development
+      #           # - staging
+      #           - dev/gary/circleci
       - deploy-staging:
           requires:
-            - test-dev
+            - unit-test
           filters:
             branches:
               only: dev/gary/circleci # staging
