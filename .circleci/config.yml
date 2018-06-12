@@ -60,7 +60,9 @@ jobs:
 
       - run:
           name: Run containers
-          command: make run-dev background=true
+          command: |
+            docker network create mdtwallet-api_api # for testing only
+            make run-dev background=true
 
       - run:
           name: Verify web app
