@@ -25,9 +25,9 @@ jobs:
           name: Run unit tests
           command: npm run unit
 
-  test-dev:
+  build-and-publish-images:
     docker:
-      - image: golang:1.10.3
+      - image: circleci/node:9.11.1-browsers
 
     working_directory: ~/mdtwallet-webapp
 
@@ -55,8 +55,15 @@ jobs:
             chmod +x /usr/local/bin/docker-compose
 
       - run:
-          name: Build Docker images
-          command: make build-dev
+          name: Build and push Docker images
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+              make build-dev
+              # TODO(GARY): push images to Docker registry
+            elif [ "${CIRCLE_BRANCH}" == "staging" ];
+              make build-staging
+              # TODO(GARY): push images to Docker registry
+            fi
 
       # - run:
       #     name: Run containers
@@ -71,13 +78,13 @@ jobs:
       #       docker run --network container:mdtwallet-webapp_mdtwallet-app_1 \
       #         appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost/
 
-      - run:
-          name: Cleanup Docker containers
-          command: make clean-dev
+      # - run:
+      #     name: Cleanup Docker containers
+      #     command: make clean-dev
 
   deploy-staging:
     docker:
-      - image: golang:1.10.3
+      - image: circleci/node:9.11.1-browsers
     steps:
       - run:
           name: Deploy to staging server
@@ -93,20 +100,20 @@ workflows:
             branches:
               only:
                 - development
-                # - staging
+                - staging
                 - dev/gary/circleci
-      # - test-dev:
+      # - build-and-publish-images:
       #     requires:
       #       - unit-test
       #     filters:
       #       branches:
       #         only:
       #           - development
-      #           # - staging
+      #           - staging
       #           - dev/gary/circleci
       - deploy-staging:
           requires:
             - unit-test
           filters:
             branches:
-              only: dev/gary/circleci # staging
+              only: staging
