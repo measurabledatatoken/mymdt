@@ -39,6 +39,10 @@ const RouteDef = {
     path: '/home/settings/phone/add/verify',
     name: 'phoneNumberVerify',
   },
+  PinCodeSetup: {
+    path: '/home/settings/pincode/setup',
+    name: 'pinCodeSetup',
+  },
 };
 
 

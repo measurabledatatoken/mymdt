@@ -17,6 +17,7 @@ import ReportProblem from '@/screens/setting/ReportProblem';
 import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
 import PhoneNumberAdd from '@/screens/phone/PhoneNumberAdd';
 import PhoneNumberVerify from '@/screens/phone/PhoneNumberVerify';
+import PinCodeSetup from '@/screens/pincode/PinCodeSetup';
 
 import Tutorial from '@/screens/Tutorial';
 
@@ -80,7 +81,13 @@ const router = new Router({
           component: PhoneNumberVerify,
           props: true,
         },
-
+        // Pin Code
+        {
+          path: RouteDef.PinCodeSetup.path,
+          name: RouteDef.PinCodeSetup.name,
+          component: PinCodeSetup,
+          props: true,
+        },
         {
           path: RouteDef.PriceUnits.path,
           component: PriceUnits,
