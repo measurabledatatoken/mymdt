@@ -1,9 +1,8 @@
 PROJECT_NAME ?= mdtwallet-webapp
 MDTWALLET_APP ?= mdtwallet-app
+INDEX ?= 1
 
 .PHONY: build-dev run-dev clean-dev build-staging run-staging clean-staging staging-logs app-logs
-
-INDEX := 1
 
 build-dev:
 	${INFO} "Building development docker images..."
@@ -12,7 +11,7 @@ build-dev:
 
 run-dev:
 	${INFO} "Running development environment..."
-	@ docker-compose -f docker-compose.dev.yaml up
+	@ docker-compose -f docker-compose.dev.yaml up $(BACKGROUND)
 
 clean-dev:
 	${INFO} "Cleaning development environment..."
@@ -46,3 +45,9 @@ INFO := @bash -c '\
 	printf $(YELLOW); \
 	echo "=> $$1"; \
 	printf $(NC)' SOME_VALUE
+
+ifeq ($(background), true)
+  BACKGROUND = -d
+else
+  BACKGROUND =
+endif
