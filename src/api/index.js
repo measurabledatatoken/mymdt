@@ -1,9 +1,11 @@
 
 import account from './account';
 import auth from './auth';
-import transfer from './transfer';
 import misc from './misc';
 import task from './task';
+import transfer from './transfer';
+import security from './security';
+
 
 export default {
   account,
@@ -11,4 +13,5 @@ export default {
   misc,
   transfer,
   task,
+  security,
 };

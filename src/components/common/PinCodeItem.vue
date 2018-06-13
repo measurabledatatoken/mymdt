@@ -1,6 +1,6 @@
 <template>
-    <input ref="pinCodeInput" :class="[position, `pin-input-item`]" :value="initPinCode" min="0" max="9" :type="type" @input="onValueInput"
-        @focus="onInputFocus" @keydown="onKeyDown">
+  <input ref="pinCodeInput" :class="[position, `pin-input-item`, {invalid: invalid}]" :value="initPinCode"
+    min="0" max="9" :type="type" @input="onValueInput" @focus="onInputFocus" @keydown="onKeyDown">
 </template>
 
 <script>
@@ -26,6 +26,10 @@ export default {
       validator(value) {
         return ['password', 'number'].indexOf(value) !== -1;
       },
+    },
+    invalid: {
+      default: false,
+      type: Boolean,
     },
   },
   methods: {
@@ -57,11 +61,38 @@ export default {
   &.left {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
+
+    &:not(:focus) {
+      border-right: 0px;
+    }
+
+    &.invalid {
+      border-top-color: #ff3b30;
+      border-left-color: #ff3b30;
+      border-bottom-color: #ff3b30;
+    }
+  }
+
+  &.middle {
+    &:not(:focus) {
+      border-right: 0px;
+    }
+
+    &.invalid {
+      border-top-color: #ff3b30;
+      border-bottom-color: #ff3b30;
+    }
   }
 
   &.right {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
+
+    &.invalid {
+      border-top-color: #ff3b30;
+      border-right-color: #ff3b30;
+      border-bottom-color: #ff3b30;
+    }
   }
 }
 
@@ -74,8 +105,7 @@ export default {
   @include left_right_boarder_radius;
 
   &:focus {
-    outline: none;
-    border: solid 2px #4187f7;
+    outline: solid 2px #4187f7;
 
     @include left_right_boarder_radius;
   }

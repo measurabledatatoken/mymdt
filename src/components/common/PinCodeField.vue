@@ -1,20 +1,17 @@
 <template>
-  <div>
-    <label for="pin-code-input">
+  <div class="pin-code-field">
       <ul class="pin-code-container">
         <li class="field-wrap" v-for="(item, index) in length" :key="index">
           <PinCodeItem ref="pinCodeItem" :position="getPositionForIndex(index, length)" @input="onPinInput(index, ...arguments)"
-            @backspace="onBackspacePressed(index, ...arguments)" @focus="onInputFocus(index, ...arguments)">
+            @backspace="onBackspacePressed(index)" @focus="onInputFocus(index)" :invalid="invalid">
           </PinCodeItem>
         </li>
       </ul>
-    </label>
   </div>
 </template>
 
 <script>
-import PinCodeItem from '@/components/common/PinCodeItem'
-  ;
+import PinCodeItem from '@/components/common/PinCodeItem';
 
 export default {
   props: {
@@ -34,6 +31,7 @@ export default {
   data() {
     return {
       pinCode: this.initPinCode,
+      invalid: false,
     };
   },
   methods: {
@@ -54,9 +52,12 @@ export default {
 
       if (index < this.length - 1) {
         this.$refs.pinCodeItem[index + 1].focus();
+      } else {
+        this.$emit('codefilled', this.pinCode);
       }
     },
     onInputFocus(index) {
+      this.invalid = false;
       const curPinCodeLength = this.pinCode.length;
       if (index === curPinCodeLength - 1) {
         const pinCodeItem = this.$refs.pinCodeItem[index];
@@ -79,14 +80,16 @@ export default {
         this.pinCode = this.pinCode.slice(0, index - 1);
       }
     },
+    setInvalid() {
+      this.invalid = true;
+      this.pinCode = '';
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .pin-code-container {
-  margin: 0;
-  padding: 0;
   display: flex;
   .field-wrap {
     list-style: none;

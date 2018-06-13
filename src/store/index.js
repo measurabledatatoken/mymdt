@@ -13,6 +13,7 @@ import transactions from './modules/transactions';
 import reportProblem from './modules/reportProblem';
 import ui from './modules/ui';
 import entities from './modules/entities';
+import security from './modules/security';
 
 Vue.use(Vuex);
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     qrcode,
     transactions,
     reportProblem,
+    security,
   },
   strict: debug,
   plugins: debug ? [createLogger(), createPersistedState()] : [],

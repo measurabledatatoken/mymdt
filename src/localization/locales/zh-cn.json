@@ -9,7 +9,7 @@
     "skip": "跳过",
     "edit": "更改",
     "nextbtn": "下一步",
-    "unknown_error": "未知错误，请提供以下信息与我们联系。"
+    "unknown_error": "未知错误,请提供以下信息与我们联系。"
   },
   "home": {
     "total_balance": "结余",
@@ -42,7 +42,7 @@
     "final_amount": "最终数量",
     "invalid_email": "无效的电邮地址",
     "invalid_ethaddress": "无效的以太钱包地址",
-    "insufficient_fund": "帐号MDT数量不够，请减才少数量或另选帐号。"
+    "insufficient_fund": "帐号MDT数量不够,请减才少数量或另选帐号。"
   },
   "earn": {
     "title": "赚取 MDT"
@@ -92,21 +92,32 @@
     "yes_skip": "是,跳过",
     "phone_setup_success": "电话号码成功设置！",
     "add_phone_title": "添加您的电话号码",
-    "add_phone_content": "在您的帐户中添加电话号码，我们会要求您输入验证码。",
+    "add_phone_content": "在您的帐户中添加电话号码,我们会要求您输入验证码。",
     "country_code_placeholder": "国家代码",
     "phone_number_placeholder": "电话号码",
     "verify_phone_title": "验证您的手机",
     "verify_phone_content": "验证码已发送至您注册的电话号码:",
     "verification_code": "验证码",
     "verification_code_placeholder": "6位数字验证码",
-    "resend_counting":"在{num}秒之后可以重新发送",
-    "重发":"重发验证码",
+    "resend_counting": "在{num}秒之后可以重新发送",
+    "重发": "重发验证码",
     "cant_receive": "无法接收代码？",
     "invalid_phonenumber": "无效的电话号码"
   },
+  "passcode": {
+    "pin_popup_title": "请输入您的PIN码",
+    "pin_setup_title": "PIN",
+    "oldpin_title": "请输入您的旧密码",
+    "forgot_pin": "忘记密码？",
+    "already_setup_title": "您已经设置了PIN码",
+    "already_setup_content": "您想更改PIN吗？",
+    "create_pin_title": "请创建6位密码",
+    "reenter_pin": "请再输入一次",
+    "not_match": "PIN不符,请重试"
+  },
   "reportProblem": {
     "title": "回报问题",
-    "description": "请使用下面的表格向我们发送您的意见。请尽可能详细地描述问题。例如，请列出您遇到问题的哪个帐户，您做了什么以及发生了什么。\n如果您提供了您的电子邮件地址，则表示您同意我们可能会与您联系，以便更好地理解您提交的意见。",
+    "description": "请使用下面的表格向我们发送您的意见。请尽可能详细地描述问题。例如,请列出您遇到问题的哪个帐户,您做了什么以及发生了什么。\n如果您提供了您的电子邮件地址,则表示您同意我们可能会与您联系,以便更好地理解您提交的意见。",
     "emailAddress": "电邮地址",
     "optional": "选填",
     "comments": "意见",
@@ -114,8 +125,8 @@
     "submit": "提交",
     "pleaseInputValidEmailAddress": "请输入正确的电邮地址",
     "thisFieldIsMandatory": "此栏为必填",
-    "recaptchaFailed": "reCAPTCHA验证失败，请重新验证",
-    "errorMessage": "很抱歉，您的评论无法立即提交。<br />你可以联系 <a href=\"mailto:token@mdt.co\">token@mdt.co</a> 寻求帮助"
+    "recaptchaFailed": "reCAPTCHA验证失败,请重新验证",
+    "errorMessage": "很抱歉,您的评论无法立即提交。<br />你可以联系 <a href=\"mailto:token@mdt.co\">token@mdt.co</a> 寻求帮助"
   },
   "reportProblemSuccess": {
     "title": "成功",

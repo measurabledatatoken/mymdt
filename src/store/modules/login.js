@@ -17,6 +17,7 @@ export const SET_CREDENTIALS = 'login/SET_CREDENTIALS';
 // actions
 export const REQUEST_LOGIN = 'login/REQUEST_LOGIN';
 export const REQUEST_AUTO_LOGIN = 'login/REQUEST_AUTO_LOGIN';
+export const VALIDATE_PASSCODE = 'login/VALIDATE_PASSCODE';
 
 const state = {
   loginSuccess: null,
@@ -129,6 +130,9 @@ const actions = {
           throw (error);
         },
       );
+  },
+  [VALIDATE_PASSCODE](context, { passcode, credential }) {
+    return api.auth.validatePasscode(passcode, credential);
   },
 };
 

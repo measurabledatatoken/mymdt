@@ -36,21 +36,25 @@
           <div class='amount-unit'>MDT</div>
           <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }}</div>
         </div>
+
       </div>
     </div>
     <Recaptcha class="recaptcha" @verify="onRecaptchaVerified" />
     <MDTPrimaryButton v-on:click="transferMDT" :disabled="disableTransferBtn" :bottom="true">{{ $t('message.common.transferbtn') }}</MDTPrimaryButton>
+    <PinCodeInputPopup ref="pinCodeInputPopup" @close-clicked="showPinCodeInput = false" :md-active.sync="showPinCodeInput" @codefilled="onPinCodeFilled" :emailAddress="transferFromAccount.emailAddress">testing</PinCodeInputPopup>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
+import { SET_PIN, VALIDATE_PIN } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
 import BasePage from '@/screens/BasePage';
+import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
 export default {
   extends: BasePage,
@@ -61,13 +65,15 @@ export default {
   },
   data() {
     return {
-      disableTransferBtn: true,
+      disableTransferBtn: false,
       TransferType,
+      showPinCodeInput: true,
     };
   },
   components: {
     Recaptcha,
     MDTPrimaryButton,
+    PinCodeInputPopup,
   },
   computed: {
     ...mapState({
@@ -109,8 +115,12 @@ export default {
     },
   },
   methods: {
+    ...mapMutations({
+      setPIN: SET_PIN,
+    }),
     ...mapActions({
       startTransfer: START_TRANSFER,
+      validatePIN: VALIDATE_PIN,
     }),
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
@@ -119,6 +129,15 @@ export default {
       this.startTransfer().then(() => {
         this.$router.push(RouteDef.TransferSuccess.path);
       }).catch(() => {});
+    },
+    onPinCodeFilled(pinCode) {
+      this.validatePIN()
+        .then(() => {
+          this.setTransferPasscode(pinCode);
+        })
+        .catch(() => {
+          this.$refs.pinCodeInputPopup.setInvalid();
+        });
     },
   },
 };
