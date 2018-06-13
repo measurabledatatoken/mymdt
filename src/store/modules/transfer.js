@@ -10,6 +10,7 @@ export const SET_TRANSFER_FROM_ACCOUNT = 'transfer/SET_TRANSFER_FROM_ACCOUNT';
 export const SET_TRANSFER_TO_ACCOUNT = 'transfer/SET_TRANSFER_TO_ACCOUNT';
 export const SET_TRANSFER_TO_WALLETADDRESS = 'transfer/SET_TRANSFER_TO_WALLETADDRESS';
 export const SET_TRANSFER_NOTE = 'transfer/SET_TRANSFER_NOTE';
+export const SET_TRANSFER_PASSCODE = 'transfer/SET_TRANSFER_PASSCODE';
 export const SET_TRANSFER_SUCCESS = 'transfer/SET_TRANSFER_SUCCESS';
 
 // action
@@ -51,6 +52,9 @@ const mutations = {
   },
   [SET_TRANSFER_NOTE](state, transferNote) {
     state.transferNote = transferNote;
+  },
+  [SET_TRANSFER_PASSCODE](state, transferPasscode) {
+    state.transferPasscode = transferPasscode;
   },
   [SET_TRANSFER_SUCCESS](state, transferSuccess) {
     state.transferSuccess = transferSuccess;

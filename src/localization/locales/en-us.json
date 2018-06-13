@@ -104,6 +104,17 @@
     "cant_receive": "Can't receive code?",
     "invalid_phonenumb er": "Invalid Phone number"
   },
+  "passcode": {
+    "pin_popup_title": "Please Enter Your PIN",
+    "pin_setup_title": "PIN",
+    "oldpin_title": "Please Enter Your Old PIN",
+    "forgot_pin": "Forgot PIN?",
+    "already_setup_title": "You already set up PIN",
+    "already_setup_content": "Would you like to change your PIN?",
+    "create_pin_title":"Please Create 6-digit PIN",
+    "reenter_pin":"Please Enter Again",
+    "not_match": "PIN does not match, please try again"
+  },
   "reportProblem": {
     "title": "回報問題",
     "description": "Use the form below to send us your comments.\nPlease descirbe the problem as specific as possible. For example, please include which account you are having trouble with, what did you do and what happened.\nIf you provide your email address, you agree that we may contact you to better understand the comments you submitted.",

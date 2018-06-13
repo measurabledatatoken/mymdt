@@ -42,7 +42,7 @@
     "final_amount": "最終數量",
     "invalid_email": "無效的電郵地址",
     "invalid_ethaddress": "無效的以太錢包地址",
-    "insufficient_fund": "帳號MDT數量不夠，請減才少數量或另選帳號。" 
+    "insufficient_fund": "帳號MDT數量不夠，請減才少數量或另選帳號。"
   },
   "earn": {
     "title": "賺取 MDT"
@@ -103,6 +103,17 @@
     "resend": "重發驗證碼",
     "cant_receive": "無法接收代碼？",
     "invalid_phonenumber": "無效的電話號碼"
+  },
+  "passcode": {
+    "pin_popup_title": "請輸入您的PIN碼",
+    "pin_setup_title": "PIN",
+    "oldpin_title": "請輸入您的舊密碼",
+    "forgot_pin": "忘記密碼？",
+    "already_setup_title": "您已經設置了PIN碼",
+    "already_setup_content": "您想更改PIN嗎？",
+    "create_pin_title": "請創建6位密碼",
+    "reenter_pin": "請再輸入一次",
+    "not_match": "PIN不符,請重試"
   },
   "reportProblem": {
     "title": "回報問題",
