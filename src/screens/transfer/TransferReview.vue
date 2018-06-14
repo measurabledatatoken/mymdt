@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { SET_PIN, VALIDATE_PIN } from '@/store/modules/security';
+import { VALIDATE_PIN } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
@@ -74,7 +74,7 @@ export default {
     return {
       disableTransferBtn: false,
       TransferType,
-      showPinCodeInput: true,
+      showPinCodeInput: false,
     };
   },
   components: {
@@ -122,9 +122,6 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      setPIN: SET_PIN,
-    }),
     ...mapActions({
       startTransfer: START_TRANSFER,
       validatePIN: VALIDATE_PIN,
@@ -136,10 +133,7 @@ export default {
       this.showPinCodeInput = true;
     },
     onPinCodeFilled(pinCode) {
-      this.validatePIN()
-        .then(() => {
-          this.setTransferPasscode(pinCode);
-        })
+      this.validatePIN(pinCode)
         .catch((err) => {
           this.$refs.pinCodeInputPopup.setInvalid();
           throw (err);
