@@ -11,11 +11,12 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
+
 import BasePage from '@/screens/BasePage';
 import UserInfoCard from '@/components/common/UserInfoCard';
 import TransactionList from '@/components/transaction/TransactionList';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
-import { mapState, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
 
 export default {
@@ -38,7 +39,9 @@ export default {
   computed: {
     ...mapState({
       transactions: state => state.transactions.all,
-      selectedUser: state => state.home.selectedUser,
+    }),
+    ...mapGetters({
+      selectedUser: 'getSelectedUser',
     }),
   },
   created() {

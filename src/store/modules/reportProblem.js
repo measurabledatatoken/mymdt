@@ -11,9 +11,9 @@ export const REPORT_PROBLEM = 'reportProblem/REPORT_PROBLEM';
 const state = null;
 
 const actions = {
-  [REPORT_PROBLEM]({ commit, dispatch, rootState }, payload) {
+  [REPORT_PROBLEM]({ commit, dispatch, rootState, rootGetters }, payload) {
     commit(SET_IS_LOADING, true);
-    return api.account.reportProblem(rootState.home.appID, payload, rootState.home.selectedUser.accessToken)
+    return api.account.reportProblem(rootState.home.appID, payload, rootGetters.getSelectedUser.accessToken)
       .then(() => {
         commit(SET_IS_LOADING, false);
         router.push(RouteDef.ReportProblemSuccess.path);

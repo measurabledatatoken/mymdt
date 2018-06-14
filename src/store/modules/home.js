@@ -1,9 +1,11 @@
 import api from '@/api';
+
+import { SET_USERS } from '@/store/modules/entities/users';
+
 // Mutations
 export const SET_MDT_PRICE = 'home/SET_MDT_PRICE';
 export const SET_NEED_EXIT_BTN = 'home/SET_NEED_EXIT_BTN';
 export const SET_SELECTED_USER = 'home/SET_SELECTED_USER';
-export const SET_USER_ACCOUNTS = 'home/SET_USER_ACCOUNTS';
 export const SET_APP_CONFIG = 'home/SET_APP_CONFIG';
 export const SET_PRICE_UNIT = 'home/SET_PRICE_UNIT';
 export const SET_IS_USER_ACCOUNTS_DIRTY = 'home/SET_IS_USER_ACCOUNTS_DIRTY';
@@ -18,26 +20,17 @@ const state = {
   mdtPrice: 0,
   needExit: false,
   appID: '',
-  selectedUser: {
-    displayName: null,
-    emailAddress: null,
-    avatarURL: null,
-    isEmailConfirmed: null,
-    phoneNumber: null,
-    isPhoneConfirmed: null,
-    isAccountConfirmed: null,
-    isTwofaEnabled: null,
-    ethWalletAddress: null,
-    mdtBalance: null,
-    isWalletEnabled: null,
-    accessToken: null,
-  },
-  userAccounts: [],
+  selectedUserId: null,
   isUserAccountsDirty: false,
   priceUnit: 'USD',
 
   // AppConfig
   appConfig: null,
+};
+
+const getters = {
+  // eslint-disable-next-line
+  getSelectedUser: (state, getters, rootState, rootGetters) => rootGetters.getUser(state.selectedUserId),
 };
 
 const mutations = {
@@ -47,11 +40,8 @@ const mutations = {
   [SET_NEED_EXIT_BTN](state, needExit) {
     state.needExit = needExit;
   },
-  [SET_SELECTED_USER](state, selectedUser) {
-    state.selectedUser = selectedUser;
-  },
-  [SET_USER_ACCOUNTS](state, userAccounts) {
-    state.userAccounts = userAccounts;
+  [SET_SELECTED_USER](state, userId) {
+    state.selectedUserId = userId;
   },
   [SET_IS_USER_ACCOUNTS_DIRTY](state, isUserAccountsDirty) {
     state.isUserAccountsDirty = isUserAccountsDirty;
@@ -99,37 +89,14 @@ const actions = {
 
     api.account.getUserAccountsData(credentials)
       .then(
-        (data) => {
-          if (data.length > 0) {
-            const userAccountsData = [];
-            data.forEach((dataItem) => {
-              let tempAccessToken = null;
-              credentials.forEach((credential) => {
-                if (credential.email_address === dataItem.email_address) {
-                  tempAccessToken = credential.access_token;
-                }
-              });
-
-              const userAccountData = {
-                displayName: dataItem.display_name,
-                emailAddress: dataItem.email_address,
-                avatarURL: dataItem.avatar_url,
-                isEmailConfirmed: dataItem.is_email_confirmed,
-                phoneNumber: dataItem.phone_number,
-                isPhoneConfirmed: dataItem.is_phone_confirmed,
-                isAccountConfirmed: dataItem.is_account_enabled,
-                isTwofaEnabled: dataItem.is_twofa_enabled,
-                ethWalletAddress: dataItem.eth_wallet_address,
-                mdtBalance: dataItem.mdtbalance,
-                isWalletEnabled: dataItem.is_wallet_enabled,
-                accessToken: tempAccessToken,
-              };
-
-              userAccountsData.push(userAccountData);
+        (normalizeduserAccountData) => {
+          if (normalizeduserAccountData.result.length > 0) {
+            context.commit(SET_USERS, {
+              byId: normalizeduserAccountData.entities.users,
+              allIds: normalizeduserAccountData.result,
             });
 
-            context.commit(SET_USER_ACCOUNTS, userAccountsData);
-            context.commit(SET_SELECTED_USER, userAccountsData[0]);
+            context.commit(SET_SELECTED_USER, normalizeduserAccountData.result[0]);
           }
         },
       )
@@ -144,6 +111,7 @@ const actions = {
 
 export default {
   state,
+  getters,
   mutations,
   actions,
 };
