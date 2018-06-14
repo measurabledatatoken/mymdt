@@ -19,7 +19,7 @@ function handleGeneralResponse(promise, options) {
       const requiredData = !!emptyDataMsg;
       let data = response.data && response.data.data;
 
-      if (requiredData && !data) {
+      if (requiredData && !data && !options.allowEmptyData) {
         throw new Error(emptyDataMsg);
       }
 
