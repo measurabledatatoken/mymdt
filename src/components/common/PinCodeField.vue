@@ -86,6 +86,11 @@ export default {
       this.invalid = true;
       this.pinCode = '';
     },
+    focus(index) {
+      if (index <= this.length - 1) {
+        this.$refs.pinCodeItem[index].focus();
+      }
+    },
   },
 };
 </script>
