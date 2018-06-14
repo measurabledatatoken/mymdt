@@ -80,7 +80,9 @@
     "security": "安全",
     "help": "幫助",
     "reportProblem": "回報問題",
-    "legalAndPrivary": "法律和隱私"
+    "legalAndPrivary": "法律和隱私",
+    "phone_number": "電話號碼",
+    "accountSecurity": "帳號保安"
   },
   "priceUnit": {
     "title": "價格單位"

@@ -12,6 +12,7 @@ import Register from '@/screens/Register';
 import ForgetPassword from '@/screens/ForgetPassword';
 
 import Settings from '@/screens/setting/Settings';
+import UserSettings from '@/screens/setting/UserSettings';
 import PriceUnits from '@/screens/setting/PriceUnits';
 import ReportProblem from '@/screens/setting/ReportProblem';
 import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
@@ -67,6 +68,12 @@ const router = new Router({
         {
           path: RouteDef.Settings.path,
           component: Settings,
+        },
+        {
+          path: RouteDef.UserSettings.path,
+          name: RouteDef.UserSettings.name,
+          component: UserSettings,
+          props: true,
         },
         // phone
         {

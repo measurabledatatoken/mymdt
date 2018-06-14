@@ -10,7 +10,11 @@
       <setting-list-section-header>{{ $t('message.settings.security') }}</setting-list-section-header>
       <md-divider />
       <template v-for="user in allUsers">
-        <SettingListUserItem :key="user.emailAddress" :user="user" />
+        <SettingListUserItem
+        :key="user.emailAddress"
+        :to="{ name: RouteDef.UserSettings.name , params : { emailAddress: user.emailAddress } }"
+        :user="user"
+        />
         <md-divider :key="`${user.emailAddress}-divider`" />
       </template>
     </md-list>
@@ -61,6 +65,18 @@ export default {
     SettingListSectionHeader,
     BaseSettingListItem,
     SettingListUserItem,
+  },
+  methods: {
+    userClicked(emailAddress) {
+      this.$router.push(
+        {
+          name: RouteDef.UserSettings.name,
+          params: {
+            emailAddress,
+          },
+        },
+      );
+    },
   },
 };
 </script>

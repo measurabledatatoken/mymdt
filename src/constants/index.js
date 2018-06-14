@@ -11,6 +11,10 @@ const RouteDef = {
   TransactionHistory: { path: '/account/:id/transactionhistory' },
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
+  UserSettings: {
+    path: '/home/usersettings',
+    name: 'UserSettings',
+  },
   PriceUnits: { path: '/home/settings/price-units' },
   ReportProblem: { path: '/home/settings/problems' },
   ReportProblemSuccess: { path: '/home/settings/problems/success' },
