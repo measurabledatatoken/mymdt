@@ -57,7 +57,7 @@ const mutations = {
 };
 
 const actions = {
-  [START_TRANSFER](context, pin, { commit, rootState, rootGetters }) {
+  [START_TRANSFER]({ commit, rootState, rootGetters }, pin) {
     const selectedUser = rootGetters.getSelectedUser;
     const transferType = rootState.transfer.transferType;
     const amount = rootState.transfer.transferAmount;
