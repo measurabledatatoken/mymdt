@@ -1,5 +1,5 @@
 <template>
-  <md-dialog v-bind="$attrs" v-on="$listeners" :class="[`animated`, {shake: shouldShake}]">
+  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false">
     <md-button @click="$emit('close-clicked')">
       <md-icon md-src="/static/icons/done.svg"></md-icon>
     </md-button>
@@ -8,7 +8,7 @@
       <span class="title">{{$t('message.passcode.pin_popup_title')}}</span>
       <span class="subtitle">{{ emailAddress }}</span>
     </md-dialog-title>
-    <div class="conent">
+    <div class="content">
       <PinCodeField ref="pinCodeField" @codefilled="onCodeFilled" :length="6"></PinCodeField>
       <div class="forgot">
         <a href="google.com">{{ $t('message.passcode.forgot_pin') }}</a>
