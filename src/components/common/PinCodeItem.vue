@@ -101,11 +101,13 @@ export default {
   height: 100%;
   text-align: center;
   border: solid 1px #aaaaaa;
+  outline: none;
 
   @include left_right_boarder_radius;
 
   &:focus {
-    outline: solid 2px #4187f7;
+    border-color: #4187f7;
+    border-width: 2px;
 
     @include left_right_boarder_radius;
   }
