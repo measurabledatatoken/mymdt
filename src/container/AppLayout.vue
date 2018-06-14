@@ -140,7 +140,7 @@ export default {
 <style lang="scss" scoped>
 @mixin animation-active() {
   will-change: transform;
-  transition: transform 500ms ease-out;
+  transition: transform 250ms ease-out;
   position: absolute;
   width: 100%;
   bottom: 0;
