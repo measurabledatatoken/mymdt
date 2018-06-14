@@ -1,5 +1,5 @@
 <template>
-  <md-list-item v-bind="$attrs">
+  <md-list-item v-bind="$attrs" v-on="$listeners">
     <slot name="icon" />
     <div class="md-list-item-text">
       <span>{{ title }}</span>

@@ -80,7 +80,9 @@
     "security": "安全",
     "help": "帮助",
     "reportProblem": "回报问题",
-    "legalAndPrivary": "法律和隐私"
+    "legalAndPrivary": "法律和隐私",
+    "phoneNumber": "电话号码",
+    "accountSecurity": "帐号保安"
   },
   "priceUnit": {
     "title": "价格单位"

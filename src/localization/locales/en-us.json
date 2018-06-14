@@ -80,7 +80,9 @@
     "security": "Security",
     "help": "Help",
     "reportProblem": "Report Problem",
-    "legalAndPrivary": "Legal & Privacy"
+    "legalAndPrivary": "Legal & Privacy",
+    "phoneNumber": "Phone Number",
+    "accountSecurity": "Account Security"
   },
   "priceUnit": {
     "title": "Price Unit"
