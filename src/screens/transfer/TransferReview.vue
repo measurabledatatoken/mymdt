@@ -39,9 +39,16 @@
 
       </div>
     </div>
+
     <Recaptcha class="recaptcha" @verify="onRecaptchaVerified" />
-    <MDTPrimaryButton v-on:click="transferMDT" :disabled="disableTransferBtn" :bottom="true">{{ $t('message.common.transferbtn') }}</MDTPrimaryButton>
-    <PinCodeInputPopup ref="pinCodeInputPopup" @close-clicked="showPinCodeInput = false" :md-active.sync="showPinCodeInput" @codefilled="onPinCodeFilled" :emailAddress="transferFromAccount.emailAddress">testing</PinCodeInputPopup>
+
+    <MDTPrimaryButton v-on:click="transferMDT" :disabled="disableTransferBtn" :bottom="true">
+      {{ $t('message.common.transferbtn') }}
+    </MDTPrimaryButton>
+
+    <PinCodeInputPopup ref="pinCodeInputPopup" :md-active.sync="showPinCodeInput" :emailAddress="transferFromAccount.emailAddress"
+      @codefilled="onPinCodeFilled" @close-clicked="showPinCodeInput = false">
+    </PinCodeInputPopup>
   </div>
 </template>
 
@@ -126,17 +133,23 @@ export default {
       this.disableTransferBtn = false;
     },
     transferMDT() {
-      this.startTransfer().then(() => {
-        this.$router.push(RouteDef.TransferSuccess.path);
-      }).catch(() => {});
+      this.showPinCodeInput = true;
     },
     onPinCodeFilled(pinCode) {
       this.validatePIN()
         .then(() => {
           this.setTransferPasscode(pinCode);
         })
-        .catch(() => {
+        .catch((err) => {
           this.$refs.pinCodeInputPopup.setInvalid();
+          throw (err);
+        })
+        .then(() => this.startTransfer())
+        .then(() => {
+          this.$router.push(RouteDef.TransferSuccess.path);
+        })
+        .catch(() => {
+          console.log('error in onPinCodeFilled');
         });
     },
   },
