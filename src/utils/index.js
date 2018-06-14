@@ -92,6 +92,10 @@ function extractNameInitials(name) {
   }
 }
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export {
   isRouteHomePath,
   isRouteChangeBack,
@@ -103,4 +107,5 @@ export {
 
   formatAmount,
   extractNameInitials,
+  delay,
 };

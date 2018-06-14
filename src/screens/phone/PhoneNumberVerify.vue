@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -74,9 +73,6 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      selectedAccount: state => state.home.selectedUser,
-    }),
     resendBtnText() {
       return this.$t('message.phone.resend', { num: 60 });
     },

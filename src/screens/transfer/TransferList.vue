@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="account">
-      <AccountSelector v-on:accountSelected="setTransferFromAccount" :accounts="userAccounts" :selectedAccount="transferFromAccount">
+      <AccountSelector v-on:accountSelected="setTransferFromAccount" :accounts="allUsers" :selectedAccount="transferFromAccount">
       </AccountSelector>
     </div>
     <div class="action-card-list">
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 import {
   SET_TRANSFER_FROM_ACCOUNT,
 } from '@/store/modules/transfer';
@@ -42,8 +42,10 @@ export default {
   computed: {
     ...mapState({
       transferFromAccount: state => state.transfer.transferFromAccount,
-      selectedUser: state => state.home.selectedUser,
-      userAccounts: state => state.home.userAccounts,
+    }),
+    ...mapGetters({
+      allUsers: 'getAllUsers',
+      selectedUser: 'getSelectedUser',
     }),
   },
   components: {

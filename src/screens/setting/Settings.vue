@@ -9,7 +9,7 @@
     <md-list class="md-double-line">
       <setting-list-section-header>{{ $t('message.settings.security') }}</setting-list-section-header>
       <md-divider />
-      <template v-for="user in userAccounts">
+      <template v-for="user in allUsers">
         <SettingListUserItem :key="user.emailAddress" :user="user" />
         <md-divider :key="`${user.emailAddress}-divider`" />
       </template>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 import BasePage from '@/screens/BasePage';
 import UserAvatar from '@/components/common/UserAvatar';
@@ -50,8 +50,10 @@ export default {
   },
   computed: {
     ...mapState({
-      userAccounts: state => state.home.userAccounts,
       priceUnit: state => state.home.priceUnit,
+    }),
+    ...mapGetters({
+      allUsers: 'getAllUsers',
     }),
   },
   components: {
