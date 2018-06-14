@@ -1,12 +1,12 @@
 <template>
   <div class="pin-code-field">
-      <ul class="pin-code-container">
-        <li class="field-wrap" v-for="(item, index) in length" :key="index">
-          <PinCodeItem ref="pinCodeItem" :position="getPositionForIndex(index, length)" @input="onPinInput(index, ...arguments)"
-            @backspace="onBackspacePressed(index)" @focus="onInputFocus(index)" :invalid="invalid">
-          </PinCodeItem>
-        </li>
-      </ul>
+    <ul class="pin-code-container">
+      <li class="field-wrap" v-for="(item, index) in length" :key="index">
+        <PinCodeItem ref="pinCodeItem" :position="getPositionForIndex(index, length)" @input="onPinInput(index, ...arguments)"
+          @backspace="onBackspacePressed(index)" @focus="onInputFocus(index)" :invalid="invalid">
+        </PinCodeItem>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -60,13 +60,15 @@ export default {
       this.invalid = false;
       const curPinCodeLength = this.pinCode.length;
       if (index === curPinCodeLength - 1) {
+        // Remove pin code and empty the input if it is the latest one
         const pinCodeItem = this.$refs.pinCodeItem[index];
         this.pinCode = this.pinCode.slice(0, Math.max(0, index));
         pinCodeItem.emptyInput();
       } else if (index < curPinCodeLength - 1) {
+        // focus on last one. Bound the index to length - 1
         const focusIndex = Math.min(curPinCodeLength, this.length - 1);
         const pinCodeItem = this.$refs.pinCodeItem[focusIndex];
-        this.pinCode = this.pinCode.slice(0, Math.max(0, focusIndex));
+        this.pinCode = this.pinCode.slice(0, focusIndex);
         pinCodeItem.emptyInput();
         pinCodeItem.focus();
       } else {
