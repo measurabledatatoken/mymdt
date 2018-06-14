@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 import {
   SET_TRANSFER_AMOUNT,
   SET_TRANSFER_TYPE,
@@ -68,8 +68,10 @@ export default {
       transferFromAccount: state => state.transfer.transferFromAccount,
       transferToWalletAddress: state => state.transfer.transferToWalletAddress,
       transferNote: state => state.transfer.transferNote,
-      fromUserAccounts: state => state.home.userAccounts,
       ethAddressScanned: state => state.qrcode.ethAddressScanned,
+    }),
+    ...mapGetters({
+      fromUserAccounts: 'getAllUsers',
     }),
     disableNextBtn() {
       if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0 && this.isWalletAmountValid) {

@@ -57,11 +57,11 @@ export default {
       transferFromAccount: state => state.transfer.transferFromAccount,
       transferToAccount: state => state.transfer.transferToAccount,
       transferNote: state => state.transfer.transferNote,
-      fromUserAccounts: state => state.home.userAccounts,
     }),
-    ...mapGetters([
-      'transferToAccounts',
-    ]),
+    ...mapGetters({
+      transferToAccounts: 'transferToAccounts',
+      fromUserAccounts: 'getAllUsers',
+    }),
     isValidEmailAddress() {
       return isValidEmailAddress(this.transferToAccount.emailAddress);
     },
