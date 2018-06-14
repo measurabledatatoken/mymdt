@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
@@ -71,11 +70,6 @@ export default {
       showWarningPrompt: false,
       phoneNumberObj: null,
     };
-  },
-  computed: {
-    ...mapState({
-      selectedAccount: state => state.home.selectedUser,
-    }),
   },
   methods: {
     skipClicked() {

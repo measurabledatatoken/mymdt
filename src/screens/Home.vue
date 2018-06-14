@@ -11,7 +11,7 @@
     </div>
 
     <div class="bottom-content">
-      <div v-for="user in userAccounts" :key="user.emailAddress">
+      <div v-for="user in allUsers" :key="user.emailAddress">
         <UserInfoCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
         </UserInfoCard>
       </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import {
   SET_SELECTED_USER, REQUEST_MDT_PRICE,
@@ -58,12 +58,14 @@ export default {
   computed: {
     ...mapState({
       mdtPrice: state => state.home.mdtPrice,
-      userAccounts: state => state.home.userAccounts,
       isUserAccountsDirty: state => state.home.isUserAccountsDirty,
+    }),
+    ...mapGetters({
+      allUsers: 'getAllUsers',
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
-      this.userAccounts.forEach((userAccount) => {
+      this.allUsers.forEach((userAccount) => {
         totalMDTBalance += userAccount.mdtBalance;
       });
       return totalMDTBalance;
@@ -72,10 +74,10 @@ export default {
       return this.totalMDTBalance * this.mdtPrice;
     },
     accountNumStr() {
-      if (this.userAccounts.length <= 1) {
+      if (this.allUsers.length <= 1) {
         return '';
       }
-      return this.$t('message.home.accountnum', this.userAccounts.length, { num: this.userAccounts.length });
+      return this.$t('message.home.accountnum', this.allUsers.length, { num: this.allUsers.length });
     },
   },
   mounted() {
@@ -112,11 +114,11 @@ export default {
       requestUserAccounts: REQUEST_USER_ACCOUNTS,
     }),
     goToTransfer(user) {
-      this.setSelectedUser(user);
+      this.setSelectedUser(user.emailAddress);
       this.$router.push(RouteDef.TransferList.path);
     },
     goToAccountDetail(user) {
-      this.setSelectedUser(user);
+      this.setSelectedUser(user.emailAddress);
       this.$router.push({
         name: RouteDef.AccountDetail.name,
         params: {

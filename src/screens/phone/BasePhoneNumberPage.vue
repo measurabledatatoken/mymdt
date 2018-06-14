@@ -1,6 +1,6 @@
 <template>
     <div>
-        <UserInfo :user="selectedAccount" :showMDT="false" />
+        <UserInfo :user="selectedUser" :showMDT="false" />
         <div class="title">
             <slot name="title"/>
         </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import UserInfo from '@/components/common/UserInfo';
 
 export default {
@@ -21,8 +21,8 @@ export default {
     UserInfo,
   },
   computed: {
-    ...mapState({
-      selectedAccount: state => state.home.selectedUser,
+    ...mapGetters({
+      selectedUser: 'getSelectedUser',
     }),
   },
 };
