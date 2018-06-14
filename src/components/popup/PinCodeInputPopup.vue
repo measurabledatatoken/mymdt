@@ -1,7 +1,7 @@
 <template>
   <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false" @md-opened="onMDOpened">
     <md-button @click="$emit('close-clicked')">
-      <md-icon md-src="/static/icons/done.svg"></md-icon>
+      <md-icon md-src="/static/icons/popup-close.svg"></md-icon>
     </md-button>
 
     <md-dialog-title>

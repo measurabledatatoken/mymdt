@@ -138,12 +138,15 @@ export default {
           this.$refs.pinCodeInputPopup.setInvalid();
           throw (err);
         })
-        .then(() => this.startTransfer())
+        .then(() => {
+          this.showPinCodeInput = false;
+          return this.startTransfer(pinCode);
+        })
         .then(() => {
           this.$router.push(RouteDef.TransferSuccess.path);
         })
-        .catch(() => {
-          console.log('error in onPinCodeFilled');
+        .catch((err) => {
+          console.log(`error in onPinCodeFilled: ${err.message}`);
         });
     },
   },

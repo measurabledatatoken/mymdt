@@ -10,7 +10,6 @@ export const SET_TRANSFER_FROM_ACCOUNT = 'transfer/SET_TRANSFER_FROM_ACCOUNT';
 export const SET_TRANSFER_TO_ACCOUNT = 'transfer/SET_TRANSFER_TO_ACCOUNT';
 export const SET_TRANSFER_TO_WALLETADDRESS = 'transfer/SET_TRANSFER_TO_WALLETADDRESS';
 export const SET_TRANSFER_NOTE = 'transfer/SET_TRANSFER_NOTE';
-export const SET_TRANSFER_PASSCODE = 'transfer/SET_TRANSFER_PASSCODE';
 export const SET_TRANSFER_SUCCESS = 'transfer/SET_TRANSFER_SUCCESS';
 
 // action
@@ -23,7 +22,6 @@ const state = {
   transferToAccount: null,
   transferToWalletAddress: null,
   transferNote: null,
-  transferPasscode: null,
   transferSuccess: null,
 };
 
@@ -53,28 +51,25 @@ const mutations = {
   [SET_TRANSFER_NOTE](state, transferNote) {
     state.transferNote = transferNote;
   },
-  [SET_TRANSFER_PASSCODE](state, transferPasscode) {
-    state.transferPasscode = transferPasscode;
-  },
   [SET_TRANSFER_SUCCESS](state, transferSuccess) {
     state.transferSuccess = transferSuccess;
   },
 };
 
 const actions = {
-  [START_TRANSFER]({ commit, rootState, rootGetters }) {
+  [START_TRANSFER](context, pin, { commit, rootState, rootGetters }) {
     const selectedUser = rootGetters.getSelectedUser;
     const transferType = rootState.transfer.transferType;
     const amount = rootState.transfer.transferAmount;
-    const transferPasscode = rootState.transfer.transferPasscode;
     const transferNote = rootState.transfer.transferNote;
+
 
     let toAddress = rootState.transfer.transferToAccount.emailAddress;
     if (transferType === TransferType.EthWallet) {
       toAddress = rootState.transfer.transferToWalletAddress;
     }
 
-    return api.transfer.transfer(toAddress, transferType, amount, transferPasscode, transferNote, transferFromAccount.accessToken)
+    return api.transfer.transfer(toAddress, transferType, amount, pin, transferNote, selectedUser.accessToken)
       .then(() => '')
       .catch(
         (error) => {

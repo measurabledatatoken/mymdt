@@ -5,7 +5,7 @@ import { APIEndPoint, APIScheme } from './constants';
 export default {
   validatePIN(pin, accessToken) {
     const body = {
-      code: pin,
+      pin,
     };
     const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/verify`,
       body,
@@ -13,7 +13,7 @@ export default {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    return handleGeneralResponse(promise, 'autologin data should not be null if the request is successed');
+    return handleGeneralResponse(promise, { allowEmptyData: true });
   },
 };
 

@@ -19,7 +19,9 @@ const mutations = {
 
 const actions = {
   [VALIDATE_PIN](context, pin) {
-    return api.security.validatePIN(pin)
+    const transferFromAccount = this.state.transfer.transferFromAccount;
+
+    return api.security.validatePIN(pin, transferFromAccount.accessToken)
       .then(() => '')
       .catch(
         (error) => {
