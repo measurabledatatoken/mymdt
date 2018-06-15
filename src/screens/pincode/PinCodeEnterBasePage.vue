@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <UserInfo :user="getSelectedSecurityUser" :showMDT="false" />
-    <slot name="title"></slot>
-    <PinCodeField ref="pinCodeField" :length=6 :shouldAutoFocus=true @codefilled="onCodeFilled" @focus="isPinFilled = false"></PinCodeField>
+    <div>
+        <UserInfo :user="getSelectedSecurityUser" :showMDT="false" />
+        <slot name="title"></slot>
+        <PinCodeField ref="pinCodeField" :length=6 :shouldAutoFocus=true @codefilled="onCodeFilled" @focus="isPinFilled = false"
+            :invalidDescription="$t('message.passcode.not_match')">
 
-    <MDTPrimaryButton slot="button" :disabled="!isPinFilled" @click="$emit('click', pincode)">
-        <slot name="button-text" ></slot>
-    </MDTPrimaryButton>
-  </div>
+        </PinCodeField>
+
+        <MDTPrimaryButton slot="button" :disabled="!isPinFilled" @click="$emit('click', pincode)">
+            <slot name="button-text"></slot>
+        </MDTPrimaryButton>
+    </div>
 </template>
 
 <script>
@@ -61,9 +64,7 @@ export default {
   margin: 16px;
 }
 
-
 .pin-code-field {
   margin-bottom: 24px;
 }
-
 </style>
