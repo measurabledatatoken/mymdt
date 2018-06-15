@@ -87,6 +87,7 @@ export default {
 }
 
 .pin-code-field {
+  margin-top: 16px;
   width: auto;
 }
 
