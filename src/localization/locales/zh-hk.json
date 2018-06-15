@@ -115,7 +115,8 @@
     "already_setup_content": "您想更改PIN嗎？",
     "create_pin_title": "請創建6位密碼",
     "reenter_pin_title": "請再輸入一次",
-    "not_match": "PIN不符,請重試"
+    "not_match": "PIN不符,請重試",
+    "pin_setup_successfully": "成功設定PIN！"
   },
   "reportProblem": {
     "title": "回報問題",

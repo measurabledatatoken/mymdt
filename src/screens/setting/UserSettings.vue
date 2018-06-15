@@ -1,21 +1,24 @@
 <template>
-    <div>
-        <BaseUserSettingPage>
-            <md-list slot="content">
-                <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
-                <md-divider />
-                <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
-                <md-divider />
-                <!-- <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
+  <div>
+    <BaseUserSettingPage>
+      <template slot="content">
+        <md-list>
+          <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
+          <md-divider />
+          <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
+          <md-divider />
+          <!-- <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
             />
             <md-divider /> -->
-                <md-divider />
-                <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" />
-                <md-divider />
-            </md-list>
-        </BaseUserSettingPage>
+          <md-divider />
+          <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" />
+          <md-divider />
+        </md-list>
+        <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :active="showPinSetupSuccessPopup" iconSrc="/static/icons/guarded.svg"></SuccessPopup>
+      </template>
+    </BaseUserSettingPage>
 
-    </div>
+  </div>
 
 </template>
 
@@ -24,12 +27,19 @@ import { RouteDef } from '@/constants';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
+import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
   components: {
     BaseUserSettingPage,
     BaseSettingListItem,
     SettingListSectionHeader,
+    SuccessPopup,
+  },
+  data() {
+    return {
+      showPinSetupSuccessPopup: true,
+    };
   },
   methods: {
     onSetupPINClicked() {
