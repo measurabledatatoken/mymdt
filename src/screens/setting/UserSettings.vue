@@ -1,19 +1,19 @@
 <template>
     <div>
-        <div>{{ getSelectedSecurityUser.emailAddress }}</div>
-
-        <md-list>
-            <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
-            <md-divider />
-            <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
-            <md-divider />
-            <!-- <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
+        <BaseUserSettingPage>
+            <md-list slot="content">
+                <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
+                <md-divider />
+                <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
+                <md-divider />
+                <!-- <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
             />
             <md-divider /> -->
-            <md-divider />
-            <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" />
-            <md-divider />
-        </md-list>
+                <md-divider />
+                <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" />
+                <md-divider />
+            </md-list>
+        </BaseUserSettingPage>
 
     </div>
 
@@ -21,21 +21,15 @@
 
 <script>
 import { RouteDef } from '@/constants';
-import { mapGetters } from 'vuex';
+import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 
 export default {
   components: {
+    BaseUserSettingPage,
     BaseSettingListItem,
     SettingListSectionHeader,
-  },
-  computed: {
-    ...mapGetters(
-      {
-        getSelectedSecurityUser: 'getSelectedSecurityUser',
-      },
-    ),
   },
   methods: {
     onSetupPINClicked() {
@@ -50,11 +44,11 @@ export default {
       // Push
     },
     onPasscodeForgotClicked() {
-
+      this.$router.push(RouteDef.PinCodeForgot.path);
     },
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>
