@@ -13,7 +13,7 @@ export default {
     },
     height: {
       type: String,
-      default: '0.5rem',
+      default: '0.625rem',
     },
   },
 };
@@ -22,15 +22,16 @@ export default {
 <style lang="scss" scoped>
 .content-placeholder-text {
   display: block;
-  background-color: #ebebeb;
+  background-color: #eef3f8;
   overflow: hidden;
   position: relative;
   border-radius: 0.125rem;
-  margin: 0.25rem 0;
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
 
   .content-placeholder__background {
     animation: content-placeholder-animation 1s linear infinite;
-    background: linear-gradient(to right, rgba(15,15,15,0) 0%,rgba(219,219,219,0.4) 50%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(to right, rgba(15,15,15,0) 0%,rgba(235,235,235,0.4) 50%,rgba(255,255,255,0) 100%);
     position: absolute;
     top: 0;
     left: 0;

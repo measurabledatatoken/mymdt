@@ -59,6 +59,7 @@
     "title": "交易",
     "reward": "奖励",
     "pending": "等候处理...",
+    "suspended": "停止",
     "processing": "处理中...",
     "successful": "完成",
     "failed": "失败",
@@ -69,7 +70,16 @@
     "to": "至",
     "note": "备注",
     "transactionFee": "手续费",
-    "accountBalance": "帐户结余"
+    "accountBalance": "帐户结余",
+    "taskReward": "Task Reward",
+    "redeem": "兑换",
+    "internalTransfer": "转帐",
+    "externalTransfer": "转帐",
+    "transferOutToEmail": "转出至{email}",
+    "transferInFromEmail": "转入自{email}",
+    "transferOutToETHWallet": "转出至以太钱包",
+    "deposit": "存入",
+    "noTransaction": "没有交易"
   },
   "settings": {
     "title": "设定",

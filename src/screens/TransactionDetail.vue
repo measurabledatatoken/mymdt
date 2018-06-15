@@ -1,28 +1,26 @@
 <template>
   <md-list class="transaction-detail-list md-double-line">
-    <transaction-item
-      :line1="transaction.name"
-      :line2="transaction.application"
-      :amount="transaction.delta"
-      :status="transaction.status"
+    <TransactionItem
+      :transaction="transaction"
+      showApplication
     />
     <md-divider />
-    <transaction-detail-item :title="$t('message.transaction.type')" :description="$t(transactionType.properties[transaction.type].messageId)" />
-    <transaction-detail-item :title="$t('message.transaction.time')" :description="transaction.datetime" />
-    <transaction-detail-item v-if="!!transaction.detail" :title="$t('message.transaction.detail')" :description="transaction.detail" />
-    <transaction-detail-item v-if="!!transaction.from" :title="$t('message.transaction.from')" :description="transaction.from" />
-    <transaction-detail-item v-if="!!transaction.to" :title="$t('message.transaction.to')" :description="transaction.to" />
-    <transaction-detail-item v-if="!!transaction.note" :title="$t('message.transaction.note')" :description="transaction.note" />
-    <transaction-detail-item
-      v-if="typeof transaction.fee === 'number'"
+    <TransactionDetailItem :title="$t('message.transaction.type')" :description="$t(transactionType.properties[transaction.transaction_type].messageId)" />
+    <TransactionDetailItem :title="$t('message.transaction.time')" :description="transaction.transaction_time" />
+    <!-- <TransactionDetailItem v-if="!!transaction.detail" :title="$t('message.transaction.detail')" :description="transaction.detail" /> -->
+    <TransactionDetailItem v-if="!!from" :title="$t('message.transaction.from')" :description="from" />
+    <TransactionDetailItem v-if="!!to" :title="$t('message.transaction.to')" :description="to" />
+    <TransactionDetailItem v-if="!!transaction.note" :title="$t('message.transaction.note')" :description="transaction.note" />
+    <TransactionDetailItem
+      v-if="typeof transaction.transaction_fee === 'number'"
       :title="$t('message.transaction.transactionFee')"
-      :description="`${formatAmount(transaction.fee)} MDT`"
+      :description="`${formatAmount(transaction.transaction_fee)} MDT`"
       :singleLine="true"
     />
-    <transaction-detail-item
-      v-if="typeof transaction.balance === 'number'"
+    <TransactionDetailItem
+      v-if="typeof transaction.account_balance === 'number'"
       :title="$t('message.transaction.accountBalance')"
-      :description="`${formatAmount(transaction.balance)} MDT`"
+      :description="`${formatAmount(transaction.account_balance)} MDT`"
       :singleLine="true"
     />
   </md-list>
@@ -51,6 +49,32 @@ export default {
   computed: {
     transaction() {
       return this.$route.params.transaction || {};
+    },
+    from() {
+      switch (this.transaction.transaction_type) {
+        case transactionType.INTERNAL_TRANSFER: {
+          return this.transaction.from_email;
+        }
+        case transactionType.EXTERNAL_TRANSFER: {
+          return this.transaction.from_eth_wallet;
+        }
+        default: {
+          return null;
+        }
+      }
+    },
+    to() {
+      switch (this.transaction.transaction_type) {
+        case transactionType.INTERNAL_TRANSFER: {
+          return this.transaction.to_email;
+        }
+        case transactionType.EXTERNAL_TRANSFER: {
+          return this.transaction.to_eth_wallet;
+        }
+        default: {
+          return null;
+        }
+      }
     },
   },
   components: {
