@@ -7,9 +7,9 @@
             <md-divider />
             <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
             <md-divider />
-            <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
+            <!-- <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
             />
-            <md-divider />
+            <md-divider /> -->
             <md-divider />
             <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" />
             <md-divider />

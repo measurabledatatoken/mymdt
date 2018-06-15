@@ -10,9 +10,9 @@
     </md-dialog-title>
     <div class="content">
       <PinCodeField ref="pinCodeField" @codefilled="onCodeFilled" :length="6" :auto-focus=true></PinCodeField>
-      <div class="forgot">
+      <!-- <div class="forgot">
         <a href="google.com">{{ $t('message.passcode.forgot_pin') }}</a>
-      </div>
+      </div> -->
     </div>
   </md-dialog>
 </template>
