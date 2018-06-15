@@ -40,18 +40,14 @@ export default {
   methods: {
     onSetupPINClicked() {
       // check if the PIN has already set and show popup
-      this.$router.push(
-        {
-          name: RouteDef.PinCodeSetup.name,
-          params: {
-            emailAddress: this.getSelectedSecurityUser.emailAddress,
-            instructionTitle: this.$t('message.passcode.create_pin_title'),
-          },
-        },
-      );
+
+      // Push
+      this.$router.push(RouteDef.PinCodeSetup.path);
     },
     onSetupPhoneNumberClicked() {
+      // check if the Phone Number has already set and show popup
 
+      // Push
     },
     onPasscodeForgotClicked() {
 
