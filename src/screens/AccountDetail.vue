@@ -11,12 +11,16 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import BasePage from '@/screens/BasePage';
 import UserInfoCard from '@/components/common/UserInfoCard';
 import TransactionList from '@/components/transaction/TransactionList';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+
+import { FETCH_TRANSACTIONS } from '@/store/modules/entities/transactions';
+import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
+
 import { RouteDef } from '@/constants';
 
 export default {
@@ -37,23 +41,30 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      transactions: state => state.transactions.all,
-    }),
     ...mapGetters({
       selectedUser: 'getSelectedUser',
+      getTransactions: 'getTransactions',
     }),
+    transactions() {
+      return this.getTransactions(this.selectedUser.transactions);
+    },
   },
   created() {
-    this.getAccountTransactions();
+    this.fetchApplications({
+      userId: this.selectedUser.emailAddress,
+    });
+    this.fetchTransactions({
+      userId: this.selectedUser.emailAddress,
+    });
   },
   methods: {
     goToTransfer() {
       this.$router.push(RouteDef.TransferList.path);
     },
-    ...mapActions([
-      'getAccountTransactions',
-    ]),
+    ...mapActions({
+      fetchTransactions: FETCH_TRANSACTIONS,
+      fetchApplications: FETCH_APPLICATIONS,
+    }),
   },
 };
 </script>

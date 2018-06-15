@@ -59,6 +59,7 @@
     "title": "Transaction",
     "reward": "Reward",
     "pending": "Pending...",
+    "suspended": "Suspended",
     "processing": "Processing...",
     "successful": "Successful",
     "failed": "Failed",
@@ -69,7 +70,16 @@
     "to": "To",
     "note": "Note",
     "transactionFee": "Transaction Fee",
-    "accountBalance": "Account Balance"
+    "accountBalance": "Account Balance",
+    "taskReward": "Task Reward",
+    "redeem": "Redeem",
+    "internalTransfer": "Transfer",
+    "externalTransfer": "Transfer",
+    "transferOutToEmail": "Transfer Out to {email}",
+    "transferInFromEmail": "Transfer in from {email}",
+    "transferOutToETHWallet": "Transfer Out to ETH Wallet",
+    "deposit": "Deposit",
+    "noTransaction": "No Transaction"
   },
   "settings": {
     "title": "Settings",

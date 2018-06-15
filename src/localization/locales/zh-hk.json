@@ -59,6 +59,7 @@
     "title": "交易",
     "reward": "獎勵",
     "pending": "等候處理...",
+    "suspended": "停止",
     "processing": "處理中...",
     "successful": "完成",
     "failed": "失敗",
@@ -69,7 +70,16 @@
     "to": "至",
     "note": "備註",
     "transactionFee": "手續費",
-    "accountBalance": "帳戶結餘"
+    "accountBalance": "帳戶結餘",
+    "taskReward": "Task Reward",
+    "redeem": "兌換",
+    "internalTransfer": "轉帳",
+    "externalTransfer": "轉帳",
+    "transferOutToEmail": "轉出至{email}",
+    "transferInFromEmail": "轉入自{email}",
+    "transferOutToETHWallet": "轉出至以太錢包",
+    "deposit": "存入",
+    "noTransaction": "沒有交易"
   },
   "settings": {
     "title": "設定",

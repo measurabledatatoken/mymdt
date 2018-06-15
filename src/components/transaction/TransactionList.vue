@@ -2,23 +2,34 @@
   <md-list class="transaction-list md-double-line">
     <md-subheader>{{ $t('message.account.transactions') }}</md-subheader>
     <md-divider />
-    <template v-for="transaction in transactions">
-      <transaction-item
+    <template v-if="uiState.isFetchingTransactions">
+      <TransactionListLoadingItem />
+      <TransactionListLoadingItem />
+      <TransactionListLoadingItem />
+    </template>
+    <template
+      v-else-if="Array.isArray(transactions) && transactions.length > 0"
+      v-for="transaction in transactions"
+    >
+      <TransactionItem
         :key="transaction.id"
+        :transaction="transaction"
         :to="{ name: RouteDef.TransactionDetail.name, params: { transaction_id: transaction.id, transaction } }"
-        :avatar="transaction.avatar"
-        :line1="transaction.name"
-        :line2="transaction.datetime"
-        :amount="transaction.delta"
-        :status="transaction.status"
+        showAvatar
       />
       <md-divider :key="`${transaction.id}-divider`" class="list-item-divider" />
     </template>
+    <TransactionListEmptyItem v-else />
   </md-list>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import TransactionItem from '@/components/transaction/TransactionItem';
+import TransactionListLoadingItem from '@/components/transaction/TransactionListLoadingItem';
+import TransactionListEmptyItem from '@/components/transaction/TransactionListEmptyItem';
+import Skeleton from '@/components/common/Skeleton';
 
 import { RouteDef } from '@/constants';
 
@@ -29,8 +40,16 @@ export default {
     };
   },
   props: ['transactions'],
+  computed: {
+    ...mapState({
+      uiState: state => state.ui.transactionList,
+    }),
+  },
   components: {
     TransactionItem,
+    TransactionListLoadingItem,
+    TransactionListEmptyItem,
+    Skeleton,
   },
 };
 </script>

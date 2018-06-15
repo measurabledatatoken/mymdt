@@ -2,6 +2,7 @@ import api from '@/api';
 import { delay } from '@/utils';
 
 import { FETCHING_REWARDS_SUCCESS } from '@/store/modules/entities/rewards';
+import { FETCHING_TRANSACTIONS_SUCCESS } from '@/store/modules/entities/transactions';
 
 export const FETCHING_TASKS = 'users/FETCHING_TASKS';
 export const FETCHING_TASKS_SUCCESS = 'users/FETCHING_TASKS_SUCCESS';
@@ -42,11 +43,25 @@ const mutations = {
   },
   [FETCHING_REWARDS_SUCCESS](state, payload) {
     const { id, data } = payload;
+    const orginalRewards = (state.byId[id] && state.byId[id].transactions) || [];
+
     state.byId = {
       ...state.byId,
       [id]: {
         ...state.byId[id],
-        rewards: data.result,
+        rewards: [...new Set([...orginalRewards, ...data.result])],
+      },
+    };
+  },
+  [FETCHING_TRANSACTIONS_SUCCESS](state, payload) {
+    const { userId, data } = payload;
+    const orginalTransactions = (state.byId[userId] && state.byId[userId].transactions) || [];
+
+    state.byId = {
+      ...state.byId,
+      [userId]: {
+        ...state.byId[userId],
+        transactions: [...new Set([...orginalTransactions, ...data.result])],
       },
     };
   },
