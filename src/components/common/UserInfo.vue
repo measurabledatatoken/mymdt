@@ -1,14 +1,14 @@
 <template>
-  <div class="user-info">
-    <UserAvatar :user="user" />
-    <div class="user-data">
-      <div v-bind:class="{ onlytitle : subTitle.length === 0} " class="md-title"> {{ title }}</div>
-      <div class="md-sutitle"> {{ subTitle }}</div>
+  <div :class="['user-info', { 'user-info--small': small } ]">
+    <div class="user-info__item">
+      <UserAvatar :user="user" />
+      <div class="user-data">
+        <div v-bind:class="{ onlytitle : subTitle.length === 0} " class="md-title"> {{ title }}</div>
+        <div class="md-sutitle"> {{ subTitle }}</div>
+      </div>
+      <div v-if="showMDT && small" class="mdt-count"> {{ user.mdtBalance.toFixed(4) }} MDT</div>
     </div>
-
-    <div v-show="showMDT" class="mdt-count"> {{ user.mdtBalance.toFixed(4) }} MDT</div>
-
-    <md-divider v-bind:class="{ 'show-mdt': showMDT} "></md-divider>
+    <div v-if="showMDT && !small" class="mdt-count"> {{ user.mdtBalance.toFixed(4) }} MDT</div>
   </div>
 </template>
 
@@ -22,6 +22,10 @@ export default {
   props: {
     user: {
       type: Object,
+    },
+    small: {
+      type: Boolean,
+      default: true,
     },
     showMDT: {
       type: Boolean,
@@ -46,49 +50,60 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.md-avatar {
-  margin-right: 16px;
-  float: left;
-}
+.user-info {
+  .user-info__item {
+    display: flex;
+    align-items: center;
 
-.user-data {
-  min-height: 40px;
+    .md-avatar {
+      float: none;
+      margin: 0 1rem 0 0;
+    }
 
-  .md-title,
-  .md-sutitle {
-    color: #4a4a4a;
-    text-align: left;
-  }
-  .md-title {
-    line-height: 20px;
-    font-size: 16px;
+    .user-data {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      overflow: hidden;
+      white-space: nowrap;
 
-    &.onlytitle {
-      line-height: 40px;
+      > * {
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
+        line-height: 1.25em;
+        text-overflow: ellipsis;
+      }
+
+      .md-title, .md-sutitle {
+        color: $label-color;
+        text-align: left;
+      }
+
+      .md-title {
+        font-size: 1rem;
+      }
+
+      .md-sutitle {
+        font-size: 0.875rem;
+      }
     }
   }
-  .md-sutitle {
-    font-size: 14px;
+
+  .mdt-count {
+    text-align: right;
+    color: $label-color;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 1.25rem;
   }
-}
 
-.mdt-count {
-  width: 100%;
-  text-align: right;
-  color: #4a4a4a;
-  font-size: 20px;
-  font-weight: bold;
-  padding-top: 10px;
-  line-height: 40px;
-}
-
-.md-divider {
-  background-color: #eef3f8;
-  width: 100%;
-  margin-top: 14px;
-  margin-left: 0px;
-  &.show-mdt {
-    margin-top: 0px;
+  &.user-info--small {
+    .mdt-count {
+      font-size: 1rem;
+      margin-top: 0;
+    }
   }
 }
 </style>

@@ -5,7 +5,7 @@ import misc from './misc';
 import task from './task';
 import transfer from './transfer';
 import security from './security';
-
+import reward from './reward';
 
 export default {
   account,
@@ -14,4 +14,5 @@ export default {
   transfer,
   task,
   security,
+  reward,
 };
