@@ -47,6 +47,10 @@ const RouteDef = {
     path: '/home/settings/pincode/setup',
     name: 'pinCodeSetup',
   },
+  PinCodeConfirm: {
+    path: '/home/settings/pincode/confirm',
+    name: 'pinCodeConfirm',
+  },
 };
 
 

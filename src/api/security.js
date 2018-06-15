@@ -15,5 +15,32 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
+  setupPIN(pin, confirmedPIN, accessToken) {
+    const body = {
+      pin,
+      confirmed_pin: confirmedPIN,
+    };
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/setup`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  changePIN(oldPIN, newPIN, confirmedPIN, accessToken) {
+    const body = {
+      old_pin: oldPIN,
+      new_pin: newPIN,
+      confirmed_pin: confirmedPIN,
+    };
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/change`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
 };
 

@@ -114,7 +114,7 @@
     "already_setup_title": "您已经设置了PIN码",
     "already_setup_content": "您想更改PIN吗？",
     "create_pin_title": "请创建6位密码",
-    "reenter_pin": "请再输入一次",
+    "reenter_pin_title": "请再输入一次",
     "not_match": "PIN不符,请重试"
   },
   "reportProblem": {
