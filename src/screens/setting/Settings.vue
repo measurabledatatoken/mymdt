@@ -12,7 +12,7 @@
       <template v-for="user in allUsers">
         <SettingListUserItem
         :key="user.emailAddress"
-        :to="{ name: RouteDef.UserSettings.name , params : { emailAddress: user.emailAddress } }"
+        @click="onUserClicked(user.emailAddress)"
         :user="user"
         />
         <md-divider :key="`${user.emailAddress}-divider`" />
@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-
+import { mapState, mapGetters, mapMutations } from 'vuex';
+import { SET_SELECTED_USER } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import UserAvatar from '@/components/common/UserAvatar';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
@@ -67,13 +67,16 @@ export default {
     SettingListUserItem,
   },
   methods: {
-    userClicked(emailAddress) {
+    ...mapMutations(
+      {
+        setSelectedUser: SET_SELECTED_USER,
+      },
+    ),
+    onUserClicked(emailAddress) {
+      this.setSelectedUser(emailAddress);
       this.$router.push(
         {
           name: RouteDef.UserSettings.name,
-          params: {
-            emailAddress,
-          },
         },
       );
     },
