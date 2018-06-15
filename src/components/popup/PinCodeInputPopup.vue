@@ -72,7 +72,7 @@ export default {
     min-width: 40px;
     height: 40px;
     margin: 0px;
-    position: fixed;
+    position: absolute;
     top: 0px;
     right: 0px;
 
