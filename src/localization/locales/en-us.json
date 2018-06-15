@@ -44,9 +44,6 @@
     "invalid_ethaddress": "Invalid Eth Address",
     "insufficient_fund": "Insufficient fund. Please enter another amount or change an account."
   },
-  "earn": {
-    "title": "Earn MDT"
-  },
   "qrcode": {
     "title": "Scan QR Code",
     "my_photo_library": "My Photo Library",
@@ -62,6 +59,7 @@
     "title": "Transaction",
     "reward": "Reward",
     "pending": "Pending...",
+    "suspended": "Suspended",
     "processing": "Processing...",
     "successful": "Successful",
     "failed": "Failed",
@@ -72,7 +70,16 @@
     "to": "To",
     "note": "Note",
     "transactionFee": "Transaction Fee",
-    "accountBalance": "Account Balance"
+    "accountBalance": "Account Balance",
+    "taskReward": "Task Reward",
+    "redeem": "Redeem",
+    "internalTransfer": "Transfer",
+    "externalTransfer": "Transfer",
+    "transferOutToEmail": "Transfer Out to {email}",
+    "transferInFromEmail": "Transfer in from {email}",
+    "transferOutToETHWallet": "Transfer Out to ETH Wallet",
+    "deposit": "Deposit",
+    "noTransaction": "No Transaction"
   },
   "settings": {
     "title": "Settings",
@@ -131,5 +138,14 @@
   "reportProblemSuccess": {
     "title": "Success",
     "message": "Your comments are submitted!"
+  },
+  "earnMDT": {
+    "title": "Earn MDT",
+    "amountPerTime": "{amount}/time",
+    "go": "Go",
+    "claim": "Claim",
+    "invite": "Invite",
+    "maximumAmountToEarn": "Maximum {amount} {currency}",
+    "rewardErrorMessage": "Failed to claim reward. Please refresh and try again."
   }
 }

@@ -1,11 +1,15 @@
 import { normalize } from 'normalizr';
 
 function handleGeneralResponse(promise, options) {
-  let emptyDataMsg = options.emptyDataMsg;
-  if (typeof options === 'string') {
-    emptyDataMsg = options;
-    // eslint-disable-next-line
-    options = {};
+  let emptyDataMsg = null;
+  if (options) {
+    if (typeof options === 'string') {
+      emptyDataMsg = options;
+      // eslint-disable-next-line
+      options = {};
+    } else {
+      emptyDataMsg = options.emptyDataMsg;
+    }
   }
 
   // eslint-disable-next-line

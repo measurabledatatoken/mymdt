@@ -1,13 +1,16 @@
 import api from '@/api';
 import { delay } from '@/utils';
 
+import { FETCHING_REWARDS_SUCCESS } from '@/store/modules/entities/rewards';
+import { FETCHING_TRANSACTIONS_SUCCESS } from '@/store/modules/entities/transactions';
+
 export const FETCHING_TASKS = 'users/FETCHING_TASKS';
 export const FETCHING_TASKS_SUCCESS = 'users/FETCHING_TASKS_SUCCESS';
 export const FETCHING_TASKS_FAILURE = 'users/FETCHING_TASKS_FAILURE';
 export const SET_USERS = 'users/SET_USERS';
 
-export const GET_ALL_TASKS = 'task/GET_ALL_TASKS';
-export const GET_TASKS = 'task/GET_TASKS';
+export const FETCH_ALL_TASKS = 'users/FETCH_ALL_TASKS';
+export const FETCH_TASKS = 'users/FETCH_TASKS';
 
 const state = {
   byId: {},
@@ -15,7 +18,6 @@ const state = {
 };
 
 const moduleGetters = {
-  // eslint-disable-next-line
   getUser: state => id => state.byId[id],
   getAllUsers: state => state.allIds.map(id => state.byId[id]),
 };
@@ -39,24 +41,48 @@ const mutations = {
       },
     };
   },
+  [FETCHING_REWARDS_SUCCESS](state, payload) {
+    const { id, data } = payload;
+    const orginalRewards = (state.byId[id] && state.byId[id].transactions) || [];
+
+    state.byId = {
+      ...state.byId,
+      [id]: {
+        ...state.byId[id],
+        rewards: [...new Set([...orginalRewards, ...data.result])],
+      },
+    };
+  },
+  [FETCHING_TRANSACTIONS_SUCCESS](state, payload) {
+    const { userId, data } = payload;
+    const orginalTransactions = (state.byId[userId] && state.byId[userId].transactions) || [];
+
+    state.byId = {
+      ...state.byId,
+      [userId]: {
+        ...state.byId[userId],
+        transactions: [...new Set([...orginalTransactions, ...data.result])],
+      },
+    };
+  },
 };
 
 const actions = {
-  [GET_ALL_TASKS]({ state, dispatch }) {
+  [FETCH_ALL_TASKS]({ state, dispatch }) {
     return Promise.all(
       state.allIds.map(
-        userId => dispatch(GET_TASKS, {
+        userId => dispatch(FETCH_TASKS, {
           userId,
         }),
       ));
   },
-  [GET_TASKS]({ commit, rootState, getters }, { userId }) {
+  [FETCH_TASKS]({ commit, rootState, getters }, { userId }) {
     commit(FETCHING_TASKS, {
       id: userId,
     });
     return Promise.all([
       api.task.getTasks(rootState.home.appID, getters.getUser(userId).accessToken),
-      delay(2000),
+      delay(750),
     ])
       .then(([data]) => commit(FETCHING_TASKS_SUCCESS, {
         id: userId,

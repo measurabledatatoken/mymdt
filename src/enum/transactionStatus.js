@@ -1,8 +1,9 @@
 export default {
   PENDING: 0,
   PROCESSING: 1,
-  SUCCESSFUL: 2,
-  FAILED: 3,
+  SUSPENDED: 2,
+  SUCCESSFUL: 3,
+  FAILED: 4,
   properties: {
     0: {
       messageId: 'message.transaction.pending',
@@ -11,9 +12,12 @@ export default {
       messageId: 'message.transaction.processing',
     },
     2: {
-      messageId: 'message.transaction.successful',
+      messageId: 'message.transaction.suspended',
     },
     3: {
+      messageId: 'message.transaction.successful',
+    },
+    4: {
       messageId: 'message.transaction.failed',
     },
   },
