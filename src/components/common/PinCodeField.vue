@@ -7,6 +7,7 @@
         </PinCodeItem>
       </li>
     </ul>
+    <div class="invalid-description" :hidden="!invalid">{{ invalidDescription }}</div>
   </div>
 </template>
 
@@ -27,6 +28,10 @@ export default {
     shouldAutoFocus: {
       default: false,
       type: Boolean,
+    },
+    invalidDescription: {
+      default: '',
+      tupe: String,
     },
   },
   components: {
@@ -117,6 +122,7 @@ export default {
   display: flex;
   justify-content: center;
   padding: 0px;
+  margin: 0px;
 
   .field-wrap {
     list-style: none;
@@ -129,5 +135,9 @@ export default {
       font-style: normal;
     }
   }
+}
+
+.invalid-description {
+  color: #ff3b30;
 }
 </style>
