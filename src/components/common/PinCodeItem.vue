@@ -1,6 +1,6 @@
 <template>
   <input ref="pinCodeInput" :class="[position, `pin-input-item`, {invalid: invalid}]" :value="initPinCode"
-    min="0" max="9" :type="type" @input="onValueInput" @focus="onInputFocus" @keydown="onKeyDown">
+    min="0" max="9" :type="type" :pattern="pattern" :inputmode="inputmode" @input="onValueInput" @focus="onInputFocus" @keydown="onKeyDown">
 </template>
 
 <script>
@@ -27,9 +27,27 @@ export default {
         return ['password', 'number'].indexOf(value) !== -1;
       },
     },
+    numericOnly: {
+      default: true,
+      type: Boolean,
+    },
     invalid: {
       default: false,
       type: Boolean,
+    },
+  },
+  computed: {
+    pattern() {
+      if (this.numericOnly) {
+        return '[0-9]*';
+      }
+      return '';
+    },
+    inputMode() {
+      if (this.numericOnly) {
+        return 'numeric';
+      }
+      return '';
     },
   },
   methods: {
