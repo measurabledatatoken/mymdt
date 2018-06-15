@@ -1,5 +1,5 @@
 <template>
-  <base-setting-list-item :title="user.displayName" :description="user.emailAddress" v-bind="$attrs">
+  <base-setting-list-item :title="user.displayName" :description="user.emailAddress" v-bind="$attrs" v-on="$listeners">
     <user-avatar slot="icon" :user="user" />
     <md-icon
       class="secured-icon"

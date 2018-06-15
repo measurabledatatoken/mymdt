@@ -12,12 +12,15 @@ import Register from '@/screens/Register';
 import ForgetPassword from '@/screens/ForgetPassword';
 
 import Settings from '@/screens/setting/Settings';
+import UserSettings from '@/screens/setting/UserSettings';
 import PriceUnits from '@/screens/setting/PriceUnits';
 import ReportProblem from '@/screens/setting/ReportProblem';
 import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
 import PhoneNumberAdd from '@/screens/phone/PhoneNumberAdd';
 import PhoneNumberVerify from '@/screens/phone/PhoneNumberVerify';
 import PinCodeSetup from '@/screens/pincode/PinCodeSetup';
+import PinCodeConfirm from '@/screens/pincode/PinCodeConfirm';
+import PinCodeForgot from '@/screens/pincode/PinCodeForgot';
 
 import Tutorial from '@/screens/Tutorial';
 
@@ -68,6 +71,12 @@ const router = new Router({
           path: RouteDef.Settings.path,
           component: Settings,
         },
+        {
+          path: RouteDef.UserSettings.path,
+          name: RouteDef.UserSettings.name,
+          component: UserSettings,
+          props: true,
+        },
         // phone
         {
           path: RouteDef.PhoneNumberAdd.path,
@@ -86,6 +95,18 @@ const router = new Router({
           path: RouteDef.PinCodeSetup.path,
           name: RouteDef.PinCodeSetup.name,
           component: PinCodeSetup,
+          props: true,
+        },
+        {
+          path: RouteDef.PinCodeConfirm.path,
+          name: RouteDef.PinCodeConfirm.name,
+          component: PinCodeConfirm,
+          props: true,
+        },
+        {
+          path: RouteDef.PinCodeForgot.path,
+          name: RouteDef.PinCodeForgot.name,
+          component: PinCodeForgot,
           props: true,
         },
         {

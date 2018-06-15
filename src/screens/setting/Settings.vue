@@ -10,7 +10,11 @@
       <setting-list-section-header>{{ $t('message.settings.security') }}</setting-list-section-header>
       <md-divider />
       <template v-for="user in allUsers">
-        <SettingListUserItem :key="user.emailAddress" :user="user" />
+        <SettingListUserItem
+        :key="user.emailAddress"
+        @click="onUserClicked(user.emailAddress)"
+        :user="user"
+        />
         <md-divider :key="`${user.emailAddress}-divider`" />
       </template>
     </md-list>
@@ -26,8 +30,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-
+import { mapState, mapGetters, mapMutations } from 'vuex';
+import { SET_SELECTED_USER } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import UserAvatar from '@/components/common/UserAvatar';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
@@ -61,6 +65,21 @@ export default {
     SettingListSectionHeader,
     BaseSettingListItem,
     SettingListUserItem,
+  },
+  methods: {
+    ...mapMutations(
+      {
+        setSelectedUser: SET_SELECTED_USER,
+      },
+    ),
+    onUserClicked(emailAddress) {
+      this.setSelectedUser(emailAddress);
+      this.$router.push(
+        {
+          name: RouteDef.UserSettings.name,
+        },
+      );
+    },
   },
 };
 </script>
