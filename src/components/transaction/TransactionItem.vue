@@ -1,50 +1,66 @@
 <template>
   <md-list-item v-bind="$attrs">
-    <md-avatar v-if="avatar">
-      <img :src="avatar" alt="Avatar">
+    <md-avatar v-if="showAvatar && application && application.avatar_url">
+      <img :src="application.avatar_url" alt="Avatar">
     </md-avatar>
     <div class="md-list-item-text">
-      <span class="text-title">{{ line1 }}</span>
-      <span>{{ line2 }}</span>
+      <TransactionTitle :transaction="transaction" />
+      <span>{{ (showApplication && application) ? application.name : transaction.transaction_time }}</span>
     </div>
-    <div v-bind:class="['action', getStatusClass(), { 'action--amount-negative': amount < 0 }]">
+    <div v-bind:class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
       <span>{{ formattedAmount }} MDT</span>
       <span
         class="action-status"
-        v-if="!!transactionStatus.properties[status]"
-        v-show="showStatus()"
+        v-if="showStatus"
       >
-        {{ $t(transactionStatus.properties[status].messageId) }}
+        {{ getStatusText() }}
       </span>
     </div>
   </md-list-item>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import TransactionTitle from '@/components/transaction/TransactionTitle';
+
 import { transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
 
 export default {
-  props: ['avatar', 'line1', 'line2', 'amount', 'status'],
-  data() {
-    return {
-      transactionStatus,
-    };
+  props: {
+    transaction: Object,
+    showAvatar: {
+      type: Boolean,
+      default: false,
+    },
+    showApplication: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
+    ...mapGetters(['getApplication']),
     formattedAmount() {
-      return formatAmount(this.amount, { type: 'short' });
+      return formatAmount(this.transaction.delta, { type: 'short' });
+    },
+    getStatusText() {
+      return this.$t(transactionStatus.properties[this.transaction.status].messageId);
+    },
+    showStatus() {
+      return transactionStatus.properties[this.transaction.status] && (this.transaction.status !== transactionStatus.SUCCESSFUL);
+    },
+    application() {
+      return this.getApplication(this.transaction.application_id);
     },
   },
   methods: {
-    showStatus() {
-      return this.$props.status !== transactionStatus.SUCCESSFUL;
-    },
     getStatusClass() {
-      switch (this.$props.status) {
+      switch (this.transaction.status) {
         case transactionStatus.SUCCESSFUL: {
           return 'action--successful';
         }
+        case transactionStatus.SUSPENDED:
         case transactionStatus.FAILED: {
           return 'action--failed';
         }
@@ -54,14 +70,13 @@ export default {
       }
     },
   },
+  components: {
+    TransactionTitle,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-  .text-title {
-    color: var(--md-theme-default-text-primary-on-background, rgba(0,0,0,0.87));
-  }
-
   .action {
     margin-left: 16px;
     color: $theme-font-color-btn;

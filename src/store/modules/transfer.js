@@ -28,7 +28,7 @@ const state = {
 const getters = {
   // eslint-disable-next-line
   transferToAccounts: (state, getters, rootState, rootGetters) => rootGetters.getAllUsers.filter(
-    user => user.emailAddress !== state.transferFromAccount.emailAddress,
+    user => (!state.transferFromAccount || user.emailAddress !== state.transferFromAccount.emailAddress),
   ),
 };
 
