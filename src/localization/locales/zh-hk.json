@@ -44,9 +44,6 @@
     "invalid_ethaddress": "無效的以太錢包地址",
     "insufficient_fund": "帳號MDT數量不夠，請減才少數量或另選帳號。"
   },
-  "earn": {
-    "title": "賺取 MDT"
-  },
   "qrcode": {
     "title": "掃描二維碼",
     "my_photo_library": "我的相簿",
@@ -131,5 +128,14 @@
   "reportProblemSuccess": {
     "title": "成功",
     "message": "您的意見已提交！"
+  },
+  "earnMDT": {
+    "title": "賺取 MDT",
+    "amountPerTime": "{amount}/次",
+    "go": "Go",
+    "claim": "認領",
+    "invite": "邀請",
+    "maximumAmountToEarn": "最多 {amount} {currency}",
+    "rewardErrorMessage": "未能認領獎勵。請刷新並重試"
   }
 }

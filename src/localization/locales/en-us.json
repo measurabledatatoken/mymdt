@@ -44,9 +44,6 @@
     "invalid_ethaddress": "Invalid Eth Address",
     "insufficient_fund": "Insufficient fund. Please enter another amount or change an account."
   },
-  "earn": {
-    "title": "Earn MDT"
-  },
   "qrcode": {
     "title": "Scan QR Code",
     "my_photo_library": "My Photo Library",
@@ -131,5 +128,14 @@
   "reportProblemSuccess": {
     "title": "Success",
     "message": "Your comments are submitted!"
+  },
+  "earnMDT": {
+    "title": "Earn MDT",
+    "amountPerTime": "{amount}/time",
+    "go": "Go",
+    "claim": "Claim",
+    "invite": "Invite",
+    "maximumAmountToEarn": "Maximum {amount} {currency}",
+    "rewardErrorMessage": "Failed to claim reward. Please refresh and try again."
   }
 }
