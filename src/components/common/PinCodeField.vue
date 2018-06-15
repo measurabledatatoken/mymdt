@@ -24,6 +24,10 @@ export default {
       default: '',
       type: String,
     },
+    shouldAutoFocus: {
+      default: false,
+      type: Boolean,
+    },
   },
   components: {
     PinCodeItem,
@@ -33,6 +37,18 @@ export default {
       pinCode: this.initPinCode,
       invalid: false,
     };
+  },
+  mounted() {
+    if (this.shouldAutoFocus) {
+      this.$nextTick(() => {
+        setTimeout(
+          () => {
+            this.$refs.pinCodeItem[0].focus();
+          }, 300,
+        );
+      },
+      );
+    }
   },
   methods: {
     getPositionForIndex(index, length) {
@@ -57,6 +73,7 @@ export default {
       }
     },
     onInputFocus(index) {
+      this.$emit('focus');
       this.invalid = false;
       const curPinCodeLength = this.pinCode.length;
       if (index === curPinCodeLength - 1) {
@@ -98,6 +115,9 @@ export default {
 <style lang="scss" scoped>
 .pin-code-container {
   display: flex;
+  justify-content: center;
+  padding: 0px;
+
   .field-wrap {
     list-style: none;
     display: block;
