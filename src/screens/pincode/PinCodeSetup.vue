@@ -1,64 +1,43 @@
 <template>
   <div>
-    <UserInfo :user="selectedUser" :showMDT="false" />
-    <div class="title"> {{ instructionTitle }} </div>
-    <PinCodeField :length=6 :shouldAutoFocus=true @codefilled="isPinFilled = true" @focus="isPinFilled = false"></PinCodeField>
-    <MDTPrimaryButton :disabled="!isPinFilled">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+    <PinCodeEnterBasePage v-bind="$attrs" @click="onNextClicked">
+      <div class="title" slot="title"> {{ $t('message.passcode.create_pin_title') }} </div>
+      <template slot="button-text">{{ $t('message.common.nextbtn') }} </template>
+    </PinCodeEnterBasePage>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
+import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
-import PinCodeField from '@/components/common/PinCodeField';
-import UserInfo from '@/components/common/UserInfo';
-import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 
 export default {
-  extend: BasePage,
+  extends: BasePage,
   metaInfo() {
     return {
       title: 'PIN',
     };
   },
   components: {
-    PinCodeField,
-    UserInfo,
-    MDTPrimaryButton,
+    PinCodeEnterBasePage,
   },
-  props: {
-    isConfirm: {
-      default: false,
-      type: Boolean,
-    },
-    emailAddress: {
-      type: String,
-    },
-    instructionTitle: {
-      type: String,
-    },
-  },
-  data() {
-    return {
-      isPinFilled: false,
-    };
-  },
-  computed: {
-    ...mapGetters({
-      getUser: 'getUser',
-    }),
-    selectedUser() {
-      return this.getUser(this.emailAddress);
+  methods: {
+    onNextClicked(pincode) {
+      this.$router.push(
+        {
+          name: RouteDef.PinCodeConfirm.name,
+          params: {
+            setupedPin: pincode,
+          },
+        },
+      );
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.user-info {
-  margin: 16px;
-}
 
 .title {
   font-size: 16px;
@@ -66,9 +45,4 @@ export default {
   color: $label-color;
   margin: 24px 0px;
 }
-
-.pin-code-field {
-  margin-bottom: 24px;
-}
-
 </style>
