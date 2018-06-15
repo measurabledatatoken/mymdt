@@ -113,9 +113,10 @@
     "forgot_pin": "Forgot PIN?",
     "already_setup_title": "You already set up PIN",
     "already_setup_content": "Would you like to change your PIN?",
-    "create_pin_title":"Please Create 6-digit PIN",
-    "reenter_pin_title":"Please Enter Again",
-    "not_match": "PIN does not match, please try again"
+    "create_pin_title": "Please Create 6-digit PIN",
+    "reenter_pin_title": "Please Enter Again",
+    "not_match": "PIN does not match, please try again",
+    "pin_setup_successfully": "PIN And Phone Number Successfully Set! "
   },
   "reportProblem": {
     "title": "回報問題",
