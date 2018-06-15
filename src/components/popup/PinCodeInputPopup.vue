@@ -91,6 +91,7 @@ export default {
 }
 
 .forgot {
+  margin-top: 16px;
   text-align: center;
 }
 </style>
