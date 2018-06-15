@@ -87,7 +87,9 @@
     "security": "安全",
     "help": "幫助",
     "reportProblem": "回報問題",
-    "legalAndPrivary": "法律和隱私"
+    "legalAndPrivary": "法律和隱私",
+    "phone_number": "電話號碼",
+    "accountSecurity": "帳號保安"
   },
   "priceUnit": {
     "title": "價格單位"
@@ -119,8 +121,9 @@
     "already_setup_title": "您已經設置了PIN碼",
     "already_setup_content": "您想更改PIN嗎？",
     "create_pin_title": "請創建6位密碼",
-    "reenter_pin": "請再輸入一次",
-    "not_match": "PIN不符,請重試"
+    "reenter_pin_title": "請再輸入一次",
+    "not_match": "PIN不符,請重試",
+    "pin_setup_successfully": "成功設定PIN！"
   },
   "reportProblem": {
     "title": "回報問題",

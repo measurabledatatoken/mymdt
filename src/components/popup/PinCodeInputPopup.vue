@@ -1,5 +1,5 @@
 <template>
-  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false" @md-opened="onMDOpened">
+  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false">
     <md-button @click="$emit('close-clicked')">
       <md-icon md-src="/static/icons/popup-close.svg"></md-icon>
     </md-button>
@@ -9,7 +9,7 @@
       <span class="subtitle">{{ emailAddress }}</span>
     </md-dialog-title>
     <div class="content">
-      <PinCodeField ref="pinCodeField" @codefilled="onCodeFilled" :length="6"></PinCodeField>
+      <PinCodeField ref="pinCodeField" @codefilled="onCodeFilled" :length="6" :auto-focus=true></PinCodeField>
       <div class="forgot">
         <a href="google.com">{{ $t('message.passcode.forgot_pin') }}</a>
       </div>
@@ -46,12 +46,6 @@ export default {
     onCodeFilled(pinCode) {
       this.shouldShake = false;
       this.$emit('codefilled', pinCode);
-    },
-    onMDOpened() {
-      // Not sure why need to set timeout in order to focus yet. May have better solution
-      setTimeout(() => {
-        this.$refs.pinCodeField.focus(0);
-      }, 500);
     },
   },
 };

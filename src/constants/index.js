@@ -11,6 +11,10 @@ const RouteDef = {
   TransactionHistory: { path: '/account/:id/transactionhistory' },
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
+  UserSettings: {
+    path: '/home/usersettings',
+    name: 'UserSettings',
+  },
   PriceUnits: { path: '/home/settings/price-units' },
   ReportProblem: { path: '/home/settings/problems' },
   ReportProblemSuccess: { path: '/home/settings/problems/success' },
@@ -42,6 +46,14 @@ const RouteDef = {
   PinCodeSetup: {
     path: '/home/settings/pincode/setup',
     name: 'pinCodeSetup',
+  },
+  PinCodeConfirm: {
+    path: '/home/settings/pincode/confirm',
+    name: 'pinCodeConfirm',
+  },
+  PinCodeForgot: {
+    path: '/home/settings/pincode/forgot',
+    name: 'pinCodeForgot',
   },
 };
 

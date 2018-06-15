@@ -17,6 +17,7 @@ export const BACK_TO_HOME = 'common/BACK_TO_HOME';
 export const OPEN_ERROR_PROMPT = 'common/OPEN_ERROR_PROMPT';
 export const DISMISS_ERROR_PROMPT = 'common/DISMISS_ERROR_PROMPT';
 
+
 const state = {
   errorMessage: null,
   errorTitle: null,
