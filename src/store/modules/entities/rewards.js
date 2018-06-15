@@ -48,12 +48,12 @@ const actions = {
         }),
       ));
   },
-  [FETCH_REWARDS]({ commit, rootState, getters }, { userId }) {
+  [FETCH_REWARDS]({ commit, rootState, rootGetters }, { userId }) {
     commit(FETCHING_REWARDS, {
       id: userId,
     });
     return Promise.all([
-      api.reward.getRewards(rootState.home.appID, getters.getUser(userId).accessToken),
+      api.reward.getRewards(rootState.home.appID, rootGetters.getUser(userId).accessToken),
       delay(750),
     ])
       .then(([data]) => commit(FETCHING_REWARDS_SUCCESS, {
