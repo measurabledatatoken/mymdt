@@ -1,19 +1,28 @@
 import api from '@/api';
 
 // mutation
-export const SET_PHONE_NUMBER = 'transfer/SET_PHONE_NUMBER';
-
+export const SET_PHONE_NUMBER = 'security/SET_PHONE_NUMBER';
+export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 // action
-export const VALIDATE_PIN = 'transfer/VALIDATE_PIN';
+export const VALIDATE_PIN = 'security/VALIDATE_PIN';
 
 const state = {
   phoneNumber: null,
   pin: null,
+  selectedUserId: null,
+};
+
+const getters = {
+  // eslint-disable-next-line
+  getSelectedSecurityUser: (state, getters, rootState, rootGetters) => rootGetters.getUser(state.selectedUserId),
 };
 
 const mutations = {
   [SET_PHONE_NUMBER](state, phoneNumber) {
     state.phoneNumber = phoneNumber;
+  },
+  [SET_SELECTED_USER](state, userId) {
+    state.selectedUserId = userId;
   },
 };
 
@@ -34,6 +43,7 @@ const actions = {
 
 export default{
   state,
+  getters,
   mutations,
   actions,
 };
