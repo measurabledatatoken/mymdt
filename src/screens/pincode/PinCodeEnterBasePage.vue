@@ -1,22 +1,26 @@
 <template>
     <div>
-        <UserInfo :user="getSelectedSecurityUser" :showMDT="false" />
-        <slot name="title"></slot>
-        <PinCodeField ref="pinCodeField" :length=6 :shouldAutoFocus=true @codefilled="onCodeFilled" @focus="isPinFilled = false"
-            :invalidDescription="$t('message.passcode.not_match')">
+        <BaseUserSettingPage>
+            <template slot="content">
+                <slot name="title"></slot>
+                <PinCodeField ref="pinCodeField" :length=6 :shouldAutoFocus=true @codefilled="onCodeFilled" @focus="isPinFilled = false"
+                    :invalidDescription="$t('message.passcode.not_match')">
 
-        </PinCodeField>
+                </PinCodeField>
 
-        <MDTPrimaryButton slot="button" :disabled="!isPinFilled" @click="$emit('click', pincode)">
-            <slot name="button-text"></slot>
-        </MDTPrimaryButton>
+                <MDTPrimaryButton slot="button" :disabled="!isPinFilled" @click="$emit('click', pincode)">
+                    <slot name="button-text"></slot>
+                </MDTPrimaryButton>
+            </template>
+        </BaseUserSettingPage>
+
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import BasePage from '@/screens/BasePage';
-import UserInfo from '@/components/common/UserInfo';
+import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import PinCodeField from '@/components/common/PinCodeField';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
@@ -28,9 +32,9 @@ export default {
     };
   },
   components: {
-    UserInfo,
     PinCodeField,
     MDTPrimaryButton,
+    BaseUserSettingPage,
   },
   data() {
     return {
@@ -60,10 +64,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user-info {
-  margin: 16px;
-}
-
 .pin-code-field {
   margin-bottom: 24px;
 }
