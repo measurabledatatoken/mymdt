@@ -59,8 +59,7 @@ export default {
 <style lang="scss" scoped>
 @mixin left_right_boarder_radius {
   &.left {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-radius: 4px 0px 0px 4px;
 
     &:not(:focus) {
       border-right: 0px;
@@ -74,6 +73,7 @@ export default {
   }
 
   &.middle {
+    border-radius: 0px 0px 0px 0px;
     &:not(:focus) {
       border-right: 0px;
     }
@@ -85,8 +85,7 @@ export default {
   }
 
   &.right {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-radius: 0px 4px 4px 0px;
 
     &.invalid {
       border-top-color: #ff3b30;
