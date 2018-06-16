@@ -13,7 +13,7 @@
         class="action-status"
         v-if="showStatus"
       >
-        {{ getStatusText() }}
+        {{ getStatusText }}
       </span>
     </div>
   </md-list-item>
