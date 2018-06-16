@@ -1,6 +1,7 @@
 <template>
   <input ref="pinCodeInput" :class="[position, `pin-input-item`, {invalid: invalid}]" :value="initPinCode"
-    min="0" max="9" :type="type" :pattern="pattern" :inputmode="inputmode" @input="onValueInput" @focus="onInputFocus" @keydown="onKeyDown">
+    min="0" max="9" :type="type" :pattern="pattern" :inputmode="inputMode" @input="onValueInput" @focus="onInputFocus"
+    @keydown="onKeyDown">
 </template>
 
 <script>
