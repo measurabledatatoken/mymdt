@@ -160,7 +160,9 @@ const router = new Router({
         },
         {
           path: RouteDef.TransferSuccess.path,
+          name: RouteDef.TransferSuccess.name,
           component: TransferSuccess,
+          props: true,
         },
 
         // Earn MDT Route
