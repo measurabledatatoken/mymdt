@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
 import { VALIDATE_PIN } from '@/store/modules/security';
@@ -91,22 +91,15 @@ export default {
       transferNote: state => state.transfer.transferNote,
       transferToWalletAddress: state => state.transfer.transferToWalletAddress,
     }),
+    ...mapGetters({
+      transactionFee: 'transactionFee',
+      finalAmount: 'finalAmount',
+    }),
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
         return this.transferToWalletAddress;
       }
       return this.transferToAccount.emailAddress;
-    },
-    transactionFee() {
-      const feePercentage = this.$store.state.home.appConfig.mdt_transaction_fee / 100.0;
-      const minFee = parseFloat(this.$store.state.home.appConfig.mdt_min_transaction_fee);
-      const minFeeByPercentage = this.transferAmount * parseFloat(feePercentage, 10);
-      const finalFee = minFeeByPercentage < minFee ? minFee : minFeeByPercentage;
-      return finalFee.toFixed(4);
-    },
-    finalAmount() {
-      const finalAmount = this.transferAmount - this.transactionFee;
-      return finalAmount;
     },
     finalAmountStr() {
       return this.finalAmount <= 0 ? '--' : this.finalAmount.toFixed(4);

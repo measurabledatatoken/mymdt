@@ -1,7 +1,15 @@
 import api from '@/api';
-import { ErrorCode } from '@/enum';
-import { TransferType } from '@/constants';
-import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from './common';
+import {
+  ErrorCode,
+} from '@/enum';
+import {
+  TransferType,
+} from '@/constants';
+import {
+  SET_ERROR_MESSAGE,
+  SET_ERROR_TITLE,
+  SET_SHOW_ERROR_PROMPT,
+} from './common';
 
 // mutation
 export const SET_TRANSFER_AMOUNT = 'transfer/SET_TRANSFER_AMOUNT';
@@ -30,6 +38,19 @@ const getters = {
   transferToAccounts: (state, getters, rootState, rootGetters) => rootGetters.getAllUsers.filter(
     user => (!state.transferFromAccount || user.emailAddress !== state.transferFromAccount.emailAddress),
   ),
+  // eslint-disable-next-line
+  transactionFee: (state, getters, rootState, rootGetters) => {
+    const feePercentage = rootState.home.appConfig.mdt_transaction_fee / 100.0;
+    const minFee = parseFloat(rootState.home.appConfig.mdt_min_transaction_fee);
+    const minFeeByPercentage = state.transferAmount * parseFloat(feePercentage, 10);
+    const finalFee = minFeeByPercentage < minFee ? minFee : minFeeByPercentage;
+    return finalFee;
+  },
+  // eslint-disable-next-line
+  finalAmount: (state, getters, rootState, rootGetters) => {
+    const finalAmount = state.transferAmount - rootGetters.transactionFee;
+    return finalAmount;
+  },
 };
 
 const mutations = {
@@ -76,7 +97,9 @@ const actions = {
           const errorCode = error.response.data.error_code;
 
           commit(SET_ERROR_MESSAGE, ErrorCode.properties[errorCode].messageId);
-          commit(SET_ERROR_TITLE, { messageId: 'message.common.error_title' });
+          commit(SET_ERROR_TITLE, {
+            messageId: 'message.common.error_title',
+          });
           commit(SET_SHOW_ERROR_PROMPT, true);
           throw (error);
         },
@@ -85,7 +108,7 @@ const actions = {
 };
 
 
-export default{
+export default {
   state,
   getters,
   mutations,
