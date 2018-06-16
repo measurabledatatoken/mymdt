@@ -72,23 +72,14 @@ export default {
     }),
     ...mapGetters({
       fromUserAccounts: 'getAllUsers',
+      transactionFee: 'transactionFee',
+      finalAmount: 'finalAmount',
     }),
     disableNextBtn() {
       if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0 && this.isWalletAmountValid) {
         return false;
       }
       return true;
-    },
-    transactionFee() {
-      const feePercentage = this.$store.state.home.appConfig.mdt_transaction_fee / 100.0;
-      const minFee = parseFloat(this.$store.state.home.appConfig.mdt_min_transaction_fee);
-      const minFeeByPercentage = this.transferAmount * parseFloat(feePercentage, 10);
-      const finalFee = minFeeByPercentage < minFee ? minFee : minFeeByPercentage;
-      return finalFee.toFixed(4);
-    },
-    finalAmount() {
-      const finalAmount = this.transferAmount - this.transactionFee;
-      return finalAmount;
     },
     finalAmountStr() {
       return this.finalAmount <= 0 ? '--' : this.finalAmount;
