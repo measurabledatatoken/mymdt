@@ -78,16 +78,21 @@ const mutations = {
 };
 
 const actions = {
-  [START_TRANSFER]({ commit, rootState, rootGetters }, pin) {
+  [START_TRANSFER]({
+    commit,
+    rootState,
+    rootGetters,
+  }, pin) {
     const selectedUser = rootGetters.getSelectedUser;
     const transferType = rootState.transfer.transferType;
-    const amount = rootState.transfer.transferAmount;
     const transferNote = rootState.transfer.transferNote;
 
 
+    let amount = rootState.transfer.transferAmount;
     let toAddress = rootState.transfer.transferToAccount.emailAddress;
     if (transferType === TransferType.EthWallet) {
       toAddress = rootState.transfer.transferToWalletAddress;
+      amount = rootGetters.finalAmount;
     }
 
     return api.transfer.transfer(toAddress, transferType, amount, pin, transferNote, selectedUser.accessToken)
