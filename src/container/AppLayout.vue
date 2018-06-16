@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import {
   DISMISS_ERROR_PROMPT, SET_LOCALE,
   ADD_NAVIGATION_STACK, POP_NAVIGATION_STACK,
@@ -65,6 +65,11 @@ export default {
       isLoading: state => state.common.isLoading,
       navigationStack: state => state.common.navigationStack,
     }),
+    ...mapGetters(
+      {
+        isPathExistInNavigationStack: 'isPathExistInNavigationStack',
+      },
+    ),
     showErrorPrompt: {
       get() {
         return this.$store.state.common.showErrorPrompt;
@@ -82,12 +87,7 @@ export default {
   watch: {
     $route(to, from) {
       let isBack = false;
-      let isPathExistInNavStack = false;
-      this.navigationStack.forEach((navigationPath) => {
-        if (navigationPath === to.path) {
-          isPathExistInNavStack = true;
-        }
-      });
+      const isPathExistInNavStack = this.isPathExistInNavigationStack(to.path);
 
       if (isPathExistInNavStack) {
         isBack = true;
