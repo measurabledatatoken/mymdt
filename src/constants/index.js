@@ -25,7 +25,10 @@ const RouteDef = {
   TransferEthWalletReview: { path: '/home/transfer/ethwallet/review' },
   TransferEmailReview: { path: '/home/transfer/ethwallet/review' },
   TransferEthWalletQrCode: { path: '/home/transfer/ethwallet/qrcode' },
-  TransferSuccess: { path: '/home/transfer/ethwallet/review/success' },
+  TransferSuccess: {
+    path: '/home/transfer/ethwallet/review/success',
+    name: 'transferSuccess',
+  },
   EarnMDT: { path: '/home/earn' },
   AccountDetail: {
     path: '/home/accounts/:account_id',

@@ -135,8 +135,17 @@ export default {
           this.showPinCodeInput = false;
           return this.startTransfer(pinCode);
         })
-        .then(() => {
-          this.$router.push(RouteDef.TransferSuccess.path);
+        .then((responseData) => {
+          this.$router.push(
+            {
+              name: RouteDef.TransferSuccess.name,
+              params: {
+                finalAmount: responseData.amount,
+                fee: responseData.transaction_fee,
+                totalAmount: -responseData.delta,
+                transferType: this.transferType,
+              },
+            });
         })
         .catch((err) => {
           console.log(`error in onPinCodeFilled: ${err.message}`);

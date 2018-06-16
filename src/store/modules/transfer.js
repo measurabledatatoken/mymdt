@@ -96,7 +96,9 @@ const actions = {
     }
 
     return api.transfer.transfer(toAddress, transferType, amount, pin, transferNote, selectedUser.accessToken)
-      .then(() => '')
+      .then(
+        responseData => responseData,
+      )
       .catch(
         (error) => {
           const errorCode = error.response.data.error_code;
