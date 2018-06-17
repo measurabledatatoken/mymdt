@@ -3,7 +3,7 @@
     <md-menu class="country-code-selector" md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened"
       v-on:md-closed="menuClosed">
       <md-field md-inline md-menu-trigger v-bind:class="{ 'open': isMenuOpened }">
-        <label>{{ $t('message.phone.country_code_placeholder')}}</label>
+        <label class="label">{{ $t('message.phone.country_code_placeholder')}}</label>
         <md-input ref="countryCodeInput" v-model="countryCodeSearchText"></md-input>
         <md-icon v-show="!isMenuOpened" md-src="/static/icons/keyboard_arrow_down.svg">
         </md-icon>
@@ -143,11 +143,12 @@ $menuItemHeight: 36px;
 .phone-input {
   margin-left: $defaultPageMargin;
   margin-right: $defaultPageMargin;
+
 }
 
 .country-code-selector {
   float: left;
-  width: 35%;
+  width: 36%;
   height: $menuItemHeight;
   margin-right: 5%;
 
@@ -164,7 +165,7 @@ $menuItemHeight: 36px;
 }
 
 .phone-number-input {
-  width: 55%;
+  width: 54%;
   height: $menuItemHeight;
 }
 
@@ -199,7 +200,7 @@ $menuItemHeight: 36px;
 
     .dial-code {
       float: left;
-      width: 50%;
+      width: 55%;
       text-align: right;
     }
 
