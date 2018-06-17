@@ -56,7 +56,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { VALIDATE_PIN } from '@/store/modules/security';
+import { VALIDATE_TRANSFER_PIN } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
@@ -117,7 +117,7 @@ export default {
   methods: {
     ...mapActions({
       startTransfer: START_TRANSFER,
-      validatePIN: VALIDATE_PIN,
+      validatePIN: VALIDATE_TRANSFER_PIN,
     }),
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
