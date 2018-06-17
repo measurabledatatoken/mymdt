@@ -37,8 +37,8 @@ const getters = {
       if (navigationPath === path) {
         return true;
       }
-      return false;
     }
+    return false;
   },
 };
 
