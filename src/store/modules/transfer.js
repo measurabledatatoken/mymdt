@@ -23,6 +23,16 @@ export const SET_TRANSFER_SUCCESS = 'transfer/SET_TRANSFER_SUCCESS';
 // action
 export const START_TRANSFER = 'transfer/START_TRANSFER';
 
+
+const clearState = (state) => {
+  state.transferAmount = null;
+  state.transferType = null;
+  state.transferFromAccount = null;
+  state.transferToAccount = null;
+  state.transferToWalletAddress = null;
+  state.transferNote = null;
+};
+
 const state = {
   transferAmount: null,
   transferType: null,
@@ -30,7 +40,6 @@ const state = {
   transferToAccount: null,
   transferToWalletAddress: null,
   transferNote: null,
-  transferSuccess: null,
 };
 
 const getters = {
@@ -80,6 +89,7 @@ const mutations = {
 const actions = {
   [START_TRANSFER]({
     commit,
+    state,
     rootState,
     rootGetters,
   }, pin) {
@@ -97,7 +107,10 @@ const actions = {
 
     return api.transfer.transfer(toAddress, transferType, amount, pin, transferNote, selectedUser.accessToken)
       .then(
-        responseData => responseData,
+        (responseData) => {
+          clearState(state);
+          return responseData;
+        },
       )
       .catch(
         (error) => {
