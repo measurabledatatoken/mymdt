@@ -24,7 +24,7 @@ export const SET_TRANSFER_SUCCESS = 'transfer/SET_TRANSFER_SUCCESS';
 export const START_TRANSFER = 'transfer/START_TRANSFER';
 
 const state = {
-  transferAmount: 0,
+  transferAmount: null,
   transferType: null,
   transferFromAccount: null,
   transferToAccount: null,
