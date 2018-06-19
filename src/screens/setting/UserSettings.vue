@@ -23,6 +23,11 @@
     <md-dialog-confirm :md-active.sync="showAlreadySetPinDialog" :md-title="$t('message.passcode.already_setup_title')"
       :md-content="$t('message.passcode.already_setup_content')" :md-confirm-text="$t('message.common.change')"
       :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPIN" />
+
+
+    <md-dialog-confirm :md-active.sync="showAlreadySetPhoneDialog" :md-title="$t('message.phone.already_setup_title')"
+      :md-content="$t('message.phone.already_setup_content')" :md-confirm-text="$t('message.common.change')"
+      :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPhoneNumber" />
   </div>
 
 </template>
@@ -73,8 +78,15 @@ export default {
         return;
       }
       // check if the Phone Number has already set and show popup
+      if (this.getSelectedSecurityUser().isPhoneConfirmed) {
+        this.showAlreadySetPhoneDialog = true;
+        return;
+      }
 
       // Push
+      this.$router.push(RouteDef.PhoneNumberSetup.path);
+    },
+    onConfirmSetupPhoneNumber() {
       this.$router.push(RouteDef.PhoneNumberSetup.path);
     },
     onPasscodeForgotClicked() {
