@@ -17,11 +17,12 @@
           v-for="reward in getRewards(user.rewards)"
         >
             <RewardItem
+              v-if="reward"
               :key="reward.id"
               :reward="reward"
               :userId="user.emailAddress"
             />
-            <md-divider :key="`${reward.id}-divider`" />
+            <md-divider v-if="reward" :key="`${reward.id}-divider`" />
         </template>
         <li
           v-if="uiState.users[user.emailAddress].isFetchingTasks"
@@ -32,8 +33,8 @@
           <Skeleton class="account-task-list__loading-item-button" width="60px" />
         </li>
         <template
-          v-else-if="Array.isArray(user.tasks) && user.tasks.length > 0"
-          v-for="task in user.tasks"
+          v-else-if="Array.isArray(user.tasks) && user.tasks.filter(task => !task.is_task_completed).length > 0"
+          v-for="task in user.tasks.filter(task => !task.is_task_completed)"
         >
             <TaskItem
               :key="task.task_id"

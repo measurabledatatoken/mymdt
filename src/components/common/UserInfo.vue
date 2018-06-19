@@ -6,18 +6,20 @@
         <div v-bind:class="{ onlytitle : subTitle.length === 0} " class="md-title"> {{ title }}</div>
         <div class="md-sutitle"> {{ subTitle }}</div>
       </div>
-      <div v-if="showMDT && small" class="mdt-count"> {{ user.mdtBalance.toFixed(4) }} MDT</div>
+      <UserInfoMDTAmount v-if="showMDT && small" class="user-info__amount" :amount="user.mdtBalance" animated />
     </div>
-    <div v-if="showMDT && !small" class="mdt-count"> {{ user.mdtBalance.toFixed(4) }} MDT</div>
+    <UserInfoMDTAmount v-if="showMDT && !small" class="user-info__amount" :amount="user.mdtBalance" />
   </div>
 </template>
 
 <script>
 import UserAvatar from '@/components/common/UserAvatar';
+import UserInfoMDTAmount from '@/components/common/UserInfoMDTAmount';
 
 export default {
   components: {
     UserAvatar,
+    UserInfoMDTAmount,
   },
   props: {
     user: {
@@ -91,18 +93,17 @@ export default {
     }
   }
 
-  .mdt-count {
-    text-align: right;
-    color: $label-color;
-    font-size: 1.25rem;
-    font-weight: bold;
+  .user-info__amount {
     margin-top: 1.25rem;
   }
 
   &.user-info--small {
-    .mdt-count {
-      font-size: 1rem;
+    .user-info__amount {
       margin-top: 0;
+
+      &.mdt-amount {
+        font-size: 1rem;
+      }
     }
   }
 }
