@@ -145,6 +145,7 @@ export default {
 
 .md-field {
   margin: 16px $defaultPageMargin 10px $defaultPageMargin;
+  width:  calc(100% - 2 * #{$defaultPageMargin});
 
   .label {
     color: $label-color;
