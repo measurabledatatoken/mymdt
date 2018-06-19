@@ -9,7 +9,6 @@ import forgetPassword from './modules/forgetpassword';
 import login from './modules/login';
 import transfer from './modules/transfer';
 import qrcode from './modules/qrcode';
-import transactions from './modules/transactions';
 import reportProblem from './modules/reportProblem';
 import ui from './modules/ui';
 import entities from './modules/entities';
@@ -29,7 +28,6 @@ export default new Vuex.Store({
     login,
     transfer,
     qrcode,
-    transactions,
     reportProblem,
     security,
   },
