@@ -20,12 +20,12 @@
       </template>
     </BaseUserSettingPage>
 
-    <md-dialog-confirm :md-active.sync="showAlreadySetPinDialog" :md-title="$t('message.passcode.already_setup_title')"
+    <MDTConfirmPopup :md-active.sync="showAlreadySetPinDialog" :md-title="$t('message.passcode.already_setup_title')"
       :md-content="$t('message.passcode.already_setup_content')" :md-confirm-text="$t('message.common.change')"
       :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPIN" />
 
 
-    <md-dialog-confirm :md-active.sync="showAlreadySetPhoneDialog" :md-title="$t('message.phone.already_setup_title')"
+    <MDTConfirmPopup :md-active.sync="showAlreadySetPhoneDialog" :md-title="$t('message.phone.already_setup_title')"
       :md-content="$t('message.phone.already_setup_content')" :md-confirm-text="$t('message.common.change')"
       :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPhoneNumber" />
   </div>
@@ -35,6 +35,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { RouteDef } from '@/constants';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
@@ -46,6 +47,7 @@ export default {
     BaseSettingListItem,
     SettingListSectionHeader,
     SuccessPopup,
+    MDTConfirmPopup,
   },
   data() {
     return {
@@ -101,18 +103,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.md-dialog {
-  /deep/ .md-dialog-actions {
-    justify-content: space-between;
-    padding-right: 24px;
-
-    .md-ripple {
-      padding: 0px;
-    }
-  }
-
-  /deep/ .md-button-content {
-    text-transform: none;
-  }
-}
 </style>

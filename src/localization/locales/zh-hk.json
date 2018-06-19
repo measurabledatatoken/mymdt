@@ -10,7 +10,8 @@
     "edit": "更改",
     "nextbtn": "下一步",
     "unknown_error": "未知錯誤，請提供以下信息與我們聯繫。",
-    "change": "更改"
+    "change": "更改",
+    "setup": "設定"
   },
   "home": {
     "total_balance": "結餘",
@@ -127,7 +128,9 @@
     "create_pin_title": "請創建6位密碼",
     "reenter_pin_title": "請再輸入一次",
     "not_match": "PIN不符,請重試",
-    "pin_setup_successfully": "成功設定PIN！"
+    "pin_setup_successfully": "成功設定PIN！",
+    "pin_setup_remind_title": "請設定你的PIN",
+    "pin_setup_remind_content": "PIN可以保護你的資產"
   },
   "reportProblem": {
     "title": "回報問題",
