@@ -113,7 +113,9 @@
     "resend_counting": "Can Resend after {second}s",
     "resend": "Resend Verification Code",
     "cant_receive": "Can't receive code?",
-    "invalid_phonenumb er": "Invalid Phone number"
+    "invalid_phonenumb er": "Invalid Phone number",
+    "already_setup_title": "You already set up Phone Number",
+    "already_setup_content": "Would you like to change your Phone Number?"
   },
   "passcode": {
     "pin_popup_title": "Please Enter Your PIN",
