@@ -10,7 +10,7 @@
     <div class="task-item__action">
       <span class="action__amount-to-earn">{{getAmountText()}}</span>
       <MDTSecondaryButton
-        ref="claimButton"
+        :href="task.task_url"
         class="action__claim-button"
       >
         {{ $t('message.earnMDT.go') }}

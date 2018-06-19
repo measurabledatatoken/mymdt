@@ -2,6 +2,7 @@ import api from '@/api';
 import { delay } from '@/utils';
 
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
+import { FETCH_USER } from '@/store/modules/entities/users';
 
 export const FETCHING_REWARDS = 'reward/FETCHING_REWARDS';
 export const FETCHING_REWARDS_SUCCESS = 'reward/FETCHING_REWARDS_SUCCESS';
@@ -52,11 +53,8 @@ const actions = {
     commit(FETCHING_REWARDS, {
       id: userId,
     });
-    return Promise.all([
-      api.reward.getRewards(rootState.home.appID, rootGetters.getUser(userId).accessToken),
-      delay(750),
-    ])
-      .then(([data]) => commit(FETCHING_REWARDS_SUCCESS, {
+    return delay(750).then(() => api.reward.getRewards(rootState.home.appID, rootGetters.getUser(userId).accessToken))
+      .then(data => commit(FETCHING_REWARDS_SUCCESS, {
         id: userId,
         data,
       }))
@@ -71,9 +69,14 @@ const actions = {
     });
 
     return api.reward.claimReward(rootState.home.appID, rewardId, rootGetters.getUser(userId).accessToken)
-      .then(() => commit(CLAIMING_REWARD_SUCCESS, {
-        rewardId,
-      }))
+      .then(() => {
+        commit(CLAIMING_REWARD_SUCCESS, {
+          rewardId,
+        });
+        dispatch(FETCH_USER, {
+          userId,
+        });
+      })
       .catch((error) => {
         commit(CLAIMING_REWARD_FAILURE, {
           rewardId,

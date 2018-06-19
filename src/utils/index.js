@@ -69,6 +69,9 @@ function formatAmount(amount, options) {
     case 'short': {
       return numeral(amount).format('0,0.00');
     }
+    case 'medium': {
+      return numeral(amount).format('0,0.0000');
+    }
     default: {
       return numeral(amount).format('0,0.0000[00000000000000]');
     }
