@@ -133,11 +133,11 @@
     "pin_setup_remind_content": "Passcode is important to keep your money safe"
   },
   "reportProblem": {
-    "title": "回報問題",
+    "title": "Report Problem",
     "description": "Use the form below to send us your comments.\nPlease descirbe the problem as specific as possible. For example, please include which account you are having trouble with, what did you do and what happened.\nIf you provide your email address, you agree that we may contact you to better understand the comments you submitted.",
-    "emailAddress": "電郵地址",
-    "optional": "選填",
-    "comments": "意見",
+    "emailAddress": "Email Address",
+    "optional": "Optional",
+    "comments": "Comments",
     "upTo500Characters": "Up to 500 characters",
     "submit": "Submit",
     "pleaseInputValidEmailAddress": "Please input valid email address",
