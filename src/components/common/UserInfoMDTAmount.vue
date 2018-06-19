@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     amountText() {
-      return `${formatAmount(this.amount, { type: 'medium' })} MDT`;
+      return `${formatAmount(this.amount)} MDT`;
     },
     amountDeltaText() {
       return `${this.amountDelta >= 0 ? '+' : '-'}${formatAmount(this.amountDelta, { type: 'short' })} MDT`;

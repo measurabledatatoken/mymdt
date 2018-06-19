@@ -4,7 +4,7 @@
       :amount="transferAmount" :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
     <div class="transaction-fee">
       <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
-      <div class="transaction-fee-value"> {{ transactionFee }} MDT</div>
+      <div class="transaction-fee-value"> {{ formatAmount(transactionFee) }} MDT</div>
     </div>
 
     <div class="final-amount">
@@ -41,6 +41,7 @@ import WalletAddressField from '@/components/common/WalletAddressField';
 import { RouteDef, TransferType } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import { formatAmount } from '@/utils';
 
 export default {
   extends: BasePage,
@@ -82,7 +83,7 @@ export default {
       return true;
     },
     finalAmountStr() {
-      return this.finalAmount <= 0 ? '--' : this.finalAmount;
+      return this.finalAmount <= 0 ? '--' : formatAmount(this.finalAmount);
     },
     isWalletAmountValid() {
       return this.transferAmount < this.transferFromAccount.mdtBalance;
@@ -119,6 +120,7 @@ export default {
     walletAddressInvalid() {
       this.isWalletAddressValid = false;
     },
+    formatAmount,
   },
 };
 </script>
