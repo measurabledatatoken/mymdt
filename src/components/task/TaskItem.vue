@@ -10,7 +10,8 @@
     <div class="task-item__action">
       <span class="action__amount-to-earn">{{getAmountText()}}</span>
       <MDTSecondaryButton
-        :href="task.task_url"
+        :href="isExternalUrl ? task.task_url : null"
+        :to="isExternalUrl ? null : task.task_url"
         class="action__claim-button"
       >
         {{ $t('message.earnMDT.go') }}
@@ -26,6 +27,11 @@ import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 export default {
   props: {
     task: Object,
+  },
+  computed: {
+    isExternalUrl() {
+      return /.+:\/\/.+/.test(this.task.task_url);
+    },
   },
   methods: {
     showMaximum() {

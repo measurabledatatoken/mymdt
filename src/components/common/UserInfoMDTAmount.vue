@@ -70,7 +70,7 @@ export default {
   }
 
   .mdt-amount-delta--positive-enter-active, .mdt-amount-delta--negative-enter-active {
-    animation-duration: 0.5s;
+    animation-duration: 1s;
     animation-fill-mode: forwards;
   }
 
@@ -92,7 +92,7 @@ export default {
   }
   to {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-200%);
   }
 }
 
@@ -103,7 +103,7 @@ export default {
   }
   to {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(200%);
   }
 }
 </style>
