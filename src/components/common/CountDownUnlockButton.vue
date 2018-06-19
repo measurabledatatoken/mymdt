@@ -4,7 +4,7 @@
             {{ $t(countDoneTranslateKey) }}
         </template>
         <template v-else>
-            {{ $t(countingTranslateKey, { num: curCountDownSecond}) }}
+            {{ $t(countingTranslateKey, { second: curCountDownSecond}) }}
         </template>
     </MDTSubtleButton>
 </template>
