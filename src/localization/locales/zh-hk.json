@@ -103,7 +103,7 @@
     "yes_skip": "是,跳過",
     "phone_setup_success": "電話號碼成功設置！",
     "add_phone_title": "添加您的電話號碼",
-    "add_phone_content": "在您的帳戶中添加電話號碼，我們會要求您輸入驗證碼。",
+    "add_phone_content": "在您的帳戶中添加電話號碼，\n我們會要求您輸入驗證碼。",
     "country_code_placeholder": "國家代碼",
     "phone_number_placeholder": "電話號碼",
     "verify_phone_title": "驗證您的手機",

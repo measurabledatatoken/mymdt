@@ -6,7 +6,7 @@
       </template>
 
       <template slot="content">
-        {{ $t('message.phone.add_phone_content') }}
+        <p class="content_description">{{ $t('message.phone.add_phone_content') }}</p>
       </template>
 
       <template slot="action-area">
@@ -133,5 +133,9 @@ export default {
       padding-left: 0;
     }
   }
+}
+
+.content_description {
+  white-space: pre-line;
 }
 </style>

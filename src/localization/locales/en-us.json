@@ -103,7 +103,7 @@
     "yes_skip": "Yes, skip",
     "phone_setup_success": "Phone Number Successfylly Set!",
     "add_phone_title": "Add Your Phone Number",
-    "add_phone_content": "Add a phone number to your account. We will ask you to enter a verification code.",
+    "add_phone_content": "Add a phone number to your account. \n We will ask you to enter a verification code.",
     "country_code_placeholder": "Country Code",
     "phone_number_placeholder": "Phone Number",
     "verify_phone_title": "Verify Your Phone",
