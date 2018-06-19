@@ -16,7 +16,7 @@ import UserSettings from '@/screens/setting/UserSettings';
 import PriceUnits from '@/screens/setting/PriceUnits';
 import ReportProblem from '@/screens/setting/ReportProblem';
 import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
-import PhoneNumberAdd from '@/screens/phone/PhoneNumberAdd';
+import PhoneNumberSetup from '@/screens/phone/PhoneNumberSetup';
 import PhoneNumberVerify from '@/screens/phone/PhoneNumberVerify';
 import PinCodeSetup from '@/screens/pincode/PinCodeSetup';
 import PinCodeConfirm from '@/screens/pincode/PinCodeConfirm';
@@ -79,9 +79,9 @@ const router = new Router({
         },
         // phone
         {
-          path: RouteDef.PhoneNumberAdd.path,
-          name: RouteDef.PhoneNumberAdd.name,
-          component: PhoneNumberAdd,
+          path: RouteDef.PhoneNumberSetup.path,
+          name: RouteDef.PhoneNumberSetup.name,
+          component: PhoneNumberSetup,
           props: true,
         },
         {
@@ -160,7 +160,9 @@ const router = new Router({
         },
         {
           path: RouteDef.TransferSuccess.path,
+          name: RouteDef.TransferSuccess.name,
           component: TransferSuccess,
+          props: true,
         },
 
         // Earn MDT Route

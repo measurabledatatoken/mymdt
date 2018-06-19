@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { VALIDATE_PIN } from '@/store/modules/security';
+import { VALIDATE_TRANSFER_PIN } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
@@ -91,22 +91,15 @@ export default {
       transferNote: state => state.transfer.transferNote,
       transferToWalletAddress: state => state.transfer.transferToWalletAddress,
     }),
+    ...mapGetters({
+      transactionFee: 'transactionFee',
+      finalAmount: 'finalAmount',
+    }),
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
         return this.transferToWalletAddress;
       }
       return this.transferToAccount.emailAddress;
-    },
-    transactionFee() {
-      const feePercentage = this.$store.state.home.appConfig.mdt_transaction_fee / 100.0;
-      const minFee = parseFloat(this.$store.state.home.appConfig.mdt_min_transaction_fee);
-      const minFeeByPercentage = this.transferAmount * parseFloat(feePercentage, 10);
-      const finalFee = minFeeByPercentage < minFee ? minFee : minFeeByPercentage;
-      return finalFee.toFixed(4);
-    },
-    finalAmount() {
-      const finalAmount = this.transferAmount - this.transactionFee;
-      return finalAmount;
     },
     finalAmountStr() {
       return this.finalAmount <= 0 ? '--' : this.finalAmount.toFixed(4);
@@ -124,7 +117,7 @@ export default {
   methods: {
     ...mapActions({
       startTransfer: START_TRANSFER,
-      validatePIN: VALIDATE_PIN,
+      validatePIN: VALIDATE_TRANSFER_PIN,
     }),
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
@@ -142,8 +135,17 @@ export default {
           this.showPinCodeInput = false;
           return this.startTransfer(pinCode);
         })
-        .then(() => {
-          this.$router.push(RouteDef.TransferSuccess.path);
+        .then((responseData) => {
+          this.$router.push(
+            {
+              name: RouteDef.TransferSuccess.name,
+              params: {
+                finalAmount: responseData.amount,
+                fee: responseData.transaction_fee,
+                totalAmount: -responseData.delta,
+                transferType: this.transferType,
+              },
+            });
         })
         .catch((err) => {
           console.log(`error in onPinCodeFilled: ${err.message}`);

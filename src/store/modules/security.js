@@ -5,7 +5,7 @@ export const SET_PHONE_NUMBER = 'security/SET_PHONE_NUMBER';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 
 // action
-export const VALIDATE_PIN = 'security/VALIDATE_PIN';
+export const VALIDATE_TRANSFER_PIN = 'security/VALIDATE_TRANSFER_PIN';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 
@@ -30,8 +30,9 @@ const mutations = {
 };
 
 const actions = {
-  [VALIDATE_PIN](context, pin) {
-    const transferFromAccount = this.state.transfer.transferFromAccount;
+  // eslint-disable-next-line
+  [VALIDATE_TRANSFER_PIN]({ commit, rootState, rootGetters }, pin) {
+    const transferFromAccount = rootState.transfer.transferFromAccount;
 
     return api.security.validatePIN(pin, transferFromAccount.accessToken)
       .then(() => '')
@@ -41,10 +42,11 @@ const actions = {
         },
       );
   },
-  [SETUP_PIN](context, { pin, confirmedPIN }) {
-    const transferFromAccount = this.state.transfer.transferFromAccount;
+  // eslint-disable-next-line
+  [SETUP_PIN]({ commit, rootState, rootGetters }, { pin, confirmedPIN }) {
+    const account = rootGetters.getUser(rootState.security.selectedUserId);
 
-    return api.security.setupPIN(pin, confirmedPIN, transferFromAccount.accessToken)
+    return api.security.setupPIN(pin, confirmedPIN, account.accessToken)
       .then(() => '')
       .catch(
         (error) => {
@@ -52,10 +54,11 @@ const actions = {
         },
       );
   },
-  [CHANGE_PIN](context, { oldPIN, newPIN, confirmedPIN }) {
-    const transferFromAccount = this.state.transfer.transferFromAccount;
+  // eslint-disable-next-line
+  [CHANGE_PIN]({ commit, rootState, rootGetters }, { oldPIN, newPIN, confirmedPIN }) {
+    const account = rootGetters.getUser(rootState.security.selectedUserId);
 
-    return api.security.changePIN(oldPIN, newPIN, confirmedPIN, transferFromAccount.accessToken)
+    return api.security.changePIN(oldPIN, newPIN, confirmedPIN, account.accessToken)
       .then(() => '')
       .catch(
         (error) => {

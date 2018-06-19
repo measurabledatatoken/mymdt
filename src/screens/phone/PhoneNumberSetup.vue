@@ -17,8 +17,8 @@
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null" class="next-button">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
-        <MDTSubtleButton v-on:click="skipClicked()" class="skip-btn">{{ $t('message.common.skip') }}</MDTSubtleButton>
+        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null" class="next-button" :class="{ 'hasSkip': needSkip }">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+        <MDTSubtleButton v-on:click="skipClicked()" class="skip-btn" v-if="needSkip">{{ $t('message.common.skip') }}</MDTSubtleButton>
       </template>
 
       <md-dialog-confirm :md-active.sync="showWarningPrompt" :md-title="$t('message.phone.skip_setup_title')"
@@ -64,6 +64,10 @@ export default {
     doneCallBackPath: {
       type: String,
     },
+    needSkip: {
+      default: false,
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -103,7 +107,11 @@ export default {
 <style lang="scss" scoped>
 .md-button {
   position: absolute;
-  bottom: 72px;
+  bottom: 28px;
+
+  &.hasSkip {
+    bottom: 72px;
+  }
 }
 
 .skip-btn {
@@ -111,7 +119,8 @@ export default {
   bottom: 12px;
 }
 
-.next-button, .skip-btn {
+.next-button,
+.skip-btn {
   @include center_horizontal();
 }
 
