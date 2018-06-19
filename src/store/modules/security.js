@@ -30,8 +30,9 @@ const mutations = {
 };
 
 const actions = {
-  [VALIDATE_TRANSFER_PIN](context, pin) {
-    const transferFromAccount = this.state.transfer.transferFromAccount;
+  // eslint-disable-next-line
+  [VALIDATE_TRANSFER_PIN]({ commit, rootState, rootGetters }, pin) {
+    const transferFromAccount = rootState.transfer.transferFromAccount;
 
     return api.security.validatePIN(pin, transferFromAccount.accessToken)
       .then(() => '')
@@ -43,7 +44,7 @@ const actions = {
   },
   // eslint-disable-next-line
   [SETUP_PIN]({ commit, rootState, rootGetters }, { pin, confirmedPIN }) {
-    const account = rootGetters.getUser(this.state.security.selectedUserId);
+    const account = rootGetters.getUser(rootState.security.selectedUserId);
 
     return api.security.setupPIN(pin, confirmedPIN, account.accessToken)
       .then(() => '')
@@ -55,7 +56,7 @@ const actions = {
   },
   // eslint-disable-next-line
   [CHANGE_PIN]({ commit, rootState, rootGetters }, { oldPIN, newPIN, confirmedPIN }) {
-    const account = rootGetters.getUser(this.state.security.selectedUserId);
+    const account = rootGetters.getUser(rootState.security.selectedUserId);
 
     return api.security.changePIN(oldPIN, newPIN, confirmedPIN, account.accessToken)
       .then(() => '')
