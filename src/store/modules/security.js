@@ -9,6 +9,9 @@ export const VALIDATE_TRANSFER_PIN = 'security/VALIDATE_TRANSFER_PIN';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 
+export const SEND_VERIFICATION_CODE = 'security/SEND_VERIFICATION_CODE';
+export const VERIFY_VERIFICATION_CODE = 'security/VERIFY_VERIFICATION_CODE';
+
 const state = {
   phoneNumber: null,
   pin: null,
@@ -59,6 +62,28 @@ const actions = {
     const account = rootGetters.getUser(rootState.security.selectedUserId);
 
     return api.security.changePIN(oldPIN, newPIN, confirmedPIN, account.accessToken)
+      .then(() => '')
+      .catch(
+        (error) => {
+          throw (error);
+        },
+      );
+  },
+  // eslint-disable-next-line
+  [SEND_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum }) {
+    const account = rootGetters.getUser(this.state.security.selectedUserId);
+    return api.security.sendVerificationCodeToPhone(countryCode, phoneNum, account.accessToken)
+      .then(() => '')
+      .catch(
+        (error) => {
+          throw (error);
+        },
+      );
+  },
+  // eslint-disable-next-line
+  [VERIFY_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum, verificationCode }) {
+    const account = rootGetters.getUser(this.state.security.selectedUserId);
+    return api.security.verifyVerificationCode(countryCode, phoneNum, verificationCode, account.accessToken)
       .then(() => '')
       .catch(
         (error) => {
