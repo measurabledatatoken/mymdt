@@ -9,7 +9,8 @@
     "skip": "Skip",
     "edit": "Edit",
     "nextbtn": "Next",
-    "unknown_error": "Unknown Error, Please contact us with following information."
+    "unknown_error": "Unknown Error, Please contact us with following information.",
+    "change": "Change"
   },
   "home": {
     "total_balance": "Total Balance",

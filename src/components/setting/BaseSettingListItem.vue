@@ -2,8 +2,8 @@
   <md-list-item v-bind="$attrs" v-on="$listeners">
     <slot name="icon" />
     <div class="md-list-item-text">
-      <span>{{ title }}</span>
-      <span>{{ description }}</span>
+      <span :disabled="disabled">{{ title }}</span>
+      <span :disabled="disabled">{{ description }}</span>
     </div>
     <div class="md-list-action" v-show="showAction">
       <slot name="action-data" />
@@ -20,6 +20,9 @@ export default {
     showAction: {
       type: Boolean,
       default: true,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
 };

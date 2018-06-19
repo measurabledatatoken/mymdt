@@ -9,7 +9,8 @@
     "skip": "跳过",
     "edit": "更改",
     "nextbtn": "下一步",
-    "unknown_error": "未知错误,请提供以下信息与我们联系。"
+    "unknown_error": "未知错误,请提供以下信息与我们联系。",
+    "change": "更改"
   },
   "home": {
     "total_balance": "结余",
