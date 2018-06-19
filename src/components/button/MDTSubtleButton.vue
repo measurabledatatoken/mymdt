@@ -22,7 +22,6 @@ export default {
   text-transform: none;
   box-shadow: none;
 
-
   &[disabled] {
     color: $plainbtn-wordcolor-disabled;
   }

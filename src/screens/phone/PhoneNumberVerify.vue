@@ -17,34 +17,42 @@
           <div class="phone-nbumber">
             {{this.phoneNumber}}
           </div>
-          <md-button v-on:click="onEditClick()" :md-ripple="false" class="edit-btn">{{ $t('message.common.edit') }}</md-button>
+          <md-button v-on:click="onEditClicked()" :md-ripple="false" class="edit-btn">{{ $t('message.common.edit') }}</md-button>
         </div>
 
-        <md-field>
+        <md-field :md-counter="false">
           <label class="label">{{ $t('message.phone.verification_code') }}</label>
-          <md-input :placeholder="$t('message.phone.verification_code_placeholder')" v-model="verificationCode"></md-input>
+          <md-input :maxlength="VerificationCodeLength" :placeholder="$t('message.phone.verification_code_placeholder')"
+            v-model="verificationCode" @input="onVerificationCodeInput" />
         </md-field>
 
-        <CountDownUnlockButton v-on:click="onResendClick()" :secondsToCount="60" countingTranslateKey="message.phone.resend_counting"
+        <CountDownUnlockButton v-on:click="onResendClicked()" :secondsToCount="60" countingTranslateKey="message.phone.resend_counting"
           countDoneTranslateKey="message.phone.resend" class="resend-btn" />
         <br style="clear:both" />
 
-        <MDTSubtleButton v-on:click="onResendClick()" class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
+        <MDTSubtleButton v-on:click="onResendClicked()" class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton to="/" :disabled="!verifyDone" class="done" :bottom="true"> {{ $t('message.common.done') }}</MDTPrimaryButton>
+        <MDTPrimaryButton :disabled="!verificationCodeFilled" class="done" :bottom="true" @click="onDoneClicked">
+          {{ $t('message.common.done') }}
+        </MDTPrimaryButton>
       </template>
     </BasePhoneNumberPage>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
+import { VERIFY_VERIFICATION_CODE } from '@/store/modules/security';
+import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
+
+const VerificationCodeLength = 6;
 
 export default {
   metaInfo() {
@@ -68,8 +76,9 @@ export default {
   },
   data() {
     return {
-      verifyDone: false,
+      verificationCodeFilled: false,
       verificationCode: '',
+      VerificationCodeLength,
     };
   },
   computed: {
@@ -78,7 +87,11 @@ export default {
     },
   },
   methods: {
-    onEditClick() {
+    ...mapActions({
+      verifyVerificationCode: VERIFY_VERIFICATION_CODE,
+      backToPath: BACK_TO_PATH,
+    }),
+    onEditClicked() {
       this.$router.push(
         {
           name: RouteDef.PhoneNumberSetup.name,
@@ -90,10 +103,28 @@ export default {
         },
       );
     },
-    onResendClick() {
+    onVerificationCodeInput(value) {
+      if (value.length === VerificationCodeLength) {
+        this.verificationCodeFilled = true;
+      } else {
+        this.verificationCodeFilled = false;
+      }
+    },
+    onDoneClicked() {
+      this.verifyVerificationCode(
+        {
+          countryCode: this.countryDailCode,
+          phoneNum: this.phoneNumber,
+          verificationCode: this.verificationCode,
+        },
+      ).then(() => {
+        this.backToPath(RouteDef.UserSettings.path);
+      });
+    },
+    onResendClicked() {
 
     },
-    onCannotReceiveCodeClick() {
+    onCannotReceiveCodeClicked() {
 
     },
   },
@@ -145,7 +176,7 @@ export default {
 
 .md-field {
   margin: 16px $defaultPageMargin 10px $defaultPageMargin;
-  width:  calc(100% - 2 * #{$defaultPageMargin});
+  width: calc(100% - 2 * #{$defaultPageMargin});
 
   .label {
     color: $label-color;

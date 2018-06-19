@@ -19,6 +19,7 @@
     </template>
 
     <MDTPrimaryButton @click="onDoneClick" :bottom="true">{{ $t('message.common.done') }}</MDTPrimaryButton>
+    <MDTSubtleButton :to="Route"></MDTSubtleButton>
   </div>
 </template>
 
@@ -27,8 +28,10 @@ import { mapActions, mapMutations } from 'vuex';
 import { RouteDef, TransferType } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
 import { BACK_TO_HOME } from '@/store/modules/common';
+
 
 export default {
   extends: BasePage,
@@ -39,6 +42,7 @@ export default {
   },
   components: {
     MDTPrimaryButton,
+    MDTSubtleButton,
   },
   props: {
     finalAmount: {

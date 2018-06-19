@@ -13,6 +13,7 @@ export const FLUSH_NAVIGATION_STACK = 'common./FLUSH_NAVIGATION_STACK';
 
 // Actions
 export const BACK_TO_HOME = 'common/BACK_TO_HOME';
+export const BACK_TO_PATH = 'common/BACK_TO_PATH';
 
 export const OPEN_ERROR_PROMPT = 'common/OPEN_ERROR_PROMPT';
 export const DISMISS_ERROR_PROMPT = 'common/DISMISS_ERROR_PROMPT';
@@ -39,6 +40,18 @@ const getters = {
       }
     }
     return false;
+  },
+  // eslint-disable-next-line
+  getPathDepthInNavigationStack: (state, getters, rootState, rootGetters) => (path) => {
+    let depth = 0;
+    for (let i = state.navigationStack.length - 1; i >= 0; i -= 1) {
+      const navigationPath = state.navigationStack[i];
+      depth += 1;
+      if (navigationPath === path) {
+        break;
+      }
+    }
+    return depth;
   },
 };
 
@@ -85,6 +98,10 @@ const mutations = {
 const actions = {
   [BACK_TO_HOME](context) {
     const depth = context.state.navigationStack.length;
+    router.go(-depth);
+  },
+  [BACK_TO_PATH](context, path) {
+    const depth = context.getters.getPathDepthInNavigationStack(path);
     router.go(-depth);
   },
   [OPEN_ERROR_PROMPT]({ commit }, { message, title }) {
