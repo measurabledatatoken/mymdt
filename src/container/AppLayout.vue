@@ -222,15 +222,27 @@ export default {
 .md-dialog {
   text-align: left;
 
+  /deep/ .md-dialog-container {
+    width: 100%;
+  }
+
   /deep/ .md-dialog-title {
     font-size: 20px;
     font-weight: bold;
+  }
+
+  /deep/ .md-dialog-content {
+    word-wrap: break-word;
   }
 
   /deep/ .md-button {
     width: 100%;
     font-size: 16px;
     font-weight: bold;
+  }
+
+  /deep/ .md-dialog-actions {
+    padding: 8px;
   }
 }
 
