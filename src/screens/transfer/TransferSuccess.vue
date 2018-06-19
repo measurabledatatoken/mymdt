@@ -4,7 +4,7 @@
       <md-icon md-src="/static/icons/transaction-success.svg"></md-icon>
       <div class="message">
 
-        {{ $t('message.transfer.successdetail_email', { 'finalAmount': finalAmount.toFixed(4) })}}
+        {{ $t('message.transfer.successdetail_email', { 'finalAmount': formatAmount(finalAmount) })}}
         <br>
       </div>
 
@@ -32,6 +32,7 @@ import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
 import { BACK_TO_HOME } from '@/store/modules/common';
 
+import { formatAmount } from '@/utils';
 
 export default {
   extends: BasePage,
@@ -82,6 +83,7 @@ export default {
       this.setIsUserAcctionsDirty(true);
       this.backToHome();
     },
+    formatAmount,
   },
 };
 </script>
