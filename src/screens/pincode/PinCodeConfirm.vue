@@ -5,8 +5,8 @@
       <template slot="button-text">{{ $t('message.common.nextbtn') }} </template>
     </PinCodeEnterBasePage>
 
-    <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :active.aync="showPinSetupSuccessPopup" iconSrc="/static/icons/guarded.svg"
-      :confirmText="$t('message.common.done')" @click="onPopupDoneClicked">
+    <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :md-active.sync="showPinSetupSuccessPopup" iconSrc="/static/icons/guarded.svg"
+      :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
     </SuccessPopup>
   </div>
 </template>
