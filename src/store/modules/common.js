@@ -28,6 +28,20 @@ const state = {
   navigationStack: [],
 };
 
+const getters = {
+  // eslint-disable-next-line
+  isPathExistInNavigationStack: (state, getters, rootState, rootGetters) => (path) => {
+
+    for (let i = 0; i < state.navigationStack.length; i += 1) {
+      const navigationPath = state.navigationStack[i];
+      if (navigationPath === path) {
+        return true;
+      }
+    }
+    return false;
+  },
+};
+
 const mutations = {
   [SET_ERROR_MESSAGE](state, errorMessage) {
     state.errorMessage = errorMessage;
@@ -87,6 +101,7 @@ const actions = {
 
 export default{
   state,
+  getters,
   mutations,
   actions,
 };

@@ -1,5 +1,5 @@
 <template>
-  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false">
+  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false" @md-opened="onMDOpened">
     <md-button @click="$emit('close-clicked')">
       <md-icon md-src="/static/icons/popup-close.svg"></md-icon>
     </md-button>
@@ -47,6 +47,13 @@ export default {
       this.shouldShake = false;
       this.$emit('codefilled', pinCode);
     },
+    onMDOpened() {
+      // Not sure why need to set timeout in order to focus yet. May have better solution
+      setTimeout(() => {
+        this.$refs.pinCodeField.focus(0);
+      }, 300);
+    },
+
   },
 };
 </script>
@@ -72,7 +79,7 @@ export default {
     min-width: 40px;
     height: 40px;
     margin: 0px;
-    position: fixed;
+    position: absolute;
     top: 0px;
     right: 0px;
 
@@ -87,10 +94,12 @@ export default {
 }
 
 .pin-code-field {
+  margin-top: 16px;
   width: auto;
 }
 
 .forgot {
+  margin-top: 16px;
   text-align: center;
 }
 </style>

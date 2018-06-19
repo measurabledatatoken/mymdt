@@ -1,6 +1,7 @@
 <template>
   <input ref="pinCodeInput" :class="[position, `pin-input-item`, {invalid: invalid}]" :value="initPinCode"
-    min="0" max="9" :type="type" @input="onValueInput" @focus="onInputFocus" @keydown="onKeyDown">
+    min="0" max="9" :type="type" :pattern="pattern" :inputmode="inputMode" @input="onValueInput" @focus="onInputFocus"
+    @keydown="onKeyDown">
 </template>
 
 <script>
@@ -27,9 +28,27 @@ export default {
         return ['password', 'number'].indexOf(value) !== -1;
       },
     },
+    numericOnly: {
+      default: true,
+      type: Boolean,
+    },
     invalid: {
       default: false,
       type: Boolean,
+    },
+  },
+  computed: {
+    pattern() {
+      if (this.numericOnly) {
+        return '[0-9]*';
+      }
+      return '';
+    },
+    inputMode() {
+      if (this.numericOnly) {
+        return 'numeric';
+      }
+      return '';
     },
   },
   methods: {
@@ -59,8 +78,7 @@ export default {
 <style lang="scss" scoped>
 @mixin left_right_boarder_radius {
   &.left {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-radius: 4px 0px 0px 4px;
 
     &:not(:focus) {
       border-right: 0px;
@@ -74,6 +92,7 @@ export default {
   }
 
   &.middle {
+    border-radius: 0px 0px 0px 0px;
     &:not(:focus) {
       border-right: 0px;
     }
@@ -85,8 +104,7 @@ export default {
   }
 
   &.right {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-radius: 0px 4px 4px 0px;
 
     &.invalid {
       border-top-color: #ff3b30;

@@ -1,18 +1,30 @@
 <template>
   <div>
-    <md-icon md-src="/static/icons/transaction-success.svg"></md-icon>
-    <div class="message">
-      {{ transferAmount.toFixed(4) }} MDT
-      <br> {{ $t('message.transfer.successdetail')}}
-    </div>
+    <template v-if="transferType == TransferType.Email">
+      <md-icon md-src="/static/icons/transaction-success.svg"></md-icon>
+      <div class="message">
+
+        {{ $t('message.transfer.successdetail_email', { 'finalAmount': finalAmount.toFixed(4) })}}
+        <br>
+      </div>
+
+    </template>
+    <template v-else>
+      <md-icon md-src="/static/icons/transaction-pending.svg"></md-icon>
+      <div class="message">
+
+        {{ $t('message.transfer.successdetail_ethwallet')}}
+        <br>
+      </div>
+    </template>
 
     <MDTPrimaryButton @click="onDoneClick" :bottom="true">{{ $t('message.common.done') }}</MDTPrimaryButton>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
-import { RouteDef } from '@/constants';
+import { mapActions, mapMutations } from 'vuex';
+import { RouteDef, TransferType } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
@@ -25,18 +37,31 @@ export default {
       title: this.$t('message.transfer.successtitle'),
     };
   },
-  data() {
-    return {
-      RouteDef,
-    };
-  },
   components: {
     MDTPrimaryButton,
   },
-  computed: {
-    ...mapState({
-      transferAmount: state => state.transfer.transferAmount,
-    }),
+  props: {
+    finalAmount: {
+      type: Number,
+    },
+    fee: {
+      type: Number,
+    },
+    totalAmount: {
+      type: Number,
+    },
+    transferType: {
+      type: String,
+      validator(value) {
+        return [TransferType.EthWallet, TransferType.Email].indexOf(value) !== -1;
+      },
+    },
+  },
+  data() {
+    return {
+      RouteDef,
+      TransferType,
+    };
   },
   methods: {
     ...mapMutations(
@@ -68,5 +93,6 @@ export default {
   margin-top: 20px;
   font-size: 20px;
   line-height: 30px;
+  margin: 16px;
 }
 </style>

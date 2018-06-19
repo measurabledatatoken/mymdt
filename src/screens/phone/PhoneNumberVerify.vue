@@ -81,7 +81,7 @@ export default {
     onEditClick() {
       this.$router.push(
         {
-          name: RouteDef.PhoneNumberAdd.name,
+          name: RouteDef.PhoneNumberSetup.name,
           params: {
             countryDailCode: this.countryDailCode,
             phoneNumber: this.phoneNumber,
