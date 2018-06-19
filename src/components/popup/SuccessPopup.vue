@@ -1,10 +1,10 @@
 <template>
-    <md-dialog md-active.sync="showDialog">
+    <md-dialog :md-active.sync="showDialog">
         <md-icon :md-src="iconSrc"></md-icon>
         <md-dialog-title>
             <span class="title">{{ title }}</span>
         </md-dialog-title>
-        <MDTSubtleButton @click="md-active">Done</MDTSubtleButton>
+        <MDTSubtleButton @click="onClick">{{ confirmText }}</MDTSubtleButton>
     </md-dialog>
 </template>
 
@@ -22,14 +22,21 @@ export default {
     iconSrc: {
       type: String,
     },
+    confirmText: {
+      type: String,
+    },
     active: {
       type: Boolean,
     },
   },
-  data() {
-    return {
-      showDialog: this.active,
-    };
+  computed: {
+    showDialog() { return this.active; },
+  },
+  methods: {
+    onClick(event) {
+      this.showDialog = false;
+      this.$emit('click', event);
+    },
   },
 };
 </script>
@@ -37,7 +44,7 @@ export default {
 <style lang="scss" scoped>
 .md-dialog {
   width: 80%;
-  height: 220px;
+  height: 200px;
 
   .md-icon {
     margin-top: 32px;

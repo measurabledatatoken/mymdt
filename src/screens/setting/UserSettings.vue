@@ -15,19 +15,17 @@
           />
           <md-divider />
         </md-list>
-        <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :active="showPinSetupSuccessPopup"
-          iconSrc="/static/icons/guarded.svg"></SuccessPopup>
+
+        <MDTConfirmPopup :md-active.sync="showAlreadySetPinDialog" :md-title="$t('message.passcode.already_setup_title')"
+          :md-content="$t('message.passcode.already_setup_content')" :md-confirm-text="$t('message.common.change')"
+          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPIN" />
+
+        <MDTConfirmPopup :md-active.sync="showAlreadySetPhoneDialog" :md-title="$t('message.phone.already_setup_title')"
+          :md-content="$t('message.phone.already_setup_content')" :md-confirm-text="$t('message.common.change')"
+          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPhoneNumber" />
       </template>
     </BaseUserSettingPage>
 
-    <MDTConfirmPopup :md-active.sync="showAlreadySetPinDialog" :md-title="$t('message.passcode.already_setup_title')"
-      :md-content="$t('message.passcode.already_setup_content')" :md-confirm-text="$t('message.common.change')"
-      :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPIN" />
-
-
-    <MDTConfirmPopup :md-active.sync="showAlreadySetPhoneDialog" :md-title="$t('message.phone.already_setup_title')"
-      :md-content="$t('message.phone.already_setup_content')" :md-confirm-text="$t('message.common.change')"
-      :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPhoneNumber" />
   </div>
 
 </template>
@@ -35,18 +33,16 @@
 <script>
 import { mapGetters } from 'vuex';
 import { RouteDef } from '@/constants';
-import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
-import SuccessPopup from '@/components/popup/SuccessPopup';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 
 export default {
   components: {
     BaseUserSettingPage,
     BaseSettingListItem,
     SettingListSectionHeader,
-    SuccessPopup,
     MDTConfirmPopup,
   },
   data() {
@@ -56,7 +52,6 @@ export default {
           getSelectedSecurityUser: 'getSelectedSecurityUser',
         },
       ),
-      showPinSetupSuccessPopup: true,
       showAlreadySetPinDialog: false,
       showAlreadySetPhoneDialog: false,
     };

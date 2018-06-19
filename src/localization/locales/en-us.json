@@ -128,7 +128,7 @@
     "create_pin_title": "Please Create 6-digit PIN",
     "reenter_pin_title": "Please Enter Again",
     "not_match": "PIN does not match, please try again",
-    "pin_setup_successfully": "PIN And Phone Number Successfully Set!",
+    "pin_setup_successfully": "PIN setup successfully!",
     "pin_setup_remind_title": "Please Set Up Your PIN",
     "pin_setup_remind_content": "Passcode is important to keep your money safe"
   },
