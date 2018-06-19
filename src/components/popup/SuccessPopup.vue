@@ -1,10 +1,10 @@
 <template>
-    <md-dialog :md-active.sync="showDialog">
+    <md-dialog v-bind="$attrs" v-on="$listeners">
         <md-icon :md-src="iconSrc"></md-icon>
         <md-dialog-title>
             <span class="title">{{ title }}</span>
         </md-dialog-title>
-        <MDTSubtleButton @click="onClick">{{ confirmText }}</MDTSubtleButton>
+        <MDTSubtleButton @click="$emit('md-confirm')">{{ confirmText }}</MDTSubtleButton>
     </md-dialog>
 </template>
 
@@ -24,18 +24,6 @@ export default {
     },
     confirmText: {
       type: String,
-    },
-    active: {
-      type: Boolean,
-    },
-  },
-  computed: {
-    showDialog() { return this.active; },
-  },
-  methods: {
-    onClick(event) {
-      this.showDialog = false;
-      this.$emit('click', event);
     },
   },
 };
