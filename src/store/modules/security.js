@@ -1,4 +1,11 @@
 import api from '@/api';
+import {
+  SET_IS_LOADING,
+} from '@/store/modules/common';
+import {
+  FETCH_USER,
+} from '@/store/modules/entities/users';
+
 
 // mutation
 export const SET_PHONE_NUMBER = 'security/SET_PHONE_NUMBER';
@@ -46,13 +53,18 @@ const actions = {
       );
   },
   // eslint-disable-next-line
-  [SETUP_PIN]({ commit, rootState, rootGetters }, { pin, confirmedPIN }) {
+  [SETUP_PIN]({ commit, dispatch, rootState, rootGetters }, { pin, confirmedPIN }) {
     const account = rootGetters.getUser(rootState.security.selectedUserId);
+    commit(SET_IS_LOADING, true);
 
     return api.security.setupPIN(pin, confirmedPIN, account.accessToken)
-      .then(() => '')
+      .then(() => dispatch(FETCH_USER, { userId: rootState.security.selectedUserId }))
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
       .catch(
         (error) => {
+          commit(SET_IS_LOADING, false);
           throw (error);
         },
       );
