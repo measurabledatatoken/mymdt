@@ -29,10 +29,18 @@ import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 export default {
   props: {
     task: Object,
+    user: Object,
   },
   computed: {
     isExternalUrl() {
       return /.+:\/\/.+/.test(this.task.task_url);
+    },
+    taskUrl() {
+      if (!this.task.task_url) {
+        return '';
+      }
+
+      return this.task.task_url.replace('[email]', this.user.emailAddress);
     },
     description() {
       return this.task.max_completion > 1 ? this.$t('message.earnMDT.maximumAmountToEarn', {
