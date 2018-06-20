@@ -30,6 +30,7 @@
           <TaskItem
             :key="task.task_id"
             :task="task"
+            :user="user"
           />
           <md-divider :key="`${task.task_id}-divider`" />
         </template>
