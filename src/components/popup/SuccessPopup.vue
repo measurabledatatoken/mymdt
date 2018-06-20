@@ -50,8 +50,10 @@ export default {
   }
 
   /deep/ .md-button.subtle {
+    position: absolute;
     width: 100%;
     font-weight: bold;
+    bottom: 10px;
   }
 }
 </style>
