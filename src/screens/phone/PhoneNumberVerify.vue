@@ -39,6 +39,10 @@
         </MDTPrimaryButton>
       </template>
     </BasePhoneNumberPage>
+
+    <SuccessPopup :title="$t('message.phone.phone_setup_success')" :md-active.sync="showPhoneSetupSuccessPopup"
+        iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
+      </SuccessPopup>
   </div>
 </template>
 
@@ -51,6 +55,7 @@ import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
+import SuccessPopup from '@/components/popup/SuccessPopup';
 
 const VerificationCodeLength = 6;
 
@@ -62,6 +67,7 @@ export default {
     MDTPrimaryButton,
     MDTSubtleButton,
     CountDownUnlockButton,
+    SuccessPopup,
   },
   props: {
     countryDailCode: {
@@ -77,6 +83,7 @@ export default {
   data() {
     return {
       verificationCodeFilled: false,
+      showPhoneSetupSuccessPopup: false,
       verificationCode: '',
       VerificationCodeLength,
     };
@@ -127,8 +134,11 @@ export default {
           verificationCode: this.verificationCode,
         },
       ).then(() => {
-        this.backToPath(RouteDef.UserSettings.path);
+        this.showPhoneSetupSuccessPopup = true;
       });
+    },
+    onPopupDoneClicked() {
+      this.backToPath(RouteDef.UserSettings.path);
     },
     onResendClicked() {
 
