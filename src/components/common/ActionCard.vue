@@ -1,5 +1,5 @@
 <template>
-  <md-card class="action-card">
+  <md-card class="action-card" v-bind="$attrs" v-on="$listeners">
     <md-card-media>
       <img :src="imgSrc">
     </md-card-media>
@@ -8,7 +8,7 @@
     </md-card-header>
 
     <md-card-actions>
-      <md-button :to="to">{{ actionName }}</md-button>
+      <md-button :to="to" @click="$listeners.actionClick">{{ actionName }}</md-button>
     </md-card-actions>
   </md-card>
 </template>

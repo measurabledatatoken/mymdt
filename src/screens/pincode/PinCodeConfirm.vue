@@ -4,6 +4,10 @@
       <div class="title" slot="title"> {{ $t('message.passcode.reenter_pin_title') }} </div>
       <template slot="button-text">{{ $t('message.common.nextbtn') }} </template>
     </PinCodeEnterBasePage>
+
+    <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :md-active.sync="showPinSetupSuccessPopup" iconSrc="/static/icons/guarded.svg"
+      :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
+    </SuccessPopup>
   </div>
 </template>
 
@@ -12,6 +16,7 @@ import { mapActions } from 'vuex';
 import { SETUP_PIN } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
+import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
   extends: BasePage,
@@ -22,12 +27,18 @@ export default {
   },
   components: {
     PinCodeEnterBasePage,
+    SuccessPopup,
   },
   props: {
     // pin enter in the setup pin page
     setupedPin: {
       type: String,
     },
+  },
+  data() {
+    return {
+      showPinSetupSuccessPopup: false,
+    };
   },
   methods: {
     ...mapActions({
@@ -42,16 +53,18 @@ export default {
       this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode })
         .then(
           () => {
-            this.$router.go(-2);
+            this.showPinSetupSuccessPopup = true;
           },
         );
+    },
+    onPopupDoneClicked() {
+      this.$router.go(-2);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .title {
   font-size: 16px;
   font-weight: bold;

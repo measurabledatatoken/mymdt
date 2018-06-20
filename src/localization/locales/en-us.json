@@ -9,7 +9,9 @@
     "skip": "Skip",
     "edit": "Edit",
     "nextbtn": "Next",
-    "unknown_error": "Unknown Error, Please contact us with following information."
+    "unknown_error": "Unknown Error, Please contact us with following information.",
+    "change": "Change",
+    "setup": "Setup"
   },
   "home": {
     "total_balance": "Total Balance",
@@ -102,7 +104,7 @@
     "yes_skip": "Yes, skip",
     "phone_setup_success": "Phone Number Successfylly Set!",
     "add_phone_title": "Add Your Phone Number",
-    "add_phone_content": "Add a phone number to your account. We will ask you to enter a verification code.",
+    "add_phone_content": "Add a phone number to your account. \n We will ask you to enter a verification code.",
     "country_code_placeholder": "Country Code",
     "phone_number_placeholder": "Phone Number",
     "verify_phone_title": "Verify Your Phone",
@@ -112,7 +114,9 @@
     "resend_counting": "Can Resend after {second}s",
     "resend": "Resend Verification Code",
     "cant_receive": "Can't receive code?",
-    "invalid_phonenumb er": "Invalid Phone number"
+    "invalid_phonenumb er": "Invalid Phone number",
+    "already_setup_title": "You already set up Phone Number",
+    "already_setup_content": "Would you like to change your Phone Number?"
   },
   "passcode": {
     "pin_popup_title": "Please Enter Your PIN",
@@ -124,14 +128,16 @@
     "create_pin_title": "Please Create 6-digit PIN",
     "reenter_pin_title": "Please Enter Again",
     "not_match": "PIN does not match, please try again",
-    "pin_setup_successfully": "PIN And Phone Number Successfully Set! "
+    "pin_setup_successfully": "PIN setup successfully!",
+    "pin_setup_remind_title": "Please Set Up Your PIN",
+    "pin_setup_remind_content": "Passcode is important to keep your money safe"
   },
   "reportProblem": {
-    "title": "回報問題",
+    "title": "Report Problem",
     "description": "Use the form below to send us your comments.\nPlease descirbe the problem as specific as possible. For example, please include which account you are having trouble with, what did you do and what happened.\nIf you provide your email address, you agree that we may contact you to better understand the comments you submitted.",
-    "emailAddress": "電郵地址",
-    "optional": "選填",
-    "comments": "意見",
+    "emailAddress": "Email Address",
+    "optional": "Optional",
+    "comments": "Comments",
     "upTo500Characters": "Up to 500 characters",
     "submit": "Submit",
     "pleaseInputValidEmailAddress": "Please input valid email address",
