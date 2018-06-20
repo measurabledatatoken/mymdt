@@ -10,10 +10,8 @@
       </template>
 
       <template slot="action-area">
-        <keep-alive>
           <PhoneInputField :initCountryDailCode="countryDailCode" :initPhoneNumber="phoneNumber" v-on:phoneNumberEntered="onPhoneNumberEntered"
             v-on:phoneNumberInvalid="onPhonenNumberInvalid" />
-        </keep-alive>
       </template>
 
       <template slot="buttons">
