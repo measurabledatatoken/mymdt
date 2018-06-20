@@ -8,13 +8,21 @@
           <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
           <md-divider />
           <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
-            />
-            <md-divider />
+            :disabled="!getSelectedSecurityUser().isPasscodeSet" />
           <md-divider />
-          <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" />
+          <md-divider />
+          <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" :disabled="!getSelectedSecurityUser().isPasscodeSet"
+          />
           <md-divider />
         </md-list>
-        <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :active="showPinSetupSuccessPopup" iconSrc="/static/icons/guarded.svg"></SuccessPopup>
+
+        <MDTConfirmPopup :md-active.sync="showAlreadySetPinDialog" :md-title="$t('message.passcode.already_setup_title')"
+          :md-content="$t('message.passcode.already_setup_content')" :md-confirm-text="$t('message.common.change')"
+          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPIN" />
+
+        <MDTConfirmPopup :md-active.sync="showAlreadySetPhoneDialog" :md-title="$t('message.phone.already_setup_title')"
+          :md-content="$t('message.phone.already_setup_content')" :md-confirm-text="$t('message.common.change')"
+          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPhoneNumber" />
       </template>
     </BaseUserSettingPage>
 
@@ -23,38 +31,66 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { RouteDef } from '@/constants';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
-import SuccessPopup from '@/components/popup/SuccessPopup';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 
 export default {
   components: {
     BaseUserSettingPage,
     BaseSettingListItem,
     SettingListSectionHeader,
-    SuccessPopup,
+    MDTConfirmPopup,
   },
   data() {
     return {
-      showPinSetupSuccessPopup: true,
+      ...mapGetters(
+        {
+          getSelectedSecurityUser: 'getSelectedSecurityUser',
+        },
+      ),
+      showAlreadySetPinDialog: false,
+      showAlreadySetPhoneDialog: false,
     };
   },
   methods: {
     onSetupPINClicked() {
       // check if the PIN has already set and show popup
+      if (this.getSelectedSecurityUser().isPasscodeSet) {
+        this.showAlreadySetPinDialog = true;
+        return;
+      }
 
       // Push
       this.$router.push(RouteDef.PinCodeSetup.path);
     },
+    onConfirmSetupPIN() {
+      this.$router.push(RouteDef.PinCodeSetup.path);
+    },
     onSetupPhoneNumberClicked() {
+      if (!this.getSelectedSecurityUser().isPasscodeSet) {
+        return;
+      }
       // check if the Phone Number has already set and show popup
+      if (this.getSelectedSecurityUser().isPhoneConfirmed) {
+        this.showAlreadySetPhoneDialog = true;
+        return;
+      }
 
       // Push
       this.$router.push(RouteDef.PhoneNumberSetup.path);
     },
+    onConfirmSetupPhoneNumber() {
+      this.$router.push(RouteDef.PhoneNumberSetup.path);
+    },
     onPasscodeForgotClicked() {
+      if (!this.getSelectedSecurityUser().isPasscodeSet) {
+        return;
+      }
+
       this.$router.push(RouteDef.PinCodeForgot.path);
     },
   },

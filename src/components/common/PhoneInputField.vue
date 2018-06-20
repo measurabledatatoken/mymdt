@@ -251,7 +251,6 @@ $menuItemHeight: 36px;
   label {
     color: $theme-placehoder-color;
     top: 8px;
-    padding-left: 8px;
   }
 
   &:after {

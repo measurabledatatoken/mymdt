@@ -19,7 +19,9 @@ export default {
   font-size: 16px;
   color: $plainbtn-wordcolor;
   background-color: transparent;
+  text-transform: none;
   box-shadow: none;
+
   &[disabled] {
     color: $plainbtn-wordcolor-disabled;
   }

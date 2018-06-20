@@ -42,5 +42,32 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
+  sendVerificationCodeToPhone(countryCode, phoneNum, accessToken) {
+    const body = {
+      country_code: countryCode,
+      phone_num: phoneNum,
+    };
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/requestotp`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  verifyVerificationCode(countryCode, phoneNum, verificationCode, accessToken) {
+    const body = {
+      country_code: countryCode,
+      phone_number: phoneNum,
+      verification_code: verificationCode,
+    };
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/verifyotp`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
 };
 

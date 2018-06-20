@@ -5,14 +5,20 @@
       </AccountSelector>
     </div>
     <div class="action-card-list">
-      <ActionCard :to="RouteDef.TransferEmail.path" class="left" :title="$t('message.transfer.transferlist_emailtitle')"
+      <ActionCard @actionClick="onTransferMethodClicked(RouteDef.TransferEmail.path)" class="left" :title="$t('message.transfer.transferlist_emailtitle')"
         :actionName="$t('message.common.transferbtn')" imgSrc="/static/icons/transfer-to-email.svg">
       </ActionCard>
-      <ActionCard :to="RouteDef.TransferEthWallet.path" class="right" :title="$t('message.transfer.transferlist_ethtitle')"
+      <ActionCard @actionClick="onTransferMethodClicked(RouteDef.TransferEthWallet.path)" class="right" :title="$t('message.transfer.transferlist_ethtitle')"
         :actionName="$t('message.common.transferbtn')" imgSrc="/static/icons/transfer-to-eth.svg">
       </ActionCard>
     </div>
+
+
+    <MDTConfirmPopup :md-active.sync="showSetupPinDialog" :md-title="$t('message.passcode.pin_setup_remind_title')"
+      :md-content="$t('message.passcode.pin_setup_remind_content')" :md-confirm-text="$t('message.common.setup')"
+      :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPinDialogClick" />
   </div>
+
 
 </template>
 
@@ -21,7 +27,11 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import {
   SET_TRANSFER_FROM_ACCOUNT,
 } from '@/store/modules/transfer';
+import {
+  SET_SELECTED_USER,
+} from '@/store/modules/security';
 import { RouteDef } from '@/constants';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import AccountSelector from '@/components/common/AccountSelector';
 import ActionCard from '@/components/common/ActionCard';
 
@@ -37,6 +47,7 @@ export default {
   data() {
     return {
       RouteDef,
+      showSetupPinDialog: false,
     };
   },
   computed: {
@@ -51,6 +62,7 @@ export default {
   components: {
     AccountSelector,
     ActionCard,
+    MDTConfirmPopup,
   },
   created() {
     this.setTransferFromAccount(this.selectedUser);
@@ -58,7 +70,19 @@ export default {
   methods: {
     ...mapMutations({
       setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+      setSecuritySelectedUser: SET_SELECTED_USER,
     }),
+    onTransferMethodClicked(path) {
+      if (!this.selectedUser.isPasscodeSet) {
+        this.showSetupPinDialog = true;
+      } else {
+        this.$router.push(path);
+      }
+    },
+    onConfirmSetupPinDialogClick() {
+      this.setSecuritySelectedUser(this.selectedUser.emailAddress);
+      this.$router.push(RouteDef.PinCodeSetup.path);
+    },
   },
 };
 </script>
@@ -86,4 +110,5 @@ export default {
     margin: 4% 4% 4% 2%;
   }
 }
+
 </style>
