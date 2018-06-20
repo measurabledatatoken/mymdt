@@ -81,7 +81,11 @@ export default {
     },
     onConfirmSetupPinDialogClick() {
       this.setSecuritySelectedUser(this.selectedUser.emailAddress);
-      this.$router.push(RouteDef.PinCodeSetup.path);
+      this.$router.push(
+        {
+          name: RouteDef.PinCodeSetup.name,
+          params: { doneCallBackPath: RouteDef.TransferList.path },
+        });
     },
   },
 };

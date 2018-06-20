@@ -78,6 +78,7 @@ export default {
     },
     doneCallBackPath: {
       type: String,
+      default: RouteDef.UserSettings.path,
     },
   },
   data() {
@@ -138,7 +139,7 @@ export default {
       });
     },
     onPopupDoneClicked() {
-      this.backToPath(RouteDef.UserSettings.path);
+      this.backToPath(this.doneCallBackPath);
     },
     onResendClicked() {
 

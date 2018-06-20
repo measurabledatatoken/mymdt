@@ -9,14 +9,18 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { RouteDef } from '@/constants';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 
 export default {
-  props: {
-
-  },
   components: {
     BaseUserSettingPage,
+  },
+  props: {
+    doneCallBackPath: {
+      default: RouteDef.UserSettings.path,
+      type: String,
+    },
   },
   methods: {
     ...mapGetters(

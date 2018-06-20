@@ -62,6 +62,7 @@ export default {
       type: String,
     },
     doneCallBackPath: {
+      default: RouteDef.UserSettings.path,
       type: String,
     },
     needSkip: {
@@ -95,7 +96,7 @@ export default {
       );
     },
     confirmSkip() {
-      this.backToPath(RouteDef.UserSettings.path);
+      this.backToPath(this.doneCallBackPath);
     },
     onPhoneNumberEntered(phoneNumberObj) {
       this.phoneNumberObj = phoneNumberObj;
