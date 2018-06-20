@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import { RouteDef } from '@/constants';
 import { SETUP_PIN } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
@@ -40,6 +41,11 @@ export default {
       showPinSetupSuccessPopup: false,
     };
   },
+  computed: {
+    ...mapGetters({
+      getSelectedSecurityUser: 'getSelectedSecurityUser',
+    }),
+  },
   methods: {
     ...mapActions({
       setupPIN: SETUP_PIN,
@@ -58,7 +64,14 @@ export default {
         );
     },
     onPopupDoneClicked() {
-      this.$router.go(-2);
+      if (!this.getSelectedSecurityUser.isPhoneConfirmed) {
+        this.$router.push({
+          name: RouteDef.PhoneNumberSetup.name,
+          params: { needSkip: true },
+        });
+      } else {
+        this.$router.go(-2);
+      }
     },
   },
 };
