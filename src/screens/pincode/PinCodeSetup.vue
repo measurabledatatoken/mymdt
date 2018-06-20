@@ -22,6 +22,12 @@ export default {
   components: {
     PinCodeEnterBasePage,
   },
+  props: {
+    doneCallBackPath: {
+      default: RouteDef.UserSettings.path,
+      type: String,
+    },
+  },
   methods: {
     onNextClicked(pincode) {
       this.$router.push(
@@ -29,6 +35,7 @@ export default {
           name: RouteDef.PinCodeConfirm.name,
           params: {
             setupedPin: pincode,
+            doneCallBackPath: this.doneCallBackPath,
           },
         },
       );
