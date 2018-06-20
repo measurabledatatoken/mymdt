@@ -15,7 +15,7 @@
             {{this.countryDailCode}}
           </div>
           <div class="phone-nbumber">
-            {{this.phoneNumber}}
+            {{this.maskedPhoneNumber}}
           </div>
           <md-button v-on:click="onEditClicked()" :md-ripple="false" class="edit-btn">{{ $t('message.common.edit') }}</md-button>
         </div>
@@ -82,8 +82,17 @@ export default {
     };
   },
   computed: {
-    resendBtnText() {
-      return this.$t('message.phone.resend', { num: 60 });
+    maskedPhoneNumber() {
+      const firstSliceEndIndex = this.phoneNumber.length / 3;
+      const secondSliceEndIndex = 2 * (this.phoneNumber.length / 3);
+
+      let maskedPhoneNumber = this.phoneNumber.slice(0, firstSliceEndIndex);
+      for (let i = firstSliceEndIndex; i < secondSliceEndIndex; i += 1) {
+        maskedPhoneNumber = maskedPhoneNumber.concat('*');
+      }
+      maskedPhoneNumber = maskedPhoneNumber.concat(this.phoneNumber.slice(secondSliceEndIndex, this.phoneNumber.length));
+
+      return maskedPhoneNumber;
     },
   },
   methods: {
