@@ -102,7 +102,7 @@ export default {
 
 .action-card {
   width: 44%;
-  height: 194px;
+  height: 210px;
   margin: 4% 2% 4% 4%;
   float: left;
 
