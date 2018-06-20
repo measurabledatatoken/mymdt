@@ -45,8 +45,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
+import { SET_SELECTED_USER } from '@/store/modules/security';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
@@ -75,7 +76,16 @@ export default {
       return !this.getSelectedSecurityUser().isPhoneConfirmed && this.getSelectedSecurityUser().isPasscodeSet;
     },
   },
+  created() {
+    const emailAddress = this.$route.query.email;
+    if (emailAddress) {
+      this.setSelectedUser(emailAddress);
+    }
+  },
   methods: {
+    ...mapMutations({
+      setSelectedUser: SET_SELECTED_USER,
+    }),
     onSetupPINClicked() {
       // check if the PIN has already set and show popup
       if (this.getSelectedSecurityUser().isPasscodeSet) {
