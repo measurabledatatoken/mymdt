@@ -1,59 +1,61 @@
 <template>
-  <md-list-item class="reward-item" v-bind="$attrs">
-    <div class="reward-item__info">
-      <md-icon class="reward-item__icon" md-src="/static/icons/done.svg" />
-      <div class="md-list-item-text">
-        <span class="reward-item__info-title">{{ reward.name }}</span>
-      </div>
-    </div>
-    <div class="reward-item__action">
-      <div class="action__amount-placholder">
-        <transition name="action__amount-to-earn">
-          <span v-show="!claimed" class="action__amount-to-earn">{{getAmountText()}}</span>
-        </transition>
-        <transition name="action__claim-button" v-on:after-leave="afterLeave">
-          <MDTSecondaryButton
-            v-show="!claimed"
-            @click="handleClickClaimButton"
-            ref="claimButton"
-            class="action__claim-button"
-            color="secondary"
-            :style="claimButtonStyle"
-          >
-            {{getButtonText()}}
-          </MDTSecondaryButton>
-        </transition>
-        <div class="action__amount-wrapper">
-          <transition name="action__amount">
-            <MDTSecondaryButton v-if="showAmount" class="action__amount" disabled>{{ `+${getAmountText()}` }}</MDTSecondaryButton>
+  <BaseEarnMDTItem
+    class="earn-mdt-reward-item"
+    :title="reward.name"
+    md-src="/static/icons/done.svg"
+    v-bind="$attrs"
+  >
+    <template slot="action">
+      <div class="earn-mdt-reward-item-action">
+        <div class="earn-mdt-reward-item-action__amount-placholder">
+          <transition name="earn-mdt-reward-item-action__amount-to-earn">
+            <span v-show="!claimed" class="earn-mdt-reward-item-action__amount-to-earn">{{ amountText }}</span>
           </transition>
-          <transition name="deco">
-            <span v-if="showAmount" class="deco deco__left deco__left-1"></span>
+          <transition name="earn-mdt-reward-item-action__claim-button" v-on:after-leave="afterLeave">
+            <MDTSecondaryButton
+              v-show="!claimed"
+              @click="handleClickClaimButton"
+              ref="claimButton"
+              class="earn-mdt-reward-item-action__claim-button"
+              color="secondary"
+              :style="claimButtonStyle"
+            >
+              {{ buttonText }}
+            </MDTSecondaryButton>
           </transition>
-          <transition name="deco">
-            <span v-if="showAmount" class="deco deco__left deco__left-2"></span>
-          </transition>
-          <transition name="deco">
-            <span v-if="showAmount" class="deco deco__left deco__left-3"></span>
-          </transition>
-          <transition name="deco">
-            <span v-if="showAmount" class="deco deco__right deco__right-1"></span>
-          </transition>
-          <transition name="deco">
-            <span v-if="showAmount" class="deco deco__right deco__right-2"></span>
-          </transition>
-          <transition name="deco">
-            <span v-if="showAmount" class="deco deco__right deco__right-3"></span>
-          </transition>
+          <div class="earn-mdt-reward-item-action__amount-wrapper">
+            <transition name="earn-mdt-reward-item-action__amount">
+              <MDTSecondaryButton v-if="showAmount" class="earn-mdt-reward-item-action__amount" disabled>{{ `+${amountText}` }}</MDTSecondaryButton>
+            </transition>
+            <transition name="deco">
+              <span v-if="showAmount" class="deco deco__left deco__left-1"></span>
+            </transition>
+            <transition name="deco">
+              <span v-if="showAmount" class="deco deco__left deco__left-2"></span>
+            </transition>
+            <transition name="deco">
+              <span v-if="showAmount" class="deco deco__left deco__left-3"></span>
+            </transition>
+            <transition name="deco">
+              <span v-if="showAmount" class="deco deco__right deco__right-1"></span>
+            </transition>
+            <transition name="deco">
+              <span v-if="showAmount" class="deco deco__right deco__right-2"></span>
+            </transition>
+            <transition name="deco">
+              <span v-if="showAmount" class="deco deco__right deco__right-3"></span>
+            </transition>
+          </div>
         </div>
       </div>
-    </div>
-  </md-list-item>
+    </template>
+  </BaseEarnMDTItem>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 
+import BaseEarnMDTItem from '@/components/task/BaseEarnMDTItem';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 import { CLAIM_REWARD } from '@/store/modules/entities/rewards';
 import { formatAmount } from '@/utils';
@@ -74,20 +76,17 @@ export default {
     claimed() {
       return this.reward.status === 4;
     },
+    buttonText() {
+      return this.claimed ? '' : this.$t('message.earnMDT.claim');
+    },
+    amountText() {
+      return `${formatAmount(this.reward.value, { type: 'short' })} ${this.reward.currency}`;
+    },
   },
   methods: {
     ...mapActions({
       claimReward: CLAIM_REWARD,
     }),
-    getButtonText() {
-      if (this.claimed) {
-        return '';
-      }
-      return this.$t('message.earnMDT.claim');
-    },
-    getAmountText() {
-      return `${formatAmount(this.reward.value, { type: 'short' })} ${this.reward.currency}`;
-    },
     handleClickClaimButton() {
       this.claimReward({
         rewardId: this.reward.id,
@@ -104,10 +103,12 @@ export default {
     }
   },
   mounted() {
-    this.claimButtonStyle = {
-      height: `${this.$refs.claimButton.$el.clientHeight}px`,
-      width: `${this.$refs.claimButton.$el.clientWidth}px`,
-    };
+    this.$nextTick(() => {
+      this.claimButtonStyle = {
+        height: `${this.$refs.claimButton.$el.clientHeight}px`,
+        width: `${this.$refs.claimButton.$el.clientWidth}px`,
+      };
+    });
 
     // TODO: is more fine-tuned needed?
     // const style = this.$refs.claimButton.$el.currentStyle || window.getComputedStyle(this.$refs.claimButton.$el);
@@ -120,50 +121,34 @@ export default {
     // };
   },
   components: {
+    BaseEarnMDTItem,
     MDTSecondaryButton,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.reward-item {
+.earn-mdt-reward-item {
   /deep/ .md-list-item-content {
     display: block;
   }
 
-  .reward-item__info {
-    display: flex;
-    align-items: flex-start;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    margin-bottom: 0.5rem;
-
-    .reward-item__info-title {
-      font-weight: bold;
-      color: $label-color;
-    }
-
-    .reward-item__icon {
-      line-height: 1.25rem;
-      width: 1rem;
-      height: 1rem;
-
-      /deep/ svg {
-        fill: $theme-secondary-color;
-      }
+  /deep/ .md-icon {
+    svg {
+      fill: $theme-secondary-color;
     }
   }
 
-  .reward-item__action {
+  .earn-mdt-reward-item-action {
     justify-content: flex-end;
     display: flex;
 
-    .action__claim-button {
+    .earn-mdt-reward-item-action__claim-button {
       margin-right: 0px;
       margin-left: 0px;
     }
 
-    .action__claim-button-leave-active {
+    .earn-mdt-reward-item-action__claim-button-leave-active {
       min-width: 0;
       animation-name: shrink;
       animation-duration: 0.4s;
@@ -171,39 +156,43 @@ export default {
       animation-fill-mode: forwards;
     }
 
-    .action__amount-to-earn {
+    .earn-mdt-reward-item-action__amount-to-earn {
       font-size: 0.875rem;
+      font-weight: bold;
       color: $theme-secondary-color;
       margin-right: 0.625rem;
     }
 
-    .action__amount-to-earn-leave-active {
-      animation-name: action__amount-to-earn-animation;
+    .earn-mdt-reward-item-action__amount-to-earn-leave-active {
+      animation-name: earn-mdt-reward-item-action__amount-to-earn-animation;
       animation-duration: 0.4s;
       animation-timing-function: linear;
       animation-fill-mode: forwards;
     }
 
-    .action__amount-placholder {
+    .earn-mdt-reward-item-action__amount-placholder {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-left: auto;
       line-height: 1.25rem;
 
-      .action__amount-wrapper {
+      .earn-mdt-reward-item-action__amount-wrapper {
         position: relative;
 
-        .action__amount {
+        .earn-mdt-reward-item-action__amount {
           background-color: transparent;
           color: $theme-secondary-color;
           min-width: 0;
+          font-weight: bold;
+          box-shadow: none;
+
           /deep/ .md-ripple {
             padding: 0;
           }
         }
 
-        .action__amount-enter-active {
+        .earn-mdt-reward-item-action__amount-enter-active {
           animation-name: zoomIn;
           animation-duration: 0.5s;
           animation-fill-mode: forwards;
@@ -276,14 +265,12 @@ export default {
   }
 }
 
-@keyframes action__amount-to-earn-animation {
+@keyframes earn-mdt-reward-item-action__amount-to-earn-animation {
   from {
     opacity: 1;
-    // transform: translateX(0);
   }
   to {
     opacity: 0;;
-    // transform: translateX(100%);
   }
 }
 

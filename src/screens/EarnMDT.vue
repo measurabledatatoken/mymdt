@@ -4,43 +4,34 @@
       <UserInfoCard :user="user" small>
       </UserInfoCard>
       <md-list class="account-task-list">
-        <li
-          v-if="uiState.users[user.emailAddress].isFetchingRewards"
-          class="account-task-list__loading-item"
-        >
-          <Skeleton width="80%" />
-          <Skeleton width="50%" />
-          <Skeleton class="account-task-list__loading-item-button" width="60px" />
-        </li>
+        <template v-if="uiState.users[user.emailAddress].isFetchingRewards">
+          <EarnMDTLoadingItem />
+          <md-divider />
+        </template>
         <template
           v-else-if="Array.isArray(user.rewards) && user.rewards.length > 0"
-          v-for="reward in getRewards(user.rewards)"
+          v-for="reward in getRewards(user.rewards).filter(reward => reward)"
         >
-            <RewardItem
-              v-if="reward"
-              :key="reward.id"
-              :reward="reward"
-              :userId="user.emailAddress"
-            />
-            <md-divider v-if="reward" :key="`${reward.id}-divider`" />
+          <RewardItem
+            :key="reward.id"
+            :reward="reward"
+            :userId="user.emailAddress"
+          />
+          <md-divider :key="`${reward.id}-divider`" />
         </template>
-        <li
-          v-if="uiState.users[user.emailAddress].isFetchingTasks"
-          class="account-task-list__loading-item"
-        >
-          <Skeleton width="80%" />
-          <Skeleton width="50%" />
-          <Skeleton class="account-task-list__loading-item-button" width="60px" />
-        </li>
+        <template v-if="uiState.users[user.emailAddress].isFetchingTasks">
+          <EarnMDTLoadingItem />
+          <md-divider />
+        </template>
         <template
           v-else-if="Array.isArray(user.tasks) && user.tasks.filter(task => !task.is_task_completed).length > 0"
           v-for="task in user.tasks.filter(task => !task.is_task_completed)"
         >
-            <TaskItem
-              :key="task.task_id"
-              :task="task"
-            />
-            <md-divider :key="`${task.task_id}-divider`" />
+          <TaskItem
+            :key="task.task_id"
+            :task="task"
+          />
+          <md-divider :key="`${task.task_id}-divider`" />
         </template>
       </md-list>
     </li>
@@ -53,6 +44,7 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 import BasePage from '@/screens/BasePage';
 import Skeleton from '@/components/common/Skeleton';
 import UserInfoCard from '@/components/common/UserInfoCard';
+import EarnMDTLoadingItem from '@/components/task/EarnMDTLoadingItem';
 import RewardItem from '@/components/task/RewardItem';
 import TaskItem from '@/components/task/TaskItem';
 
@@ -97,6 +89,7 @@ export default {
   components: {
     UserInfoCard,
     Skeleton,
+    EarnMDTLoadingItem,
     RewardItem,
     TaskItem,
   },
@@ -113,6 +106,10 @@ export default {
     list-style: none;
     padding: 0;
     margin-top: 0;
+
+    li:last-of-type {
+      display: none;
+    }
 
     .account-task-list__loading-item {
       padding: 0.25rem 1.5rem;
