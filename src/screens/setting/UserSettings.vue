@@ -5,10 +5,24 @@
         <md-list>
           <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
           <md-divider />
-          <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
+          <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked">
+            <template slot="action-data" v-if="!getSelectedSecurityUser().isPasscodeSet">
+              {{$t('message.settings.setUpNow')}}
+            </template>
+            <template slot="action-data" v-if="getSelectedSecurityUser().isPasscodeSet">
+              <md-icon md-src="/static/icons/settings-account-3.svg"></md-icon>
+            </template>
+          </base-setting-list-item>
           <md-divider />
           <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
-            :disabled="!getSelectedSecurityUser().isPasscodeSet" />
+            :disabled="!getSelectedSecurityUser().isPasscodeSet">
+            <template slot="action-data" v-if="showPhoneNumberSetup">
+              {{$t('message.settings.setUpNow')}}
+            </template>
+            <template slot="action-data" v-if="getSelectedSecurityUser().isPhoneConfirmed">
+              <md-icon md-src="/static/icons/settings-account-3.svg"></md-icon>
+            </template>
+          </base-setting-list-item>
           <md-divider />
           <md-divider />
           <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" :disabled="!getSelectedSecurityUser().isPasscodeSet"
@@ -55,6 +69,11 @@ export default {
       showAlreadySetPinDialog: false,
       showAlreadySetPhoneDialog: false,
     };
+  },
+  computed: {
+    showPhoneNumberSetup() {
+      return !this.getSelectedSecurityUser().isPhoneConfirmed && this.getSelectedSecurityUser().isPasscodeSet;
+    },
   },
   methods: {
     onSetupPINClicked() {
