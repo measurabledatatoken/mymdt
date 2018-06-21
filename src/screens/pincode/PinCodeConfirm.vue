@@ -12,8 +12,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import { RouteDef } from '@/constants';
 import { SETUP_PIN } from '@/store/modules/security';
+import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
@@ -34,15 +36,25 @@ export default {
     setupedPin: {
       type: String,
     },
+    doneCallBackPath: {
+      default: RouteDef.UserSettings.path,
+      type: String,
+    },
   },
   data() {
     return {
       showPinSetupSuccessPopup: false,
     };
   },
+  computed: {
+    ...mapGetters({
+      getSelectedSecurityUser: 'getSelectedSecurityUser',
+    }),
+  },
   methods: {
     ...mapActions({
       setupPIN: SETUP_PIN,
+      backToPath: BACK_TO_PATH,
     }),
     onCodeFilled(pincode) {
       if (this.setupedPin !== pincode) {
@@ -58,7 +70,15 @@ export default {
         );
     },
     onPopupDoneClicked() {
-      this.$router.go(-2);
+      if (!this.getSelectedSecurityUser.isPhoneConfirmed) {
+        this.$router.push({
+          name: RouteDef.PhoneNumberSetup.name,
+          params: { needSkip: true },
+          doneCallBackPath: this.doneCallBackPath,
+        });
+      } else {
+        this.backToPath(this.doneCallBackPath);
+      }
     },
   },
 };

@@ -15,7 +15,7 @@
             {{this.countryDailCode}}
           </div>
           <div class="phone-nbumber">
-            {{this.phoneNumber}}
+            {{this.maskedPhoneNumber}}
           </div>
           <md-button v-on:click="onEditClicked()" :md-ripple="false" class="edit-btn">{{ $t('message.common.edit') }}</md-button>
         </div>
@@ -39,6 +39,10 @@
         </MDTPrimaryButton>
       </template>
     </BasePhoneNumberPage>
+
+    <SuccessPopup :title="$t('message.phone.phone_setup_success')" :md-active.sync="showPhoneSetupSuccessPopup"
+        iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
+      </SuccessPopup>
   </div>
 </template>
 
@@ -51,6 +55,7 @@ import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
+import SuccessPopup from '@/components/popup/SuccessPopup';
 
 const VerificationCodeLength = 6;
 
@@ -62,6 +67,7 @@ export default {
     MDTPrimaryButton,
     MDTSubtleButton,
     CountDownUnlockButton,
+    SuccessPopup,
   },
   props: {
     countryDailCode: {
@@ -72,18 +78,29 @@ export default {
     },
     doneCallBackPath: {
       type: String,
+      default: RouteDef.UserSettings.path,
     },
   },
   data() {
     return {
       verificationCodeFilled: false,
+      showPhoneSetupSuccessPopup: false,
       verificationCode: '',
       VerificationCodeLength,
     };
   },
   computed: {
-    resendBtnText() {
-      return this.$t('message.phone.resend', { num: 60 });
+    maskedPhoneNumber() {
+      const firstSliceEndIndex = this.phoneNumber.length / 3;
+      const secondSliceEndIndex = 2 * (this.phoneNumber.length / 3);
+
+      let maskedPhoneNumber = this.phoneNumber.slice(0, firstSliceEndIndex);
+      for (let i = firstSliceEndIndex; i < secondSliceEndIndex; i += 1) {
+        maskedPhoneNumber = maskedPhoneNumber.concat('*');
+      }
+      maskedPhoneNumber = maskedPhoneNumber.concat(this.phoneNumber.slice(secondSliceEndIndex, this.phoneNumber.length));
+
+      return maskedPhoneNumber;
     },
   },
   methods: {
@@ -118,8 +135,11 @@ export default {
           verificationCode: this.verificationCode,
         },
       ).then(() => {
-        this.backToPath(RouteDef.UserSettings.path);
+        this.showPhoneSetupSuccessPopup = true;
       });
+    },
+    onPopupDoneClicked() {
+      this.backToPath(this.doneCallBackPath);
     },
     onResendClicked() {
 

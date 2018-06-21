@@ -35,6 +35,7 @@ export default {
 .md-button {
   position: absolute;
   left: 0;
+  min-width: 56px;;
   height: $header-height;
   margin: 0;
 }

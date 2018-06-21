@@ -10,10 +10,8 @@
       </template>
 
       <template slot="action-area">
-        <keep-alive>
-          <PhoneInputField :initCountryDailCode="countryDailCode" :initPhoneNumber="phoneNumber" v-on:phoneNumberEntered="onPhoneNumberEntered"
-            v-on:phoneNumberInvalid="onPhonenNumberInvalid" />
-        </keep-alive>
+        <PhoneInputField :initCountryDailCode="countryDailCode" :initPhoneNumber="phoneNumber" v-on:phoneNumberEntered="onPhoneNumberEntered"
+          v-on:phoneNumberInvalid="onPhonenNumberInvalid" />
       </template>
 
       <template slot="buttons">
@@ -21,17 +19,19 @@
         <MDTSubtleButton v-on:click="skipClicked()" class="skip-btn" v-if="needSkip">{{ $t('message.common.skip') }}</MDTSubtleButton>
       </template>
 
-      <md-dialog-confirm :md-active.sync="showWarningPrompt" :md-title="$t('message.phone.skip_setup_title')"
-        :md-content="$t('message.phone.skip_setup_content')" :md-cancel-text="$t('message.common.cancel')"
-        :md-confirm-text="$t('message.phone.yes_skip')" @md-confirm="confirmSkip" />
-
     </BasePhoneNumberPage>
+
+    <md-dialog-confirm :md-active.sync="showWarningPrompt" :md-title="$t('message.phone.skip_setup_title')"
+      :md-content="$t('message.phone.skip_setup_content')" :md-cancel-text="$t('message.common.cancel')"
+      :md-confirm-text="$t('message.phone.yes_skip')" @md-confirm="confirmSkip" />
 
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
+import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import PhoneInputField from '@/components/common/PhoneInputField';
@@ -62,6 +62,7 @@ export default {
       type: String,
     },
     doneCallBackPath: {
+      default: RouteDef.UserSettings.path,
       type: String,
     },
     needSkip: {
@@ -76,6 +77,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      backToPath: BACK_TO_PATH,
+    }),
     skipClicked() {
       this.showWarningPrompt = true;
     },
@@ -92,7 +96,7 @@ export default {
       );
     },
     confirmSkip() {
-      // TODO: skip the setting
+      this.backToPath(this.doneCallBackPath);
     },
     onPhoneNumberEntered(phoneNumberObj) {
       this.phoneNumberObj = phoneNumberObj;

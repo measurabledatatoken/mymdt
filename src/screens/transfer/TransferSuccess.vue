@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="transferType == TransferType.Email">
+    <template v-if="transferType === TransferType.Email">
       <md-icon md-src="/static/icons/transaction-success.svg"></md-icon>
       <div class="message">
 
@@ -30,6 +30,7 @@ import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
+import { FLUSH_TRANSFER_DATA } from '@/store/modules/transfer';
 import { BACK_TO_HOME } from '@/store/modules/common';
 
 import { formatAmount } from '@/utils';
@@ -72,6 +73,7 @@ export default {
     ...mapMutations(
       {
         setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
+        flushTransferData: FLUSH_TRANSFER_DATA,
       },
     ),
     ...mapActions(
@@ -80,6 +82,7 @@ export default {
       },
     ),
     onDoneClick() {
+      this.flushTransferData();
       this.setIsUserAcctionsDirty(true);
       this.backToHome();
     },
