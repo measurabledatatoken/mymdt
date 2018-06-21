@@ -1,20 +1,37 @@
 <template>
-    <BaseUserSettingPage v-bind="$attrs" @click="onNextClicked">
-        <template slot="content">
+  <BaseUserSettingPage v-bind="$attrs">
+    <template slot="content">
 
-            <div> Forgot PIN</div>
-        </template>
-    </BaseUserSettingPage>
+      <div class="phone-title"> {{ $t('message.settings.phoneNumber') }}</div>
+      <div class="phone-num" :class="{'none': !selectedSecurityUser.phoneNumber}"> {{ selectedSecurityUser.phoneNumber ? this.maskedPhoneNumber : $t('message.common.none')
+        }}
+      </div>
+
+      <MDSubtleButton @click="onSendVerificationCodePressed" class="resend"> {{ $t('message.phone.send') }} </MDSubtleButton>
+      <MDSubtleButton :to="RouteDef.ReportProblem.path"> {{ $t('message.settings.stillNeedHelp') }} </MDSubtleButton>
+    </template>
+  </BaseUserSettingPage>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { RouteDef } from '@/constants';
+import { maskFullPhoneNumber } from '@/helpers/phoneUtil';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
+import BasePage from '@/screens/BasePage';
+import MDSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
+  metaInfo() {
+    return {
+      title: this.$t('message.passcode.forgot_pin'),
+    };
+  },
+  extends: BasePage,
   components: {
     BaseUserSettingPage,
+    BasePage,
+    MDSubtleButton,
   },
   props: {
     doneCallBackPath: {
@@ -22,15 +39,52 @@ export default {
       type: String,
     },
   },
-  methods: {
+  data() {
+    return {
+      RouteDef,
+    };
+  },
+  computed: {
     ...mapGetters(
       {
-        getSelectedSecurityUser: 'getSelectedSecurityUser',
+        selectedSecurityUser: 'getSelectedSecurityUser',
       },
     ),
+    maskedPhoneNumber() {
+      return maskFullPhoneNumber(this.selectedSecurityUser.phoneNumber);
+    },
+  },
+  methods: {
+
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.phone-title {
+  color: $label-color;
+  font-weight: bold;
+  text-align: left;
+  margin: 8px 0px;
+}
+
+.phone-num {
+  color: $label-color;
+  font-size: 16px;
+  text-align: left;
+  margin-bottom: 20px;
+
+  &.none {
+    color: $theme-placehoder-color;
+  }
+}
+
+.md-button {
+  float: left;
+
+  /deep/ .md-ripple {
+    padding: 0;
+    justify-content: left;
+  }
+}
 </style>

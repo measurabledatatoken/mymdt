@@ -51,6 +51,7 @@ import { mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
 import { VERIFY_VERIFICATION_CODE } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
+import { maskPhoneNumber } from '@/helpers/phoneUtil';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
@@ -91,16 +92,7 @@ export default {
   },
   computed: {
     maskedPhoneNumber() {
-      const firstSliceEndIndex = this.phoneNumber.length / 3;
-      const secondSliceEndIndex = 2 * (this.phoneNumber.length / 3);
-
-      let maskedPhoneNumber = this.phoneNumber.slice(0, firstSliceEndIndex);
-      for (let i = firstSliceEndIndex; i < secondSliceEndIndex; i += 1) {
-        maskedPhoneNumber = maskedPhoneNumber.concat('*');
-      }
-      maskedPhoneNumber = maskedPhoneNumber.concat(this.phoneNumber.slice(secondSliceEndIndex, this.phoneNumber.length));
-
-      return maskedPhoneNumber;
+      return maskPhoneNumber(this.phoneNumber);
     },
   },
   methods: {

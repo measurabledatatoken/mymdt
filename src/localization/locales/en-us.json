@@ -11,7 +11,8 @@
     "nextbtn": "Next",
     "unknown_error": "Unknown Error, Please contact us with following information.",
     "change": "Change",
-    "setup": "Setup"
+    "setup": "Setup",
+    "none": "None"
   },
   "home": {
     "total_balance": "Total Balance",
@@ -93,7 +94,8 @@
     "legalAndPrivacy": "Legal & Privacy",
     "phoneNumber": "Phone Number",
     "setUpNow": "Set Up Now",
-    "accountSecurity": "Account Security"
+    "accountSecurity": "Account Security",
+    "stillNeedHelp": "Still Need Help?"
   },
   "priceUnit": {
     "title": "Price Unit"
@@ -114,6 +116,7 @@
     "verification_code_placeholder": "6-digit Number",
     "resend_counting": "Can Resend after {second}s",
     "resend": "Resend Verification Code",
+    "send": "Send Verification Code",
     "cant_receive": "Can't receive code?",
     "invalid_phonenumb er": "Invalid Phone number",
     "already_setup_title": "You already set up Phone Number",
