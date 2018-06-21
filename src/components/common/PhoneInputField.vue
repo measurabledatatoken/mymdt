@@ -112,6 +112,7 @@ export default {
         console.log(`tempCountryCode:${tempCountryCode}  newValue:}${newValue}`);
         if (tempCountryCode === newValue) {
           this.countryDailCode = tempCountryCode;
+          this.processFullPhoneEntered();
           break;
         }
       }
