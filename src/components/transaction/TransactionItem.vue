@@ -5,7 +5,7 @@
     </md-avatar>
     <div class="md-list-item-text">
       <TransactionTitle :transaction="transaction" />
-      <span>{{ (showApplication && application) ? application.name : transaction.transaction_time }}</span>
+      <span>{{ (showApplication && application) ? application.name : $d(new Date(transaction.transaction_time), 'long') }}</span>
     </div>
     <div v-bind:class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
       <span>{{ formattedAmount }} MDT</span>
