@@ -1,4 +1,11 @@
 
+<template>
+  <div class="basepage">
+    <slot></slot>
+  </div>
+</template>
+
+
 <script>
 import { mapMutations } from 'vuex';
 import { SET_NAVIGATION_TITLE, SET_IS_LOADING } from '@/store/modules/common';
@@ -20,6 +27,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="scss">
+   .basepage {
+     margin-left: $defaultPageMargin;
+     margin-right: $defaultPageMargin;
+   }
 </style>
