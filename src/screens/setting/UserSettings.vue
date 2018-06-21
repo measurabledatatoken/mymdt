@@ -5,10 +5,24 @@
         <md-list>
           <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
           <md-divider />
-          <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked" />
+          <base-setting-list-item :title="$t('message.passcode.pin_setup_title')" @click="onSetupPINClicked">
+            <template slot="action-data" v-if="!getSelectedSecurityUser().isPasscodeSet">
+              {{$t('message.settings.setUpNow')}}
+            </template>
+            <template slot="action-data" v-if="getSelectedSecurityUser().isPasscodeSet">
+              <md-icon md-src="/static/icons/settings-account-3.svg"></md-icon>
+            </template>
+          </base-setting-list-item>
           <md-divider />
           <base-setting-list-item :title="$t('message.settings.phoneNumber')" @click="onSetupPhoneNumberClicked"
-            :disabled="!getSelectedSecurityUser().isPasscodeSet" />
+            :disabled="!getSelectedSecurityUser().isPasscodeSet">
+            <template slot="action-data" v-if="showPhoneNumberSetup">
+              {{$t('message.settings.setUpNow')}}
+            </template>
+            <template slot="action-data" v-if="getSelectedSecurityUser().isPhoneConfirmed">
+              <md-icon md-src="/static/icons/settings-account-3.svg"></md-icon>
+            </template>
+          </base-setting-list-item>
           <md-divider />
           <md-divider />
           <base-setting-list-item :title="$t('message.passcode.forgot_pin')" @click="onPasscodeForgotClicked" :disabled="!getSelectedSecurityUser().isPasscodeSet"
@@ -31,8 +45,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
+import { SET_SELECTED_USER } from '@/store/modules/security';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
@@ -56,7 +71,21 @@ export default {
       showAlreadySetPhoneDialog: false,
     };
   },
+  computed: {
+    showPhoneNumberSetup() {
+      return !this.getSelectedSecurityUser().isPhoneConfirmed && this.getSelectedSecurityUser().isPasscodeSet;
+    },
+  },
+  created() {
+    const emailAddress = this.$route.query.email;
+    if (emailAddress) {
+      this.setSelectedUser(emailAddress);
+    }
+  },
   methods: {
+    ...mapMutations({
+      setSelectedUser: SET_SELECTED_USER,
+    }),
     onSetupPINClicked() {
       // check if the PIN has already set and show popup
       if (this.getSelectedSecurityUser().isPasscodeSet) {

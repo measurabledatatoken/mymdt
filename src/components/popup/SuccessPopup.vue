@@ -32,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 .md-dialog {
   width: 80%;
-  height: 200px;
+  height: 220px;
 
   .md-icon {
     margin-top: 32px;
@@ -42,13 +42,18 @@ export default {
   }
 
   .md-dialog-title {
-    padding-top: 0px;
+    padding-top: 10px;
+    margin-bottom: 10px;
     font-size: 20px;
     text-align: center;
+    font-weight: bold;
   }
 
   /deep/ .md-button.subtle {
+    position: absolute;
     width: 100%;
+    font-weight: bold;
+    bottom: 10px;
   }
 }
 </style>

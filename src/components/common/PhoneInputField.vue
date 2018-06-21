@@ -26,7 +26,7 @@
 
     <md-field class="phone-number-input" md-inline>
       <label>{{ $t('message.phone.phone_number_placeholder')}}</label>
-      <md-input type="number" v-model="phoneNumber" v-on:keydown="phoneNumberEntered($event.target.value)"></md-input>
+      <md-input type="number" v-model="phoneNumber" v-on:input="phoneNumberEntered"></md-input>
       <span v-if="isFullPhoneNumberEntered && !isFullPhoneNumberValid" class="md-helper-text">{{ $t('message.phone.invalid_phonenumber') }}</span>
     </md-field>
   </div>

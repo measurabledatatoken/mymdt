@@ -61,6 +61,8 @@ export default {
 }
 
 .md-button {
+  position: absolute;
+  bottom: 12px;
   background-color: $bluebtn-backgroundcolor;
   color: $bluebtn-wordcolor !important;
   height: 24px;

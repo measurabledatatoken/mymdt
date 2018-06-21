@@ -72,7 +72,7 @@ export default {
       return true;
     },
     isWalletAmountValid() {
-      return this.transferAmount < this.transferFromAccount.mdtBalance;
+      return this.transferAmount <= this.transferFromAccount.mdtBalance;
     },
   },
   created() {
