@@ -34,26 +34,21 @@ export default {
       isAddressValid: true,
     };
   },
-  mounted() {
-    const ethAddress = getEthAddressFromString(this.walletAddress);
-    if (ethAddress == null) {
-      this.isAddressValid = false;
-      this.$emit('walletAddressInvalid', ethAddress);
-    } else {
-      this.isAddressValid = true;
-      this.$emit('walletAddressEntered', ethAddress);
-    }
+  watch: {
+    walletAddress: (newValue) => {
+      const ethAddress = getEthAddressFromString(newValue);
+      if (ethAddress == null) {
+        this.isAddressValid = false;
+        this.$emit('walletAddressInvalid', newValue);
+      } else {
+        this.isAddressValid = true;
+        this.$emit('walletAddressEntered', newValue);
+      }
+    },
   },
   methods: {
     valueChanged(value) {
-      const ethAddress = getEthAddressFromString(value);
-      if (ethAddress == null) {
-        this.isAddressValid = false;
-        this.$emit('walletAddressInvalid', value);
-      } else {
-        this.isAddressValid = true;
-        this.$emit('walletAddressEntered', value);
-      }
+      this.walletAddress = value;
     },
   },
   components: {
