@@ -14,13 +14,13 @@
     <TransactionDetailItem
       v-if="typeof transaction.transaction_fee === 'number'"
       :title="$t('message.transaction.transactionFee')"
-      :description="`${formatAmount(transaction.transaction_fee)} MDT`"
+      :description="`${formatAmount(transaction.transaction_fee, { type: 'long' })} MDT`"
       :singleLine="true"
     />
     <TransactionDetailItem
       v-if="typeof transaction.account_balance === 'number'"
       :title="$t('message.transaction.accountBalance')"
-      :description="`${formatAmount(transaction.account_balance)} MDT`"
+      :description="`${formatAmount(transaction.account_balance, { type: 'long' })} MDT`"
       :singleLine="true"
     />
   </md-list>

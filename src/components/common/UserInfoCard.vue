@@ -1,5 +1,5 @@
 <template>
-  <md-card md-with-hover>
+  <md-card :md-with-hover="hover">
     <div v-on:click="$emit('goToAccountDetail')" class="md-card-header">
         <UserInfo :user="user" :small="small"></UserInfo>
     </div>
@@ -17,6 +17,10 @@ export default {
   props: {
     user: Object,
     small: Boolean,
+    hover: {
+      type: Boolean,
+      default: true,
+    },
   },
   components: {
     UserInfo,

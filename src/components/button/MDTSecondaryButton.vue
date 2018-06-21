@@ -1,5 +1,5 @@
 <template>
-  <md-button :class="['secondary-button', { 'secondary-button__color--secondary': color === 'secondary' }]" v-bind="$attrs" v-on="$listeners">
+  <md-button :class="['md-raised', 'secondary-button', { 'secondary-button__color--secondary': color === 'secondary' }]" v-bind="$attrs" v-on="$listeners">
     <slot></slot>
   </md-button>
 </template>
@@ -12,7 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 .md-button {
-  &.secondary-button {
+  &.secondary-button.md-raised {
     height: auto;
     min-width: 6.5625rem;
     font-size: 0.875rem;
@@ -21,6 +21,7 @@ export default {
     color: white;
     background-color: $theme-color;
     border-radius: 1rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 
     &.secondary-button__color--secondary {
       background-color: $theme-secondary-color;

@@ -1,6 +1,8 @@
 import api from '@/api';
 import { delay } from '@/utils';
 
+import { FETCH_USER } from '@/store/modules/entities/users';
+
 export const FETCHING_TRANSACTIONS = 'transaction/FETCHING_TRANSACTIONS';
 export const FETCHING_TRANSACTIONS_SUCCESS = 'transaction/FETCHING_TRANSACTIONS_SUCCESS';
 export const FETCHING_TRANSACTIONS_FAILURE = 'transaction/FETCHING_TRANSACTIONS_FAILURE';
@@ -28,19 +30,41 @@ const mutations = {
   },
 };
 
+function getLatestTimeFromTransactions(transactions) {
+  return transactions.reduce((latestTime, transaction) => {
+    const transactionTime = new Date(transaction.transaction_time);
+    if (transactionTime > latestTime) {
+      return transactionTime;
+    }
+
+    return latestTime;
+  }, new Date(0));
+}
+
 const actions = {
-  [FETCH_TRANSACTIONS]({ commit, rootGetters }, { userId }) {
+  [FETCH_TRANSACTIONS]({ commit, dispatch, getters, rootGetters }, { userId }) {
     commit(FETCHING_TRANSACTIONS, {
       userId,
     });
-    return Promise.all([
-      api.transaction.getTransactions(rootGetters.getUser(userId).accessToken),
-      delay(750),
-    ])
-      .then(([data]) => commit(FETCHING_TRANSACTIONS_SUCCESS, {
-        userId,
-        data,
-      }))
+    return delay(750).then(() => api.transaction.getTransactions(rootGetters.getUser(userId).accessToken))
+      .then((data) => {
+        const currentTransactionIds = rootGetters.getUser(userId).transactions;
+        const currentTransactions = getters.getTransactions(currentTransactionIds).filter(transactions => transactions);
+        const currentLatestTime = getLatestTimeFromTransactions(currentTransactions);
+        const fetchedTransactions = data.result.map(tranactionId => data.entities.transactions[tranactionId]);
+        const fetchedLatestTime = getLatestTimeFromTransactions(fetchedTransactions);
+
+        if (fetchedLatestTime > currentLatestTime) {
+          dispatch(FETCH_USER, {
+            userId,
+          });
+        }
+
+        commit(FETCHING_TRANSACTIONS_SUCCESS, {
+          userId,
+          data,
+        });
+      })
       .catch(error => commit(FETCHING_TRANSACTIONS_FAILURE, {
         userId,
         error,

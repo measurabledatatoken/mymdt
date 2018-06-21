@@ -2,10 +2,10 @@
   <div class="home">
     <div class="top-content">
       <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
-      <div class="balance-count">{{ totalMDTBalance }} MDT</div>
+      <div class="balance-count">{{ formatAmount(totalMDTBalance) }} MDT</div>
 
       <div class="account-content">
-        <div class="balance-value">≈ {{ totalMDTValues.toFixed(2) }} USD</div>
+        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }} USD</div>
         <div class="accountnum">{{ accountNumStr }}</div>
       </div>
     </div>
@@ -23,6 +23,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+
 import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import {
   SET_SELECTED_USER, REQUEST_MDT_PRICE,
@@ -35,6 +36,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import LoadingPopup from '@/components/common/LoadingPopup';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
+import { formatAmount } from '@/utils';
 
 export default {
   extends: BasePage,
@@ -158,6 +160,7 @@ export default {
         },
       );
     },
+    formatAmount,
   },
 };
 </script>
