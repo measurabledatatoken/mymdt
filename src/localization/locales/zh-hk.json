@@ -11,7 +11,8 @@
     "nextbtn": "下一步",
     "unknown_error": "未知錯誤，請提供以下信息與我們聯繫。",
     "change": "更改",
-    "setup": "設定"
+    "setup": "設定",
+    "none": "没有"
   },
   "home": {
     "total_balance": "总結餘",
@@ -93,7 +94,8 @@
     "legalAndPrivacy": "法律和隱私",
     "phone_number": "電話號碼",
     "setUpNow": "現在設定",
-    "accountSecurity": "帳號保安"
+    "accountSecurity": "帳號保安",
+    "stillNeedHelp": "仍需要幫助?"
   },
   "priceUnit": {
     "title": "價格單位"
@@ -114,6 +116,7 @@
     "verification_code_placeholder": "6位數字驗證碼",
     "resend_counting": "在{num}秒之後可以重新發送",
     "resend": "重發驗證碼",
+    "send": "發送驗證碼",
     "cant_receive": "無法接收代碼？",
     "invalid_phonenumber": "無效的電話號碼",
     "already_setup_title": "您已經設置了電話號碼",
