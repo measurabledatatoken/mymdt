@@ -49,7 +49,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
-import { VERIFY_VERIFICATION_CODE } from '@/store/modules/security';
+import { ADD_PHONE_NUMBER } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import { maskPhoneNumber } from '@/helpers/phoneUtil';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      verifyVerificationCode: VERIFY_VERIFICATION_CODE,
+      addPhoneNumber: ADD_PHONE_NUMBER,
       backToPath: BACK_TO_PATH,
     }),
     onEditClicked() {
@@ -120,7 +120,7 @@ export default {
       }
     },
     onDoneClicked() {
-      this.verifyVerificationCode(
+      this.addPhoneNumber(
         {
           countryCode: this.countryDailCode,
           phoneNum: this.phoneNumber,

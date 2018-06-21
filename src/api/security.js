@@ -42,6 +42,20 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
+  resetPIN(newPIN, confirmedPIN, verificationCode, accessToken) {
+    const body = {
+      new_pin: newPIN,
+      confirmed_pin: confirmedPIN,
+      verification_code: verificationCode,
+    };
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/reset`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
   sendVerificationCodeToPhone(countryCode, phoneNum, accessToken) {
     const body = {
       country_code: countryCode,
@@ -55,13 +69,28 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
-  verifyVerificationCode(countryCode, phoneNum, verificationCode, accessToken) {
+  addPhoneNumber(countryCode, phoneNum, verificationCode, accessToken) {
     const body = {
       country_code: countryCode,
       phone_number: phoneNum,
       verification_code: verificationCode,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/verifyotp`,
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/add`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  changePhoneNumber(countryCode, phoneNum, verificationCode, pin, accessToken) {
+    const body = {
+      country_code: countryCode,
+      phone_number: phoneNum,
+      verification_code: verificationCode,
+      pin,
+    };
+    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/change`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
