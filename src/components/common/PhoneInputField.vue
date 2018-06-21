@@ -172,6 +172,7 @@ $menuItemHeight: 36px;
 .md-menu-content {
   border-radius: 0px 0px 4px 4px !important;
   overflow: hidden;
+  -webkit-overflow-scrolling: touch;
 
   /deep/ .md-scrollbar {
     &::-webkit-scrollbar {
