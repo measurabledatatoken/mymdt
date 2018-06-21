@@ -28,7 +28,7 @@
                 {{ account.emailAddress }}
               </div>
               <div class="account-balance">
-                {{ `${$t('message.transfer.amountlbl')}: ${parseFloat(account.mdtBalance).toFixed(4)}` }} MDT
+                {{ `${$t('message.transfer.amountlbl')}: ${formatAmount(account.mdtBalance)}` }} MDT
               </div>
             </div>
             <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
@@ -56,6 +56,7 @@
 
 <script>
 import BaseField from '@/components/input/BaseField';
+import { formatAmount } from '@/utils';
 
 export default {
   props: {
@@ -112,7 +113,7 @@ export default {
         return '';
       }
       const balance = this.selectedAccount.mdtBalance;
-      const balanceStr = parseFloat(balance.toFixed(4));
+      const balanceStr = formatAmount(balance);
       return `${balanceStr} MDT`;
     },
     filteredAccounts() {
@@ -137,6 +138,7 @@ export default {
     menuClosed() {
       this.isMenuOpened = false;
     },
+    formatAmount,
   },
   created() {
     this.selectedOther = true;

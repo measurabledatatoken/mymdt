@@ -13,7 +13,7 @@
         <div class="amount-container">
           <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
           <div class='amount-unit'>MDT</div>
-          <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
+          <div class='amount-value'>{{ formatAmount(transferAmount) }}</div>
         </div>
       </div>
 
@@ -21,13 +21,13 @@
         <div class="amount-container">
           <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
           <div class='amount-unit'>MDT</div>
-          <div class='amount-value'>{{ transferAmount.toFixed(4) }}</div>
+          <div class='amount-value'>{{ formatAmount(transferAmount) }}</div>
         </div>
 
         <div class="transaction-fee-container">
           <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
           <div class='amount-unit'>MDT</div>
-          <div class="transaction-fee-value"> {{ transactionFee }}</div>
+          <div class="transaction-fee-value"> {{ formatAmount(transactionFee) }}</div>
         </div>
 
         <md-divider></md-divider>
@@ -62,6 +62,8 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
+
+import { formatAmount } from '@/utils';
 
 export default {
   extends: BasePage,
@@ -102,7 +104,7 @@ export default {
       return this.transferToAccount.emailAddress;
     },
     finalAmountStr() {
-      return this.finalAmount <= 0 ? '--' : this.finalAmount.toFixed(4);
+      return this.finalAmount <= 0 ? '--' : formatAmount(this.finalAmount);
     },
     isWalletAmountValid() {
       return this.transferAmount < this.transferFromAccount.mdtBalance;
@@ -151,6 +153,7 @@ export default {
           console.log(`error in onPinCodeFilled: ${err.message}`);
         });
     },
+    formatAmount,
   },
 };
 </script>
