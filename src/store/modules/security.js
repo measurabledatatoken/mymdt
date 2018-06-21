@@ -15,9 +15,11 @@ export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 export const VALIDATE_TRANSFER_PIN = 'security/VALIDATE_TRANSFER_PIN';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
+export const RESET_PIN = 'security/RESET_PIN';
 
 export const SEND_VERIFICATION_CODE = 'security/SEND_VERIFICATION_CODE';
-export const VERIFY_VERIFICATION_CODE = 'security/VERIFY_VERIFICATION_CODE';
+export const ADD_PHONE_NUMBER = 'security/ADD_PHONE_NUMBER';
+export const CHANGE_PHONE_NUMBER = 'security/CHANGE_PHONE_NUMBER';
 
 const state = {
   phoneNumber: null,
@@ -52,7 +54,21 @@ const actions = {
         },
       );
   },
-  // eslint-disable-next-line
+  [RESET_PIN]({ commit, rootState, rootGetters }, { pin, confirmedPIN, verificationCode }) {
+    const account = rootGetters.getUser(rootState.security.selectedUserId);
+    commit(SET_IS_LOADING, true);
+
+    return api.security.resetPIN(pin, confirmedPIN, verificationCode, account.accessToken)
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
+      .catch(
+        (error) => {
+          commit(SET_IS_LOADING, false);
+          throw (error);
+        },
+      );
+  },
   [SETUP_PIN]({ commit, dispatch, rootState, rootGetters }, { pin, confirmedPIN }) {
     const account = rootGetters.getUser(rootState.security.selectedUserId);
     commit(SET_IS_LOADING, true);
@@ -69,36 +85,58 @@ const actions = {
         },
       );
   },
-  // eslint-disable-next-line
   [CHANGE_PIN]({ commit, rootState, rootGetters }, { oldPIN, newPIN, confirmedPIN }) {
     const account = rootGetters.getUser(rootState.security.selectedUserId);
+    commit(SET_IS_LOADING, true);
 
     return api.security.changePIN(oldPIN, newPIN, confirmedPIN, account.accessToken)
-      .then(() => '')
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
       .catch(
         (error) => {
+          commit(SET_IS_LOADING, false);
           throw (error);
         },
       );
   },
-  // eslint-disable-next-line
   [SEND_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum }) {
-    const account = rootGetters.getUser(this.state.security.selectedUserId);
+    const account = rootGetters.getUser(rootState.security.selectedUserId);
     return api.security.sendVerificationCodeToPhone(countryCode, phoneNum, account.accessToken)
-      .then(() => '')
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
       .catch(
         (error) => {
+          commit(SET_IS_LOADING, false);
           throw (error);
         },
       );
   },
   // eslint-disable-next-line
-  [VERIFY_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum, verificationCode }) {
+  [ADD_PHONE_NUMBER]({ commit, rootState, rootGetters }, { countryCode, phoneNum, verificationCode }) {
     const account = rootGetters.getUser(this.state.security.selectedUserId);
-    return api.security.verifyVerificationCode(countryCode, phoneNum, verificationCode, account.accessToken)
-      .then(() => '')
+    return api.security.addPhoneNumber(countryCode, phoneNum, verificationCode, account.accessToken)
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
       .catch(
         (error) => {
+          commit(SET_IS_LOADING, false);
+          throw (error);
+        },
+      );
+  },
+  // eslint-disable-next-line
+   [CHANGE_PHONE_NUMBER]({ commit, rootState, rootGetters }, { countryCode, phoneNum, pin, verificationCode }) {
+    const account = rootGetters.getUser(this.state.security.selectedUserId);
+    return api.security.addPhoneNumber(countryCode, phoneNum, verificationCode, pin, account.accessToken)
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
+      .catch(
+        (error) => {
+          commit(SET_IS_LOADING, false);
           throw (error);
         },
       );
