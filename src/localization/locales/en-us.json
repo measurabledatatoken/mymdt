@@ -1,8 +1,8 @@
 {
   "common": {
     "transferbtn": "Transfer",
-    "okay": "okay",
-    "unknow_error": "Somthing went wrong... <br> Please try again later",
+    "okay": "Okay",
+    "unknow_error": "Something went wrong... <br> Please try again later",
     "error_title": "Something is wrong",
     "done": "Done",
     "cancel": "Cancel",
@@ -27,8 +27,8 @@
     "emailtitle": "Transfer to Email Address",
     "reviewtitle": "Review",
     "successtitle": "Success",
-    "successdetail_email": "{finalAmount} MDT successfully transfered!",
-    "successdetail_ethwallet": "Your MDT is on its way. We are processing the transaction. Please check the status in your transactions history.",
+    "successdetail_email": "{finalAmount} MDT successfully transferred!",
+    "successdetail_ethwallet": "Your MDT is on its way. We are processing the transaction. Please check the status in your transaction history.",
     "amountlbl": "Amount",
     "fromlbl": "From",
     "tolbl": "To",
@@ -37,7 +37,7 @@
     "other_emailaddress": "Other email address...",
     "enter_emailaddress": "Type email address",
     "notelbl": "Note",
-    "note_placeholder": "Optional note. Up to {num} charater",
+    "note_placeholder": "Optional note. Up to {num} character",
     "transferlist_emailtitle": "Transfer MDT to Email Account",
     "transferlist_ethtitle": "Transfer MDT to External ETH Wallet",
     "transfer": "transfer",
@@ -78,9 +78,9 @@
     "redeem": "Redeem",
     "internalTransfer": "Transfer",
     "externalTransfer": "Transfer",
-    "transferOutToEmail": "Transfer Out to {email}",
+    "transferOutToEmail": "Transfer out to {email}",
     "transferInFromEmail": "Transfer in from {email}",
-    "transferOutToETHWallet": "Transfer Out to ETH Wallet",
+    "transferOutToETHWallet": "Transfer out to ETH Wallet",
     "deposit": "Deposit",
     "noTransaction": "No Transaction"
   },
@@ -90,10 +90,10 @@
     "security": "Security",
     "help": "Help",
     "reportProblem": "Report Problem",
-    "legalAndPrivary": "Legal & Privacy",
+    "legalAndPrivacy": "Legal & Privacy",
     "phoneNumber": "Phone Number",
-    "accountSecurity": "Account Security",
-    "setUpNow": "Set Up Now"
+    "setUpNow": "Set Up Now",
+    "accountSecurity": "Account Security"
   },
   "priceUnit": {
     "title": "Price Unit"
@@ -103,7 +103,7 @@
     "skip_setup_title": "Skip Phone Setup?",
     "skip_setup_content": "Are you sure? Adding a phone number will make your account more secure. If you skip now, you can always add your phone number in Settings -> Security.",
     "yes_skip": "Yes, skip",
-    "phone_setup_success": "Phone Number Successfylly Set!",
+    "phone_setup_success": "Phone Number Successfully Set!",
     "add_phone_title": "Add Your Phone Number",
     "add_phone_content": "Add a phone number to your account. \n We will ask you to enter a verification code.",
     "country_code_placeholder": "Country Code",
@@ -135,7 +135,7 @@
   },
   "reportProblem": {
     "title": "Report Problem",
-    "description": "Use the form below to send us your comments.\nPlease descirbe the problem as specific as possible. For example, please include which account you are having trouble with, what did you do and what happened.\nIf you provide your email address, you agree that we may contact you to better understand the comments you submitted.",
+    "description": "Use the form below to send us your comments.\nPlease describe the problem as specific as possible. For example, please include which account you are having trouble with, what did you do and what happened.\nIf you provide your email address, you agree that we may contact you to better understand the comments you submitted.",
     "emailAddress": "Email Address",
     "optional": "Optional",
     "comments": "Comments",

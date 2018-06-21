@@ -11,10 +11,10 @@
     "nextbtn": "下一步",
     "unknown_error": "未知错误,请提供以下信息与我们联系。",
     "change": "更改",
-    "setup": "设定"
+    "setup": "设置"
   },
   "home": {
-    "total_balance": "结余",
+    "total_balance": "总余额",
     "title": "MDT 钱包",
     "settings": "设定",
     "tutorial": "教学",
@@ -45,12 +45,12 @@
     "final_amount": "最终数量",
     "invalid_email": "无效的电邮地址",
     "invalid_ethaddress": "无效的以太钱包地址",
-    "insufficient_fund": "帐号MDT数量不够,请减才少数量或另选帐号。"
+    "insufficient_fund": "该帐号MDT数量不够,请减才少数量或另选帐号。"
   },
   "qrcode": {
     "title": "扫描二维码",
-    "my_photo_library": "我的相簿",
-    "align_description": "请把二维码放在框中扫描",
+    "my_photo_library": "我的相册",
+    "align_description": "将二维码放入框中扫描",
     "eth_scan_wrong_type": "请只扫描以太钱包地址的二维码",
     "eth_address_invalid": "不是正确的以太钱包地址"
   },
@@ -73,7 +73,7 @@
     "to": "至",
     "note": "备注",
     "transactionFee": "手续费",
-    "accountBalance": "帐户结余",
+    "accountBalance": "帐户余额",
     "taskReward": "Task Reward",
     "redeem": "兑换",
     "internalTransfer": "转帐",
@@ -85,15 +85,15 @@
     "noTransaction": "没有交易"
   },
   "settings": {
-    "title": "设定",
+    "title": "设置",
     "martketPriceUnit": "MDT市场价格单位",
     "security": "安全",
     "help": "帮助",
     "reportProblem": "回报问题",
-    "legalAndPrivary": "法律和隐私",
+    "legalAndPrivacy": "法律和隐私",
     "phoneNumber": "电话号码",
-    "accountSecurity": "帐号保安",
-    "setUpNow": "当前设置"
+    "setUpNow": "现在设定",
+    "accountSecurity": "帐号保安"
   },
   "priceUnit": {
     "title": "价格单位"
@@ -116,8 +116,8 @@
     "重发": "重发验证码",
     "cant_receive": "无法接收代码？",
     "invalid_phonenumber": "无效的电话号码",
-    "already_setup_title": "您已經設置了電話號碼",
-    "already_setup_content": "你想更改你的電話號碼嗎？"
+    "already_setup_title": "您已经设置了电话号码",
+    "already_setup_content": "您想更改电话号码吗？"
   },
   "passcode": {
     "pin_popup_title": "请输入您的PIN码",
@@ -131,15 +131,15 @@
     "not_match": "PIN不符,请重试",
     "pin_setup_successfully": "成功设定PIN！",
     "pin_setup_remind_title": "请设定你的PIN",
-    "pin_setup_remind_content": "PIN可以保护你的資產"
+    "pin_setup_remind_content": "PIN可以保护你的资产"
   },
   "reportProblem": {
     "title": "回报问题",
-    "description": "请使用下面的表格向我们发送您的意见。请尽可能详细地描述问题。例如,请列出您遇到问题的哪个帐户,您做了什么以及发生了什么。\n如果您提供了您的电子邮件地址,则表示您同意我们可能会与您联系,以便更好地理解您提交的意见。",
+    "description": "请使用下面的表格向我们发送您的意见，并尽可能详细地描述问题。例如,请列出您遇到问题的哪个帐户,您做了什么以及发生了什么。\n如果您提供了电邮地址,则表示您同意我们可能会与您联系,以便更好地理解您提交的意见。",
     "emailAddress": "电邮地址",
     "optional": "选填",
     "comments": "意见",
-    "upTo500Characters": "最多输入五百个字元",
+    "upTo500Characters": "最多输入五百个字符",
     "submit": "提交",
     "pleaseInputValidEmailAddress": "请输入正确的电邮地址",
     "thisFieldIsMandatory": "此栏为必填",
@@ -153,7 +153,7 @@
   "earnMDT": {
     "title": "赚取 MDT",
     "amountPerTime": "{amount}/次",
-    "go": "Go",
+    "go": "去完成",
     "claim": "认领",
     "invite": "邀请",
     "maximumAmountToEarn": "最多 {amount} {currency}",

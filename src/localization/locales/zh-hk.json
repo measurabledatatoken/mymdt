@@ -14,7 +14,7 @@
     "setup": "設定"
   },
   "home": {
-    "total_balance": "結餘",
+    "total_balance": "总結餘",
     "title": "MDT 錢包",
     "settings": "設定",
     "tutorial": "教學",
@@ -90,10 +90,10 @@
     "security": "安全",
     "help": "幫助",
     "reportProblem": "回報問題",
-    "legalAndPrivary": "法律和隱私",
+    "legalAndPrivacy": "法律和隱私",
     "phone_number": "電話號碼",
-    "accountSecurity": "帳號保安",
-    "setUpNow": "現在設定"
+    "setUpNow": "現在設定",
+    "accountSecurity": "帳號保安"
   },
   "priceUnit": {
     "title": "價格單位"
@@ -153,7 +153,7 @@
   "earnMDT": {
     "title": "賺取 MDT",
     "amountPerTime": "{amount}/次",
-    "go": "Go",
+    "go": "去完成",
     "claim": "認領",
     "invite": "邀請",
     "maximumAmountToEarn": "最多 {amount} {currency}",
