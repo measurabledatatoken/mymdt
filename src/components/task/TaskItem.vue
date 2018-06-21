@@ -10,8 +10,8 @@
       <div class="earn-mdt-task-item__action">
         <span class="earn-mdt-task-item-action__amount-to-earn">{{ amountText }}</span>
         <MDTSecondaryButton
-          :href="isExternalUrl ? task.task_url : null"
-          :to="isExternalUrl ? null : task.task_url"
+          :href="isExternalUrl ? taskUrl : null"
+          :to="isExternalUrl ? null : taskUrl"
           class="earn-mdt-task-item-action__claim-button"
         >
           {{ $t('message.earnMDT.go') }}
@@ -39,7 +39,6 @@ export default {
       if (!this.task.task_url) {
         return '';
       }
-
       return this.task.task_url.replace('[email]', this.user.emailAddress);
     },
     description() {
