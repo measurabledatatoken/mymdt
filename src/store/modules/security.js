@@ -12,12 +12,12 @@ export const SET_PHONE_NUMBER = 'security/SET_PHONE_NUMBER';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 
 // action
-export const VALIDATE_TRANSFER_PIN = 'security/VALIDATE_TRANSFER_PIN';
+export const VALIDATE_PIN = 'security/VALIDATE_PIN';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 export const RESET_PIN = 'security/RESET_PIN';
 
-export const SEND_VERIFICATION_CODE = 'security/SEND_VERIFICATION_CODE';
+export const REQUEST_VERIFICATION_CODE = 'security/REQUEST_VERIFICATION_CODE';
 export const ADD_PHONE_NUMBER = 'security/ADD_PHONE_NUMBER';
 export const CHANGE_PHONE_NUMBER = 'security/CHANGE_PHONE_NUMBER';
 
@@ -43,7 +43,7 @@ const mutations = {
 
 const actions = {
   // eslint-disable-next-line
-  [VALIDATE_TRANSFER_PIN]({ commit, rootState, rootGetters }, pin) {
+  [VALIDATE_PIN]({ commit, rootState, rootGetters }, pin) {
     const transferFromAccount = rootState.transfer.transferFromAccount;
 
     return api.security.validatePIN(pin, transferFromAccount.accessToken)
@@ -100,7 +100,7 @@ const actions = {
         },
       );
   },
-  [SEND_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum }) {
+  [REQUEST_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum }) {
     const account = rootGetters.getUser(rootState.security.selectedUserId);
     return api.security.sendVerificationCodeToPhone(countryCode, phoneNum, account.accessToken)
       .then(() => {
