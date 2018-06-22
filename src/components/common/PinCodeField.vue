@@ -1,19 +1,25 @@
 <template>
   <div class="pin-code-field">
-    <ul class="pin-code-container">
-      <li class="field-wrap" v-for="(item, index) in length" :key="index">
-        <PinCodeItem ref="pinCodeItem" :position="getPositionForIndex(index, length)" @input="onPinInput(index, ...arguments)"
-          @backspace="onBackspacePressed(index)" @focus="onInputFocus(index)" :invalid="invalid">
-        </PinCodeItem>
+    <ul :class="['pin-code-container', { 'pin-code-container--invalid': invalid } ]">
+      <li v-for="(item, index) in length" :key="index">
+        <input
+          class="pin-code-input"
+          ref="pinCodeItem"
+          :type="type"
+          :pattern="pattern"
+          :value="pinCodeChars[index].display"
+          maxlength="1"
+          @input="onCharInput(index, $event.target.value)"
+          @keydown="onCharKeyDown(index, $event)"
+          @focus="onCharFocus(index)"
+        />
       </li>
     </ul>
-    <div class="invalid-description" :hidden="!invalid">{{ invalidDescription }}</div>
+    <div class="invalid-description" v-if="invalid">{{ invalidDescription }}</div>
   </div>
 </template>
 
 <script>
-import PinCodeItem from '@/components/common/PinCodeItem';
-
 export default {
   props: {
     length: {
@@ -21,8 +27,10 @@ export default {
       type: Number,
       required: true,
     },
-    initPinCode: {
-      default: '',
+    initPinCodeChars: {
+      type: Array,
+    },
+    correctPinCode: {
       type: String,
     },
     shouldAutoFocus: {
@@ -31,17 +39,35 @@ export default {
     },
     invalidDescription: {
       default: '',
-      tupe: String,
+      type: String,
     },
-  },
-  components: {
-    PinCodeItem,
+    pattern: {
+      default: '\\d*',
+      type: String,
+    },
+    type: {
+      default: 'password',
+      type: String,
+    },
   },
   data() {
     return {
-      pinCode: this.initPinCode,
       invalid: false,
+      pinCodeChars: this.initPinCodeChars || Array.from(Array(this.length)).map(() => ({ value: undefined, display: undefined })),
     };
+  },
+  computed: {
+    filled() {
+      return this.pinCodeChars.every(char => this.isValidChar(char.value));
+    },
+    pinCode() {
+      return this.pinCodeChars.reduce((partial, char) => {
+        if (this.isValidChar(char.value)) {
+          return `${partial}${char.value.toString()}`;
+        }
+        return partial;
+      }, '');
+    },
   },
   mounted() {
     if (this.shouldAutoFocus) {
@@ -49,69 +75,81 @@ export default {
         setTimeout(
           () => {
             this.$refs.pinCodeItem[0].focus();
-          }, 300,
+          }, 750,
         );
       },
       );
     }
   },
-  methods: {
-    getPositionForIndex(index, length) {
-      if (index === 0) {
-        return 'left';
-      } else if (index === length - 1) {
-        return 'right';
-      }
-      return 'middle';
-    },
-    onPinInput(index, pinCode) {
-      if (this.pinCode[index] === undefined) {
-        this.pinCode = this.pinCode.concat(pinCode.toString());
+  watch: {
+    filled(val) {
+      if (val) {
+        this.$emit('filled', this.pinCode);
       } else {
-        this.pinCode[index] = pinCode;
+        this.$emit('unfilled');
+      }
+    },
+  },
+  methods: {
+    isValidChar(char) {
+      return !!(char || char === 0);
+    },
+    updatePincodeChar(index, char, options) {
+      // eslint-disable-next-line
+      options = {
+        updateValue: true,
+        updateDisplay: true,
+        ...options,
+      };
+
+      if (options.updateValue) {
+        this.pinCodeChars[index].value = char;
       }
 
-      if (index < this.length - 1) {
-        this.$refs.pinCodeItem[index + 1].focus();
-      } else {
-        this.$emit('codefilled', this.pinCode);
+      if (options.updateDisplay) {
+        this.pinCodeChars[index].display = char;
       }
     },
-    onInputFocus(index) {
-      this.$emit('focus');
+    onCharInput(index, char) {
       this.invalid = false;
-      const curPinCodeLength = this.pinCode.length;
-      if (index === curPinCodeLength - 1) {
-        // Remove pin code and empty the input if it is the latest one
-        const pinCodeItem = this.$refs.pinCodeItem[index];
-        this.pinCode = this.pinCode.slice(0, Math.max(0, index));
-        pinCodeItem.emptyInput();
-      } else if (index < curPinCodeLength - 1) {
-        // focus on last one. Bound the index to length - 1
-        const focusIndex = Math.min(curPinCodeLength, this.length - 1);
-        const pinCodeItem = this.$refs.pinCodeItem[focusIndex];
-        this.pinCode = this.pinCode.slice(0, focusIndex);
-        pinCodeItem.emptyInput();
-        pinCodeItem.focus();
-      } else {
-        const pinCodeItem = this.$refs.pinCodeItem[curPinCodeLength];
-        pinCodeItem.focus();
+      this.updatePincodeChar(index, char);
+
+      if (index > 0 && this.isValidChar(this.pinCodeChars[index - 1].value)) {
+        this.$refs.pinCodeItem[index - 1].value = '●';
+        this.updatePincodeChar(index - 1, '●', {
+          updateValue: false,
+        });
+      }
+
+      if (this.isValidChar(char) && index < this.length - 1 && !this.isValidChar(this.pinCodeChars[index + 1].value)) {
+        this.$refs.pinCodeItem[index + 1].focus();
+      }
+
+      if (this.filled && this.correctPinCode && this.correctPinCode !== this.pinCode) {
+        this.setInvalid();
       }
     },
-    onBackspacePressed(index) {
-      if (index > 0) {
-        this.$refs.pinCodeItem[index - 1].focus();
-        this.pinCode = this.pinCode.slice(0, index - 1);
+    onCharFocus(index) {
+      this.updatePincodeChar(index, undefined);
+    },
+    onCharKeyDown(index, event) {
+      const key = event.key.toLowerCase();
+      if (key === 'backspace' || key === 'delete') {
+        const currentChar = this.pinCodeChars[index].value;
+        if (index > 0 && !this.isValidChar(currentChar)) {
+          this.$refs.pinCodeItem[index - 1].focus();
+        }
       }
     },
     setInvalid() {
       this.invalid = true;
-      this.pinCode = '';
-    },
-    focus(index) {
-      if (index <= this.length - 1) {
-        this.$refs.pinCodeItem[index].focus();
+
+      for (let i = 0; i < this.length; i += 1) {
+        this.$refs.pinCodeItem[i].value = '';
+        this.updatePincodeChar(i, '');
       }
+
+      this.$refs.pinCodeItem[0].focus();
     },
   },
 };
@@ -119,25 +157,81 @@ export default {
 
 <style lang="scss" scoped>
 .pin-code-container {
-  display: flex;
-  justify-content: center;
+  display: inline-block;
   padding: 0px;
-  margin: 0px;
+  margin: 0 0 0.25rem 0;
 
-  .field-wrap {
+  > li {
     list-style: none;
-    display: block;
-    height: 40px;
-    width: 40px;
-    line-height: 40px;
-    font-size: 16px;
-    .char-field {
-      font-style: normal;
+    display: inline-block;
+
+    .pin-code-input {
+      height: 2.5rem;
+      width: 2.5rem;
+      line-height: 1;
+      font-size: 1rem;
+      text-align: center;
+      border: none;
+      border: solid 1px #aaaaaa;
+      border-right: 0px;
+      outline: none;
+      border-radius: 0px 0px 0px 0px;
+      appearance: none;
+
+      &:focus {
+        border-color: $theme-font-color-btn;
+        border-width: 2px;
+        border-right: solid 2px $theme-font-color-btn;
+      }
+    }
+
+    &:first-child {
+      .pin-code-input {
+        border-radius: 4px 0px 0px 4px;
+      }
+    }
+
+    &:last-child {
+      .pin-code-input {
+        border-radius: 0px 4px 4px 0px;
+        border-right: solid 1px #aaaaaa;
+
+        &:focus {
+          border-right: solid 2px $theme-font-color-btn;
+        }
+      }
+    }
+  }
+
+  &.pin-code-container--invalid {
+    > li {
+      .pin-code-input {
+        border-top-color: $error-color;
+        border-bottom-color: $error-color;
+
+        &:focus {
+          border-width: 1px;
+          border-right: 0;
+        }
+      }
+
+      &:first-child {
+        .pin-code-input {
+          border-left-color: $error-color;
+        }
+      }
+
+      &:last-child {
+        .pin-code-input {
+          border-right-color: $error-color;
+        }
+      }
     }
   }
 }
 
 .invalid-description {
-  color: #ff3b30;
+  color: $error-color;
+  @include no-flick;
 }
 </style>
