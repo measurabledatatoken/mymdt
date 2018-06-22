@@ -1,9 +1,12 @@
 <template>
   <div>
-    <PinCodeEnterBasePage ref="pinCodeBasePage" v-bind="$attrs" @click="onDoneClicked" @codefilled="onCodeFilled">
-      <div class="title" slot="title"> {{ $t('message.passcode.reenter_pin_title') }} </div>
-      <template slot="button-text">{{ $t('message.common.nextbtn') }} </template>
-    </PinCodeEnterBasePage>
+    <PinCodeEnterBasePage
+      ref="pinCodeBasePage"
+      :title="$t('message.passcode.reenter_pin_title')"
+      :buttonText="$t('message.common.nextbtn')"
+      :correctPinCode="setupedPin"
+      @click="onDoneClicked"
+    />
 
     <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :md-active.sync="showPinSetupSuccessPopup" iconSrc="/static/icons/guarded.svg"
       :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
@@ -56,11 +59,6 @@ export default {
       setupPIN: SETUP_PIN,
       backToPath: BACK_TO_PATH,
     }),
-    onCodeFilled(pincode) {
-      if (this.setupedPin !== pincode) {
-        this.$refs.pinCodeBasePage.setInvalid();
-      }
-    },
     onDoneClicked(pincode) {
       this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode })
         .then(
