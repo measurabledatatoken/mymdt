@@ -1,12 +1,13 @@
 <template>
-  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false" @md-opened="onMDOpened">
+  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false"
+    @md-opened="onMDOpened">
     <md-button @click="$emit('close-clicked')">
       <md-icon md-src="/static/icons/popup-close.svg"></md-icon>
     </md-button>
 
     <md-dialog-title>
-      <span class="title">{{$t('message.passcode.pin_popup_title')}}</span>
-      <span class="subtitle">{{ emailAddress }}</span>
+      <div class="title">{{ title }}</div>
+      <div class="subtitle">{{ emailAddress }}</div>
     </md-dialog-title>
     <div class="content">
       <PinCodeField ref="pinCodeField" @filled="onCodeFilled" :length="6" :shouldAutoFocus=true></PinCodeField>
@@ -25,6 +26,9 @@ export default {
     PinCodeField,
   },
   props: {
+    title: {
+      type: String,
+    },
     emailAddress: {
       type: String,
     },
@@ -65,26 +69,41 @@ export default {
 
   .md-dialog-title {
     background-color: #f4f6f8;
-    height: 91px;
+    height: 88px;
     margin-bottom: 0px;
+    padding-top: 32px;
+
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 20px;
+    }
 
     .subtitle {
-      font-size: 12px;
+      font-size: 14px;
       color: #bdbdbd;
     }
   }
 
   .md-button {
-    width: 40px;
-    min-width: 40px;
-    height: 40px;
+    height: 32px;
+    width: 32px;
+    min-width: 32px;
+    padding: 8px;
     margin: 0px;
     position: absolute;
     top: 0px;
     right: 0px;
 
-    /deep/ svg {
-      fill: #4a4a4a;
+    /deep/ .md-icon {
+      width: 16px;
+      min-width: 16px;
+      height: 16px;
+      line-height: 16px;
+
+      /deep/ svg {
+        fill: #4a4a4a;
+      }
     }
   }
 
