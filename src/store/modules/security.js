@@ -12,7 +12,8 @@ export const SET_PHONE_NUMBER = 'security/SET_PHONE_NUMBER';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 
 // action
-export const VALIDATE_PIN = 'security/VALIDATE_PIN';
+export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
+export const VALIDATE_PIN_FOR_TRANSFER = 'security/VALIDATE_PIN_FOR_TRANSFER';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 export const RESET_PIN = 'security/RESET_PIN';
@@ -42,8 +43,18 @@ const mutations = {
 };
 
 const actions = {
-  // eslint-disable-next-line
-  [VALIDATE_PIN]({ commit, rootState, rootGetters }, pin) {
+  [VALIDATE_PIN_FOR_SECURITY]({ rootState, rootGetters }, pin) {
+    const account = rootGetters.getUser(rootState.security.selectedUserId);
+
+    return api.security.validatePIN(pin, account.accessToken)
+      .then(() => '')
+      .catch(
+        (error) => {
+          throw (error);
+        },
+      );
+  },
+  [VALIDATE_PIN_FOR_TRANSFER]({ rootState }, pin) {
     const transferFromAccount = rootState.transfer.transferFromAccount;
 
     return api.security.validatePIN(pin, transferFromAccount.accessToken)

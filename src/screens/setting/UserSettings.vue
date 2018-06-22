@@ -39,7 +39,8 @@
           :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPhoneNumber" />
 
         <PinCodeInputPopup ref="pinCodeInputPopup" :md-active.sync="showPinCodeInput" :title="$t('message.passcode.oldpin_title')"
-          :emailAddress="getSelectedSecurityUser.emailAddress" @codefilled="onPinCodeFilled" @close-click="showPinCodeInput = false">
+          :emailAddress="getSelectedSecurityUser.emailAddress" @codefilled="onPinCodeFilled" @close-click="showPinCodeInput = false"
+          @fotgot-click="onFotgotClicked">
         </PinCodeInputPopup>
       </template>
     </BaseUserSettingPage>
@@ -51,7 +52,8 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_SELECTED_USER, VALIDATE_PIN } from '@/store/modules/security';
+import { SET_SELECTED_USER, VALIDATE_PIN_FOR_SECURITY } from '@/store/modules/security';
+import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
@@ -101,7 +103,7 @@ export default {
       setSelectedUser: SET_SELECTED_USER,
     }),
     ...mapActions({
-      validatePIN: VALIDATE_PIN,
+      validatePIN: VALIDATE_PIN_FOR_SECURITY,
     }),
     onSetupPINClicked() {
       // check if the PIN has already set and show popup
@@ -111,7 +113,15 @@ export default {
       }
 
       // Push
-      this.$router.push(RouteDef.PinCodeSetup.path);
+      this.$router.push(
+        {
+          name: RouteDef.PinCodeSetup.name,
+          params: {
+            mode: SetupPINMode.SETUP,
+            doneCallBackPath: RouteDef.UserSettings.path,
+          },
+        },
+      );
     },
     onConfirmSetupPIN() {
       this.showPinCodeInput = true;
@@ -124,8 +134,25 @@ export default {
         })
         .then(() => {
           this.showPinCodeInput = false;
-          this.$router.push(RouteDef.PinCodeSetup.path);
+          this.$router.push(
+            {
+              name: RouteDef.PinCodeSetup.name,
+              params: {
+                mode: SetupPINMode.CHANGE,
+                oldPIN: pinCode,
+                doneCallBackPath: RouteDef.UserSettings.path,
+              },
+            },
+          );
         });
+    },
+    onFotgotClicked() {
+      this.$router.push({
+        name: RouteDef.PinCodeForgot.name,
+        params: {
+          doneCallBackPath: RouteDef.UserSettings.path,
+        },
+      });
     },
     onSetupPhoneNumberClicked() {
       if (!this.getSelectedSecurityUser.isPasscodeSet) {

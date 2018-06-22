@@ -1,7 +1,7 @@
 <template>
   <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false"
     @md-opened="onMDOpened">
-    <md-button @click="$emit('close-clicked')">
+    <md-button @click="$emit('close-click')">
       <md-icon md-src="/static/icons/popup-close.svg"></md-icon>
     </md-button>
 
@@ -12,7 +12,7 @@
     <div class="content">
       <PinCodeField ref="pinCodeField" @filled="onCodeFilled" :length="6" :shouldAutoFocus=true></PinCodeField>
       <div class="forgot">
-        <a href="google.com">{{ $t('message.passcode.forgot_pin') }}</a>
+        <a @click="$emit('fotgot-click')">{{ $t('message.passcode.forgot_pin') }}</a>
       </div>
     </div>
   </md-dialog>
