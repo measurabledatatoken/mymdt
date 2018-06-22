@@ -21,6 +21,11 @@ export default {
   height: 100vh;
 }
 
+
+.md-menu-content-container .md-list {
+  font-family: "Lato", "Avenir", Helvetica, Arial, sans-serif;
+}
+
 body {
   background-color: $app-bgcolor;
 }

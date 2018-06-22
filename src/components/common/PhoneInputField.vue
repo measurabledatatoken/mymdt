@@ -103,6 +103,21 @@ export default {
       return false;
     },
   },
+  watch: {
+    countryCodeSearchText(newValue) {
+      // if there are entry in tempCountryCodeList which match the user input, make it the final dail code too.
+      const filteredCountryCodeList = this.filteredCountryCodeList;
+      for (let i = 0; i < filteredCountryCodeList.length; i += 1) {
+        const tempCountryCode = filteredCountryCodeList[i].dial_code.replace(/\s/g, '');
+        console.log(`tempCountryCode:${tempCountryCode}  newValue:}${newValue}`);
+        if (tempCountryCode === newValue) {
+          this.countryDailCode = tempCountryCode;
+          this.processFullPhoneEntered();
+          break;
+        }
+      }
+    },
+  },
   methods: {
     menuOpened() {
       this.isMenuOpened = true;

@@ -73,8 +73,10 @@ export default {
       if (!this.getSelectedSecurityUser.isPhoneConfirmed) {
         this.$router.push({
           name: RouteDef.PhoneNumberSetup.name,
-          params: { needSkip: true },
-          doneCallBackPath: this.doneCallBackPath,
+          params: {
+            needSkip: true,
+            doneCallBackPath: this.doneCallBackPath,
+          },
         });
       } else {
         this.backToPath(this.doneCallBackPath);
