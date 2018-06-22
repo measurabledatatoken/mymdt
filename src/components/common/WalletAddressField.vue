@@ -6,9 +6,9 @@
     <md-textarea md-autogrow :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
       :value="walletAddress">
     </md-textarea>
-    <md-button class="md-icon-button" :to="RouteDef.TransferEthWalletQrCode.path">
+    <!-- <md-button class="md-icon-button" :to="RouteDef.TransferEthWalletQrCode.path">
       <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>
-    </md-button>
+    </md-button> -->
   </BaseField>
 </template>
 
@@ -34,26 +34,21 @@ export default {
       isAddressValid: true,
     };
   },
-  mounted() {
-    const ethAddress = getEthAddressFromString(this.walletAddress);
-    if (ethAddress == null) {
-      this.isAddressValid = false;
-      this.$emit('walletAddressInvalid', ethAddress);
-    } else {
-      this.isAddressValid = true;
-      this.$emit('walletAddressEntered', ethAddress);
-    }
+  watch: {
+    walletAddress: (newValue) => {
+      const ethAddress = getEthAddressFromString(newValue);
+      if (ethAddress == null) {
+        this.isAddressValid = false;
+        this.$emit('walletAddressInvalid', newValue);
+      } else {
+        this.isAddressValid = true;
+        this.$emit('walletAddressEntered', newValue);
+      }
+    },
   },
   methods: {
     valueChanged(value) {
-      const ethAddress = getEthAddressFromString(value);
-      if (ethAddress == null) {
-        this.isAddressValid = false;
-        this.$emit('walletAddressInvalid', value);
-      } else {
-        this.isAddressValid = true;
-        this.$emit('walletAddressEntered', value);
-      }
+      this.walletAddress = value;
     },
   },
   components: {

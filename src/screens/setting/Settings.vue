@@ -23,7 +23,7 @@
       <md-divider />
       <base-setting-list-item :title="$t('message.settings.reportProblem')" :showAction="false" :to="RouteDef.ReportProblem.path" />
       <md-divider />
-      <base-setting-list-item :title="$t('message.settings.legalAndPrivary')" :showAction="false" />
+      <base-setting-list-item :title="$t('message.settings.legalAndPrivacy')" :showAction="false" />
       <md-divider />
     </md-list>
   </div>

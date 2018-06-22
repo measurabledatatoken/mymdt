@@ -48,12 +48,19 @@
 import { mapGetters, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
 import { SET_SELECTED_USER } from '@/store/modules/security';
+import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 
 export default {
+  metaInfo() {
+    return {
+      title: this.$t('message.settings.title'),
+    };
+  },
+  extends: BasePage,
   components: {
     BaseUserSettingPage,
     BaseSettingListItem,
