@@ -32,7 +32,7 @@ export default {
     const body = {
       old_pin: oldPIN,
       new_pin: newPIN,
-      confirmed_pin: confirmedPIN,
+      new_confirmed_pin: confirmedPIN,
     };
     const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/change`,
       body,
