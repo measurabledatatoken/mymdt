@@ -151,7 +151,7 @@ const router = new Router({
           component: TransferEthWallet,
         },
         {
-          path: RouteDef.TransferEthWalletReview.path,
+          path: RouteDef.TransferReview.path,
           component: TransferReview,
         },
         {
