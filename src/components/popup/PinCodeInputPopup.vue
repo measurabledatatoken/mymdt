@@ -9,7 +9,7 @@
       <span class="subtitle">{{ emailAddress }}</span>
     </md-dialog-title>
     <div class="content">
-      <PinCodeField ref="pinCodeField" @codefilled="onCodeFilled" :length="6" :auto-focus=true></PinCodeField>
+      <PinCodeField ref="pinCodeField" @filled="onCodeFilled" :length="6" :shouldAutoFocus=true></PinCodeField>
       <div class="forgot">
         <a href="google.com">{{ $t('message.passcode.forgot_pin') }}</a>
       </div>

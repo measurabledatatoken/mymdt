@@ -141,6 +141,9 @@ export default {
         }
       }
     },
+    focus(index) {
+      this.$refs.pinCodeItem[index].focus();
+    },
     setInvalid() {
       this.invalid = true;
 
