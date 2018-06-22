@@ -1,7 +1,7 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid"
-      :amount="transferAmount" :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
+    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid" :amount="transferAmount"
+      :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
     <div class="transaction-fee">
       <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
       <div class="transaction-fee-value"> {{ formatAmount(transactionFee) }} MDT</div>
@@ -13,11 +13,11 @@
     </div>
 
     <div class="extra-space"> </div>
-    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')" :accounts="fromUserAccounts"
-      :selectedAccount="transferFromAccount">
+    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')"
+      :accounts="fromUserAccounts" :selectedAccount="transferFromAccount">
     </AccountSelector>
-    <WalletAddressField v-on:walletAddressEntered="walletAddressEntered" v-on:walletAddressInvalid="walletAddressInvalid"
-      :label="$t('message.transfer.tolbl')" :walletAddress="transferToWalletAddress">
+    <WalletAddressField :label="$t('message.transfer.tolbl')" :initWalletAddress="transferToWalletAddress"
+      v-on:walletAddressEntered="walletAddressEntered" v-on:walletAddressInvalid="walletAddressInvalid">
     </WalletAddressField>
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
     <MDTPrimaryButton :to="RouteDef.TransferReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
@@ -86,7 +86,7 @@ export default {
       return this.finalAmount <= 0 ? '--' : formatAmount(this.finalAmount);
     },
     isWalletAmountValid() {
-      return this.transferAmount < this.transferFromAccount.mdtBalance;
+      return this.transferAmount <= this.transferFromAccount.mdtBalance;
     },
     isFinalAmountSmallerThanZero() {
       if (this.finalAmount <= 0) {
