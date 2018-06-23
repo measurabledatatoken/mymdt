@@ -22,11 +22,12 @@ export default {
     return handleGeneralResponse(promise, 'login data should not be null if the request is successed');
   },
   // App Credentials should included display_name, email_address, token
-  autoLogin(appCredentials, appID) {
+  autoLogin(appCredentials, appID, locale) {
     const promise = axios.post(`${APIScheme}://${APIEndPoint}/account/autologin`,
       {
         app_id: appID,
         app_credentials: appCredentials,
+        locale,
       },
     );
     return handleGeneralResponse(promise, 'autologin data should not be null if the request is successed');
