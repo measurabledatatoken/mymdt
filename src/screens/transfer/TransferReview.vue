@@ -54,10 +54,10 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { VALIDATE_PIN_FOR_SECURITY } from '@/store/modules/security';
+import { VALIDATE_PIN_FOR_SECURITY, SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
@@ -118,6 +118,9 @@ export default {
     },
   },
   methods: {
+    ...mapMutations({
+      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+    }),
     ...mapActions({
       startTransfer: START_TRANSFER,
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
@@ -155,11 +158,9 @@ export default {
         });
     },
     onFotgotClicked() {
+      this.setDoneCallbackPath(RouteDef.TransferReview.path);
       this.$router.push({
         name: RouteDef.PinCodeForgot.name,
-        params: {
-          doneCallBackPath: RouteDef.TransferReview.path,
-        },
       });
     },
     formatAmount,
