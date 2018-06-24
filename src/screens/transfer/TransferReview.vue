@@ -57,7 +57,7 @@
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { VALIDATE_PIN_FOR_SECURITY, SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
+import { VALIDATE_PIN_FOR_SECURITY, SET_DONE_CALLBACK_PATH, SET_SELECTED_USER } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
@@ -120,6 +120,7 @@ export default {
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+      setSelectedUser: SET_SELECTED_USER,
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
@@ -159,6 +160,7 @@ export default {
     },
     onFotgotClicked() {
       this.setDoneCallbackPath(RouteDef.TransferReview.path);
+      this.setSelectedUser(this.transferFromAccount.emailAddress);
       this.$router.push({
         name: RouteDef.PinCodeForgot.name,
       });
