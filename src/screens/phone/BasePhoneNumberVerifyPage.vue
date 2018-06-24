@@ -2,7 +2,7 @@
   <div>
     <BasePhoneNumberPage>
       <template slot="title">
-        {{ $t('message.phone.verify_phone_title') }}
+        {{ title }}
       </template>
 
       <template slot="content">
@@ -12,12 +12,12 @@
       <template slot="action-area">
         <div class="phone-number-cointainer">
           <div class="dail-countrycode">
-            {{this.countryDailCode}}
+            {{this.countryDialCode}}
           </div>
           <div class="phone-nbumber">
             {{this.maskedPhoneNumber}}
           </div>
-          <md-button v-on:click="onEditClicked()" :md-ripple="false" class="edit-btn">{{ $t('message.common.edit') }}</md-button>
+          <md-button v-if="editable" :md-ripple="false" class="edit-btn" @click="$router.go(-1)" >{{ $t('message.common.edit') }}</md-button>
         </div>
 
         <md-field :md-counter="false">
@@ -30,33 +30,28 @@
           countDoneTranslateKey="message.phone.resend" class="resend-btn" />
         <br style="clear:both" />
 
-        <MDTSubtleButton v-on:click="onResendClicked()" class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
+        <MDTSubtleButton :to="RouteDef.ReportProblem.path" class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton :disabled="!verificationCodeFilled" class="done" :bottom="true" @click="onDoneClicked">
+        <MDTPrimaryButton :disabled="!verificationCodeFilled" class="done" :bottom="true" @click="$emit('doneClick')">
           {{ $t('message.common.done') }}
         </MDTPrimaryButton>
       </template>
     </BasePhoneNumberPage>
-
-    <SuccessPopup :title="$t('message.phone.phone_setup_success')" :md-active.sync="showPhoneSetupSuccessPopup"
-        iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
-      </SuccessPopup>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
-import { ADD_PHONE_NUMBER } from '@/store/modules/security';
+import { SET_COUNTRY_DIALCODE, SET_COUNTRY_CODE, SET_PHONENUMBER, REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import { maskPhoneNumber } from '@/helpers/phoneUtil';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
-import SuccessPopup from '@/components/popup/SuccessPopup';
 
 const VerificationCodeLength = 6;
 
@@ -68,50 +63,48 @@ export default {
     MDTPrimaryButton,
     MDTSubtleButton,
     CountDownUnlockButton,
-    SuccessPopup,
   },
   props: {
-    countryDailCode: {
+    title: {
       type: String,
     },
-    phoneNumber: {
-      type: String,
-    },
-    doneCallBackPath: {
-      type: String,
-      default: RouteDef.UserSettings.path,
+    editable: {
+      default: true,
+      type: Boolean,
     },
   },
   data() {
     return {
       verificationCodeFilled: false,
-      showPhoneSetupSuccessPopup: false,
       verificationCode: '',
       VerificationCodeLength,
+      RouteDef,
     };
   },
   computed: {
+    ...mapState({
+      countryDialCode: state => state.security.countryDialCode,
+      countryCode: state => state.security.countryCode,
+      phoneNumber: state => state.security.phoneNumber,
+      doneCallBackPath: state => state.security.doneCallBackPath,
+    }),
     maskedPhoneNumber() {
+      if (!this.phoneNumber) {
+        return '';
+      }
       return maskPhoneNumber(this.phoneNumber);
     },
   },
   methods: {
     ...mapActions({
-      addPhoneNumber: ADD_PHONE_NUMBER,
+      requestVerificationCode: REQUEST_VERIFICATION_CODE,
       backToPath: BACK_TO_PATH,
     }),
-    onEditClicked() {
-      this.$router.push(
-        {
-          name: RouteDef.PhoneNumberSetup.name,
-          params: {
-            countryDailCode: this.countryDailCode,
-            phoneNumber: this.phoneNumber,
-            doneCallBackPath: this.doneCallBackPath,
-          },
-        },
-      );
-    },
+    ...mapMutations({
+      setCountryDialCode: SET_COUNTRY_DIALCODE,
+      setCountryCode: SET_COUNTRY_CODE,
+      setPhoneNumber: SET_PHONENUMBER,
+    }),
     onVerificationCodeInput(value) {
       if (value.length === VerificationCodeLength) {
         this.verificationCodeFilled = true;
@@ -119,25 +112,14 @@ export default {
         this.verificationCodeFilled = false;
       }
     },
-    onDoneClicked() {
-      this.addPhoneNumber(
-        {
-          countryCode: this.countryDailCode,
-          phoneNum: this.phoneNumber,
-          verificationCode: this.verificationCode,
-        },
-      ).then(() => {
-        this.showPhoneSetupSuccessPopup = true;
-      });
-    },
-    onPopupDoneClicked() {
-      this.backToPath(this.doneCallBackPath);
-    },
     onResendClicked() {
-
-    },
-    onCannotReceiveCodeClicked() {
-
+      this.requestVerificationCode(
+        {
+          countryDialCode: this.countryDialCode,
+          countryCode: this.countryCode,
+          phoneNum: this.phoneNum,
+        },
+      );
     },
   },
 };
