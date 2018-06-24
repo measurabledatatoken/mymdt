@@ -23,7 +23,7 @@
         <md-field :md-counter="false">
           <label class="label">{{ $t('message.phone.verification_code') }}</label>
           <md-input :maxlength="VerificationCodeLength" :placeholder="$t('message.phone.verification_code_placeholder')"
-            v-model="verificationCode" @input="onVerificationCodeInput" />
+            v-model="verificationCode" pattern="\d*" @input="onVerificationCodeInput" />
         </md-field>
 
         <CountDownUnlockButton v-on:click="onResendClicked()" :secondsToCount="60" countingTranslateKey="message.phone.resend_counting"
