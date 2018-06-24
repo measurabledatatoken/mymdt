@@ -96,6 +96,7 @@ export default {
     },
   },
   created() {
+    this.setDoneCallbackPath(RouteDef.UserSettings.path);
     const emailAddress = this.$route.query.email;
     if (emailAddress) {
       this.setSelectedUser(emailAddress);
@@ -116,7 +117,6 @@ export default {
         return;
       }
 
-      this.setDoneCallbackPath(RouteDef.UserSettings.path);
       this.$router.push(
         {
           name: RouteDef.PinCodeSetup.name,
@@ -143,7 +143,6 @@ export default {
 
 
           if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
-            this.setDoneCallbackPath(RouteDef.UserSettings.path);
             this.$router.push(
               {
                 name: RouteDef.PinCodeSetup.name,
@@ -154,7 +153,6 @@ export default {
               },
             );
           } else {
-            this.setDoneCallbackPath(RouteDef.UserSettings.path);
             this.$router.push(
               {
                 name: RouteDef.PhoneNumberVerify.name,
@@ -169,7 +167,6 @@ export default {
         });
     },
     onFotgotClicked() {
-      this.setDoneCallbackPath(RouteDef.UserSettings.path);
       this.$router.push({
         name: RouteDef.PinCodeForgot.name,
       });
