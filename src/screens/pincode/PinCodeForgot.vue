@@ -4,13 +4,15 @@
 
       <div class="phone-title"> {{ $t('message.settings.phoneNumber') }}</div>
       <div class="phone-num" :class="{'none': !selectedSecurityUser.phoneNumber}">
-        {{
-          selectedSecurityUser.phoneNumber ? this.maskedPhoneNumber : $t('message.common.none')
-        }}
+        {{ selectedSecurityUser.phoneNumber ? this.maskedPhoneNumber : $t('message.common.none') }}
       </div>
 
-      <MDSubtleButton @click="onSendVerificationCodePressed" class="resend"> {{ $t('message.phone.send') }} </MDSubtleButton>
-      <MDSubtleButton :to="RouteDef.ReportProblem.path"> {{ $t('message.settings.stillNeedHelp') }} </MDSubtleButton>
+      <MDSubtleButton @click="onSendVerificationCodePressed" class="resend" :disabled="!selectedSecurityUser.phoneNumber">
+        {{ $t('message.phone.send') }}
+      </MDSubtleButton>
+      <MDSubtleButton :to="RouteDef.ReportProblem.path">
+        {{ $t('message.settings.stillNeedHelp') }}
+      </MDSubtleButton>
     </template>
   </BaseUserSettingPage>
 </template>
