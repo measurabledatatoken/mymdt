@@ -37,12 +37,6 @@ export default {
     BasePage,
     MDSubtleButton,
   },
-  props: {
-    doneCallBackPath: {
-      default: RouteDef.UserSettings.path,
-      type: String,
-    },
-  },
   data() {
     return {
       RouteDef,
