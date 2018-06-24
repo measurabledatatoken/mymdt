@@ -2,21 +2,25 @@
   <div>
     <BasePhoneNumberPage>
       <template slot="title">
-        {{ $t('message.phone.add_phone_title') }}
+        {{ title }}
       </template>
 
       <template slot="content">
-        <p class="content_description">{{ $t('message.phone.add_phone_content') }}</p>
+        <p class="content_description">{{ content }}</p>
       </template>
 
       <template slot="action-area">
-        <PhoneInputField :initCountryDailCode="countryDailCode" :initPhoneNumber="phoneNumber" v-on:phoneNumberEntered="onPhoneNumberEntered"
-          v-on:phoneNumberInvalid="onPhonenNumberInvalid" />
+        <PhoneInputField :initcountryDialCode="countryDialCode" :initCountryCode="countryCode" :initPhoneNumber="phoneNumber"
+          @phoneNumberEntered="onPhoneNumberEntered" @phoneNumberInvalid="onPhonenNumberInvalid" />
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton v-on:click="nextClicked()" :disabled="phoneNumberObj == null" class="next-button" :class="{ 'hasSkip': needSkip }">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
-        <MDTSubtleButton v-on:click="skipClicked()" class="skip-btn" v-if="needSkip">{{ $t('message.common.skip') }}</MDTSubtleButton>
+        <MDTPrimaryButton :disabled="isPhoneInvalid" class="next-button" :class="{ 'hasSkip': needSkip }" @click="onNextClicked">
+          {{ $t('message.common.nextbtn') }}
+        </MDTPrimaryButton>
+        <MDTSubtleButton class="skip-btn" @click="onSkipClicked" v-if="needSkip">
+          {{ $t('message.common.skip') }}
+        </MDTSubtleButton>
       </template>
 
     </BasePhoneNumberPage>
@@ -29,22 +33,15 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { RouteDef } from '@/constants';
+import { mapState, mapActions, mapMutations } from 'vuex';
+import { SET_COUNTRY_DIALCODE, SET_COUNTRY_CODE, SET_PHONENUMBER } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
-import BasePage from '@/screens/BasePage';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import PhoneInputField from '@/components/common/PhoneInputField';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
-  extends: BasePage,
-  metaInfo() {
-    return {
-      title: this.$t('message.phone.title'),
-    };
-  },
   components: {
     BasePhoneNumberPage,
     PhoneInputField,
@@ -52,17 +49,10 @@ export default {
     MDTSubtleButton,
   },
   props: {
-    countryDailCode: {
+    title: {
       type: String,
     },
-    phoneNumber: {
-      type: String,
-    },
-    fullPhoneNumber: {
-      type: String,
-    },
-    doneCallBackPath: {
-      default: RouteDef.UserSettings.path,
+    content: {
       type: String,
     },
     needSkip: {
@@ -73,36 +63,43 @@ export default {
   data() {
     return {
       showWarningPrompt: false,
-      phoneNumberObj: null,
+      isPhoneInvalid: false,
     };
   },
+  computed: {
+    ...mapState({
+      countryDialCode: state => state.security.countryDialCode,
+      countryCode: state => state.security.countryCode,
+      phoneNumber: state => state.security.phoneNumber,
+      doneCallBackPath: state => state.security.doneCallBackPath,
+    }),
+  },
   methods: {
+    ...mapMutations({
+      setCountryDialCode: SET_COUNTRY_DIALCODE,
+      setCountryCode: SET_COUNTRY_CODE,
+      setPhoneNumber: SET_PHONENUMBER,
+    }),
     ...mapActions({
       backToPath: BACK_TO_PATH,
     }),
-    skipClicked() {
-      this.showWarningPrompt = true;
+    onNextClicked() {
+      this.$emit('nextClick');
     },
-    nextClicked() {
-      this.$router.push(
-        {
-          name: RouteDef.PhoneNumberVerify.name,
-          params: {
-            countryDailCode: this.phoneNumberObj.countryDailCode,
-            phoneNumber: this.phoneNumberObj.phoneNumber,
-            doneCallBackPath: this.doneCallBackPath,
-          },
-        },
-      );
+    onSkipClicked() {
+      this.showWarningPrompt = true;
     },
     confirmSkip() {
       this.backToPath(this.doneCallBackPath);
     },
-    onPhoneNumberEntered(phoneNumberObj) {
-      this.phoneNumberObj = phoneNumberObj;
+    onPhoneNumberEntered({ countryDialCode, countryCode, phoneNumber }) {
+      this.setCountryDialCode(countryDialCode);
+      this.setCountryCode(countryCode);
+      this.setPhoneNumber(phoneNumber);
+      this.isPhoneInvalid = false;
     },
     onPhonenNumberInvalid() {
-      this.phoneNumberObj = null;
+      this.isPhoneInvalid = true;
     },
   },
 };

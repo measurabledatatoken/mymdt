@@ -3,7 +3,9 @@
     <template slot="content">
 
       <div class="phone-title"> {{ $t('message.settings.phoneNumber') }}</div>
-      <div class="phone-num" :class="{'none': !selectedSecurityUser.phoneNumber}"> {{ selectedSecurityUser.phoneNumber ? this.maskedPhoneNumber : $t('message.common.none')
+      <div class="phone-num" :class="{'none': !selectedSecurityUser.phoneNumber}">
+        {{
+          selectedSecurityUser.phoneNumber ? this.maskedPhoneNumber : $t('message.common.none')
         }}
       </div>
 
@@ -14,9 +16,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
 import { maskFullPhoneNumber } from '@/helpers/phoneUtil';
+import { REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
+import SetupPINMode from '@/enum/setupPINMode';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BasePage from '@/screens/BasePage';
 import MDSubtleButton from '@/components/button/MDTSubtleButton';
@@ -51,11 +55,30 @@ export default {
       },
     ),
     maskedPhoneNumber() {
-      return maskFullPhoneNumber(this.selectedSecurityUser.phoneNumber);
+      const fullPhone = `${this.selectedSecurityUser.countryDialCode} ${this.selectedSecurityUser.phoneNumber}`;
+      return maskFullPhoneNumber(fullPhone);
     },
   },
   methods: {
-
+    ...mapActions({
+      requestVerificationCode: REQUEST_VERIFICATION_CODE,
+    }),
+    onSendVerificationCodePressed() {
+      this.requestVerificationCode().then(() => {
+        this.$router.push(
+          {
+            name: RouteDef.PhoneNumberVerify.name,
+            params: {
+              emailAddress: this.selectedSecurityUser.emailAddress,
+              nextPagePathName: RouteDef.PinCodeSetup.name,
+              payloadForNextPage: {
+                mode: SetupPINMode.RESET,
+              },
+            },
+          },
+        );
+      });
+    },
   },
 };
 </script>

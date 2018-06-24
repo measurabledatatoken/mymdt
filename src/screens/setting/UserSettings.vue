@@ -32,16 +32,17 @@
 
         <MDTConfirmPopup :md-active.sync="showAlreadySetPinDialog" :md-title="$t('message.passcode.already_setup_title')"
           :md-content="$t('message.passcode.already_setup_content')" :md-confirm-text="$t('message.common.change')"
-          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPIN" />
+          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmChangePIN" />
 
         <MDTConfirmPopup :md-active.sync="showAlreadySetPhoneDialog" :md-title="$t('message.phone.already_setup_title')"
           :md-content="$t('message.phone.already_setup_content')" :md-confirm-text="$t('message.common.change')"
-          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPhoneNumber" />
+          :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmChangePhoneNumber" />
 
-        <PinCodeInputPopup ref="pinCodeInputPopup" :md-active.sync="showPinCodeInput" :title="$t('message.passcode.oldpin_title')"
+        <PinCodeInputPopup ref="pinCodeInputPopup" :md-active.sync="showPinCodeInput" :title="pinCodePopupTitle"
           :emailAddress="getSelectedSecurityUser.emailAddress" @codefilled="onPinCodeFilled" @close-click="showPinCodeInput = false"
           @fotgot-click="onFotgotClicked">
         </PinCodeInputPopup>
+
       </template>
     </BaseUserSettingPage>
 
@@ -52,7 +53,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_SELECTED_USER, VALIDATE_PIN_FOR_SECURITY } from '@/store/modules/security';
+import { SET_SELECTED_USER, VALIDATE_PIN_FOR_SECURITY, SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
@@ -62,12 +63,12 @@ import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
 export default {
+  extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.settings.title'),
     };
   },
-  extends: BasePage,
   components: {
     BaseUserSettingPage,
     BaseSettingListItem,
@@ -80,6 +81,8 @@ export default {
       showAlreadySetPinDialog: false,
       showAlreadySetPhoneDialog: false,
       showPinCodeInput: false,
+      pinCodePopupTitle: '',
+      nextRouteNameAfterPINFilled: '',
     };
   },
   computed: {
@@ -101,6 +104,7 @@ export default {
   methods: {
     ...mapMutations({
       setSelectedUser: SET_SELECTED_USER,
+      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
     ...mapActions({
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
@@ -112,7 +116,7 @@ export default {
         return;
       }
 
-      // Push
+      this.setDoneCallbackPath(RouteDef.UserSettings.path);
       this.$router.push(
         {
           name: RouteDef.PinCodeSetup.name,
@@ -123,7 +127,9 @@ export default {
         },
       );
     },
-    onConfirmSetupPIN() {
+    onConfirmChangePIN() {
+      this.pinCodePopupTitle = this.$t('message.passcode.oldpin_popup_title');
+      this.nextRouteNameAfterPINFilled = RouteDef.PinCodeSetup.name;
       this.showPinCodeInput = true;
     },
     onPinCodeFilled(pinCode) {
@@ -134,24 +140,38 @@ export default {
         })
         .then(() => {
           this.showPinCodeInput = false;
-          this.$router.push(
-            {
-              name: RouteDef.PinCodeSetup.name,
-              params: {
-                mode: SetupPINMode.CHANGE,
-                oldPIN: pinCode,
-                doneCallBackPath: RouteDef.UserSettings.path,
+
+
+          if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
+            this.setDoneCallbackPath(RouteDef.UserSettings.path);
+            this.$router.push(
+              {
+                name: RouteDef.PinCodeSetup.name,
+                params: {
+                  mode: SetupPINMode.CHANGE,
+                  oldPIN: pinCode,
+                },
               },
-            },
-          );
+            );
+          } else {
+            this.setDoneCallbackPath(RouteDef.UserSettings.path);
+            this.$router.push(
+              {
+                name: RouteDef.PhoneNumberVerify.name,
+                params: {
+                  emailAddress: this.getSelectedSecurityUser.emailAddress,
+                  nextPagePathName: RouteDef.ChangePhoneNumberInput.name,
+                  payloadForNextPage: { pin: pinCode },
+                },
+              },
+            );
+          }
         });
     },
     onFotgotClicked() {
+      this.setDoneCallbackPath(RouteDef.UserSettings.path);
       this.$router.push({
         name: RouteDef.PinCodeForgot.name,
-        params: {
-          doneCallBackPath: RouteDef.UserSettings.path,
-        },
       });
     },
     onSetupPhoneNumberClicked() {
@@ -165,10 +185,13 @@ export default {
       }
 
       // Push
-      this.$router.push(RouteDef.PhoneNumberSetup.path);
+      this.$router.push({
+        name: RouteDef.AddPhoneNumberInput.name,
+      });
     },
-    onConfirmSetupPhoneNumber() {
-      this.$router.push(RouteDef.PhoneNumberSetup.path);
+    onConfirmChangePhoneNumber() {
+      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+      this.showPinCodeInput = true;
     },
     onPasscodeForgotClicked() {
       if (!this.getSelectedSecurityUser.isPasscodeSet) {

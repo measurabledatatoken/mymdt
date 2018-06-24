@@ -16,8 +16,11 @@ import UserSettings from '@/screens/setting/UserSettings';
 import PriceUnits from '@/screens/setting/PriceUnits';
 import ReportProblem from '@/screens/setting/ReportProblem';
 import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
-import PhoneNumberSetup from '@/screens/phone/PhoneNumberSetup';
-import PhoneNumberVerify from '@/screens/phone/PhoneNumberVerify';
+import AddPhoneNumberInputPage from '@/screens/phone/AddPhoneNumberInputPage';
+import ChangePhoneNumberInputPage from '@/screens/phone/ChangePhoneNumberInputPage';
+import AddPhoneNumberVerifyPage from '@/screens/phone/AddPhoneNumberVerifyPage';
+import ChangePhoneNumberVerifyPage from '@/screens/phone/ChangePhoneNumberVerifyPage';
+import PhoneNumberVerifyPage from '@/screens/phone/PhoneNumberVerifyPage';
 import PinCodeSetup from '@/screens/pincode/PinCodeSetup';
 import PinCodeConfirm from '@/screens/pincode/PinCodeConfirm';
 import PinCodeForgot from '@/screens/pincode/PinCodeForgot';
@@ -79,15 +82,33 @@ const router = new Router({
         },
         // phone
         {
-          path: RouteDef.PhoneNumberSetup.path,
-          name: RouteDef.PhoneNumberSetup.name,
-          component: PhoneNumberSetup,
+          path: RouteDef.AddPhoneNumberInput.path,
+          name: RouteDef.AddPhoneNumberInput.name,
+          component: AddPhoneNumberInputPage,
+          props: true,
+        },
+        {
+          path: RouteDef.ChangePhoneNumberInput.path,
+          name: RouteDef.ChangePhoneNumberInput.name,
+          component: ChangePhoneNumberInputPage,
+          props: true,
+        },
+        {
+          path: RouteDef.AddPhoneNumberVerify.path,
+          name: RouteDef.AddPhoneNumberVerify.name,
+          component: AddPhoneNumberVerifyPage,
+          props: true,
+        },
+        {
+          path: RouteDef.ChangePhoneNumberVerify.path,
+          name: RouteDef.ChangePhoneNumberVerify.name,
+          component: ChangePhoneNumberVerifyPage,
           props: true,
         },
         {
           path: RouteDef.PhoneNumberVerify.path,
           name: RouteDef.PhoneNumberVerify.name,
-          component: PhoneNumberVerify,
+          component: PhoneNumberVerifyPage,
           props: true,
         },
         // Pin Code

@@ -37,13 +37,25 @@ const RouteDef = {
     path: '/home/accounts/:account_id/transactions/:transaction_id',
     name: 'transactionDetail',
   },
-  PhoneNumberSetup: {
-    path: '/home/settings/phone/setup',
-    name: 'PhoneNumberSetup',
+  AddPhoneNumberInput: {
+    path: '/home/settings/phone/add',
+    name: 'AddPhoneNumberInput',
+  },
+  ChangePhoneNumberInput: {
+    path: '/home/settings/phone/change',
+    name: 'ChangePhoneNumberInput',
   },
   PhoneNumberVerify: {
+    path: '/home/settings/phone/verify',
+    name: 'PhoneNumberVerify',
+  },
+  AddPhoneNumberVerify: {
     path: '/home/settings/phone/add/verify',
-    name: 'phoneNumberVerify',
+    name: 'AddPhoneNumberVerify',
+  },
+  ChangePhoneNumberVerify: {
+    path: '/home/settings/phone/change/verify',
+    name: 'ChangePhoneNumberVerify',
   },
   PinCodeSetup: {
     path: '/home/settings/pincode/setup',

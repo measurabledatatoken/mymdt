@@ -28,15 +28,8 @@ export default {
     verificationCode: {
       type: String,
     },
-    doneCallBackPath: {
-      default: RouteDef.UserSettings.path,
-      type: String,
-    },
     mode: {
       type: String,
-      validator(value) {
-        return ['setup', 'reset', 'change'].indexOf(value) !== -1;
-      },
     },
   },
   methods: {
@@ -47,7 +40,6 @@ export default {
           params: {
             setupedPin: pincode,
             oldPIN: this.oldPIN,
-            doneCallBackPath: this.doneCallBackPath,
             mode: this.mode,
           },
         },
