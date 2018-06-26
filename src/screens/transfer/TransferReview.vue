@@ -57,7 +57,7 @@
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { VALIDATE_PIN_FOR_SECURITY, SET_DONE_CALLBACK_PATH, SET_SELECTED_USER, VALIDATE_PIN_FOR_TRANSFER } from '@/store/modules/security';
+import { SET_DONE_CALLBACK_PATH, SET_SELECTED_USER, VALIDATE_PIN_FOR_TRANSFER } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
