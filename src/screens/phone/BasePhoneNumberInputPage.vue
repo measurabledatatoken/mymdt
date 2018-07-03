@@ -118,6 +118,7 @@ export default {
 .skip-btn {
   position: absolute;
   bottom: 12px;
+  width: auto;
 }
 
 .next-button,

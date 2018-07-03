@@ -15,12 +15,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.md-button.md-raised.subtle {
+.md-button.subtle {
   font-size: 16px;
   color: $plainbtn-wordcolor;
-  background-color: transparent;
-  text-transform: none;
-  box-shadow: none;
 
   &[disabled] {
     color: $plainbtn-wordcolor-disabled;

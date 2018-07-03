@@ -1,5 +1,5 @@
 <template>
-  <MDTBaseButton v-bind="$attrs" v-on="$listeners" :class="['primary', { 'primary--bottom': bottom }]">
+  <MDTBaseButton v-bind="$attrs" v-on="$listeners" :class="['md-raised', 'primary', { 'primary--bottom': bottom }]">
     <slot></slot>
   </MDTBaseButton>
 </template>
