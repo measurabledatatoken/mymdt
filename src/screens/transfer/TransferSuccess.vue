@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import { RouteDef, TransferType } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
-import { FLUSH_TRANSFER_DATA } from '@/store/modules/transfer';
+import { FLUSH_TRANSFER_DATA, ADD_TRANSFERTO_EMAIL_HISTORY } from '@/store/modules/transfer';
 import { BACK_TO_HOME } from '@/store/modules/common';
 
 import { formatAmount } from '@/utils';
@@ -69,11 +69,20 @@ export default {
       TransferType,
     };
   },
+  computed: {
+    ...mapState({
+      transferToAccount: state => state.transfer.transferToAccount,
+    }),
+    ...mapGetters({
+      getUser: 'getUser',
+    }),
+  },
   methods: {
     ...mapMutations(
       {
         setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
         flushTransferData: FLUSH_TRANSFER_DATA,
+        addTransferToEmailHistory: ADD_TRANSFERTO_EMAIL_HISTORY,
       },
     ),
     ...mapActions(
@@ -82,6 +91,10 @@ export default {
       },
     ),
     onDoneClick() {
+      const user = this.getUser(this.transferToAccount.emailAddress);
+      if (this.transferType === TransferType.Email && !user) {
+        this.addTransferToEmailHistory(this.transferToAccount.emailAddress);
+      }
       this.flushTransferData();
       this.setIsUserAcctionsDirty(true);
       this.backToHome();
