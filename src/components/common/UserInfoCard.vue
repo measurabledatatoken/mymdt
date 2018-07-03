@@ -32,6 +32,7 @@ export default {
 .md-card {
   border-radius: 0.5em;
   background-color: white;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   margin: 0.5em;
 }
 
