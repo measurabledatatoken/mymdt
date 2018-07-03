@@ -11,7 +11,8 @@
     "nextbtn": "Next",
     "unknown_error": "Unknown Error, Please contact us with following information.",
     "change": "Change",
-    "setup": "Setup"
+    "setup": "Setup",
+    "none": "None"
   },
   "home": {
     "total_balance": "Total Balance",
@@ -93,7 +94,8 @@
     "legalAndPrivacy": "Legal & Privacy",
     "phoneNumber": "Phone Number",
     "setUpNow": "Set Up Now",
-    "accountSecurity": "Account Security"
+    "accountSecurity": "Account Security",
+    "stillNeedHelp": "Still Need Help?"
   },
   "priceUnit": {
     "title": "Price Unit"
@@ -104,25 +106,30 @@
     "skip_setup_content": "Are you sure? Adding a phone number will make your account more secure. If you skip now, you can always add your phone number in Settings -> Security.",
     "yes_skip": "Yes, skip",
     "phone_setup_success": "Phone Number Successfully Set!",
+    "phone_update_success": "Phone Number Successfully Updated!",
     "add_phone_title": "Add Your Phone Number",
     "add_phone_content": "Add a phone number to your account. \n We will ask you to enter a verification code.",
+    "change_phone_title": "Update Your Phone Number",
+    "change_phone_content": "Update your phone number on your account. \n We will ask you to enter a veriffication code.",
     "country_code_placeholder": "Country Code",
     "phone_number_placeholder": "Phone Number",
     "verify_phone_title": "Verify Your Phone",
+    "verify_newphone_title": "Verify Your New Phone",
     "verify_phone_content": "A verification code has been sent to your registered phone number:",
     "verification_code": "Verification Code",
     "verification_code_placeholder": "6-digit Number",
     "resend_counting": "Can Resend after {second}s",
     "resend": "Resend Verification Code",
+    "send": "Send Verification Code",
     "cant_receive": "Can't receive code?",
-    "invalid_phonenumb er": "Invalid Phone number",
+    "invalid_phonenumber": "Invalid Phone number",
     "already_setup_title": "You already set up Phone Number",
     "already_setup_content": "Would you like to change your Phone Number?"
   },
   "passcode": {
     "pin_popup_title": "Please Enter Your PIN",
     "pin_setup_title": "PIN",
-    "oldpin_title": "Please Enter Your Old PIN",
+    "oldpin_popup_title": "Please Enter Your Old PIN",
     "forgot_pin": "Forgot PIN?",
     "already_setup_title": "You already set up PIN",
     "already_setup_content": "Would you like to change your PIN?",

@@ -8,18 +8,19 @@
       @click="onDoneClicked"
     />
 
-    <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :md-active.sync="showPinSetupSuccessPopup" iconSrc="/static/icons/guarded.svg"
-      :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
+    <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :md-active.sync="showPinSetupSuccessPopup"
+      iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
     </SuccessPopup>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SETUP_PIN } from '@/store/modules/security';
+import { SETUP_PIN, CHANGE_PIN, RESET_PIN, SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
+import SetupPINMode from '@/enum/setupPINMode';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 
@@ -36,11 +37,19 @@ export default {
   },
   props: {
     // pin enter in the setup pin page
-    setupedPin: {
+    oldPIN: {
       type: String,
     },
-    doneCallBackPath: {
-      default: RouteDef.UserSettings.path,
+    verificationCode: {
+      type: String,
+    },
+    mode: {
+      type: String,
+      validator(value) {
+        return [SetupPINMode.SETUP, SetupPINMode.RESET, SetupPINMode.CHANGE].indexOf(value) !== -1;
+      },
+    },
+    setupedPin: {
       type: String,
     },
   },
@@ -50,30 +59,63 @@ export default {
     };
   },
   computed: {
+    ...mapState(
+      {
+        doneCallBackPath: state => state.security.doneCallBackPath,
+      },
+    ),
     ...mapGetters({
       getSelectedSecurityUser: 'getSelectedSecurityUser',
     }),
   },
   methods: {
+    ...mapMutations({
+      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+    }),
     ...mapActions({
       setupPIN: SETUP_PIN,
+      changePIN: CHANGE_PIN,
+      resetPIN: RESET_PIN,
       backToPath: BACK_TO_PATH,
     }),
     onDoneClicked(pincode) {
-      this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode })
-        .then(
-          () => {
-            this.showPinSetupSuccessPopup = true;
-          },
-        );
+      switch (this.mode) {
+        case SetupPINMode.RESET: {
+          this.resetPIN({ pin: this.setupedPin, confirmedPIN: pincode, verificationCode: this.verificationCode })
+            .then(
+              () => {
+                this.showPinSetupSuccessPopup = true;
+              },
+            );
+          break;
+        }
+        case SetupPINMode.CHANGE: {
+          this.changePIN({ oldPIN: this.oldPIN, newPIN: this.setupedPin, confirmedPIN: pincode })
+            .then(
+              () => {
+                this.showPinSetupSuccessPopup = true;
+              },
+            );
+          break;
+        }
+        default: {
+          this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode })
+            .then(
+              () => {
+                this.showPinSetupSuccessPopup = true;
+              },
+            );
+          break;
+        }
+      }
     },
     onPopupDoneClicked() {
       if (!this.getSelectedSecurityUser.isPhoneConfirmed) {
+        this.setDoneCallbackPath(this.doneCallBackPath);
         this.$router.push({
-          name: RouteDef.PhoneNumberSetup.name,
+          name: RouteDef.AddPhoneNumberInput.name,
           params: {
             needSkip: true,
-            doneCallBackPath: this.doneCallBackPath,
           },
         });
       } else {

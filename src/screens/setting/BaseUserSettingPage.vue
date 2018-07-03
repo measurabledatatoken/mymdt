@@ -1,18 +1,20 @@
 <template>
-    <div>
+    <BasePageContainer>
         <UserInfo :user="getSelectedSecurityUser" :showMDT="false" />
         <md-divider></md-divider>
         <slot name="content"></slot>
-    </div>
+    </BasePageContainer>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import UserInfo from '@/components/common/UserInfo';
+import BasePageContainer from '@/screens/BasePageContainer';
 
 export default {
   components: {
     UserInfo,
+    BasePageContainer,
   },
   computed: {
     ...mapGetters(
@@ -27,12 +29,13 @@ export default {
 <style lang="scss" scoped>
 
 .user-info {
-  margin: 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .md-divider {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  width: 100%;
+  margin: 10px 0px;
 }
 
 </style>

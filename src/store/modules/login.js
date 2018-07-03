@@ -78,6 +78,7 @@ const actions = {
   [REQUEST_AUTO_LOGIN](context, {
     authTokens,
     appID,
+    locale,
   }) {
     context.commit(SET_IS_LOADING, true);
 
@@ -93,7 +94,7 @@ const actions = {
       appCredentials.push(appCredential);
     }
 
-    return api.auth.autoLogin(appCredentials, appID)
+    return api.auth.autoLogin(appCredentials, appID, locale)
       .then(
         (data) => {
           context.commit(SET_LOGIN_ERRORCODE, null);

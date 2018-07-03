@@ -28,7 +28,7 @@ import {
   SET_TRANSFER_FROM_ACCOUNT,
 } from '@/store/modules/transfer';
 import {
-  SET_SELECTED_USER,
+  SET_SELECTED_USER, SET_DONE_CALLBACK_PATH,
 } from '@/store/modules/security';
 import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
@@ -71,6 +71,7 @@ export default {
     ...mapMutations({
       setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
       setSecuritySelectedUser: SET_SELECTED_USER,
+      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
     onTransferMethodClicked(path) {
       if (!this.selectedUser.isPasscodeSet) {
@@ -81,10 +82,10 @@ export default {
     },
     onConfirmSetupPinDialogClick() {
       this.setSecuritySelectedUser(this.selectedUser.emailAddress);
+      this.setDoneCallbackPath(RouteDef.TransferList.path);
       this.$router.push(
         {
           name: RouteDef.PinCodeSetup.name,
-          params: { doneCallBackPath: RouteDef.TransferList.path },
         });
     },
   },

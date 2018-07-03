@@ -22,8 +22,13 @@ export default {
     PinCodeEnterBasePage,
   },
   props: {
-    doneCallBackPath: {
-      default: RouteDef.UserSettings.path,
+    oldPIN: {
+      type: String,
+    },
+    verificationCode: {
+      type: String,
+    },
+    mode: {
       type: String,
     },
   },
@@ -34,7 +39,8 @@ export default {
           name: RouteDef.PinCodeConfirm.name,
           params: {
             setupedPin: pincode,
-            doneCallBackPath: this.doneCallBackPath,
+            oldPIN: this.oldPIN,
+            mode: this.mode,
           },
         },
       );
