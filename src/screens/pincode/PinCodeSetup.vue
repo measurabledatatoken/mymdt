@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <PinCodeEnterBasePage v-bind="$attrs" @click="onNextClicked">
-      <div class="title" slot="title"> {{ $t('message.passcode.create_pin_title') }} </div>
-      <template slot="button-text">{{ $t('message.common.nextbtn') }} </template>
-    </PinCodeEnterBasePage>
-  </div>
+  <PinCodeEnterBasePage
+    :title="$t('message.passcode.create_pin_title')"
+    :buttonText="$t('message.common.nextbtn')"
+    @click="onNextClicked"
+  />
 </template>
 
 <script>

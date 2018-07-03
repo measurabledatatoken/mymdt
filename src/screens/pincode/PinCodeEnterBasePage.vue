@@ -1,24 +1,33 @@
 <template>
-    <div>
-        <BaseUserSettingPage>
-            <template slot="content">
-                <slot name="title"></slot>
-                <PinCodeField ref="pinCodeField" :length=6 :shouldAutoFocus=true @codefilled="onCodeFilled" @focus="isPinFilled = false"
-                    :invalidDescription="$t('message.passcode.not_match')">
-
-                </PinCodeField>
-
-                <MDTPrimaryButton slot="button" :disabled="!isPinFilled" @click="$emit('click', pincode)">
-                    <slot name="button-text"></slot>
-                </MDTPrimaryButton>
-            </template>
-        </BaseUserSettingPage>
-
-    </div>
+  <div>
+    <BaseUserSettingPage>
+      <template slot="content">
+        <h3 class="pincode-base-page__title">{{ title }}</h3>
+        <PinCodeField
+          ref="pinCodeField"
+          :length=6
+          :shouldAutoFocus=true
+          :invalidDescription="$t('message.passcode.not_match')"
+          :correctPinCode="correctPinCode"
+          @filled="onFilled"
+          @unfilled="onUnfilled"
+        />
+        <MDTPrimaryButton
+          slot="button"
+          class="pincode-base-page__button"
+          :disabled="!isPinFilled"
+          @click="$emit('click', pincode)"
+        >
+            {{ buttonText }}
+        </MDTPrimaryButton>
+      </template>
+    </BaseUserSettingPage>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import PinCodeField from '@/components/common/PinCodeField';
@@ -36,6 +45,11 @@ export default {
     MDTPrimaryButton,
     BaseUserSettingPage,
   },
+  props: {
+    title: String,
+    buttonText: String,
+    correctPinCode: String,
+  },
   data() {
     return {
       isPinFilled: false,
@@ -50,14 +64,13 @@ export default {
     ),
   },
   methods: {
-    setInvalid() {
-      this.$refs.pinCodeField.setInvalid();
-      this.isPinFilled = false;
-    },
-    onCodeFilled(pincode) {
+    onFilled(pincode) {
       this.isPinFilled = true;
       this.pincode = pincode;
-      this.$emit('codefilled', pincode);
+    },
+    onUnfilled() {
+      this.isPinFilled = false;
+      this.pincode = '';
     },
   },
 };
@@ -66,5 +79,17 @@ export default {
 <style lang="scss" scoped>
 .pin-code-field {
   margin-bottom: 24px;
+}
+
+.pincode-base-page__title {
+  @include no-flick;
+  font-size: 1rem;
+  font-weight: bold;
+  color: $label-color;
+  margin: 1.5rem 0px;
+}
+
+.pincode-base-page__button {
+  @include no-flick;
 }
 </style>

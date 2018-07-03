@@ -25,10 +25,59 @@ const messages = {
   },
 };
 
+const dateTimeFormats = {
+  'en-us': {
+    short: {
+      year: 'numeric', month: 'short', day: 'numeric',
+    },
+    long: {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+      hour12: false,
+    },
+  },
+  'zh-hk': {
+    short: {
+      year: 'numeric', month: 'short', day: 'numeric',
+    },
+    long: {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+      hour12: false,
+    },
+  },
+  'zh-cn': {
+    short: {
+      year: 'numeric', month: 'short', day: 'numeric',
+    },
+    long: {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+      hour12: false,
+    },
+  },
+};
+
 Vue.use(VueI18n);
 
 export default new VueI18n({
   locale: 'en-us',
   fallbackLocale: 'en-us',
   messages,
+  dateTimeFormats,
 });
