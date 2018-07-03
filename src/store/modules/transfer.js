@@ -20,6 +20,7 @@ export const SET_TRANSFER_TO_WALLETADDRESS = 'transfer/SET_TRANSFER_TO_WALLETADD
 export const SET_TRANSFER_NOTE = 'transfer/SET_TRANSFER_NOTE';
 export const SET_TRANSFER_SUCCESS = 'transfer/SET_TRANSFER_SUCCESS';
 export const FLUSH_TRANSFER_DATA = 'transfer/FLUSH_TRANSFER_DATA';
+export const ADD_TRANSFERTO_EMAIL_HISTORY = 'transfer/ADD_TRANSFERTO_EMAIL_HISTORY';
 
 // action
 export const START_TRANSFER = 'transfer/START_TRANSFER';
@@ -41,13 +42,20 @@ const state = {
   transferToAccount: null,
   transferToWalletAddress: null,
   transferNote: null,
+  transferToEmailHistory: [],
 };
 
 const getters = {
   // eslint-disable-next-line
-  transferToAccounts: (state, getters, rootState, rootGetters) => rootGetters.getAllUsers.filter(
-    user => (!state.transferFromAccount || user.emailAddress !== state.transferFromAccount.emailAddress),
-  ),
+  transferToAccounts: (state, getters, rootState, rootGetters) => {
+    const tempAccounts = rootGetters.getAllUsers.filter(
+      user => (!state.transferFromAccount || user.emailAddress !== state.transferFromAccount.emailAddress));
+
+    for (let i = 0; i < state.transferToEmailHistory.length; i += 1) {
+      tempAccounts.push({ emailAddress: state.transferToEmailHistory[i] });
+    }
+    return tempAccounts;
+  },
   // eslint-disable-next-line
   transactionFee: (state, getters, rootState, rootGetters) => {
     const feePercentage = rootState.home.appConfig.mdt_transaction_fee / 100.0;
@@ -87,6 +95,22 @@ const mutations = {
   },
   [FLUSH_TRANSFER_DATA](state) {
     clearState(state);
+  },
+  [ADD_TRANSFERTO_EMAIL_HISTORY](state, transferToEmail) {
+    const length = state.transferToEmailHistory.length;
+    // only store 3 latest email
+    if (length >= 3) {
+      state.transferToEmailHistory.shift();
+    }
+
+    for (let i = 0; i < state.transferToEmailHistory.length; i += 1) {
+      const email = state.transferToEmailHistory[i];
+      if (transferToEmail === email) {
+        return;
+      }
+    }
+
+    state.transferToEmailHistory.push(transferToEmail);
   },
 };
 

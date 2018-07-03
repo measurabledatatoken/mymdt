@@ -29,10 +29,7 @@ const moduleGetters = {
 const mutations = {
   [SET_USERS](state, payload) {
     const { byId, allIds } = payload;
-    state.byId = {
-      ...state.byId,
-      ...byId,
-    };
+    state.byId = byId;
     state.allIds = allIds;
   },
   [FETCHING_USER_SUCCESS](state, payload) {
