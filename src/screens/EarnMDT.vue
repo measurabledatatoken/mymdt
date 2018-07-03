@@ -1,7 +1,7 @@
 <template>
   <ul class="account-list">
     <li v-for="user in allUsers" :key="user.emailAddress">
-      <UserInfoCard :user="user" small>
+      <UserInfoCard :user="user" small :hover="false">
       </UserInfoCard>
       <md-list class="account-task-list">
         <template v-if="uiState.users[user.emailAddress].isFetchingRewards">
