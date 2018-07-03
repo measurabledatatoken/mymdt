@@ -4,8 +4,8 @@ import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  getMDTUSDPrice() {
-    const promise = axios.get(`${APIScheme}://${APIEndPoint}/mdtprice`);
+  getMDTPrice(currency) {
+    const promise = axios.get(`${APIScheme}://${APIEndPoint}/mdtprice?currency=${currency}`);
     return handleGeneralResponse(promise, 'getAppConfig data should not be null if the request is successed');
   },
   getAppConfig() {

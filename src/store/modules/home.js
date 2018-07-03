@@ -58,16 +58,22 @@ const mutations = {
 };
 
 const actions = {
-  [REQUEST_MDT_PRICE](context) {
-    api.misc.getMDTUSDPrice()
+  [REQUEST_MDT_PRICE]({ commit, state }) {
+    const priceUnit = state.priceUnit;
+    api.misc.getMDTPrice(priceUnit)
       .then(
         (data) => {
-          context.commit(SET_MDT_PRICE, data.price_usd);
+          if (!priceUnit) {
+            commit(SET_MDT_PRICE, data.price_usd);
+          } else {
+            const priceUnitKey = `price_${priceUnit.toLowerCase()}`;
+            commit(SET_MDT_PRICE, data[priceUnitKey]);
+          }
         },
       )
       .catch(
         (error) => {
-          console.log('getMDTUSDPrice failed', error);
+          console.log('getMDTPrice failed', error);
         },
       );
   },

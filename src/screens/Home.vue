@@ -5,7 +5,7 @@
       <div class="balance-count">{{ formatAmount(totalMDTBalance) }} MDT</div>
 
       <div class="account-content">
-        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }} USD</div>
+        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }}  {{priceUnit}} </div>
         <div class="accountnum">{{ accountNumStr }}</div>
       </div>
     </div>
@@ -60,6 +60,7 @@ export default {
   computed: {
     ...mapState({
       mdtPrice: state => state.home.mdtPrice,
+      priceUnit: state => state.home.priceUnit,
       isUserAccountsDirty: state => state.home.isUserAccountsDirty,
     }),
     ...mapGetters({
