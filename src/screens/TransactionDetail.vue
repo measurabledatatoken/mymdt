@@ -6,7 +6,7 @@
     />
     <md-divider />
     <TransactionDetailItem :title="$t('message.transaction.type')" :description="$t(transactionType.properties[transaction.transaction_type].messageId)" />
-    <TransactionDetailItem :title="$t('message.transaction.time')" :description="transaction.transaction_time" />
+    <TransactionDetailItem :title="$t('message.transaction.time')" :description="$d(new Date(transaction.transaction_time), 'long')" />
     <!-- <TransactionDetailItem v-if="!!transaction.detail" :title="$t('message.transaction.detail')" :description="transaction.detail" /> -->
     <TransactionDetailItem v-if="!!from" :title="$t('message.transaction.from')" :description="from" />
     <TransactionDetailItem v-if="!!to" :title="$t('message.transaction.to')" :description="to" />

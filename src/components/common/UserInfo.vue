@@ -53,6 +53,8 @@ export default {
 
 <style lang="scss" scoped>
 .user-info {
+  @include no-flick();
+
   .user-info__item {
     display: flex;
     align-items: center;
