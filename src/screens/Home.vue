@@ -90,7 +90,7 @@ export default {
       const needExit = this.$route.query.needexit;
 
       this.setNeedExitBtn(needExit);
-      this.autoLogin(appID, tokensStr);
+      this.autoLogin(appID, tokensStr, this.$i18n.locale);
     }
     this.requstMDTPrice();
     this.requestAppConfig();

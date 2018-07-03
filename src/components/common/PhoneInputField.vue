@@ -17,7 +17,7 @@
           <div class="country-code">{{countryCodeItem.code}}</div>
           <div class="dial-code">{{countryCodeItem.dial_code}}</div>
           <div class="icon-container">
-            <md-icon v-if="countryCodeItem.dial_code === countryDailCode" class="done" md-src="/static/icons/done.svg"></md-icon>
+            <md-icon v-if="countryCodeItem.dial_code === countryDialCode" class="done" md-src="/static/icons/done.svg"></md-icon>
           </div>
           <md-divider></md-divider>
         </md-menu-item>
@@ -26,7 +26,7 @@
 
     <md-field class="phone-number-input" md-inline>
       <label>{{ $t('message.phone.phone_number_placeholder')}}</label>
-      <md-input type="number" v-model="phoneNumber" v-on:input="phoneNumberEntered"></md-input>
+      <md-input type="number" pattern="\d*" v-model="phoneNumber" v-on:input="phoneNumberEntered"></md-input>
       <span v-if="isFullPhoneNumberEntered && !isFullPhoneNumberValid" class="md-helper-text">{{ $t('message.phone.invalid_phonenumber') }}</span>
     </md-field>
   </div>
@@ -38,7 +38,11 @@ import { isValidPhoneNumber } from '@/utils';
 
 export default {
   props: {
-    initCountryDailCode: {
+    initcountryDialCode: {
+      default: null,
+      type: String,
+    },
+    initCountryCode: {
       default: null,
       type: String,
     },
@@ -50,9 +54,10 @@ export default {
   data() {
     return {
       countryCodeList: CountryCodeList,
-      countryCodeSearchText: this.initCountryDailCode,
+      countryCodeSearchText: this.initcountryDialCode,
       phoneNumber: this.initPhoneNumber,
-      countryDailCode: this.initCountryDailCode,
+      countryDialCode: this.initcountryDialCode,
+      countryCode: this.initCountryCode,
       isMenuOpened: false,
     };
   },
@@ -61,7 +66,7 @@ export default {
     filteredCountryCodeList() {
       if (
         this.countryCodeSearchText === null || this.countryCodeSearchText.length === 0 ||
-        this.countryDailCode === this.countryCodeSearchText
+        this.countryDialCode === this.countryCodeSearchText
       ) {
         return this.countryCodeList;
       }
@@ -84,17 +89,17 @@ export default {
       return tempCountryCodeList;
     },
     fullPhoneNumber() {
-      if (this.countryDailCode == null || this.phoneNumber == null) {
+      if (this.countryDialCode == null || this.phoneNumber == null) {
         return '';
       }
-      return this.countryDailCode.replace(/\s/g, '') + this.phoneNumber;
+      return this.countryDialCode.replace(/\s/g, '') + this.phoneNumber;
     },
     isFullPhoneNumberEntered() {
-      if (this.countryDailCode == null || this.phoneNumber == null) {
+      if (this.countryDialCode == null || this.phoneNumber == null) {
         return false;
       }
 
-      return this.countryDailCode.length > 0 && this.phoneNumber.length > 0;
+      return this.countryDialCode.length > 0 && this.phoneNumber.length > 0;
     },
     isFullPhoneNumberValid() {
       if (this.isFullPhoneNumberEntered) {
@@ -108,10 +113,12 @@ export default {
       // if there are entry in tempCountryCodeList which match the user input, make it the final dail code too.
       const filteredCountryCodeList = this.filteredCountryCodeList;
       for (let i = 0; i < filteredCountryCodeList.length; i += 1) {
-        const tempCountryCode = filteredCountryCodeList[i].dial_code.replace(/\s/g, '');
-        console.log(`tempCountryCode:${tempCountryCode}  newValue:}${newValue}`);
-        if (tempCountryCode === newValue) {
-          this.countryDailCode = tempCountryCode;
+        const tempcountryDialCode = filteredCountryCodeList[i].dial_code.replace(/\s/g, '');
+        const tempCountryCode = filteredCountryCodeList[i].code;
+
+        if (tempcountryDialCode === newValue) {
+          this.countryDialCode = tempcountryDialCode;
+          this.countryCode = tempCountryCode;
           this.processFullPhoneEntered();
           break;
         }
@@ -129,23 +136,23 @@ export default {
     },
     selectCountryCode(countryCodeItem) {
       this.countryCodeSearchText = countryCodeItem.dial_code;
-      this.countryDailCode = countryCodeItem.dial_code;
+      this.countryDialCode = countryCodeItem.dial_code;
       this.processFullPhoneEntered();
     },
     phoneNumberEntered() {
       this.processFullPhoneEntered();
     },
     processFullPhoneEntered() {
-      const phoneNumberObj = {
-        countryDailCode: this.countryDailCode,
-        phoneNumber: this.phoneNumber,
-        fullPhoneNumber: this.fullPhoneNumber,
-      };
-
       if (this.isFullPhoneNumberValid) {
-        this.$emit('phoneNumberEntered', phoneNumberObj);
+        this.$emit('phoneNumberEntered',
+          {
+            countryDialCode: this.countryDialCode,
+            countryCode: this.countryCode,
+            phoneNumber: this.phoneNumber,
+          },
+        );
       } else {
-        this.$emit('phoneNumberInvalid', phoneNumberObj);
+        this.$emit('phoneNumberInvalid');
       }
     },
   },

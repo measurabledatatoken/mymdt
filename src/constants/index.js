@@ -22,8 +22,7 @@ const RouteDef = {
   TransferList: { path: '/home/transfer' },
   TransferEmail: { path: '/home/transfer/email' },
   TransferEthWallet: { path: '/home/transfer/ethwallet' },
-  TransferEthWalletReview: { path: '/home/transfer/ethwallet/review' },
-  TransferEmailReview: { path: '/home/transfer/ethwallet/review' },
+  TransferReview: { path: '/home/transfer/review' },
   TransferEthWalletQrCode: { path: '/home/transfer/ethwallet/qrcode' },
   TransferSuccess: {
     path: '/home/transfer/ethwallet/review/success',
@@ -38,13 +37,25 @@ const RouteDef = {
     path: '/home/accounts/:account_id/transactions/:transaction_id',
     name: 'transactionDetail',
   },
-  PhoneNumberSetup: {
-    path: '/home/settings/phone/setup',
-    name: 'PhoneNumberSetup',
+  AddPhoneNumberInput: {
+    path: '/home/settings/phone/add',
+    name: 'AddPhoneNumberInput',
+  },
+  ChangePhoneNumberInput: {
+    path: '/home/settings/phone/change',
+    name: 'ChangePhoneNumberInput',
   },
   PhoneNumberVerify: {
+    path: '/home/settings/phone/verify',
+    name: 'PhoneNumberVerify',
+  },
+  AddPhoneNumberVerify: {
     path: '/home/settings/phone/add/verify',
-    name: 'phoneNumberVerify',
+    name: 'AddPhoneNumberVerify',
+  },
+  ChangePhoneNumberVerify: {
+    path: '/home/settings/phone/change/verify',
+    name: 'ChangePhoneNumberVerify',
   },
   PinCodeSetup: {
     path: '/home/settings/pincode/setup',

@@ -8,20 +8,30 @@ import {
 
 
 // mutation
-export const SET_PHONE_NUMBER = 'security/SET_PHONE_NUMBER';
+export const SET_COUNTRY_DIALCODE = 'phoneVerifyScreen/SET_COUNTRY_DIALCODE';
+export const SET_COUNTRY_CODE = 'phoneVerifyScreen/SET_COUNTRY_CODE';
+export const SET_PHONENUMBER = 'phoneVerifyScreen/SET_PHONENUMBER';
+export const SET_DONE_CALLBACK_PATH = 'phoneVerifyScreen/SET_DONE_CALLBACK_PATH';
+export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 
 // action
-export const VALIDATE_TRANSFER_PIN = 'security/VALIDATE_TRANSFER_PIN';
+export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
+export const VALIDATE_PIN_FOR_TRANSFER = 'security/VALIDATE_PIN_FOR_TRANSFER';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
+export const RESET_PIN = 'security/RESET_PIN';
 
-export const SEND_VERIFICATION_CODE = 'security/SEND_VERIFICATION_CODE';
+export const REQUEST_VERIFICATION_CODE = 'security/REQUEST_VERIFICATION_CODE';
+export const ADD_PHONE_NUMBER = 'security/ADD_PHONE_NUMBER';
+export const CHANGE_PHONE_NUMBER = 'security/CHANGE_PHONE_NUMBER';
 export const VERIFY_VERIFICATION_CODE = 'security/VERIFY_VERIFICATION_CODE';
 
 const state = {
+  countryDialCode: null,
+  countryCode: null,
   phoneNumber: null,
-  pin: null,
+  doneCallBackPath: null,
   selectedUserId: null,
 };
 
@@ -31,8 +41,22 @@ const getters = {
 };
 
 const mutations = {
-  [SET_PHONE_NUMBER](state, phoneNumber) {
+  [SET_COUNTRY_DIALCODE](state, countryDialCode) {
+    state.countryDialCode = countryDialCode;
+  },
+  [SET_COUNTRY_CODE](state, countryCode) {
+    state.countryCode = countryCode;
+  },
+  [SET_PHONENUMBER](state, phoneNumber) {
     state.phoneNumber = phoneNumber;
+  },
+  [SET_DONE_CALLBACK_PATH](state, doneCallBackPath) {
+    state.doneCallBackPath = doneCallBackPath;
+  },
+  [FLUSH_PHONE_STATE](state) {
+    state.countryDialCode = null;
+    state.countryCode = null;
+    state.phoneNumber = null;
   },
   [SET_SELECTED_USER](state, userId) {
     state.selectedUserId = userId;
@@ -40,8 +64,23 @@ const mutations = {
 };
 
 const actions = {
-  // eslint-disable-next-line
-  [VALIDATE_TRANSFER_PIN]({ commit, rootState, rootGetters }, pin) {
+  [VALIDATE_PIN_FOR_SECURITY]({
+    state,
+    rootGetters,
+  }, pin) {
+    const account = rootGetters.getUser(state.selectedUserId);
+
+    return api.security.validatePIN(pin, account.accessToken)
+      .then(() => '')
+      .catch(
+        (error) => {
+          throw (error);
+        },
+      );
+  },
+  [VALIDATE_PIN_FOR_TRANSFER]({
+    rootState,
+  }, pin) {
     const transferFromAccount = rootState.transfer.transferFromAccount;
 
     return api.security.validatePIN(pin, transferFromAccount.accessToken)
@@ -52,13 +91,19 @@ const actions = {
         },
       );
   },
-  // eslint-disable-next-line
-  [SETUP_PIN]({ commit, dispatch, rootState, rootGetters }, { pin, confirmedPIN }) {
-    const account = rootGetters.getUser(rootState.security.selectedUserId);
+  [RESET_PIN]({
+    commit,
+    state,
+    rootGetters,
+  }, {
+    pin,
+    confirmedPIN,
+    verificationCode,
+  }) {
+    const account = rootGetters.getUser(state.selectedUserId);
     commit(SET_IS_LOADING, true);
 
-    return api.security.setupPIN(pin, confirmedPIN, account.accessToken)
-      .then(() => dispatch(FETCH_USER, { userId: rootState.security.selectedUserId }))
+    return api.security.resetPIN(pin, confirmedPIN, verificationCode, account.accessToken)
       .then(() => {
         commit(SET_IS_LOADING, false);
       })
@@ -69,36 +114,152 @@ const actions = {
         },
       );
   },
-  // eslint-disable-next-line
-  [CHANGE_PIN]({ commit, rootState, rootGetters }, { oldPIN, newPIN, confirmedPIN }) {
-    const account = rootGetters.getUser(rootState.security.selectedUserId);
+  [SETUP_PIN]({
+    commit,
+    dispatch,
+    state,
+    rootGetters,
+  }, {
+    pin,
+    confirmedPIN,
+  }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    commit(SET_IS_LOADING, true);
+
+    return api.security.setupPIN(pin, confirmedPIN, account.accessToken)
+      .then(() => dispatch(FETCH_USER, {
+        userId: state.selectedUserId,
+      }))
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
+      .catch(
+        (error) => {
+          commit(SET_IS_LOADING, false);
+          throw (error);
+        },
+      );
+  },
+  [CHANGE_PIN]({
+    commit,
+    state,
+    rootGetters,
+  }, {
+    oldPIN,
+    newPIN,
+    confirmedPIN,
+  }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    commit(SET_IS_LOADING, true);
 
     return api.security.changePIN(oldPIN, newPIN, confirmedPIN, account.accessToken)
-      .then(() => '')
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
       .catch(
         (error) => {
+          commit(SET_IS_LOADING, false);
           throw (error);
         },
       );
   },
-  // eslint-disable-next-line
-  [SEND_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum }) {
-    const account = rootGetters.getUser(this.state.security.selectedUserId);
-    return api.security.sendVerificationCodeToPhone(countryCode, phoneNum, account.accessToken)
-      .then(() => '')
+  [REQUEST_VERIFICATION_CODE]({
+    commit,
+    state,
+    rootGetters,
+  }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return api.security.sendVerificationCodeToPhone(
+      state.countryDialCode,
+      state.countryCode,
+      state.phoneNumber,
+      account.accessToken)
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+      })
       .catch(
         (error) => {
+          commit(SET_IS_LOADING, false);
           throw (error);
         },
       );
   },
-  // eslint-disable-next-line
-  [VERIFY_VERIFICATION_CODE]({ commit, rootState, rootGetters }, { countryCode, phoneNum, verificationCode }) {
-    const account = rootGetters.getUser(this.state.security.selectedUserId);
-    return api.security.verifyVerificationCode(countryCode, phoneNum, verificationCode, account.accessToken)
-      .then(() => '')
+  [ADD_PHONE_NUMBER]({
+    commit,
+    dispatch,
+    state,
+    rootGetters,
+  }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return api.security.addPhoneNumber(
+      state.countryDialCode,
+      state.countryCode,
+      state.phoneNumber,
+      state.verificationCode,
+      account.accessToken)
+      .then(() => dispatch(FETCH_USER, {
+        userId: state.selectedUserId,
+      }))
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+        commit(FLUSH_PHONE_STATE);
+      })
       .catch(
         (error) => {
+          commit(SET_IS_LOADING, false);
+          throw (error);
+        },
+      );
+  },
+  [CHANGE_PHONE_NUMBER]({
+    commit,
+    dispatch,
+    state,
+    rootGetters,
+  }, {
+    pin,
+  }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return api.security.changePhoneNumber(
+      state.countryDialCode,
+      state.countryCode,
+      state.phoneNumber,
+      state.verificationCode,
+      pin,
+      account.accessToken)
+      .then(() => dispatch(FETCH_USER, {
+        userId: state.selectedUserId,
+      }))
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+        commit(FLUSH_PHONE_STATE);
+      })
+      .catch(
+        (error) => {
+          commit(SET_IS_LOADING, false);
+          throw (error);
+        },
+      );
+  },
+  [VERIFY_VERIFICATION_CODE]({
+    commit,
+    state,
+    rootGetters,
+  }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return api.security.verifyCodeForPhoneNumber(
+      state.countryDialCode,
+      state.countryCode,
+      state.phoneNumber,
+      state.verificationCode,
+      account.accessToken)
+      .then(() => {
+        commit(SET_IS_LOADING, false);
+        commit(FLUSH_PHONE_STATE);
+      })
+      .catch(
+        (error) => {
+          commit(SET_IS_LOADING, false);
           throw (error);
         },
       );
@@ -106,7 +267,7 @@ const actions = {
 };
 
 
-export default{
+export default {
   state,
   getters,
   mutations,

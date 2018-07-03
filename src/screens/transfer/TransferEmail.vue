@@ -9,7 +9,7 @@
       :accounts="transferToAccounts" :selectedAccount="transferToAccount">
     </AccountSelector>
     <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
-    <MDTPrimaryButton :to="RouteDef.TransferEmailReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+    <MDTPrimaryButton :to="RouteDef.TransferReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
   </div>
 
 </template>

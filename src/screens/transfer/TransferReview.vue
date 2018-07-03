@@ -46,17 +46,18 @@
       {{ $t('message.common.transferbtn') }}
     </MDTPrimaryButton>
 
-    <PinCodeInputPopup ref="pinCodeInputPopup" :md-active.sync="showPinCodeInput" :emailAddress="transferFromAccount.emailAddress"
-      @codefilled="onPinCodeFilled" @close-clicked="showPinCodeInput = false">
+    <PinCodeInputPopup ref="pinCodeInputPopup" :md-active.sync="showPinCodeInput" :title="$t('message.passcode.pin_popup_title')"
+      :emailAddress="transferFromAccount.emailAddress" @codefilled="onPinCodeFilled" @close-click="showPinCodeInput = false"
+      @fotgot-click="onFotgotClicked">
     </PinCodeInputPopup>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { VALIDATE_TRANSFER_PIN } from '@/store/modules/security';
+import { SET_DONE_CALLBACK_PATH, SET_SELECTED_USER, VALIDATE_PIN_FOR_TRANSFER } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Recaptcha from '@/components/input/Recaptcha';
@@ -117,9 +118,13 @@ export default {
     },
   },
   methods: {
+    ...mapMutations({
+      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+      setSelectedUser: SET_SELECTED_USER,
+    }),
     ...mapActions({
       startTransfer: START_TRANSFER,
-      validatePIN: VALIDATE_TRANSFER_PIN,
+      validatePIN: VALIDATE_PIN_FOR_TRANSFER,
     }),
     onRecaptchaVerified() {
       this.disableTransferBtn = false;
@@ -152,6 +157,13 @@ export default {
         .catch((err) => {
           console.log(`error in onPinCodeFilled: ${err.message}`);
         });
+    },
+    onFotgotClicked() {
+      this.setDoneCallbackPath(RouteDef.TransferReview.path);
+      this.setSelectedUser(this.transferFromAccount.emailAddress);
+      this.$router.push({
+        name: RouteDef.PinCodeForgot.name,
+      });
     },
     formatAmount,
   },

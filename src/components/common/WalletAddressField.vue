@@ -23,7 +23,7 @@ export default {
       type: String,
       default: '',
     },
-    walletAddress: {
+    initWalletAddress: {
       type: String,
       default: '',
     },
@@ -32,10 +32,11 @@ export default {
     return {
       RouteDef,
       isAddressValid: true,
+      walletAddress: this.initWalletAddress,
     };
   },
   watch: {
-    walletAddress: (newValue) => {
+    walletAddress(newValue) {
       const ethAddress = getEthAddressFromString(newValue);
       if (ethAddress == null) {
         this.isAddressValid = false;
