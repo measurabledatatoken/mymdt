@@ -1,5 +1,5 @@
 <template>
-    <md-button v-bind="$attrs" @click="$emit('click')" class="md-raised">
+    <md-button v-bind="$attrs" @click="$emit('click')">
         <slot></slot>
     </md-button>
 </template>

@@ -4,14 +4,15 @@
         <UserInfo :user="user" :small="small"></UserInfo>
     </div>
     <md-divider v-if="!small" />
-    <md-card-actions v-if="!small" md-alignment="space-between">
-      <md-button v-on:click="$emit('transfer')">{{ $t('message.common.transferbtn') }}</md-button>
+    <md-card-actions v-if="!small">
+      <MDTSubtleButton class="md-primary" v-on:click="$emit('transfer')">{{ $t('message.common.transferbtn') }}</MDTSubtleButton>
     </md-card-actions>
   </md-card>
 </template>
 
 <script>
 import UserInfo from '@/components/common/UserInfo';
+import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
   props: {
@@ -24,6 +25,7 @@ export default {
   },
   components: {
     UserInfo,
+    MDTSubtleButton,
   },
 };
 </script>
@@ -39,16 +41,16 @@ export default {
 .md-card-actions {
   justify-content: center;
   height: 3em;
-}
 
-.md-button {
-  color: $plainbtn-wordcolor !important;
-  font-size: 16px;
-  font-weight: bold;
+  .md-button {
+    font-weight: bold;
+    width: 100%;
 
-  /deep/ .md-button-content {
-    text-transform: none;
+    /deep/ .md-button-content {
+      text-transform: none;
+    }
   }
 }
+
 </style>
 
