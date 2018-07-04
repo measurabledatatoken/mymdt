@@ -8,6 +8,12 @@ import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 import Vuelidate from 'vuelidate';
 
+// require styles
+// eslint-disable-next-line
+import 'swiper/dist/css/swiper.css';
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+
+
 import App from './App';
 import router from './router';
 
@@ -16,9 +22,13 @@ import i18n from './localization';
 
 import fixVirtualKeyboardGlitch from './helpers/fixVirtualKeyboardGlitch';
 
+
 Vue.config.productionTip = false;
 Vue.use(VueMaterial);
 Vue.use(Vuelidate);
+
+
+Vue.use(VueAwesomeSwiper);
 
 /* eslint-disable no-new */
 new Vue({

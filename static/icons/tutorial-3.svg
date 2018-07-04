@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(103 43)">
+            <path fill="#D0D0D0" d="M6.831 2.9l58.083-1.528 2.518 1.93A4 4 0 0 1 69 6.476V118a4 4 0 0 1-4 4H6.957a4 4 0 0 1-2.822-1.166l-3.03-3.017L2.937 6.832A4 4 0 0 1 6.83 2.899z"/>
+            <rect width="66" height="119" fill="#E1E1E1" rx="4"/>
+            <path fill="#FFF" stroke="#D5D5D5" stroke-width="2" d="M5 16h55v88H5z"/>
+            <rect width="16" height="4" x="25" y="6" fill="#D5D5D5" rx="2"/>
+        </g>
+        <path fill="#4187F7" d="M108 60h14l-4 17h-18z"/>
+        <path fill="#83CCFC" d="M122 60h14v17h-18z"/>
+        <path fill="#4187F7" d="M136 60h14l4 17h-18z"/>
+        <path fill="#83CCFC" d="M150 60h14l8 17h-18zM109 86.036a9 9 0 0 0 9-9c0-.081-4.03 0-9 0s-9-.033-9 0a9 9 0 0 0 9 9z"/>
+        <path fill="#AFFAFF" d="M127 86.036a9 9 0 0 0 9-9c0-.081-4.03 0-9 0s-9-.033-9 0a9 9 0 0 0 9 9z"/>
+        <path fill="#83CCFC" d="M145 86.036a9 9 0 0 0 9-9c0-.081-4.03 0-9 0s-9-.033-9 0a9 9 0 0 0 9 9z"/>
+        <path fill="#AFFAFF" d="M163 86.036a9 9 0 0 0 9-9c0-.081-4.03 0-9 0s-9-.033-9 0a9 9 0 0 0 9 9z"/>
+        <g transform="translate(114 99)">
+            <circle cx="30" cy="27" r="12" fill="#FEE602"/>
+            <circle cx="24" cy="12" r="12" fill="#FEE602"/>
+            <circle cx="14" cy="27" r="12" fill="#FEE602"/>
+            <circle cx="12" cy="26" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+            <circle cx="21" cy="12" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+            <circle cx="28" cy="26" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+        </g>
+        <g transform="translate(31 64)">
+            <circle cx="30" cy="27" r="12" fill="#FEE602"/>
+            <circle cx="24" cy="12" r="12" fill="#FEE602"/>
+            <circle cx="14" cy="27" r="12" fill="#FEE602"/>
+            <circle cx="12" cy="26" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+            <circle cx="21" cy="12" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+            <circle cx="28" cy="26" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+        </g>
+        <g transform="translate(28 119)">
+            <circle cx="35.5" cy="8.5" r="8.5" fill="#AFFAFF"/>
+            <path fill="#AFFAFF" d="M35.5 20C43.508 20 50 26.492 50 34.5c0 .131-6.492 0-14.5 0s-14.5.053-14.5 0C21 26.492 27.492 20 35.5 20z"/>
+            <circle cx="14.5" cy="8.5" r="8.5" fill="#4187F7"/>
+            <path fill="#4187F7" d="M14.5 20C22.508 20 29 26.492 29 34.5c0 .131-6.492 0-14.5 0S0 34.553 0 34.5C0 26.492 6.492 20 14.5 20z"/>
+        </g>
+    </g>
+</svg>
