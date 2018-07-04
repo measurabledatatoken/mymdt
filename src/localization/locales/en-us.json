@@ -197,5 +197,15 @@
     "nc_error300": "Unknown Error. Please refresh and try again",
     "nc_errorServer": "Server Error. Please refresh and try again",
     "nc_errorNetwork": "Network Error. Please refresh and try again"
+  },
+  "betaTesting": {
+    "title": "MDT Wallet Beta Testing",
+    "description": "Please enter a valid access code, and press “Import Account(s)” to begin your MDT wallet experience.",
+    "accessCode": "Access Code",
+    "pleaseEnterAccessCode": "Please enter Access Code",
+    "accessCodeIsNotValid": "Access Code is not valid",
+    "agreementCheckbox": "I agree to the rules of MDT Wallet Beta Testing",
+    "agreementDetail": "By clicking the button below, your email accounts in MailTime will automatically logged into the MDT wallet.",
+    "importAccounts": "Import Account(s)"
   }
 }

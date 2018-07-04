@@ -7,10 +7,10 @@ import { RouteDef } from '@/constants';
 import AppLayout from '@/container/AppLayout';
 
 import Home from '@/screens/Home';
+import BetaTesting from '@/screens/BetaTesting';
 import Login from '@/screens/Login';
 import Register from '@/screens/Register';
 import ForgetPassword from '@/screens/ForgetPassword';
-
 import Settings from '@/screens/setting/Settings';
 import UserSettings from '@/screens/setting/UserSettings';
 import PriceUnits from '@/screens/setting/PriceUnits';
@@ -24,24 +24,23 @@ import PhoneNumberVerifyPage from '@/screens/phone/PhoneNumberVerifyPage';
 import PinCodeSetup from '@/screens/pincode/PinCodeSetup';
 import PinCodeConfirm from '@/screens/pincode/PinCodeConfirm';
 import PinCodeForgot from '@/screens/pincode/PinCodeForgot';
-
 import Tutorial from '@/screens/Tutorial';
-
 import AccountDetail from '@/screens/AccountDetail';
 import TransactionDetail from '@/screens/TransactionDetail';
-
 import TransferList from '@/screens/transfer/TransferList';
 import TransferEmail from '@/screens/transfer/TransferEmail';
 import TransferEthWallet from '@/screens/transfer/TransferEthWallet';
 import TransferReview from '@/screens/transfer/TransferReview';
 import TransferSuccess from '@/screens/transfer/TransferSuccess';
 import QrCodeScanPage from '@/screens/QRCodeScanPage';
-
 import EarnMDT from '@/screens/EarnMDT';
+
+import BetaTestingHeader from '@/components/header/BetaTestingHeader';
 
 Vue.use(Router);
 Vue.use(Meta);
 
+const landingRoute = RouteDef.BetaTesting;
 
 const router = new Router({
   mode: 'history',
@@ -60,7 +59,17 @@ const router = new Router({
         },
         {
           path: RouteDef.AutoLogin.path,
-          redirect: RouteDef.Home,
+          redirect: landingRoute,
+        },
+        {
+          path: RouteDef.BetaTesting.path,
+          components: {
+            default: BetaTesting,
+            header: BetaTestingHeader,
+          },
+          meta: {
+            replaceHeader: true,
+          },
         },
         {
           path: RouteDef.Register.path,
@@ -192,13 +201,20 @@ const router = new Router({
           component: EarnMDT,
         },
 
-
-        { // Route to Home page for route not defined
-          path: '*', component: Home,
+        // Route to Home page for route not defined
+        {
+          path: '*', redirect: RouteDef.Home,
         },
       ],
     },
   ],
+});
+
+// redirect to landing page
+const originalLocation = router.resolve(window.location.href);
+router.replace({
+  ...originalLocation.location,
+  ...landingRoute,
 });
 
 export default router;

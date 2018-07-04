@@ -90,8 +90,7 @@ export default {
     },
   },
   mounted() {
-    const redirectFrom = this.$route.redirectedFrom;
-    if (redirectFrom !== undefined && redirectFrom.indexOf('autologin') >= 0) {
+    if (this.$route.query.appid && this.$route.query.tokens) {
       const appID = this.$route.query.appid;
       const tokensStr = this.$route.query.tokens;
       const emailsStr = this.$route.query.emails;
@@ -107,6 +106,9 @@ export default {
       this.requestUserAccounts();
       this.setIsUserAcctionsDirty(false);
     }
+
+    // clear url
+    this.$router.replace(RouteDef.Home);
   },
   methods: {
     ...mapMutations({
