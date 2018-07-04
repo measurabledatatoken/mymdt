@@ -165,5 +165,16 @@
     "invite": "邀请",
     "maximumAmountToEarn": "最多 {amount} {currency}",
     "rewardErrorMessage": "未能认领奖励。请刷新并重试"
+  },
+  "tutorial": {
+    "get_started": "开始使用",
+    "slide_1_title": "什么是MDT？",
+    "slide_1_description": "MDT是一种加密货币。",
+    "slide_2_title": "通过简单任务赚取代币",
+    "slide_2_description": "无需努力工作。\n 在MyMDT中完成简单的任务从而赚取奖励，例如在MailTime中发送电子邮件。",
+    "slide_3_title": "发送或支出",
+    "slide_3_description": "您可以将您的MDT转移给您的朋友，您的以太钱包，或者将其用于MyMDT以获取有趣的内容（即将推出）！",
+    "slide_4_title": "安全",
+    "slide_4_description": "所有交易均由您的PIN授权。加入您的电话号码以获得更高的安全性。"
   }
 }
