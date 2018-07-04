@@ -26,6 +26,20 @@ const state = {
   credentials: [],
 };
 
+const moduleGetters = {
+  getInvalidCredentialsInUser: (state) => {
+    const invalidCredentials = state.credentials.filter(credential => credential.access_token.length === 0);
+    const credentialAsUser = [];
+    invalidCredentials.forEach(
+      (credential) => {
+        const tempUser = { emailAddress: credential.email_address };
+        credentialAsUser.push(tempUser);
+      },
+    );
+    return credentialAsUser;
+  },
+};
+
 const mutations = {
   [SET_LOGIN_ERRORCODE](state, loginErrorCode) {
     state.loginErrorCode = loginErrorCode;
@@ -77,6 +91,7 @@ const actions = {
   },
   [REQUEST_AUTO_LOGIN](context, {
     authTokens,
+    emails,
     appID,
     locale,
   }) {
@@ -86,10 +101,15 @@ const actions = {
       return Promise.reject(new Error('authTokens should all be array'));
     }
 
+    if (authTokens.length !== emails.length) {
+      return Promise.reject(new Error('authTokens and emails should be same length'));
+    }
+
     const appCredentials = [];
     for (let i = 0; i < authTokens.length; i += 1) {
       const appCredential = {
         token: authTokens[i],
+        email_address: emails[i],
       };
       appCredentials.push(appCredential);
     }
@@ -140,6 +160,7 @@ const actions = {
 
 export default {
   state,
+  getters: moduleGetters,
   mutations,
   actions,
 };

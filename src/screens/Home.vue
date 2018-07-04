@@ -15,6 +15,11 @@
         <UserInfoCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
         </UserInfoCard>
       </div>
+
+      <div v-for="user in invalidUser" :key="user.emailAddress">
+        <UserInfoCard v-bind:user="user" v-on:transfer="invalidUserClicked(user)" v-on:goToAccountDetail="invalidUserClicked(user)" disabled>
+        </UserInfoCard>
+      </div>
     </div>
     <LoadingPopup v-if="showHomeLoadingEnd" src="static/loadersecondhalf.gif" />
     <MDTPrimaryButton :to="RouteDef.EarnMDT.path" :bottom="true">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
@@ -65,6 +70,7 @@ export default {
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
+      invalidUser: 'getInvalidCredentialsInUser',
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
@@ -88,10 +94,11 @@ export default {
     if (redirectFrom !== undefined && redirectFrom.indexOf('autologin') >= 0) {
       const appID = this.$route.query.appid;
       const tokensStr = this.$route.query.tokens;
+      const emailsStr = this.$route.query.emails;
       const needExit = this.$route.query.needexit;
 
       this.setNeedExitBtn(needExit);
-      this.autoLogin(appID, tokensStr, this.$i18n.locale);
+      this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
     }
     this.requstMDTPrice();
     this.requestAppConfig();
@@ -129,17 +136,22 @@ export default {
         },
       });
     },
-    autoLogin(appID, tokensStr) {
-      if (appID === undefined || tokensStr === undefined) {
+    invalidUserClicked(user) {
+      window.location.href = `mdtwallet://relogin?email=${user.emailAddress}`;
+    },
+    autoLogin(appID, tokensStr, emailsStr) {
+      if (appID === undefined || tokensStr === undefined || emailsStr === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
         this.setErrorMessage('AppID is undefined');
         this.setShowErrorPrompt(true);
         return;
       }
       const authTokens = tokensStr.split(',');
+      const emails = emailsStr.split(',');
       this.requestAutoLogin(
         {
           authTokens,
+          emails,
           appID,
         },
       ).then(

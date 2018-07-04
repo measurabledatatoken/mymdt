@@ -92,8 +92,14 @@ const actions = {
   },
   [REQUEST_USER_ACCOUNTS](context) {
     const credentials = context.rootState.login.credentials;
+    const validCredentials = [];
+    credentials.forEach((credential) => {
+      if (credential.access_token.length > 0) {
+        validCredentials.push(credential);
+      }
+    });
 
-    api.account.getUserAccountsData(credentials)
+    api.account.getUserAccountsData(validCredentials)
       .then(
         (normalizeduserAccountData) => {
           if (normalizeduserAccountData.result.length > 0) {
