@@ -70,7 +70,7 @@ export default {
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
-      invalidUser: 'getInvalidCredentialsInUser',
+      invalidUser: 'getInvalidUser',
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;

@@ -13,6 +13,7 @@ import {
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
 export const SET_CREDENTIALS = 'login/SET_CREDENTIALS';
+export const SET_INVALIDEMAILS = 'login/SET_INVALIDEMAILS';
 
 // actions
 export const REQUEST_LOGIN = 'login/REQUEST_LOGIN';
@@ -24,19 +25,19 @@ const state = {
   loginErrorCode: null,
 
   credentials: [],
+  invalidEmails: [],
 };
 
 const moduleGetters = {
-  getInvalidCredentialsInUser: (state) => {
-    const invalidCredentials = state.credentials.filter(credential => credential.access_token.length === 0);
-    const credentialAsUser = [];
-    invalidCredentials.forEach(
-      (credential) => {
-        const tempUser = { emailAddress: credential.email_address };
-        credentialAsUser.push(tempUser);
+  getInvalidUser: (state) => {
+    const invalidUsers = [];
+    state.invalidEmails.forEach(
+      (emails) => {
+        const tempUser = { emailAddress: emails };
+        invalidUsers.push(tempUser);
       },
     );
-    return credentialAsUser;
+    return invalidUsers;
   },
 };
 
@@ -51,6 +52,9 @@ const mutations = {
   },
   [SET_CREDENTIALS](state, credentials) {
     state.credentials = credentials;
+  },
+  [SET_INVALIDEMAILS](state, invalidEmails) {
+    state.invalidEmails = invalidEmails;
   },
 };
 
@@ -119,20 +123,17 @@ const actions = {
         (data) => {
           context.commit(SET_LOGIN_ERRORCODE, null);
 
-          if (data.length > 0) {
-            const credentials = [];
-            data.forEach((dataItem) => {
-              const credential = {
-                email_address: dataItem.email_address,
-                access_token: dataItem.access_token,
-              };
-              credentials.push(credential);
-            });
-            context.commit(SET_CREDENTIALS, credentials);
-
-            return context.dispatch(REQUEST_USER_ACCOUNTS);
-          }
-          throw (new Error('Data length is 0'));
+          const credentials = [];
+          data.valid.forEach((dataItem) => {
+            const credential = {
+              email_address: dataItem.email_address,
+              access_token: dataItem.access_token,
+            };
+            credentials.push(credential);
+          });
+          context.commit(SET_CREDENTIALS, credentials);
+          context.commit(SET_INVALIDEMAILS, data.invalid);
+          return context.dispatch(REQUEST_USER_ACCOUNTS);
         },
       ).then(
         () => {
