@@ -140,12 +140,27 @@ export default {
       window.location.href = `mdtwallet://relogin?email=${user.emailAddress}`;
     },
     autoLogin(appID, tokensStr, emailsStr) {
-      if (appID === undefined || tokensStr === undefined || emailsStr === undefined) {
+      if (appID === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
-        this.setErrorMessage('AppID is undefined');
+        this.setErrorMessage('Need to define appid in url parameter');
         this.setShowErrorPrompt(true);
         return;
       }
+
+      if (tokensStr === undefined) {
+        this.setErrorTitle(this.$t('message.common.unknown_error'));
+        this.setErrorMessage('Need to define tokens in url parameter');
+        this.setShowErrorPrompt(true);
+        return;
+      }
+
+      if (emailsStr === undefined) {
+        this.setErrorTitle(this.$t('message.common.unknown_error'));
+        this.setErrorMessage('Need to define emails in url parameter');
+        this.setShowErrorPrompt(true);
+        return;
+      }
+
       const authTokens = tokensStr.split(',');
       const emails = emailsStr.split(',');
       this.requestAutoLogin(
