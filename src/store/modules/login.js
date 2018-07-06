@@ -29,16 +29,11 @@ const state = {
 };
 
 const moduleGetters = {
-  getInvalidUser: (state) => {
-    const invalidUsers = [];
-    state.invalidEmails.forEach(
-      (emails) => {
-        const tempUser = { emailAddress: emails };
-        invalidUsers.push(tempUser);
-      },
-    );
-    return invalidUsers;
-  },
+  getInvalidUser: state => state.invalidEmails.map(
+    email => ({
+      emailAddress: email,
+    }),
+  ),
 };
 
 const mutations = {
@@ -109,28 +104,24 @@ const actions = {
       return Promise.reject(new Error('authTokens and emails should be same length'));
     }
 
-    const appCredentials = [];
-    for (let i = 0; i < authTokens.length; i += 1) {
-      const appCredential = {
-        token: authTokens[i],
+    const appCredentials = authTokens.map(
+      (authToken, i) => ({
+        token: authToken,
         email_address: emails[i],
-      };
-      appCredentials.push(appCredential);
-    }
+      }),
+    );
 
     return api.auth.autoLogin(appCredentials, appID, locale)
       .then(
         (data) => {
           context.commit(SET_LOGIN_ERRORCODE, null);
 
-          const credentials = [];
-          data.valid.forEach((dataItem) => {
-            const credential = {
+          const credentials = data.valid.map(
+            dataItem => ({
               email_address: dataItem.email_address,
               access_token: dataItem.access_token,
-            };
-            credentials.push(credential);
-          });
+            }),
+          );
           context.commit(SET_CREDENTIALS, credentials);
           context.commit(SET_INVALIDEMAILS, data.invalid);
           return context.dispatch(REQUEST_USER_ACCOUNTS);
