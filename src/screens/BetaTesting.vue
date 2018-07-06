@@ -74,7 +74,8 @@ export default {
       exists: state => state.device.betaTestingSessionExists,
     }),
     showScreen() {
-      return this.checked && !this.exists;
+      // return this.checked && !this.exists;
+      return true;
     },
     accessCodeError() {
       if (this.failed) {
