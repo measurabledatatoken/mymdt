@@ -178,5 +178,21 @@
     "slide_3_description": "您可以將您的MDT轉移給您的朋友，您的以太錢包，或者將其用於MyMDT以獲取有趣的內容（即將推出）！",
     "slide_4_title": "安全",
     "slide_4_description": "所有交易均由您的PIN授權。加入您的電話號碼以獲得更高的安全性。"
+  },
+  "recaptcha": {
+    "default_txt": "點擊按鈕開始智能驗證",
+    "success_txt": "驗證成功",
+    "fail_txt": "驗證失敗，請在此點擊按鈕刷新",
+    "scaning_txt": "智能檢測中",
+    "_ggk_guide": "請在屏幕上滑動，刮出兩面盾牌",
+    "_ggk_success": "恭喜您成功刮出盾牌<br/>繼續下一步操作吧",
+    "_ggk_loading": "加載中",
+    "_ggk_fail": "['呀，盾牌不見了<br/>請', 'javascript:noCaptcha.reset()', '再來一次', '或', 'http://survey.taobao.com/survey /QgzQDdDd?token=%TOKEN', '反饋問題']",
+    "_ggk_action_timeout": "['我等得太久啦<br/>請', 'javascript:noCaptcha.reset()', '再來一次', '或', 'http://survey.taobao.com/ survey/QgzQDdDd?token=%TOKEN', '反饋問題']",
+    "_ggk_net_err": "['網絡實在不給力<br/>請', 'javascript:noCaptcha.reset()', '再來一次', '或', 'http://survey.taobao.com/survey/ QgzQDdDd?token=%TOKEN', '反饋問題']",
+    "_ggk_too_fast": "['您刮得太快啦<br/>請', 'javascript:noCaptcha.reset()', '再來一次', '或', 'http://survey.taobao.com/ survey/QgzQDdDd?token=%TOKEN', '反饋問題']",
+    "nc_loading": "加載中",
+    "nc_startText": "請按住滑塊，拖動到最右邊",
+    "nc_yesText": "驗證通過"
   }
 }
