@@ -40,13 +40,13 @@ export default {
   },
   computed: {
     title() {
-      if (!this.user.displayName || this.user.displayName.length === 0) {
+      if (!this.user.displayName) {
         return this.user.emailAddress;
       }
       return this.user.displayName;
     },
     subTitle() {
-      if (!this.user.displayName || this.user.displayName.length === 0) {
+      if (!this.user.displayName) {
         return '';
       }
       return this.user.emailAddress;
