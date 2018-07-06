@@ -70,17 +70,7 @@ export default {
       },
     };
   },
-  computed: {
-    swiper() {
-      return this.$refs.mySwiper.swiper;
-    },
-  },
   methods: {
-    onSwiperEvent() {
-      if (this.swiper.activeIndex === 3) {
-        this.isFinalPage = true;
-      }
-    },
     onStartClicked() {
       this.$emit('update:active', false);
     },
