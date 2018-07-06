@@ -127,7 +127,10 @@ export default {
     handleSubmit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.requestBetaTestingSession(this.accessCode)
+        this.requestBetaTestingSession({
+          deviceId: this.$route.query.deviceid,
+          accessCode: this.accessCode,
+        })
           .then(() => {
             this.goToHome();
           })

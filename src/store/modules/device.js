@@ -22,11 +22,11 @@ const actions = {
     });
     commit(SET_IS_LOADING, true);
     return api.device.getBetaTestingSession(deviceId)
-      .then((session) => {
+      .then((data) => {
         commit(SET_IS_LOADING, false);
         commit(SET_BETA_TESTING_RESULT, {
           checked: true,
-          exists: !!session,
+          exists: data.session_exists,
         });
       })
       .catch(() => {
@@ -41,10 +41,10 @@ const actions = {
         });
       });
   },
-  [REQUEST_BETA_TESTING_SESSION]({ commit }, accessCode) {
+  [REQUEST_BETA_TESTING_SESSION]({ commit }, { deviceId, accessCode }) {
     commit(SET_IS_LOADING, true);
 
-    return api.device.requestBetaTestingSession(accessCode)
+    return api.device.requestBetaTestingSession(deviceId, accessCode)
       .then(() => {
         commit(SET_IS_LOADING, false);
         commit(SET_BETA_TESTING_RESULT, {
