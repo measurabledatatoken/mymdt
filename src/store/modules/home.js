@@ -58,16 +58,22 @@ const mutations = {
 };
 
 const actions = {
-  [REQUEST_MDT_PRICE](context) {
-    api.misc.getMDTUSDPrice()
+  [REQUEST_MDT_PRICE]({ commit, state }) {
+    const priceUnit = state.priceUnit;
+    api.misc.getMDTPrice(priceUnit)
       .then(
         (data) => {
-          context.commit(SET_MDT_PRICE, data.price_usd);
+          if (!priceUnit) {
+            commit(SET_MDT_PRICE, data.price_usd);
+          } else {
+            const priceUnitKey = `price_${priceUnit.toLowerCase()}`;
+            commit(SET_MDT_PRICE, data[priceUnitKey]);
+          }
         },
       )
       .catch(
         (error) => {
-          console.log('getMDTUSDPrice failed', error);
+          console.log('getMDTPrice failed', error);
         },
       );
   },
@@ -86,8 +92,14 @@ const actions = {
   },
   [REQUEST_USER_ACCOUNTS](context) {
     const credentials = context.rootState.login.credentials;
+    const validCredentials = [];
+    credentials.forEach((credential) => {
+      if (credential.access_token.length > 0) {
+        validCredentials.push(credential);
+      }
+    });
 
-    api.account.getUserAccountsData(credentials)
+    api.account.getUserAccountsData(validCredentials)
       .then(
         (normalizeduserAccountData) => {
           if (normalizeduserAccountData.result.length > 0) {

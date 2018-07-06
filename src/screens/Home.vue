@@ -5,7 +5,7 @@
       <div class="balance-count">{{ formatAmount(totalMDTBalance) }} MDT</div>
 
       <div class="account-content">
-        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }} USD</div>
+        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }}  {{priceUnit}} </div>
         <div class="accountnum">{{ accountNumStr }}</div>
       </div>
     </div>
@@ -13,6 +13,11 @@
     <div class="bottom-content">
       <div v-for="user in allUsers" :key="user.emailAddress">
         <UserInfoCard v-on:transfer="goToTransfer(user)" v-on:goToAccountDetail="goToAccountDetail(user)" v-bind:user="user">
+        </UserInfoCard>
+      </div>
+
+      <div v-for="user in invalidUser" :key="user.emailAddress">
+        <UserInfoCard v-bind:user="user" v-on:transfer="invalidUserClicked(user)" v-on:goToAccountDetail="invalidUserClicked(user)" disabled>
         </UserInfoCard>
       </div>
     </div>
@@ -60,10 +65,12 @@ export default {
   computed: {
     ...mapState({
       mdtPrice: state => state.home.mdtPrice,
+      priceUnit: state => state.home.priceUnit,
       isUserAccountsDirty: state => state.home.isUserAccountsDirty,
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
+      invalidUser: 'getInvalidUser',
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
@@ -87,10 +94,11 @@ export default {
     if (redirectFrom !== undefined && redirectFrom.indexOf('autologin') >= 0) {
       const appID = this.$route.query.appid;
       const tokensStr = this.$route.query.tokens;
+      const emailsStr = this.$route.query.emails;
       const needExit = this.$route.query.needexit;
 
       this.setNeedExitBtn(needExit);
-      this.autoLogin(appID, tokensStr, this.$i18n.locale);
+      this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
     }
     this.requstMDTPrice();
     this.requestAppConfig();
@@ -128,17 +136,37 @@ export default {
         },
       });
     },
-    autoLogin(appID, tokensStr) {
-      if (appID === undefined || tokensStr === undefined) {
+    invalidUserClicked(user) {
+      window.location.href = `mdtwallet://relogin?email=${user.emailAddress}`;
+    },
+    autoLogin(appID, tokensStr, emailsStr) {
+      if (appID === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
-        this.setErrorMessage('AppID is undefined');
+        this.setErrorMessage('Need to define appid in url parameter');
         this.setShowErrorPrompt(true);
         return;
       }
+
+      if (tokensStr === undefined) {
+        this.setErrorTitle(this.$t('message.common.unknown_error'));
+        this.setErrorMessage('Need to define tokens in url parameter');
+        this.setShowErrorPrompt(true);
+        return;
+      }
+
+      if (emailsStr === undefined) {
+        this.setErrorTitle(this.$t('message.common.unknown_error'));
+        this.setErrorMessage('Need to define emails in url parameter');
+        this.setShowErrorPrompt(true);
+        return;
+      }
+
       const authTokens = tokensStr.split(',');
+      const emails = emailsStr.split(',');
       this.requestAutoLogin(
         {
           authTokens,
+          emails,
           appID,
         },
       ).then(

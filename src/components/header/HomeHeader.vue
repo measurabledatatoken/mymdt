@@ -8,7 +8,7 @@
     <md-button :to="RouteDef.Settings.path" class="md-icon-button settingsbtn">
       <md-icon md-src="/static/icons/settings-white.svg"></md-icon>
     </md-button>
-    <md-button :to="RouteDef.Tutorial.path" class="md-icon-button tutorialbtn">
+    <md-button @click="$emit('tutorialClick')" class="md-icon-button tutorialbtn">
       <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
     </md-button>
   </div>

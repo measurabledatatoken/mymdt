@@ -18,6 +18,12 @@ export default {
 .md-button.subtle {
   font-size: 16px;
   color: $plainbtn-wordcolor;
+  text-transform: none;
+
+  /deep/ .md-ripple {
+      padding: 0px;
+
+  }
 
   &[disabled] {
     color: $plainbtn-wordcolor-disabled;

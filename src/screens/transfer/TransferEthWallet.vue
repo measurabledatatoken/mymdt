@@ -1,28 +1,49 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid" :amount="transferAmount"
-      :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
+    <MDTInputField v-on:amountEntered="setTransferAmount"
+                   v-on:amountInvalid="transferAmountInvalid"
+                   :amount="transferAmount"
+                   :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
     <div class="transaction-fee">
       <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
+      <md-button class="transaction-fee-icon md-icon-button"
+                 :md-ripple="false"
+                 @click="showTutorial = true">
+        <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
+      </md-button>
       <div class="transaction-fee-value"> {{ formatAmount(transactionFee) }} MDT</div>
     </div>
 
     <div class="final-amount">
       <div class="final-amount-lbl">{{ $t('message.transfer.final_amount') }}</div>
-      <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }} MDT</div>
+      <div class="final-amount-value"
+           v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }} MDT</div>
     </div>
 
     <div class="extra-space"> </div>
-    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')"
-      :accounts="fromUserAccounts" :selectedAccount="transferFromAccount">
+    <AccountSelector v-on:accountSelected="setTransferFromAccount"
+                     :label="$t('message.transfer.fromlbl')"
+                     :accounts="fromUserAccounts"
+                     :selectedAccount="transferFromAccount">
     </AccountSelector>
-    <WalletAddressField :label="$t('message.transfer.tolbl')" :initWalletAddress="transferToWalletAddress"
-      v-on:walletAddressEntered="walletAddressEntered" v-on:walletAddressInvalid="walletAddressInvalid">
+    <WalletAddressField :label="$t('message.transfer.tolbl')"
+                        :initWalletAddress="transferToWalletAddress"
+                        v-on:walletAddressEntered="walletAddressEntered"
+                        v-on:walletAddressInvalid="walletAddressInvalid">
     </WalletAddressField>
-    <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
-    <MDTPrimaryButton :to="RouteDef.TransferReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
-  </div>
+    <NoteInputField v-on:infoEntered="setTransferNote"
+                    :note="transferNote"></NoteInputField>
+    <MDTPrimaryButton :to="RouteDef.TransferReview.path"
+                      :disabled="disableNextBtn"
+                      :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
 
+    <md-dialog-alert :md-active.sync="showTutorial"
+                     :md-title="$t('message.transfer.tutorial_title')"
+                     :md-content="$t('message.transfer.tutorial_description')"
+                     :md-confirm-text="$t('message.common.okay')">
+
+    </md-dialog-alert>
+  </div>
 </template>
 
 <script>
@@ -61,6 +82,7 @@ export default {
     return {
       RouteDef,
       isWalletAddressValid: false,
+      showTutorial: false,
     };
   },
   computed: {
@@ -138,11 +160,30 @@ export default {
 .transaction-fee-lbl,
 .final-amount-lbl {
   float: left;
-  width: 40%;
+  width: auto;
   text-align: left;
+  font-weight: bold;
 }
 
-.transaction-fee-value,
+.transaction-fee-icon {
+  float: left;
+  width: 10%;
+  min-width: 0px;
+  height: 20px;
+  margin: 0px;
+
+  &:active:before,
+  &:focus:before {
+    background-color: white;
+  }
+}
+
+.transaction-fee-value {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+
 .final-amount-value {
   float: right;
   width: 60%;
@@ -155,5 +196,20 @@ export default {
 
 .extra-space {
   height: 10px;
+}
+
+.md-dialog {
+  /deep/ .md-dialog-title {
+    font-weight: bold;
+  }
+
+  /deep/ .md-dialog-actions {
+    justify-content: center;
+  }
+
+  /deep/ .md-button-content {
+    font-weight: bold;
+    text-transform: none;
+  }
 }
 </style>

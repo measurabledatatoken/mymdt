@@ -46,7 +46,9 @@
     "final_amount": "Final Amount",
     "invalid_email": "Invalid Email Address",
     "invalid_ethaddress": "Invalid Eth Address",
-    "insufficient_fund": "Insufficient fund. Please enter another amount or change an account."
+    "insufficient_fund": "Insufficient fund. Please enter another amount or change an account.",
+    "tutorial_title": "Transaction Fee",
+    "tutorial_description": "MDT is an ERC20 token. Transferring to an ETH wallet incurrs gas fee. When you transfer your MDT to an ETH wallet, the gas fee is calculated in MDT and deducted from your transaction. Depending on how clogged the network is, gas fee or transaction fee will fluctuate."
   },
   "qrcode": {
     "title": "Scan QR Code",
@@ -165,5 +167,16 @@
     "invite": "Invite",
     "maximumAmountToEarn": "Maximum {amount} {currency}",
     "rewardErrorMessage": "Failed to claim reward. Please refresh and try again."
+  },
+  "tutorial": {
+    "get_started": "Get Started",
+    "slide_1_title": "What is MDT?",
+    "slide_1_description": "MDT is a crytocurrency.",
+    "slide_2_title": "Earn Tokens by Simple Tasks",
+    "slide_2_description": "No need to work hard. \n MyMDT rewards you for very simple tasks, such as sending out an email in MailTime.",
+    "slide_3_title": "Send or Spend",
+    "slide_3_description": "You can transfer your MDT to your friend, your wallet, or spend it in MyMDT for fun stuff (coming soon)!",
+    "slide_4_title": "Security",
+    "slide_4_description": "All transactions are authorized by your PIN. Add your phone number for more security. We got you covered."
   }
 }

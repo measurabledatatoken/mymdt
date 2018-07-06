@@ -2,7 +2,7 @@
   <div class="appcontainer">
     <header class="header">
       <transition :name=" 'header-' + transitionName">
-        <HomeHeader v-if="showHomeHeader" class="header-view"></HomeHeader>
+        <HomeHeader v-if="showHomeHeader" class="header-view" @tutorialClick="onTutorialClicked"></HomeHeader>
         <NavigationHeader v-if="!showHomeHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
       </transition>
     </header>
@@ -15,7 +15,9 @@
     <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')" />
 
-    <LoadingPopup v-if="isLoading" src="/static/threedotsloader.gif"/>
+    <LoadingPopup v-if="isLoading" src="/static/threedotsloader.gif" />
+
+    <HomeTutorial :active.sync="showTutorial"></HomeTutorial>
   </div>
 </template>
 
@@ -28,12 +30,20 @@ import {
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 import LoadingPopup from '@/components/common/LoadingPopup';
+import HomeTutorial from '@/components/tutorial/HomeTutorial';
 
 export default {
+  components: {
+    HomeHeader,
+    NavigationHeader,
+    LoadingPopup,
+    HomeTutorial,
+  },
   data() {
     return {
       showHomeHeader: true,
       transitionName: 'pop-in',
+      showTutorial: false,
     };
   },
   computed: {
@@ -78,11 +88,6 @@ export default {
         this.dismissErrorPrompt();
       },
     },
-  },
-  components: {
-    HomeHeader,
-    NavigationHeader,
-    LoadingPopup,
   },
   watch: {
     $route(to, from) {
@@ -133,6 +138,9 @@ export default {
     ...mapActions({
       dismissErrorPrompt: DISMISS_ERROR_PROMPT,
     }),
+    onTutorialClicked() {
+      this.showTutorial = true;
+    },
   },
 };
 </script>
@@ -246,5 +254,9 @@ export default {
   }
 }
 
+.home-tutorial {
+   position: absolute;
+   z-index: 10;
+}
 </style>
 
