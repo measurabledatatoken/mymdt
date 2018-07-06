@@ -179,5 +179,24 @@
     "slide_3_description": "您可以将您的MDT转移给您的朋友，您的以太钱包，或者将其用于MyMDT以获取有趣的内容（即将推出）！",
     "slide_4_title": "安全",
     "slide_4_description": "所有交易均由您的PIN授权。加入您的电话号码以获得更高的安全性。"
+  },
+  "recaptcha": {
+    "default_txt": "点击按钮开始智能验证",
+    "success_txt": "验证成功",
+    "fail_txt": "验证失败，请在此点击按钮刷新",
+    "scaning_txt": "智能检测中",
+    "_ggk_guide": "请在屏幕上滑动，刮出两面盾牌",
+    "_ggk_success": "恭喜您成功刮出盾牌<br/>继续下一步操作吧",
+    "_ggk_loading": "加载中",
+    "_ggk_fail": "盾牌不见了<br/>请再来一次",
+    "_ggk_action_timeout": "我等得太久啦<br/>请再来一次",
+    "_ggk_net_err": "网络实在不给力<br/>请再来一次",
+    "_ggk_too_fast": "您刮得太快啦<br/>请再来一次",
+    "nc_loading": "加载中",
+    "nc_startText": "请按住滑块，拖动到最右边",
+    "nc_yesText": "验证通过",
+    "nc_error300": "不知名错误.请重刷页面并重试。",
+    "nc_errorServer": "伺服器错误.请重刷页面并重试。",
+    "nc_errorNetwork": "网络错误.请重刷页面并重试。"
   }
 }

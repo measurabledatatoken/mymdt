@@ -22,12 +22,9 @@
       >
       </md-textarea>
     </BaseField>
-    <Recaptcha
-      :error="$v.isVerified.$error && $t('message.reportProblem.recaptchaFailed')"
-      @verify="handleRecaptchaVerify"
-      @expired="handleRecaptchaExpired"
-    />
-    <MDTPrimaryButton type="submit" >{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
+
+    <MDTSmartCaptcha @callback="handleRecaptchaVerify"></MDTSmartCaptcha>
+    <MDTPrimaryButton type="submit" :disabled="!$v.isVerified.$dirty || !$v.comments.$dirty || $v.$anyError">{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
   </form>
 </template>
 
@@ -39,6 +36,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BaseField from '@/components/input/BaseField';
 import Recaptcha from '@/components/input/Recaptcha';
 import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
+import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
 
 const checked = value => !helpers.req(value) || value === true;
 
@@ -71,15 +69,14 @@ export default {
     BaseField,
     Recaptcha,
     MDTPrimaryButton,
+    MDTSmartCaptcha,
   },
   methods: {
     handleRecaptchaVerify() {
       this.isVerified = true;
       this.$v.isVerified.$touch();
-    },
-    handleRecaptchaExpired() {
-      this.isVerified = false;
-      this.$v.isVerified.$touch();
+
+      // TODO: pass token, sig and sessionId with the form and do server side verification
     },
     handleSubmit() {
       this.$v.$touch();
@@ -109,4 +106,5 @@ export default {
     margin-bottom: 0.5rem;
   }
 }
+
 </style>
