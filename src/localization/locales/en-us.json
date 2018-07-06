@@ -187,12 +187,15 @@
     "_ggk_guide": "Swipe on the screen until two shields show",
     "_ggk_success": "Congratulations. <br/> Please process",
     "_ggk_loading": "Loading",
-    "_ggk_fail": "['Ar，Shield is missing.<br/>Please', 'javascript:noCaptcha.reset()', 'try again', 'or', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', 'Report a problem.']",
-    "_ggk_action_timeout": "['You have waited too long<br/>Please', 'javascript:noCaptcha.reset()', 'try again', 'or', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', 'Report a problem.']",
-    "_ggk_net_err": "['Network Problem<br/>Please', 'javascript:noCaptcha.reset()', 'try again', 'or', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', 'Report a problem.']",
-    "_ggk_too_fast": "['You scrap too fast.<br/>Please', 'javascript:noCaptcha.reset()', 'try again', 'or', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', 'Report a problem.']",
+    "_ggk_fail": "Shield is missing.<br/>Please try again",
+    "_ggk_action_timeout": "You have waited too long.<br/>Please try again",
+    "_ggk_net_err": "Network Problem.<br/>Please try again",
+    "_ggk_too_fast": "You scrap too fast.<br/>Please try again",
     "nc_loading": "Verifing",
     "nc_startText": "Please press and slide to right",
-    "nc_yesText": "Verifiy Success"
+    "nc_yesText": "Verifiy Success",
+    "nc_error300": "Unknown Error. Please refresh and try again",
+    "nc_errorServer": "Server Error. Please refresh and try again",
+    "nc_errorNetwork": "Network Error. Please refresh and try again"
   }
 }
