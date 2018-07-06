@@ -23,6 +23,9 @@ export default {
         nc_loading: this.$t('message.recaptcha.nc_loading'),
         nc_startText: this.$t('message.recaptcha.nc_startText'),
         nc_yesText: this.$t('message.recaptcha.nc_yesText'),
+        nc_error300: this.$t('message.recaptcha.nc_error300'),
+        nc_errorServer: this.$t('message.recaptcha.nc_errorServer'),
+        nc_errorNetwork: this.$t('message.recaptcha.nc_errorNetwork'),
       };
     },
   },

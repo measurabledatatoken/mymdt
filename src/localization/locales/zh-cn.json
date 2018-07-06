@@ -188,12 +188,15 @@
     "_ggk_guide": "请在屏幕上滑动，刮出两面盾牌",
     "_ggk_success": "恭喜您成功刮出盾牌<br/>继续下一步操作吧",
     "_ggk_loading": "加载中",
-    "_ggk_fail": "['呀，盾牌不见了<br/>请', 'javascript:noCaptcha.reset()', '再来一次', '或', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', '反馈问题']",
-    "_ggk_action_timeout": "['我等得太久啦<br/>请', 'javascript:noCaptcha.reset()', '再来一次', '或', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', '反馈问题']",
-    "_ggk_net_err": "['网络实在不给力<br/>请', 'javascript:noCaptcha.reset()', '再来一次', '或', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', '反馈问题']",
-    "_ggk_too_fast": "['您刮得太快啦<br/>请', 'javascript:noCaptcha.reset()', '再来一次', '或', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', '反馈问题']",
+    "_ggk_fail": "盾牌不见了<br/>请再来一次",
+    "_ggk_action_timeout": "我等得太久啦<br/>请再来一次",
+    "_ggk_net_err": "网络实在不给力<br/>请再来一次",
+    "_ggk_too_fast": "您刮得太快啦<br/>请再来一次",
     "nc_loading": "加载中",
     "nc_startText": "请按住滑块，拖动到最右边",
-    "nc_yesText": "验证通过"
+    "nc_yesText": "验证通过",
+    "nc_error300": "不知名错误.请重刷页面并重试。",
+    "nc_errorServer": "伺服器错误.请重刷页面并重试。",
+    "nc_errorNetwork": "网络错误.请重刷页面并重试。"
   }
 }

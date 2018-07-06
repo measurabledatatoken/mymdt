@@ -64,8 +64,12 @@ export default {
       window.NVC_Opt = {
         appkey: this.appkey,
         scene: ncScene,
+
+        // Following items are for testing only
+        // appkey: 'CF_APP_1',
+        // scene: 'nvc_register',
+        // trans: { key1: 'code300', nvcCode: 400 },
         renderTo: `#${this.id}`,
-        trans: { key1: 'code0', nvcCode: 600 },
         elements: option.elements || [
           '//img.alicdn.com/tfs/TB17cwllsLJ8KJjy0FnXXcFDpXa-50-74.png',
           '//img.alicdn.com/tfs/TB17cwllsLJ8KJjy0FnXXcFDpXa-50-74.png',
@@ -140,6 +144,18 @@ export default {
             }
             case '_yesTEXT': {
               noCaptchaElement.innerText = option.nc_yesText || '验证通过';
+              break;
+            }
+            case '_error300': {
+              noCaptchaElement.innerText = option.nc_error300 || '出错了，刷新再来一次';
+              break;
+            }
+            case '_errorServer': {
+              noCaptchaElement.innerText = option.nc_errorServer || '服务器错误或者超时';
+              break;
+            }
+            case '_errorNetwork': {
+              noCaptchaElement.innerText = option.nc_errorNetwork || '网络不给力，请刷新再来一次';
               break;
             }
             default: {
