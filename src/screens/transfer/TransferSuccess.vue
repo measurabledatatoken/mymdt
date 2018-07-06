@@ -3,22 +3,19 @@
     <template v-if="transferType === TransferType.Email">
       <md-icon md-src="/static/icons/transaction-success.svg"></md-icon>
       <div class="message">
-
         {{ $t('message.transfer.successdetail_email', { 'finalAmount': formatAmount(finalAmount) })}}
-        <br>
       </div>
 
     </template>
     <template v-else>
       <md-icon md-src="/static/icons/transaction-pending.svg"></md-icon>
       <div class="message">
-
-        {{ $t('message.transfer.successdetail_ethwallet')}}
-        <br>
+        {{ $t('message.transfer.successdetail_ethwallet') }}
       </div>
     </template>
 
-    <MDTPrimaryButton @click="onDoneClick" :bottom="true">{{ $t('message.common.done') }}</MDTPrimaryButton>
+    <MDTPrimaryButton @click="onDoneClick"
+                      :bottom="true">{{ $t('message.common.done') }}</MDTPrimaryButton>
     <MDTSubtleButton :to="Route"></MDTSubtleButton>
   </div>
 </template>
@@ -112,9 +109,9 @@ export default {
 }
 
 .message {
-  margin-top: 20px;
   font-size: 20px;
   line-height: 30px;
-  margin: 16px;
+  margin: 0px 16px 16px 16px;
+  white-space: pre-line;
 }
 </style>
