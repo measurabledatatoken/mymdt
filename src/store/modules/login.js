@@ -13,6 +13,7 @@ import {
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
 export const SET_CREDENTIALS = 'login/SET_CREDENTIALS';
+export const SET_INVALIDEMAILS = 'login/SET_INVALIDEMAILS';
 
 // actions
 export const REQUEST_LOGIN = 'login/REQUEST_LOGIN';
@@ -24,6 +25,15 @@ const state = {
   loginErrorCode: null,
 
   credentials: [],
+  invalidEmails: [],
+};
+
+const moduleGetters = {
+  getInvalidUser: state => state.invalidEmails.map(
+    email => ({
+      emailAddress: email,
+    }),
+  ),
 };
 
 const mutations = {
@@ -37,6 +47,9 @@ const mutations = {
   },
   [SET_CREDENTIALS](state, credentials) {
     state.credentials = credentials;
+  },
+  [SET_INVALIDEMAILS](state, invalidEmails) {
+    state.invalidEmails = invalidEmails;
   },
 };
 
@@ -77,6 +90,7 @@ const actions = {
   },
   [REQUEST_AUTO_LOGIN](context, {
     authTokens,
+    emails,
     appID,
     locale,
   }) {
@@ -86,33 +100,31 @@ const actions = {
       return Promise.reject(new Error('authTokens should all be array'));
     }
 
-    const appCredentials = [];
-    for (let i = 0; i < authTokens.length; i += 1) {
-      const appCredential = {
-        token: authTokens[i],
-      };
-      appCredentials.push(appCredential);
+    if (authTokens.length !== emails.length) {
+      return Promise.reject(new Error('authTokens and emails should be same length'));
     }
+
+    const appCredentials = authTokens.map(
+      (authToken, i) => ({
+        token: authToken,
+        email_address: emails[i],
+      }),
+    );
 
     return api.auth.autoLogin(appCredentials, appID, locale)
       .then(
         (data) => {
           context.commit(SET_LOGIN_ERRORCODE, null);
 
-          if (data.length > 0) {
-            const credentials = [];
-            data.forEach((dataItem) => {
-              const credential = {
-                email_address: dataItem.email_address,
-                access_token: dataItem.access_token,
-              };
-              credentials.push(credential);
-            });
-            context.commit(SET_CREDENTIALS, credentials);
-
-            return context.dispatch(REQUEST_USER_ACCOUNTS);
-          }
-          throw (new Error('Data length is 0'));
+          const credentials = data.valid.map(
+            dataItem => ({
+              email_address: dataItem.email_address,
+              access_token: dataItem.access_token,
+            }),
+          );
+          context.commit(SET_CREDENTIALS, credentials);
+          context.commit(SET_INVALIDEMAILS, data.invalid);
+          return context.dispatch(REQUEST_USER_ACCOUNTS);
         },
       ).then(
         () => {
@@ -140,6 +152,7 @@ const actions = {
 
 export default {
   state,
+  getters: moduleGetters,
   mutations,
   actions,
 };

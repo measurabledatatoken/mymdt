@@ -46,7 +46,10 @@
     "final_amount": "最终数量",
     "invalid_email": "无效的电邮地址",
     "invalid_ethaddress": "无效的以太钱包地址",
-    "insufficient_fund": "该帐号MDT数量不够,请减才少数量或另选帐号。"
+    "insufficient_fund": "该帐号MDT数量不够,请减才少数量或另选帐号。",
+
+    "tutorial_title": "转帐手续费",
+    "tutorial_description": "MDT为ERC20代币。转帐至ETH钱包需要支付燃气费。当您将MDT转移到ETH钱包时，燃气费会以MDT计算并从您的交易中扣除。根据网络的堵塞情况，燃气费或交易费将会波动。"
   },
   "qrcode": {
     "title": "扫描二维码",
@@ -165,5 +168,16 @@
     "invite": "邀请",
     "maximumAmountToEarn": "最多 {amount} {currency}",
     "rewardErrorMessage": "未能认领奖励。请刷新并重试"
+  },
+  "tutorial": {
+    "get_started": "开始使用",
+    "slide_1_title": "什么是MDT？",
+    "slide_1_description": "MDT是一种加密货币。",
+    "slide_2_title": "通过简单任务赚取代币",
+    "slide_2_description": "无需努力工作。\n 在MyMDT中完成简单的任务从而赚取奖励，例如在MailTime中发送电子邮件。",
+    "slide_3_title": "发送或支出",
+    "slide_3_description": "您可以将您的MDT转移给您的朋友，您的以太钱包，或者将其用于MyMDT以获取有趣的内容（即将推出）！",
+    "slide_4_title": "安全",
+    "slide_4_description": "所有交易均由您的PIN授权。加入您的电话号码以获得更高的安全性。"
   }
 }

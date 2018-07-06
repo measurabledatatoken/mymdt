@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(73 43)">
+            <path fill="#D0D0D0" d="M6.831 2.9l58.083-1.528 2.518 1.93A4 4 0 0 1 69 6.476V118a4 4 0 0 1-4 4H6.957a4 4 0 0 1-2.822-1.166l-3.03-3.017L2.937 6.832A4 4 0 0 1 6.83 2.899z"/>
+            <rect width="66" height="119" fill="#E1E1E1" rx="4"/>
+            <path fill="#FFF" stroke="#D5D5D5" stroke-width="2" d="M5 16h55v88H5z"/>
+            <rect width="16" height="4" x="25" y="6" fill="#D5D5D5" rx="2"/>
+        </g>
+        <path fill="#AFFAFF" d="M123.02 71.321L163.47 70l2.15 1.418a4 4 0 0 1 1.799 3.34v16.364a4 4 0 0 1-4 4h-18.104l-18.805 7.552-1.967-2.006 1.967-5.546h-3.931a4 4 0 0 1-3.469-2.007L118 91.182l1.16-16.15a4 4 0 0 1 3.86-3.71z"/>
+        <path fill="#4187F7" d="M121 69h40a4 4 0 0 1 4 4v15.684a4 4 0 0 1-4 4h-18.104l-18.804 7.551v-7.551H121a4 4 0 0 1-4-4V73a4 4 0 0 1 4-4z"/>
+        <g transform="translate(154 128)">
+            <circle cx="12" cy="13" r="12" fill="#FEE602"/>
+            <circle cx="13" cy="12" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+        </g>
+        <g transform="translate(12 112)">
+            <circle cx="13" cy="13" r="12" fill="#FEE602"/>
+            <circle cx="12" cy="12" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+        </g>
+        <g transform="translate(33 59)">
+            <circle cx="13" cy="13" r="12" fill="#FEE602"/>
+            <circle cx="12" cy="12" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+        </g>
+        <g transform="translate(87 101)">
+            <circle cx="14" cy="14" r="12" fill="#AFFAFF"/>
+            <circle cx="12" cy="12" r="12" fill="#4187F7"/>
+            <path fill="#FFF" d="M9.455 15.701l-3.341-3.447L5 13.403 9.455 18 19 8.15 17.886 7z"/>
+        </g>
+        <g transform="translate(55 136)">
+            <circle cx="30" cy="27" r="12" fill="#FEE602"/>
+            <circle cx="24" cy="12" r="12" fill="#FEE602"/>
+            <circle cx="14" cy="27" r="12" fill="#FEE602"/>
+            <circle cx="12" cy="26" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+            <circle cx="21" cy="12" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+            <circle cx="28" cy="26" r="11" fill="#FFF490" stroke="#FEE602" stroke-width="2"/>
+        </g>
+    </g>
+</svg>

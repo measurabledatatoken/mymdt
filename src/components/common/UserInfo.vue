@@ -33,16 +33,20 @@ export default {
       type: Boolean,
       default: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     title() {
-      if (this.user.displayName.length === 0) {
+      if (!this.user.displayName) {
         return this.user.emailAddress;
       }
       return this.user.displayName;
     },
     subTitle() {
-      if (this.user.displayName.length === 0) {
+      if (!this.user.displayName) {
         return '';
       }
       return this.user.emailAddress;

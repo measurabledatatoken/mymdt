@@ -100,6 +100,7 @@ export default {
 
 .md-button {
   float: left;
+  margin-left: 0px;
 
   /deep/ .md-ripple {
     padding: 0;

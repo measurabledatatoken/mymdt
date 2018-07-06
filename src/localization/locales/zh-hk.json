@@ -29,7 +29,7 @@
     "reviewtitle": "確認",
     "successtitle": "成功",
     "successdetail_email": "{finalAmount} 成功轉帳！",
-    "successdetail_ethwallet": "你的MDT轉帳要求正在處理中。狀態交易記錄中查看。",    
+    "successdetail_ethwallet": "你的MDT轉帳要求正在處理中。狀態交易記錄中查看。",
     "fromlbl": "由",
     "tolbl": "至",
     "amountlbl": "數量",
@@ -46,7 +46,9 @@
     "final_amount": "最終數量",
     "invalid_email": "無效的電郵地址",
     "invalid_ethaddress": "無效的以太錢包地址",
-    "insufficient_fund": "帳號MDT數量不夠，請減才少數量或另選帳號。"
+    "insufficient_fund": "帳號MDT數量不夠，請減才少數量或另選帳號。",
+    "tutorial_title": "轉帳手續費",
+    "tutorial_description": "MDT為ERC20代幣。轉帳至ETH錢包需要支付燃氣費。當您將MDT轉移到ETH錢包時，燃氣費會以MDT計算並從您的交易中扣除。根據網絡的堵塞情況，燃氣費或交易費將會波動。"
   },
   "qrcode": {
     "title": "掃描二維碼",
@@ -165,5 +167,16 @@
     "invite": "邀請",
     "maximumAmountToEarn": "最多 {amount} {currency}",
     "rewardErrorMessage": "未能認領獎勵。請刷新並重試"
+  },
+  "tutorial": {
+    "get_started": "開始使用",
+    "slide_1_title": "什麼是MDT？",
+    "slide_1_description": "MDT是一種加密貨幣。",
+    "slide_2_title": "通過簡單任務賺取代幣",
+    "slide_2_description": "無需努力工作。\n 在MyMDT中完成簡單的任務從而賺取獎勵，例如在MailTime中發送電子郵件。",
+    "slide_3_title": "發送或支出",
+    "slide_3_description": "您可以將您的MDT轉移給您的朋友，您的以太錢包，或者將其用於MyMDT以獲取有趣的內容（即將推出）！",
+    "slide_4_title": "安全",
+    "slide_4_description": "所有交易均由您的PIN授權。加入您的電話號碼以獲得更高的安全性。"
   }
 }

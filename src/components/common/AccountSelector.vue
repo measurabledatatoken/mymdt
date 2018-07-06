@@ -27,7 +27,7 @@
               <div class="account-email" v-bind:class="{ 'selected' : account.emailAddress === selectedAccountEmail }">
                 {{ account.emailAddress }}
               </div>
-              <div class="account-balance">
+              <div class="account-balance" v-if="account.mdtBalance != undefined">
                 {{ `${$t('message.transfer.amountlbl')}: ${formatAmount(account.mdtBalance)}` }} MDT
               </div>
             </div>
