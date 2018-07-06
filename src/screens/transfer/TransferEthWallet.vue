@@ -203,7 +203,7 @@ export default {
     font-weight: bold;
   }
 
-  /deep/ .md-dialog-action {
+  /deep/ .md-dialog-actions {
     justify-content: center;
   }
 
