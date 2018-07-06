@@ -40,9 +40,7 @@
       </div>
     </div>
 
-    <Recaptcha class="recaptcha" @verify="onRecaptchaVerified" />
-
-    <MDTPrimaryButton v-on:click="transferMDT" :disabled="disableTransferBtn" :bottom="true">
+    <MDTPrimaryButton v-on:click="transferMDT" :bottom="true">
       {{ $t('message.common.transferbtn') }}
     </MDTPrimaryButton>
 
@@ -60,7 +58,6 @@ import { START_TRANSFER } from '@/store/modules/transfer';
 import { SET_DONE_CALLBACK_PATH, SET_SELECTED_USER, VALIDATE_PIN_FOR_TRANSFER } from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
-import Recaptcha from '@/components/input/Recaptcha';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
@@ -75,13 +72,11 @@ export default {
   },
   data() {
     return {
-      disableTransferBtn: false,
       TransferType,
       showPinCodeInput: false,
     };
   },
   components: {
-    Recaptcha,
     MDTPrimaryButton,
     PinCodeInputPopup,
   },
@@ -126,9 +121,6 @@ export default {
       startTransfer: START_TRANSFER,
       validatePIN: VALIDATE_PIN_FOR_TRANSFER,
     }),
-    onRecaptchaVerified() {
-      this.disableTransferBtn = false;
-    },
     transferMDT() {
       this.showPinCodeInput = true;
     },
@@ -306,9 +298,4 @@ $amountMinHeight: 20px;
   }
 }
 
-.recaptcha {
-  position: absolute;
-  bottom: 7em;
-  @include center_horizontal;
-}
 </style>
