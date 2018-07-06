@@ -1,10 +1,9 @@
 <template>
-  <BaseField class="recaptcha-field" v-bind="$attrs">
-    <vue-recaptcha
-      class="recaptcha"
-      sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"
-      v-on="$listeners"
-    />
+  <BaseField class="recaptcha-field"
+             v-bind="$attrs">
+    <vue-recaptcha class="recaptcha"
+                   sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"
+                   v-on="$listeners" />
   </BaseField>
 </template>
 
@@ -33,13 +32,13 @@ export default {
   }
 }
 
-.recaptcha {
-  /deep/ > div {
+.recaptcha /deep/ {
+  > div {
     margin: auto;
   }
+}
 
-  /deep/ iframe {
-    height: 4.875rem;
-  }
+.recaptcha /deep/ iframe {
+  height: 4.875rem;
 }
 </style>

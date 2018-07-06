@@ -29,7 +29,7 @@
     "reviewtitle": "Review",
     "successtitle": "Success",
     "successdetail_email": "{finalAmount} MDT successfully transferred!",
-    "successdetail_ethwallet": "Your MDT is on its way. We are processing the transaction. Please check the status in your transaction history.",
+    "successdetail_ethwallet": "Your MDT is on its way...\n We are processing the transaction. Please check the status in your transaction history.",
     "amountlbl": "Amount",
     "fromlbl": "From",
     "tolbl": "To",
@@ -178,5 +178,24 @@
     "slide_3_description": "You can transfer your MDT to your friend, your wallet, or spend it in MyMDT for fun stuff (coming soon)!",
     "slide_4_title": "Security",
     "slide_4_description": "All transactions are authorized by your PIN. Add your phone number for more security. We got you covered."
+  },
+  "recaptcha": {
+    "default_txt": "Press to start",
+    "success_txt": "Verify Success",
+    "fail_txt": "Verify Failed. Press to restart",
+    "scaning_txt": "Scanning",
+    "_ggk_guide": "Swipe on the screen until two shields show",
+    "_ggk_success": "Congratulations. <br/> Please process",
+    "_ggk_loading": "Loading",
+    "_ggk_fail": "Shield is missing.<br/>Please try again",
+    "_ggk_action_timeout": "You have waited too long.<br/>Please try again",
+    "_ggk_net_err": "Network Problem.<br/>Please try again",
+    "_ggk_too_fast": "You scrap too fast.<br/>Please try again",
+    "nc_loading": "Verifing",
+    "nc_startText": "Please press and slide to right",
+    "nc_yesText": "Verifiy Success",
+    "nc_error300": "Unknown Error. Please refresh and try again",
+    "nc_errorServer": "Server Error. Please refresh and try again",
+    "nc_errorNetwork": "Network Error. Please refresh and try again"
   }
 }
