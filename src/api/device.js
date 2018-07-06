@@ -1,28 +1,25 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// import handleGeneralResponse from './helper';
-// import { APIEndPoint, APIScheme } from './constants';
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import handleGeneralResponse from './helper';
+import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  getBetaTestingSession(deviceId) { // eslint-disable-line
-    return delay(1500).then(() => false);
-    // const promise = axios.get(
-    //   `${APIScheme}://${APIEndPoint}/account/registered-apps`,
-    //   {
-    //     headers: { Authorization: `Bearer ${accessToken}` },
-    //   },
-    // );
+  getBetaTestingSession(deviceId) {
+    const promise = axios.get(
+      `${APIScheme}://${APIEndPoint}/devices/${deviceId}/beta-testing-session`,
+    );
 
-    // return handleGeneralResponse(promise, {
-    //   allowEmptyData: true,
-    // });
+    return handleGeneralResponse(promise);
   },
-  requestBetaTestingSession(accessCode) { // eslint-disable-line
-    return delay(1500).then(() => true);
-    // return delay(1500).then(() => Promise.reject(new Error()));
+  requestBetaTestingSession(deviceId, accessCode) {
+    console.log('accessCode', accessCode);
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/devices/${deviceId}/beta-testing-session/create`,
+      {
+        access_code: accessCode,
+      },
+    );
+
+    return handleGeneralResponse(promise);
   },
 };
