@@ -27,7 +27,7 @@
       @verify="handleRecaptchaVerify"
       @expired="handleRecaptchaExpired"
     /> -->
-    <MDTSmartCaptcha appkey="FFFF0N0000000000643E" scene="ic_other_h5" @callback="handleRecaptchaVerify"></MDTSmartCaptcha>
+    <MDTSmartCaptcha @callback="handleRecaptchaVerify"></MDTSmartCaptcha>
     <MDTPrimaryButton type="submit" :disabled="!$v.isVerified.$dirty || !$v.comments.$dirty || $v.$anyError">{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
   </form>
 </template>
@@ -40,7 +40,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BaseField from '@/components/input/BaseField';
 import Recaptcha from '@/components/input/Recaptcha';
 import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
-import MDTSmartCaptcha from '@/components/smartCaptcha/MDTSmartCaptcha';
+import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
 
 const checked = value => !helpers.req(value) || value === true;
 

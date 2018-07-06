@@ -1,9 +1,9 @@
 <template>
-<SmartCaptcha class="captcha" v-bind="$attrs" v-on="$listeners" :option="captchaOption"></SmartCaptcha>
+<SmartCaptcha class="captcha" appkey="FFFF0N0000000000643E" scene="ic_other_h5" v-bind="$attrs" v-on="$listeners" :option="captchaOption"></SmartCaptcha>
 </template>
 
 <script>
-import SmartCaptcha from '@/components/smartCaptcha/SmartCaptcha';
+import SmartCaptcha from '@/components/input/SmartCaptcha';
 
 export default {
   computed: {
