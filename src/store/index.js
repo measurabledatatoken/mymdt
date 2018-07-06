@@ -35,6 +35,6 @@ export default new Vuex.Store({
   },
   strict: debug,
   plugins: debug ? [createLogger(), createPersistedState({
-    paths: ['home', 'login', 'entities'],
+    paths: ['home', 'login', 'entities', 'device.deviceId'],
   })] : [],
 });

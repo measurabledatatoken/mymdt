@@ -69,6 +69,7 @@ export default {
   },
   computed: {
     ...mapState({
+      deviceId: state => state.device.deviceId,
       checked: state => state.device.betaTestingSessionChecked,
       exists: state => state.device.betaTestingSessionExists,
     }),
@@ -94,7 +95,7 @@ export default {
     },
   },
   created() {
-    const deviceId = this.$route.query.deviceid;
+    const deviceId = this.$route.query.deviceid || this.deviceId;
     if (!deviceId) {
       this.openErrorPrompt({
         message: {

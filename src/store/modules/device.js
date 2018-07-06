@@ -3,13 +3,16 @@ import {
   SET_IS_LOADING,
   OPEN_ERROR_PROMPT,
 } from '@/store/modules/common';
+import { runAtLeast } from '@/utils';
 
 export const GET_BETA_TESTING_SESSION = 'device/GET_BETA_TESTING_SESSION';
 export const REQUEST_BETA_TESTING_SESSION = 'device/REQUEST_BETA_TESTING_SESSION';
 
 const SET_BETA_TESTING_RESULT = 'device/SET_BETA_TESTING_RESULT';
+const SET_DEVICE_ID = 'device/SET_DEVICE_ID';
 
 const state = {
+  deviceId: '',
   betaTestingSessionChecked: false,
   betaTestingSessionExists: false,
 };
@@ -20,8 +23,11 @@ const actions = {
       checked: false,
       exists: false,
     });
+    commit(SET_DEVICE_ID, {
+      deviceId,
+    });
     commit(SET_IS_LOADING, true);
-    return api.device.getBetaTestingSession(deviceId)
+    return runAtLeast(api.device.getBetaTestingSession(deviceId), 500)
       .then((data) => {
         commit(SET_IS_LOADING, false);
         commit(SET_BETA_TESTING_RESULT, {
@@ -64,6 +70,10 @@ const mutations = {
     const { checked, exists } = payload;
     state.betaTestingSessionChecked = checked || state.betaTestingSessionChecked;
     state.betaTestingSessionExists = exists || state.betaTestingSessionExists;
+  },
+  [SET_DEVICE_ID](state, payload) {
+    const { deviceId } = payload;
+    state.deviceId = deviceId || state.deviceId;
   },
 };
 
