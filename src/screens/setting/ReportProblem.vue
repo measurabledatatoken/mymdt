@@ -22,11 +22,7 @@
       >
       </md-textarea>
     </BaseField>
-    <!-- <Recaptcha
-      :error="$v.isVerified.$error && $t('message.reportProblem.recaptchaFailed')"
-      @verify="handleRecaptchaVerify"
-      @expired="handleRecaptchaExpired"
-    /> -->
+
     <MDTSmartCaptcha @callback="handleRecaptchaVerify"></MDTSmartCaptcha>
     <MDTPrimaryButton type="submit" :disabled="!$v.isVerified.$dirty || !$v.comments.$dirty || $v.$anyError">{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
   </form>
