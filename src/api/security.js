@@ -82,12 +82,10 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
-  changePhoneNumber(countryDialCode, countryCode, phoneNum, verificationCode, pin, accessToken) {
+  changePhoneNumber(oldVerificationCode, verificationCode, pin, accessToken) {
     const body = {
-      country_dial_code: countryDialCode,
-      country_code: countryCode,
-      phone_number: phoneNum,
-      verification_code: verificationCode,
+      old_phone_otp: oldVerificationCode,
+      new_phone_otp: verificationCode,
       pin,
     };
     const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/change`,

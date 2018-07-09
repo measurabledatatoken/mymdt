@@ -28,6 +28,9 @@ export default {
     pin: {
       type: String,
     },
+    verificationCode: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -50,13 +53,16 @@ export default {
           name: RouteDef.ChangePhoneNumberInput.name,
           params: {
             pin: this.pin,
+            verificationCode: this.verificationCode,
           },
         },
       );
     },
-    onDoneClicked() {
+    onDoneClicked(verificationCode) {
       this.changePhoneNumber(
         {
+          oldVerificationCode: this.verificationCode,
+          verificationCode,
           pin: this.pin,
         },
       ).then(() => {

@@ -14,6 +14,7 @@ export const SET_PHONENUMBER = 'phoneVerifyScreen/SET_PHONENUMBER';
 export const SET_DONE_CALLBACK_PATH = 'phoneVerifyScreen/SET_DONE_CALLBACK_PATH';
 export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
+export const SET_SECURITY_USER_PHONE_INFO = 'security/SET_SECURITY_USER_PHONE_INFO';
 
 // action
 export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
@@ -58,8 +59,13 @@ const mutations = {
     state.countryCode = null;
     state.phoneNumber = null;
   },
-  [SET_SELECTED_USER](state, userId) {
-    state.selectedUserId = userId;
+  [SET_SELECTED_USER](state, emailAddress) {
+    state.selectedUserId = emailAddress;
+  },
+  [SET_SECURITY_USER_PHONE_INFO](state, user) {
+    state.countryDialCode = user.countryDialCode;
+    state.countryCode = user.countryCode;
+    state.phoneNumber = user.phoneNumber;
   },
 };
 
@@ -198,20 +204,22 @@ const actions = {
     return api.security.addPhoneNumber(
       pin,
       verificationCode,
-      account.accessToken)
-      .then(() => dispatch(FETCH_USER, {
+      account.accessToken,
+    ).then(
+      () => dispatch(FETCH_USER, {
         userId: state.selectedUserId,
-      }))
-      .then(() => {
+      }),
+    ).then(
+      () => {
         commit(SET_IS_LOADING, false);
         commit(FLUSH_PHONE_STATE);
-      })
-      .catch(
-        (error) => {
-          commit(SET_IS_LOADING, false);
-          throw (error);
-        },
-      );
+      },
+    ).catch(
+      (error) => {
+        commit(SET_IS_LOADING, false);
+        throw (error);
+      },
+    );
   },
   [CHANGE_PHONE_NUMBER]({
     commit,
@@ -219,29 +227,31 @@ const actions = {
     state,
     rootGetters,
   }, {
+    oldVerificationCode,
+    verificationCode,
     pin,
   }) {
     const account = rootGetters.getUser(state.selectedUserId);
     return api.security.changePhoneNumber(
-      state.countryDialCode,
-      state.countryCode,
-      state.phoneNumber,
-      state.verificationCode,
+      oldVerificationCode,
+      verificationCode,
       pin,
-      account.accessToken)
-      .then(() => dispatch(FETCH_USER, {
+      account.accessToken,
+    ).then(
+      () => dispatch(FETCH_USER, {
         userId: state.selectedUserId,
-      }))
-      .then(() => {
+      }),
+    ).then(
+      () => {
         commit(SET_IS_LOADING, false);
         commit(FLUSH_PHONE_STATE);
-      })
-      .catch(
-        (error) => {
-          commit(SET_IS_LOADING, false);
-          throw (error);
-        },
-      );
+      },
+    ).catch(
+      (error) => {
+        commit(SET_IS_LOADING, false);
+        throw (error);
+      },
+    );
   },
   [VERIFY_VERIFICATION_CODE]({
     commit,
@@ -249,11 +259,12 @@ const actions = {
     rootGetters,
   }, {
     action,
+    verificationCode,
   }) {
     const account = rootGetters.getUser(state.selectedUserId);
     return api.security.verifyCodeForPhoneNumber(
       action,
-      state.verificationCode,
+      verificationCode,
       account.accessToken)
       .then(() => {
         commit(SET_IS_LOADING, false);
