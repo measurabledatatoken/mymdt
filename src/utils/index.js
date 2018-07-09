@@ -99,6 +99,27 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function forcePromiseToRunForAtLeast(promise, ms) {
+  return Promise.all([
+    promise
+      .then(data => ({
+        valid: true,
+        data,
+      }))
+      .catch(error => ({
+        valid: false,
+        error,
+      })),
+    delay(ms),
+  ])
+    .then(([result]) => {
+      if (result.valid) {
+        return result.data;
+      }
+      throw result.error;
+    });
+}
+
 export {
   isRouteHomePath,
   isRouteChangeBack,
@@ -111,4 +132,5 @@ export {
   formatAmount,
   extractNameInitials,
   delay,
+  forcePromiseToRunForAtLeast,
 };

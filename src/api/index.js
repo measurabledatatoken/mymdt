@@ -8,6 +8,7 @@ import security from './security';
 import reward from './reward';
 import transaction from './transaction';
 import application from './application';
+import device from './device';
 
 export default {
   account,
@@ -19,4 +20,5 @@ export default {
   reward,
   transaction,
   application,
+  device,
 };

@@ -197,5 +197,15 @@
     "nc_error300": "不知名錯誤.請重刷頁面並重試。",
     "nc_errorServer": "伺服器錯誤.請重刷頁面並重試。",
     "nc_errorNetwork": "網絡錯誤.請重刷頁面並重試。"
+  },
+  "betaTesting": {
+    "title": "MDT 錢包 Beta 測試版",
+    "description": "請輸入有效的邀請碼，並點擊“導入郵箱賬號”按鈕，開始您的錢包體驗。",
+    "accessCode": "邀請碼",
+    "pleaseEnterAccessCode": "請輸入邀請碼",
+    "accessCodeIsNotValid": "邀請碼無效",
+    "agreementCheckbox": "我同意有關 MDT 錢包 Beta 測試版的相關規定",
+    "agreementDetail": "點擊“導入郵箱賬號”，您在 MailTime 簡信中登錄的郵箱賬號將自動登入 MDT 錢包。",
+    "importAccounts": "導入郵箱賬號"
   }
 }

@@ -198,5 +198,15 @@
     "nc_error300": "不知名错误.请重刷页面并重试。",
     "nc_errorServer": "伺服器错误.请重刷页面并重试。",
     "nc_errorNetwork": "网络错误.请重刷页面并重试。"
+  },
+  "betaTesting": {
+    "title": "MDT 钱包 Beta 测试版",
+    "description": "请输入有效的邀请码，并点击“导入邮箱账号”按钮，开始您的钱包体验。",
+    "accessCode": "邀请码",
+    "pleaseEnterAccessCode": "请输入邀请码",
+    "accessCodeIsNotValid": "邀请码无效",
+    "agreementCheckbox": "我同意有关 MDT 钱包 Beta 测试版的相关规定",
+    "agreementDetail": "点击“导入邮箱账号”，您在 MailTime 简信中登录的邮箱账号将自动登入 MDT 钱包。",
+    "importAccounts": "导入邮箱账号"
   }
 }

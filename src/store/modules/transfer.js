@@ -58,6 +58,9 @@ const getters = {
   },
   // eslint-disable-next-line
   transactionFee: (state, getters, rootState, rootGetters) => {
+    if (!rootState.home.appConfig) {
+      return 0;
+    }
     const feePercentage = rootState.home.appConfig.mdt_transaction_fee / 100.0;
     const minFee = parseFloat(rootState.home.appConfig.mdt_min_transaction_fee);
     const minFeeByPercentage = state.transferAmount * parseFloat(feePercentage, 10);
