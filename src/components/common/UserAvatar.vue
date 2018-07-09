@@ -40,6 +40,8 @@ export default {
       const name = this.displayName.toLowerCase();
       const firstChar = name.charAt(0);
       let index = ((firstChar.charCodeAt(0) - 'a'.charCodeAt(0)) * colorCodes.length) / 26;
+      index = Math.min(index, colorCodes.length - 1);
+      index = Math.max(0, colorCodes.length - 1);
       index = parseInt(index, 10);
       return colorCodes[index];
     },
