@@ -39,7 +39,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Checkbox from '@/components/input/Checkbox';
 import BaseField from '@/components/input/BaseField';
 
-import { GET_BETA_TESTING_SESSION, REQUEST_BETA_TESTING_SESSION } from '@/store/modules/device';
+import { GET_BETA_TESTING_SESSION, REQUEST_BETA_TESTING_SESSION } from '@/store/modules/betaTesting';
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 import { RouteDef } from '@/constants';
@@ -51,6 +51,7 @@ export default {
     return {
       accessCode: '',
       agree: false,
+      showScreen: false,
       failed: false,
     };
   },
@@ -69,14 +70,8 @@ export default {
   },
   computed: {
     ...mapState({
-      deviceId: state => state.device.deviceId,
-      checked: state => state.device.betaTestingSessionChecked,
-      exists: state => state.device.betaTestingSessionExists,
+      savedDeviceId: state => state.betaTesting.deviceId,
     }),
-    showScreen() {
-      // return this.checked && !this.exists;
-      return true;
-    },
     accessCodeError() {
       if (this.failed) {
         return this.$t('message.betaTesting.accessCodeIsNotValid');
@@ -87,17 +82,12 @@ export default {
       }
       return '';
     },
-  },
-  watch: {
-    exists(newValue) {
-      if (newValue) {
-        this.goToHome();
-      }
+    deviceId() {
+      return this.$route.query.deviceid || this.savedDeviceId;
     },
   },
   created() {
-    const deviceId = this.$route.query.deviceid || this.deviceId;
-    if (!deviceId) {
+    if (!this.deviceId) {
       this.openErrorPrompt({
         message: {
           messageId: 'message.common.unknow_error',
@@ -107,7 +97,14 @@ export default {
         },
       });
     } else {
-      this.getBetaTestingSession(deviceId);
+      this.getBetaTestingSession(this.deviceId)
+        .then((sessionExists) => {
+          if (!sessionExists) {
+            this.showScreen = true;
+          } else {
+            this.goToHome();
+          }
+        });
     }
   },
   methods: {
@@ -130,14 +127,15 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.requestBetaTestingSession({
-          deviceId: this.$route.query.deviceid,
+          deviceId: this.deviceId,
           accessCode: this.accessCode,
         })
-          .then(() => {
-            this.goToHome();
-          })
-          .catch(() => {
-            this.failed = true;
+          .then((requestSuccess) => {
+            if (requestSuccess) {
+              this.goToHome();
+            } else {
+              this.failed = true;
+            }
           });
       }
     },

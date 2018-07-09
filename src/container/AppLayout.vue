@@ -74,7 +74,6 @@ export default {
       },
       locale: state => state.common.locale,
       isLoading: state => state.common.isLoading,
-      hasFlushed: state => state.common.hasFlushed,
       navigationStack: state => state.common.navigationStack,
     }),
     ...mapGetters(

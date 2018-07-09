@@ -99,7 +99,7 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function runAtLeast(promise, ms) {
+function forcePromiseToRunForAtLeast(promise, ms) {
   return Promise.all([
     promise
       .then(data => ({
@@ -132,5 +132,5 @@ export {
   formatAmount,
   extractNameInitials,
   delay,
-  runAtLeast,
+  forcePromiseToRunForAtLeast,
 };
