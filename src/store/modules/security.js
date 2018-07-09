@@ -167,12 +167,13 @@ const actions = {
     commit,
     state,
     rootGetters,
+  }, {
+    action,
   }) {
     const account = rootGetters.getUser(state.selectedUserId);
     return api.security.sendVerificationCodeToPhone(
-      state.countryDialCode,
-      state.countryCode,
-      state.phoneNumber,
+      state.countryDialCode + state.phoneNumber,
+      action,
       account.accessToken)
       .then(() => {
         commit(SET_IS_LOADING, false);
@@ -189,13 +190,14 @@ const actions = {
     dispatch,
     state,
     rootGetters,
+  }, {
+    pin,
+    verificationCode,
   }) {
     const account = rootGetters.getUser(state.selectedUserId);
     return api.security.addPhoneNumber(
-      state.countryDialCode,
-      state.countryCode,
-      state.phoneNumber,
-      state.verificationCode,
+      pin,
+      verificationCode,
       account.accessToken)
       .then(() => dispatch(FETCH_USER, {
         userId: state.selectedUserId,
@@ -245,12 +247,12 @@ const actions = {
     commit,
     state,
     rootGetters,
+  }, {
+    action,
   }) {
     const account = rootGetters.getUser(state.selectedUserId);
     return api.security.verifyCodeForPhoneNumber(
-      state.countryDialCode,
-      state.countryCode,
-      state.phoneNumber,
+      action,
       state.verificationCode,
       account.accessToken)
       .then(() => {
