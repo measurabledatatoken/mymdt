@@ -31,7 +31,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
-import { SET_SELECTED_USER } from '@/store/modules/security';
+import { SET_SELECTED_USER, SET_SECURITY_USER_PHONE_INFO } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import UserAvatar from '@/components/common/UserAvatar';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
@@ -58,6 +58,7 @@ export default {
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
+      getUser: 'getUser',
     }),
   },
   components: {
@@ -70,10 +71,12 @@ export default {
     ...mapMutations(
       {
         setSelectedUser: SET_SELECTED_USER,
+        setSecurityUserInfo: SET_SECURITY_USER_PHONE_INFO,
       },
     ),
     onUserClicked(emailAddress) {
       this.setSelectedUser(emailAddress);
+      this.setSecurityUserInfo(this.getUser(emailAddress));
       this.$router.push(
         {
           name: RouteDef.UserSettings.name,

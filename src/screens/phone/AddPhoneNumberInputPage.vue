@@ -1,7 +1,9 @@
 <template>
-    <BasePhoneNumberInputPage v-bind="$attrs" :title="$t('message.phone.add_phone_title')" :content="$t('message.phone.add_phone_content')"
-    @nextClick="onNextClicked">
-    </BasePhoneNumberInputPage>
+  <BasePhoneNumberInputPage v-bind="$attrs"
+                            :title="$t('message.phone.add_phone_title')"
+                            :content="$t('message.phone.add_phone_content')"
+                            @nextClick="onNextClicked">
+  </BasePhoneNumberInputPage>
 </template>
 
 <script>
@@ -32,15 +34,20 @@ export default {
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onNextClicked() {
-      this.requestVerificationCode({ action: OTPActionType.SetupPhoneNumberAction });
-      this.$router.push(
+      this.requestVerificationCode(
         {
-          name: RouteDef.AddPhoneNumberVerify.name,
-          params: {
-            pin: this.pin,
-          },
+          action: OTPActionType.SetupPhoneNumberAction,
         },
-      );
+      ).then(() => {
+        this.$router.push(
+          {
+            name: RouteDef.AddPhoneNumberVerify.name,
+            params: {
+              pin: this.pin,
+            },
+          },
+        );
+      });
     },
   },
 };

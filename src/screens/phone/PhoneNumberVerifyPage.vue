@@ -27,6 +27,9 @@ export default {
     payloadForNextPage: {
       type: Object,
     },
+    action: {
+      type: String,
+    },
   },
   computed: {
     ...mapGetters({
@@ -51,8 +54,9 @@ export default {
     ...mapActions({
       verifyVerificationCode: VERIFY_VERIFICATION_CODE,
     }),
-    onDoneClicked() {
-      this.verifyVerificationCode().then(() => {
+    onDoneClicked(verificationCode) {
+      this.payloadForNextPage.verificationCode = verificationCode;
+      this.verifyVerificationCode({ action: this.action, verificationCode }).then(() => {
         this.$router.push(
           {
             name: this.nextPagePathName,
