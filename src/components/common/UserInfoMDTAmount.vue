@@ -1,8 +1,11 @@
 <template>
-  <div class="mdt-amount">
+  <div class="mdt-amount" :disabled="disabled">
     <div>{{ amountText }}</div>
-    <transition :name="transitionName" v-on:after-enter="afterEnter" class="abc">
-      <div v-if="amountDelta" class="mdt-amount-delta">{{ amountDeltaText }}</div>
+    <transition :name="transitionName"
+                v-on:after-enter="afterEnter"
+                class="abc">
+      <div v-if="amountDelta"
+           class="mdt-amount-delta">{{ amountDeltaText }}</div>
     </transition>
   </div>
 </template>
@@ -21,10 +24,15 @@ export default {
     amount: {
       type: Number,
     },
-    animated: Boolean,
+    disabled: {
+      type: Boolean,
+    },
   },
   computed: {
     amountText() {
+      if (!this.amount) {
+        return '--MDT';
+      }
       return `${formatAmount(this.amount)} MDT`;
     },
     amountDeltaText() {
@@ -60,6 +68,10 @@ export default {
   font-weight: bold;
   position: relative;
 
+  &[disabled] {
+    opacity: 0.6;
+  }
+
   .mdt-amount-delta {
     font-size: 0.75em;
     position: absolute;
@@ -69,7 +81,8 @@ export default {
     opacity: 0;
   }
 
-  .mdt-amount-delta--positive-enter-active, .mdt-amount-delta--negative-enter-active {
+  .mdt-amount-delta--positive-enter-active,
+  .mdt-amount-delta--negative-enter-active {
     animation-duration: 1s;
     animation-fill-mode: forwards;
   }
