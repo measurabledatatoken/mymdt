@@ -9,7 +9,9 @@ import {
 import {
   SET_IS_LOADING,
 } from '@/store/modules/common';
-import { HANDLE_ERROR_CODE } from '@/store/modules/api';
+import {
+  HANDLE_ERROR_CODE,
+} from '@/store/modules/api';
 
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
@@ -89,13 +91,16 @@ const actions = {
         },
       );
   },
-  [REQUEST_AUTO_LOGIN](context, {
+  [REQUEST_AUTO_LOGIN]({
+    commit,
+    dispatch,
+    rootState,
+  }, {
     authTokens,
     emails,
     appID,
-    locale,
   }) {
-    context.commit(SET_IS_LOADING, true);
+    commit(SET_IS_LOADING, true);
 
     if (!Array.isArray(authTokens)) {
       return Promise.reject(new Error('authTokens should all be array'));
@@ -112,10 +117,11 @@ const actions = {
       }),
     );
 
+    const locale = rootState.common.locale;
     return api.auth.autoLogin(appCredentials, appID, locale)
       .then(
         (data) => {
-          context.commit(SET_LOGIN_ERRORCODE, null);
+          commit(SET_LOGIN_ERRORCODE, null);
 
           const credentials = data.valid.map(
             dataItem => ({
@@ -123,30 +129,33 @@ const actions = {
               access_token: dataItem.access_token,
             }),
           );
-          context.commit(SET_CREDENTIALS, credentials);
-          context.commit(SET_INVALIDEMAILS, data.invalid);
-          return context.dispatch(REQUEST_USER_ACCOUNTS);
+          commit(SET_CREDENTIALS, credentials);
+          commit(SET_INVALIDEMAILS, data.invalid);
+          return dispatch(REQUEST_USER_ACCOUNTS);
         },
       ).then(
         () => {
-          context.commit(SET_APP_ID, appID);
-          context.commit(SET_IS_LOADING, false);
+          commit(SET_APP_ID, appID);
+          commit(SET_IS_LOADING, false);
         },
       )
       .catch((error) => {
         if (error.response && error.response.data) {
-          context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
+          commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
         } else {
-          context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
+          commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
         }
-        context.commit(SET_IS_LOADING, false);
-        context.dispatch(HANDLE_ERROR_CODE, {
+        commit(SET_IS_LOADING, false);
+        dispatch(HANDLE_ERROR_CODE, {
           error,
           openErrorPrompt: 'default',
         });
       });
   },
-  [VALIDATE_PASSCODE](context, { passcode, credential }) {
+  [VALIDATE_PASSCODE](context, {
+    passcode,
+    credential,
+  }) {
     return api.auth.validatePasscode(passcode, credential);
   },
 };
