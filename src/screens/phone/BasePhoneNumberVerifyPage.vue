@@ -34,7 +34,7 @@
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton :disabled="!verificationCodeFilled" class="done" :bottom="true" @click="$emit('doneClick')">
+        <MDTPrimaryButton :disabled="!verificationCodeFilled" class="done" :bottom="true" @click="$emit('doneClick', verificationCode)">
           {{ $t('message.common.done') }}
         </MDTPrimaryButton>
       </template>
@@ -108,6 +108,7 @@ export default {
     onVerificationCodeInput(value) {
       if (value.length === VerificationCodeLength) {
         this.verificationCodeFilled = true;
+        this.$emit('verificationCodeInput', value);
       } else {
         this.verificationCodeFilled = false;
       }

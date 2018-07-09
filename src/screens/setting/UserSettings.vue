@@ -152,6 +152,13 @@ export default {
                 },
               },
             );
+          } else if (this.nextRouteNameAfterPINFilled === RouteDef.AddPhoneNumberInput.name) {
+            this.$router.push({
+              name: RouteDef.AddPhoneNumberInput.name,
+              params: {
+                pin: pinCode,
+              },
+            });
           } else {
             this.$router.push(
               {
@@ -181,10 +188,8 @@ export default {
         return;
       }
 
-      // Push
-      this.$router.push({
-        name: RouteDef.AddPhoneNumberInput.name,
-      });
+      this.nextRouteNameAfterPINFilled = RouteDef.AddPhoneNumberInput.name;
+      this.showPinCodeInput = true;
     },
     onConfirmChangePhoneNumber() {
       this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');

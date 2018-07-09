@@ -10,6 +10,7 @@ import { RouteDef } from '@/constants';
 import { REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
 import BasePhoneNumberInputPage from '@/screens/phone/BasePhoneNumberInputPage';
 import BasePage from '@/screens/BasePage';
+import OTPActionType from '@/enum/otpActionType';
 
 export default {
   extends: BasePage,
@@ -21,15 +22,23 @@ export default {
   components: {
     BasePhoneNumberInputPage,
   },
+  props: {
+    pin: {
+      type: String,
+    },
+  },
   methods: {
     ...mapActions({
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onNextClicked() {
-      this.requestVerificationCode();
+      this.requestVerificationCode({ action: OTPActionType.SetupPhoneNumberAction });
       this.$router.push(
         {
           name: RouteDef.AddPhoneNumberVerify.name,
+          params: {
+            pin: this.pin,
+          },
         },
       );
     },
