@@ -26,7 +26,8 @@ export default {
   }
 
   &[disabled] {
-    color: $plainbtn-wordcolor-disabled;
+    color: $plainbtn-wordcolor;
+    opacity: 0.6;
   }
 }
 </style>

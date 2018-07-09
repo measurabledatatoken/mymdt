@@ -1,11 +1,11 @@
 <template>
-  <md-card :md-with-hover="hover" :disabled="disabled">
+  <md-card :md-with-hover="hover">
     <div v-on:click="$emit('goToAccountDetail')" class="md-card-header">
         <UserInfo :user="user" :small="small" :disabled="disabled"></UserInfo>
     </div>
     <md-divider v-if="!small" />
     <md-card-actions v-if="!small">
-      <MDTSubtleButton class="md-primary" v-on:click="$emit('transfer')">{{ $t('message.common.transferbtn') }}</MDTSubtleButton>
+      <MDTSubtleButton class="md-primary" v-on:click="$emit('transfer')" :disabled="disabled">{{ $t('message.common.transferbtn') }}</MDTSubtleButton>
     </md-card-actions>
   </md-card>
 </template>
@@ -40,10 +40,6 @@ export default {
   background-color: white;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   margin: 0.5em;
-
-  &[disabled] {
-    background-color: $theme-disable-color-font;
-  }
 }
 
 .md-card-actions {

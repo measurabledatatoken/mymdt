@@ -1,6 +1,8 @@
 <template>
-  <md-avatar class="md-avatar-icon">
-    <img :src="imageSrc" alt="People" v-if="imageSrc">
+  <md-avatar class="md-avatar-icon" :disabled="disabled">
+    <img :src="imageSrc"
+         alt="People"
+         v-if="imageSrc">
     <template v-else>
       {{ displayName }}
     </template>
@@ -11,7 +13,21 @@
 import { extractNameInitials } from '@/utils';
 
 export default {
-  props: ['user', 'src', 'name'],
+  props: {
+    user:
+    {
+      type: String,
+    },
+    src: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    disabled: {
+      type: Boolean,
+    },
+  },
   computed: {
     imageSrc() {
       return this.src || this.user.avatarURL;
@@ -22,3 +38,10 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss" scoped>
+  .md-avatar-icon[disabled]{
+    opacity: 0.6;
+  }
+</style>
