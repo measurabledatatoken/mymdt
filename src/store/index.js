@@ -13,6 +13,7 @@ import reportProblem from './modules/reportProblem';
 import ui from './modules/ui';
 import entities from './modules/entities';
 import security from './modules/security';
+import betaTesting from './modules/betaTesting';
 
 Vue.use(Vuex);
 
@@ -30,7 +31,10 @@ export default new Vuex.Store({
     qrcode,
     reportProblem,
     security,
+    betaTesting,
   },
   strict: debug,
-  plugins: debug ? [createLogger(), createPersistedState()] : [],
+  plugins: debug ? [createLogger(), createPersistedState({
+    paths: ['home', 'login', 'entities', 'betaTesting'],
+  })] : [],
 });

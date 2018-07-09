@@ -2,8 +2,9 @@
   <div class="appcontainer">
     <header class="header">
       <transition :name=" 'header-' + transitionName">
-        <HomeHeader v-if="showHomeHeader" class="header-view" @tutorialClick="onTutorialClicked"></HomeHeader>
-        <NavigationHeader v-if="!showHomeHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
+        <HomeHeader v-if="showHomeHeader && !showCustomHeader" class="header-view" @tutorialClick="onTutorialClicked"></HomeHeader>
+        <NavigationHeader v-if="!showHomeHeader && !showCustomHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
+        <router-view class="view two" name="header" v-if="showCustomHeader"></router-view>
       </transition>
     </header>
     <main class="content">
@@ -87,6 +88,16 @@ export default {
       set() {
         this.dismissErrorPrompt();
       },
+    },
+    showCustomHeader() {
+      if (Array.isArray(this.$route.matched)) {
+        const currentMatch = this.$route.matched[this.$route.matched.length - 1];
+        if (currentMatch.components && currentMatch.components.header) {
+          return true;
+        }
+      }
+
+      return false;
     },
   },
   watch: {
