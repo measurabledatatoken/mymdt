@@ -37,9 +37,10 @@ export default {
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onNextClicked() {
+      const action = OTPActionType.ChangePhoneNumberAction;
       this.requestVerificationCode(
         {
-          action: OTPActionType.ChangePhoneNumberAction,
+          action,
         },
       ).then(
         () => {
@@ -49,6 +50,7 @@ export default {
               params: {
                 pin: this.pin,
                 verificationCode: this.verificationCode,
+                action,
               },
             },
           );

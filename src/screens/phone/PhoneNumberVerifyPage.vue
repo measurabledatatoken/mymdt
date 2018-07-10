@@ -1,6 +1,9 @@
 <template>
-  <BasePhoneNumberVerifyPage :title="$t('message.phone.verify_phone_title')" @doneClick="onDoneClicked"
-  :editable="false">
+  <BasePhoneNumberVerifyPage :title="$t('message.phone.verify_phone_title')"
+                             v-bind="$attrs"
+                             :action="action"
+                             @doneClick="onDoneClicked"
+                             :editable="false">
   </BasePhoneNumberVerifyPage>
 </template>
 
