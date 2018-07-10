@@ -3,11 +3,14 @@
     <template slot="content">
 
       <div class="phone-title"> {{ $t('message.settings.phoneNumber') }}</div>
-      <div class="phone-num" :class="{'none': !selectedSecurityUser.phoneNumber}">
+      <div class="phone-num"
+           :class="{'none': !selectedSecurityUser.phoneNumber}">
         {{ selectedSecurityUser.phoneNumber ? this.maskedPhoneNumber : $t('message.common.none') }}
       </div>
 
-      <MDSubtleButton @click="onSendVerificationCodePressed" class="resend" :disabled="!selectedSecurityUser.phoneNumber">
+      <MDSubtleButton @click="onSendVerificationCodePressed"
+                      class="resend"
+                      :disabled="!selectedSecurityUser.phoneNumber">
         {{ $t('message.phone.send') }}
       </MDSubtleButton>
       <MDSubtleButton :to="RouteDef.ReportProblem.path">
@@ -26,6 +29,7 @@ import SetupPINMode from '@/enum/setupPINMode';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BasePage from '@/screens/BasePage';
 import MDSubtleButton from '@/components/button/MDTSubtleButton';
+import OTPActionType from '@/enum/otpActionType';
 
 export default {
   metaInfo() {
@@ -60,13 +64,16 @@ export default {
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onSendVerificationCodePressed() {
-      this.requestVerificationCode().then(() => {
+      this.requestVerificationCode({
+        action: OTPActionType.ResetPasscodeAction,
+      }).then(() => {
         this.$router.push(
           {
             name: RouteDef.PhoneNumberVerify.name,
             params: {
               emailAddress: this.selectedSecurityUser.emailAddress,
               nextPagePathName: RouteDef.PinCodeSetup.name,
+              action: OTPActionType.ResetPasscodeAction,
               payloadForNextPage: {
                 mode: SetupPINMode.RESET,
               },
@@ -101,6 +108,7 @@ export default {
 .md-button {
   float: left;
   margin-left: 0px;
+  width: 100%;
 
   /deep/ .md-ripple {
     padding: 0;
