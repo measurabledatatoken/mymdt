@@ -13,7 +13,6 @@
           />
         </BaseField>
       </div>
-      {{ agree }}
       <div class="beta-testing-form__footer">
         <Checkbox
           :title="$t('message.betaTesting.agreementCheckbox')"
