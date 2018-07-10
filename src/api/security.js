@@ -69,7 +69,7 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
-  addPhoneNumber(pin, verificationCode, accessToken) {
+  addPhoneNumber(verificationCode, pin, accessToken) {
     const body = {
       pin,
       otp: verificationCode,
