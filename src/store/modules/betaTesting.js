@@ -1,9 +1,5 @@
 import api from '@/api';
-import {
-  SET_IS_LOADING,
-  OPEN_ERROR_PROMPT,
-} from '@/store/modules/common';
-import { forcePromiseToRunForAtLeast } from '@/utils';
+import { REQUEST } from '@/store/modules/api';
 
 export const GET_BETA_TESTING_SESSION = 'betaTesting/GET_BETA_TESTING_SESSION';
 export const REQUEST_BETA_TESTING_SESSION = 'betaTesting/REQUEST_BETA_TESTING_SESSION';
@@ -15,40 +11,38 @@ const state = {
 };
 
 const actions = {
-  [GET_BETA_TESTING_SESSION]({ commit, dispatch }, deviceId) {
+  async [GET_BETA_TESTING_SESSION]({ commit, dispatch }, deviceId) {
     commit(SET_DEVICE_ID, {
       deviceId,
     });
-    commit(SET_IS_LOADING, true);
-    return forcePromiseToRunForAtLeast(api.device.getBetaTestingSession(deviceId), 500)
-      .then((data) => {
-        commit(SET_IS_LOADING, false);
-        return data.session_exists;
-      })
-      .catch(() => {
-        commit(SET_IS_LOADING, false);
-        dispatch(OPEN_ERROR_PROMPT, {
-          message: {
-            messageId: 'message.common.unknow_error',
-          },
-          title: {
-            messageId: 'message.common.error_title',
-          },
-        });
-      });
-  },
-  [REQUEST_BETA_TESTING_SESSION]({ commit }, { deviceId, accessCode }) {
-    commit(SET_IS_LOADING, true);
 
-    return api.device.requestBetaTestingSession(deviceId, accessCode)
-      .then(() => {
-        commit(SET_IS_LOADING, false);
-        return true;
-      })
-      .catch(() => {
-        commit(SET_IS_LOADING, false);
-        return false;
+    try {
+      const response = await dispatch(REQUEST, {
+        api: api.device.getBetaTestingSession,
+        args: deviceId,
+        setLoading: true,
+        runForAtLeast: 500,
+        openErrorPrompt: 'default',
       });
+      return response.session_exists;
+    } catch (error) {
+      return false;
+    }
+  },
+  async [REQUEST_BETA_TESTING_SESSION]({ dispatch }, { deviceId, accessCode }) {
+    try {
+      await dispatch(REQUEST, {
+        api: api.device.requestBetaTestingSession,
+        args: [deviceId, accessCode],
+        setLoading: true,
+        runForAtLeast: 500,
+        openErrorPrompt: false,
+      });
+
+      return true;
+    } catch (error) {
+      return false;
+    }
   },
 };
 
