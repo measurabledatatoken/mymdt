@@ -46,7 +46,7 @@ export default {
     const body = {
       new_pin: newPIN,
       new_confirmed_pin: confirmedPIN,
-      verification_code: verificationCode,
+      otp: verificationCode,
     };
     const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/reset`,
       body,
