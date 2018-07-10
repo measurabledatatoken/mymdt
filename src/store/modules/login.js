@@ -9,6 +9,7 @@ import {
 import {
   SET_IS_LOADING,
 } from '@/store/modules/common';
+import { HANDLE_ERROR_CODE } from '@/store/modules/api';
 
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
@@ -132,17 +133,18 @@ const actions = {
           context.commit(SET_IS_LOADING, false);
         },
       )
-      .catch(
-        (error) => {
-          if (error.response && error.response.data) {
-            context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
-          } else {
-            context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
-          }
-          context.commit(SET_IS_LOADING, false);
-          throw (error);
-        },
-      );
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
+        } else {
+          context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
+        }
+        context.commit(SET_IS_LOADING, false);
+        context.dispatch(HANDLE_ERROR_CODE, {
+          error,
+          openErrorPrompt: 'default',
+        });
+      });
   },
   [VALIDATE_PASSCODE](context, { passcode, credential }) {
     return api.auth.validatePasscode(passcode, credential);

@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 import createPersistedState from 'vuex-persistedstate';
 
+import api from './modules/api';
 import common from './modules/common';
 import home from './modules/home';
 import forgetPassword from './modules/forgetpassword';
@@ -23,6 +24,7 @@ export default new Vuex.Store({
   modules: {
     ui,
     entities,
+    api,
     common,
     home,
     forgetPassword,

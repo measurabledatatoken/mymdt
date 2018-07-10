@@ -14,6 +14,11 @@
     "setup": "設定",
     "none": "没有"
   },
+  "error": {
+    "userNotExist": "用戶電郵不存在。",
+    "rewardExpired": "獎勵已過期。",
+    "rewardAlreadyClaimed": "獎勵已認領。"
+  },
   "home": {
     "total_balance": "总結餘",
     "title": "MDT 錢包",
