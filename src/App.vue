@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato"
+          rel="stylesheet">
     <router-view/>
   </div>
 </template>
@@ -19,8 +20,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100vh;
-}
 
+  -webkit-touch-callout: none;
+  user-select: none; /* Disable selection/copy in UIWebView */
+}
 
 .md-menu-content-container .md-list {
   font-family: "Lato", "Avenir", Helvetica, Arial, sans-serif;
