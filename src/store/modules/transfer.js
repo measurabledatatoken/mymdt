@@ -1,15 +1,8 @@
 import api from '@/api';
 import {
-  ErrorCode,
-} from '@/enum';
-import {
   TransferType,
 } from '@/constants';
-import {
-  SET_ERROR_MESSAGE,
-  SET_ERROR_TITLE,
-  SET_SHOW_ERROR_PROMPT,
-} from './common';
+import { REQUEST } from '@/store/modules/api';
 
 // mutation
 export const SET_TRANSFER_AMOUNT = 'transfer/SET_TRANSFER_AMOUNT';
@@ -119,7 +112,7 @@ const mutations = {
 
 const actions = {
   [START_TRANSFER]({
-    commit,
+    dispatch,
     rootState,
     rootGetters,
   }, pin) {
@@ -135,22 +128,11 @@ const actions = {
       amount = rootGetters.finalAmount;
     }
 
-    return api.transfer.transfer(toAddress, transferType, amount, pin, transferNote, selectedUser.accessToken)
-      .then(
-        responseData => responseData,
-      )
-      .catch(
-        (error) => {
-          const errorCode = error.response.data.error_code;
-
-          commit(SET_ERROR_MESSAGE, ErrorCode.properties[errorCode].messageId);
-          commit(SET_ERROR_TITLE, {
-            messageId: 'message.common.error_title',
-          });
-          commit(SET_SHOW_ERROR_PROMPT, true);
-          throw (error);
-        },
-      );
+    return dispatch(REQUEST, {
+      api: api.transfer.transfer,
+      args: [toAddress, transferType, amount, pin, transferNote, selectedUser.accessToken],
+      openErrorPrompt: true,
+    });
   },
 };
 
