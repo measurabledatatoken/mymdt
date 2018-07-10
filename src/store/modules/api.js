@@ -32,7 +32,7 @@ const actions = {
       );
 
       if (setLoading) {
-        commit(SET_IS_LOADING, true);
+        commit(SET_IS_LOADING, false);
       }
 
       return response;
