@@ -155,7 +155,7 @@ export default {
   color: $plainbtn-wordcolor;
 }
 
-.md-button.md-raised {
+.md-button {
   &.resend-btn,
   &.cant-receive-btn {
     width: auto;
