@@ -34,9 +34,10 @@ export default {
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onNextClicked() {
+      const action = OTPActionType.SetupPhoneNumberAction;
       this.requestVerificationCode(
         {
-          action: OTPActionType.SetupPhoneNumberAction,
+          action,
         },
       ).then(() => {
         this.$router.push(
@@ -44,6 +45,7 @@ export default {
             name: RouteDef.AddPhoneNumberVerify.name,
             params: {
               pin: this.pin,
+              action,
             },
           },
         );

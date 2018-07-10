@@ -17,24 +17,37 @@
           <div class="phone-nbumber">
             {{this.maskedPhoneNumber}}
           </div>
-          <md-button v-if="editable" :md-ripple="false" class="edit-btn" @click="$router.go(-1)" >{{ $t('message.common.edit') }}</md-button>
+          <md-button v-if="editable"
+                     :md-ripple="false"
+                     class="edit-btn"
+                     @click="$router.go(-1)">{{ $t('message.common.edit') }}</md-button>
         </div>
 
         <md-field :md-counter="false">
           <label class="label">{{ $t('message.phone.verification_code') }}</label>
-          <md-input :maxlength="VerificationCodeLength" :placeholder="$t('message.phone.verification_code_placeholder')"
-            v-model="verificationCode" pattern="\d*" @input="onVerificationCodeInput" />
+          <md-input :maxlength="VerificationCodeLength"
+                    :placeholder="$t('message.phone.verification_code_placeholder')"
+                    v-model="verificationCode"
+                    pattern="\d*"
+                    @input="onVerificationCodeInput" />
         </md-field>
 
-        <CountDownUnlockButton v-on:click="onResendClicked()" :secondsToCount="60" countingTranslateKey="message.phone.resend_counting"
-          countDoneTranslateKey="message.phone.resend" class="resend-btn" />
+        <CountDownUnlockButton v-on:click="onResendClicked()"
+                               :secondsToCount="60"
+                               countingTranslateKey="message.phone.resend_counting"
+                               countDoneTranslateKey="message.phone.resend"
+                               class="resend-btn" />
         <br style="clear:both" />
 
-        <MDTSubtleButton :to="RouteDef.ReportProblem.path" class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
+        <MDTSubtleButton :to="RouteDef.ReportProblem.path"
+                         class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton :disabled="!verificationCodeFilled" class="done" :bottom="true" @click="$emit('doneClick', verificationCode)">
+        <MDTPrimaryButton :disabled="!verificationCodeFilled"
+                          class="done"
+                          :bottom="true"
+                          @click="$emit('doneClick', verificationCode)">
           {{ $t('message.common.done') }}
         </MDTPrimaryButton>
       </template>
@@ -66,6 +79,9 @@ export default {
   },
   props: {
     title: {
+      type: String,
+    },
+    action: {
       type: String,
     },
     editable: {
@@ -116,9 +132,7 @@ export default {
     onResendClicked() {
       this.requestVerificationCode(
         {
-          countryDialCode: this.countryDialCode,
-          countryCode: this.countryCode,
-          phoneNum: this.phoneNum,
+          action: this.action,
         },
       );
     },
