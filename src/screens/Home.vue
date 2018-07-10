@@ -182,12 +182,6 @@ export default {
             1000,
           );
         },
-      ).catch(
-        (error) => {
-          this.setErrorTitle(this.$t('message.common.unknown_error'));
-          this.setErrorMessage(`Error Code:${error.response.data.error_message}`);
-          this.setShowErrorPrompt(true);
-        },
       );
     },
     formatAmount,

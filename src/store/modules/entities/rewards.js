@@ -1,7 +1,7 @@
 import api from '@/api';
 import { delay } from '@/utils';
 
-import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
+import { REQUEST } from '@/store/modules/api';
 import { FETCH_USER } from '@/store/modules/entities/users';
 
 export const FETCHING_REWARDS = 'reward/FETCHING_REWARDS';
@@ -63,34 +63,34 @@ const actions = {
         error,
       }));
   },
-  [CLAIM_REWARD]({ commit, dispatch, rootState, rootGetters }, { rewardId, userId }) {
+  async [CLAIM_REWARD]({ commit, dispatch, rootState, rootGetters }, { rewardId, userId }) {
     commit(CLAIMING_REWARD, {
       rewardId,
     });
 
-    return api.reward.claimReward(rootState.home.appID, rewardId, rootGetters.getUser(userId).accessToken)
-      .then(() => {
-        commit(CLAIMING_REWARD_SUCCESS, {
-          rewardId,
-        });
-        dispatch(FETCH_USER, {
-          userId,
-        });
-      })
-      .catch((error) => {
-        commit(CLAIMING_REWARD_FAILURE, {
-          rewardId,
-          error,
-        });
-        dispatch(OPEN_ERROR_PROMPT, {
-          message: {
-            messageId: 'message.earnMDT.rewardErrorMessage',
-          },
-          title: {
-            messageId: 'message.common.error_title',
-          },
-        });
+    try {
+      await dispatch(REQUEST, {
+        api: api.reward.claimReward,
+        args: [rootState.home.appID, rewardId, rootGetters.getUser(userId).accessToken],
+        openErrorPrompt: true,
+        defaultErrorPromptMessage: {
+          messageId: 'message.earnMDT.rewardErrorMessage',
+        },
       });
+
+      commit(CLAIMING_REWARD_SUCCESS, {
+        rewardId,
+      });
+
+      await dispatch(FETCH_USER, {
+        userId,
+      });
+    } catch (error) {
+      commit(CLAIMING_REWARD_FAILURE, {
+        rewardId,
+        error,
+      });
+    }
   },
 };
 
