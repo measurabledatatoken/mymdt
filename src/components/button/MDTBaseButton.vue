@@ -14,19 +14,24 @@ export default {
   },
   data() {
     return {
-      shouldStopClickEmit: false,
+      stopClickEmitTimer: null,
     };
+  },
+  beforeDestroy() {
+    if (this.stopClickEmitTimer != null) {
+      clearTimeout(this.stopClickEmitTimer);
+      this.stopClickEmitTimer = null;
+    }
   },
   methods: {
     onClick() {
-      if (!this.shouldStopClickEmit) {
+      if (this.stopClickEmitTimer == null) {
         this.$emit('click');
 
         if (this.preventDoubleClick) {
-          this.shouldStopClickEmit = true;
-          setTimeout(() => {
-            this.shouldStopClickEmit = false;
-          }, 3000);
+          this.stopClickEmitTimer = setTimeout(() => {
+            this.stopClickEmitTimer = null;
+          }, 1000);
         }
       }
     },
