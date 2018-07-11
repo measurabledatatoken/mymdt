@@ -70,7 +70,13 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_SELECTED_USER, SET_SECURITY_USER_PHONE_INFO, VALIDATE_PIN_FOR_SECURITY, SET_DONE_CALLBACK_PATH, REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
+import {
+  SET_SELECTED_USER,
+  SET_SECURITY_USER_PHONE_INFO,
+  VALIDATE_PIN_FOR_SECURITY,
+  SET_DONE_CALLBACK_PATH,
+  REQUEST_VERIFICATION_CODE,
+} from '@/store/modules/security';
 import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
@@ -104,14 +110,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(
-      {
-        getSelectedSecurityUser: 'getSelectedSecurityUser',
-        getUser: 'getUser',
-      },
-    ),
+    ...mapGetters({
+      getSelectedSecurityUser: 'getSelectedSecurityUser',
+      getUser: 'getUser',
+    }),
     showPhoneNumberSetup() {
-      return !this.getSelectedSecurityUser.isPhoneConfirmed && this.getSelectedSecurityUser.isPasscodeSet;
+      return (
+        !this.getSelectedSecurityUser.isPhoneConfirmed &&
+        this.getSelectedSecurityUser.isPasscodeSet
+      );
     },
   },
   created() {
@@ -139,15 +146,13 @@ export default {
         return;
       }
 
-      this.$router.push(
-        {
-          name: RouteDef.PinCodeSetup.name,
-          params: {
-            mode: SetupPINMode.SETUP,
-            doneCallBackPath: RouteDef.UserSettings.path,
-          },
+      this.$router.push({
+        name: RouteDef.PinCodeSetup.name,
+        params: {
+          mode: SetupPINMode.SETUP,
+          doneCallBackPath: RouteDef.UserSettings.path,
         },
-      );
+      });
     },
     onConfirmChangePIN() {
       this.pinCodePopupTitle = this.$t('message.passcode.oldpin_popup_title');
@@ -156,25 +161,25 @@ export default {
     },
     onPinCodeFilled(pinCode) {
       this.validatePIN(pinCode)
-        .catch((err) => {
+        .catch(err => {
           this.$refs.pinCodeInputPopup.setInvalid();
-          throw (err);
+          throw err;
         })
         .then(() => {
           this.showPinCodeInput = false;
 
-
           if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
-            this.$router.push(
-              {
-                name: RouteDef.PinCodeSetup.name,
-                params: {
-                  mode: SetupPINMode.CHANGE,
-                  oldPIN: pinCode,
-                },
+            this.$router.push({
+              name: RouteDef.PinCodeSetup.name,
+              params: {
+                mode: SetupPINMode.CHANGE,
+                oldPIN: pinCode,
               },
-            );
-          } else if (this.nextRouteNameAfterPINFilled === RouteDef.AddPhoneNumberInput.name) {
+            });
+          } else if (
+            this.nextRouteNameAfterPINFilled ===
+            RouteDef.AddPhoneNumberInput.name
+          ) {
             this.$router.push({
               name: RouteDef.AddPhoneNumberInput.name,
               params: {
@@ -182,22 +187,18 @@ export default {
               },
             });
           } else {
-            this.requestVerificationCode(
-              {
-                action: OTPActionType.VerifyPhoneNumberAction,
-              },
-            ).then(() => {
-              this.$router.push(
-                {
-                  name: RouteDef.PhoneNumberVerify.name,
-                  params: {
-                    emailAddress: this.getSelectedSecurityUser.emailAddress,
-                    nextPagePathName: RouteDef.ChangePhoneNumberInput.name,
-                    payloadForNextPage: { pin: pinCode },
-                    action: OTPActionType.VerifyPhoneNumberAction,
-                  },
+            this.requestVerificationCode({
+              action: OTPActionType.VerifyPhoneNumberAction,
+            }).then(() => {
+              this.$router.push({
+                name: RouteDef.PhoneNumberVerify.name,
+                params: {
+                  emailAddress: this.getSelectedSecurityUser.emailAddress,
+                  nextPagePathName: RouteDef.ChangePhoneNumberInput.name,
+                  payloadForNextPage: { pin: pinCode },
+                  action: OTPActionType.VerifyPhoneNumberAction,
                 },
-              );
+              });
             });
           }
         });

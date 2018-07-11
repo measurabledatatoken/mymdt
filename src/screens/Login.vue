@@ -66,16 +66,16 @@ export default {
     }),
     confirmLogin() {
       this.requested = true;
-      this.requestLogin(
-        {
-          emailAddress: this.emailAddress,
-          password: this.password,
-        },
-      ).then(() => {
-        if (this.loginSuccess) {
-          this.$router.push(RouteDef.Home.path);
-        }
-      }).catch(() => ({}));
+      this.requestLogin({
+        emailAddress: this.emailAddress,
+        password: this.password,
+      })
+        .then(() => {
+          if (this.loginSuccess) {
+            this.$router.push(RouteDef.Home.path);
+          }
+        })
+        .catch(() => ({}));
     },
   },
 };
@@ -83,5 +83,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

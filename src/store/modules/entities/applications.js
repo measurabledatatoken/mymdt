@@ -1,8 +1,10 @@
 import api from '@/api';
 
 export const FETCHING_APPLICATIONS = 'application/FETCHING_APPLICATIONS';
-export const FETCHING_APPLICATIONS_SUCCESS = 'application/FETCHING_APPLICATIONS_SUCCESS';
-export const FETCHING_APPLICATIONS_FAILURE = 'application/FETCHING_APPLICATIONS_FAILURE';
+export const FETCHING_APPLICATIONS_SUCCESS =
+  'application/FETCHING_APPLICATIONS_SUCCESS';
+export const FETCHING_APPLICATIONS_FAILURE =
+  'application/FETCHING_APPLICATIONS_FAILURE';
 
 export const FETCH_APPLICATIONS = 'application/FETCH_APPLICATIONS';
 
@@ -13,7 +15,8 @@ const state = {
 
 const moduleGetters = {
   getApplication: state => id => state.byId[id],
-  getApplications: (state, getters) => (ids = []) => ids.map(id => getters.getApplication(id)),
+  getApplications: (state, getters) => (ids = []) =>
+    ids.map(id => getters.getApplication(id)),
 };
 
 const mutations = {
@@ -32,19 +35,24 @@ const actions = {
     commit(FETCHING_APPLICATIONS, {
       userId,
     });
-    return api.application.getApplications(rootGetters.getUser(userId).accessToken)
-      .then(data => commit(FETCHING_APPLICATIONS_SUCCESS, {
-        userId,
-        data,
-      }))
-      .catch(error => commit(FETCHING_APPLICATIONS_FAILURE, {
-        userId,
-        error,
-      }));
+    return api.application
+      .getApplications(rootGetters.getUser(userId).accessToken)
+      .then(data =>
+        commit(FETCHING_APPLICATIONS_SUCCESS, {
+          userId,
+          data,
+        }),
+      )
+      .catch(error =>
+        commit(FETCHING_APPLICATIONS_FAILURE, {
+          userId,
+          error,
+        }),
+      );
   },
 };
 
-export default{
+export default {
   state,
   getters: moduleGetters,
   mutations,

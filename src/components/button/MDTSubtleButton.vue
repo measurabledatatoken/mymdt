@@ -21,8 +21,7 @@ export default {
   text-transform: none;
 
   /deep/ .md-ripple {
-      padding: 0px;
-
+    padding: 0px;
   }
 
   &[disabled] {
@@ -31,4 +30,3 @@ export default {
   }
 }
 </style>
-

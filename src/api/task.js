@@ -24,4 +24,3 @@ export default {
     return handleGeneralResponse(promise, 'No tasks');
   },
 };
-

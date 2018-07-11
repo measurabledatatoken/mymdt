@@ -38,7 +38,10 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Checkbox from '@/components/input/Checkbox';
 import BaseField from '@/components/input/BaseField';
 
-import { GET_BETA_TESTING_SESSION, REQUEST_BETA_TESTING_SESSION } from '@/store/modules/betaTesting';
+import {
+  GET_BETA_TESTING_SESSION,
+  REQUEST_BETA_TESTING_SESSION,
+} from '@/store/modules/betaTesting';
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 import { RouteDef } from '@/constants';
@@ -96,14 +99,13 @@ export default {
         },
       });
     } else {
-      this.getBetaTestingSession(this.deviceId)
-        .then((sessionExists) => {
-          if (!sessionExists) {
-            this.showScreen = true;
-          } else {
-            this.goToHome();
-          }
-        });
+      this.getBetaTestingSession(this.deviceId).then(sessionExists => {
+        if (!sessionExists) {
+          this.showScreen = true;
+        } else {
+          this.goToHome();
+        }
+      });
     }
   },
   methods: {
@@ -128,14 +130,13 @@ export default {
         this.requestBetaTestingSession({
           deviceId: this.deviceId,
           accessCode: this.accessCode,
-        })
-          .then((requestSuccess) => {
-            if (requestSuccess) {
-              this.goToHome();
-            } else {
-              this.failed = true;
-            }
-          });
+        }).then(requestSuccess => {
+          if (requestSuccess) {
+            this.goToHome();
+          } else {
+            this.failed = true;
+          }
+        });
       }
     },
   },
@@ -183,7 +184,7 @@ export default {
 
       /deep/ .md-field {
         &:after {
-          background-color: rgba(255,255,255,.6);
+          background-color: rgba(255, 255, 255, 0.6);
         }
       }
 

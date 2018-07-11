@@ -3,4 +3,3 @@ export default {
   CHANGE_PHONE: 'change',
   VERIFY_CODE: 'verify_oldphone',
 };
-

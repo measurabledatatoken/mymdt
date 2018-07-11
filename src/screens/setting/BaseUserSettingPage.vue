@@ -17,17 +17,14 @@ export default {
     BasePageContainer,
   },
   computed: {
-    ...mapGetters(
-      {
-        getSelectedSecurityUser: 'getSelectedSecurityUser',
-      },
-    ),
+    ...mapGetters({
+      getSelectedSecurityUser: 'getSelectedSecurityUser',
+    }),
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .user-info {
   margin-top: 16px;
   margin-bottom: 16px;
@@ -37,5 +34,4 @@ export default {
   width: 100%;
   margin: 10px 0px;
 }
-
 </style>

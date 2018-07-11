@@ -37,7 +37,7 @@ $line-height: 1rem;
     transition: all $animation-time;
 
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       opacity: 0;
 

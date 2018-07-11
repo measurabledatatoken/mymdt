@@ -38,24 +38,18 @@ export default {
     }),
     onNextClicked() {
       const action = OTPActionType.ChangePhoneNumberAction;
-      this.requestVerificationCode(
-        {
-          action,
-        },
-      ).then(
-        () => {
-          this.$router.push(
-            {
-              name: RouteDef.ChangePhoneNumberVerify.name,
-              params: {
-                pin: this.pin,
-                verificationCode: this.verificationCode,
-                action,
-              },
-            },
-          );
-        },
-      );
+      this.requestVerificationCode({
+        action,
+      }).then(() => {
+        this.$router.push({
+          name: RouteDef.ChangePhoneNumberVerify.name,
+          params: {
+            pin: this.pin,
+            verificationCode: this.verificationCode,
+            action,
+          },
+        });
+      });
     },
   },
 };

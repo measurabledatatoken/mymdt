@@ -1,10 +1,8 @@
 import numeral from 'numeral';
 
-import {
-  RouteDef,
-} from '@/constants';
+import { RouteDef } from '@/constants';
 
-const isRouteHomePath = (routePath) => {
+const isRouteHomePath = routePath => {
   const keys = Object.keys(RouteDef);
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
@@ -17,27 +15,26 @@ const isRouteHomePath = (routePath) => {
   return true;
 };
 
-
 const isRouteChangeBack = (to, from) => {
   const toDepth = to.path.split('/').length;
   const fromDepth = from.path.split('/').length;
   return toDepth < fromDepth;
 };
 
-const isValidEthAddress = address => new RegExp('^0x[a-fA-F0-9]{40}$').test(address);
+const isValidEthAddress = address =>
+  new RegExp('^0x[a-fA-F0-9]{40}$').test(address);
 
-const isValidEmailAddress = (email) => {
+const isValidEmailAddress = email => {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 };
 
-const isValidPhoneNumber = (phoneNumber) => {
+const isValidPhoneNumber = phoneNumber => {
   const re = /\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$/;
   return re.test(phoneNumber);
 };
 
-
-const getEthAddressFromString = (str) => {
+const getEthAddressFromString = str => {
   if (typeof str !== 'string') {
     return null;
   }
@@ -90,7 +87,9 @@ function extractNameInitials(name) {
       return parts[0][0].toUpperCase();
     }
     default: {
-      return `${parts[0][0].toUpperCase()}${parts[parts.length - 1][0].toUpperCase()}`;
+      return `${parts[0][0].toUpperCase()}${parts[
+        parts.length - 1
+      ][0].toUpperCase()}`;
     }
   }
 }
@@ -111,24 +110,21 @@ function forcePromiseToRunForAtLeast(promise, ms) {
         error,
       })),
     delay(ms),
-  ])
-    .then(([result]) => {
-      if (result.valid) {
-        return result.data;
-      }
-      throw result.error;
-    });
+  ]).then(([result]) => {
+    if (result.valid) {
+      return result.data;
+    }
+    throw result.error;
+  });
 }
 
 export {
   isRouteHomePath,
   isRouteChangeBack,
-
   isValidEthAddress,
   isValidPhoneNumber,
   isValidEmailAddress,
   getEthAddressFromString,
-
   formatAmount,
   extractNameInitials,
   delay,

@@ -39,18 +39,16 @@ export default {
   },
   methods: {
     countDown() {
-      setTimeout(
-        () => {
-          this.curCountDownSecond = Math.max(0, this.curCountDownSecond - 1);
+      setTimeout(() => {
+        this.curCountDownSecond = Math.max(0, this.curCountDownSecond - 1);
 
-          if (this.curCountDownSecond === 0) {
-            this.enabled = true;
-            this.curCountDownSecond = this.secondsToCount;
-          } else {
-            this.countDown();
-          }
-        }, 1000,
-      );
+        if (this.curCountDownSecond === 0) {
+          this.enabled = true;
+          this.curCountDownSecond = this.secondsToCount;
+        } else {
+          this.countDown();
+        }
+      }, 1000);
     },
     onClick() {
       this.enabled = false;
@@ -60,4 +58,3 @@ export default {
   },
 };
 </script>
-

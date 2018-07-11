@@ -55,7 +55,11 @@
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
-import { SET_DONE_CALLBACK_PATH, SET_SELECTED_USER, VALIDATE_PIN_FOR_TRANSFER } from '@/store/modules/security';
+import {
+  SET_DONE_CALLBACK_PATH,
+  SET_SELECTED_USER,
+  VALIDATE_PIN_FOR_TRANSFER,
+} from '@/store/modules/security';
 import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
@@ -126,27 +130,26 @@ export default {
     },
     onPinCodeFilled(pinCode) {
       this.validatePIN(pinCode)
-        .catch((err) => {
+        .catch(err => {
           this.$refs.pinCodeInputPopup.setInvalid();
-          throw (err);
+          throw err;
         })
         .then(() => {
           this.showPinCodeInput = false;
           return this.startTransfer(pinCode);
         })
-        .then((responseData) => {
-          this.$router.push(
-            {
-              name: RouteDef.TransferSuccess.name,
-              params: {
-                finalAmount: responseData.amount,
-                fee: responseData.transaction_fee,
-                totalAmount: -responseData.delta,
-                transferType: this.transferType,
-              },
-            });
+        .then(responseData => {
+          this.$router.push({
+            name: RouteDef.TransferSuccess.name,
+            params: {
+              finalAmount: responseData.amount,
+              fee: responseData.transaction_fee,
+              totalAmount: -responseData.delta,
+              transferType: this.transferType,
+            },
+          });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(`error in onPinCodeFilled: ${err.message}`);
         });
     },
@@ -297,5 +300,4 @@ $amountMinHeight: 20px;
     }
   }
 }
-
 </style>

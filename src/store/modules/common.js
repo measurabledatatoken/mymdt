@@ -8,7 +8,8 @@ export const SET_NAVIGATION_TITLE = 'common/SET_NAVIGATION_TITLE';
 export const SET_LOCALE = 'common/SET_LOCALE';
 export const ADD_NAVIGATION_STACK = 'common/ADD_NAVIGATION_STACK';
 export const POP_NAVIGATION_STACK = 'common/POP_NAVIGATION_STACK';
-export const POP_NAVIGATION_STACK_TO_PATH = 'common/POP_NAVIGATION_STACK_TO_PATH';
+export const POP_NAVIGATION_STACK_TO_PATH =
+  'common/POP_NAVIGATION_STACK_TO_PATH';
 export const FLUSH_NAVIGATION_STACK = 'common./FLUSH_NAVIGATION_STACK';
 
 // Actions
@@ -17,7 +18,6 @@ export const BACK_TO_PATH = 'common/BACK_TO_PATH';
 
 export const OPEN_ERROR_PROMPT = 'common/OPEN_ERROR_PROMPT';
 export const DISMISS_ERROR_PROMPT = 'common/DISMISS_ERROR_PROMPT';
-
 
 const state = {
   errorMessage: null,
@@ -116,7 +116,7 @@ const actions = {
   },
 };
 
-export default{
+export default {
   state,
   getters,
   mutations,

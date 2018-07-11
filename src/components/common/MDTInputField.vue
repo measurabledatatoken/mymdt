@@ -62,7 +62,8 @@ export default {
   .md-input {
     text-align: right;
 
-    &.amount, &::placeholder {
+    &.amount,
+    &::placeholder {
       font-size: 1.75rem;
     }
 

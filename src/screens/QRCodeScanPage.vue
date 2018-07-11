@@ -29,8 +29,15 @@
 <script>
 import { mapMutations } from 'vuex';
 import { SET_ETHADDRESS_SCANNED } from '@/store/modules/qrcode';
-import { SET_ERROR_MESSAGE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
-import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reader';
+import {
+  SET_ERROR_MESSAGE,
+  SET_SHOW_ERROR_PROMPT,
+} from '@/store/modules/common';
+import {
+  QrcodeReader,
+  scanImageData,
+  imageDataFromFile,
+} from 'vue-qrcode-reader';
 import { getEthAddressFromString } from '@/utils';
 import BasePage from '@/screens/BasePage';
 
@@ -75,7 +82,7 @@ export default {
     },
     onFileSelected(event) {
       const imgFile = event.target.files[0];
-      imageDataFromFile(imgFile).then((imageData) => {
+      imageDataFromFile(imgFile).then(imageData => {
         const result = scanImageData(imageData);
         const ethAddress = getEthAddressFromString(result.data);
 
@@ -137,7 +144,7 @@ $clip_bottom: 65%;
     width: 100%;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     display: none;
   }
 }
@@ -195,5 +202,4 @@ $clip_bottom: 65%;
     height: 100% !important;
   }
 }
-
 </style>

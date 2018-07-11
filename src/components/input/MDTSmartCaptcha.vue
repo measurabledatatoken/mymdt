@@ -36,9 +36,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .captcha {
-        display: flex;
-        justify-content: center;
-        padding: 1rem;
-    }
+.captcha {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
 </style>

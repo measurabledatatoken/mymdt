@@ -2,7 +2,8 @@ import api from '@/api';
 import { REQUEST } from '@/store/modules/api';
 
 export const GET_BETA_TESTING_SESSION = 'betaTesting/GET_BETA_TESTING_SESSION';
-export const REQUEST_BETA_TESTING_SESSION = 'betaTesting/REQUEST_BETA_TESTING_SESSION';
+export const REQUEST_BETA_TESTING_SESSION =
+  'betaTesting/REQUEST_BETA_TESTING_SESSION';
 
 const SET_DEVICE_ID = 'betaTesting/SET_DEVICE_ID';
 

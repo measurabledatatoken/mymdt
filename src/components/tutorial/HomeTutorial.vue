@@ -44,7 +44,6 @@ import TutorialItem from '@/components/tutorial/TutorialItem';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
-
 export default {
   props: {
     active: {
@@ -98,7 +97,7 @@ export default {
 .swiper-pagination {
   bottom: 20%;
 
-  /deep/ .swiper-pagination-bullet{
+  /deep/ .swiper-pagination-bullet {
     margin: 0 10px;
   }
 }

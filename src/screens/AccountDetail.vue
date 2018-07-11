@@ -70,24 +70,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $header-padding-top: 2rem;
+$header-padding-top: 2rem;
 
-  .app-view {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
+.app-view {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.header {
+  padding-top: $header-padding-top;
+  position: relative;
+
+  .header__background {
+    background-color: $home-bgcolor;
+    height: calc(
+      8em + 0.5em + #{$header-padding-top}
+    ); // height of UserInfoCard content + UserInfoCard margin top + header padding
+    width: 100%;
+    position: absolute;
+    top: 0;
   }
-
-  .header {
-    padding-top: $header-padding-top;
-    position: relative;
-
-    .header__background {
-      background-color: $home-bgcolor;
-      height: calc(8em + 0.5em + #{$header-padding-top}); // height of UserInfoCard content + UserInfoCard margin top + header padding
-      width: 100%;
-      position: absolute;
-      top: 0;
-    }
-  }
+}
 </style>

@@ -58,7 +58,12 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_COUNTRY_DIALCODE, SET_COUNTRY_CODE, SET_PHONENUMBER, REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
+import {
+  SET_COUNTRY_DIALCODE,
+  SET_COUNTRY_CODE,
+  SET_PHONENUMBER,
+  REQUEST_VERIFICATION_CODE,
+} from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import { maskPhoneNumber } from '@/helpers/phoneUtil';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
@@ -69,8 +74,7 @@ import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
 const VerificationCodeLength = 6;
 
 export default {
-  metaInfo() {
-  },
+  metaInfo() {},
   components: {
     BasePhoneNumberPage,
     MDTPrimaryButton,
@@ -130,11 +134,9 @@ export default {
       }
     },
     onResendClicked() {
-      this.requestVerificationCode(
-        {
-          action: this.action,
-        },
-      );
+      this.requestVerificationCode({
+        action: this.action,
+      });
     },
   },
 };

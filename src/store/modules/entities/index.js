@@ -10,6 +10,6 @@ const modules = {
   applications,
 };
 
-export default{
+export default {
   modules,
 };

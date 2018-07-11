@@ -49,13 +49,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(
-      {
-        selectedSecurityUser: 'getSelectedSecurityUser',
-      },
-    ),
+    ...mapGetters({
+      selectedSecurityUser: 'getSelectedSecurityUser',
+    }),
     maskedPhoneNumber() {
-      const fullPhone = `${this.selectedSecurityUser.countryDialCode} ${this.selectedSecurityUser.phoneNumber}`;
+      const fullPhone = `${this.selectedSecurityUser.countryDialCode} ${
+        this.selectedSecurityUser.phoneNumber
+      }`;
       return maskFullPhoneNumber(fullPhone);
     },
   },
@@ -67,19 +67,17 @@ export default {
       this.requestVerificationCode({
         action: OTPActionType.ResetPasscodeAction,
       }).then(() => {
-        this.$router.push(
-          {
-            name: RouteDef.PhoneNumberVerify.name,
-            params: {
-              emailAddress: this.selectedSecurityUser.emailAddress,
-              nextPagePathName: RouteDef.PinCodeSetup.name,
-              action: OTPActionType.ResetPasscodeAction,
-              payloadForNextPage: {
-                mode: SetupPINMode.RESET,
-              },
+        this.$router.push({
+          name: RouteDef.PhoneNumberVerify.name,
+          params: {
+            emailAddress: this.selectedSecurityUser.emailAddress,
+            nextPagePathName: RouteDef.PinCodeSetup.name,
+            action: OTPActionType.ResetPasscodeAction,
+            payloadForNextPage: {
+              mode: SetupPINMode.RESET,
             },
           },
-        );
+        });
       });
     },
   },

@@ -23,8 +23,7 @@ import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage
 import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
-  metaInfo() {
-  },
+  metaInfo() {},
   components: {
     BasePhoneNumberVerifyPage,
     SuccessPopup,
@@ -53,24 +52,20 @@ export default {
       backToPath: BACK_TO_PATH,
     }),
     onEditClicked() {
-      this.$router.push(
-        {
-          name: RouteDef.ChangePhoneNumberInput.name,
-          params: {
-            pin: this.pin,
-            verificationCode: this.verificationCode,
-          },
+      this.$router.push({
+        name: RouteDef.ChangePhoneNumberInput.name,
+        params: {
+          pin: this.pin,
+          verificationCode: this.verificationCode,
         },
-      );
+      });
     },
     onDoneClicked(verificationCode) {
-      this.changePhoneNumber(
-        {
-          oldVerificationCode: this.verificationCode,
-          verificationCode,
-          pin: this.pin,
-        },
-      ).then(() => {
+      this.changePhoneNumber({
+        oldVerificationCode: this.verificationCode,
+        verificationCode,
+        pin: this.pin,
+      }).then(() => {
         this.showPhoneSetupSuccessPopup = true;
       });
     },
@@ -79,7 +74,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style lang="scss" scoped>

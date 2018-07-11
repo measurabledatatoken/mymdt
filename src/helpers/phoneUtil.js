@@ -6,7 +6,9 @@ function maskPhoneNumber(phoneNumber) {
   for (let i = firstSliceEndIndex; i < secondSliceEndIndex; i += 1) {
     maskedPhoneNumber = maskedPhoneNumber.concat('*');
   }
-  maskedPhoneNumber = maskedPhoneNumber.concat(phoneNumber.slice(secondSliceEndIndex, phoneNumber.length));
+  maskedPhoneNumber = maskedPhoneNumber.concat(
+    phoneNumber.slice(secondSliceEndIndex, phoneNumber.length),
+  );
   return maskedPhoneNumber;
 }
 
@@ -26,8 +28,4 @@ function maskFullPhoneNumber(fullPhoneNum) {
   return maskPhoneNumber(phoneNumber);
 }
 
-
-export {
-  maskPhoneNumber,
-  maskFullPhoneNumber,
-};
+export { maskPhoneNumber, maskFullPhoneNumber };

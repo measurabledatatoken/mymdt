@@ -24,8 +24,7 @@ import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage
 import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
-  metaInfo() {
-  },
+  metaInfo() {},
   components: {
     BasePhoneNumberVerifyPage,
     SuccessPopup,
@@ -51,18 +50,14 @@ export default {
       backToPath: BACK_TO_PATH,
     }),
     onEditClicked() {
-      this.$router.push(
-        {
-          name: RouteDef.AddPhoneNumberInput.name,
-        },
-      );
+      this.$router.push({
+        name: RouteDef.AddPhoneNumberInput.name,
+      });
     },
     onDoneClicked(verificationCode) {
-      this.addPhoneNumber({ pin: this.pin, verificationCode }).then(
-        () => {
-          this.showPhoneSetupSuccessPopup = true;
-        },
-      );
+      this.addPhoneNumber({ pin: this.pin, verificationCode }).then(() => {
+        this.showPhoneSetupSuccessPopup = true;
+      });
     },
     onPopupDoneClicked() {
       this.backToPath(this.doneCallBackPath);

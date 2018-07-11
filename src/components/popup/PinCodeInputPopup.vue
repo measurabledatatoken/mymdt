@@ -57,7 +57,6 @@ export default {
         this.$refs.pinCodeField.focus(0);
       }, 300);
     },
-
   },
 };
 </script>

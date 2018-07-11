@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .transaction-detail-list {
-    padding-top: 0;
-  }
+.transaction-detail-list {
+  padding-top: 0;
+}
 </style>

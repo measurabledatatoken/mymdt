@@ -36,7 +36,10 @@ export default {
       return `${formatAmount(this.amount)} MDT`;
     },
     amountDeltaText() {
-      return `${this.amountDelta >= 0 ? '+' : '-'}${formatAmount(this.amountDelta, { type: 'short' })} MDT`;
+      return `${this.amountDelta >= 0 ? '+' : '-'}${formatAmount(
+        this.amountDelta,
+        { type: 'short' },
+      )} MDT`;
     },
     transitionName() {
       if (this.amountDelta >= 0) {

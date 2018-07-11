@@ -57,11 +57,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(
-      {
-        getSelectedSecurityUser: 'getSelectedSecurityUser',
-      },
-    ),
+    ...mapGetters({
+      getSelectedSecurityUser: 'getSelectedSecurityUser',
+    }),
   },
   methods: {
     onFilled(pincode) {

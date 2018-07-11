@@ -99,7 +99,13 @@ export default {
       finalAmount: 'finalAmount',
     }),
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0 && this.isWalletAmountValid) {
+      if (
+        this.transferAmount > 0 &&
+        this.transferToWalletAddress &&
+        this.isWalletAddressValid &&
+        this.finalAmount > 0 &&
+        this.isWalletAmountValid
+      ) {
         return false;
       }
       return true;

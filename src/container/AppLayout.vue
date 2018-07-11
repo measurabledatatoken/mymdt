@@ -25,9 +25,13 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import {
-  DISMISS_ERROR_PROMPT, SET_LOCALE,
-  ADD_NAVIGATION_STACK, POP_NAVIGATION_STACK,
-  POP_NAVIGATION_STACK_TO_PATH, FLUSH_NAVIGATION_STACK } from '@/store/modules/common';
+  DISMISS_ERROR_PROMPT,
+  SET_LOCALE,
+  ADD_NAVIGATION_STACK,
+  POP_NAVIGATION_STACK,
+  POP_NAVIGATION_STACK_TO_PATH,
+  FLUSH_NAVIGATION_STACK,
+} from '@/store/modules/common';
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 import LoadingPopup from '@/components/common/LoadingPopup';
@@ -76,11 +80,9 @@ export default {
       isLoading: state => state.common.isLoading,
       navigationStack: state => state.common.navigationStack,
     }),
-    ...mapGetters(
-      {
-        isPathExistInNavigationStack: 'isPathExistInNavigationStack',
-      },
-    ),
+    ...mapGetters({
+      isPathExistInNavigationStack: 'isPathExistInNavigationStack',
+    }),
     showErrorPrompt: {
       get() {
         return this.$store.state.common.showErrorPrompt;
@@ -91,7 +93,9 @@ export default {
     },
     showCustomHeader() {
       if (Array.isArray(this.$route.matched)) {
-        const currentMatch = this.$route.matched[this.$route.matched.length - 1];
+        const currentMatch = this.$route.matched[
+          this.$route.matched.length - 1
+        ];
         if (currentMatch.components && currentMatch.components.header) {
           return true;
         }
@@ -266,8 +270,7 @@ export default {
 }
 
 .home-tutorial {
-   position: absolute;
-   z-index: 10;
+  position: absolute;
+  z-index: 10;
 }
 </style>
-

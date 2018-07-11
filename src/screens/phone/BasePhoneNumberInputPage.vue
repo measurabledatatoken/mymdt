@@ -34,7 +34,11 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
-import { SET_COUNTRY_DIALCODE, SET_COUNTRY_CODE, SET_PHONENUMBER } from '@/store/modules/security';
+import {
+  SET_COUNTRY_DIALCODE,
+  SET_COUNTRY_CODE,
+  SET_PHONENUMBER,
+} from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import PhoneInputField from '@/components/common/PhoneInputField';
