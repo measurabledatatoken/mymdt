@@ -16,12 +16,6 @@ const url = {
   },
 };
 export default {
-  data() {
-    return {
-      sc: undefined,
-      id: `sc${parseInt(Math.random() * 1000000, 10)}`,
-    };
-  },
   props: {
     h5: { type: Boolean, default: false },
     appkey: { type: String, required: true },
@@ -36,6 +30,12 @@ export default {
         return {};
       },
     },
+  },
+  data() {
+    return {
+      sc: undefined,
+      id: `sc${parseInt(Math.random() * 1000000, 10)}`,
+    };
   },
   mounted() {
     this.$_setOpt();

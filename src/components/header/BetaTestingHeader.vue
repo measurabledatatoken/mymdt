@@ -1,7 +1,10 @@
 <template>
   <div class="home-header">
-    <md-button class="md-icon-button" @click="returnCallback">
-      <md-icon md-src="/static/icons/close-white.svg"></md-icon>
+    <md-button 
+      class="md-icon-button" 
+      @click="returnCallback"
+    >
+      <md-icon md-src="/static/icons/close-white.svg"/>
     </md-button>
   </div>
 </template>

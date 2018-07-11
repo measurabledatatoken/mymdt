@@ -1,7 +1,11 @@
 <template>
-    <MDTBaseButton v-bind="$attrs" v-on="$listeners" class="subtle">
-        <slot></slot>
-    </MDTBaseButton>
+  <MDTBaseButton 
+    v-bind="$attrs" 
+    class="subtle" 
+    v-on="$listeners"
+  >
+    <slot/>
+  </MDTBaseButton>
 </template>
 
 <script>

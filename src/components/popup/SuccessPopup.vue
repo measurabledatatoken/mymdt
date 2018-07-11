@@ -1,11 +1,14 @@
 <template>
-    <md-dialog v-bind="$attrs" v-on="$listeners">
-        <md-icon :md-src="iconSrc"></md-icon>
-        <md-dialog-title>
-            <span class="title">{{ title }}</span>
-        </md-dialog-title>
-        <MDTSubtleButton @click="$emit('md-confirm')">{{ confirmText }}</MDTSubtleButton>
-    </md-dialog>
+  <md-dialog 
+    v-bind="$attrs" 
+    v-on="$listeners"
+  >
+    <md-icon :md-src="iconSrc"/>
+    <md-dialog-title>
+      <span class="title">{{ title }}</span>
+    </md-dialog-title>
+    <MDTSubtleButton @click="$emit('md-confirm')">{{ confirmText }}</MDTSubtleButton>
+  </md-dialog>
 </template>
 
 <script>
@@ -18,12 +21,15 @@ export default {
   props: {
     title: {
       type: String,
+      default: '',
     },
     iconSrc: {
       type: String,
+      default: null,
     },
     confirmText: {
       type: String,
+      default: '',
     },
   },
 };

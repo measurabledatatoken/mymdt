@@ -10,18 +10,25 @@
             {{ $t('message.qrcode.my_photo_library') }}
           </label>
         </div>
-        <input v-on:change="onFileSelected($event)" id="photolibbtn" type="file">
+        <input 
+          id="photolibbtn" 
+          type="file" 
+          @change="onFileSelected($event)"
+        >
 
       </div>
       <div class="overlay-border">
-        <div class="frame topleft"></div>
-        <div class="frame topright"></div>
-        <div class="frame bottomleft"></div>
-        <div class="frame bottomright"></div>
+        <div class="frame topleft"/>
+        <div class="frame topright"/>
+        <div class="frame bottomleft"/>
+        <div class="frame bottomright"/>
       </div>
 
-      <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
-      </qrcode-reader>
+      <qrcode-reader 
+        :video-constraints="videoConstraints" 
+        class="reader" 
+        @decode="onDecode"
+      />
     </div>
   </div>
 </template>
@@ -42,6 +49,9 @@ import { getEthAddressFromString } from '@/utils';
 import BasePage from '@/screens/BasePage';
 
 export default {
+  components: {
+    QrcodeReader,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -57,9 +67,6 @@ export default {
         },
       },
     };
-  },
-  components: {
-    QrcodeReader,
   },
   mounted() {
     this.setEthAddressScanned(null);

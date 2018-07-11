@@ -1,11 +1,14 @@
 <template>
   <div class="home">
     <h1>Forget Password</h1>
-    <input v-model="emailAddress" placeholder="Email Address">
-    <button v-on:click="confirmForgetPassword">Confirm</button>
+    <input 
+      v-model="emailAddress" 
+      placeholder="Email Address"
+    >
+    <button @click="confirmForgetPassword">Confirm</button>
     <p>{{
       errorMessage
-      }}</p>
+    }}</p>
   </div>
 </template>
 
@@ -26,14 +29,6 @@ export default {
       lastEmailAddress: '',
     };
   },
-  watch: {
-    emailChanged(newEmailAddress, oldEmailAddress) {
-      // TODO: Do real time validation
-      this.setForgetSuccess(null);
-      console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
-    },
-  },
-  created() {},
   computed: {
     ...mapState({
       forgetSuccess: state => state.forgetPassword.forgetSuccess,
@@ -49,6 +44,13 @@ export default {
         }`;
       }
       return 'failed, please try again';
+    },
+  },
+  watch: {
+    emailChanged(newEmailAddress, oldEmailAddress) {
+      // TODO: Do real time validation
+      this.setForgetSuccess(null);
+      console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
     },
   },
   methods: {

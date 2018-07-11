@@ -1,8 +1,14 @@
 <template>
-  <md-avatar class="md-avatar-icon" :disabled="disabled" :style="{ 'background-color': backgroundColor }">
-    <img :src="imageSrc"
-         alt="People"
-         v-if="imageSrc">
+  <md-avatar 
+    :disabled="disabled" 
+    :style="{ 'background-color': backgroundColor }" 
+    class="md-avatar-icon"
+  >
+    <img 
+      v-if="imageSrc"
+      :src="imageSrc"
+      alt="People"
+    >
     <template v-else>
       {{ displayName }}
     </template>
@@ -16,15 +22,19 @@ export default {
   props: {
     user: {
       type: Object,
+      default: null,
     },
     src: {
       type: String,
+      default: null,
     },
     name: {
       type: String,
+      default: null,
     },
     disabled: {
       type: Boolean,
+      default: false,
     },
   },
   computed: {

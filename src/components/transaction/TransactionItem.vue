@@ -1,17 +1,20 @@
 <template>
   <md-list-item v-bind="$attrs">
     <md-avatar v-if="showAvatar && application && application.avatar_url">
-      <img :src="application.avatar_url" alt="Avatar">
+      <img 
+        :src="application.avatar_url" 
+        alt="Avatar"
+      >
     </md-avatar>
     <div class="md-list-item-text">
       <TransactionTitle :transaction="transaction" />
       <span>{{ (showApplication && application) ? application.name : $d(new Date(transaction.transaction_time), 'long') }}</span>
     </div>
-    <div v-bind:class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
+    <div :class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
       <span>{{ formattedAmount }} MDT</span>
       <span
-        class="action-status"
         v-if="showStatus"
+        class="action-status"
       >
         {{ getStatusText }}
       </span>
@@ -28,8 +31,14 @@ import { transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
 
 export default {
+  components: {
+    TransactionTitle,
+  },
   props: {
-    transaction: Object,
+    transaction: {
+      type: Object,
+      default: null,
+    },
     showAvatar: {
       type: Boolean,
       default: false,
@@ -74,9 +83,6 @@ export default {
         }
       }
     },
-  },
-  components: {
-    TransactionTitle,
   },
 };
 </script>

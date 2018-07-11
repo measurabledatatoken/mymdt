@@ -1,13 +1,21 @@
 <template>
   <div class="tutorial-item">
     <div class="tutorial-item__img-container">
-      <img class="icon"
-           :src="imgSrc">
+      <img 
+        :src="imgSrc"
+        class="icon"
+      >
     </div>
     <div class="tutorial-item__title">{{ title }}</div>
     <div class="tutorial-item__description">{{ description }}</div>
-    <MDTSubtleButton v-if="!isFinalPage" @click="$emit('click')">{{ $t("message.tutorial.get_started") }}</MDTSubtleButton>
-    <MDTPrimaryButton v-if="isFinalPage" @click="$emit('click')">{{ $t("message.tutorial.get_started") }}</MDTPrimaryButton>
+    <MDTSubtleButton 
+      v-if="!isFinalPage" 
+      @click="$emit('click')"
+    >{{ $t("message.tutorial.get_started") }}</MDTSubtleButton>
+    <MDTPrimaryButton 
+      v-if="isFinalPage" 
+      @click="$emit('click')"
+    >{{ $t("message.tutorial.get_started") }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -16,24 +24,27 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
+  components: {
+    MDTPrimaryButton,
+    MDTSubtleButton,
+  },
   props: {
     imgSrc: {
       type: String,
+      default: null,
     },
     title: {
       type: String,
+      default: null,
     },
     description: {
       type: String,
+      default: null,
     },
     isFinalPage: {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    MDTPrimaryButton,
-    MDTSubtleButton,
   },
 };
 </script>

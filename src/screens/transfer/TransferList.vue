@@ -1,22 +1,38 @@
 <template>
   <div>
     <div class="account">
-      <AccountSelector v-on:accountSelected="setTransferFromAccount" :accounts="allUsers" :selectedAccount="transferFromAccount">
-      </AccountSelector>
+      <AccountSelector 
+        :accounts="allUsers" 
+        :selected-account="transferFromAccount" 
+        @accountSelected="setTransferFromAccount"
+      />
     </div>
     <div class="action-card-list">
-      <ActionCard @actionClick="onTransferMethodClicked(RouteDef.TransferEmail.path)" class="left" :title="$t('message.transfer.transferlist_emailtitle')"
-        :actionName="$t('message.common.transferbtn')" imgSrc="/static/icons/transfer-to-email.svg">
-      </ActionCard>
-      <ActionCard @actionClick="onTransferMethodClicked(RouteDef.TransferEthWallet.path)" class="right" :title="$t('message.transfer.transferlist_ethtitle')"
-        :actionName="$t('message.common.transferbtn')" imgSrc="/static/icons/transfer-to-eth.svg">
-      </ActionCard>
+      <ActionCard 
+        :title="$t('message.transfer.transferlist_emailtitle')" 
+        :action-name="$t('message.common.transferbtn')" 
+        class="left"
+        img-src="/static/icons/transfer-to-email.svg" 
+        @actionClick="onTransferMethodClicked(RouteDef.TransferEmail.path)"
+      />
+      <ActionCard 
+        :title="$t('message.transfer.transferlist_ethtitle')" 
+        :action-name="$t('message.common.transferbtn')" 
+        class="right"
+        img-src="/static/icons/transfer-to-eth.svg" 
+        @actionClick="onTransferMethodClicked(RouteDef.TransferEthWallet.path)"
+      />
     </div>
 
 
-    <MDTConfirmPopup :md-active.sync="showSetupPinDialog" :md-title="$t('message.passcode.pin_setup_remind_title')"
-      :md-content="$t('message.passcode.pin_setup_remind_content')" :md-confirm-text="$t('message.common.setup')"
-      :md-cancel-text="$t('message.common.cancel')" @md-confirm="onConfirmSetupPinDialogClick" />
+    <MDTConfirmPopup 
+      :md-active.sync="showSetupPinDialog" 
+      :md-title="$t('message.passcode.pin_setup_remind_title')"
+      :md-content="$t('message.passcode.pin_setup_remind_content')" 
+      :md-confirm-text="$t('message.common.setup')"
+      :md-cancel-text="$t('message.common.cancel')" 
+      @md-confirm="onConfirmSetupPinDialogClick"
+    />
   </div>
 
 
@@ -37,6 +53,11 @@ import ActionCard from '@/components/common/ActionCard';
 import BasePage from '@/screens/BasePage';
 
 export default {
+  components: {
+    AccountSelector,
+    ActionCard,
+    MDTConfirmPopup,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -57,11 +78,6 @@ export default {
       allUsers: 'getAllUsers',
       selectedUser: 'getSelectedUser',
     }),
-  },
-  components: {
-    AccountSelector,
-    ActionCard,
-    MDTConfirmPopup,
   },
   created() {
     this.setTransferFromAccount(this.selectedUser);

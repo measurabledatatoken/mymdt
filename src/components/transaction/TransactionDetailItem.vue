@@ -9,7 +9,20 @@
 
 <script>
 export default {
-  props: ['singleLine', 'title', 'description'],
+  props: {
+    singleLine: {
+      type: Boolean,
+      default: false,
+    },
+    title: {
+      type: String,
+      default: null,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
+  },
 };
 </script>
 

@@ -1,8 +1,12 @@
 <template>
-  <md-dialog v-bind="$attrs" :class="[{'animated shake': shouldShake}]" @md-closed="shouldShake = false"
-    @md-opened="onMDOpened">
+  <md-dialog 
+    v-bind="$attrs" 
+    :class="[{'animated shake': shouldShake}]" 
+    @md-closed="shouldShake = false"
+    @md-opened="onMDOpened"
+  >
     <md-button @click="$emit('close-click')">
-      <md-icon md-src="/static/icons/popup-close.svg"></md-icon>
+      <md-icon md-src="/static/icons/popup-close.svg"/>
     </md-button>
 
     <md-dialog-title>
@@ -10,7 +14,12 @@
       <div class="subtitle">{{ emailAddress }}</div>
     </md-dialog-title>
     <div class="content">
-      <PinCodeField ref="pinCodeField" @filled="onCodeFilled" :length="6" :shouldAutoFocus=true></PinCodeField>
+      <PinCodeField 
+        ref="pinCodeField" 
+        :length="6" 
+        :should-auto-focus="true" 
+        @filled="onCodeFilled"
+      />
       <div class="forgot">
         <a @click="$emit('fotgot-click')">{{ $t('message.passcode.forgot_pin') }}</a>
       </div>
@@ -28,9 +37,11 @@ export default {
   props: {
     title: {
       type: String,
+      default: '',
     },
     emailAddress: {
       type: String,
+      default: '',
     },
     autoFocus: {
       default: true,

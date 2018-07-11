@@ -3,14 +3,18 @@
     <template slot="content">
 
       <div class="phone-title"> {{ $t('message.settings.phoneNumber') }}</div>
-      <div class="phone-num"
-           :class="{'none': !selectedSecurityUser.phoneNumber}">
-        {{ selectedSecurityUser.phoneNumber ? this.maskedPhoneNumber : $t('message.common.none') }}
+      <div 
+        :class="{'none': !selectedSecurityUser.phoneNumber}"
+        class="phone-num"
+      >
+        {{ selectedSecurityUser.phoneNumber ? maskedPhoneNumber : $t('message.common.none') }}
       </div>
 
-      <MDSubtleButton @click="onSendVerificationCodePressed"
-                      class="resend"
-                      :disabled="!selectedSecurityUser.phoneNumber">
+      <MDSubtleButton 
+        :disabled="!selectedSecurityUser.phoneNumber"
+        class="resend"
+        @click="onSendVerificationCodePressed"
+      >
         {{ $t('message.phone.send') }}
       </MDSubtleButton>
       <MDSubtleButton :to="RouteDef.ReportProblem.path">
@@ -37,12 +41,12 @@ export default {
       title: this.$t('message.passcode.forgot_pin'),
     };
   },
-  extends: BasePage,
   components: {
     BaseUserSettingPage,
     BasePage,
     MDSubtleButton,
   },
+  extends: BasePage,
   data() {
     return {
       RouteDef,

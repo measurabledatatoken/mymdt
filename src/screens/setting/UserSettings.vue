@@ -5,60 +5,79 @@
         <md-list>
           <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
           <md-divider />
-          <base-setting-list-item :title="$t('message.passcode.pin_setup_title')"
-                                  @click="onSetupPINClicked">
-            <template slot="action-data"
-                      v-if="!getSelectedSecurityUser.isPasscodeSet">
-              {{$t('message.settings.setUpNow')}}
+          <base-setting-list-item 
+            :title="$t('message.passcode.pin_setup_title')"
+            @click="onSetupPINClicked"
+          >
+            <template 
+              v-if="!getSelectedSecurityUser.isPasscodeSet"
+              slot="action-data"
+            >
+              {{ $t('message.settings.setUpNow') }}
             </template>
-            <template slot="action-data"
-                      v-if="getSelectedSecurityUser.isPasscodeSet">
-              <md-icon md-src="/static/icons/settings-account-3.svg"></md-icon>
-            </template>
-          </base-setting-list-item>
-          <md-divider />
-          <base-setting-list-item :title="$t('message.settings.phoneNumber')"
-                                  @click="onSetupPhoneNumberClicked"
-                                  :disabled="!getSelectedSecurityUser.isPasscodeSet">
-            <template slot="action-data"
-                      v-if="showPhoneNumberSetup">
-              {{$t('message.settings.setUpNow')}}
-            </template>
-            <template slot="action-data"
-                      v-if="getSelectedSecurityUser.isPhoneConfirmed">
-              <md-icon md-src="/static/icons/settings-account-3.svg"></md-icon>
+            <template 
+              v-if="getSelectedSecurityUser.isPasscodeSet"
+              slot="action-data"
+            >
+              <md-icon md-src="/static/icons/settings-account-3.svg"/>
             </template>
           </base-setting-list-item>
           <md-divider />
+          <base-setting-list-item 
+            :title="$t('message.settings.phoneNumber')"
+            :disabled="!getSelectedSecurityUser.isPasscodeSet"
+            @click="onSetupPhoneNumberClicked"
+          >
+            <template 
+              v-if="showPhoneNumberSetup"
+              slot="action-data"
+            >
+              {{ $t('message.settings.setUpNow') }}
+            </template>
+            <template 
+              v-if="getSelectedSecurityUser.isPhoneConfirmed"
+              slot="action-data"
+            >
+              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+            </template>
+          </base-setting-list-item>
           <md-divider />
-          <base-setting-list-item :title="$t('message.passcode.forgot_pin')"
-                                  @click="onPasscodeForgotClicked"
-                                  :disabled="!getSelectedSecurityUser.isPasscodeSet" />
+          <md-divider />
+          <base-setting-list-item 
+            :title="$t('message.passcode.forgot_pin')"
+            :disabled="!getSelectedSecurityUser.isPasscodeSet"
+            @click="onPasscodeForgotClicked"
+          />
           <md-divider />
         </md-list>
 
-        <MDTConfirmPopup :md-active.sync="showAlreadySetPinDialog"
-                         :md-title="$t('message.passcode.already_setup_title')"
-                         :md-content="$t('message.passcode.already_setup_content')"
-                         :md-confirm-text="$t('message.common.change')"
-                         :md-cancel-text="$t('message.common.cancel')"
-                         @md-confirm="onConfirmChangePIN" />
+        <MDTConfirmPopup 
+          :md-active.sync="showAlreadySetPinDialog"
+          :md-title="$t('message.passcode.already_setup_title')"
+          :md-content="$t('message.passcode.already_setup_content')"
+          :md-confirm-text="$t('message.common.change')"
+          :md-cancel-text="$t('message.common.cancel')"
+          @md-confirm="onConfirmChangePIN"
+        />
 
-        <MDTConfirmPopup :md-active.sync="showAlreadySetPhoneDialog"
-                         :md-title="$t('message.phone.already_setup_title')"
-                         :md-content="$t('message.phone.already_setup_content')"
-                         :md-confirm-text="$t('message.common.change')"
-                         :md-cancel-text="$t('message.common.cancel')"
-                         @md-confirm="onConfirmChangePhoneNumber" />
+        <MDTConfirmPopup 
+          :md-active.sync="showAlreadySetPhoneDialog"
+          :md-title="$t('message.phone.already_setup_title')"
+          :md-content="$t('message.phone.already_setup_content')"
+          :md-confirm-text="$t('message.common.change')"
+          :md-cancel-text="$t('message.common.cancel')"
+          @md-confirm="onConfirmChangePhoneNumber"
+        />
 
-        <PinCodeInputPopup ref="pinCodeInputPopup"
-                           :md-active.sync="showPinCodeInput"
-                           :title="pinCodePopupTitle"
-                           :emailAddress="getSelectedSecurityUser.emailAddress"
-                           @codefilled="onPinCodeFilled"
-                           @close-click="showPinCodeInput = false"
-                           @fotgot-click="onFotgotClicked">
-        </PinCodeInputPopup>
+        <PinCodeInputPopup 
+          ref="pinCodeInputPopup"
+          :md-active.sync="showPinCodeInput"
+          :title="pinCodePopupTitle"
+          :email-address="getSelectedSecurityUser.emailAddress"
+          @codefilled="onPinCodeFilled"
+          @close-click="showPinCodeInput = false"
+          @fotgot-click="onFotgotClicked"
+        />
 
       </template>
     </BaseUserSettingPage>
@@ -87,18 +106,18 @@ import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import OTPActionType from '@/enum/otpActionType';
 
 export default {
-  extends: BasePage,
-  metaInfo() {
-    return {
-      title: this.$t('message.settings.title'),
-    };
-  },
   components: {
     BaseUserSettingPage,
     BaseSettingListItem,
     SettingListSectionHeader,
     MDTConfirmPopup,
     PinCodeInputPopup,
+  },
+  extends: BasePage,
+  metaInfo() {
+    return {
+      title: this.$t('message.settings.title'),
+    };
   },
   data() {
     return {

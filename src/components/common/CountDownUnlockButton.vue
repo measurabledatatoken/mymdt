@@ -1,12 +1,15 @@
 <template>
-    <MDTSubtleButton v-on:click="onClick()" :disabled="!enabled">
-        <template v-if="enabled">
-            {{ $t(countDoneTranslateKey) }}
-        </template>
-        <template v-else>
-            {{ $t(countingTranslateKey, { second: curCountDownSecond}) }}
-        </template>
-    </MDTSubtleButton>
+  <MDTSubtleButton 
+    :disabled="!enabled" 
+    @click="onClick()"
+  >
+    <template v-if="enabled">
+      {{ $t(countDoneTranslateKey) }}
+    </template>
+    <template v-else>
+      {{ $t(countingTranslateKey, { second: curCountDownSecond}) }}
+    </template>
+  </MDTSubtleButton>
 </template>
 
 <script>
@@ -19,12 +22,15 @@ export default {
   props: {
     secondsToCount: {
       type: Number,
+      default: 0,
     },
     countingTranslateKey: {
       type: String,
+      default: '',
     },
     countDoneTranslateKey: {
       type: String,
+      default: '',
     },
   },
   data() {

@@ -1,45 +1,94 @@
 <template>
   <div class="account-selector">
-    <BaseField :label="label" class="selector-menu">
-      <md-menu md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened" v-on:md-closed="menuClosed">
+    <BaseField 
+      :label="label" 
+      class="selector-menu"
+    >
+      <md-menu 
+        md-size="auto" 
+        md-full-width 
+        md-close-on-select 
+        md-align-trigger 
+        @md-opened="menuOpened" 
+        @md-closed="menuClosed"
+      >
         <!-- Button -->
-        <md-button :md-ripple="false" v-bind:class="{ 'open': isMenuOpened }" md-menu-trigger>
-          <div class="account-info" v-bind:class="{ 'other': selectedOther, 'open': isMenuOpened }">
-            <div v-if="selectedAccount" class="account-email">
+        <md-button 
+          :md-ripple="false" 
+          :class="{ 'open': isMenuOpened }" 
+          md-menu-trigger
+        >
+          <div 
+            :class="{ 'other': selectedOther, 'open': isMenuOpened }" 
+            class="account-info"
+          >
+            <div 
+              v-if="selectedAccount" 
+              class="account-email"
+            >
               {{ selectedAccountEmail }}
             </div>
-            <div v-if="selectedAccount" class="account-balance">
+            <div 
+              v-if="selectedAccount" 
+              class="account-balance"
+            >
               {{ selectedAccountBalance }}
             </div>
-            <div v-if="!selectedAccount" class="placeholder"> {{ $t('message.transfer.select_account_placeholder') }} </div>
+            <div 
+              v-if="!selectedAccount" 
+              class="placeholder"
+            > {{ $t('message.transfer.select_account_placeholder') }} </div>
           </div>
-          <md-icon v-show="!isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_down.svg">
-          </md-icon>
-          <md-icon v-show="isMenuOpened" v-bind:class="{ 'other': selectedOther }" md-src="/static/icons/keyboard_arrow_up.svg">
-          </md-icon>
+          <md-icon 
+            v-show="!isMenuOpened" 
+            :class="{ 'other': selectedOther }" 
+            md-src="/static/icons/keyboard_arrow_down.svg"
+          />
+          <md-icon 
+            v-show="isMenuOpened" 
+            :class="{ 'other': selectedOther }" 
+            md-src="/static/icons/keyboard_arrow_up.svg"
+          />
         </md-button>
 
         <!-- Content -->
         <md-menu-content>
-          <md-menu-item @click="selectAccount(account)" v-for="account in filteredAccounts" :key="account.emailAddress">
-            <md-divider></md-divider>
+          <md-menu-item 
+            v-for="account in filteredAccounts" 
+            :key="account.emailAddress" 
+            @click="selectAccount(account)"
+          >
+            <md-divider/>
             <div>
-              <div class="account-email" v-bind:class="{ 'selected' : account.emailAddress === selectedAccountEmail }">
+              <div 
+                :class="{ 'selected' : account.emailAddress === selectedAccountEmail }" 
+                class="account-email"
+              >
                 {{ account.emailAddress }}
               </div>
-              <div class="account-balance" v-if="account.mdtBalance != undefined">
+              <div 
+                v-if="account.mdtBalance != undefined" 
+                class="account-balance"
+              >
                 {{ `${$t('message.transfer.amountlbl')}: ${formatAmount(account.mdtBalance)}` }} MDT
               </div>
             </div>
-            <div v-if="account.emailAddress === selectedAccountEmail" class="icon-container">
-              <md-icon md-src="/static/icons/done.svg"></md-icon>
+            <div 
+              v-if="account.emailAddress === selectedAccountEmail" 
+              class="icon-container"
+            >
+              <md-icon md-src="/static/icons/done.svg"/>
             </div>
 
           </md-menu-item>
 
           <!-- Other email address. Only show if the props  enableOther is true-->
-          <md-menu-item class="other" v-if="enableOther" @click="selectOther()">
-            <md-divider></md-divider>
+          <md-menu-item 
+            v-if="enableOther" 
+            class="other" 
+            @click="selectOther()"
+          >
+            <md-divider/>
             <div> {{ $t('message.transfer.other_emailaddress') }} </div>
           </md-menu-item>
         </md-menu-content>
@@ -47,8 +96,17 @@
 
     </BaseField>
     <!-- Input field for user after pressed other email -->
-    <BaseField class="other-email" v-if="selectedOther" md-dense md-inline md-clearable>
-      <md-input v-model="otherEmailAddress" :placeholder="$t('message.transfer.enter_emailaddress')"></md-input>
+    <BaseField 
+      v-if="selectedOther" 
+      class="other-email" 
+      md-dense 
+      md-inline 
+      md-clearable
+    >
+      <md-input 
+        v-model="otherEmailAddress" 
+        :placeholder="$t('message.transfer.enter_emailaddress')"
+      />
     </BaseField>
   </div>
 
@@ -59,6 +117,9 @@ import BaseField from '@/components/input/BaseField';
 import { formatAmount } from '@/utils';
 
 export default {
+  components: {
+    BaseField,
+  },
   props: {
     label: {
       default: '',
@@ -70,9 +131,11 @@ export default {
     },
     selectedAccount: {
       type: Object,
+      default: null,
     },
     enableOther: {
       type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -127,22 +190,6 @@ export default {
       return this.accounts;
     },
   },
-  methods: {
-    selectAccount(account) {
-      this.$emit('accountSelected', account);
-      this.selectedOther = false;
-    },
-    selectOther() {
-      this.selectedOther = true;
-    },
-    menuOpened() {
-      this.isMenuOpened = true;
-    },
-    menuClosed() {
-      this.isMenuOpened = false;
-    },
-    formatAmount,
-  },
   created() {
     this.selectedOther = true;
 
@@ -158,8 +205,21 @@ export default {
       });
     }
   },
-  components: {
-    BaseField,
+  methods: {
+    selectAccount(account) {
+      this.$emit('accountSelected', account);
+      this.selectedOther = false;
+    },
+    selectOther() {
+      this.selectedOther = true;
+    },
+    menuOpened() {
+      this.isMenuOpened = true;
+    },
+    menuClosed() {
+      this.isMenuOpened = false;
+    },
+    formatAmount,
   },
 };
 </script>

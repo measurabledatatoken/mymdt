@@ -1,53 +1,70 @@
 <template>
   <div class="transfer-review">
     <div class="review-content">
-      <div class='from-lbl'>{{ $t('message.transfer.fromlbl') }}</div>
-      <div class='from-value'>{{ transferFromAccount.emailAddress }}</div>
-      <div class='to-lbl'>{{ $t('message.transfer.tolbl') }}</div>
-      <div class='to-value'>{{ transferToStr }}</div>
-      <div class='note-lbl'>{{ $t('message.transfer.notelbl') }}</div>
-      <div class='note-value'>{{ transferNote }}</div>
+      <div class="from-lbl">{{ $t('message.transfer.fromlbl') }}</div>
+      <div class="from-value">{{ transferFromAccount.emailAddress }}</div>
+      <div class="to-lbl">{{ $t('message.transfer.tolbl') }}</div>
+      <div class="to-value">{{ transferToStr }}</div>
+      <div class="note-lbl">{{ $t('message.transfer.notelbl') }}</div>
+      <div class="note-value">{{ transferNote }}</div>
 
-      <div v-if="transferType === TransferType.Email" class='amount-container-email'>
-        <md-divider></md-divider>
+      <div 
+        v-if="transferType === TransferType.Email" 
+        class="amount-container-email"
+      >
+        <md-divider/>
         <div class="amount-container">
-          <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
-          <div class='amount-unit'>MDT</div>
-          <div class='amount-value'>{{ formatAmount(transferAmount) }}</div>
+          <div class="amount-lbl">{{ $t('message.transfer.amountlbl') }}</div>
+          <div class="amount-unit">MDT</div>
+          <div class="amount-value">{{ formatAmount(transferAmount) }}</div>
         </div>
       </div>
 
-      <div v-if="transferType === TransferType.EthWallet" class='amount-container-eth'>
+      <div 
+        v-if="transferType === TransferType.EthWallet" 
+        class="amount-container-eth"
+      >
         <div class="amount-container">
-          <div class='amount-lbl'>{{ $t('message.transfer.amountlbl') }}</div>
-          <div class='amount-unit'>MDT</div>
-          <div class='amount-value'>{{ formatAmount(transferAmount) }}</div>
+          <div class="amount-lbl">{{ $t('message.transfer.amountlbl') }}</div>
+          <div class="amount-unit">MDT</div>
+          <div class="amount-value">{{ formatAmount(transferAmount) }}</div>
         </div>
 
         <div class="transaction-fee-container">
           <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
-          <div class='amount-unit'>MDT</div>
+          <div class="amount-unit">MDT</div>
           <div class="transaction-fee-value"> {{ formatAmount(transactionFee) }}</div>
         </div>
 
-        <md-divider></md-divider>
+        <md-divider/>
         <div class="final-amount-container">
           <div class="final-amount-lbl">{{ $t('message.transfer.final_amount') }}</div>
-          <div class='amount-unit'>MDT</div>
-          <div class="final-amount-value" v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }}</div>
+          <div class="amount-unit">MDT</div>
+          <div 
+            :class="{ 'negative': isFinalAmountSmallerThanZero }" 
+            class="final-amount-value"
+          > {{ finalAmountStr }}</div>
         </div>
 
       </div>
     </div>
 
-    <MDTPrimaryButton v-on:click="transferMDT" :bottom="true">
+    <MDTPrimaryButton 
+      :bottom="true" 
+      @click="transferMDT"
+    >
       {{ $t('message.common.transferbtn') }}
     </MDTPrimaryButton>
 
-    <PinCodeInputPopup ref="pinCodeInputPopup" :md-active.sync="showPinCodeInput" :title="$t('message.passcode.pin_popup_title')"
-      :emailAddress="transferFromAccount.emailAddress" @codefilled="onPinCodeFilled" @close-click="showPinCodeInput = false"
-      @fotgot-click="onFotgotClicked">
-    </PinCodeInputPopup>
+    <PinCodeInputPopup 
+      ref="pinCodeInputPopup" 
+      :md-active.sync="showPinCodeInput" 
+      :title="$t('message.passcode.pin_popup_title')"
+      :email-address="transferFromAccount.emailAddress" 
+      @codefilled="onPinCodeFilled" 
+      @close-click="showPinCodeInput = false"
+      @fotgot-click="onFotgotClicked"
+    />
   </div>
 </template>
 
@@ -68,6 +85,10 @@ import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import { formatAmount } from '@/utils';
 
 export default {
+  components: {
+    MDTPrimaryButton,
+    PinCodeInputPopup,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -79,10 +100,6 @@ export default {
       TransferType,
       showPinCodeInput: false,
     };
-  },
-  components: {
-    MDTPrimaryButton,
-    PinCodeInputPopup,
   },
   computed: {
     ...mapState({

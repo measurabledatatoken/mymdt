@@ -1,9 +1,10 @@
 <template>
-  <BasePhoneNumberInputPage v-bind="$attrs"
-                            :title="$t('message.phone.add_phone_title')"
-                            :content="$t('message.phone.add_phone_content')"
-                            @nextClick="onNextClicked">
-  </BasePhoneNumberInputPage>
+  <BasePhoneNumberInputPage 
+    v-bind="$attrs"
+    :title="$t('message.phone.add_phone_title')"
+    :content="$t('message.phone.add_phone_content')"
+    @nextClick="onNextClicked"
+  />
 </template>
 
 <script>
@@ -15,18 +16,19 @@ import BasePage from '@/screens/BasePage';
 import OTPActionType from '@/enum/otpActionType';
 
 export default {
+  components: {
+    BasePhoneNumberInputPage,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.settings.phoneNumber'),
     };
   },
-  components: {
-    BasePhoneNumberInputPage,
-  },
   props: {
     pin: {
       type: String,
+      default: null,
     },
   },
   methods: {

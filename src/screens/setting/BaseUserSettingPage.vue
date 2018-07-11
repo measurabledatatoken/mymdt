@@ -1,9 +1,12 @@
 <template>
-    <BasePageContainer>
-        <UserInfo :user="getSelectedSecurityUser" :showMDT="false" />
-        <md-divider></md-divider>
-        <slot name="content"></slot>
-    </BasePageContainer>
+  <BasePageContainer>
+    <UserInfo 
+      :user="getSelectedSecurityUser" 
+      :show-mdt="false"
+    />
+    <md-divider/>
+    <slot name="content"/>
+  </BasePageContainer>
 </template>
 
 <script>

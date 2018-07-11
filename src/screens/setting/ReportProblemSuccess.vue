@@ -2,7 +2,7 @@
   <div class="view">
     <div class="content">
       <div class="icon">
-        <md-icon md-src="/static/icons/transaction-success.svg"></md-icon>
+        <md-icon md-src="/static/icons/transaction-success.svg"/>
       </div>
       <p class="message">{{ $t('message.reportProblemSuccess.message') }}</p>
     </div>
@@ -15,6 +15,9 @@ import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
 export default {
+  components: {
+    MDTPrimaryButton,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -22,9 +25,6 @@ export default {
     };
   },
   methods: {},
-  components: {
-    MDTPrimaryButton,
-  },
 };
 </script>
 

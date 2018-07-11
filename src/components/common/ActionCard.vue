@@ -1,5 +1,9 @@
 <template>
-  <md-card class="action-card" v-bind="$attrs" v-on="$listeners">
+  <md-card 
+    v-bind="$attrs" 
+    class="action-card" 
+    v-on="$listeners"
+  >
     <md-card-media>
       <img :src="imgSrc">
     </md-card-media>
@@ -8,7 +12,10 @@
     </md-card-header>
 
     <md-card-actions>
-      <md-button :to="to" @click="$listeners.actionClick">{{ actionName }}</md-button>
+      <md-button 
+        :to="to" 
+        @click="$listeners.actionClick"
+      >{{ actionName }}</md-button>
     </md-card-actions>
   </md-card>
 </template>
@@ -26,9 +33,11 @@ export default {
     },
     imgSrc: {
       type: String,
+      default: '',
     },
     to: {
       type: String,
+      default: null,
     },
   },
 };

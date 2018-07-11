@@ -1,12 +1,17 @@
 <template>
   <div class="app-view">
     <div class="header">
-      <div class="header__background"></div>
-      <user-info-card v-on:transfer="goToTransfer()" v-bind:user="selectedUser">
-      </user-info-card>
+      <div class="header__background"/>
+      <user-info-card 
+        :user="selectedUser" 
+        @transfer="goToTransfer()"
+      />
     </div>
-    <transaction-list v-bind:transactions="transactions" />
-    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" :bottom="true">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+    <transaction-list :transactions="transactions" />
+    <MDTPrimaryButton 
+      :to="RouteDef.EarnMDT.path" 
+      :bottom="true"
+    >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -24,16 +29,16 @@ import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
 import { RouteDef } from '@/constants';
 
 export default {
+  components: {
+    UserInfoCard,
+    TransactionList,
+    MDTPrimaryButton,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.account.title'),
     };
-  },
-  components: {
-    UserInfoCard,
-    TransactionList,
-    MDTPrimaryButton,
   },
   data() {
     return {
