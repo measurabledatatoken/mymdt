@@ -1,7 +1,7 @@
 <template>
   <PinCodeEnterBasePage
     :title="$t('message.passcode.create_pin_title')"
-    :buttonText="$t('message.common.nextbtn')"
+    :button-text="$t('message.common.nextbtn')"
     @click="onNextClicked"
   />
 </template>
@@ -12,24 +12,27 @@ import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 
 export default {
+  components: {
+    PinCodeEnterBasePage,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: 'PIN',
     };
   },
-  components: {
-    PinCodeEnterBasePage,
-  },
   props: {
     oldPIN: {
       type: String,
+      default: null,
     },
     verificationCode: {
       type: String,
+      default: null,
     },
     mode: {
       type: String,
+      default: null,
     },
   },
   methods: {

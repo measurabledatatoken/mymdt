@@ -1,49 +1,77 @@
 <template>
   <BaseEarnMDTItem
-    class="earn-mdt-reward-item"
     :title="reward.name"
-    md-src="/static/icons/done.svg"
     v-bind="$attrs"
+    class="earn-mdt-reward-item"
+    md-src="/static/icons/done.svg"
   >
     <template slot="action">
       <div class="earn-mdt-reward-item-action">
         <div class="earn-mdt-reward-item-action__amount-placholder">
           <transition name="earn-mdt-reward-item-action__amount-to-earn">
-            <span v-show="!claimed" class="earn-mdt-reward-item-action__amount-to-earn">{{ amountText }}</span>
+            <span 
+              v-show="!claimed" 
+              class="earn-mdt-reward-item-action__amount-to-earn"
+            >{{ amountText }}</span>
           </transition>
-          <transition name="earn-mdt-reward-item-action__claim-button" v-on:after-leave="afterLeave">
+          <transition 
+            name="earn-mdt-reward-item-action__claim-button" 
+            @after-leave="afterLeave"
+          >
             <MDTSecondaryButton
               v-show="!claimed"
-              @click="handleClickClaimButton"
               ref="claimButton"
+              :style="claimButtonStyle"
               class="earn-mdt-reward-item-action__claim-button"
               color="secondary"
-              :style="claimButtonStyle"
+              @click="handleClickClaimButton"
             >
               {{ buttonText }}
             </MDTSecondaryButton>
           </transition>
           <div class="earn-mdt-reward-item-action__amount-wrapper">
             <transition name="earn-mdt-reward-item-action__amount">
-              <MDTSecondaryButton v-if="showAmount" class="earn-mdt-reward-item-action__amount" disabled>{{ `+${amountText}` }}</MDTSecondaryButton>
+              <MDTSecondaryButton 
+                v-if="showAmount" 
+                class="earn-mdt-reward-item-action__amount" 
+                disabled
+              >{{ `+${amountText}` }}</MDTSecondaryButton>
             </transition>
             <transition name="deco">
-              <span v-if="showAmount" class="deco deco__left deco__left-1"></span>
+              <span 
+                v-if="showAmount" 
+                class="deco deco__left deco__left-1"
+              />
             </transition>
             <transition name="deco">
-              <span v-if="showAmount" class="deco deco__left deco__left-2"></span>
+              <span 
+                v-if="showAmount" 
+                class="deco deco__left deco__left-2"
+              />
             </transition>
             <transition name="deco">
-              <span v-if="showAmount" class="deco deco__left deco__left-3"></span>
+              <span 
+                v-if="showAmount" 
+                class="deco deco__left deco__left-3"
+              />
             </transition>
             <transition name="deco">
-              <span v-if="showAmount" class="deco deco__right deco__right-1"></span>
+              <span 
+                v-if="showAmount" 
+                class="deco deco__right deco__right-1"
+              />
             </transition>
             <transition name="deco">
-              <span v-if="showAmount" class="deco deco__right deco__right-2"></span>
+              <span 
+                v-if="showAmount" 
+                class="deco deco__right deco__right-2"
+              />
             </transition>
             <transition name="deco">
-              <span v-if="showAmount" class="deco deco__right deco__right-3"></span>
+              <span 
+                v-if="showAmount" 
+                class="deco deco__right deco__right-3"
+              />
             </transition>
           </div>
         </div>
@@ -61,9 +89,19 @@ import { CLAIM_REWARD } from '@/store/modules/entities/rewards';
 import { formatAmount } from '@/utils';
 
 export default {
+  components: {
+    BaseEarnMDTItem,
+    MDTSecondaryButton,
+  },
   props: {
-    reward: Object,
-    userId: String,
+    reward: {
+      type: Object,
+      default: null,
+    },
+    userId: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -83,20 +121,6 @@ export default {
       return `${formatAmount(this.reward.value, { type: 'short' })} ${
         this.reward.currency
       }`;
-    },
-  },
-  methods: {
-    ...mapActions({
-      claimReward: CLAIM_REWARD,
-    }),
-    handleClickClaimButton() {
-      this.claimReward({
-        rewardId: this.reward.id,
-        userId: this.userId,
-      });
-    },
-    afterLeave() {
-      this.showAmount = true;
     },
   },
   created() {
@@ -122,9 +146,19 @@ export default {
     //   width: `${this.$refs.claimButton.$el.clientWidth + marginHorizontal}px`,
     // };
   },
-  components: {
-    BaseEarnMDTItem,
-    MDTSecondaryButton,
+  methods: {
+    ...mapActions({
+      claimReward: CLAIM_REWARD,
+    }),
+    handleClickClaimButton() {
+      this.claimReward({
+        rewardId: this.reward.id,
+        userId: this.userId,
+      });
+    },
+    afterLeave() {
+      this.showAmount = true;
+    },
   },
 };
 </script>

@@ -1,14 +1,17 @@
 <template>
-  <form class="beta-testing-form" @submit.prevent="handleSubmit">
+  <form 
+    class="beta-testing-form" 
+    @submit.prevent="handleSubmit"
+  >
     <div :class="['beta-testing-form__wrapper', { 'beta-testing-form__wrapper--active': showScreen }]">
       <div class="beta-testing-form__content">
         <h1>{{ $t('message.betaTesting.title') }}</h1>
         <p>{{ $t('message.betaTesting.description') }}</p>
         <BaseField :error="accessCodeError">
           <md-input
-            class="beta-testing-form__content-input"
             :placeholder="$t('message.betaTesting.accessCode')"
             :value="$v.accessCode.$model"
+            class="beta-testing-form__content-input"
             @input="handleInput($event)"
           />
         </BaseField>
@@ -49,6 +52,11 @@ import { RouteDef } from '@/constants';
 const checked = value => !helpers.req(value) || value === true;
 
 export default {
+  components: {
+    MDTPrimaryButton,
+    Checkbox,
+    BaseField,
+  },
   data() {
     return {
       accessCode: '',
@@ -64,11 +72,6 @@ export default {
     agree: {
       checked,
     },
-  },
-  components: {
-    MDTPrimaryButton,
-    Checkbox,
-    BaseField,
   },
   computed: {
     ...mapState({

@@ -1,7 +1,7 @@
 
 <template>
   <div class="basepage">
-    <slot></slot>
+    <slot/>
   </div>
 </template>
 

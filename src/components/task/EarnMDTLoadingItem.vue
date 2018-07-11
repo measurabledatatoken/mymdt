@@ -4,7 +4,10 @@
   >
     <Skeleton width="80%" />
     <Skeleton width="50%" />
-    <Skeleton class="earn-mdt-loading-item__button" width="60px" />
+    <Skeleton 
+      class="earn-mdt-loading-item__button" 
+      width="60px"
+    />
   </md-list-item>
 </template>
 

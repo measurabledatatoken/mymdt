@@ -1,11 +1,18 @@
 <template>
-  <div class="mdt-amount" :disabled="disabled">
+  <div 
+    :disabled="disabled" 
+    class="mdt-amount"
+  >
     <div>{{ amountText }}</div>
-    <transition :name="transitionName"
-                v-on:after-enter="afterEnter"
-                class="abc">
-      <div v-if="amountDelta"
-           class="mdt-amount-delta">{{ amountDeltaText }}</div>
+    <transition 
+      :name="transitionName"
+      class="abc"
+      @after-enter="afterEnter"
+    >
+      <div 
+        v-if="amountDelta"
+        class="mdt-amount-delta"
+      >{{ amountDeltaText }}</div>
     </transition>
   </div>
 </template>
@@ -14,19 +21,21 @@
 import { formatAmount } from '@/utils';
 
 export default {
+  props: {
+    amount: {
+      type: Number,
+      default: null,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       animating: false,
       amountDelta: 0,
     };
-  },
-  props: {
-    amount: {
-      type: Number,
-    },
-    disabled: {
-      type: Boolean,
-    },
   },
   computed: {
     amountText() {

@@ -1,39 +1,52 @@
 <template>
-  <div v-if="active"
-       class="home-tutorial">
-    <swiper :options="swiperOption"
-            ref="mySwiper">
+  <div 
+    v-if="active"
+    class="home-tutorial"
+  >
+    <swiper 
+      ref="mySwiper"
+      :options="swiperOption"
+    >
 
       <!-- slides -->
       <swiper-slide>
-        <TutorialItem imgSrc="/static/icons/tutorial-1.svg"
-                      :title="$t('message.tutorial.slide_1_title')"
-                      :description="$t('message.tutorial.slide_1_description')"
-                      @click="onStartClicked" />
+        <TutorialItem 
+          :title="$t('message.tutorial.slide_1_title')"
+          :description="$t('message.tutorial.slide_1_description')"
+          img-src="/static/icons/tutorial-1.svg"
+          @click="onStartClicked"
+        />
       </swiper-slide>
       <swiper-slide>
-        <TutorialItem imgSrc="/static/icons/tutorial-2.svg"
-                      :title="$t('message.tutorial.slide_2_title')"
-                      :description="$t('message.tutorial.slide_2_description')"
-                      @click="onStartClicked" />
+        <TutorialItem 
+          :title="$t('message.tutorial.slide_2_title')"
+          :description="$t('message.tutorial.slide_2_description')"
+          img-src="/static/icons/tutorial-2.svg"
+          @click="onStartClicked"
+        />
       </swiper-slide>
       <swiper-slide>
-        <TutorialItem imgSrc="/static/icons/tutorial-3.svg"
-                      :title="$t('message.tutorial.slide_3_title')"
-                      :description="$t('message.tutorial.slide_3_description')"
-                      @click="onStartClicked" />
+        <TutorialItem 
+          :title="$t('message.tutorial.slide_3_title')"
+          :description="$t('message.tutorial.slide_3_description')"
+          img-src="/static/icons/tutorial-3.svg"
+          @click="onStartClicked"
+        />
       </swiper-slide>
       <swiper-slide>
-        <TutorialItem imgSrc="/static/icons/tutorial-4.svg"
-                      :title="$t('message.tutorial.slide_4_title')"
-                      :description="$t('message.tutorial.slide_4_description')"
-                      :isFinalPage="true"
-                      @click="onStartClicked" />
+        <TutorialItem 
+          :title="$t('message.tutorial.slide_4_title')"
+          :description="$t('message.tutorial.slide_4_description')"
+          :is-final-page="true"
+          img-src="/static/icons/tutorial-4.svg"
+          @click="onStartClicked"
+        />
       </swiper-slide>
 
-      <div class="swiper-pagination"
-           slot="pagination">
-      </div>
+      <div 
+        slot="pagination"
+        class="swiper-pagination"
+      />
     </swiper>
   </div>
 </template>
@@ -45,17 +58,18 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
-  props: {
-    active: {
-      type: Boolean,
-    },
-  },
   components: {
     swiper,
     swiperSlide,
     TutorialItem,
     MDTPrimaryButton,
     MDTSubtleButton,
+  },
+  props: {
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {

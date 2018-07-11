@@ -1,16 +1,19 @@
 <template>
   <div>
-    <BasePhoneNumberVerifyPage :title="$t('message.phone.verify_newphone_title')"
-                               v-bind="$attrs"
-                               @editClick="onEditClicked"
-                               @doneClick="onDoneClicked"></BasePhoneNumberVerifyPage>
+    <BasePhoneNumberVerifyPage 
+      :title="$t('message.phone.verify_newphone_title')"
+      v-bind="$attrs"
+      @editClick="onEditClicked"
+      @doneClick="onDoneClicked"
+    />
 
-    <SuccessPopup :title="$t('message.phone.phone_update_success')"
-                  :md-active.sync="showPhoneSetupSuccessPopup"
-                  iconSrc="/static/icons/guarded.svg"
-                  :confirmText="$t('message.common.done')"
-                  @md-confirm="onPopupDoneClicked">
-    </SuccessPopup>
+    <SuccessPopup 
+      :title="$t('message.phone.phone_update_success')"
+      :md-active.sync="showPhoneSetupSuccessPopup"
+      :confirm-text="$t('message.common.done')"
+      icon-src="/static/icons/guarded.svg"
+      @md-confirm="onPopupDoneClicked"
+    />
   </div>
 </template>
 
@@ -31,9 +34,11 @@ export default {
   props: {
     pin: {
       type: String,
+      default: null,
     },
     verificationCode: {
       type: String,
+      default: null,
     },
   },
   data() {

@@ -1,12 +1,21 @@
 <template>
-  <md-button :class="['md-raised', 'secondary-button', { 'secondary-button__color--secondary': color === 'secondary' }]" v-bind="$attrs" v-on="$listeners">
-    <slot></slot>
+  <md-button 
+    :class="['md-raised', 'secondary-button', { 'secondary-button__color--secondary': color === 'secondary' }]" 
+    v-bind="$attrs" 
+    v-on="$listeners"
+  >
+    <slot/>
   </md-button>
 </template>
 
 <script>
 export default {
-  props: ['color'],
+  props: {
+    color: {
+      type: String,
+      default: '',
+    },
+  },
 };
 </script>
 

@@ -1,5 +1,8 @@
 <template>
-    <md-dialog-confirm v-bind="$attrs" v-on="$listeners" />
+  <md-dialog-confirm 
+    v-bind="$attrs" 
+    v-on="$listeners"
+  />
 </template>
 
 <script>

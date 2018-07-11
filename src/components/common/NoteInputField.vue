@@ -2,13 +2,12 @@
   <BaseField :label="$t('message.transfer.notelbl')">
     <md-textarea
       :placeholder="$t('message.transfer.note_placeholder',{num: maxNum})"
-      v-on:change="valueChanged($event.target.value)"
       :value="note"
-      md-autogrow
       :md-counter="maxNum"
       :maxlength="maxNum"
-    >
-    </md-textarea>
+      md-autogrow
+      @change="valueChanged($event.target.value)"
+    />
   </BaseField>
 </template>
 
@@ -16,8 +15,14 @@
 import BaseField from '@/components/input/BaseField';
 
 export default {
+  components: {
+    BaseField,
+  },
   props: {
-    note: String,
+    note: {
+      type: String,
+      default: null,
+    },
     maxNum: {
       default: 140,
       type: Number,
@@ -27,9 +32,6 @@ export default {
     valueChanged(value) {
       this.$emit('infoEntered', value);
     },
-  },
-  components: {
-    BaseField,
   },
 };
 </script>

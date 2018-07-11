@@ -3,14 +3,18 @@
     <PinCodeEnterBasePage
       ref="pinCodeBasePage"
       :title="$t('message.passcode.reenter_pin_title')"
-      :buttonText="$t('message.common.nextbtn')"
-      :correctPinCode="setupedPin"
+      :button-text="$t('message.common.nextbtn')"
+      :correct-pin-code="setupedPin"
       @click="onDoneClicked"
     />
 
-    <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :md-active.sync="showPinSetupSuccessPopup"
-      iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
-    </SuccessPopup>
+    <SuccessPopup 
+      :title="$t('message.passcode.pin_setup_successfully')" 
+      :md-active.sync="showPinSetupSuccessPopup"
+      :confirm-text="$t('message.common.done')" 
+      icon-src="/static/icons/guarded.svg" 
+      @md-confirm="onPopupDoneClicked"
+    />
   </div>
 </template>
 
@@ -30,26 +34,29 @@ import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
+  components: {
+    PinCodeEnterBasePage,
+    SuccessPopup,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: 'PIN',
     };
   },
-  components: {
-    PinCodeEnterBasePage,
-    SuccessPopup,
-  },
   props: {
     // pin enter in the setup pin page
     oldPIN: {
       type: String,
+      default: null,
     },
     verificationCode: {
       type: String,
+      default: null,
     },
     mode: {
       type: String,
+      required: true,
       validator(value) {
         return (
           [SetupPINMode.SETUP, SetupPINMode.RESET, SetupPINMode.CHANGE].indexOf(
@@ -60,6 +67,7 @@ export default {
     },
     setupedPin: {
       type: String,
+      default: null,
     },
   },
   data() {

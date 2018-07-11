@@ -7,8 +7,8 @@
       <div class="content">
         <slot name="content" />
       </div>
-      <slot name="action-area"></slot>
-      <slot name="buttons"></slot>
+      <slot name="action-area"/>
+      <slot name="buttons"/>
     </template>
   </BaseUserSettingPage>
 </template>

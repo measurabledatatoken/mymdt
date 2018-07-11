@@ -1,22 +1,24 @@
 <template>
   <div>
     <template v-if="transferType === TransferType.Email">
-      <md-icon md-src="/static/icons/transaction-success.svg"></md-icon>
+      <md-icon md-src="/static/icons/transaction-success.svg"/>
       <div class="message">
-        {{ $t('message.transfer.successdetail_email', { 'finalAmount': formatAmount(finalAmount) })}}
+        {{ $t('message.transfer.successdetail_email', { 'finalAmount': formatAmount(finalAmount) }) }}
       </div>
 
     </template>
     <template v-else>
-      <md-icon md-src="/static/icons/transaction-pending.svg"></md-icon>
+      <md-icon md-src="/static/icons/transaction-pending.svg"/>
       <div class="message">
         {{ $t('message.transfer.successdetail_ethwallet') }}
       </div>
     </template>
 
-    <MDTPrimaryButton @click="onDoneClick"
-                      :bottom="true">{{ $t('message.common.done') }}</MDTPrimaryButton>
-    <MDTSubtleButton :to="Route"></MDTSubtleButton>
+    <MDTPrimaryButton 
+      :bottom="true"
+      @click="onDoneClick"
+    >{{ $t('message.common.done') }}</MDTPrimaryButton>
+    <MDTSubtleButton :to="Route"/>
   </div>
 </template>
 
@@ -36,28 +38,32 @@ import { BACK_TO_HOME } from '@/store/modules/common';
 import { formatAmount } from '@/utils';
 
 export default {
+  components: {
+    MDTPrimaryButton,
+    MDTSubtleButton,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.transfer.successtitle'),
     };
   },
-  components: {
-    MDTPrimaryButton,
-    MDTSubtleButton,
-  },
   props: {
     finalAmount: {
       type: Number,
+      default: null,
     },
     fee: {
       type: Number,
+      default: null,
     },
     totalAmount: {
       type: Number,
+      default: null,
     },
     transferType: {
       type: String,
+      required: true,
       validator(value) {
         return (
           [TransferType.EthWallet, TransferType.Email].indexOf(value) !== -1

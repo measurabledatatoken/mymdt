@@ -1,11 +1,21 @@
 <template>
-<SmartCaptcha class="captcha" appkey="FFFF0N0000000000643E" scene="ic_other_h5" v-bind="$attrs" v-on="$listeners" :option="captchaOption"></SmartCaptcha>
+  <SmartCaptcha 
+    v-bind="$attrs" 
+    :option="captchaOption" 
+    class="captcha" 
+    appkey="FFFF0N0000000000643E" 
+    scene="ic_other_h5" 
+    v-on="$listeners"
+  />
 </template>
 
 <script>
 import SmartCaptcha from '@/components/input/SmartCaptcha';
 
 export default {
+  components: {
+    SmartCaptcha,
+  },
   computed: {
     captchaOption() {
       return {
@@ -28,9 +38,6 @@ export default {
         nc_errorNetwork: this.$t('message.recaptcha.nc_errorNetwork'),
       };
     },
-  },
-  components: {
-    SmartCaptcha,
   },
 };
 </script>

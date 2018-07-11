@@ -2,23 +2,42 @@
   <div class="appcontainer">
     <header class="header">
       <transition :name=" 'header-' + transitionName">
-        <HomeHeader v-if="showHomeHeader && !showCustomHeader" class="header-view" @tutorialClick="onTutorialClicked"></HomeHeader>
-        <NavigationHeader v-if="!showHomeHeader && !showCustomHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
-        <router-view class="view two" name="header" v-if="showCustomHeader"></router-view>
+        <HomeHeader 
+          v-if="showHomeHeader && !showCustomHeader" 
+          class="header-view" 
+          @tutorialClick="onTutorialClicked"
+        />
+        <NavigationHeader 
+          v-if="!showHomeHeader && !showCustomHeader" 
+          :title="navigationTitle" 
+          class="header-view"
+        />
+        <router-view 
+          v-if="showCustomHeader" 
+          class="view two" 
+          name="header"
+        />
       </transition>
     </header>
     <main class="content">
       <transition :name="'content-' + transitionName">
-        <router-view class="content-router-view"></router-view>
+        <router-view class="content-router-view"/>
       </transition>
     </main>
 
-    <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
-      :md-confirm-text="$t('message.common.okay')" />
+    <md-dialog-alert 
+      :md-active.sync="showErrorPrompt" 
+      :md-title="errorTitle" 
+      :md-content="errorMessage"
+      :md-confirm-text="$t('message.common.okay')"
+    />
 
-    <LoadingPopup v-if="isLoading" src="/static/threedotsloader.gif" />
+    <LoadingPopup 
+      v-if="isLoading" 
+      src="/static/threedotsloader.gif"
+    />
 
-    <HomeTutorial :active.sync="showTutorial"></HomeTutorial>
+    <HomeTutorial :active.sync="showTutorial"/>
   </div>
 </template>
 

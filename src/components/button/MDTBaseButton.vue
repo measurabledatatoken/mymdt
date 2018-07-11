@@ -1,7 +1,10 @@
 <template>
-    <md-button v-bind="$attrs" @click="$emit('click')">
-        <slot></slot>
-    </md-button>
+  <md-button 
+    v-bind="$attrs" 
+    @click="$emit('click')"
+  >
+    <slot/>
+  </md-button>
 </template>
 
 <style lang="scss" scoped>

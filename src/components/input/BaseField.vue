@@ -1,9 +1,18 @@
 <template>
   <div class="base-field">
-    <div class="label" v-if="!!label">{{ label }}</div>
-    <md-field :class="{ 'md-invalid': !!error}" v-bind="$attrs">
+    <div 
+      v-if="!!label" 
+      class="label"
+    >{{ label }}</div>
+    <md-field 
+      :class="{ 'md-invalid': !!error}" 
+      v-bind="$attrs"
+    >
       <slot />
-      <span class="md-error" v-if="!!error">{{ error }}</span>
+      <span 
+        v-if="!!error" 
+        class="md-error"
+      >{{ error }}</span>
     </md-field>
   </div>
 
@@ -11,7 +20,16 @@
 
 <script>
 export default {
-  props: ['label', 'error'],
+  props: {
+    label: {
+      type: String,
+      default: null,
+    },
+    error: {
+      type: [String, Boolean],
+      default: null,
+    },
+  },
 };
 </script>
 

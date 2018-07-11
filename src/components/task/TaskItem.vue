@@ -1,10 +1,10 @@
 <template>
   <BaseEarnMDTItem
-    class="earn-mdt-task-item"
     :title="task.name"
     :description="description"
-    md-src="/static/icons/get-mdt.svg"
     v-bind="$attrs"
+    class="earn-mdt-task-item"
+    md-src="/static/icons/get-mdt.svg"
   >
     <template slot="action">
       <div class="earn-mdt-task-item__action">
@@ -27,9 +27,19 @@ import BaseEarnMDTItem from '@/components/task/BaseEarnMDTItem';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 
 export default {
+  components: {
+    BaseEarnMDTItem,
+    MDTSecondaryButton,
+  },
   props: {
-    task: Object,
-    user: Object,
+    task: {
+      type: Object,
+      default: null,
+    },
+    user: {
+      type: Object,
+      default: null,
+    },
   },
   computed: {
     isExternalUrl() {
@@ -63,10 +73,6 @@ export default {
 
       return amount;
     },
-  },
-  components: {
-    BaseEarnMDTItem,
-    MDTSecondaryButton,
   },
 };
 </script>

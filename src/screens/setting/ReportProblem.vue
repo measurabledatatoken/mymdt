@@ -1,12 +1,18 @@
 <template>
-  <form class="form" @submit.prevent="handleSubmit">
-    <p class="description">{{ $t('message.reportProblem.description')}}</p>
+  <form 
+    class="form" 
+    @submit.prevent="handleSubmit"
+  >
+    <p class="description">{{ $t('message.reportProblem.description') }}</p>
     <BaseField
       :label="$t('message.reportProblem.emailAddress')"
       :error="$v.email.$error && $t('message.reportProblem.pleaseInputValidEmailAddress')"
       md-clearable
     >
-      <md-input :placeholder="$t('message.reportProblem.optional')" v-model="$v.email.$model"></md-input>
+      <md-input 
+        :placeholder="$t('message.reportProblem.optional')" 
+        v-model="$v.email.$model"
+      />
     </BaseField>
     <BaseField
       :label="$t('message.reportProblem.comments')"
@@ -14,17 +20,19 @@
       md-clearable
     >
       <md-textarea
-        md-autogrow
         :placeholder="$t('message.reportProblem.upTo500Characters')"
         :md-counter="500"
         :maxlength="500"
         v-model="$v.comments.$model"
-      >
-      </md-textarea>
+        md-autogrow
+      />
     </BaseField>
 
-    <MDTSmartCaptcha @callback="handleRecaptchaVerify"></MDTSmartCaptcha>
-    <MDTPrimaryButton type="submit" :disabled="!$v.isVerified.$dirty || !$v.comments.$dirty || $v.$anyError">{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
+    <MDTSmartCaptcha @callback="handleRecaptchaVerify"/>
+    <MDTPrimaryButton 
+      :disabled="!$v.isVerified.$dirty || !$v.comments.$dirty || $v.$anyError" 
+      type="submit"
+    >{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
   </form>
 </template>
 
@@ -41,6 +49,12 @@ import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
 const checked = value => !helpers.req(value) || value === true;
 
 export default {
+  components: {
+    BaseField,
+    Recaptcha,
+    MDTPrimaryButton,
+    MDTSmartCaptcha,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -64,12 +78,6 @@ export default {
     isVerified: {
       checked,
     },
-  },
-  components: {
-    BaseField,
-    Recaptcha,
-    MDTPrimaryButton,
-    MDTSmartCaptcha,
   },
   methods: {
     handleRecaptchaVerify() {

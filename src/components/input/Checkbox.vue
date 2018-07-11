@@ -1,21 +1,31 @@
 <template>
-    <label class="mdt-checkbox">
-      <input type="checkbox" :value="value" @change="$emit('input', $event.target.checked)" />
-      <span class="mdt-checkbox__checkmark"></span>
-      <div class="mdt-checkbox__title">{{ title }}</div>
-    </label>
+  <label class="mdt-checkbox">
+    <input 
+      :value="value" 
+      type="checkbox" 
+      @change="$emit('input', $event.target.checked)"
+    >
+    <span class="mdt-checkbox__checkmark"/>
+    <div class="mdt-checkbox__title">{{ title }}</div>
+  </label>
 </template>
 
 <script>
 import BaseField from '@/components/input/BaseField';
 
 export default {
-  props: {
-    title: String,
-    value: Boolean,
-  },
   components: {
     BaseField,
+  },
+  props: {
+    title: {
+      type: String,
+      default: null,
+    },
+    value: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>

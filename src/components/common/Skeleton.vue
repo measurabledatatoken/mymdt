@@ -1,6 +1,9 @@
 <template>
-  <div :style="{ width, height }" class="content-placeholder-text">
-    <div class="content-placeholder__background"></div>
+  <div 
+    :style="{ width, height }" 
+    class="content-placeholder-text"
+  >
+    <div class="content-placeholder__background"/>
   </div>
 </template>
 

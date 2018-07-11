@@ -1,33 +1,69 @@
 <template>
   <div class="phone-input">
-    <md-menu class="country-code-selector" md-size="auto" mdFullWidth mdCloseOnSelect mdAlignTrigger v-on:md-opened="menuOpened"
-      v-on:md-closed="menuClosed">
-      <md-field md-inline md-menu-trigger v-bind:class="{ 'open': isMenuOpened }">
-        <label class="label">{{ $t('message.phone.country_code_placeholder')}}</label>
-        <md-input ref="countryCodeInput" v-model="countryCodeSearchText"></md-input>
-        <md-icon v-show="!isMenuOpened" md-src="/static/icons/keyboard_arrow_down.svg">
-        </md-icon>
-        <md-icon v-show="isMenuOpened" md-src="/static/icons/keyboard_arrow_up.svg">
-        </md-icon>
+    <md-menu 
+      class="country-code-selector" 
+      md-size="auto" 
+      md-full-width 
+      md-close-on-select 
+      md-align-trigger 
+      @md-opened="menuOpened"
+      @md-closed="menuClosed"
+    >
+      <md-field 
+        :class="{ 'open': isMenuOpened }" 
+        md-inline 
+        md-menu-trigger
+      >
+        <label class="label">{{ $t('message.phone.country_code_placeholder') }}</label>
+        <md-input 
+          ref="countryCodeInput" 
+          v-model="countryCodeSearchText"
+        />
+        <md-icon 
+          v-show="!isMenuOpened" 
+          md-src="/static/icons/keyboard_arrow_down.svg"
+        />
+        <md-icon 
+          v-show="isMenuOpened" 
+          md-src="/static/icons/keyboard_arrow_up.svg"
+        />
       </md-field>
 
       <md-menu-content>
-        <md-menu-item @click="selectCountryCode(countryCodeItem)" v-for="countryCodeItem in filteredCountryCodeList"
-          :key="countryCodeItem.code">
-          <div class="country-code">{{countryCodeItem.code}}</div>
-          <div class="dial-code">{{countryCodeItem.dial_code}}</div>
+        <md-menu-item 
+          v-for="countryCodeItem in filteredCountryCodeList" 
+          :key="countryCodeItem.code"
+          @click="selectCountryCode(countryCodeItem)"
+        >
+          <div class="country-code">{{ countryCodeItem.code }}</div>
+          <div class="dial-code">{{ countryCodeItem.dial_code }}</div>
           <div class="icon-container">
-            <md-icon v-if="countryCodeItem.dial_code === countryDialCode" class="done" md-src="/static/icons/done.svg"></md-icon>
+            <md-icon 
+              v-if="countryCodeItem.dial_code === countryDialCode" 
+              class="done" 
+              md-src="/static/icons/done.svg"
+            />
           </div>
-          <md-divider></md-divider>
+          <md-divider/>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
 
-    <md-field class="phone-number-input" md-inline>
-      <label>{{ $t('message.phone.phone_number_placeholder')}}</label>
-      <md-input type="number" pattern="\d*" v-model="phoneNumber" v-on:input="phoneNumberEntered"></md-input>
-      <span v-if="isFullPhoneNumberEntered && !isFullPhoneNumberValid" class="md-helper-text">{{ $t('message.phone.invalid_phonenumber') }}</span>
+    <md-field 
+      class="phone-number-input" 
+      md-inline
+    >
+      <label>{{ $t('message.phone.phone_number_placeholder') }}</label>
+      <md-input 
+        v-model="phoneNumber" 
+        type="number" 
+        pattern="\d*" 
+        @input="phoneNumberEntered"
+      />
+      <span 
+        v-if="isFullPhoneNumberEntered && !isFullPhoneNumberValid" 
+        class="md-helper-text"
+      >{{ $t('message.phone.invalid_phonenumber') }}</span>
     </md-field>
   </div>
 </template>

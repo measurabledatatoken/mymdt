@@ -9,7 +9,10 @@ import { transactionType } from '@/enum';
 
 export default {
   props: {
-    transaction: Object,
+    transaction: {
+      type: Object,
+      default: null,
+    },
   },
   computed: {
     title() {
