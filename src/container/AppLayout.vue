@@ -2,9 +2,15 @@
   <div class="appcontainer">
     <header class="header">
       <transition :name=" 'header-' + transitionName">
-        <HomeHeader v-if="showHomeHeader && !showCustomHeader" class="header-view" @tutorialClick="onTutorialClicked"></HomeHeader>
-        <NavigationHeader v-if="!showHomeHeader && !showCustomHeader" :title="navigationTitle" class="header-view"> </NavigationHeader>
-        <router-view class="view two" name="header" v-if="showCustomHeader"></router-view>
+        <HomeHeader v-if="showHomeHeader && !showCustomHeader"
+                    class="header-view"
+                    @tutorialClick="onTutorialClicked"></HomeHeader>
+        <NavigationHeader v-if="!showHomeHeader && !showCustomHeader"
+                          :title="navigationTitle"
+                          class="header-view"> </NavigationHeader>
+        <router-view class="view two"
+                     name="header"
+                     v-if="showCustomHeader"></router-view>
       </transition>
     </header>
     <main class="content">
@@ -13,10 +19,13 @@
       </transition>
     </main>
 
-    <md-dialog-alert :md-active.sync="showErrorPrompt" :md-title="errorTitle" :md-content="errorMessage"
-      :md-confirm-text="$t('message.common.okay')" />
+    <md-dialog-alert :md-active.sync="showErrorPrompt"
+                     :md-title="errorTitle"
+                     :md-content="errorMessage"
+                     :md-confirm-text="$t('message.common.okay')" />
 
-    <LoadingPopup v-if="isLoading" src="/static/threedotsloader.gif" />
+    <LoadingPopup v-if="isLoading"
+                  src="/static/threedotsloader.gif" />
 
     <HomeTutorial :active.sync="showTutorial"></HomeTutorial>
   </div>
@@ -172,19 +181,21 @@ export default {
 }
 
 .header {
-  position: sticky;
+  position: absolute;
   top: 0;
-  z-index: 3;
+  z-index: 10;
   height: $header-height;
   background: $home-bgcolor;
+  width: 100%;
 }
 
 .header-view {
-  width: 100%;
   height: $header-height;
 }
 
 .content {
+  width: 100%;
+  margin-top: $header-height;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -266,8 +277,8 @@ export default {
 }
 
 .home-tutorial {
-   position: absolute;
-   z-index: 10;
+  position: absolute;
+  z-index: 10;
 }
 </style>
 
