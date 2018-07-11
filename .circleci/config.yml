@@ -23,7 +23,7 @@ jobs:
 
       - run:
           name: Run unit tests
-          command: npm run unit
+          command: npm run test:unit
 
   build-and-publish-images:
     docker:
