@@ -1,18 +1,24 @@
 <template>
   <div class="home">
     <h1>Forget Password</h1>
-    <input v-model="emailAddress" placeholder="Email Address">
-    <button v-on:click="confirmForgetPassword">Confirm</button>
+    <input 
+      v-model="emailAddress" 
+      placeholder="Email Address"
+    >
+    <button @click="confirmForgetPassword">Confirm</button>
     <p>{{
       errorMessage
-      }}</p>
+    }}</p>
   </div>
 </template>
 
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { SET_FORGET_SUCCESS, REQUEST_FORGET_PASSWORD } from '@/store/modules/forgetpassword';
+import {
+  SET_FORGET_SUCCESS,
+  REQUEST_FORGET_PASSWORD,
+} from '@/store/modules/forgetpassword';
 import BasePage from '@/screens/BasePage';
 
 export default {
@@ -22,15 +28,6 @@ export default {
       emailAddress: '',
       lastEmailAddress: '',
     };
-  },
-  watch: {
-    emailChanged(newEmailAddress, oldEmailAddress) {
-      // TODO: Do real time validation
-      this.setForgetSuccess(null);
-      console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
-    },
-  },
-  created() {
   },
   computed: {
     ...mapState({
@@ -42,9 +39,18 @@ export default {
       }
 
       if (this.forgetSuccess) {
-        return `success, please check the email associated with ${this.lastEmailAddress}`;
+        return `success, please check the email associated with ${
+          this.lastEmailAddress
+        }`;
       }
       return 'failed, please try again';
+    },
+  },
+  watch: {
+    emailChanged(newEmailAddress, oldEmailAddress) {
+      // TODO: Do real time validation
+      this.setForgetSuccess(null);
+      console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
     },
   },
   methods: {
@@ -64,5 +70,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

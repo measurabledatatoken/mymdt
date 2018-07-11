@@ -1,13 +1,30 @@
 <template>
-  <md-list-item :class="{ 'list-item--selected': selected }" v-bind="$attrs" @click="$emit('click')">
+  <md-list-item 
+    :class="{ 'list-item--selected': selected }" 
+    v-bind="$attrs" 
+    @click="$emit('click')"
+  >
     <span class="md-list-item-text">{{ title }}</span>
-    <md-icon v-if="selected" class="action-icon" md-src="/static/icons/done.svg" />
+    <md-icon 
+      v-if="selected" 
+      class="action-icon" 
+      md-src="/static/icons/done.svg"
+    />
   </md-list-item>
 </template>
 
 <script>
 export default {
-  props: ['title', 'selected'],
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
+    selected: {
+      type: Boolean,
+      default: false,
+    },
+  },
 };
 </script>
 

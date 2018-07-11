@@ -1,7 +1,11 @@
 <template>
-    <MDTBaseButton v-bind="$attrs" v-on="$listeners" class="subtle">
-        <slot></slot>
-    </MDTBaseButton>
+  <MDTBaseButton 
+    v-bind="$attrs" 
+    class="subtle" 
+    v-on="$listeners"
+  >
+    <slot/>
+  </MDTBaseButton>
 </template>
 
 <script>
@@ -21,8 +25,7 @@ export default {
   text-transform: none;
 
   /deep/ .md-ripple {
-      padding: 0px;
-
+    padding: 0px;
   }
 
   &[disabled] {
@@ -31,4 +34,3 @@ export default {
   }
 }
 </style>
-

@@ -10,18 +10,25 @@
             {{ $t('message.qrcode.my_photo_library') }}
           </label>
         </div>
-        <input v-on:change="onFileSelected($event)" id="photolibbtn" type="file">
+        <input 
+          id="photolibbtn" 
+          type="file" 
+          @change="onFileSelected($event)"
+        >
 
       </div>
       <div class="overlay-border">
-        <div class="frame topleft"></div>
-        <div class="frame topright"></div>
-        <div class="frame bottomleft"></div>
-        <div class="frame bottomright"></div>
+        <div class="frame topleft"/>
+        <div class="frame topright"/>
+        <div class="frame bottomleft"/>
+        <div class="frame bottomright"/>
       </div>
 
-      <qrcode-reader class="reader" @decode="onDecode" :video-constraints="videoConstraints">
-      </qrcode-reader>
+      <qrcode-reader 
+        :video-constraints="videoConstraints" 
+        class="reader" 
+        @decode="onDecode"
+      />
     </div>
   </div>
 </template>
@@ -29,12 +36,22 @@
 <script>
 import { mapMutations } from 'vuex';
 import { SET_ETHADDRESS_SCANNED } from '@/store/modules/qrcode';
-import { SET_ERROR_MESSAGE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
-import { QrcodeReader, scanImageData, imageDataFromFile } from 'vue-qrcode-reader';
+import {
+  SET_ERROR_MESSAGE,
+  SET_SHOW_ERROR_PROMPT,
+} from '@/store/modules/common';
+import {
+  QrcodeReader,
+  scanImageData,
+  imageDataFromFile,
+} from 'vue-qrcode-reader';
 import { getEthAddressFromString } from '@/utils';
 import BasePage from '@/screens/BasePage';
 
 export default {
+  components: {
+    QrcodeReader,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -50,9 +67,6 @@ export default {
         },
       },
     };
-  },
-  components: {
-    QrcodeReader,
   },
   mounted() {
     this.setEthAddressScanned(null);
@@ -75,7 +89,7 @@ export default {
     },
     onFileSelected(event) {
       const imgFile = event.target.files[0];
-      imageDataFromFile(imgFile).then((imageData) => {
+      imageDataFromFile(imgFile).then(imageData => {
         const result = scanImageData(imageData);
         const ethAddress = getEthAddressFromString(result.data);
 
@@ -137,7 +151,7 @@ $clip_bottom: 65%;
     width: 100%;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     display: none;
   }
 }
@@ -195,5 +209,4 @@ $clip_bottom: 65%;
     height: 100% !important;
   }
 }
-
 </style>

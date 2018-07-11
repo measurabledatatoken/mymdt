@@ -1,48 +1,60 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="setTransferAmount"
-                   v-on:amountInvalid="transferAmountInvalid"
-                   :amount="transferAmount"
-                   :max-amount="transferFromAccount.mdtBalance"></MDTInputField>
+    <MDTInputField 
+      :amount="transferAmount"
+      :max-amount="transferFromAccount.mdtBalance"
+      @amountEntered="setTransferAmount"
+      @amountInvalid="transferAmountInvalid"
+    />
     <div class="transaction-fee">
       <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
-      <md-button class="transaction-fee-icon md-icon-button"
-                 :md-ripple="false"
-                 @click="showTutorial = true">
-        <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
+      <md-button 
+        :md-ripple="false"
+        class="transaction-fee-icon md-icon-button"
+        @click="showTutorial = true"
+      >
+        <md-icon md-src="/static/icons/question-mark-home.svg"/>
       </md-button>
       <div class="transaction-fee-value"> {{ formatAmount(transactionFee) }} MDT</div>
     </div>
 
     <div class="final-amount">
       <div class="final-amount-lbl">{{ $t('message.transfer.final_amount') }}</div>
-      <div class="final-amount-value"
-           v-bind:class="{ 'negative': isFinalAmountSmallerThanZero }"> {{ finalAmountStr }} MDT</div>
+      <div 
+        :class="{ 'negative': isFinalAmountSmallerThanZero }"
+        class="final-amount-value"
+      > {{ finalAmountStr }} MDT</div>
     </div>
 
-    <div class="extra-space"> </div>
-    <AccountSelector v-on:accountSelected="setTransferFromAccount"
-                     :label="$t('message.transfer.fromlbl')"
-                     :accounts="fromUserAccounts"
-                     :selectedAccount="transferFromAccount">
-    </AccountSelector>
-    <WalletAddressField :label="$t('message.transfer.tolbl')"
-                        :initWalletAddress="transferToWalletAddress"
-                        v-on:walletAddressEntered="walletAddressEntered"
-                        v-on:walletAddressInvalid="walletAddressInvalid">
-    </WalletAddressField>
-    <NoteInputField v-on:infoEntered="setTransferNote"
-                    :note="transferNote"></NoteInputField>
-    <MDTPrimaryButton :to="RouteDef.TransferReview.path"
-                      :disabled="disableNextBtn"
-                      :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+    <div class="extra-space"/>
+    <AccountSelector 
+      :label="$t('message.transfer.fromlbl')"
+      :accounts="fromUserAccounts"
+      :selected-account="transferFromAccount"
+      @accountSelected="setTransferFromAccount"
+    />
+    <WalletAddressField 
+      :label="$t('message.transfer.tolbl')"
+      :init-wallet-address="transferToWalletAddress"
+      @walletAddressEntered="walletAddressEntered"
+      @walletAddressInvalid="walletAddressInvalid"
+    />
+    <NoteInputField 
+      :note="transferNote"
+      @infoEntered="setTransferNote"
+    />
+    <MDTPrimaryButton 
+      :to="RouteDef.TransferReview.path"
+      :disabled="disableNextBtn"
+      :bottom="true"
+    >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
 
-    <md-dialog-alert :md-active.sync="showTutorial"
-                     :md-title="$t('message.transfer.tutorial_title')"
-                     :md-content="$t('message.transfer.tutorial_description')"
-                     :md-confirm-text="$t('message.common.okay')">
-
-    </md-dialog-alert>
+    <md-dialog-alert 
+      :md-active.sync="showTutorial"
+      :md-title="$t('message.transfer.tutorial_title')"
+      :md-content="$t('message.transfer.tutorial_description')"
+      :md-confirm-text="$t('message.common.okay')"
+    />
   </div>
 </template>
 
@@ -65,18 +77,18 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import { formatAmount } from '@/utils';
 
 export default {
-  extends: BasePage,
-  metaInfo() {
-    return {
-      title: this.$t('message.transfer.ethtitle'),
-    };
-  },
   components: {
     AccountSelector,
     MDTInputField,
     NoteInputField,
     WalletAddressField,
     MDTPrimaryButton,
+  },
+  extends: BasePage,
+  metaInfo() {
+    return {
+      title: this.$t('message.transfer.ethtitle'),
+    };
   },
   data() {
     return {
@@ -99,7 +111,13 @@ export default {
       finalAmount: 'finalAmount',
     }),
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToWalletAddress && this.isWalletAddressValid && this.finalAmount > 0 && this.isWalletAmountValid) {
+      if (
+        this.transferAmount > 0 &&
+        this.transferToWalletAddress &&
+        this.isWalletAddressValid &&
+        this.finalAmount > 0 &&
+        this.isWalletAmountValid
+      ) {
         return false;
       }
       return true;

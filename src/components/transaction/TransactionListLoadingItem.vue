@@ -2,10 +2,17 @@
   <md-list-item
     class="transaction-list-loading-item"
   >
-    <Skeleton class="transaction-list-loading-item__picture" width="2.5rem" height="2.5rem" />
+    <Skeleton 
+      class="transaction-list-loading-item__picture" 
+      width="2.5rem" 
+      height="2.5rem"
+    />
     <div class="transaction-list-loading-item__content">
       <Skeleton width="65%" />
-      <Skeleton class="account-task-list__loading-item-button" width="55%" />
+      <Skeleton 
+        class="account-task-list__loading-item-button" 
+        width="55%"
+      />
     </div>
   </md-list-item>
 </template>
@@ -35,4 +42,3 @@ export default {
   justify-content: space-between;
 }
 </style>
-

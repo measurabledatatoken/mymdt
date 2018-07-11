@@ -1,15 +1,15 @@
 <template>
-    <md-dialog-confirm v-bind="$attrs" v-on="$listeners" />
+  <md-dialog-confirm 
+    v-bind="$attrs" 
+    v-on="$listeners"
+  />
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
-
 .md-dialog {
   /deep/ .md-dialog-actions {
     justify-content: space-between;

@@ -5,20 +5,20 @@
         <h3 class="pincode-base-page__title">{{ title }}</h3>
         <PinCodeField
           ref="pinCodeField"
-          :length=6
-          :shouldAutoFocus=true
-          :invalidDescription="$t('message.passcode.not_match')"
-          :correctPinCode="correctPinCode"
+          :length="6"
+          :should-auto-focus="true"
+          :invalid-description="$t('message.passcode.not_match')"
+          :correct-pin-code="correctPinCode"
           @filled="onFilled"
           @unfilled="onUnfilled"
         />
         <MDTPrimaryButton
           slot="button"
-          class="pincode-base-page__button"
           :disabled="!isPinFilled"
+          class="pincode-base-page__button"
           @click="$emit('click', pincode)"
         >
-            {{ buttonText }}
+          {{ buttonText }}
         </MDTPrimaryButton>
       </template>
     </BaseUserSettingPage>
@@ -46,9 +46,18 @@ export default {
     BaseUserSettingPage,
   },
   props: {
-    title: String,
-    buttonText: String,
-    correctPinCode: String,
+    title: {
+      type: String,
+      default: null,
+    },
+    buttonText: {
+      type: String,
+      default: null,
+    },
+    correctPinCode: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
@@ -57,11 +66,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(
-      {
-        getSelectedSecurityUser: 'getSelectedSecurityUser',
-      },
-    ),
+    ...mapGetters({
+      getSelectedSecurityUser: 'getSelectedSecurityUser',
+    }),
   },
   methods: {
     onFilled(pincode) {

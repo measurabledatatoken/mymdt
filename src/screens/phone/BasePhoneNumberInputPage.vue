@@ -10,31 +10,54 @@
       </template>
 
       <template slot="action-area">
-        <PhoneInputField :initcountryDialCode="countryDialCode" :initCountryCode="countryCode" :initPhoneNumber="phoneNumber"
-          @phoneNumberEntered="onPhoneNumberEntered" @phoneNumberInvalid="onPhonenNumberInvalid" />
+        <PhoneInputField 
+          :initcountry-dial-code="countryDialCode" 
+          :init-country-code="countryCode" 
+          :init-phone-number="phoneNumber"
+          @phoneNumberEntered="onPhoneNumberEntered" 
+          @phoneNumberInvalid="onPhonenNumberInvalid"
+        />
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton :disabled="isPhoneInvalid" class="next-button" :class="{ 'hasSkip': needSkip }" @click="onNextClicked">
+        <MDTPrimaryButton 
+          :disabled="isPhoneInvalid" 
+          :class="{ 'hasSkip': needSkip }" 
+          class="next-button" 
+          @click="onNextClicked"
+        >
           {{ $t('message.common.nextbtn') }}
         </MDTPrimaryButton>
-        <MDTSubtleButton class="skip-btn" @click="onSkipClicked" v-if="needSkip">
+        <MDTSubtleButton 
+          v-if="needSkip" 
+          class="skip-btn" 
+          @click="onSkipClicked"
+        >
           {{ $t('message.common.skip') }}
         </MDTSubtleButton>
       </template>
 
     </BasePhoneNumberPage>
 
-    <md-dialog-confirm :md-active.sync="showWarningPrompt" :md-title="$t('message.phone.skip_setup_title')"
-      :md-content="$t('message.phone.skip_setup_content')" :md-cancel-text="$t('message.common.cancel')"
-      :md-confirm-text="$t('message.phone.yes_skip')" @md-confirm="confirmSkip" />
+    <md-dialog-confirm 
+      :md-active.sync="showWarningPrompt" 
+      :md-title="$t('message.phone.skip_setup_title')"
+      :md-content="$t('message.phone.skip_setup_content')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      :md-confirm-text="$t('message.phone.yes_skip')" 
+      @md-confirm="confirmSkip"
+    />
 
   </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
-import { SET_COUNTRY_DIALCODE, SET_COUNTRY_CODE, SET_PHONENUMBER } from '@/store/modules/security';
+import {
+  SET_COUNTRY_DIALCODE,
+  SET_COUNTRY_CODE,
+  SET_PHONENUMBER,
+} from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import PhoneInputField from '@/components/common/PhoneInputField';
@@ -51,9 +74,11 @@ export default {
   props: {
     title: {
       type: String,
+      default: null,
     },
     content: {
       type: String,
+      default: null,
     },
     needSkip: {
       default: false,

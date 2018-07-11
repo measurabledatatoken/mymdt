@@ -3,21 +3,30 @@
     <PinCodeEnterBasePage
       ref="pinCodeBasePage"
       :title="$t('message.passcode.reenter_pin_title')"
-      :buttonText="$t('message.common.nextbtn')"
-      :correctPinCode="setupedPin"
+      :button-text="$t('message.common.nextbtn')"
+      :correct-pin-code="setupedPin"
       @click="onDoneClicked"
     />
 
-    <SuccessPopup :title="$t('message.passcode.pin_setup_successfully')" :md-active.sync="showPinSetupSuccessPopup"
-      iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
-    </SuccessPopup>
+    <SuccessPopup 
+      :title="$t('message.passcode.pin_setup_successfully')" 
+      :md-active.sync="showPinSetupSuccessPopup"
+      :confirm-text="$t('message.common.done')" 
+      icon-src="/static/icons/guarded.svg" 
+      @md-confirm="onPopupDoneClicked"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SETUP_PIN, CHANGE_PIN, RESET_PIN, SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
+import {
+  SETUP_PIN,
+  CHANGE_PIN,
+  RESET_PIN,
+  SET_DONE_CALLBACK_PATH,
+} from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
 import SetupPINMode from '@/enum/setupPINMode';
@@ -25,32 +34,40 @@ import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
+  components: {
+    PinCodeEnterBasePage,
+    SuccessPopup,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: 'PIN',
     };
   },
-  components: {
-    PinCodeEnterBasePage,
-    SuccessPopup,
-  },
   props: {
     // pin enter in the setup pin page
     oldPIN: {
       type: String,
+      default: null,
     },
     verificationCode: {
       type: String,
+      default: null,
     },
     mode: {
       type: String,
+      required: true,
       validator(value) {
-        return [SetupPINMode.SETUP, SetupPINMode.RESET, SetupPINMode.CHANGE].indexOf(value) !== -1;
+        return (
+          [SetupPINMode.SETUP, SetupPINMode.RESET, SetupPINMode.CHANGE].indexOf(
+            value,
+          ) !== -1
+        );
       },
     },
     setupedPin: {
       type: String,
+      default: null,
     },
   },
   data() {
@@ -59,11 +76,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(
-      {
-        doneCallBackPath: state => state.security.doneCallBackPath,
-      },
-    ),
+    ...mapState({
+      doneCallBackPath: state => state.security.doneCallBackPath,
+    }),
     ...mapGetters({
       getSelectedSecurityUser: 'getSelectedSecurityUser',
     }),
@@ -81,30 +96,31 @@ export default {
     onDoneClicked(pincode) {
       switch (this.mode) {
         case SetupPINMode.RESET: {
-          this.resetPIN({ pin: this.setupedPin, confirmedPIN: pincode, verificationCode: this.verificationCode })
-            .then(
-              () => {
-                this.showPinSetupSuccessPopup = true;
-              },
-            );
+          this.resetPIN({
+            pin: this.setupedPin,
+            confirmedPIN: pincode,
+            verificationCode: this.verificationCode,
+          }).then(() => {
+            this.showPinSetupSuccessPopup = true;
+          });
           break;
         }
         case SetupPINMode.CHANGE: {
-          this.changePIN({ oldPIN: this.oldPIN, newPIN: this.setupedPin, confirmedPIN: pincode })
-            .then(
-              () => {
-                this.showPinSetupSuccessPopup = true;
-              },
-            );
+          this.changePIN({
+            oldPIN: this.oldPIN,
+            newPIN: this.setupedPin,
+            confirmedPIN: pincode,
+          }).then(() => {
+            this.showPinSetupSuccessPopup = true;
+          });
           break;
         }
         default: {
-          this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode })
-            .then(
-              () => {
-                this.showPinSetupSuccessPopup = true;
-              },
-            );
+          this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode }).then(
+            () => {
+              this.showPinSetupSuccessPopup = true;
+            },
+          );
           break;
         }
       }

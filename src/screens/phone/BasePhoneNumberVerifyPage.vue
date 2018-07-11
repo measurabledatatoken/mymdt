@@ -12,42 +12,52 @@
       <template slot="action-area">
         <div class="phone-number-cointainer">
           <div class="dail-countrycode">
-            {{this.countryDialCode}}
+            {{ countryDialCode }}
           </div>
           <div class="phone-nbumber">
-            {{this.maskedPhoneNumber}}
+            {{ maskedPhoneNumber }}
           </div>
-          <md-button v-if="editable"
-                     :md-ripple="false"
-                     class="edit-btn"
-                     @click="$router.go(-1)">{{ $t('message.common.edit') }}</md-button>
+          <md-button 
+            v-if="editable"
+            :md-ripple="false"
+            class="edit-btn"
+            @click="$router.go(-1)"
+          >{{ $t('message.common.edit') }}</md-button>
         </div>
 
         <md-field :md-counter="false">
           <label class="label">{{ $t('message.phone.verification_code') }}</label>
-          <md-input :maxlength="VerificationCodeLength"
-                    :placeholder="$t('message.phone.verification_code_placeholder')"
-                    v-model="verificationCode"
-                    pattern="\d*"
-                    @input="onVerificationCodeInput" />
+          <md-input 
+            :maxlength="VerificationCodeLength"
+            :placeholder="$t('message.phone.verification_code_placeholder')"
+            v-model="verificationCode"
+            pattern="\d*"
+            @input="onVerificationCodeInput"
+          />
         </md-field>
 
-        <CountDownUnlockButton v-on:click="onResendClicked()"
-                               :secondsToCount="60"
-                               countingTranslateKey="message.phone.resend_counting"
-                               countDoneTranslateKey="message.phone.resend"
-                               class="resend-btn" />
-        <br style="clear:both" />
+        <CountDownUnlockButton 
+          :seconds-to-count="60"
+          counting-translate-key="message.phone.resend_counting"
+          count-done-translate-key="message.phone.resend"
+          class="resend-btn"
+          @click="onResendClicked()"
+        />
+        <br style="clear:both" >
 
-        <MDTSubtleButton :to="RouteDef.ReportProblem.path"
-                         class="cant-receive-btn">{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
+        <MDTSubtleButton 
+          :to="RouteDef.ReportProblem.path"
+          class="cant-receive-btn"
+        >{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
       </template>
 
       <template slot="buttons">
-        <MDTPrimaryButton :disabled="!verificationCodeFilled"
-                          class="done"
-                          :bottom="true"
-                          @click="$emit('doneClick', verificationCode)">
+        <MDTPrimaryButton 
+          :disabled="!verificationCodeFilled"
+          :bottom="true"
+          class="done"
+          @click="$emit('doneClick', verificationCode)"
+        >
           {{ $t('message.common.done') }}
         </MDTPrimaryButton>
       </template>
@@ -58,7 +68,12 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_COUNTRY_DIALCODE, SET_COUNTRY_CODE, SET_PHONENUMBER, REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
+import {
+  SET_COUNTRY_DIALCODE,
+  SET_COUNTRY_CODE,
+  SET_PHONENUMBER,
+  REQUEST_VERIFICATION_CODE,
+} from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import { maskPhoneNumber } from '@/helpers/phoneUtil';
 import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
@@ -69,8 +84,7 @@ import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
 const VerificationCodeLength = 6;
 
 export default {
-  metaInfo() {
-  },
+  metaInfo() {},
   components: {
     BasePhoneNumberPage,
     MDTPrimaryButton,
@@ -80,9 +94,11 @@ export default {
   props: {
     title: {
       type: String,
+      default: null,
     },
     action: {
       type: String,
+      default: null,
     },
     editable: {
       default: true,
@@ -130,11 +146,9 @@ export default {
       }
     },
     onResendClicked() {
-      this.requestVerificationCode(
-        {
-          action: this.action,
-        },
-      );
+      this.requestVerificationCode({
+        action: this.action,
+      });
     },
   },
 };

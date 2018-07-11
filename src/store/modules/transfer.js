@@ -1,7 +1,5 @@
 import api from '@/api';
-import {
-  TransferType,
-} from '@/constants';
+import { TransferType } from '@/constants';
 import { REQUEST } from '@/store/modules/api';
 
 // mutation
@@ -9,17 +7,18 @@ export const SET_TRANSFER_AMOUNT = 'transfer/SET_TRANSFER_AMOUNT';
 export const SET_TRANSFER_TYPE = 'transfer/SET_TRANSFER_TYPE';
 export const SET_TRANSFER_FROM_ACCOUNT = 'transfer/SET_TRANSFER_FROM_ACCOUNT';
 export const SET_TRANSFER_TO_ACCOUNT = 'transfer/SET_TRANSFER_TO_ACCOUNT';
-export const SET_TRANSFER_TO_WALLETADDRESS = 'transfer/SET_TRANSFER_TO_WALLETADDRESS';
+export const SET_TRANSFER_TO_WALLETADDRESS =
+  'transfer/SET_TRANSFER_TO_WALLETADDRESS';
 export const SET_TRANSFER_NOTE = 'transfer/SET_TRANSFER_NOTE';
 export const SET_TRANSFER_SUCCESS = 'transfer/SET_TRANSFER_SUCCESS';
 export const FLUSH_TRANSFER_DATA = 'transfer/FLUSH_TRANSFER_DATA';
-export const ADD_TRANSFERTO_EMAIL_HISTORY = 'transfer/ADD_TRANSFERTO_EMAIL_HISTORY';
+export const ADD_TRANSFERTO_EMAIL_HISTORY =
+  'transfer/ADD_TRANSFERTO_EMAIL_HISTORY';
 
 // action
 export const START_TRANSFER = 'transfer/START_TRANSFER';
 
-
-const clearState = (state) => {
+const clearState = state => {
   state.transferAmount = null;
   state.transferType = null;
   state.transferFromAccount = null;
@@ -42,7 +41,10 @@ const getters = {
   // eslint-disable-next-line
   transferToAccounts: (state, getters, rootState, rootGetters) => {
     const tempAccounts = rootGetters.getAllUsers.filter(
-      user => (!state.transferFromAccount || user.emailAddress !== state.transferFromAccount.emailAddress));
+      user =>
+        !state.transferFromAccount ||
+        user.emailAddress !== state.transferFromAccount.emailAddress,
+    );
 
     for (let i = 0; i < state.transferToEmailHistory.length; i += 1) {
       tempAccounts.push({ emailAddress: state.transferToEmailHistory[i] });
@@ -56,7 +58,8 @@ const getters = {
     }
     const feePercentage = rootState.home.appConfig.mdt_transaction_fee / 100.0;
     const minFee = parseFloat(rootState.home.appConfig.mdt_min_transaction_fee);
-    const minFeeByPercentage = state.transferAmount * parseFloat(feePercentage, 10);
+    const minFeeByPercentage =
+      state.transferAmount * parseFloat(feePercentage, 10);
     const finalFee = minFeeByPercentage < minFee ? minFee : minFeeByPercentage;
     return finalFee;
   },
@@ -111,15 +114,10 @@ const mutations = {
 };
 
 const actions = {
-  [START_TRANSFER]({
-    dispatch,
-    rootState,
-    rootGetters,
-  }, pin) {
+  [START_TRANSFER]({ dispatch, rootState, rootGetters }, pin) {
     const selectedUser = rootGetters.getSelectedUser;
     const transferType = rootState.transfer.transferType;
     const transferNote = rootState.transfer.transferNote;
-
 
     let amount = rootState.transfer.transferAmount;
     let toAddress = rootState.transfer.transferToAccount.emailAddress;
@@ -130,12 +128,18 @@ const actions = {
 
     return dispatch(REQUEST, {
       api: api.transfer.transfer,
-      args: [toAddress, transferType, amount, pin, transferNote, selectedUser.accessToken],
+      args: [
+        toAddress,
+        transferType,
+        amount,
+        pin,
+        transferNote,
+        selectedUser.accessToken,
+      ],
       openErrorPrompt: true,
     });
   },
 };
-
 
 export default {
   state,

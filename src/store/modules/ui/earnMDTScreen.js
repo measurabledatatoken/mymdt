@@ -121,7 +121,11 @@ const state = {
 
 const mutations = {
   [FETCHING_TASKS](state, payload) {
-    state.users[payload.id] = updateUser(state.users[payload.id], FETCHING_TASKS, payload);
+    state.users[payload.id] = updateUser(
+      state.users[payload.id],
+      FETCHING_TASKS,
+      payload,
+    );
   },
   [FETCHING_TASKS_SUCCESS](state, payload) {
     state.users[payload.id] = updateUser(
@@ -138,7 +142,11 @@ const mutations = {
     );
   },
   [FETCHING_REWARDS](state, payload) {
-    state.users[payload.id] = updateUser(state.users[payload.id], FETCHING_REWARDS, payload);
+    state.users[payload.id] = updateUser(
+      state.users[payload.id],
+      FETCHING_REWARDS,
+      payload,
+    );
   },
   [FETCHING_REWARDS_SUCCESS](state, payload) {
     state.users[payload.id] = updateUser(
@@ -156,7 +164,11 @@ const mutations = {
   },
   [CLAIMING_REWARD](state, payload) {
     const { rewardId } = payload;
-    state.rewards[rewardId] = updateReward(state.rewards[rewardId], CLAIMING_REWARD, payload);
+    state.rewards[rewardId] = updateReward(
+      state.rewards[rewardId],
+      CLAIMING_REWARD,
+      payload,
+    );
   },
   [CLAIMING_REWARD_SUCCESS](state, payload) {
     const { rewardId } = payload;

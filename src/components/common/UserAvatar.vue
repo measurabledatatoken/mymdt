@@ -1,8 +1,14 @@
 <template>
-  <md-avatar class="md-avatar-icon" :disabled="disabled" :style="{ 'background-color': backgroundColor }">
-    <img :src="imageSrc"
-         alt="People"
-         v-if="imageSrc">
+  <md-avatar 
+    :disabled="disabled" 
+    :style="{ 'background-color': backgroundColor }" 
+    class="md-avatar-icon"
+  >
+    <img 
+      v-if="imageSrc"
+      :src="imageSrc"
+      alt="People"
+    >
     <template v-else>
       {{ displayName }}
     </template>
@@ -14,18 +20,21 @@ import { extractNameInitials } from '@/utils';
 
 export default {
   props: {
-    user:
-    {
+    user: {
       type: Object,
+      default: null,
     },
     src: {
       type: String,
+      default: null,
     },
     name: {
       type: String,
+      default: null,
     },
     disabled: {
       type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -33,13 +42,27 @@ export default {
       return this.src || this.user.avatarURL;
     },
     displayName() {
-      return extractNameInitials(this.name || this.user.displayName || this.user.emailAddress);
+      return extractNameInitials(
+        this.name || this.user.displayName || this.user.emailAddress,
+      );
     },
     backgroundColor() {
-      const colorCodes = ['#fad689', '#d7c4bb', '#ffba84', '#b9887d', '#b5caa0', '#a8d8b9', '#a5dee4', '#b2b2d8', '#eea9a9'];
+      const colorCodes = [
+        '#fad689',
+        '#d7c4bb',
+        '#ffba84',
+        '#b9887d',
+        '#b5caa0',
+        '#a8d8b9',
+        '#a5dee4',
+        '#b2b2d8',
+        '#eea9a9',
+      ];
       const name = this.displayName.toLowerCase();
       const firstChar = name.charAt(0);
-      let index = ((firstChar.charCodeAt(0) - 'a'.charCodeAt(0)) * colorCodes.length) / 26;
+      let index =
+        ((firstChar.charCodeAt(0) - 'a'.charCodeAt(0)) * colorCodes.length) /
+        26;
       index = Math.min(index, colorCodes.length - 1);
       index = Math.max(0, colorCodes.length - 1);
       index = parseInt(index, 10);
@@ -51,7 +74,7 @@ export default {
 
 
 <style lang="scss" scoped>
-  .md-avatar-icon[disabled]{
-    opacity: 0.6;
-  }
+.md-avatar-icon[disabled] {
+  opacity: 0.6;
+}
 </style>

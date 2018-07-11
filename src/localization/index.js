@@ -1,4 +1,3 @@
-
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 
@@ -28,7 +27,9 @@ const messages = {
 const dateTimeFormats = {
   'en-us': {
     short: {
-      year: 'numeric', month: 'short', day: 'numeric',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     },
     long: {
       year: 'numeric',
@@ -43,7 +44,9 @@ const dateTimeFormats = {
   },
   'zh-hk': {
     short: {
-      year: 'numeric', month: 'short', day: 'numeric',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     },
     long: {
       year: 'numeric',
@@ -58,7 +61,9 @@ const dateTimeFormats = {
   },
   'zh-cn': {
     short: {
-      year: 'numeric', month: 'short', day: 'numeric',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     },
     long: {
       year: 'numeric',

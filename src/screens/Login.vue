@@ -1,13 +1,20 @@
 <template>
   <div class="home">
     <h1>Login Page</h1>
-    <input v-model="emailAddress" placeholder="Email Address">
-    <input type="password" v-model="password" placeholder="Password">
-    <button v-on:click="confirmLogin">Login</button>
+    <input 
+      v-model="emailAddress" 
+      placeholder="Email Address"
+    >
+    <input 
+      v-model="password" 
+      type="password" 
+      placeholder="Password"
+    >
+    <button @click="confirmLogin">Login</button>
 
     <div><router-link to="/register">Register</router-link></div>
     <div><router-link to="/forgetpassword">Forget Password</router-link></div>
-    <p>{{errorMessage}}</p>
+    <p>{{ errorMessage }}</p>
 
   </div>
 </template>
@@ -22,7 +29,6 @@ import BasePage from '@/screens/BasePage';
 
 export default {
   extends: BasePage,
-  props: [],
   data() {
     return {
       emailAddress: '',
@@ -66,16 +72,16 @@ export default {
     }),
     confirmLogin() {
       this.requested = true;
-      this.requestLogin(
-        {
-          emailAddress: this.emailAddress,
-          password: this.password,
-        },
-      ).then(() => {
-        if (this.loginSuccess) {
-          this.$router.push(RouteDef.Home.path);
-        }
-      }).catch(() => ({}));
+      this.requestLogin({
+        emailAddress: this.emailAddress,
+        password: this.password,
+      })
+        .then(() => {
+          if (this.loginSuccess) {
+            this.$router.push(RouteDef.Home.path);
+          }
+        })
+        .catch(() => ({}));
     },
   },
 };
@@ -83,5 +89,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

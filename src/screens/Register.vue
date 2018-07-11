@@ -6,14 +6,11 @@
 
 
 <script>
-
 export default {
-  created() {
-  },
+  created() {},
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

@@ -1,10 +1,22 @@
 <template>
-  <md-list-item class="base-earn-mdt-item" v-bind="$attrs">
+  <md-list-item 
+    v-bind="$attrs" 
+    class="base-earn-mdt-item"
+  >
     <div class="base-earn-mdt-item__info">
-      <md-icon class="base-earn-mdt-item__icon" :md-src="mdSrc" />
+      <md-icon 
+        :md-src="mdSrc" 
+        class="base-earn-mdt-item__icon"
+      />
       <div class="md-list-item-text">
-        <span v-if="title" class="base-earn-mdt-item__info-title">{{ title }}</span>
-        <span v-if="description" class="base-earn-mdt-item__info-description">{{ description }}</span>
+        <span 
+          v-if="title" 
+          class="base-earn-mdt-item__info-title"
+        >{{ title }}</span>
+        <span 
+          v-if="description" 
+          class="base-earn-mdt-item__info-description"
+        >{{ description }}</span>
       </div>
     </div>
     <slot name="action" />
@@ -13,7 +25,20 @@
 
 <script>
 export default {
-  props: ['md-src', 'title', 'description'],
+  props: {
+    mdSrc: {
+      type: String,
+      default: null,
+    },
+    title: {
+      type: String,
+      default: null,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
+  },
 };
 </script>
 
@@ -49,10 +74,8 @@ export default {
     }
 
     .base-earn-mdt-item__info-description {
-      color: $secondary-text-color
+      color: $secondary-text-color;
     }
   }
 }
-
 </style>
-

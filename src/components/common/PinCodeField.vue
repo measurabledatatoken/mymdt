@@ -1,21 +1,27 @@
 <template>
   <div class="pin-code-field">
     <ul :class="['pin-code-container', { 'pin-code-container--invalid': invalid } ]">
-      <li v-for="(item, index) in length" :key="index">
+      <li 
+        v-for="(item, index) in length" 
+        :key="index"
+      >
         <input
-          class="pin-code-input"
           ref="pinCodeItem"
           :type="type"
           :pattern="pattern"
           :value="pinCodeChars[index].display"
+          class="pin-code-input"
           maxlength="1"
           @input="onCharInput(index, $event.target.value)"
           @keydown="onCharKeyDown(index, $event)"
           @focus="onCharFocus(index)"
-        />
+        >
       </li>
     </ul>
-    <div class="invalid-description" v-if="invalid">{{ invalidDescription }}</div>
+    <div 
+      v-if="invalid" 
+      class="invalid-description"
+    >{{ invalidDescription }}</div>
   </div>
 </template>
 
@@ -29,9 +35,11 @@ export default {
     },
     initPinCodeChars: {
       type: Array,
+      default: null,
     },
     correctPinCode: {
       type: String,
+      default: null,
     },
     shouldAutoFocus: {
       default: false,
@@ -53,7 +61,12 @@ export default {
   data() {
     return {
       invalid: false,
-      pinCodeChars: this.initPinCodeChars || Array.from(Array(this.length)).map(() => ({ value: undefined, display: undefined })),
+      pinCodeChars:
+        this.initPinCodeChars ||
+        Array.from(Array(this.length)).map(() => ({
+          value: undefined,
+          display: undefined,
+        })),
     };
   },
   computed: {
@@ -69,18 +82,6 @@ export default {
       }, '');
     },
   },
-  mounted() {
-    if (this.shouldAutoFocus) {
-      this.$nextTick(() => {
-        setTimeout(
-          () => {
-            this.$refs.pinCodeItem[0].focus();
-          }, 750,
-        );
-      },
-      );
-    }
-  },
   watch: {
     filled(val) {
       if (val) {
@@ -89,6 +90,15 @@ export default {
         this.$emit('unfilled');
       }
     },
+  },
+  mounted() {
+    if (this.shouldAutoFocus) {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.$refs.pinCodeItem[0].focus();
+        }, 750);
+      });
+    }
   },
   methods: {
     isValidChar(char) {
@@ -121,11 +131,19 @@ export default {
         });
       }
 
-      if (this.isValidChar(char) && index < this.length - 1 && !this.isValidChar(this.pinCodeChars[index + 1].value)) {
+      if (
+        this.isValidChar(char) &&
+        index < this.length - 1 &&
+        !this.isValidChar(this.pinCodeChars[index + 1].value)
+      ) {
         this.$refs.pinCodeItem[index + 1].focus();
       }
 
-      if (this.filled && this.correctPinCode && this.correctPinCode !== this.pinCode) {
+      if (
+        this.filled &&
+        this.correctPinCode &&
+        this.correctPinCode !== this.pinCode
+      ) {
         this.setInvalid();
       }
     },

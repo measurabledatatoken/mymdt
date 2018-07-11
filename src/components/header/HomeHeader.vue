@@ -1,15 +1,25 @@
 <template>
 
   <div class="home-header">
-    <md-button v-if="needExit" class="md-icon-button closebtn" v-on:click="returnCallback">
-      <md-icon md-src="/static/icons/close-white.svg"></md-icon>
+    <md-button 
+      v-if="needExit" 
+      class="md-icon-button closebtn" 
+      @click="returnCallback"
+    >
+      <md-icon md-src="/static/icons/close-white.svg"/>
     </md-button>
 
-    <md-button :to="RouteDef.Settings.path" class="md-icon-button settingsbtn">
-      <md-icon md-src="/static/icons/settings-white.svg"></md-icon>
+    <md-button 
+      :to="RouteDef.Settings.path" 
+      class="md-icon-button settingsbtn"
+    >
+      <md-icon md-src="/static/icons/settings-white.svg"/>
     </md-button>
-    <md-button @click="$emit('tutorialClick')" class="md-icon-button tutorialbtn">
-      <md-icon md-src="/static/icons/question-mark-home.svg"></md-icon>
+    <md-button 
+      class="md-icon-button tutorialbtn" 
+      @click="$emit('tutorialClick')"
+    >
+      <md-icon md-src="/static/icons/question-mark-home.svg"/>
     </md-button>
   </div>
 
@@ -38,8 +48,6 @@ export default {
     },
   },
 };
-
-
 </script>
 
 

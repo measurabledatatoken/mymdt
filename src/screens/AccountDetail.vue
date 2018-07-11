@@ -1,12 +1,17 @@
 <template>
   <div class="app-view">
     <div class="header">
-      <div class="header__background"></div>
-      <user-info-card v-on:transfer="goToTransfer()" v-bind:user="selectedUser">
-      </user-info-card>
+      <div class="header__background"/>
+      <user-info-card 
+        :user="selectedUser" 
+        @transfer="goToTransfer()"
+      />
     </div>
-    <transaction-list v-bind:transactions="transactions" />
-    <MDTPrimaryButton :to="RouteDef.EarnMDT.path" :bottom="true">{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+    <transaction-list :transactions="transactions" />
+    <MDTPrimaryButton 
+      :to="RouteDef.EarnMDT.path" 
+      :bottom="true"
+    >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -24,16 +29,16 @@ import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
 import { RouteDef } from '@/constants';
 
 export default {
+  components: {
+    UserInfoCard,
+    TransactionList,
+    MDTPrimaryButton,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: this.$t('message.account.title'),
     };
-  },
-  components: {
-    UserInfoCard,
-    TransactionList,
-    MDTPrimaryButton,
   },
   data() {
     return {
@@ -70,24 +75,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $header-padding-top: 2rem;
+$header-padding-top: 2rem;
 
-  .app-view {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
+.app-view {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.header {
+  padding-top: $header-padding-top;
+  position: relative;
+
+  .header__background {
+    background-color: $home-bgcolor;
+    height: calc(
+      8em + 0.5em + #{$header-padding-top}
+    ); // height of UserInfoCard content + UserInfoCard margin top + header padding
+    width: 100%;
+    position: absolute;
+    top: 0;
   }
-
-  .header {
-    padding-top: $header-padding-top;
-    position: relative;
-
-    .header__background {
-      background-color: $home-bgcolor;
-      height: calc(8em + 0.5em + #{$header-padding-top}); // height of UserInfoCard content + UserInfoCard margin top + header padding
-      width: 100%;
-      position: absolute;
-      top: 0;
-    }
-  }
+}
 </style>

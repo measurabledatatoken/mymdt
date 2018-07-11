@@ -3,4 +3,3 @@ export default {
   CHANGE: 'change',
   RESET: 'reset',
 };
-

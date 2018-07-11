@@ -1,13 +1,21 @@
 <template>
   <div class="tutorial-item">
     <div class="tutorial-item__img-container">
-      <img class="icon"
-           :src="imgSrc">
+      <img 
+        :src="imgSrc"
+        class="icon"
+      >
     </div>
     <div class="tutorial-item__title">{{ title }}</div>
     <div class="tutorial-item__description">{{ description }}</div>
-    <MDTSubtleButton v-if="!isFinalPage" @click="$emit('click')">{{ $t("message.tutorial.get_started") }}</MDTSubtleButton>
-    <MDTPrimaryButton v-if="isFinalPage" @click="$emit('click')">{{ $t("message.tutorial.get_started") }}</MDTPrimaryButton>
+    <MDTSubtleButton 
+      v-if="!isFinalPage" 
+      @click="$emit('click')"
+    >{{ $t("message.tutorial.get_started") }}</MDTSubtleButton>
+    <MDTPrimaryButton 
+      v-if="isFinalPage" 
+      @click="$emit('click')"
+    >{{ $t("message.tutorial.get_started") }}</MDTPrimaryButton>
   </div>
 </template>
 
@@ -16,38 +24,40 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
+  components: {
+    MDTPrimaryButton,
+    MDTSubtleButton,
+  },
   props: {
     imgSrc: {
       type: String,
+      default: null,
     },
     title: {
       type: String,
+      default: null,
     },
     description: {
       type: String,
+      default: null,
     },
     isFinalPage: {
       type: Boolean,
       default: false,
     },
   },
-  components: {
-    MDTPrimaryButton,
-    MDTSubtleButton,
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 .tutorial-item {
-  width: calc(100% - #{24px*2});
+  width: calc(100% - #{24px * 2});
   height: 100%;
   display: flex;
   flex-direction: column;
   align-self: center;
   padding-left: 24px;
   padding-right: 24px;
-
 
   .tutorial-item__img-container {
     display: flex;
@@ -76,7 +86,7 @@ export default {
 
   .md-button {
     position: absolute;
-    width: calc(100% - #{24px*2});
+    width: calc(100% - #{24px * 2});
     bottom: 4%;
     margin: 0px;
     font-weight: normal;

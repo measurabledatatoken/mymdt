@@ -33,7 +33,9 @@ export default {
         headers: { Authorization: `Bearer ${accessToken}` },
       },
     );
-    return handleGeneralResponse(promise, 'transfer data should not be null if the request is successed');
+    return handleGeneralResponse(
+      promise,
+      'transfer data should not be null if the request is successed',
+    );
   },
 };
-

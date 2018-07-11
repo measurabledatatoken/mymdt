@@ -1,7 +1,7 @@
 <template>
   <PinCodeEnterBasePage
     :title="$t('message.passcode.create_pin_title')"
-    :buttonText="$t('message.common.nextbtn')"
+    :button-text="$t('message.common.nextbtn')"
     @click="onNextClicked"
   />
 </template>
@@ -12,46 +12,46 @@ import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 
 export default {
+  components: {
+    PinCodeEnterBasePage,
+  },
   extends: BasePage,
   metaInfo() {
     return {
       title: 'PIN',
     };
   },
-  components: {
-    PinCodeEnterBasePage,
-  },
   props: {
     oldPIN: {
       type: String,
+      default: null,
     },
     verificationCode: {
       type: String,
+      default: null,
     },
     mode: {
       type: String,
+      default: null,
     },
   },
   methods: {
     onNextClicked(pincode) {
-      this.$router.push(
-        {
-          name: RouteDef.PinCodeConfirm.name,
-          params: {
-            setupedPin: pincode,
-            oldPIN: this.oldPIN,
-            mode: this.mode,
-            verificationCode: this.verificationCode,
-          },
+      this.$router.push({
+        name: RouteDef.PinCodeConfirm.name,
+        params: {
+          setupedPin: pincode,
+          oldPIN: this.oldPIN,
+          mode: this.mode,
+          verificationCode: this.verificationCode,
         },
-      );
+      });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .title {
   font-size: 16px;
   font-weight: bold;

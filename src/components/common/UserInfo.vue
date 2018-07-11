@@ -1,24 +1,34 @@
 <template>
   <div :class="['user-info', { 'user-info--small': small } ]">
     <div class="user-info__item">
-      <UserAvatar :user="user"
-                  :disabled="disabled" />
-      <div class="user-data"
-           :disabled="disabled">
-        <div :class="{ onlytitle : subTitle.length === 0} "
-             class="md-title"> {{ title }}</div>
+      <UserAvatar 
+        :user="user"
+        :disabled="disabled"
+      />
+      <div 
+        :disabled="disabled"
+        class="user-data"
+      >
+        <div 
+          :class="{ onlytitle : subTitle.length === 0} "
+          class="md-title"
+        > {{ title }}</div>
         <div class="md-sutitle"> {{ subTitle }}</div>
       </div>
-      <UserInfoMDTAmount v-if="showMDT && small"
-                         class="user-info__amount"
-                         :disabled=disabled
-                         :amount="user.mdtBalance"
-                         animated />
+      <UserInfoMDTAmount 
+        v-if="showMDT && small"
+        :disabled="disabled"
+        :amount="user.mdtBalance"
+        class="user-info__amount"
+        animated
+      />
     </div>
-    <UserInfoMDTAmount v-if="showMDT && !small"
-                       class="user-info__amount"
-                       :disabled=disabled
-                       :amount="user.mdtBalance" />
+    <UserInfoMDTAmount 
+      v-if="showMDT && !small"
+      :disabled="disabled"
+      :amount="user.mdtBalance"
+      class="user-info__amount"
+    />
   </div>
 </template>
 
@@ -34,6 +44,7 @@ export default {
   props: {
     user: {
       type: Object,
+      default: null,
     },
     small: {
       type: Boolean,

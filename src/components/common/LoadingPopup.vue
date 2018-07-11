@@ -1,7 +1,10 @@
 <template>
   <div class="spinner-overlay">
     <div class="spinner-cointainer">
-      <img class="spinner" :src="src" />
+      <img 
+        :src="src" 
+        class="spinner"
+      >
     </div>
   </div>
 </template>
@@ -11,6 +14,7 @@ export default {
   props: {
     src: {
       type: String,
+      default: '',
     },
   },
 };
