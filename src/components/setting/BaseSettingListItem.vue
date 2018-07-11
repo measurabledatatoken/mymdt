@@ -1,13 +1,22 @@
 <template>
-  <md-list-item v-bind="$attrs" v-on="$listeners">
+  <md-list-item 
+    v-bind="$attrs" 
+    v-on="$listeners"
+  >
     <slot name="icon" />
     <div class="md-list-item-text">
       <span :disabled="disabled">{{ title }}</span>
       <span :disabled="disabled">{{ description }}</span>
     </div>
-    <div class="md-list-action" v-show="showAction">
+    <div 
+      v-show="showAction" 
+      class="md-list-action"
+    >
       <slot name="action-data" />
-      <md-icon class="action-icon" md-src="/static/icons/setting-arrow-gray.svg" />
+      <md-icon 
+        class="action-icon" 
+        md-src="/static/icons/setting-arrow-gray.svg"
+      />
     </div>
   </md-list-item>
 </template>
@@ -15,14 +24,21 @@
 <script>
 export default {
   props: {
-    title: String,
-    description: String,
+    title: {
+      type: String,
+      default: '',
+    },
+    description: {
+      type: String,
+      default: '',
+    },
     showAction: {
       type: Boolean,
       default: true,
     },
     disabled: {
       type: Boolean,
+      default: false,
     },
   },
 };
@@ -45,4 +61,3 @@ export default {
   }
 }
 </style>
-

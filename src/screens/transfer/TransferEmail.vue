@@ -1,22 +1,38 @@
 <template>
   <div>
-    <MDTInputField v-on:amountEntered="setTransferAmount" v-on:amountInvalid="transferAmountInvalid" :amount="transferAmount"
-      :max-amount="transferFromAccount.mdtBalance" />
-    <AccountSelector v-on:accountSelected="setTransferFromAccount" :label="$t('message.transfer.fromlbl')"
-      :accounts="fromUserAccounts" :selectedAccount="transferFromAccount">
-    </AccountSelector>
-    <AccountSelector v-on:accountSelected="setTransferToAccount" :label="$t('message.transfer.tolbl')" :enableOther="true"
-      :accounts="transferToAccounts" :selectedAccount="transferToAccount">
-    </AccountSelector>
-    <NoteInputField v-on:infoEntered="setTransferNote" :note="transferNote"></NoteInputField>
-    <MDTPrimaryButton :to="RouteDef.TransferReview.path" :disabled="disableNextBtn" :bottom="true">{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+    <MDTInputField 
+      :amount="transferAmount" 
+      :max-amount="transferFromAccount.mdtBalance" 
+      @amountEntered="setTransferAmount"
+      @amountInvalid="transferAmountInvalid"
+    />
+    <AccountSelector 
+      :label="$t('message.transfer.fromlbl')" 
+      :accounts="fromUserAccounts"
+      :selected-account="transferFromAccount" 
+      @accountSelected="setTransferFromAccount"
+    />
+    <AccountSelector 
+      :label="$t('message.transfer.tolbl')" 
+      :enable-other="true" 
+      :accounts="transferToAccounts"
+      :selected-account="transferToAccount" 
+      @accountSelected="setTransferToAccount"
+    />
+    <NoteInputField 
+      :note="transferNote" 
+      @infoEntered="setTransferNote"
+    />
+    <MDTPrimaryButton 
+      :to="RouteDef.TransferReview.path" 
+      :disabled="disableNextBtn" 
+      :bottom="true"
+    >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
   </div>
 
 </template>
 
 <script>
-
-
 import { mapState, mapMutations, mapGetters } from 'vuex';
 import {
   SET_TRANSFER_AMOUNT,
@@ -34,17 +50,17 @@ import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
 export default {
-  extends: BasePage,
-  metaInfo() {
-    return {
-      title: this.$t('message.transfer.emailtitle'),
-    };
-  },
   components: {
     AccountSelector,
     MDTInputField,
     NoteInputField,
     MDTPrimaryButton,
+  },
+  extends: BasePage,
+  metaInfo() {
+    return {
+      title: this.$t('message.transfer.emailtitle'),
+    };
   },
   data() {
     return {
@@ -66,7 +82,12 @@ export default {
       return isValidEmailAddress(this.transferToAccount.emailAddress);
     },
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToAccount && this.isWalletAmountValid && this.isValidEmailAddress) {
+      if (
+        this.transferAmount > 0 &&
+        this.transferToAccount &&
+        this.isWalletAmountValid &&
+        this.isValidEmailAddress
+      ) {
         return false;
       }
       return true;

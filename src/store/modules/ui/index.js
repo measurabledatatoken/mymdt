@@ -6,6 +6,6 @@ const modules = {
   transactionList,
 };
 
-export default{
+export default {
   modules,
 };

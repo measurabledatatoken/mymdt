@@ -9,7 +9,10 @@ import { transactionType } from '@/enum';
 
 export default {
   props: {
-    transaction: Object,
+    transaction: {
+      type: Object,
+      default: null,
+    },
   },
   computed: {
     title() {
@@ -48,7 +51,9 @@ export default {
 
 <style lang="scss" scoped>
 .text-title {
-  color: var(--md-theme-default-text-primary-on-background, rgba(0,0,0,0.87));
+  color: var(
+    --md-theme-default-text-primary-on-background,
+    rgba(0, 0, 0, 0.87)
+  );
 }
 </style>
-

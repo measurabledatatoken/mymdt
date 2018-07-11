@@ -1,11 +1,22 @@
 <template>
   <md-card :md-with-hover="hover">
-    <div v-on:click="$emit('goToAccountDetail')" class="md-card-header">
-        <UserInfo :user="user" :small="small" :disabled="disabled"></UserInfo>
+    <div 
+      class="md-card-header" 
+      @click="$emit('goToAccountDetail')"
+    >
+      <UserInfo 
+        :user="user" 
+        :small="small" 
+        :disabled="disabled"
+      />
     </div>
     <md-divider v-if="!small" />
     <md-card-actions v-if="!small">
-      <MDTSubtleButton class="md-primary" v-on:click="$emit('transfer')" :disabled="disabled">{{ $t('message.common.transferbtn') }}</MDTSubtleButton>
+      <MDTSubtleButton 
+        :disabled="disabled" 
+        class="md-primary" 
+        @click="$emit('transfer')"
+      >{{ $t('message.common.transferbtn') }}</MDTSubtleButton>
     </md-card-actions>
   </md-card>
 </template>
@@ -15,9 +26,19 @@ import UserInfo from '@/components/common/UserInfo';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 
 export default {
+  components: {
+    UserInfo,
+    MDTSubtleButton,
+  },
   props: {
-    user: Object,
-    small: Boolean,
+    user: {
+      type: Object,
+      default: null,
+    },
+    small: {
+      type: Boolean,
+      default: false,
+    },
     hover: {
       type: Boolean,
       default: true,
@@ -26,10 +47,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    UserInfo,
-    MDTSubtleButton,
   },
 };
 </script>
@@ -55,6 +72,4 @@ export default {
     }
   }
 }
-
 </style>
-

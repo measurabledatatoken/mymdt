@@ -22,7 +22,8 @@ const state = {
 
 const moduleGetters = {
   getReward: state => id => state.byId[id],
-  getRewards: (state, getters) => (ids = []) => ids.map(id => getters.getReward(id)),
+  getRewards: (state, getters) => (ids = []) =>
+    ids.map(id => getters.getReward(id)),
 };
 
 const mutations = {
@@ -43,27 +44,41 @@ const mutations = {
 const actions = {
   [FETCH_ALL_REWARDS]({ rootState, dispatch }) {
     return Promise.all(
-      rootState.entities.users.allIds.map(
-        userId => dispatch(FETCH_REWARDS, {
+      rootState.entities.users.allIds.map(userId =>
+        dispatch(FETCH_REWARDS, {
           userId,
         }),
-      ));
+      ),
+    );
   },
   [FETCH_REWARDS]({ commit, rootState, rootGetters }, { userId }) {
     commit(FETCHING_REWARDS, {
       id: userId,
     });
-    return delay(750).then(() => api.reward.getRewards(rootState.home.appID, rootGetters.getUser(userId).accessToken))
-      .then(data => commit(FETCHING_REWARDS_SUCCESS, {
-        id: userId,
-        data,
-      }))
-      .catch(error => commit(FETCHING_REWARDS_FAILURE, {
-        id: userId,
-        error,
-      }));
+    return delay(750)
+      .then(() =>
+        api.reward.getRewards(
+          rootState.home.appID,
+          rootGetters.getUser(userId).accessToken,
+        ),
+      )
+      .then(data =>
+        commit(FETCHING_REWARDS_SUCCESS, {
+          id: userId,
+          data,
+        }),
+      )
+      .catch(error =>
+        commit(FETCHING_REWARDS_FAILURE, {
+          id: userId,
+          error,
+        }),
+      );
   },
-  async [CLAIM_REWARD]({ commit, dispatch, rootState, rootGetters }, { rewardId, userId }) {
+  async [CLAIM_REWARD](
+    { commit, dispatch, rootState, rootGetters },
+    { rewardId, userId },
+  ) {
     commit(CLAIMING_REWARD, {
       rewardId,
     });
@@ -71,7 +86,11 @@ const actions = {
     try {
       await dispatch(REQUEST, {
         api: api.reward.claimReward,
-        args: [rootState.home.appID, rewardId, rootGetters.getUser(userId).accessToken],
+        args: [
+          rootState.home.appID,
+          rewardId,
+          rootGetters.getUser(userId).accessToken,
+        ],
         openErrorPrompt: true,
         defaultErrorPromptMessage: {
           messageId: 'message.earnMDT.rewardErrorMessage',
@@ -94,7 +113,7 @@ const actions = {
   },
 };
 
-export default{
+export default {
   state,
   getters: moduleGetters,
   mutations,

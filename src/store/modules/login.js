@@ -1,17 +1,8 @@
 import api from '@/api';
-import {
-  ErrorCode,
-} from '@/enum';
-import {
-  REQUEST_USER_ACCOUNTS,
-  SET_APP_ID,
-} from '@/store/modules/home';
-import {
-  SET_IS_LOADING,
-} from '@/store/modules/common';
-import {
-  HANDLE_ERROR_CODE,
-} from '@/store/modules/api';
+import { ErrorCode } from '@/enum';
+import { REQUEST_USER_ACCOUNTS, SET_APP_ID } from '@/store/modules/home';
+import { SET_IS_LOADING } from '@/store/modules/common';
+import { HANDLE_ERROR_CODE } from '@/store/modules/api';
 
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
@@ -32,11 +23,10 @@ const state = {
 };
 
 const moduleGetters = {
-  getInvalidUser: state => state.invalidEmails.map(
-    email => ({
+  getInvalidUser: state =>
+    state.invalidEmails.map(email => ({
       emailAddress: email,
-    }),
-  ),
+    })),
 };
 
 const mutations = {
@@ -57,49 +47,37 @@ const mutations = {
 };
 
 const actions = {
-  [REQUEST_LOGIN](context, {
-    emailAddress,
-    password,
-    appID,
-  }) {
-    return api.auth.login(emailAddress, password, appID)
-      .then(
-        (data) => {
-          context.commit(SET_LOGIN_ERRORCODE, null);
+  [REQUEST_LOGIN](context, { emailAddress, password, appID }) {
+    return api.auth
+      .login(emailAddress, password, appID)
+      .then(data => {
+        context.commit(SET_LOGIN_ERRORCODE, null);
 
-          if (data.length > 0) {
-            const credential = {
-              email_address: emailAddress,
-              access_token: data.access_token,
-            };
-            const credentials = [credential];
-            context.commit(SET_CREDENTIALS, credentials);
-          }
-          context.commit(SET_APP_ID, appID);
+        if (data.length > 0) {
+          const credential = {
+            email_address: emailAddress,
+            access_token: data.access_token,
+          };
+          const credentials = [credential];
+          context.commit(SET_CREDENTIALS, credentials);
+        }
+        context.commit(SET_APP_ID, appID);
 
-          return null;
-        },
-      )
-      .catch(
-        (error) => {
-          if (error.response && error.response.data) {
-            context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
-          } else {
-            context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
-          }
-          throw (error);
-        },
-      );
+        return null;
+      })
+      .catch(error => {
+        if (error.response && error.response.data) {
+          context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
+        } else {
+          context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
+        }
+        throw error;
+      });
   },
-  [REQUEST_AUTO_LOGIN]({
-    commit,
-    dispatch,
-    rootState,
-  }, {
-    authTokens,
-    emails,
-    appID,
-  }) {
+  [REQUEST_AUTO_LOGIN](
+    { commit, dispatch, rootState },
+    { authTokens, emails, appID },
+  ) {
     commit(SET_IS_LOADING, true);
 
     if (!Array.isArray(authTokens)) {
@@ -107,39 +85,35 @@ const actions = {
     }
 
     if (authTokens.length !== emails.length) {
-      return Promise.reject(new Error('authTokens and emails should be same length'));
+      return Promise.reject(
+        new Error('authTokens and emails should be same length'),
+      );
     }
 
-    const appCredentials = authTokens.map(
-      (authToken, i) => ({
-        token: authToken,
-        email_address: emails[i],
-      }),
-    );
+    const appCredentials = authTokens.map((authToken, i) => ({
+      token: authToken,
+      email_address: emails[i],
+    }));
 
     const locale = rootState.common.locale;
-    return api.auth.autoLogin(appCredentials, appID, locale)
-      .then(
-        (data) => {
-          commit(SET_LOGIN_ERRORCODE, null);
+    return api.auth
+      .autoLogin(appCredentials, appID, locale)
+      .then(data => {
+        commit(SET_LOGIN_ERRORCODE, null);
 
-          const credentials = data.valid.map(
-            dataItem => ({
-              email_address: dataItem.email_address,
-              access_token: dataItem.access_token,
-            }),
-          );
-          commit(SET_CREDENTIALS, credentials);
-          commit(SET_INVALIDEMAILS, data.invalid);
-          return dispatch(REQUEST_USER_ACCOUNTS);
-        },
-      ).then(
-        () => {
-          commit(SET_APP_ID, appID);
-          commit(SET_IS_LOADING, false);
-        },
-      )
-      .catch((error) => {
+        const credentials = data.valid.map(dataItem => ({
+          email_address: dataItem.email_address,
+          access_token: dataItem.access_token,
+        }));
+        commit(SET_CREDENTIALS, credentials);
+        commit(SET_INVALIDEMAILS, data.invalid);
+        return dispatch(REQUEST_USER_ACCOUNTS);
+      })
+      .then(() => {
+        commit(SET_APP_ID, appID);
+        commit(SET_IS_LOADING, false);
+      })
+      .catch(error => {
         if (error.response && error.response.data) {
           commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
         } else {
@@ -152,14 +126,10 @@ const actions = {
         });
       });
   },
-  [VALIDATE_PASSCODE](context, {
-    passcode,
-    credential,
-  }) {
+  [VALIDATE_PASSCODE](context, { passcode, credential }) {
     return api.auth.validatePasscode(passcode, credential);
   },
 };
-
 
 export default {
   state,

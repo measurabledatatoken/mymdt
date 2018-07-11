@@ -1,9 +1,13 @@
 <template>
-  <BaseField class="recaptcha-field"
-             v-bind="$attrs">
-    <vue-recaptcha class="recaptcha"
-                   sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"
-                   v-on="$listeners" />
+  <BaseField 
+    v-bind="$attrs"
+    class="recaptcha-field"
+  >
+    <vue-recaptcha 
+      class="recaptcha"
+      sitekey="6LcyaVoUAAAAAO4bHCKeCJTsdJDbgq04n-3OUOSF"
+      v-on="$listeners"
+    />
   </BaseField>
 </template>
 

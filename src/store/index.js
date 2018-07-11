@@ -36,7 +36,12 @@ export default new Vuex.Store({
     betaTesting,
   },
   strict: debug,
-  plugins: debug ? [createLogger(), createPersistedState({
-    paths: ['home', 'login', 'entities', 'betaTesting'],
-  })] : [],
+  plugins: debug
+    ? [
+        createLogger(),
+        createPersistedState({
+          paths: ['home', 'login', 'entities', 'betaTesting'],
+        }),
+      ]
+    : [],
 });

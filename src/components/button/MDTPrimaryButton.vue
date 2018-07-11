@@ -1,6 +1,10 @@
 <template>
-  <MDTBaseButton v-bind="$attrs" v-on="$listeners" :class="['md-raised', 'primary', { 'primary--bottom': bottom }]">
-    <slot></slot>
+  <MDTBaseButton 
+    v-bind="$attrs" 
+    :class="['md-raised', 'primary', { 'primary--bottom': bottom }]" 
+    v-on="$listeners"
+  >
+    <slot/>
   </MDTBaseButton>
 </template>
 
@@ -8,9 +12,14 @@
 import MDTBaseButton from '@/components/button/MDTBaseButton';
 
 export default {
-  props: ['bottom'],
   components: {
     MDTBaseButton,
+  },
+  props: {
+    bottom: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -36,4 +45,3 @@ export default {
   }
 }
 </style>
-

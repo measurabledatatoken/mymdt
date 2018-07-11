@@ -8,16 +8,19 @@
       <TransactionListLoadingItem />
     </template>
     <template
-      v-else-if="Array.isArray(transactions) && transactions.length > 0"
       v-for="transaction in transactions"
+      v-else-if="Array.isArray(transactions) && transactions.length > 0"
     >
       <TransactionItem
         :key="transaction.id"
         :transaction="transaction"
         :to="{ name: RouteDef.TransactionDetail.name, params: { transaction_id: transaction.id, transaction } }"
-        showAvatar
+        show-avatar
       />
-      <md-divider :key="`${transaction.id}-divider`" class="list-item-divider" />
+      <md-divider 
+        :key="`${transaction.id}-divider`" 
+        class="list-item-divider"
+      />
     </template>
     <TransactionListEmptyItem v-else />
   </md-list>
@@ -34,43 +37,49 @@ import Skeleton from '@/components/common/Skeleton';
 import { RouteDef } from '@/constants';
 
 export default {
-  data() {
-    return {
-      RouteDef,
-    };
-  },
-  props: ['transactions'],
-  computed: {
-    ...mapState({
-      uiState: state => state.ui.transactionList,
-    }),
-  },
   components: {
     TransactionItem,
     TransactionListLoadingItem,
     TransactionListEmptyItem,
     Skeleton,
   },
+  props: {
+    transactions: {
+      type: Array,
+      default: function() {
+        return [];
+      },
+    },
+  },
+  data() {
+    return {
+      RouteDef,
+    };
+  },
+  computed: {
+    ...mapState({
+      uiState: state => state.ui.transactionList,
+    }),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-  .transaction-list {
-    overflow-y: scroll;
-    padding-bottom: 80px;
-  }
+.transaction-list {
+  overflow-y: scroll;
+  padding-bottom: 80px;
+}
 
-  .list-item__action {
-    margin-left: 16px;
-    color: $theme-font-color-btn;
+.list-item__action {
+  margin-left: 16px;
+  color: $theme-font-color-btn;
 
-    &.list-item__action--negative {
-      color: $label-color;
-    }
+  &.list-item__action--negative {
+    color: $label-color;
   }
+}
 
-  .list-item-divider {
-    margin: 0 16px;
-  }
+.list-item-divider {
+  margin: 0 16px;
+}
 </style>
-

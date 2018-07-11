@@ -2,26 +2,44 @@
   <md-list class="transaction-detail-list md-double-line">
     <TransactionItem
       :transaction="transaction"
-      showApplication
+      show-application
     />
     <md-divider />
-    <TransactionDetailItem :title="$t('message.transaction.type')" :description="$t(transactionType.properties[transaction.transaction_type].messageId)" />
-    <TransactionDetailItem :title="$t('message.transaction.time')" :description="$d(new Date(transaction.transaction_time), 'long')" />
+    <TransactionDetailItem 
+      :title="$t('message.transaction.type')" 
+      :description="$t(transactionType.properties[transaction.transaction_type].messageId)"
+    />
+    <TransactionDetailItem 
+      :title="$t('message.transaction.time')" 
+      :description="$d(new Date(transaction.transaction_time), 'long')"
+    />
     <!-- <TransactionDetailItem v-if="!!transaction.detail" :title="$t('message.transaction.detail')" :description="transaction.detail" /> -->
-    <TransactionDetailItem v-if="!!from" :title="$t('message.transaction.from')" :description="from" />
-    <TransactionDetailItem v-if="!!to" :title="$t('message.transaction.to')" :description="to" />
-    <TransactionDetailItem v-if="!!transaction.note" :title="$t('message.transaction.note')" :description="transaction.note" />
+    <TransactionDetailItem 
+      v-if="!!from" 
+      :title="$t('message.transaction.from')" 
+      :description="from"
+    />
+    <TransactionDetailItem 
+      v-if="!!to" 
+      :title="$t('message.transaction.to')" 
+      :description="to"
+    />
+    <TransactionDetailItem 
+      v-if="!!transaction.note" 
+      :title="$t('message.transaction.note')" 
+      :description="transaction.note"
+    />
     <TransactionDetailItem
       v-if="typeof transaction.transaction_fee === 'number'"
       :title="$t('message.transaction.transactionFee')"
       :description="`${formatAmount(transaction.transaction_fee, { type: 'long' })} MDT`"
-      :singleLine="true"
+      :single-line="true"
     />
     <TransactionDetailItem
       v-if="typeof transaction.account_balance === 'number'"
       :title="$t('message.transaction.accountBalance')"
       :description="`${formatAmount(transaction.account_balance, { type: 'long' })} MDT`"
-      :singleLine="true"
+      :single-line="true"
     />
   </md-list>
 </template>
@@ -35,6 +53,10 @@ import { transactionType } from '@/enum';
 import { formatAmount } from '@/utils';
 
 export default {
+  components: {
+    TransactionItem,
+    TransactionDetailItem,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -77,10 +99,6 @@ export default {
       }
     },
   },
-  components: {
-    TransactionItem,
-    TransactionDetailItem,
-  },
   methods: {
     formatAmount,
   },
@@ -88,7 +106,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .transaction-detail-list {
-    padding-top: 0;
-  }
+.transaction-detail-list {
+  padding-top: 0;
+}
 </style>

@@ -1,17 +1,20 @@
 <template>
   <md-list-item v-bind="$attrs">
     <md-avatar v-if="showAvatar && application && application.avatar_url">
-      <img :src="application.avatar_url" alt="Avatar">
+      <img 
+        :src="application.avatar_url" 
+        alt="Avatar"
+      >
     </md-avatar>
     <div class="md-list-item-text">
       <TransactionTitle :transaction="transaction" />
       <span>{{ (showApplication && application) ? application.name : $d(new Date(transaction.transaction_time), 'long') }}</span>
     </div>
-    <div v-bind:class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
+    <div :class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
       <span>{{ formattedAmount }} MDT</span>
       <span
-        class="action-status"
         v-if="showStatus"
+        class="action-status"
       >
         {{ getStatusText }}
       </span>
@@ -28,8 +31,14 @@ import { transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
 
 export default {
+  components: {
+    TransactionTitle,
+  },
   props: {
-    transaction: Object,
+    transaction: {
+      type: Object,
+      default: null,
+    },
     showAvatar: {
       type: Boolean,
       default: false,
@@ -45,10 +54,15 @@ export default {
       return formatAmount(this.transaction.delta, { type: 'short' });
     },
     getStatusText() {
-      return this.$t(transactionStatus.properties[this.transaction.status].messageId);
+      return this.$t(
+        transactionStatus.properties[this.transaction.status].messageId,
+      );
     },
     showStatus() {
-      return transactionStatus.properties[this.transaction.status] && (this.transaction.status !== transactionStatus.SUCCESSFUL);
+      return (
+        transactionStatus.properties[this.transaction.status] &&
+        this.transaction.status !== transactionStatus.SUCCESSFUL
+      );
     },
     application() {
       return this.getApplication(this.transaction.application_id);
@@ -70,40 +84,36 @@ export default {
       }
     },
   },
-  components: {
-    TransactionTitle,
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-  .action {
-    margin-left: 16px;
+.action {
+  margin-left: 16px;
+  color: $theme-font-color-btn;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+
+  &.action--pending {
+    color: $theme-placehoder-color;
+    font-style: italic;
+  }
+
+  &.action--successful {
     color: $theme-font-color-btn;
-    display: flex;
-    flex-direction: column;
-    text-align: right;
 
-    &.action--pending {
-      color: $theme-placehoder-color;
-      font-style: italic;
-    }
-
-    &.action--successful {
-      color: $theme-font-color-btn;
-
-      &.action--amount-negative {
-        color: $label-color;
-      }
-    }
-
-    &.action--failed {
-      color: $error-color;
-    }
-
-    .action-status {
-      font-size: $secondary-font-size;
+    &.action--amount-negative {
+      color: $label-color;
     }
   }
-</style>
 
+  &.action--failed {
+    color: $error-color;
+  }
+
+  .action-status {
+    font-size: $secondary-font-size;
+  }
+}
+</style>

@@ -4,12 +4,9 @@
 
 <script>
 export default {
-  methods: {
-
-  },
+  methods: {},
 };
 </script>
 
 <style>
-
 </style>

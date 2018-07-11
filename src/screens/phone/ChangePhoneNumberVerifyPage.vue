@@ -1,16 +1,19 @@
 <template>
   <div>
-    <BasePhoneNumberVerifyPage :title="$t('message.phone.verify_newphone_title')"
-                               v-bind="$attrs"
-                               @editClick="onEditClicked"
-                               @doneClick="onDoneClicked"></BasePhoneNumberVerifyPage>
+    <BasePhoneNumberVerifyPage 
+      :title="$t('message.phone.verify_newphone_title')"
+      v-bind="$attrs"
+      @editClick="onEditClicked"
+      @doneClick="onDoneClicked"
+    />
 
-    <SuccessPopup :title="$t('message.phone.phone_update_success')"
-                  :md-active.sync="showPhoneSetupSuccessPopup"
-                  iconSrc="/static/icons/guarded.svg"
-                  :confirmText="$t('message.common.done')"
-                  @md-confirm="onPopupDoneClicked">
-    </SuccessPopup>
+    <SuccessPopup 
+      :title="$t('message.phone.phone_update_success')"
+      :md-active.sync="showPhoneSetupSuccessPopup"
+      :confirm-text="$t('message.common.done')"
+      icon-src="/static/icons/guarded.svg"
+      @md-confirm="onPopupDoneClicked"
+    />
   </div>
 </template>
 
@@ -23,8 +26,7 @@ import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage
 import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
-  metaInfo() {
-  },
+  metaInfo() {},
   components: {
     BasePhoneNumberVerifyPage,
     SuccessPopup,
@@ -32,9 +34,11 @@ export default {
   props: {
     pin: {
       type: String,
+      default: null,
     },
     verificationCode: {
       type: String,
+      default: null,
     },
   },
   data() {
@@ -53,24 +57,20 @@ export default {
       backToPath: BACK_TO_PATH,
     }),
     onEditClicked() {
-      this.$router.push(
-        {
-          name: RouteDef.ChangePhoneNumberInput.name,
-          params: {
-            pin: this.pin,
-            verificationCode: this.verificationCode,
-          },
+      this.$router.push({
+        name: RouteDef.ChangePhoneNumberInput.name,
+        params: {
+          pin: this.pin,
+          verificationCode: this.verificationCode,
         },
-      );
+      });
     },
     onDoneClicked(verificationCode) {
-      this.changePhoneNumber(
-        {
-          oldVerificationCode: this.verificationCode,
-          verificationCode,
-          pin: this.pin,
-        },
-      ).then(() => {
+      this.changePhoneNumber({
+        oldVerificationCode: this.verificationCode,
+        verificationCode,
+        pin: this.pin,
+      }).then(() => {
         this.showPhoneSetupSuccessPopup = true;
       });
     },
@@ -79,7 +79,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style lang="scss" scoped>

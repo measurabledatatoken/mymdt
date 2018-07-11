@@ -3,9 +3,12 @@
     :label="label"
     :error="!isAddressValid && $t('message.qrcode.eth_address_invalid')"
   >
-    <md-textarea md-autogrow :placeholder="$t('message.transfer.wallet_address_placeholder')" v-on:change="valueChanged($event.target.value)"
-      :value="walletAddress">
-    </md-textarea>
+    <md-textarea 
+      :placeholder="$t('message.transfer.wallet_address_placeholder')" 
+      :value="walletAddress" 
+      md-autogrow
+      @change="valueChanged($event.target.value)"
+    />
     <!-- <md-button class="md-icon-button" :to="RouteDef.TransferEthWalletQrCode.path">
       <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>
     </md-button> -->
@@ -18,6 +21,9 @@ import { getEthAddressFromString } from '@/utils';
 import { RouteDef } from '@/constants';
 
 export default {
+  components: {
+    BaseField,
+  },
   props: {
     label: {
       type: String,
@@ -51,9 +57,6 @@ export default {
     valueChanged(value) {
       this.walletAddress = value;
     },
-  },
-  components: {
-    BaseField,
   },
 };
 </script>

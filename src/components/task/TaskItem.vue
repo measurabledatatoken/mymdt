@@ -1,10 +1,10 @@
 <template>
   <BaseEarnMDTItem
-    class="earn-mdt-task-item"
     :title="task.name"
     :description="description"
-    md-src="/static/icons/get-mdt.svg"
     v-bind="$attrs"
+    class="earn-mdt-task-item"
+    md-src="/static/icons/get-mdt.svg"
   >
     <template slot="action">
       <div class="earn-mdt-task-item__action">
@@ -27,9 +27,19 @@ import BaseEarnMDTItem from '@/components/task/BaseEarnMDTItem';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 
 export default {
+  components: {
+    BaseEarnMDTItem,
+    MDTSecondaryButton,
+  },
   props: {
-    task: Object,
-    user: Object,
+    task: {
+      type: Object,
+      default: null,
+    },
+    user: {
+      type: Object,
+      default: null,
+    },
   },
   computed: {
     isExternalUrl() {
@@ -42,13 +52,19 @@ export default {
       return this.task.task_url.replace('[email]', this.user.emailAddress);
     },
     description() {
-      return this.task.max_completion > 1 ? this.$t('message.earnMDT.maximumAmountToEarn', {
-        amount: formatAmount(this.task.max_amount_to_earn, { type: 'short' }),
-        currency: 'MDT',
-      }) : null;
+      return this.task.max_completion > 1
+        ? this.$t('message.earnMDT.maximumAmountToEarn', {
+            amount: formatAmount(this.task.max_amount_to_earn, {
+              type: 'short',
+            }),
+            currency: 'MDT',
+          })
+        : null;
     },
     amountText() {
-      const amount = `${formatAmount(this.task.reward_value, { type: 'short' })} MDT`;
+      const amount = `${formatAmount(this.task.reward_value, {
+        type: 'short',
+      })} MDT`;
       if (this.task.max_completion > 1) {
         return this.$t('message.earnMDT.amountPerTime', {
           amount,
@@ -57,10 +73,6 @@ export default {
 
       return amount;
     },
-  },
-  components: {
-    BaseEarnMDTItem,
-    MDTSecondaryButton,
   },
 };
 </script>
@@ -85,6 +97,4 @@ export default {
     }
   }
 }
-
 </style>
-

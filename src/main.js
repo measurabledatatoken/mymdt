@@ -13,7 +13,6 @@ import Vuelidate from 'vuelidate';
 import 'swiper/dist/css/swiper.css';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 
-
 import App from './App';
 import router from './router';
 
@@ -22,11 +21,9 @@ import i18n from './localization';
 
 import fixVirtualKeyboardGlitch from './helpers/fixVirtualKeyboardGlitch';
 
-
 Vue.config.productionTip = false;
 Vue.use(VueMaterial);
 Vue.use(Vuelidate);
-
 
 Vue.use(VueAwesomeSwiper);
 

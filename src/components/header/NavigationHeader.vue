@@ -1,8 +1,7 @@
 <template>
-  <div class='navigation-bar'>
-    <md-button v-on:click="goBack">
-      <md-icon md-src="/static/icons/arrow-back-white.svg">
-      </md-icon>
+  <div class="navigation-bar">
+    <md-button @click="goBack">
+      <md-icon md-src="/static/icons/arrow-back-white.svg"/>
     </md-button>
     <div class="title">
       {{ title }}
@@ -12,17 +11,19 @@
 
 
 <script>
-
 export default {
-  props: ['title'],
+  props: {
+    title: {
+      type: String,
+      default: null,
+    },
+  },
   methods: {
     goBack() {
       this.$router.back();
     },
   },
 };
-
-
 </script>
 
 
@@ -35,7 +36,7 @@ export default {
 .md-button {
   position: absolute;
   left: 0;
-  min-width: 56px;;
+  min-width: 56px;
   height: $header-height;
   margin: 0;
 }

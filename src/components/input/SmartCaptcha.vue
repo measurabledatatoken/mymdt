@@ -16,12 +16,6 @@ const url = {
   },
 };
 export default {
-  data() {
-    return {
-      sc: undefined,
-      id: `sc${parseInt(Math.random() * 1000000, 10)}`,
-    };
-  },
   props: {
     h5: { type: Boolean, default: false },
     appkey: { type: String, required: true },
@@ -30,7 +24,18 @@ export default {
     h5scene: {type: String},
     aeis: { type: Boolean, default: false },
     lang: { type: String, default: 'en' },
-    option: { type: Object, default() { return {}; } },
+    option: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+  data() {
+    return {
+      sc: undefined,
+      id: `sc${parseInt(Math.random() * 1000000, 10)}`,
+    };
   },
   mounted() {
     this.$_setOpt();
@@ -47,14 +52,12 @@ export default {
         this.$_initCaptcha();
         this.$emit('load');
       } else {
-        VueScript2.load(url[!this.aeis ? 'g' : 'aeis'].base)
-          .then(() => {
-            VueScript2.load(url[!this.aeis ? 'g' : 'aeis'].pc)
-              .then(() => {
-                this.$_initCaptcha();
-                this.$emit('load');
-              });
+        VueScript2.load(url[!this.aeis ? 'g' : 'aeis'].base).then(() => {
+          VueScript2.load(url[!this.aeis ? 'g' : 'aeis'].pc).then(() => {
+            this.$_initCaptcha();
+            this.$emit('load');
           });
+        });
       }
     },
     $_setOpt() {
@@ -74,17 +77,30 @@ export default {
           '//img.alicdn.com/tfs/TB17cwllsLJ8KJjy0FnXXcFDpXa-50-74.png',
           '//img.alicdn.com/tfs/TB17cwllsLJ8KJjy0FnXXcFDpXa-50-74.png',
         ],
-        bg_back_prepared: option.bg_back_prepared || '//img.alicdn.com/tps/TB1skE5SFXXXXb3XXXXXXXXXXXX-100-80.png',
-        bg_front: option.bg_front || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABQCAMAAADY1yDdAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAADUExURefk5w+ruswAAAAfSURBVFjD7cExAQAAAMKg9U9tCU+gAAAAAAAAAIC3AR+QAAFPlUGoAAAAAElFTkSuQmCC',
-        obj_ok: option.obj_ok || '//img.alicdn.com/tfs/TB1rmyTltfJ8KJjy0FeXXXKEXXa-50-74.png',
-        bg_back_pass: option.bg_back_pass || '//img.alicdn.com/tfs/TB1KDxCSVXXXXasXFXXXXXXXXXX-100-80.png',
-        obj_error: option.obj_error || '//img.alicdn.com/tfs/TB1q9yTltfJ8KJjy0FeXXXKEXXa-50-74.png',
-        bg_back_fail: option.bg_back_fail || '//img.alicdn.com/tfs/TB1w2oOSFXXXXb4XpXXXXXXXXXX-100-80.png',
+        bg_back_prepared:
+          option.bg_back_prepared ||
+          '//img.alicdn.com/tps/TB1skE5SFXXXXb3XXXXXXXXXXXX-100-80.png',
+        bg_front:
+          option.bg_front ||
+          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABQCAMAAADY1yDdAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAADUExURefk5w+ruswAAAAfSURBVFjD7cExAQAAAMKg9U9tCU+gAAAAAAAAAIC3AR+QAAFPlUGoAAAAAElFTkSuQmCC',
+        obj_ok:
+          option.obj_ok ||
+          '//img.alicdn.com/tfs/TB1rmyTltfJ8KJjy0FeXXXKEXXa-50-74.png',
+        bg_back_pass:
+          option.bg_back_pass ||
+          '//img.alicdn.com/tfs/TB1KDxCSVXXXXasXFXXXXXXXXXX-100-80.png',
+        obj_error:
+          option.obj_error ||
+          '//img.alicdn.com/tfs/TB1q9yTltfJ8KJjy0FeXXXKEXXa-50-74.png',
+        bg_back_fail:
+          option.bg_back_fail ||
+          '//img.alicdn.com/tfs/TB1w2oOSFXXXXb4XpXXXXXXXXXX-100-80.png',
         language: 'cn',
         upLang: option.upLang || {
           cn: {
             _ggk_guide: option.ggk_guide || '请在屏幕上滑动，刮出两面盾牌',
-            _ggk_success: option.ggk_success || '恭喜您成功刮出盾牌<br/>继续下一步操作吧',
+            _ggk_success:
+              option.ggk_success || '恭喜您成功刮出盾牌<br/>继续下一步操作吧',
             _ggk_loading: option.ggk_loading || '加载中',
             // eslint-disable-next-line
             _ggk_fail: option.ggk_fail || ['呀，盾牌不见了<br/>请', 'javascript:noCaptcha.reset()', '再来一次', '或', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', '反馈问题'],
@@ -94,7 +110,6 @@ export default {
             _ggk_net_err: option.ggk_net_err || ['网络实在不给力<br/>请', 'javascript:noCaptcha.reset()', '再来一次', '或', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', '反馈问题'],
             // eslint-disable-next-line
             _ggk_too_fast: option.ggk_too_fast || ['您刮得太快啦<br/>请', 'javascript:noCaptcha.reset()', '再来一次', '或', 'http://survey.taobao.com/survey/QgzQDdDd?token=%TOKEN', '反馈问题'],
-
           },
         },
       };
@@ -112,7 +127,7 @@ export default {
         scaning_txt: option.scaning_txt || '智能检测中',
         _startTEXT: 'test',
 
-        success: (data) => {
+        success: data => {
           this.$emit('callback', {
             token: window.NVC_Opt.token,
             sessionId: data.sessionId,
@@ -127,43 +142,53 @@ export default {
     // monitor dom for second verification element. Localize the text of slide verification.
     $_MonitorNoCaptchaDom() {
       const option = this.option || {};
-      document.querySelector('#SM_BTN_WRAPPER_1').addEventListener('DOMNodeInserted', () => {
-        const noCaptchaElementList = document.getElementsByClassName('nc-lang-cnt');
-        if (noCaptchaElementList.length > 0) {
-          const noCaptchaElement = noCaptchaElementList[0];
-          const ncLangKey = noCaptchaElement.dataset.ncLang;
+      document.querySelector('#SM_BTN_WRAPPER_1').addEventListener(
+        'DOMNodeInserted',
+        () => {
+          const noCaptchaElementList = document.getElementsByClassName(
+            'nc-lang-cnt',
+          );
+          if (noCaptchaElementList.length > 0) {
+            const noCaptchaElement = noCaptchaElementList[0];
+            const ncLangKey = noCaptchaElement.dataset.ncLang;
 
-          switch (ncLangKey) {
-            case '_Loading': {
-              noCaptchaElement.innerText = option.nc_loading || '加载中';
-              break;
-            }
-            case '_startTEXT': {
-              noCaptchaElement.innerText = option.nc_startText || '请按住滑块，拖动到最右边';
-              break;
-            }
-            case '_yesTEXT': {
-              noCaptchaElement.innerText = option.nc_yesText || '验证通过';
-              break;
-            }
-            case '_error300': {
-              noCaptchaElement.innerText = option.nc_error300 || '出错了，刷新再来一次';
-              break;
-            }
-            case '_errorServer': {
-              noCaptchaElement.innerText = option.nc_errorServer || '服务器错误或者超时';
-              break;
-            }
-            case '_errorNetwork': {
-              noCaptchaElement.innerText = option.nc_errorNetwork || '网络不给力，请刷新再来一次';
-              break;
-            }
-            default: {
-              break;
+            switch (ncLangKey) {
+              case '_Loading': {
+                noCaptchaElement.innerText = option.nc_loading || '加载中';
+                break;
+              }
+              case '_startTEXT': {
+                noCaptchaElement.innerText =
+                  option.nc_startText || '请按住滑块，拖动到最右边';
+                break;
+              }
+              case '_yesTEXT': {
+                noCaptchaElement.innerText = option.nc_yesText || '验证通过';
+                break;
+              }
+              case '_error300': {
+                noCaptchaElement.innerText =
+                  option.nc_error300 || '出错了，刷新再来一次';
+                break;
+              }
+              case '_errorServer': {
+                noCaptchaElement.innerText =
+                  option.nc_errorServer || '服务器错误或者超时';
+                break;
+              }
+              case '_errorNetwork': {
+                noCaptchaElement.innerText =
+                  option.nc_errorNetwork || '网络不给力，请刷新再来一次';
+                break;
+              }
+              default: {
+                break;
+              }
             }
           }
-        }
-      }, false);
+        },
+        false,
+      );
     },
   },
 };

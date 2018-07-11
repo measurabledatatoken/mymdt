@@ -4,13 +4,13 @@
     :error="isInSufficientFund && $t('message.transfer.insufficient_fund')"
   >
     <md-input
+      :value="enteredAmount"
       class="amount"
       type="number"
       placeholder="0.0000"
       min="0"
-      v-on:change="numberChanged($event.target.value)"
-      :value="enteredAmount">
-    </md-input>
+      @change="numberChanged($event.target.value)"
+    />
     <span class="md-suffix">MDT</span>
   </BaseField>
 </template>
@@ -19,7 +19,19 @@
 import BaseField from '@/components/input/BaseField';
 
 export default {
-  props: { amount: Number, maxAmount: Number },
+  components: {
+    BaseField,
+  },
+  props: {
+    amount: {
+      type: Number,
+      default: null,
+    },
+    maxAmount: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       enteredAmount: this.amount,
@@ -46,9 +58,6 @@ export default {
       }
     },
   },
-  components: {
-    BaseField,
-  },
 };
 </script>
 
@@ -62,7 +71,8 @@ export default {
   .md-input {
     text-align: right;
 
-    &.amount, &::placeholder {
+    &.amount,
+    &::placeholder {
       font-size: 1.75rem;
     }
 

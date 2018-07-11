@@ -1,19 +1,17 @@
 import api from '@/api';
-import {
-  FETCH_USER,
-} from '@/store/modules/entities/users';
-import {
-  REQUEST,
-} from '@/store/modules/api';
+import { FETCH_USER } from '@/store/modules/entities/users';
+import { REQUEST } from '@/store/modules/api';
 
 // mutation
 export const SET_COUNTRY_DIALCODE = 'phoneVerifyScreen/SET_COUNTRY_DIALCODE';
 export const SET_COUNTRY_CODE = 'phoneVerifyScreen/SET_COUNTRY_CODE';
 export const SET_PHONENUMBER = 'phoneVerifyScreen/SET_PHONENUMBER';
-export const SET_DONE_CALLBACK_PATH = 'phoneVerifyScreen/SET_DONE_CALLBACK_PATH';
+export const SET_DONE_CALLBACK_PATH =
+  'phoneVerifyScreen/SET_DONE_CALLBACK_PATH';
 export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
-export const SET_SECURITY_USER_PHONE_INFO = 'security/SET_SECURITY_USER_PHONE_INFO';
+export const SET_SECURITY_USER_PHONE_INFO =
+  'security/SET_SECURITY_USER_PHONE_INFO';
 
 // action
 export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
@@ -69,11 +67,7 @@ const mutations = {
 };
 
 const actions = {
-  [VALIDATE_PIN_FOR_SECURITY]({
-    state,
-    dispatch,
-    rootGetters,
-  }, pin) {
+  [VALIDATE_PIN_FOR_SECURITY]({ state, dispatch, rootGetters }, pin) {
     const account = rootGetters.getUser(state.selectedUserId);
 
     return dispatch(REQUEST, {
@@ -83,10 +77,7 @@ const actions = {
       openErrorPrompt: false,
     });
   },
-  [VALIDATE_PIN_FOR_TRANSFER]({
-    dispatch,
-    rootState,
-  }, pin) {
+  [VALIDATE_PIN_FOR_TRANSFER]({ dispatch, rootState }, pin) {
     const transferFromAccount = rootState.transfer.transferFromAccount;
 
     return dispatch(REQUEST, {
@@ -96,15 +87,10 @@ const actions = {
       openErrorPrompt: false,
     });
   },
-  [RESET_PIN]({
-    dispatch,
-    state,
-    rootGetters,
-  }, {
-    pin,
-    confirmedPIN,
-    verificationCode,
-  }) {
+  [RESET_PIN](
+    { dispatch, state, rootGetters },
+    { pin, confirmedPIN, verificationCode },
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
 
     dispatch(REQUEST, {
@@ -114,14 +100,7 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  async [SETUP_PIN]({
-    dispatch,
-    state,
-    rootGetters,
-  }, {
-    pin,
-    confirmedPIN,
-  }) {
+  async [SETUP_PIN]({ dispatch, state, rootGetters }, { pin, confirmedPIN }) {
     const account = rootGetters.getUser(state.selectedUserId);
     try {
       await dispatch(REQUEST, {
@@ -138,15 +117,10 @@ const actions = {
       return false;
     }
   },
-  [CHANGE_PIN]({
-    dispatch,
-    state,
-    rootGetters,
-  }, {
-    oldPIN,
-    newPIN,
-    confirmedPIN,
-  }) {
+  [CHANGE_PIN](
+    { dispatch, state, rootGetters },
+    { oldPIN, newPIN, confirmedPIN },
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
     return dispatch(REQUEST, {
       api: api.security.changePIN,
@@ -155,29 +129,23 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  [REQUEST_VERIFICATION_CODE]({
-    dispatch,
-    state,
-    rootGetters,
-  }, {
-    action,
-  }) {
+  [REQUEST_VERIFICATION_CODE]({ dispatch, state, rootGetters }, { action }) {
     const account = rootGetters.getUser(state.selectedUserId);
     return dispatch(REQUEST, {
       api: api.security.sendVerificationCodeToPhone,
-      args: [state.countryDialCode + state.phoneNumber, action, account.accessToken],
+      args: [
+        state.countryDialCode + state.phoneNumber,
+        action,
+        account.accessToken,
+      ],
       setLoading: true,
       openErrorPrompt: true,
     });
   },
-  async [ADD_PHONE_NUMBER]({
-    dispatch,
-    state,
-    rootGetters,
-  }, {
-    pin,
-    verificationCode,
-  }) {
+  async [ADD_PHONE_NUMBER](
+    { dispatch, state, rootGetters },
+    { pin, verificationCode },
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
     try {
       await dispatch(REQUEST, {
@@ -194,15 +162,10 @@ const actions = {
       return false;
     }
   },
-  [CHANGE_PHONE_NUMBER]({
-    dispatch,
-    state,
-    rootGetters,
-  }, {
-    oldVerificationCode,
-    verificationCode,
-    pin,
-  }) {
+  [CHANGE_PHONE_NUMBER](
+    { dispatch, state, rootGetters },
+    { oldVerificationCode, verificationCode, pin },
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
     return dispatch(REQUEST, {
       api: api.security.changePhoneNumber,
@@ -211,14 +174,10 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  [VERIFY_VERIFICATION_CODE]({
-    dispatch,
-    state,
-    rootGetters,
-  }, {
-    action,
-    verificationCode,
-  }) {
+  [VERIFY_VERIFICATION_CODE](
+    { dispatch, state, rootGetters },
+    { action, verificationCode },
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
 
     return dispatch(REQUEST, {
@@ -229,7 +188,6 @@ const actions = {
     });
   },
 };
-
 
 export default {
   state,

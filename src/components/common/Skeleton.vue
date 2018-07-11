@@ -1,6 +1,9 @@
 <template>
-  <div :style="{ width, height }" class="content-placeholder-text">
-    <div class="content-placeholder__background"></div>
+  <div 
+    :style="{ width, height }" 
+    class="content-placeholder-text"
+  >
+    <div class="content-placeholder__background"/>
   </div>
 </template>
 
@@ -31,7 +34,12 @@ export default {
 
   .content-placeholder__background {
     animation: content-placeholder-animation 1s linear infinite;
-    background: linear-gradient(to right, rgba(15,15,15,0) 0%,rgba(235,235,235,0.4) 50%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(
+      to right,
+      rgba(15, 15, 15, 0) 0%,
+      rgba(235, 235, 235, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
     position: absolute;
     top: 0;
     left: 0;

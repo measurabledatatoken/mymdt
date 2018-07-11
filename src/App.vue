@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <link href="https://fonts.googleapis.com/css?family=Lato"
-          rel="stylesheet">
+    <link 
+      href="https://fonts.googleapis.com/css?family=Lato"
+      rel="stylesheet"
+    >
     <router-view/>
   </div>
 </template>
@@ -14,7 +16,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: "Lato", "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Lato', 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -26,7 +28,7 @@ export default {
 }
 
 .md-menu-content-container .md-list {
-  font-family: "Lato", "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Lato', 'Avenir', Helvetica, Arial, sans-serif;
 }
 
 body {

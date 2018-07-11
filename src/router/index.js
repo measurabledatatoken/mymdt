@@ -203,7 +203,8 @@ const router = new Router({
 
         // Route to Home page for route not defined
         {
-          path: '*', redirect: RouteDef.Home,
+          path: '*',
+          redirect: RouteDef.Home,
         },
       ],
     },

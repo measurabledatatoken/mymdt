@@ -1,21 +1,27 @@
 <template>
   <ul class="account-list">
-    <li v-for="user in allUsers" :key="user.emailAddress">
-      <UserInfoCard :user="user" small :hover="false">
-      </UserInfoCard>
+    <li 
+      v-for="user in allUsers" 
+      :key="user.emailAddress"
+    >
+      <UserInfoCard 
+        :user="user" 
+        :hover="false" 
+        small
+      />
       <md-list class="account-task-list">
         <template v-if="uiState.users[user.emailAddress].isFetchingRewards">
           <EarnMDTLoadingItem />
           <md-divider />
         </template>
         <template
-          v-else-if="Array.isArray(user.rewards) && user.rewards.length > 0"
           v-for="reward in getRewards(user.rewards).filter(reward => reward)"
+          v-else-if="Array.isArray(user.rewards) && user.rewards.length > 0"
         >
           <RewardItem
             :key="reward.id"
             :reward="reward"
-            :userId="user.emailAddress"
+            :user-id="user.emailAddress"
           />
           <md-divider :key="`${reward.id}-divider`" />
         </template>
@@ -24,8 +30,8 @@
           <md-divider />
         </template>
         <template
-          v-else-if="Array.isArray(user.tasks) && user.tasks.filter(task => !task.is_task_completed).length > 0"
           v-for="task in user.tasks.filter(task => !task.is_task_completed)"
+          v-else-if="Array.isArray(user.tasks) && user.tasks.filter(task => !task.is_task_completed).length > 0"
         >
           <TaskItem
             :key="task.task_id"
@@ -53,6 +59,13 @@ import { FETCH_ALL_TASKS } from '@/store/modules/entities/users';
 import { FETCH_ALL_REWARDS } from '@/store/modules/entities/rewards';
 
 export default {
+  components: {
+    UserInfoCard,
+    Skeleton,
+    EarnMDTLoadingItem,
+    RewardItem,
+    TaskItem,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -74,6 +87,10 @@ export default {
       getRewards: 'getRewards',
     }),
   },
+  created() {
+    this.fetchAllTasks();
+    this.fetchAllRewards();
+  },
   methods: {
     afterLeave() {
       this.showAmount = true;
@@ -82,17 +99,6 @@ export default {
       fetchAllTasks: FETCH_ALL_TASKS,
       fetchAllRewards: FETCH_ALL_REWARDS,
     }),
-  },
-  created() {
-    this.fetchAllTasks();
-    this.fetchAllRewards();
-  },
-  components: {
-    UserInfoCard,
-    Skeleton,
-    EarnMDTLoadingItem,
-    RewardItem,
-    TaskItem,
   },
 };
 </script>

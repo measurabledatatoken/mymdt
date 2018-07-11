@@ -1,7 +1,12 @@
 <template>
   <md-list class="price-unit-list">
     <template v-for="currency in currencyList">
-      <price-unit-lis-item :key="currency" :title="currency" :selected="currency === priceUnit" v-on:click="setPriceUnit(currency)" />
+      <price-unit-lis-item 
+        :key="currency" 
+        :title="currency" 
+        :selected="currency === priceUnit" 
+        @click="setPriceUnit(currency)"
+      />
       <md-divider :key="`${currency}-divider`" />
     </template>
   </md-list>
@@ -16,6 +21,9 @@ import { SET_PRICE_UNIT } from '@/store/modules/home';
 import currencyList from '@/data/currencyList.json';
 
 export default {
+  components: {
+    PriceUnitLisItem,
+  },
   extends: BasePage,
   metaInfo() {
     return {
@@ -32,9 +40,6 @@ export default {
       priceUnit: state => state.home.priceUnit,
     }),
   },
-  components: {
-    PriceUnitLisItem,
-  },
   methods: {
     ...mapMutations({
       setPriceUnit: SET_PRICE_UNIT,
@@ -45,6 +50,6 @@ export default {
 
 <style lang="scss" scoped>
 .price-unit-list {
-    padding-top: 0;
+  padding-top: 0;
 }
 </style>

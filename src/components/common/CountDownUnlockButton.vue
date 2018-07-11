@@ -1,12 +1,15 @@
 <template>
-    <MDTSubtleButton v-on:click="onClick()" :disabled="!enabled">
-        <template v-if="enabled">
-            {{ $t(countDoneTranslateKey) }}
-        </template>
-        <template v-else>
-            {{ $t(countingTranslateKey, { second: curCountDownSecond}) }}
-        </template>
-    </MDTSubtleButton>
+  <MDTSubtleButton 
+    :disabled="!enabled" 
+    @click="onClick()"
+  >
+    <template v-if="enabled">
+      {{ $t(countDoneTranslateKey) }}
+    </template>
+    <template v-else>
+      {{ $t(countingTranslateKey, { second: curCountDownSecond}) }}
+    </template>
+  </MDTSubtleButton>
 </template>
 
 <script>
@@ -19,12 +22,15 @@ export default {
   props: {
     secondsToCount: {
       type: Number,
+      default: 0,
     },
     countingTranslateKey: {
       type: String,
+      default: '',
     },
     countDoneTranslateKey: {
       type: String,
+      default: '',
     },
   },
   data() {
@@ -39,18 +45,16 @@ export default {
   },
   methods: {
     countDown() {
-      setTimeout(
-        () => {
-          this.curCountDownSecond = Math.max(0, this.curCountDownSecond - 1);
+      setTimeout(() => {
+        this.curCountDownSecond = Math.max(0, this.curCountDownSecond - 1);
 
-          if (this.curCountDownSecond === 0) {
-            this.enabled = true;
-            this.curCountDownSecond = this.secondsToCount;
-          } else {
-            this.countDown();
-          }
-        }, 1000,
-      );
+        if (this.curCountDownSecond === 0) {
+          this.enabled = true;
+          this.curCountDownSecond = this.secondsToCount;
+        } else {
+          this.countDown();
+        }
+      }, 1000);
     },
     onClick() {
       this.enabled = false;
@@ -60,4 +64,3 @@ export default {
   },
 };
 </script>
-
