@@ -1,14 +1,24 @@
 <template>
   <div :class="['user-info', { 'user-info--small': small } ]">
     <div class="user-info__item">
-      <UserAvatar :user="user" />
-      <div class="user-data">
-        <div v-bind:class="{ onlytitle : subTitle.length === 0} " class="md-title"> {{ title }}</div>
+      <UserAvatar :user="user"
+                  :disabled="disabled" />
+      <div class="user-data"
+           :disabled="disabled">
+        <div :class="{ onlytitle : subTitle.length === 0} "
+             class="md-title"> {{ title }}</div>
         <div class="md-sutitle"> {{ subTitle }}</div>
       </div>
-      <UserInfoMDTAmount v-if="showMDT && small" class="user-info__amount" :amount="user.mdtBalance" animated />
+      <UserInfoMDTAmount v-if="showMDT && small"
+                         class="user-info__amount"
+                         :disabled=disabled
+                         :amount="user.mdtBalance"
+                         animated />
     </div>
-    <UserInfoMDTAmount v-if="showMDT && !small" class="user-info__amount" :amount="user.mdtBalance" />
+    <UserInfoMDTAmount v-if="showMDT && !small"
+                       class="user-info__amount"
+                       :disabled=disabled
+                       :amount="user.mdtBalance" />
   </div>
 </template>
 
@@ -76,6 +86,10 @@ export default {
       overflow: hidden;
       white-space: nowrap;
 
+      &[disabled] {
+        opacity: 0.6;
+      }
+
       > * {
         width: 100%;
         margin: 0;
@@ -84,7 +98,8 @@ export default {
         text-overflow: ellipsis;
       }
 
-      .md-title, .md-sutitle {
+      .md-title,
+      .md-sutitle {
         color: $label-color;
         text-align: left;
       }

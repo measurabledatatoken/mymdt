@@ -1,10 +1,15 @@
 <template>
   <div>
-    <BasePhoneNumberVerifyPage :title="$t('message.phone.verify_newphone_title')" @editClick="onEditClicked"
-      @doneClick="onDoneClicked"></BasePhoneNumberVerifyPage>
+    <BasePhoneNumberVerifyPage :title="$t('message.phone.verify_newphone_title')"
+                               v-bind="$attrs"
+                               @editClick="onEditClicked"
+                               @doneClick="onDoneClicked"></BasePhoneNumberVerifyPage>
 
-    <SuccessPopup :title="$t('message.phone.phone_update_success')" :md-active.sync="showPhoneSetupSuccessPopup"
-      iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
+    <SuccessPopup :title="$t('message.phone.phone_update_success')"
+                  :md-active.sync="showPhoneSetupSuccessPopup"
+                  iconSrc="/static/icons/guarded.svg"
+                  :confirmText="$t('message.common.done')"
+                  @md-confirm="onPopupDoneClicked">
     </SuccessPopup>
   </div>
 </template>
@@ -26,6 +31,9 @@ export default {
   },
   props: {
     pin: {
+      type: String,
+    },
+    verificationCode: {
       type: String,
     },
   },
@@ -50,13 +58,16 @@ export default {
           name: RouteDef.ChangePhoneNumberInput.name,
           params: {
             pin: this.pin,
+            verificationCode: this.verificationCode,
           },
         },
       );
     },
-    onDoneClicked() {
+    onDoneClicked(verificationCode) {
       this.changePhoneNumber(
         {
+          oldVerificationCode: this.verificationCode,
+          verificationCode,
           pin: this.pin,
         },
       ).then(() => {

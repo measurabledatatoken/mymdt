@@ -116,6 +116,7 @@ export default {
           name: RouteDef.AddPhoneNumberInput.name,
           params: {
             needSkip: true,
+            pin: this.setupedPin,
           },
         });
       } else {

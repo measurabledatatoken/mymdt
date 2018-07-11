@@ -1,6 +1,6 @@
 <template>
     <label class="mdt-checkbox">
-      <input type="checkbox" :value="value" @input="$emit('input', $event.target.checked)" />
+      <input type="checkbox" :value="value" @change="$emit('input', $event.target.checked)" />
       <span class="mdt-checkbox__checkmark"></span>
       <div class="mdt-checkbox__title">{{ title }}</div>
     </label>
