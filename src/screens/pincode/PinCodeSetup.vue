@@ -34,24 +34,21 @@ export default {
   },
   methods: {
     onNextClicked(pincode) {
-      this.$router.push(
-        {
-          name: RouteDef.PinCodeConfirm.name,
-          params: {
-            setupedPin: pincode,
-            oldPIN: this.oldPIN,
-            mode: this.mode,
-            verificationCode: this.verificationCode,
-          },
+      this.$router.push({
+        name: RouteDef.PinCodeConfirm.name,
+        params: {
+          setupedPin: pincode,
+          oldPIN: this.oldPIN,
+          mode: this.mode,
+          verificationCode: this.verificationCode,
         },
-      );
+      });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .title {
   font-size: 16px;
   font-weight: bold;

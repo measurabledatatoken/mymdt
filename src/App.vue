@@ -14,7 +14,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: "Lato", "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Lato', 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -26,7 +26,7 @@ export default {
 }
 
 .md-menu-content-container .md-list {
-  font-family: "Lato", "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Lato', 'Avenir', Helvetica, Arial, sans-serif;
 }
 
 body {

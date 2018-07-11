@@ -80,7 +80,9 @@ export default {
       return this.claimed ? '' : this.$t('message.earnMDT.claim');
     },
     amountText() {
-      return `${formatAmount(this.reward.value, { type: 'short' })} ${this.reward.currency}`;
+      return `${formatAmount(this.reward.value, { type: 'short' })} ${
+        this.reward.currency
+      }`;
     },
   },
   methods: {
@@ -270,13 +272,17 @@ export default {
     opacity: 1;
   }
   to {
-    opacity: 0;;
+    opacity: 0;
   }
 }
 
 @keyframes vanish {
-  from { width: 14px;}
-  to { width: 0px; }
+  from {
+    width: 14px;
+  }
+  to {
+    width: 0px;
+  }
 }
 
 @keyframes zoomIn {
@@ -294,6 +300,4 @@ export default {
     transform: scale3d(1, 1, 1);
   }
 }
-
 </style>
-

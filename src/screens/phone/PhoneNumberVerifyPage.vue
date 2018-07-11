@@ -9,7 +9,12 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { SET_COUNTRY_DIALCODE, SET_COUNTRY_CODE, SET_PHONENUMBER, VERIFY_VERIFICATION_CODE } from '@/store/modules/security';
+import {
+  SET_COUNTRY_DIALCODE,
+  SET_COUNTRY_CODE,
+  SET_PHONENUMBER,
+  VERIFY_VERIFICATION_CODE,
+} from '@/store/modules/security';
 import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage';
 import BasePage from '@/screens/BasePage';
 
@@ -59,12 +64,14 @@ export default {
     }),
     onDoneClicked(verificationCode) {
       this.payloadForNextPage.verificationCode = verificationCode;
-      this.verifyVerificationCode({ action: this.action, verificationCode }).then(() => {
-        this.$router.push(
-          {
-            name: this.nextPagePathName,
-            params: this.payloadForNextPage,
-          });
+      this.verifyVerificationCode({
+        action: this.action,
+        verificationCode,
+      }).then(() => {
+        this.$router.push({
+          name: this.nextPagePathName,
+          params: this.payloadForNextPage,
+        });
       });
     },
   },

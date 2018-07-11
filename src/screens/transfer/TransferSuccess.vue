@@ -27,7 +27,10 @@ import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
-import { FLUSH_TRANSFER_DATA, ADD_TRANSFERTO_EMAIL_HISTORY } from '@/store/modules/transfer';
+import {
+  FLUSH_TRANSFER_DATA,
+  ADD_TRANSFERTO_EMAIL_HISTORY,
+} from '@/store/modules/transfer';
 import { BACK_TO_HOME } from '@/store/modules/common';
 
 import { formatAmount } from '@/utils';
@@ -56,7 +59,9 @@ export default {
     transferType: {
       type: String,
       validator(value) {
-        return [TransferType.EthWallet, TransferType.Email].indexOf(value) !== -1;
+        return (
+          [TransferType.EthWallet, TransferType.Email].indexOf(value) !== -1
+        );
       },
     },
   },
@@ -75,18 +80,14 @@ export default {
     }),
   },
   methods: {
-    ...mapMutations(
-      {
-        setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
-        flushTransferData: FLUSH_TRANSFER_DATA,
-        addTransferToEmailHistory: ADD_TRANSFERTO_EMAIL_HISTORY,
-      },
-    ),
-    ...mapActions(
-      {
-        backToHome: BACK_TO_HOME,
-      },
-    ),
+    ...mapMutations({
+      setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
+      flushTransferData: FLUSH_TRANSFER_DATA,
+      addTransferToEmailHistory: ADD_TRANSFERTO_EMAIL_HISTORY,
+    }),
+    ...mapActions({
+      backToHome: BACK_TO_HOME,
+    }),
     onDoneClick() {
       const user = this.getUser(this.transferToAccount.emailAddress);
       if (this.transferType === TransferType.Email && !user) {

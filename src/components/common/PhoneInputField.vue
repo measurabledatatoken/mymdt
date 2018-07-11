@@ -65,25 +65,33 @@ export default {
     // filter by dail code, country name or country code
     filteredCountryCodeList() {
       if (
-        this.countryCodeSearchText === null || this.countryCodeSearchText.length === 0 ||
+        this.countryCodeSearchText === null ||
+        this.countryCodeSearchText.length === 0 ||
         this.countryDialCode === this.countryCodeSearchText
       ) {
         return this.countryCodeList;
       }
 
       let tempCountryCodeList = this.countryCodeList.filter(
-        countryCodeItem => countryCodeItem.dial_code.indexOf(this.countryCodeSearchText) >= 0,
+        countryCodeItem =>
+          countryCodeItem.dial_code.indexOf(this.countryCodeSearchText) >= 0,
       );
 
       if (tempCountryCodeList.length === 0) {
         tempCountryCodeList = this.countryCodeList.filter(
-          countryCodeItem => countryCodeItem.code.toLowerCase().indexOf(this.countryCodeSearchText.toLowerCase()) >= 0,
+          countryCodeItem =>
+            countryCodeItem.code
+              .toLowerCase()
+              .indexOf(this.countryCodeSearchText.toLowerCase()) >= 0,
         );
       }
 
       if (tempCountryCodeList.length === 0) {
         tempCountryCodeList = this.countryCodeList.filter(
-          countryCodeItem => countryCodeItem.name.toLowerCase().indexOf(this.countryCodeSearchText.toLowerCase()) >= 0,
+          countryCodeItem =>
+            countryCodeItem.name
+              .toLowerCase()
+              .indexOf(this.countryCodeSearchText.toLowerCase()) >= 0,
         );
       }
       return tempCountryCodeList;
@@ -113,7 +121,9 @@ export default {
       // if there are entry in tempCountryCodeList which match the user input, make it the final dail code too.
       const filteredCountryCodeList = this.filteredCountryCodeList;
       for (let i = 0; i < filteredCountryCodeList.length; i += 1) {
-        const tempcountryDialCode = filteredCountryCodeList[i].dial_code.replace(/\s/g, '');
+        const tempcountryDialCode = filteredCountryCodeList[
+          i
+        ].dial_code.replace(/\s/g, '');
         const tempCountryCode = filteredCountryCodeList[i].code;
 
         if (tempcountryDialCode === newValue) {
@@ -144,13 +154,11 @@ export default {
     },
     processFullPhoneEntered() {
       if (this.isFullPhoneNumberValid) {
-        this.$emit('phoneNumberEntered',
-          {
-            countryDialCode: this.countryDialCode,
-            countryCode: this.countryCode,
-            phoneNumber: this.phoneNumber,
-          },
-        );
+        this.$emit('phoneNumberEntered', {
+          countryDialCode: this.countryDialCode,
+          countryCode: this.countryCode,
+          phoneNumber: this.phoneNumber,
+        });
       } else {
         this.$emit('phoneNumberInvalid');
       }
@@ -165,7 +173,6 @@ $menuItemHeight: 36px;
 .phone-input {
   margin-left: $defaultPageMargin;
   margin-right: $defaultPageMargin;
-
 }
 
 .country-code-selector {

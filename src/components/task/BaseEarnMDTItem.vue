@@ -49,10 +49,8 @@ export default {
     }
 
     .base-earn-mdt-item__info-description {
-      color: $secondary-text-color
+      color: $secondary-text-color;
     }
   }
 }
-
 </style>
-

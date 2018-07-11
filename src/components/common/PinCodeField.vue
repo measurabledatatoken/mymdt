@@ -53,7 +53,12 @@ export default {
   data() {
     return {
       invalid: false,
-      pinCodeChars: this.initPinCodeChars || Array.from(Array(this.length)).map(() => ({ value: undefined, display: undefined })),
+      pinCodeChars:
+        this.initPinCodeChars ||
+        Array.from(Array(this.length)).map(() => ({
+          value: undefined,
+          display: undefined,
+        })),
     };
   },
   computed: {
@@ -72,13 +77,10 @@ export default {
   mounted() {
     if (this.shouldAutoFocus) {
       this.$nextTick(() => {
-        setTimeout(
-          () => {
-            this.$refs.pinCodeItem[0].focus();
-          }, 750,
-        );
-      },
-      );
+        setTimeout(() => {
+          this.$refs.pinCodeItem[0].focus();
+        }, 750);
+      });
     }
   },
   watch: {
@@ -121,11 +123,19 @@ export default {
         });
       }
 
-      if (this.isValidChar(char) && index < this.length - 1 && !this.isValidChar(this.pinCodeChars[index + 1].value)) {
+      if (
+        this.isValidChar(char) &&
+        index < this.length - 1 &&
+        !this.isValidChar(this.pinCodeChars[index + 1].value)
+      ) {
         this.$refs.pinCodeItem[index + 1].focus();
       }
 
-      if (this.filled && this.correctPinCode && this.correctPinCode !== this.pinCode) {
+      if (
+        this.filled &&
+        this.correctPinCode &&
+        this.correctPinCode !== this.pinCode
+      ) {
         this.setInvalid();
       }
     },

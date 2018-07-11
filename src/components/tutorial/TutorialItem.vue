@@ -40,14 +40,13 @@ export default {
 
 <style lang="scss" scoped>
 .tutorial-item {
-  width: calc(100% - #{24px*2});
+  width: calc(100% - #{24px * 2});
   height: 100%;
   display: flex;
   flex-direction: column;
   align-self: center;
   padding-left: 24px;
   padding-right: 24px;
-
 
   .tutorial-item__img-container {
     display: flex;
@@ -76,7 +75,7 @@ export default {
 
   .md-button {
     position: absolute;
-    width: calc(100% - #{24px*2});
+    width: calc(100% - #{24px * 2});
     bottom: 4%;
     margin: 0px;
     font-weight: normal;

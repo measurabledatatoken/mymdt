@@ -24,11 +24,10 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
 import {
-  SET_TRANSFER_FROM_ACCOUNT,
-} from '@/store/modules/transfer';
-import {
-  SET_SELECTED_USER, SET_DONE_CALLBACK_PATH,
+  SET_SELECTED_USER,
+  SET_DONE_CALLBACK_PATH,
 } from '@/store/modules/security';
 import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
@@ -83,10 +82,9 @@ export default {
     onConfirmSetupPinDialogClick() {
       this.setSecuritySelectedUser(this.selectedUser.emailAddress);
       this.setDoneCallbackPath(RouteDef.TransferList.path);
-      this.$router.push(
-        {
-          name: RouteDef.PinCodeSetup.name,
-        });
+      this.$router.push({
+        name: RouteDef.PinCodeSetup.name,
+      });
     },
   },
 };
@@ -115,5 +113,4 @@ export default {
     margin: 4% 4% 4% 2%;
   }
 }
-
 </style>

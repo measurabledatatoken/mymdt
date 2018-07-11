@@ -85,12 +85,11 @@ const actions = {
       let message = defaultErrorPromptMessage;
       let title = defaultErrorPromptTitle;
 
-      if (
-        error.response.data &&
-        error.response.data.error_code
-      ) {
+      if (error.response.data && error.response.data.error_code) {
         const errorCode = error.response.data.error_code;
-        errorPromptBehaviour = openErrorPromptForErrorCodes && openErrorPromptForErrorCodes[errorCode];
+        errorPromptBehaviour =
+          openErrorPromptForErrorCodes &&
+          openErrorPromptForErrorCodes[errorCode];
 
         if (errorPromptBehaviour === undefined) {
           errorPromptBehaviour = openErrorPrompt;

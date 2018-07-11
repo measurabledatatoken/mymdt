@@ -14,49 +14,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .item {
-    .transaction-detail-item__text {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      overflow: hidden;
-      white-space: nowrap;
-      color: var(--md-theme-default-text-primary-on-background);
+.item {
+  .transaction-detail-item__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--md-theme-default-text-primary-on-background);
 
-      .transaction-detail-item__text-title {
-        font-weight: bold;
-        font-size: $secondary-font-size;
-        line-height: 1.75em;
-      }
-
-      .transaction-detail-item__text-description {
-        white-space: pre-wrap;
-        word-break: break-word;
-        overflow-wrap: break-word;
-        line-height: normal;
-      }
+    .transaction-detail-item__text-title {
+      font-weight: bold;
+      font-size: $secondary-font-size;
+      line-height: 1.75em;
     }
 
-    &.item--single-line {
-      flex-direction: row;
-
-      /deep/ .md-list-item-content {
-        min-height: 48px;
-      }
-
-      .transaction-detail-item__text {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-
-        .transaction-detail-item__text-title {
-          flex: 1;
-        }
-      }
-
+    .transaction-detail-item__text-description {
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      line-height: normal;
     }
   }
-</style>
 
+  &.item--single-line {
+    flex-direction: row;
+
+    /deep/ .md-list-item-content {
+      min-height: 48px;
+    }
+
+    .transaction-detail-item__text {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+
+      .transaction-detail-item__text-title {
+        flex: 1;
+      }
+    }
+  }
+}
+</style>

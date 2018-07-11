@@ -18,20 +18,16 @@ const mutations = {
 
 const actions = {
   [REQUEST_FORGET_PASSWORD](context, emailAddress) {
-    api.auth.forgetPassword(emailAddress)
-      .then(
-        () => context.commit([SET_FORGET_SUCCESS], true),
-      )
-      .catch(
-        () => {
-          context.commit([SET_FORGET_SUCCESS], false);
-        },
-      );
+    api.auth
+      .forgetPassword(emailAddress)
+      .then(() => context.commit([SET_FORGET_SUCCESS], true))
+      .catch(() => {
+        context.commit([SET_FORGET_SUCCESS], false);
+      });
   },
 };
 
-
-export default{
+export default {
   state,
   mutations,
   actions,

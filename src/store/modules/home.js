@@ -60,66 +60,59 @@ const mutations = {
 const actions = {
   [REQUEST_MDT_PRICE]({ commit, state }) {
     const priceUnit = state.priceUnit;
-    api.misc.getMDTPrice(priceUnit)
-      .then(
-        (data) => {
-          if (!priceUnit) {
-            commit(SET_MDT_PRICE, data.price_usd);
-          } else {
-            const priceUnitKey = `price_${priceUnit.toLowerCase()}`;
-            commit(SET_MDT_PRICE, data[priceUnitKey]);
-          }
-        },
-      )
-      .catch(
-        (error) => {
-          console.log('getMDTPrice failed', error);
-        },
-      );
+    api.misc
+      .getMDTPrice(priceUnit)
+      .then(data => {
+        if (!priceUnit) {
+          commit(SET_MDT_PRICE, data.price_usd);
+        } else {
+          const priceUnitKey = `price_${priceUnit.toLowerCase()}`;
+          commit(SET_MDT_PRICE, data[priceUnitKey]);
+        }
+      })
+      .catch(error => {
+        console.log('getMDTPrice failed', error);
+      });
   },
   [REQUEST_APP_CONFIG](context) {
-    api.misc.getAppConfig()
-      .then(
-        (data) => {
-          context.commit(SET_APP_CONFIG, data);
-        },
-      )
-      .catch(
-        (error) => {
-          console.log('getAppConfig failed', error);
-        },
-      );
+    api.misc
+      .getAppConfig()
+      .then(data => {
+        context.commit(SET_APP_CONFIG, data);
+      })
+      .catch(error => {
+        console.log('getAppConfig failed', error);
+      });
   },
   [REQUEST_USER_ACCOUNTS](context) {
     const credentials = context.rootState.login.credentials;
     const validCredentials = [];
-    credentials.forEach((credential) => {
+    credentials.forEach(credential => {
       if (credential.access_token.length > 0) {
         validCredentials.push(credential);
       }
     });
 
-    api.account.getUserAccountsData(validCredentials)
-      .then(
-        (normalizeduserAccountData) => {
-          if (normalizeduserAccountData.result.length > 0) {
-            context.commit(SET_USERS, {
-              byId: normalizeduserAccountData.entities.users,
-              allIds: normalizeduserAccountData.result,
-            });
+    api.account
+      .getUserAccountsData(validCredentials)
+      .then(normalizeduserAccountData => {
+        if (normalizeduserAccountData.result.length > 0) {
+          context.commit(SET_USERS, {
+            byId: normalizeduserAccountData.entities.users,
+            allIds: normalizeduserAccountData.result,
+          });
 
-            context.commit(SET_SELECTED_USER, normalizeduserAccountData.result[0]);
-          }
-        },
-      )
-      .catch(
-        (err) => {
-          console.log(`Error in REQUEST_USER_ACCOUNTS${err}`);
-        },
-      );
+          context.commit(
+            SET_SELECTED_USER,
+            normalizeduserAccountData.result[0],
+          );
+        }
+      })
+      .catch(err => {
+        console.log(`Error in REQUEST_USER_ACCOUNTS${err}`);
+      });
   },
 };
-
 
 export default {
   state,

@@ -7,7 +7,8 @@ export default {
     const body = {
       pin,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/verify`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/pin/verify`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -20,7 +21,8 @@ export default {
       pin,
       confirmed_pin: confirmedPIN,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/setup`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/pin/setup`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -34,7 +36,8 @@ export default {
       new_pin: newPIN,
       new_confirmed_pin: confirmedPIN,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/change`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/pin/change`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -48,7 +51,8 @@ export default {
       new_confirmed_pin: confirmedPIN,
       otp: verificationCode,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/pin/reset`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/pin/reset`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -61,7 +65,8 @@ export default {
       phone_number: phoneNum,
       action,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/sms/requestotp`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/sms/requestotp`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -74,7 +79,8 @@ export default {
       pin,
       otp: verificationCode,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/add`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/phonenumber/add`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -88,7 +94,8 @@ export default {
       new_phone_otp: verificationCode,
       pin,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/phonenumber/change`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/phonenumber/change`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -101,7 +108,8 @@ export default {
       action,
       otp: verificationCode,
     };
-    const promise = axios.post(`${APIScheme}://${APIEndPoint}/security/sms/verifyotp`,
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/sms/verifyotp`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -110,4 +118,3 @@ export default {
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
 };
-

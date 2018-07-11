@@ -45,10 +45,15 @@ export default {
       return formatAmount(this.transaction.delta, { type: 'short' });
     },
     getStatusText() {
-      return this.$t(transactionStatus.properties[this.transaction.status].messageId);
+      return this.$t(
+        transactionStatus.properties[this.transaction.status].messageId,
+      );
     },
     showStatus() {
-      return transactionStatus.properties[this.transaction.status] && (this.transaction.status !== transactionStatus.SUCCESSFUL);
+      return (
+        transactionStatus.properties[this.transaction.status] &&
+        this.transaction.status !== transactionStatus.SUCCESSFUL
+      );
     },
     application() {
       return this.getApplication(this.transaction.application_id);
@@ -77,33 +82,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .action {
-    margin-left: 16px;
+.action {
+  margin-left: 16px;
+  color: $theme-font-color-btn;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+
+  &.action--pending {
+    color: $theme-placehoder-color;
+    font-style: italic;
+  }
+
+  &.action--successful {
     color: $theme-font-color-btn;
-    display: flex;
-    flex-direction: column;
-    text-align: right;
 
-    &.action--pending {
-      color: $theme-placehoder-color;
-      font-style: italic;
-    }
-
-    &.action--successful {
-      color: $theme-font-color-btn;
-
-      &.action--amount-negative {
-        color: $label-color;
-      }
-    }
-
-    &.action--failed {
-      color: $error-color;
-    }
-
-    .action-status {
-      font-size: $secondary-font-size;
+    &.action--amount-negative {
+      color: $label-color;
     }
   }
-</style>
 
+  &.action--failed {
+    color: $error-color;
+  }
+
+  .action-status {
+    font-size: $secondary-font-size;
+  }
+}
+</style>

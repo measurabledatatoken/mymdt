@@ -5,8 +5,7 @@ import { SET_NAVIGATION_TITLE, SET_IS_LOADING } from '@/store/modules/common';
 
 export default {
   metaInfo() {
-    return {
-    };
+    return {};
   },
   created() {
     this.setNavigationTitle(this.$metaInfo.title);
@@ -19,4 +18,3 @@ export default {
   },
 };
 </script>
-

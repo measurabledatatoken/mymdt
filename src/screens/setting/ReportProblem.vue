@@ -81,11 +81,10 @@ export default {
     handleSubmit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.$store
-          .dispatch(REPORT_PROBLEM, {
-            email_address: this.email,
-            comments: this.comments,
-          });
+        this.$store.dispatch(REPORT_PROBLEM, {
+          email_address: this.email,
+          comments: this.comments,
+        });
       }
     },
   },
@@ -106,5 +105,4 @@ export default {
     margin-bottom: 0.5rem;
   }
 }
-
 </style>

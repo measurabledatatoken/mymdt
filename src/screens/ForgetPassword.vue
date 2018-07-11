@@ -12,7 +12,10 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { SET_FORGET_SUCCESS, REQUEST_FORGET_PASSWORD } from '@/store/modules/forgetpassword';
+import {
+  SET_FORGET_SUCCESS,
+  REQUEST_FORGET_PASSWORD,
+} from '@/store/modules/forgetpassword';
 import BasePage from '@/screens/BasePage';
 
 export default {
@@ -30,8 +33,7 @@ export default {
       console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
     },
   },
-  created() {
-  },
+  created() {},
   computed: {
     ...mapState({
       forgetSuccess: state => state.forgetPassword.forgetSuccess,
@@ -42,7 +44,9 @@ export default {
       }
 
       if (this.forgetSuccess) {
-        return `success, please check the email associated with ${this.lastEmailAddress}`;
+        return `success, please check the email associated with ${
+          this.lastEmailAddress
+        }`;
       }
       return 'failed, please try again';
     },
@@ -64,5 +68,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

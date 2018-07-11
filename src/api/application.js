@@ -4,9 +4,13 @@ import { schema } from 'normalizr';
 import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
-const applicationSchema = new schema.Entity('applications', {}, {
-  idAttribute: 'application_id',
-});
+const applicationSchema = new schema.Entity(
+  'applications',
+  {},
+  {
+    idAttribute: 'application_id',
+  },
+);
 const applicationsSchema = [applicationSchema];
 
 export default {

@@ -21,8 +21,7 @@ export default {
       title: this.$t('message.reportProblemSuccess.title'),
     };
   },
-  methods: {
-  },
+  methods: {},
   components: {
     MDTPrimaryButton,
   },
@@ -66,5 +65,4 @@ export default {
     bottom: 1.5rem;
   }
 }
-
 </style>

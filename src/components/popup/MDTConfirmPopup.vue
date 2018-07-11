@@ -3,13 +3,10 @@
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
-
 .md-dialog {
   /deep/ .md-dialog-actions {
     justify-content: space-between;

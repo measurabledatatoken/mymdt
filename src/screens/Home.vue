@@ -29,11 +29,18 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 
-import { SET_ERROR_MESSAGE, SET_ERROR_TITLE, SET_SHOW_ERROR_PROMPT } from '@/store/modules/common';
 import {
-  SET_SELECTED_USER, REQUEST_MDT_PRICE,
-  REQUEST_APP_CONFIG, REQUEST_USER_ACCOUNTS,
-  SET_IS_USER_ACCOUNTS_DIRTY, SET_NEED_EXIT_BTN,
+  SET_ERROR_MESSAGE,
+  SET_ERROR_TITLE,
+  SET_SHOW_ERROR_PROMPT,
+} from '@/store/modules/common';
+import {
+  SET_SELECTED_USER,
+  REQUEST_MDT_PRICE,
+  REQUEST_APP_CONFIG,
+  REQUEST_USER_ACCOUNTS,
+  SET_IS_USER_ACCOUNTS_DIRTY,
+  SET_NEED_EXIT_BTN,
 } from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
 import UserInfoCard from '@/components/common/UserInfoCard';
@@ -74,7 +81,7 @@ export default {
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
-      this.allUsers.forEach((userAccount) => {
+      this.allUsers.forEach(userAccount => {
         totalMDTBalance += userAccount.mdtBalance;
       });
       return totalMDTBalance;
@@ -86,7 +93,9 @@ export default {
       if (this.allUsers.length <= 1) {
         return '';
       }
-      return this.$t('message.home.accountnum', this.allUsers.length, { num: this.allUsers.length });
+      return this.$t('message.home.accountnum', this.allUsers.length, {
+        num: this.allUsers.length,
+      });
     },
   },
   mounted() {
@@ -165,24 +174,17 @@ export default {
 
       const authTokens = tokensStr.split(',');
       const emails = emailsStr.split(',');
-      this.requestAutoLogin(
-        {
-          authTokens,
-          emails,
-          appID,
-        },
-      ).then(
-        () => {
-          this.showHomeLoadingEnd = true;
+      this.requestAutoLogin({
+        authTokens,
+        emails,
+        appID,
+      }).then(() => {
+        this.showHomeLoadingEnd = true;
 
-          setTimeout(
-            () => {
-              this.showHomeLoadingEnd = false;
-            },
-            1000,
-          );
-        },
-      );
+        setTimeout(() => {
+          this.showHomeLoadingEnd = false;
+        }, 1000);
+      });
     },
     formatAmount,
   },
@@ -225,7 +227,7 @@ export default {
 }
 
 .account-content {
-  background-image: url("/static/background/sub-header-background.svg");
+  background-image: url('/static/background/sub-header-background.svg');
   background-size: cover;
   width: 100%;
   bottom: 0;

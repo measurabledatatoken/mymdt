@@ -45,6 +45,6 @@ export default {
 
 <style lang="scss" scoped>
 .price-unit-list {
-    padding-top: 0;
+  padding-top: 0;
 }
 </style>

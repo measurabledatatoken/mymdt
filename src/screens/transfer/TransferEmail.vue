@@ -15,8 +15,6 @@
 </template>
 
 <script>
-
-
 import { mapState, mapMutations, mapGetters } from 'vuex';
 import {
   SET_TRANSFER_AMOUNT,
@@ -66,7 +64,12 @@ export default {
       return isValidEmailAddress(this.transferToAccount.emailAddress);
     },
     disableNextBtn() {
-      if (this.transferAmount > 0 && this.transferToAccount && this.isWalletAmountValid && this.isValidEmailAddress) {
+      if (
+        this.transferAmount > 0 &&
+        this.transferToAccount &&
+        this.isWalletAmountValid &&
+        this.isValidEmailAddress
+      ) {
         return false;
       }
       return true;

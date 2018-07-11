@@ -55,7 +55,8 @@ const mutations = {
   },
   [FETCHING_REWARDS_SUCCESS](state, payload) {
     const { id, data } = payload;
-    const orginalRewards = (state.byId[id] && state.byId[id].transactions) || [];
+    const orginalRewards =
+      (state.byId[id] && state.byId[id].transactions) || [];
 
     state.byId = {
       ...state.byId,
@@ -67,7 +68,8 @@ const mutations = {
   },
   [FETCHING_TRANSACTIONS_SUCCESS](state, payload) {
     const { userId, data } = payload;
-    const orginalTransactions = (state.byId[userId] && state.byId[userId].transactions) || [];
+    const orginalTransactions =
+      (state.byId[userId] && state.byId[userId].transactions) || [];
 
     state.byId = {
       ...state.byId,
@@ -84,41 +86,57 @@ const actions = {
     commit(FETCHING_USER, {
       userId,
     });
-    return api.account.getAccount(getters.getUser(userId).accessToken)
-      .then(data => commit(FETCHING_USER_SUCCESS, {
-        userId,
-        data,
-      }))
-      .catch(error => commit(FETCHING_USER_FAILURE, {
-        userId,
-        error,
-      }));
+    return api.account
+      .getAccount(getters.getUser(userId).accessToken)
+      .then(data =>
+        commit(FETCHING_USER_SUCCESS, {
+          userId,
+          data,
+        }),
+      )
+      .catch(error =>
+        commit(FETCHING_USER_FAILURE, {
+          userId,
+          error,
+        }),
+      );
   },
   [FETCH_ALL_TASKS]({ state, dispatch }) {
     return Promise.all(
-      state.allIds.map(
-        userId => dispatch(FETCH_TASKS, {
+      state.allIds.map(userId =>
+        dispatch(FETCH_TASKS, {
           userId,
         }),
-      ));
+      ),
+    );
   },
   [FETCH_TASKS]({ commit, rootState, getters }, { userId }) {
     commit(FETCHING_TASKS, {
       id: userId,
     });
-    return delay(750).then(() => api.task.getTasks(rootState.home.appID, getters.getUser(userId).accessToken))
-      .then(data => commit(FETCHING_TASKS_SUCCESS, {
-        id: userId,
-        data,
-      }))
-      .catch(error => commit(FETCHING_TASKS_FAILURE, {
-        id: userId,
-        error,
-      }));
+    return delay(750)
+      .then(() =>
+        api.task.getTasks(
+          rootState.home.appID,
+          getters.getUser(userId).accessToken,
+        ),
+      )
+      .then(data =>
+        commit(FETCHING_TASKS_SUCCESS, {
+          id: userId,
+          data,
+        }),
+      )
+      .catch(error =>
+        commit(FETCHING_TASKS_FAILURE, {
+          id: userId,
+          error,
+        }),
+      );
   },
 };
 
-export default{
+export default {
   state,
   getters: moduleGetters,
   mutations,

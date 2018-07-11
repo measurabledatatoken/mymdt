@@ -42,13 +42,19 @@ export default {
       return this.task.task_url.replace('[email]', this.user.emailAddress);
     },
     description() {
-      return this.task.max_completion > 1 ? this.$t('message.earnMDT.maximumAmountToEarn', {
-        amount: formatAmount(this.task.max_amount_to_earn, { type: 'short' }),
-        currency: 'MDT',
-      }) : null;
+      return this.task.max_completion > 1
+        ? this.$t('message.earnMDT.maximumAmountToEarn', {
+            amount: formatAmount(this.task.max_amount_to_earn, {
+              type: 'short',
+            }),
+            currency: 'MDT',
+          })
+        : null;
     },
     amountText() {
-      const amount = `${formatAmount(this.task.reward_value, { type: 'short' })} MDT`;
+      const amount = `${formatAmount(this.task.reward_value, {
+        type: 'short',
+      })} MDT`;
       if (this.task.max_completion > 1) {
         return this.$t('message.earnMDT.amountPerTime', {
           amount,
@@ -85,6 +91,4 @@ export default {
     }
   }
 }
-
 </style>
-

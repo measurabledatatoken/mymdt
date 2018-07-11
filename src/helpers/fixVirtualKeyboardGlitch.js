@@ -7,7 +7,8 @@ export default function fixVirtualKeyboardGlitch() {
     const handleScroll = function handleScroll() {
       const el = getScrollingElement();
       const nextScrollTop = el.scrollTop;
-      if (nextScrollTop <= scrollTop) { // keyboard is hidden
+      if (nextScrollTop <= scrollTop) {
+        // keyboard is hidden
         el.scrollTo(0, 0);
       }
 

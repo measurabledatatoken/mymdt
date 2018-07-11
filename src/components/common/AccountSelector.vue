@@ -105,7 +105,10 @@ export default {
       return emailAddress;
     },
     selectedAccountBalance() {
-      if (!this.selectedAccount || this.selectedAccount.mdtBalance === undefined) {
+      if (
+        !this.selectedAccount ||
+        this.selectedAccount.mdtBalance === undefined
+      ) {
         return '';
       }
 
@@ -148,7 +151,7 @@ export default {
     }
 
     if (this.accounts && this.selectedAccount) {
-      this.accounts.forEach((account) => {
+      this.accounts.forEach(account => {
         if (account.emailAddress === this.selectedAccount.emailAddress) {
           this.selectedOther = false;
         }
@@ -323,4 +326,3 @@ $menuItemOtherCellHeight: 44px;
   }
 }
 </style>
-
