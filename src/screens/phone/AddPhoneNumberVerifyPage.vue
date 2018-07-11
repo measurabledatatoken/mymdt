@@ -1,11 +1,16 @@
 <template>
   <div>
-    <BasePhoneNumberVerifyPage v-bind="$attrs" :title="$t('message.phone.verify_phone_title')" @editClick="onEditClicked"
-      @doneClick="onDoneClicked">
+    <BasePhoneNumberVerifyPage v-bind="$attrs"
+                               :title="$t('message.phone.verify_phone_title')"
+                               @editClick="onEditClicked"
+                               @doneClick="onDoneClicked">
     </BasePhoneNumberVerifyPage>
 
-    <SuccessPopup :title="$t('message.phone.phone_setup_success')" :md-active.sync="showPhoneSetupSuccessPopup"
-      iconSrc="/static/icons/guarded.svg" :confirmText="$t('message.common.done')" @md-confirm="onPopupDoneClicked">
+    <SuccessPopup :title="$t('message.phone.phone_setup_success')"
+                  :md-active.sync="showPhoneSetupSuccessPopup"
+                  iconSrc="/static/icons/guarded.svg"
+                  :confirmText="$t('message.common.done')"
+                  @md-confirm="onPopupDoneClicked">
     </SuccessPopup>
   </div>
 </template>
@@ -18,7 +23,6 @@ import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 
-
 export default {
   metaInfo() {
   },
@@ -27,6 +31,9 @@ export default {
     SuccessPopup,
   },
   props: {
+    pin: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -50,16 +57,12 @@ export default {
         },
       );
     },
-    onDoneClicked() {
-      this.addPhoneNumber(
-        {
-          countryCode: this.countryDialCode,
-          phoneNum: this.phoneNumber,
-          verificationCode: this.verificationCode,
+    onDoneClicked(verificationCode) {
+      this.addPhoneNumber({ pin: this.pin, verificationCode }).then(
+        () => {
+          this.showPhoneSetupSuccessPopup = true;
         },
-      ).then(() => {
-        this.showPhoneSetupSuccessPopup = true;
-      });
+      );
     },
     onPopupDoneClicked() {
       this.backToPath(this.doneCallBackPath);

@@ -6,7 +6,7 @@
       slot="action-data"
       md-src="/static/icons/account-secured.svg"
       alt="Secured"
-      v-if="user.isEmailConfirmed && user.isPhoneConfirmed"
+      v-if="user.isPasscodeSet && user.isPhoneConfirmed"
     />
   </base-setting-list-item>
 </template>

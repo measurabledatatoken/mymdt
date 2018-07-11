@@ -1,7 +1,9 @@
 <template>
-    <BasePhoneNumberInputPage v-bind="$attrs" :title="$t('message.phone.add_phone_title')" :content="$t('message.phone.add_phone_content')"
-    @nextClick="onNextClicked">
-    </BasePhoneNumberInputPage>
+  <BasePhoneNumberInputPage v-bind="$attrs"
+                            :title="$t('message.phone.add_phone_title')"
+                            :content="$t('message.phone.add_phone_content')"
+                            @nextClick="onNextClicked">
+  </BasePhoneNumberInputPage>
 </template>
 
 <script>
@@ -10,6 +12,7 @@ import { RouteDef } from '@/constants';
 import { REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
 import BasePhoneNumberInputPage from '@/screens/phone/BasePhoneNumberInputPage';
 import BasePage from '@/screens/BasePage';
+import OTPActionType from '@/enum/otpActionType';
 
 export default {
   extends: BasePage,
@@ -21,17 +24,32 @@ export default {
   components: {
     BasePhoneNumberInputPage,
   },
+  props: {
+    pin: {
+      type: String,
+    },
+  },
   methods: {
     ...mapActions({
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onNextClicked() {
-      this.requestVerificationCode();
-      this.$router.push(
+      const action = OTPActionType.SetupPhoneNumberAction;
+      this.requestVerificationCode(
         {
-          name: RouteDef.AddPhoneNumberVerify.name,
+          action,
         },
-      );
+      ).then(() => {
+        this.$router.push(
+          {
+            name: RouteDef.AddPhoneNumberVerify.name,
+            params: {
+              pin: this.pin,
+              action,
+            },
+          },
+        );
+      });
     },
   },
 };

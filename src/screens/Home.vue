@@ -134,7 +134,7 @@ export default {
       this.$router.push({
         name: RouteDef.AccountDetail.name,
         params: {
-          account_id: user.emailAddress, // TODO: change to user id when API is ready
+          account_id: user.emailAddress,
         },
       });
     },

@@ -41,6 +41,7 @@ export default {
             setupedPin: pincode,
             oldPIN: this.oldPIN,
             mode: this.mode,
+            verificationCode: this.verificationCode,
           },
         },
       );
