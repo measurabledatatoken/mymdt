@@ -1,23 +1,34 @@
 <template>
-    <md-button v-bind="$attrs" @click="onClick" :disabled="disabled">
+    <md-button v-bind="$attrs" @click="onClick">
         <slot></slot>
     </md-button>
 </template>
 
 <script>
 export default {
+  props: {
+    preventDoubleClick: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
-      disabled: false,
+      shouldStopClickEmit: false,
     };
   },
   methods: {
     onClick() {
-      this.disabled = true;
-      this.$emit('click');
-      setTimeout(() => {
-        this.disabled = false;
-      }, 1000);
+      if (!this.shouldStopClickEmit) {
+        this.$emit('click');
+
+        if (this.preventDoubleClick) {
+          this.shouldStopClickEmit = true;
+          setTimeout(() => {
+            this.shouldStopClickEmit = false;
+          }, 3000);
+        }
+      }
     },
   },
 };
