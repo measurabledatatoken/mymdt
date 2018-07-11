@@ -124,18 +124,20 @@ const actions = {
   }) {
     const account = rootGetters.getUser(state.selectedUserId);
     try {
-      await dispatch(REQUEST, {
+      const response = await dispatch(REQUEST, {
         api: api.security.setupPIN,
         args: [pin, confirmedPIN, account.accessToken],
         setLoading: true,
         openErrorPrompt: true,
       });
 
-      return dispatch(FETCH_USER, {
+      dispatch(FETCH_USER, {
         userId: state.selectedUserId,
       });
+
+      return response;
     } catch (error) {
-      return false;
+      throw error;
     }
   },
   [CHANGE_PIN]({
@@ -180,18 +182,19 @@ const actions = {
   }) {
     const account = rootGetters.getUser(state.selectedUserId);
     try {
-      await dispatch(REQUEST, {
+      const response = await dispatch(REQUEST, {
         api: api.security.addPhoneNumber,
         args: [verificationCode, pin, account.accessToken],
         setLoading: true,
         openErrorPrompt: true,
       });
 
-      return dispatch(FETCH_USER, {
+      dispatch(FETCH_USER, {
         userId: state.selectedUserId,
       });
+      return response;
     } catch (error) {
-      return false;
+      throw error;
     }
   },
   [CHANGE_PHONE_NUMBER]({
