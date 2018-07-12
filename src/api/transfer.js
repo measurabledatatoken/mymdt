@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TransferType } from '@/constants';
+import TransferType from '@/enum/transferType';
 import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
