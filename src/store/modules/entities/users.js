@@ -4,7 +4,6 @@ import { delay } from '@/utils';
 import { FETCHING_REWARDS_SUCCESS } from '@/store/modules/entities/rewards';
 import { FETCHING_TRANSACTIONS_SUCCESS } from '@/store/modules/entities/transactions';
 
-export const FETCHING_USER = 'users/FETCHING_USER';
 export const FETCHING_USER_SUCCESS = 'users/FETCHING_USER_SUCCESS';
 export const FETCHING_USER_FAILURE = 'users/FETCHING_USER_FAILURE';
 export const FETCHING_TASKS = 'users/FETCHING_TASKS';
@@ -83,9 +82,6 @@ const mutations = {
 
 const actions = {
   [FETCH_USER]({ commit, getters }, { userId }) {
-    commit(FETCHING_USER, {
-      userId,
-    });
     return api.account
       .getAccount(getters.getUser(userId).accessToken)
       .then(data =>
