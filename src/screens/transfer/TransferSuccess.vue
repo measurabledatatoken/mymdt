@@ -18,13 +18,15 @@
       :bottom="true"
       @click="onDoneClick"
     >{{ $t('message.common.done') }}</MDTPrimaryButton>
-    <MDTSubtleButton :to="Route"/>
+    <MDTSubtleButton/>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-import { RouteDef, TransferType } from '@/constants';
+import { formatAmount, trackEvent } from '@/utils';
+import TransferType from '@/enum/transferType';
+import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
@@ -34,8 +36,6 @@ import {
   ADD_TRANSFERTO_EMAIL_HISTORY,
 } from '@/store/modules/transfer';
 import { BACK_TO_HOME } from '@/store/modules/common';
-
-import { formatAmount } from '@/utils';
 
 export default {
   components: {
@@ -85,6 +85,11 @@ export default {
       getUser: 'getUser',
     }),
   },
+  created() {
+    trackEvent('Transfer Success', {
+      'Transfer Mode': this.TransferType,
+    });
+  },
   methods: {
     ...mapMutations({
       setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
@@ -95,9 +100,11 @@ export default {
       backToHome: BACK_TO_HOME,
     }),
     onDoneClick() {
-      const user = this.getUser(this.transferToAccount.emailAddress);
-      if (this.transferType === TransferType.Email && !user) {
-        this.addTransferToEmailHistory(this.transferToAccount.emailAddress);
+      if (this.transferType === TransferType.Email) {
+        const user = this.getUser(this.transferToAccount.emailAddress);
+        if (!user) {
+          this.addTransferToEmailHistory(this.transferToAccount.emailAddress);
+        }
       }
       this.flushTransferData();
       this.setIsUserAcctionsDirty(true);
