@@ -10,9 +10,8 @@
       <div class="earn-mdt-task-item__action">
         <span class="earn-mdt-task-item-action__amount-to-earn">{{ amountText }}</span>
         <MDTSecondaryButton
-          :href="isExternalUrl ? taskUrl : null"
-          :to="isExternalUrl ? null : taskUrl"
           class="earn-mdt-task-item-action__claim-button"
+          @click="onGoToTaskClicked"
         >
           {{ $t('message.earnMDT.go') }}
         </MDTSecondaryButton>
@@ -22,7 +21,7 @@
 </template>
 
 <script>
-import { formatAmount } from '@/utils';
+import { formatAmount, trackEvent } from '@/utils';
 import BaseEarnMDTItem from '@/components/task/BaseEarnMDTItem';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 
@@ -72,6 +71,19 @@ export default {
       }
 
       return amount;
+    },
+  },
+  methods: {
+    onGoToTaskClicked() {
+      trackEvent('Click on task button', {
+        'Task Name': this.task.name,
+        'Task ID': this.task.task_id,
+      });
+      if (this.isExternalUrl) {
+        window.location = this.taskUrl;
+      } else {
+        this.$router.push(this.taskUrl);
+      }
     },
   },
 };

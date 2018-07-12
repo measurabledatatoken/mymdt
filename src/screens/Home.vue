@@ -39,14 +39,15 @@
       src="static/loadersecondhalf.gif"
     />
     <MDTPrimaryButton 
-      :to="RouteDef.EarnMDT.path" 
       :bottom="true"
+      @click="onEarnClicked"
     >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import { trackEvent } from '@/utils';
 
 import {
   SET_ERROR_MESSAGE,
@@ -137,6 +138,7 @@ export default {
 
     // clear url
     this.$router.replace(RouteDef.Home);
+    trackEvent('Home view', { 'Email Number': this.allUsers.length });
   },
   methods: {
     ...mapMutations({
@@ -154,10 +156,12 @@ export default {
       requestUserAccounts: REQUEST_USER_ACCOUNTS,
     }),
     goToTransfer(user) {
+      trackEvent('Click on transfer from Home');
       this.setSelectedUser(user.emailAddress);
       this.$router.push(RouteDef.TransferList.path);
     },
     goToAccountDetail(user) {
+      trackEvent('Click on account cards from home page to account page');
       this.setSelectedUser(user.emailAddress);
       this.$router.push({
         name: RouteDef.AccountDetail.name,
@@ -199,11 +203,16 @@ export default {
         appID,
       }).then(() => {
         this.showHomeLoadingEnd = true;
+        trackEvent('Successfully logged in ');
 
         setTimeout(() => {
           this.showHomeLoadingEnd = false;
         }, 1000);
       });
+    },
+    onEarnClicked() {
+      trackEvent('Click on Earn MDT button from home page');
+      this.$router.push(RouteDef.EarnMDT.path);
     },
     formatAmount,
   },

@@ -1,5 +1,8 @@
 <template>
-  <md-list-item v-bind="$attrs">
+  <md-list-item 
+    v-bind="$attrs" 
+    v-on="$listeners"
+  >
     <md-avatar v-if="showAvatar && application && application.avatar_url">
       <img 
         :src="application.avatar_url" 

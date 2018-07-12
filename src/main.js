@@ -7,6 +7,7 @@ import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 import Vuelidate from 'vuelidate';
+import mixpanel from 'mixpanel-browser';
 
 // require styles
 // eslint-disable-next-line
@@ -26,6 +27,8 @@ Vue.use(VueMaterial);
 Vue.use(Vuelidate);
 
 Vue.use(VueAwesomeSwiper);
+
+mixpanel.init('c5e652bf9ccc28d929ee1c8184a0f76b');
 
 /* eslint-disable no-new */
 new Vue({
