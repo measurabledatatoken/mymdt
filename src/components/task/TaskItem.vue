@@ -2,6 +2,7 @@
   <BaseEarnMDTItem
     :title="task.name"
     :description="description"
+    :task="task"
     v-bind="$attrs"
     class="earn-mdt-task-item"
     md-src="/static/icons/get-mdt.svg"
@@ -33,11 +34,15 @@ export default {
   props: {
     task: {
       type: Object,
-      default: null,
+      default() {
+        return {};
+      },
     },
     user: {
       type: Object,
-      default: null,
+      default() {
+        return {};
+      },
     },
   },
   computed: {
