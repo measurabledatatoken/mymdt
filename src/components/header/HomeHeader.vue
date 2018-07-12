@@ -10,8 +10,8 @@
     </md-button>
 
     <md-button 
-      :to="RouteDef.Settings.path" 
       class="md-icon-button settingsbtn"
+      @click="onSettingsClick"
     >
       <md-icon md-src="/static/icons/settings-white.svg"/>
     </md-button>
@@ -27,8 +27,9 @@
 
 
 <script>
-import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
 import { mapState } from 'vuex';
+import { trackEvent } from '@/utils';
+import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
 
 export default {
   data() {
@@ -45,6 +46,10 @@ export default {
   methods: {
     returnCallback() {
       window.location = ExitFromWalletWebviewURL;
+    },
+    onSettingsClick() {
+      trackEvent('Click on Settings button');
+      this.$router.push(RouteDef.Settings.path);
     },
   },
 };

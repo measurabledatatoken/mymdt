@@ -43,6 +43,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import { trackEvent } from '@/utils';
 import {
   DISMISS_ERROR_PROMPT,
   SET_LOCALE,
@@ -174,6 +175,7 @@ export default {
     }),
     onTutorialClicked() {
       this.showTutorial = true;
+      trackEvent('Click on Info button (the question mark button)');
     },
   },
 };

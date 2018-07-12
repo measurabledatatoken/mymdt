@@ -35,6 +35,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import { trackEvent } from '@/utils';
 import { required, helpers } from 'vuelidate/lib/validators';
 
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -110,6 +111,7 @@ export default {
         }
       });
     }
+    trackEvent('Open Beta Testing url ');
   },
   methods: {
     ...mapActions({
@@ -130,6 +132,7 @@ export default {
     handleSubmit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
+        trackEvent('Enter access code');
         this.requestBetaTestingSession({
           deviceId: this.deviceId,
           accessCode: this.accessCode,
