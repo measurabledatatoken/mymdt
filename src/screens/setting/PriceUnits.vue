@@ -5,7 +5,7 @@
         :key="currency" 
         :title="currency" 
         :selected="currency === priceUnit" 
-        @click="setPriceUnit(currency)"
+        @click="onPriceUnitClicked(currency)"
       />
       <md-divider :key="`${currency}-divider`" />
     </template>
@@ -19,6 +19,7 @@ import BasePage from '@/screens/BasePage';
 import PriceUnitLisItem from '@/components/setting/PriceUnitLisItem';
 import { SET_PRICE_UNIT } from '@/store/modules/home';
 import currencyList from '@/data/currencyList.json';
+import { trackEvent } from '@/utils';
 
 export default {
   components: {
@@ -44,6 +45,10 @@ export default {
     ...mapMutations({
       setPriceUnit: SET_PRICE_UNIT,
     }),
+    onPriceUnitClicked(currency) {
+      trackEvent('Change Price Unit');
+      this.setPriceUnit(currency);
+    },
   },
 };
 </script>

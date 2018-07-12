@@ -160,7 +160,7 @@ export default {
       this.setTransferAmount(0);
     },
     walletAddressEntered(value) {
-      trackEvent('Enter ETH wallet addresst', eventProperties);
+      trackEvent('Enter ETH wallet address', eventProperties);
       this.isWalletAddressValid = true;
       this.setTransferToWalletAddress(value);
     },

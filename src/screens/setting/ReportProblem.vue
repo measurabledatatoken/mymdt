@@ -45,6 +45,7 @@ import BaseField from '@/components/input/BaseField';
 import Recaptcha from '@/components/input/Recaptcha';
 import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
 import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
+import { trackEvent } from '@/utils';
 
 const checked = value => !helpers.req(value) || value === true;
 
@@ -89,6 +90,7 @@ export default {
     handleSubmit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
+        trackEvent('Submit a problem report');
         this.$store.dispatch(REPORT_PROBLEM, {
           email_address: this.email,
           comments: this.comments,
