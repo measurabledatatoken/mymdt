@@ -4,7 +4,7 @@
       <AccountSelector 
         :accounts="allUsers" 
         :selected-account="transferFromAccount" 
-        @accountSelected="setTransferFromAccount"
+        @accountSelected="onAccountSelected"
       />
     </div>
     <div class="action-card-list">
@@ -13,14 +13,14 @@
         :action-name="$t('message.common.transferbtn')" 
         class="left"
         img-src="/static/icons/transfer-to-email.svg" 
-        @actionClick="onTransferMethodClicked(RouteDef.TransferEmail.path)"
+        @actionClick="onTransferToEmailClicked()"
       />
       <ActionCard 
         :title="$t('message.transfer.transferlist_ethtitle')" 
         :action-name="$t('message.common.transferbtn')" 
         class="right"
         img-src="/static/icons/transfer-to-eth.svg" 
-        @actionClick="onTransferMethodClicked(RouteDef.TransferEthWallet.path)"
+        @actionClick="onTransferToEthWalletClicked()"
       />
     </div>
 
@@ -40,6 +40,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import { trackEvent } from '@/utils';
 import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
 import {
   SET_SELECTED_USER,
@@ -66,7 +67,6 @@ export default {
   },
   data() {
     return {
-      RouteDef,
       showSetupPinDialog: false,
     };
   },
@@ -88,12 +88,25 @@ export default {
       setSecuritySelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
-    onTransferMethodClicked(path) {
+    onTransferToEmailClicked() {
+      trackEvent('Click on Transfer to an email account');
       if (!this.selectedUser.isPasscodeSet) {
         this.showSetupPinDialog = true;
       } else {
-        this.$router.push(path);
+        this.$router.push(RouteDef.TransferEmail.path);
       }
+    },
+    onTransferToEthWalletClicked() {
+      trackEvent('Click on transfer to an ETH wallet');
+      if (!this.selectedUser.isPasscodeSet) {
+        this.showSetupPinDialog = true;
+      } else {
+        this.$router.push(RouteDef.TransferEthWallet.path);
+      }
+    },
+    onAccountSelected(account) {
+      trackEvent('Switch accounts on Transfer Methods Select');
+      this.setTransferFromAccount(account);
     },
     onConfirmSetupPinDialogClick() {
       this.setSecuritySelectedUser(this.selectedUser.emailAddress);

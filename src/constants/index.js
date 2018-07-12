@@ -1,8 +1,3 @@
-const TransferType = {
-  Email: 0,
-  EthWallet: 1,
-};
-
 const RouteDef = {
   Login: { path: '/login' },
   AutoLogin: { path: '/autologin' },
@@ -77,4 +72,4 @@ const ExitFromWalletWebviewURL = 'mdtwallet://exit';
 // in px, please also change $header-height in scss
 const HeaderHeight = 52;
 
-export { TransferType, RouteDef, ExitFromWalletWebviewURL, HeaderHeight };
+export { RouteDef, ExitFromWalletWebviewURL, HeaderHeight };
