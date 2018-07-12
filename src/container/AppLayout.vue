@@ -195,19 +195,21 @@ export default {
 }
 
 .header {
-  position: sticky;
+  position: absolute;
   top: 0;
-  z-index: 3;
+  z-index: 10;
   height: $header-height;
   background: $home-bgcolor;
+  width: 100%;
 }
 
 .header-view {
-  width: 100%;
   height: $header-height;
 }
 
 .content {
+  width: 100%;
+  margin-top: $header-height;
   flex: 1;
   display: flex;
   flex-direction: column;

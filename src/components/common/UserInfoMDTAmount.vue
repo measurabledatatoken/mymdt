@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     amountText() {
-      if (!this.amount) {
+      if (this.amount === undefined) {
         return '--MDT';
       }
       return `${formatAmount(this.amount)} MDT`;
