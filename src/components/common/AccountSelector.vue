@@ -233,6 +233,7 @@ $menuItemOtherCellHeight: 44px;
   margin: 0.5rem 0;
 
   .selector-menu {
+    margin: 0;
     /deep/ .md-field {
       margin-bottom: 0px;
 
