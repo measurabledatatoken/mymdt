@@ -13,8 +13,12 @@
           v-if="title" 
           class="base-earn-mdt-item__info-title"
         >{{ title }}</span>
+        <TaskStepList
+          v-if="task.max_completion > 1 && task.max_completion <= 5"
+          :task="task"
+        />
         <span 
-          v-if="description" 
+          v-else-if="description" 
           class="base-earn-mdt-item__info-description"
         >{{ description }}</span>
       </div>
@@ -24,7 +28,12 @@
 </template>
 
 <script>
+import TaskStepList from '@/components/task/TaskStepList';
+
 export default {
+  components: {
+    TaskStepList,
+  },
   props: {
     mdSrc: {
       type: String,
@@ -37,6 +46,12 @@ export default {
     description: {
       type: String,
       default: null,
+    },
+    task: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
   },
 };
