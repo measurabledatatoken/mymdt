@@ -52,7 +52,7 @@ ul {
       transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       transition-property: color, background-color;
       will-change: color, background-color;
-      font-size: $secondary-font-size;
+      font-size: 12px;
       line-height: 24px;
       display: inline-flex;
       justify-content: center;
@@ -93,7 +93,7 @@ ul {
       }
     }
     &:not(:last-child) {
-      padding-right: 24px;
+      padding-right: 27px;
     }
   }
 }
