@@ -1,5 +1,8 @@
 <template>
-  <div class="appcontainer">
+  <div 
+    :style="appContainerStyle" 
+    class="appcontainer"
+  >
     <header class="header">
       <transition :name=" 'header-' + transitionName">
         <HomeHeader 
@@ -68,6 +71,8 @@ export default {
       showHomeHeader: true,
       transitionName: 'pop-in',
       showTutorial: false,
+      screenHeight: 0,
+      setFixHeight: false,
     };
   },
   computed: {
@@ -122,27 +127,41 @@ export default {
 
       return false;
     },
+    appContainerStyle() {
+      const style = {};
+      if (this.setFixHeight) {
+        style.height = `${this.screenHeight}px`;
+        style.overflow = 'scroll';
+      }
+      return style;
+    },
   },
   watch: {
     $route(to, from) {
-      let isBack = false;
-      const isPathExistInNavStack = this.isPathExistInNavigationStack(to.path);
+      // do not modify the stack if to and from are equal
+      if (to.path !== from.path) {
+        let isBack = false;
+        const isPathExistInNavStack = this.isPathExistInNavigationStack(
+          to.path,
+        );
 
-      if (isPathExistInNavStack) {
-        isBack = true;
-        this.popNavigationStackToPath(to.path);
-      } else {
-        this.addNavigationStack(from.path);
+        if (isPathExistInNavStack) {
+          isBack = true;
+          this.popNavigationStackToPath(to.path);
+        } else {
+          this.addNavigationStack(from.path);
+        }
+
+        const toDepth = to.path.split('/').length;
+        if (toDepth === undefined || toDepth <= 2) {
+          this.showHomeHeader = true;
+        } else {
+          this.showHomeHeader = false;
+        }
+
+        this.transitionName = isBack ? 'pop-out' : 'pop-in';
       }
-
-      const toDepth = to.path.split('/').length;
-      if (toDepth === undefined || toDepth <= 2) {
-        this.showHomeHeader = true;
-      } else {
-        this.showHomeHeader = false;
-      }
-
-      this.transitionName = isBack ? 'pop-out' : 'pop-in';
+      this.checkRouteMeta();
     },
   },
   created() {
@@ -161,6 +180,10 @@ export default {
 
     this.flushNavigationStack();
   },
+  mounted() {
+    this.prepareMetaData();
+    this.checkRouteMeta();
+  },
   methods: {
     ...mapMutations({
       setLocale: SET_LOCALE,
@@ -174,6 +197,15 @@ export default {
     }),
     onTutorialClicked() {
       this.showTutorial = true;
+    },
+    prepareMetaData() {
+      this.screenHeight =
+        window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight;
+    },
+    checkRouteMeta() {
+      this.setFixHeight = !!this.$route.meta.setFixHeight;
     },
   },
 };
