@@ -12,10 +12,13 @@
     </md-card-header>
 
     <md-card-actions>
-      <md-button 
+      <md-button
         :to="to" 
+        class="md-primary md-raised" 
         @click="$listeners.actionClick"
-      >{{ actionName }}</md-button>
+      >
+        {{ actionName }}
+      </md-button>
     </md-card-actions>
   </md-card>
 </template>
@@ -46,6 +49,24 @@ export default {
 <style lang="scss" scoped>
 .md-card {
   padding: 16px;
+  border-radius: 6px;
+  box-shadow: none;
+
+  .md-card-actions {
+    justify-content: center;
+    height: 3em;
+
+    .md-button.md-raised {
+      position: absolute;
+      bottom: 16px;
+      height: 24px;
+      width: 105px;
+      border-radius: 16px;
+      font-weight: bold;
+      letter-spacing: 0.1px;
+      text-transform: none;
+    }
+  }
 }
 
 .md-card-header {
@@ -62,23 +83,5 @@ export default {
   font-size: 14px;
   line-height: normal;
   color: $label-color;
-}
-
-.md-card-actions {
-  justify-content: center;
-  height: 3em;
-}
-
-.md-button {
-  position: absolute;
-  bottom: 12px;
-  background-color: $bluebtn-backgroundcolor;
-  color: $bluebtn-wordcolor !important;
-  height: 24px;
-  width: 105px;
-  border-radius: 16px;
-  font-weight: bold;
-  letter-spacing: 0.1px;
-  text-transform: none;
 }
 </style>
