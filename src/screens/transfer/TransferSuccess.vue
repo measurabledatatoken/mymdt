@@ -35,7 +35,7 @@ import {
   FLUSH_TRANSFER_DATA,
   ADD_TRANSFERTO_EMAIL_HISTORY,
 } from '@/store/modules/transfer';
-import { BACK_TO_HOME } from '@/store/modules/common';
+import { BACK_TO_PATH } from '@/store/modules/common';
 
 export default {
   components: {
@@ -97,7 +97,7 @@ export default {
       addTransferToEmailHistory: ADD_TRANSFERTO_EMAIL_HISTORY,
     }),
     ...mapActions({
-      backToHome: BACK_TO_HOME,
+      backToPath: BACK_TO_PATH,
     }),
     onDoneClick() {
       if (this.transferType === TransferType.Email) {
@@ -108,7 +108,7 @@ export default {
       }
       this.flushTransferData();
       this.setIsUserAcctionsDirty(true);
-      this.backToHome();
+      this.backToPath(RouteDef.Home.path);
     },
     formatAmount,
   },
