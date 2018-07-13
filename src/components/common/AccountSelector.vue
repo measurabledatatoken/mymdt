@@ -16,7 +16,7 @@
         <md-button 
           :md-ripple="false" 
           :class="{ 'open': isMenuOpened }" 
-          md-menu-trigger
+          :md-menu-trigger="menuTrigger"
         >
           <div 
             :class="{ 'other': selectedOther, 'open': isMenuOpened }" 
@@ -40,11 +40,13 @@
             > {{ $t('message.transfer.select_account_placeholder') }} </div>
           </div>
           <md-icon 
+            v-if="menuTrigger"
             v-show="!isMenuOpened" 
             :class="{ 'other': selectedOther }" 
             md-src="/static/icons/keyboard_arrow_down.svg"
           />
           <md-icon 
+            v-if="menuTrigger"
             v-show="isMenuOpened" 
             :class="{ 'other': selectedOther }" 
             md-src="/static/icons/keyboard_arrow_up.svg"
@@ -55,6 +57,7 @@
         <md-menu-content>
           <md-menu-item 
             v-for="account in filteredAccounts" 
+            :class="['menu-item-account', { 'menu-item-account--single-line': account.mdtBalance === undefined || account.mdtBalance === null }]"
             :key="account.emailAddress" 
             @click="selectAccount(account)"
           >
@@ -137,6 +140,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    disableForSingleAccount: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -189,6 +196,17 @@ export default {
 
       return this.accounts;
     },
+    menuTrigger() {
+      if (
+        this.disableForSingleAccount &&
+        !this.enableOther &&
+        this.accounts.length === 1
+      ) {
+        return false;
+      }
+
+      return true;
+    },
   },
   created() {
     this.selectedOther = true;
@@ -226,13 +244,14 @@ export default {
 
 <style lang="scss" scoped>
 $selectedEmailColor: $theme-color;
-$menuItemCellHeight: 56px;
+$menuItemCellHeight: 60px;
 $menuItemOtherCellHeight: 44px;
 
 .account-selector {
   margin: 0.5rem 0;
 
   .selector-menu {
+    margin: 0;
     /deep/ .md-field {
       margin-bottom: 0px;
 
@@ -254,6 +273,7 @@ $menuItemOtherCellHeight: 44px;
       box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
       border-radius: 4px 4px 0px 0px;
       background-color: white;
+      z-index: 10;
     }
 
     /deep/ .md-button-content {
@@ -326,11 +346,13 @@ $menuItemOtherCellHeight: 44px;
   border-radius: 0px 0px 4px 4px !important;
   width: 100%;
   left: 0;
-  z-index: 9;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 0px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
   /deep/ .md-list {
     background-color: $theme-listing-bgcolor;
     border-radius: 0px 0px 4px 4px !important;
+    padding: 0;
   }
 }
 
@@ -344,10 +366,15 @@ $menuItemOtherCellHeight: 44px;
 }
 
 //Menu Item Style
-.md-menu-item {
+.menu-item-account {
   height: $menuItemCellHeight;
-  &.other {
+  &.other,
+  &.menu-item-account--single-line {
     height: $menuItemOtherCellHeight;
+  }
+
+  /deep/ .md-list-item-content {
+    min-height: auto;
   }
 
   .account-balance {
