@@ -107,9 +107,14 @@
       md-clearable
     >
       <md-input 
-        v-model="otherEmailAddress" 
+        :value="otherEmailAddress" 
         :placeholder="$t('message.transfer.enter_emailaddress')"
+        @change="onOtherEmailEntered($event.target.value)"
       />
+      <span 
+        v-if="isEmailValid!=null && !isEmailValid" 
+        class="md-helper-text"
+      >{{ invalidEmailText }}</span>
     </BaseField>
   </div>
 
@@ -144,6 +149,14 @@ export default {
       type: Boolean,
       default: true,
     },
+    isEmailValid: {
+      type: Boolean,
+      default: null,
+    },
+    invalidEmailText: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -152,16 +165,11 @@ export default {
     };
   },
   computed: {
-    otherEmailAddress: {
-      get() {
-        if (!this.selectedAccount) {
-          return '';
-        }
-        return this.selectedAccount.emailAddress;
-      },
-      set(value) {
-        this.$emit('accountSelected', { emailAddress: value });
-      },
+    otherEmailAddress() {
+      if (!this.selectedAccount) {
+        return '';
+      }
+      return this.selectedAccount.emailAddress;
     },
     selectedAccountEmail() {
       if (!this.selectedAccount) {
@@ -239,6 +247,9 @@ export default {
     menuClosed() {
       this.isMenuOpened = false;
       this.$emit('menuClosed');
+    },
+    onOtherEmailEntered(value) {
+      this.$emit('accountSelected', { emailAddress: value });
     },
     formatAmount,
   },
@@ -414,5 +425,9 @@ $menuItemOtherCellHeight: 44px;
   &.base-field {
     margin-top: -0.5rem;
   }
+}
+
+.md-field.md-theme-default .md-helper-text {
+  color: $theme-warning-color;
 }
 </style>

@@ -18,6 +18,8 @@
       :enable-other="true" 
       :accounts="transferToAccounts"
       :selected-account="transferToAccount" 
+      :is-email-valid="isValidEmailAddress"
+      :invalid-email-text="$t('message.error.invalid_email')"
       @accountSelected="setTransferToAccount"
       @menuOpened="onTransferToMenuOpened"
       @otherSelected="onTransferToOtherSelected"
@@ -87,6 +89,9 @@ export default {
       fromUserAccounts: 'getAllUsers',
     }),
     isValidEmailAddress() {
+      if (!this.transferToAccount || !this.transferToAccount.emailAddress) {
+        return null;
+      }
       return isValidEmailAddress(this.transferToAccount.emailAddress);
     },
     disableNextBtn() {
