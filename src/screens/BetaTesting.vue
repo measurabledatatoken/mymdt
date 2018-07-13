@@ -17,10 +17,26 @@
         </BaseField>
       </div>
       <div class="beta-testing-form__footer">
-        <Checkbox
-          :title="$t('message.betaTesting.agreementCheckbox')"
-          v-model="$v.agree.$model"
-        />
+        <Checkbox v-model="$v.agree.$model">
+          <template
+            v-if="$i18n.locale === 'en-us'"
+            slot="title"
+          >
+            I agree to <a @click.prevent.stop="handleClickNDA">the rules</a> of MDT Wallet Beta Testing
+          </template>
+          <template
+            v-if="$i18n.locale === 'zh-hk'"
+            slot="title"
+          >
+            我同意有關 MDT 錢包 Beta 測試版的<a @click.prevent.stop="handleClickNDA">相關規定</a>
+          </template>
+          <template
+            v-if="$i18n.locale === 'zh-cn'"
+            slot="title"
+          >
+            我同意有关 MDT 钱包 Beta 测试版的<a @click.prevent.stop="handleClickNDA">相关规定</a>
+          </template>
+        </Checkbox>
         <p>{{ $t('message.betaTesting.agreementDetail') }}</p>
         <MDTPrimaryButton
           :disabled="!$v.$dirty || $v.$anyError"
@@ -30,6 +46,7 @@
         </MDTPrimaryButton>
       </div>
     </div>
+    <NDA :active.sync="showNDA" />
   </form>
 </template>
 
@@ -41,6 +58,7 @@ import { required, helpers } from 'vuelidate/lib/validators';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Checkbox from '@/components/input/Checkbox';
 import BaseField from '@/components/input/BaseField';
+import NDA from '@/components/betaTesting/NDA';
 
 import {
   GET_BETA_TESTING_SESSION,
@@ -57,6 +75,7 @@ export default {
     MDTPrimaryButton,
     Checkbox,
     BaseField,
+    NDA,
   },
   data() {
     return {
@@ -64,6 +83,7 @@ export default {
       agree: false,
       showScreen: false,
       failed: false,
+      showNDA: false,
     };
   },
   validations: {
@@ -144,6 +164,9 @@ export default {
           }
         });
       }
+    },
+    handleClickNDA() {
+      this.showNDA = true;
     },
   },
 };
