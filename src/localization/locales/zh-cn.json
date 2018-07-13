@@ -17,7 +17,25 @@
   "error": {
     "userNotExist": "用户电邮不存在。",
     "rewardExpired": "奖励已过期。",
-    "rewardAlreadyClaimed": "奖励已认领。"
+    "rewardAlreadyClaimed": "奖励已认领。",
+    "invalid_email": "无效的电邮地址",
+    "invalid_ethaddress": "无效的以太钱包地址",
+    "insufficient_fund": "该帐号MDT数量不够,请减才少数量或另选帐号。",
+    "passcodeAlreadySet": "PIN已设置。",
+    "passcodeNotSet": "PIN尚未设置。",
+    "newPasscodeSameAsOld": "新PIN必需与旧PIN不同。",
+    "confirmedPasscodeNotMatch": "确认PIN不匹配。",
+    "invalidPasscode": "PIN码无效。",
+    "invalidPhoneNumberFormat": "无效的电话号码。",
+    "phoneNumberNotSet": "电话号码未设置。",
+    "phoneNumberAlreadySet": "已设置电话号码。",
+    "smsRequestTooFrequent": "短信请求太频繁",
+    "smsDailyLimitReached": "短信请达到每日上限",
+    "otpInvalid": "验证码无效。",
+    "otpExpired": "验证码已过期。",
+    "deviceIsAlreadyRegistered": "此设备已被注册。",
+    "accessCodeIsNotValid": "代码无效。",
+    "accessCodeIsUsed": "代码已被使用。"
   },
   "home": {
     "total_balance": "总余额",
@@ -49,10 +67,6 @@
     "transfer": "转帐",
     "transaction_fee": "手续费",
     "final_amount": "最终数量",
-    "invalid_email": "无效的电邮地址",
-    "invalid_ethaddress": "无效的以太钱包地址",
-    "insufficient_fund": "该帐号MDT数量不够,请减才少数量或另选帐号。",
-
     "tutorial_title": "转帐手续费",
     "tutorial_description": "MDT为ERC20代币。转帐至ETH钱包需要支付燃气费。当您将MDT转移到ETH钱包时，燃气费会以MDT计算并从您的交易中扣除。根据网络的堵塞情况，燃气费或交易费将会波动。"
   },
