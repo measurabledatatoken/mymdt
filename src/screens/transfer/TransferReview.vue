@@ -70,6 +70,9 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
+import { formatAmount, trackEvent } from '@/utils';
+import TransferType from '@/enum/transferType';
+import { RouteDef } from '@/constants';
 
 import { START_TRANSFER } from '@/store/modules/transfer';
 import {
@@ -77,12 +80,9 @@ import {
   SET_SELECTED_USER,
   VALIDATE_PIN_FOR_TRANSFER,
 } from '@/store/modules/security';
-import { TransferType, RouteDef } from '@/constants';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
-
-import { formatAmount } from '@/utils';
 
 export default {
   components: {
@@ -133,6 +133,11 @@ export default {
       return false;
     },
   },
+  created() {
+    trackEvent('View "Transfer review" Page', {
+      'Transfer Mode': this.TransferType,
+    });
+  },
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
@@ -143,6 +148,9 @@ export default {
       validatePIN: VALIDATE_PIN_FOR_TRANSFER,
     }),
     transferMDT() {
+      trackEvent('Click on Transfer button', {
+        'Transfer Mode': this.TransferType,
+      });
       this.showPinCodeInput = true;
     },
     onPinCodeFilled(pinCode) {
@@ -168,6 +176,9 @@ export default {
         })
         .catch(err => {
           console.log(`error in onPinCodeFilled: ${err.message}`);
+          trackEvent('Transfer Failure', {
+            'Transfer Mode': this.TransferType,
+          });
         });
     },
     onFotgotClicked() {

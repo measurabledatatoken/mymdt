@@ -1,4 +1,5 @@
 import numeral from 'numeral';
+import mixpanel from 'mixpanel-browser';
 
 import { RouteDef } from '@/constants';
 
@@ -118,6 +119,16 @@ function forcePromiseToRunForAtLeast(promise, ms) {
   });
 }
 
+// Event Tracking related function
+function trackEvent(event, properties) {
+  properties = properties || {};
+  mixpanel.track(event, properties);
+}
+
+function regTrackingSuperProperties(properties) {
+  mixpanel.register(properties);
+}
+
 export {
   isRouteHomePath,
   isRouteChangeBack,
@@ -129,4 +140,6 @@ export {
   extractNameInitials,
   delay,
   forcePromiseToRunForAtLeast,
+  trackEvent,
+  regTrackingSuperProperties,
 };

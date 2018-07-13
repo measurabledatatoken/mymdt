@@ -225,17 +225,20 @@ export default {
   },
   methods: {
     selectAccount(account) {
-      this.$emit('accountSelected', account);
       this.selectedOther = false;
+      this.$emit('accountSelected', account);
     },
     selectOther() {
       this.selectedOther = true;
+      this.$emit('otherSelected');
     },
     menuOpened() {
       this.isMenuOpened = true;
+      this.$emit('menuOpened');
     },
     menuClosed() {
       this.isMenuOpened = false;
+      this.$emit('menuClosed');
     },
     formatAmount,
   },

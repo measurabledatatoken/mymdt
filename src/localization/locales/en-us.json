@@ -17,7 +17,25 @@
   "error": {
     "userNotExist": "User email does not exist.",
     "rewardExpired": "Reward is already expired.",
-    "rewardAlreadyClaimed": "Reward is already claimed."
+    "rewardAlreadyClaimed": "Reward is already claimed.",
+    "invalid_email": "Invalid Email Address",
+    "invalid_ethaddress": "Invalid Eth Address",
+    "insufficient_fund": "Insufficient fund. Please enter another amount or change an account.",
+    "passcodeAlreadySet": "PIN already set.",
+    "passcodeNotSet": "PIN not set.",
+    "newPasscodeSameAsOld": "New PIN is the same as old one.",
+    "confirmedPasscodeNotMatch": "Confirm PIN not match.",
+    "invalidPasscode": "Invalid PIN.",
+    "invalidPhoneNumberFormat": "Invalid Phone Number.",
+    "phoneNumberNotSet": "Phone number not set.",
+    "phoneNumberAlreadySet": "Phone number already set.",
+    "smsRequestTooFrequent": "SMS request too frequently",
+    "smsDailyLimitReached": "SMS daily limit reached",
+    "otpInvalid": "Verification code is not valid.",
+    "otpExpired": "Verification code has been expired.",
+    "deviceIsAlreadyRegistered": "Device has alreadu registered.",
+    "accessCodeIsNotValid": "Access Code is not valid.",
+    "accessCodeIsUsed": "Access Code is already used."
   },
   "home": {
     "total_balance": "Total Balance",
@@ -49,9 +67,6 @@
     "transfer": "transfer",
     "transaction_fee": "Transaction Fee",
     "final_amount": "Final Amount",
-    "invalid_email": "Invalid Email Address",
-    "invalid_ethaddress": "Invalid Eth Address",
-    "insufficient_fund": "Insufficient fund. Please enter another amount or change an account.",
     "tutorial_title": "Transaction Fee",
     "tutorial_description": "MDT is an ERC20 token. Transferring to an ETH wallet incurrs gas fee. When you transfer your MDT to an ETH wallet, the gas fee is calculated in MDT and deducted from your transaction. Depending on how clogged the network is, gas fee or transaction fee will fluctuate."
   },

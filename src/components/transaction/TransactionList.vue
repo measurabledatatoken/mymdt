@@ -14,8 +14,8 @@
       <TransactionItem
         :key="transaction.id"
         :transaction="transaction"
-        :to="{ name: RouteDef.TransactionDetail.name, params: { transaction_id: transaction.id, transaction } }"
         show-avatar
+        @click="onTransactionItemClicked(transaction)"
       />
       <md-divider 
         :key="`${transaction.id}-divider`" 
@@ -28,6 +28,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { trackEvent } from '@/utils';
 
 import TransactionItem from '@/components/transaction/TransactionItem';
 import TransactionListLoadingItem from '@/components/transaction/TransactionListLoadingItem';
@@ -60,6 +61,15 @@ export default {
     ...mapState({
       uiState: state => state.ui.transactionList,
     }),
+  },
+  methods: {
+    onTransactionItemClicked(transaction) {
+      trackEvent('Click on one transction to view transaction details');
+      this.$router.push({
+        name: RouteDef.TransactionDetail.name,
+        params: { transaction_id: transaction.id, transaction },
+      });
+    },
   },
 };
 </script>

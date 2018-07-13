@@ -9,14 +9,15 @@
     </div>
     <transaction-list :transactions="transactions" />
     <MDTPrimaryButton 
-      :to="RouteDef.EarnMDT.path" 
       :bottom="true"
+      @click="goToEarn()"
     >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { trackEvent } from '@/utils';
 
 import BasePage from '@/screens/BasePage';
 import UserInfoCard from '@/components/common/UserInfoCard';
@@ -64,7 +65,12 @@ export default {
   },
   methods: {
     goToTransfer() {
+      trackEvent('Click on transfer from account page');
       this.$router.push(RouteDef.TransferList.path);
+    },
+    goToEarn() {
+      trackEvent('Click on Earn MDT button from account page');
+      this.$router.push(RouteDef.EarnMDT.path);
     },
     ...mapActions({
       fetchTransactions: FETCH_TRANSACTIONS,

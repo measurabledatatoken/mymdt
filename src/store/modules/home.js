@@ -1,6 +1,7 @@
 import api from '@/api';
 
 import { SET_USERS } from '@/store/modules/entities/users';
+import { regTrackingSuperProperties } from '@/utils';
 
 // Mutations
 export const SET_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -42,6 +43,7 @@ const mutations = {
   },
   [SET_SELECTED_USER](state, userId) {
     state.selectedUserId = userId;
+    regTrackingSuperProperties({ 'Email Address': userId });
   },
   [SET_IS_USER_ACCOUNTS_DIRTY](state, isUserAccountsDirty) {
     state.isUserAccountsDirty = isUserAccountsDirty;

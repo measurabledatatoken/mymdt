@@ -88,6 +88,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { trackEvent } from '@/utils';
 import { RouteDef } from '@/constants';
 import {
   SET_SELECTED_USER,
@@ -159,12 +160,15 @@ export default {
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onSetupPINClicked() {
+      trackEvent('Click on PIN');
+
       // check if the PIN has already set and show popup
       if (this.getSelectedSecurityUser.isPasscodeSet) {
         this.showAlreadySetPinDialog = true;
         return;
       }
 
+      trackEvent('Start Setting up PIN from the account security page');
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
         params: {
@@ -188,6 +192,7 @@ export default {
           this.showPinCodeInput = false;
 
           if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
+            trackEvent('Start Setting up PIN from the account security page');
             this.$router.push({
               name: RouteDef.PinCodeSetup.name,
               params: {
@@ -228,6 +233,7 @@ export default {
       });
     },
     onSetupPhoneNumberClicked() {
+      trackEvent('Click on Phone Number');
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         return;
       }
@@ -245,6 +251,7 @@ export default {
       this.showPinCodeInput = true;
     },
     onPasscodeForgotClicked() {
+      trackEvent('Click on forgot PIN');
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         return;
       }

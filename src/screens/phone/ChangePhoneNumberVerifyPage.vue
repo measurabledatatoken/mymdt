@@ -24,6 +24,7 @@ import { CHANGE_PHONE_NUMBER } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
+import { trackEvent } from '@/utils';
 
 export default {
   metaInfo() {},
@@ -71,6 +72,7 @@ export default {
         verificationCode,
         pin: this.pin,
       }).then(() => {
+        trackEvent('Phone number successfully change');
         this.showPhoneSetupSuccessPopup = true;
       });
     },
