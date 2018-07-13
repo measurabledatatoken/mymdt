@@ -102,8 +102,7 @@ export default {
     filteredCountryCodeList() {
       if (
         this.countryCodeSearchText === null ||
-        this.countryCodeSearchText.length === 0 ||
-        this.countryDialCode === this.countryCodeSearchText
+        this.countryCodeSearchText.length === 0
       ) {
         return this.countryCodeList;
       }
