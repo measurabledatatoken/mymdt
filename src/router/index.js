@@ -16,6 +16,7 @@ import UserSettings from '@/screens/setting/UserSettings';
 import PriceUnits from '@/screens/setting/PriceUnits';
 import ReportProblem from '@/screens/setting/ReportProblem';
 import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
+import LegalAndPrivacy from '@/screens/setting/LegalAndPrivacy';
 import AddPhoneNumberInputPage from '@/screens/phone/AddPhoneNumberInputPage';
 import ChangePhoneNumberInputPage from '@/screens/phone/ChangePhoneNumberInputPage';
 import AddPhoneNumberVerifyPage from '@/screens/phone/AddPhoneNumberVerifyPage';
@@ -34,6 +35,7 @@ import TransferReview from '@/screens/transfer/TransferReview';
 import TransferSuccess from '@/screens/transfer/TransferSuccess';
 import QrCodeScanPage from '@/screens/QRCodeScanPage';
 import EarnMDT from '@/screens/EarnMDT';
+import WebView from '@/screens/WebView';
 
 import BetaTestingHeader from '@/components/header/BetaTestingHeader';
 
@@ -152,6 +154,10 @@ const router = new Router({
           component: ReportProblemSuccess,
         },
         {
+          path: RouteDef.LegalAndPrivacy.path,
+          component: LegalAndPrivacy,
+        },
+        {
           path: RouteDef.Tutorial.path,
           component: Tutorial,
         },
@@ -199,6 +205,12 @@ const router = new Router({
         {
           path: RouteDef.EarnMDT.path,
           component: EarnMDT,
+        },
+
+        {
+          path: RouteDef.WebView.path,
+          name: RouteDef.WebView.name,
+          component: WebView,
         },
 
         // Route to Home page for route not defined

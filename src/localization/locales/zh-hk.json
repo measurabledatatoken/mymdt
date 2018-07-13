@@ -227,5 +227,8 @@
     "agreementCheckbox": "我同意有關 MDT 錢包 Beta 測試版的相關規定",
     "agreementDetail": "點擊“導入郵箱賬號”，您在 MailTime 簡信中登錄的郵箱賬號將自動登入 MDT 錢包。",
     "importAccounts": "導入郵箱賬號"
+  },
+  "legalAndPrivacy": {
+    "termsOfUse": "使用條款"
   }
 }
