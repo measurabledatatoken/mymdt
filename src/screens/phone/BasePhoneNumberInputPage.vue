@@ -16,6 +16,7 @@
           :init-phone-number="phoneNumber"
           @phoneNumberEntered="onPhoneNumberEntered" 
           @phoneNumberInvalid="onPhonenNumberInvalid"
+          @countryCodeSelected="onCountryCodeSelcted"
         />
       </template>
 
@@ -63,6 +64,7 @@ import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import PhoneInputField from '@/components/common/PhoneInputField';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
+import { trackEvent } from '@/utils';
 
 export default {
   components: {
@@ -109,15 +111,18 @@ export default {
       backToPath: BACK_TO_PATH,
     }),
     onNextClicked() {
+      trackEvent('Click on Next button from Phone Input');
       this.$emit('nextClick');
     },
     onSkipClicked() {
       this.showWarningPrompt = true;
     },
     confirmSkip() {
+      trackEvent('Skip adding phone number');
       this.backToPath(this.doneCallBackPath);
     },
     onPhoneNumberEntered({ countryDialCode, countryCode, phoneNumber }) {
+      trackEvent('Enter phone number');
       this.setCountryDialCode(countryDialCode);
       this.setCountryCode(countryCode);
       this.setPhoneNumber(phoneNumber);
@@ -125,6 +130,9 @@ export default {
     },
     onPhonenNumberInvalid() {
       this.isPhoneInvalid = true;
+    },
+    onCountryCodeSelcted() {
+      trackEvent('Switch country code');
     },
   },
 };

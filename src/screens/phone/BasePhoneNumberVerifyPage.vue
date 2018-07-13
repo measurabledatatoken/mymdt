@@ -80,6 +80,7 @@ import BasePhoneNumberPage from '@/screens/phone/BasePhoneNumberPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import CountDownUnlockButton from '@/components/common/CountDownUnlockButton';
+import { trackEvent } from '@/utils';
 
 const VerificationCodeLength = 6;
 
@@ -127,6 +128,9 @@ export default {
       return maskPhoneNumber(this.phoneNumber);
     },
   },
+  created() {
+    trackEvent('Enter validate verification code Page');
+  },
   methods: {
     ...mapActions({
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
@@ -138,6 +142,7 @@ export default {
       setPhoneNumber: SET_PHONENUMBER,
     }),
     onVerificationCodeInput(value) {
+      trackEvent('Enter Verification Code');
       if (value.length === VerificationCodeLength) {
         this.verificationCodeFilled = true;
         this.$emit('verificationCodeInput', value);
@@ -146,6 +151,7 @@ export default {
       }
     },
     onResendClicked() {
+      trackEvent('Resend verification code');
       this.requestVerificationCode({
         action: this.action,
       });

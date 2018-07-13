@@ -119,9 +119,14 @@ function forcePromiseToRunForAtLeast(promise, ms) {
   });
 }
 
+// Event Tracking related function
 function trackEvent(event, properties) {
   properties = properties || {};
   mixpanel.track(event, properties);
+}
+
+function regTrackingSuperProperties(properties) {
+  mixpanel.register(properties);
 }
 
 export {
@@ -136,4 +141,5 @@ export {
   delay,
   forcePromiseToRunForAtLeast,
   trackEvent,
+  regTrackingSuperProperties,
 };
