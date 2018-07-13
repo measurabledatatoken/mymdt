@@ -105,6 +105,7 @@ export default {
     },
     onLegalAndPrivacyClick() {
       trackEvent('Click on Legal and Privacy');
+      this.$router.push(RouteDef.LegalAndPrivacy.path);
     },
   },
 };

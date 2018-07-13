@@ -6,7 +6,14 @@
       @change="$emit('input', $event.target.checked)"
     >
     <span class="mdt-checkbox__checkmark"/>
-    <div class="mdt-checkbox__title">{{ title }}</div>
+    <div
+      class="mdt-checkbox__title"
+    >
+      {{ title }}
+      <slot
+        name="title"
+      />
+    </div>
   </label>
 </template>
 
