@@ -1,0 +1,66 @@
+<template>
+  <section class="legal-and-privacy-screen">
+    <h1>{{ $t('message.legalAndPrivacy.termsOfUse') }}</h1>
+    <p>PLEASE NOTE THAT YOUR USE OF AND ACCESS TO THE SERVICES ARE SUBJECT TO THE FOLLOWING TERMS; IF YOU DO NOT AGREE TO ALL OF THE FOLLOWING, YOU MAY NOT USE OR ACCESS THE SERVICE IN ANY MANNER. 
+      
+    Your using the Services in any way means that you agree to all of these Terms, and these Terms will remain in effect while you use the Services. These Terms include the provisions in this document, as well as those in the MailTime’s<WebViewLink to="https://mailtime.com/terms.html">Terms of Service</WebViewLink> and <WebViewLink to="https://mailtime.com/policy.html">Privacy Policy</WebViewLink>.
+
+    If you have any questions, comments, or concerns regarding these terms or the Services, please contact us at <a href="mailto:users@mailtime.com">users@mailtime.com</a>
+
+      You are responsible for all Content (including all User Submissions such as information from you or your email accounts that you connect with the Services) you contribute, in any manner, to the Services, and you represent and warrant you have all rights necessary to do so, in the manner in which you contribute it. You will keep all your registration information accurate and current. You are responsible for all your activity in connection with the Services, such as sending, receiving, copying, sharing, uploading, downloading, attaching or otherwise acting with respect to your Content while using MailTime).
+
+      The Services may contain links or connections to third party websites or services that are not owned or controlled by MailTime. When you access third party websites or use third party services, you accept that there are risks in doing so, and that MailTime is not responsible for such risks. We encourage you to be aware when you leave the Services and to read the terms and conditions and privacy policy of each third party website or service that you visit or utilize. MailTime has no control over, and assumes no responsibility for, the content, accuracy, privacy policies, or practices of or opinions expressed in any third party websites or by any third party that you interact with through the Services. In addition, MailTime will not and cannot monitor, verify, censor or edit the content of any third party site or service. By using the Services, you release and hold us harmless from any and all liability arising from your use of any third party website or service.
+
+      Your interactions with organizations and/or individuals found on or through the Services, including payment and delivery of goods or services, and any other terms, conditions, warranties or representations associated with such dealings, are solely between you and such organizations and/or individuals. You should make whatever investigation you feel necessary or appropriate before proceeding with any online or offline transaction with any of these third parties. You agree that MailTime shall not be responsible or liable for any loss or damage of any sort incurred as the result of any such dealings.
+
+      If there is a dispute between participants, or between users and any third party, you agree that MailTime is under no obligation to become involved. In the event that you have a dispute with one or more other users, you release MailTime, its officers, employees, agents, and successors from claims, demands, and damages of every kind or nature, known or unknown, suspected or unsuspected, disclosed or undisclosed, arising out of or in any way related to such disputes and/or our Services. If you are a California resident, you shall and hereby do waive California Civil Code Section 1542, which says: "A general release does not extend to claims which the creditor does not know or suspect to exist in his or her favor at the time of executing the release, which, if known by him or her must have materially affected his or her settlement with the debtor."
+
+      Warranty Disclaimer. Neither MailTime nor its licensors or suppliers makes any representations or warranties concerning any content contained in or accessed through the Services, and we will not be responsible or liable for the accuracy, copyright compliance, legality, or decency of material contained in or accessed through the Services. We (and our licensors and suppliers) make no representations or warranties regarding suggestions or recommendations of services or products offered or purchased through the Services. Products and services purchased or offered (whether or not following such recommendations and suggestions) through the Services are provided “AS IS” and “AS AVAILABLE” and without any warranty of any kind from MailTime or others (unless, with respect to such others only, provided expressly and unambiguously in writing by a designated third party for a specific product).] THE SERVICES AND CONTENT ARE PROVIDED BY MAILTIME (AND ITS LICENSORS AND SUPPLIERS) ON AN “AS-IS” AND “AS AVAILABLE” BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, THAT USE OF THE SERVICES WILL BE UNINTERRUPTED, TIMELY, SECURE, OR ERROR-FREE, OR THAT THE RESULTS THAT MAY BE OBTAINED THROUGH THE SERVICES WILL BE ACCURATE, RELIABLE, OR MEET YOUR EXPECTATIONS. SOME STATES DO NOT ALLOW LIMITATIONS ON HOW LONG AN IMPLIED WARRANTY LASTS, SO THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
+
+      You shall not use MailTime Services for emergency services or other critical operations where injury, death, or economic damage could result. A small percentage of users may experience epileptic seizures when exposed to certain light patterns or backgrounds on a computer and /or portable device screen or while using the Services. Certain conditions may induce previously undetected epileptic symptoms even in users who have no history of prior seizures or epilepsy. If you, or anyone in your family, have an epileptic condition, consult your physician prior to using the Services. Immediately discontinue use of the Services and consult your physician if you experience any of the following symptoms while using the Services: dizziness, altered vision, eye or muscle twitches, loss of awareness, disorientation, any involuntary movement, or convulsions.
+
+      Limitation of Liability. TO THE FULLEST EXTENT ALLOWED BY APPLICABLE LAW, UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY (INCLUDING, WITHOUT LIMITATION, TORT, CONTRACT, STRICT LIABILITY, OR OTHERWISE) SHALL MAILTIME (OR ITS LICENSORS OR SUPPLIERS) BE LIABLE TO YOU OR TO ANY OTHER PERSON FOR (A) ANY INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY KIND, INCLUDING DAMAGES FOR LOST PROFITS, LOSS OF GOODWILL, WORK STOPPAGE, ACCURACY OF RESULTS, OR COMPUTER FAILURE OR MALFUNCTION, OR (B) ANY AMOUNT, IN THE AGGREGATE, IN EXCESS OF THE GREATER OF (I) $100 OR (II) THE AMOUNTS PAID BY YOU TO COMPANY IN CONNECTION WITH THE SERVICES IN THE TWELVE (12) MONTH PERIOD PRECEDING THIS APPLICABLE CLAIM, OR (C) ANY MATTER BEYOND OUR REASONABLE CONTROL. SOME STATES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES, SO THE ABOVE LIMITATION AND EXCLUSIONS MAY NOT APPLY TO YOU.
+      Indemnity. To the fullest extent allowed by applicable law, You agree to indemnify and hold MailTime, its affiliates, officers, agents, employees, and partners harmless from and against any and all claims, liabilities, damages (actual and consequential), losses and expenses (including attorneys’ fees) arising from or in any way related to any third party claims relating to (a) your use of the Services (including any actions taken by a third party who logs in the Services as you), and (b) your violation of these Terms.
+
+      Assignment. You may not assign, delegate or transfer these Terms or your rights or obligations hereunder, in any way (by operation of law or otherwise) without MailTime’s prior written consent. We may transfer, assign, or delegate these Terms and our rights and obligations without consent.
+
+      Statute of Limitations. You agree that regardless of any statute or law to the contrary, any claim or cause of action arising out of or related to use of our Services or this Agreement must be filed within one (1) year after such claim or cause of action arose or be forever barred.
+      Choice of Law; Arbitration. These Terms are governed by and will be construed under the laws of the State of California, without regard to the conflicts of laws provisions thereof. Any dispute arising from or relating to the subject matter of these Terms shall be finally settled in San Francisco County, California, in English, in accordance with the Streamlined Arbitration Rules and Procedures of Judicial Arbitration and Mediation Services, Inc. ("JAMS") then in effect, by one commercial arbitrator with substantial experience in resolving intellectual property and commercial contract disputes, who shall be selected from the appropriate list of JAMS arbitrators in accordance with such Rules. Judgment upon the award rendered by such arbitrator may be entered in any court of competent jurisdiction. Notwithstanding the foregoing obligation to arbitrate disputes, each party shall have the right to pursue injunctive or other equitable relief at any time, from any court of competent jurisdiction. For all purposes of this Agreement, the parties consent to exclusive jurisdiction and venue in the state or federal courts located in, respectively, San Francisco County, California, or the Northern District of California.
+      Miscellaneous. You will be responsible for paying, withholding, filing, and reporting all taxes, duties, and other governmental assessments associated with your activity in connection with the Services, provided that the MailTime may, in its sole discretion, do any of the foregoing on your behalf or for itself as it sees fit. The failure of either you or us to exercise, in any way, any right herein shall not be deemed a waiver of any further rights hereunder. If any provision of these Terms is found to be unenforceable or invalid, that provision will be limited or eliminated, to the minimum extent necessary, so that these Terms shall otherwise remain in full force and effect and enforceable. You and MailTime agree that these Terms are the complete and exclusive statement of the mutual understanding between you and MailTime, and that it supersedes and cancels all previous written and oral agreements, communications and other understandings relating to the subject matter of these Terms. You hereby acknowledge and agree that you are not an employee, agent, partner, or joint venture of MailTime, and you do not have any authority of any kind to bind MailTime in any respect whatsoever. Except as expressly set forth in the section above regarding the Apple Application, you and MailTime agree there are no third party beneficiaries intended under these Terms."
+    </p>
+  </section>
+</template>
+
+<script>
+import BasePage from '@/screens/BasePage';
+import WebViewLink from '@/components/common/WebViewLink';
+
+export default {
+  components: {
+    WebViewLink,
+  },
+  extends: BasePage,
+  metaInfo() {
+    return {
+      title: this.$t('message.settings.legalAndPrivacy'),
+    };
+  },
+  methods: {
+    handleClickUrl(url) {
+      console.log(url);
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.legal-and-privacy-screen {
+  text-align: left;
+  padding: 0 $defaultPageMargin $defaultPageMargin $defaultPageMargin;
+
+  > p {
+    white-space: pre-line;
+    width: 100%;
+  }
+}
+</style>

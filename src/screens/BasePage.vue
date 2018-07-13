@@ -8,7 +8,10 @@ export default {
     return {};
   },
   created() {
-    this.setNavigationTitle(this.$metaInfo.title);
+    // if title is not set, inherit from previous screen. This behaviour is to cater WebView
+    if (this.$metaInfo.title) {
+      this.setNavigationTitle(this.$metaInfo.title);
+    }
   },
   methods: {
     ...mapMutations({

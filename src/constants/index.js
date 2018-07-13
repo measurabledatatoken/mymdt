@@ -14,6 +14,8 @@ const RouteDef = {
   PriceUnits: { path: '/home/settings/price-units' },
   ReportProblem: { path: '/home/settings/problems' },
   ReportProblemSuccess: { path: '/home/settings/problems/success' },
+  LegalAndPrivacy: { path: '/home/settings/legal' },
+  WebView: { path: '/home/webview', name: 'webview' },
   Tutorial: { path: '/home/tutorial' },
   TransferList: { path: '/home/transfer' },
   TransferEmail: { path: '/home/transfer/email' },
