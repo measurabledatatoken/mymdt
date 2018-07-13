@@ -32,6 +32,7 @@ import BasePage from '@/screens/BasePage';
 import SetupPINMode from '@/enum/setupPINMode';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
+import { trackEvent } from '@/utils';
 
 export default {
   components: {
@@ -94,6 +95,7 @@ export default {
       backToPath: BACK_TO_PATH,
     }),
     onDoneClicked(pincode) {
+      trackEvent('Enter PIN for the second time');
       switch (this.mode) {
         case SetupPINMode.RESET: {
           this.resetPIN({
@@ -101,6 +103,7 @@ export default {
             confirmedPIN: pincode,
             verificationCode: this.verificationCode,
           }).then(() => {
+            trackEvent('PIN successfully reset');
             this.showPinSetupSuccessPopup = true;
           });
           break;
@@ -111,6 +114,7 @@ export default {
             newPIN: this.setupedPin,
             confirmedPIN: pincode,
           }).then(() => {
+            trackEvent('PIN successfully change');
             this.showPinSetupSuccessPopup = true;
           });
           break;
@@ -118,6 +122,7 @@ export default {
         default: {
           this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode }).then(
             () => {
+              trackEvent('PIN successfully set');
               this.showPinSetupSuccessPopup = true;
             },
           );

@@ -109,6 +109,7 @@ export default {
       this.setTransferFromAccount(account);
     },
     onConfirmSetupPinDialogClick() {
+      trackEvent('Start Setting up PIN from the popup');
       this.setSecuritySelectedUser(this.selectedUser.emailAddress);
       this.setDoneCallbackPath(RouteDef.TransferList.path);
       this.$router.push({

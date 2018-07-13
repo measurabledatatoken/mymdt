@@ -1,4 +1,5 @@
 import api from '@/api';
+import { regTrackingSuperProperties } from '@/utils';
 import { FETCH_USER } from '@/store/modules/entities/users';
 import { REQUEST } from '@/store/modules/api';
 
@@ -58,6 +59,7 @@ const mutations = {
   },
   [SET_SELECTED_USER](state, emailAddress) {
     state.selectedUserId = emailAddress;
+    regTrackingSuperProperties({ 'Email Address': emailAddress });
   },
   [SET_SECURITY_USER_PHONE_INFO](state, user) {
     state.countryDialCode = user.countryDialCode;

@@ -168,6 +168,7 @@ export default {
         return;
       }
 
+      trackEvent('Start Setting up PIN from the account security page');
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
         params: {
@@ -191,6 +192,7 @@ export default {
           this.showPinCodeInput = false;
 
           if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
+            trackEvent('Start Setting up PIN from the account security page');
             this.$router.push({
               name: RouteDef.PinCodeSetup.name,
               params: {

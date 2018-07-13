@@ -10,6 +10,7 @@
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
+import { trackEvent } from '@/utils';
 
 export default {
   components: {
@@ -37,6 +38,7 @@ export default {
   },
   methods: {
     onNextClicked(pincode) {
+      trackEvent('Enter PIN for the first time');
       this.$router.push({
         name: RouteDef.PinCodeConfirm.name,
         params: {
