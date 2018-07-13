@@ -68,7 +68,7 @@ const router = new Router({
             header: BetaTestingHeader,
           },
           meta: {
-            replaceHeader: true,
+            setFixHeight: true,
           },
         },
         {
