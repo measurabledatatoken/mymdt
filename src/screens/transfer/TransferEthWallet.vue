@@ -3,7 +3,7 @@
     <MDTInputField 
       :amount="transferAmount"
       :max-amount="transferFromAccount.mdtBalance"
-      @amountEntered="setTransferAmount"
+      @amountEntered="onAmountEntered"
       @amountInvalid="transferAmountInvalid"
     />
     <div class="transaction-fee">
@@ -31,7 +31,8 @@
       :label="$t('message.transfer.fromlbl')"
       :accounts="fromUserAccounts"
       :selected-account="transferFromAccount"
-      @accountSelected="setTransferFromAccount"
+      @accountSelected="onTransferFromAccountSelected"
+      @menuOpened="onTransferFromMenuOpened"
     />
     <WalletAddressField 
       :label="$t('message.transfer.tolbl')"
@@ -44,10 +45,12 @@
       @infoEntered="setTransferNote"
     />
     <MDTPrimaryButton 
-      :to="RouteDef.TransferReview.path"
       :disabled="disableNextBtn"
       :bottom="true"
-    >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+      @click="onNextClicked"
+    >
+      {{ $t('message.common.nextbtn') }}
+    </MDTPrimaryButton>
 
     <md-dialog-alert 
       :md-active.sync="showTutorial"
@@ -60,6 +63,9 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import TransferType from '@/enum/transferType';
+import { RouteDef } from '@/constants';
+import { formatAmount, trackEvent } from '@/utils';
 import {
   SET_TRANSFER_AMOUNT,
   SET_TRANSFER_TYPE,
@@ -71,10 +77,10 @@ import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
-import { RouteDef, TransferType } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
-import { formatAmount } from '@/utils';
+
+const eventProperties = { 'Transfer Mode': TransferType.EthWallet };
 
 export default {
   components: {
@@ -154,11 +160,27 @@ export default {
       this.setTransferAmount(0);
     },
     walletAddressEntered(value) {
+      trackEvent('Enter ETH wallet address', eventProperties);
       this.isWalletAddressValid = true;
       this.setTransferToWalletAddress(value);
     },
     walletAddressInvalid() {
       this.isWalletAddressValid = false;
+    },
+    onAmountEntered(amount) {
+      trackEvent('Enter amount', eventProperties);
+      this.setTransferAmount(amount);
+    },
+    onTransferFromAccountSelected(account) {
+      trackEvent('Choose account for "from"', eventProperties);
+      this.setTransferFromAccount(account);
+    },
+    onTransferFromMenuOpened() {
+      trackEvent('Click on the dropdown arrow for "from"', eventProperties);
+    },
+    onNextClicked() {
+      trackEvent('Click on next button to confirm transfer', eventProperties);
+      this.$router.push(RouteDef.TransferReview.path);
     },
     formatAmount,
   },

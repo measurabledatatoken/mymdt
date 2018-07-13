@@ -24,6 +24,7 @@ import { ADD_PHONE_NUMBER } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
+import { trackEvent } from '@/utils';
 
 export default {
   metaInfo() {},
@@ -59,6 +60,7 @@ export default {
     },
     onDoneClicked(verificationCode) {
       this.addPhoneNumber({ pin: this.pin, verificationCode }).then(() => {
+        trackEvent('Phone number successfully set');
         this.showPhoneSetupSuccessPopup = true;
       });
     },

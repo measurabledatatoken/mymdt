@@ -58,7 +58,7 @@
         v-model="phoneNumber" 
         type="number" 
         pattern="\d*" 
-        @input="phoneNumberEntered"
+        @change="phoneNumberEntered"
       />
       <span 
         v-if="isFullPhoneNumberEntered && !isFullPhoneNumberValid" 
@@ -181,6 +181,7 @@ export default {
       this.$refs.countryCodeInput.$el.blur();
     },
     selectCountryCode(countryCodeItem) {
+      this.$emit('countryCodeSelected');
       this.countryCodeSearchText = countryCodeItem.dial_code;
       this.countryDialCode = countryCodeItem.dial_code;
       this.processFullPhoneEntered();

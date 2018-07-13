@@ -3,14 +3,15 @@
     <MDTInputField 
       :amount="transferAmount" 
       :max-amount="transferFromAccount.mdtBalance" 
-      @amountEntered="setTransferAmount"
+      @amountEntered="onAmountEntered"
       @amountInvalid="transferAmountInvalid"
     />
     <AccountSelector 
       :label="$t('message.transfer.fromlbl')" 
       :accounts="fromUserAccounts"
       :selected-account="transferFromAccount" 
-      @accountSelected="setTransferFromAccount"
+      @accountSelected="onTransferFromAccountSelected"
+      @menuOpened="onTransferFromMenuOpened"
     />
     <AccountSelector 
       :label="$t('message.transfer.tolbl')" 
@@ -18,22 +19,29 @@
       :accounts="transferToAccounts"
       :selected-account="transferToAccount" 
       @accountSelected="setTransferToAccount"
+      @menuOpened="onTransferToMenuOpened"
+      @otherSelected="onTransferToOtherSelected"
     />
     <NoteInputField 
       :note="transferNote" 
-      @infoEntered="setTransferNote"
+      @infoEntered="onNoteEntered"
     />
     <MDTPrimaryButton 
-      :to="RouteDef.TransferReview.path" 
-      :disabled="disableNextBtn" 
-      :bottom="true"
-    >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+      :disabled="disableNextBtn"
+      :bottom="true" 
+      @click="onNextClicked"
+    >
+      {{ $t('message.common.nextbtn') }}
+    </MDTPrimaryButton>
   </div>
 
 </template>
 
 <script>
 import { mapState, mapMutations, mapGetters } from 'vuex';
+import TransferType from '@/enum/transferType';
+import { RouteDef } from '@/constants';
+import { isValidEmailAddress, trackEvent } from '@/utils';
 import {
   SET_TRANSFER_AMOUNT,
   SET_TRANSFER_TYPE,
@@ -44,10 +52,10 @@ import {
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
-import { RouteDef, TransferType } from '@/constants';
-import { isValidEmailAddress } from '@/utils';
 import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+
+const eventProperties = { 'Transfer Mode': TransferType.Email };
 
 export default {
   components: {
@@ -109,6 +117,35 @@ export default {
     }),
     transferAmountInvalid() {
       this.setTransferAmount(0);
+    },
+    onAmountEntered(amount) {
+      trackEvent('Enter amount', eventProperties);
+      this.setTransferAmount(amount);
+    },
+    onTransferFromAccountSelected(account) {
+      trackEvent('Choose account for "from"', eventProperties);
+      this.setTransferFromAccount(account);
+    },
+    onTransferFromMenuOpened() {
+      trackEvent('Click on the dropdown arrow for "from"', eventProperties);
+    },
+    onTransferToAccountSelected(account) {
+      trackEvent('Choose an existing account for "to"', eventProperties);
+      this.setTransferToAccount(account);
+    },
+    onTransferToMenuOpened() {
+      trackEvent('Click on the dropdown arrow for "to"', eventProperties);
+    },
+    onTransferToOtherSelected() {
+      trackEvent('Choose “Other Email Account"', eventProperties);
+    },
+    onNoteEntered(note) {
+      trackEvent('Input Note', eventProperties);
+      this.setTransferNote(note);
+    },
+    onNextClicked() {
+      trackEvent('Click on next button to confirm transfer', eventProperties);
+      this.$router.push(RouteDef.TransferReview.path);
     },
   },
 };

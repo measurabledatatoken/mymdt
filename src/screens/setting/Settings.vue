@@ -3,7 +3,7 @@
     <md-list class="top-list">
       <base-setting-list-item 
         :title="$t('message.settings.martketPriceUnit')" 
-        :to="RouteDef.PriceUnits.path"
+        @click="onPriceUnitClicked"
       >
         <span slot="action-data">{{ priceUnit }}</span>
       </base-setting-list-item>
@@ -27,12 +27,13 @@
       <base-setting-list-item 
         :title="$t('message.settings.reportProblem')" 
         :show-action="false" 
-        :to="RouteDef.ReportProblem.path"
+        @click="onReportProblemClick"
       />
       <md-divider />
       <base-setting-list-item 
         :title="$t('message.settings.legalAndPrivacy')" 
         :show-action="false"
+        @click="onLegalAndPrivacyClick"
       />
       <md-divider />
     </md-list>
@@ -41,6 +42,9 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import { RouteDef } from '@/constants';
+import { trackEvent } from '@/utils';
+
 import {
   SET_SELECTED_USER,
   SET_SECURITY_USER_PHONE_INFO,
@@ -50,8 +54,6 @@ import UserAvatar from '@/components/common/UserAvatar';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListUserItem from '@/components/setting/SettingListUserItem';
-
-import { RouteDef } from '@/constants';
 
 export default {
   components: {
@@ -86,11 +88,23 @@ export default {
       setSecurityUserInfo: SET_SECURITY_USER_PHONE_INFO,
     }),
     onUserClicked(emailAddress) {
+      trackEvent('Click on an account under security section');
       this.setSelectedUser(emailAddress);
       this.setSecurityUserInfo(this.getUser(emailAddress));
       this.$router.push({
         name: RouteDef.UserSettings.name,
       });
+    },
+    onPriceUnitClicked() {
+      trackEvent('Click on Price Unit');
+      this.$router.push(RouteDef.PriceUnits.path);
+    },
+    onReportProblemClick() {
+      trackEvent('Click on report a problem');
+      this.$router.push(RouteDef.ReportProblem.path);
+    },
+    onLegalAndPrivacyClick() {
+      trackEvent('Click on Legal and Privacy');
     },
   },
 };

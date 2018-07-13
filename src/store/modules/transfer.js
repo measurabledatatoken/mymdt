@@ -1,5 +1,5 @@
 import api from '@/api';
-import { TransferType } from '@/constants';
+import TransferType from '@/enum/transferType';
 import { REQUEST } from '@/store/modules/api';
 
 // mutation
@@ -120,10 +120,12 @@ const actions = {
     const transferNote = rootState.transfer.transferNote;
 
     let amount = rootState.transfer.transferAmount;
-    let toAddress = rootState.transfer.transferToAccount.emailAddress;
+    let toAddress;
     if (transferType === TransferType.EthWallet) {
       toAddress = rootState.transfer.transferToWalletAddress;
       amount = rootGetters.finalAmount;
+    } else {
+      toAddress = rootState.transfer.transferToAccount.emailAddress;
     }
 
     return dispatch(REQUEST, {

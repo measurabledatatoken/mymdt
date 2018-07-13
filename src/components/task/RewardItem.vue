@@ -82,6 +82,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { trackEvent } from '@/utils';
 
 import BaseEarnMDTItem from '@/components/task/BaseEarnMDTItem';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
@@ -151,6 +152,9 @@ export default {
       claimReward: CLAIM_REWARD,
     }),
     handleClickClaimButton() {
+      trackEvent('Click on claim button', {
+        'Reward Name': this.reward.name,
+      });
       this.claimReward({
         rewardId: this.reward.id,
         userId: this.userId,
