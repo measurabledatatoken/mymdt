@@ -6,6 +6,7 @@
     <swiper 
       ref="mySwiper"
       :options="swiperOption"
+      @slideChange="onSlideChanged"
     >
 
       <!-- slides -->
@@ -56,6 +57,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import TutorialItem from '@/components/tutorial/TutorialItem';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
+import { trackEvent } from '@/utils';
 
 export default {
   components: {
@@ -83,9 +85,21 @@ export default {
       },
     };
   },
+  watch: {
+    active(newValue) {
+      if (newValue == true) {
+        trackEvent(`View tutorial slide 0`);
+      }
+    },
+  },
   methods: {
     onStartClicked() {
       this.$emit('update:active', false);
+    },
+    onSlideChanged() {
+      trackEvent(
+        `View tutorial slide ${this.$refs.mySwiper.swiper.activeIndex}`,
+      );
     },
   },
 };
