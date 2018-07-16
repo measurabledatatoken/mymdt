@@ -1,21 +1,22 @@
 <template>
-  <section 
-    v-if="active"
+  <md-dialog 
+    :md-active="active"
     class="nda-screen"
   >
-    <md-button
-      class="close-button" 
-      @click="handleCloseClick"
-    >
-      <md-icon 
-        class="close-button__icon" 
-        md-src="/static/icons/popup-close.svg"
-      />
-    </md-button>
+    <div>
+      <md-button
+        class="nda__close-button" 
+        @click="handleCloseClick"
+      >
+        <md-icon 
+          class="nda__close-button-icon" 
+          md-src="/static/icons/popup-close.svg"
+        />
+      </md-button>
+    </div>
     <div class="nda-screen__content">
       <h2>{{ $t('message.betaTesting.NDA') }}</h2>
       <p>This non-disclosure agreement (NDA) binding contract between you (the Recipient) and Mobile Internet Limited (the Discloser). You must agree to and accept all of the agreement, or you don’t have the right to use the Services. Your using the Services in any way means that you agree to all of these Terms, and these Terms will remain in effect while you use the Services. 
-
 
       1.	The Discloser intends to disclose information (the Confidential Information) to the Recipient for the purpose of beta testing of the application (the Purpose).
 
@@ -41,7 +42,7 @@
       9.	This Agreement is governed by, and is to be construed in accordance with, the law of Hong Kong Law. The Hong Kong Courts will have non-exclusive jurisdiction to deal with any dispute which has arisen or may arise out of, or in connection with, this Agreement.
       </p>
     </div>
-  </section>
+  </md-dialog>
 </template>
 
 <script>
@@ -62,19 +63,12 @@ export default {
 
 <style lang="scss" scoped>
 .nda-screen {
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1001;
-  text-align: left;
+  transition: none;
 
-  .close-button {
+  .nda__close-button {
     min-width: auto;
 
-    .close-button__icon {
+    .nda__close-button-icon {
       /deep/ svg {
         fill: $home-bgcolor;
       }
@@ -84,15 +78,15 @@ export default {
   .nda-screen__content {
     padding: 0 $defaultPageMargin $defaultPageMargin $defaultPageMargin;
     overflow: scroll;
-    height: 100%;
+    -webkit-overflow-scrolling: touch;
 
     > h2 {
+      margin-top: 0;
       line-height: 1;
     }
 
     > p {
       white-space: pre-line;
-      width: 100%;
     }
   }
 }

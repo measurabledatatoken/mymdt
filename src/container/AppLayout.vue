@@ -248,6 +248,7 @@ export default {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .content-router-view {
