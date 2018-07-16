@@ -190,14 +190,14 @@
   },
   "tutorial": {
     "get_started": "Get Started",
-    "slide_1_title": "What is MDT?",
-    "slide_1_description": "MDT is a crytocurrency.",
+    "slide_1_title": "What is MDT Balance?",
+    "slide_1_description": "Your MDT balance is constant, but your USD balance will fluctuate with the exchange rate, and sometimes it can be volatile.",
     "slide_2_title": "Earn Tokens by Simple Tasks",
-    "slide_2_description": "No need to work hard. \n MyMDT rewards you for very simple tasks, such as sending out an email in MailTime.",
+    "slide_2_description": "MyMDT rewards you for finishing super easy tasks such as sending an email. The more tasks you finish, the more tokens you will earn.",
     "slide_3_title": "Send or Spend",
-    "slide_3_description": "You can transfer your MDT to your friend, your wallet, or spend it in MyMDT for fun stuff (coming soon)!",
+    "slide_3_description": "You can transfer your MDT to a friend, your crypto wallet or just spend it in MyMDT for some fun stuff (coming soon) !",
     "slide_4_title": "Security",
-    "slide_4_description": "All transactions are authorized by your PIN. Add your phone number for more security. We got you covered."
+    "slide_4_description": "All transactions are authorized by your PIN. Add your phone number for more security."
   },
   "recaptcha": {
     "default_txt": "Press to start",
