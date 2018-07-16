@@ -175,6 +175,7 @@ export default {
         locale = 'en-us';
       }
     } else {
+      locale = locale.toLowerCase();
       this.setLocale(locale);
     }
     this.$i18n.locale = locale;
