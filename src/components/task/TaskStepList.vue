@@ -23,7 +23,7 @@ export default {
   props: {
     task: {
       type: Object,
-      default: null,
+      required: true,
     },
   },
   methods: {
