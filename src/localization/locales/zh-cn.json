@@ -116,7 +116,7 @@
     "legalAndPrivacy": "法律和隐私",
     "phoneNumber": "电话号码",
     "setUpNow": "现在设定",
-    "accountSecurity": "帐号保安",
+    "accountSecurity": "账号安全",
     "stillNeedHelp": "仍需要帮助?"
   },
   "priceUnit": {
@@ -190,14 +190,14 @@
   },
   "tutorial": {
     "get_started": "开始使用",
-    "slide_1_title": "什么是MDT？",
-    "slide_1_description": "MDT是一种加密货币。",
-    "slide_2_title": "通过简单任务赚取代币",
-    "slide_2_description": "无需努力工作。\n 在MyMDT中完成简单的任务从而赚取奖励，例如在MailTime中发送电子邮件。",
-    "slide_3_title": "发送或支出",
-    "slide_3_description": "您可以将您的MDT转移给您的朋友，您的以太钱包，或者将其用于MyMDT以获取有趣的内容（即将推出）！",
-    "slide_4_title": "安全",
-    "slide_4_description": "所有交易均由您的PIN授权。加入您的电话号码以获得更高的安全性。"
+    "slide_1_title": "我的MDT餘額",
+    "slide_1_description": "當你完成越多任務，獲得的MDT也會越多。在MDT餘額下方顯示的是實時的等值美金餘額，它會隨著MDT兌換美元的匯率而改變。",
+    "slide_2_title": "輕鬆獲獎勵",
+    "slide_2_description": "在MyMDT中，完成一些簡單的任務即可獲得獎勵。當你完成越多任務，獲得的MDT也會越多。",
+    "slide_3_title": "換取更多樂趣",
+    "slide_3_description": "你可以把獲得的 MDT獎勵發送給朋友，轉賬至自己的數字貨幣錢包，或是在 MyMDT中兌換其他有趣的服務！",
+    "slide_4_title": "安全第一",
+    "slide_4_description": "所有的交易必須通過你所設置的PIN碼才能驗證。請牢記自己的PIN碼，並綁定手機號碼，使交易更安全。"
   },
   "recaptcha": {
     "default_txt": "点击按钮开始智能验证",
