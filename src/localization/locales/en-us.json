@@ -224,10 +224,11 @@
     "accessCode": "Access Code",
     "pleaseEnterAccessCode": "Please enter Access Code",
     "accessCodeIsNotValid": "Access Code is not valid",
-    "agreementCheckbox": "I agree to the rules of MDT Wallet Beta Testing",
     "agreementDetail": "By clicking the button below, your email accounts in MailTime will automatically logged into the MDT wallet.",
     "importAccounts": "Import Account(s)",
-    "NDA": "NDA for Beta Testing with MailTime"
+    "NDA": "NDA for Beta Testing with MailTime",
+    "agreementCheckbox1": "I agree to {0} of MDT Wallet Beta Testing",
+    "agreementCheckbox2": "the rules"
   },
   "legalAndPrivacy": {
     "termsOfUse": "Terms of Use"

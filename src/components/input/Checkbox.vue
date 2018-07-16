@@ -11,6 +11,7 @@
     >
       {{ title }}
       <slot
+        v-if="!title"
         name="title"
       />
     </div>
