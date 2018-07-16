@@ -19,22 +19,11 @@
       <div class="beta-testing-form__footer">
         <Checkbox v-model="$v.agree.$model">
           <template
-            v-if="$i18n.locale === 'en-us'"
             slot="title"
           >
-            I agree to <a @click.prevent.stop="handleClickNDA">the rules</a> of MDT Wallet Beta Testing
-          </template>
-          <template
-            v-if="$i18n.locale === 'zh-hk'"
-            slot="title"
-          >
-            我同意有關 MDT 錢包 Beta 測試版的<a @click.prevent.stop="handleClickNDA">相關規定</a>
-          </template>
-          <template
-            v-if="$i18n.locale === 'zh-cn'"
-            slot="title"
-          >
-            我同意有关 MDT 钱包 Beta 测试版的<a @click.prevent.stop="handleClickNDA">相关规定</a>
+            <i18n path="message.betaTesting.agreementCheckbox1">
+              <a @click.prevent.stop="handleClickNDA">{{ $t('message.betaTesting.agreementCheckbox2') }}</a>
+            </i18n>
           </template>
         </Checkbox>
         <p>{{ $t('message.betaTesting.agreementDetail') }}</p>

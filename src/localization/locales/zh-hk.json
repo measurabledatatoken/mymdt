@@ -224,9 +224,11 @@
     "accessCode": "邀請碼",
     "pleaseEnterAccessCode": "請輸入邀請碼",
     "accessCodeIsNotValid": "邀請碼無效",
-    "agreementCheckbox": "我同意有關 MDT 錢包 Beta 測試版的相關規定",
     "agreementDetail": "點擊“導入郵箱賬號”，您在 MailTime 簡信中登錄的郵箱賬號將自動登入 MDT 錢包。",
-    "importAccounts": "導入郵箱賬號"
+    "importAccounts": "導入郵箱賬號",
+    "NDA": "保密協議",
+    "agreementCheckbox1": "我同意有關 MDT 錢包 Beta 測試版的{0}",
+    "agreementCheckbox2": "相關規定"
   },
   "legalAndPrivacy": {
     "termsOfUse": "使用條款"
