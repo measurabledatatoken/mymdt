@@ -8,15 +8,9 @@
     <template slot="action">
       <div class="earn-mdt-reward-item-action">
         <div class="earn-mdt-reward-item-action__amount-placholder">
-          <transition name="earn-mdt-reward-item-action__amount-to-earn">
-            <span 
-              v-show="!claimed" 
-              class="earn-mdt-reward-item-action__amount-to-earn"
-            >{{ amountText }}</span>
-          </transition>
-          <transition 
-            name="earn-mdt-reward-item-action__claim-button" 
-            @after-leave="afterLeave"
+          <transition  
+            name="earn-mdt-reward-item-action__claim-button"    
+            @after-leave="afterLeave" 
           >
             <MDTSecondaryButton
               v-show="!claimed"
@@ -26,7 +20,7 @@
               color="secondary"
               @click="handleClickClaimButton"
             >
-              {{ buttonText }}
+              {{ buttonText + " " + amountText }}
             </MDTSecondaryButton>
           </transition>
           <div class="earn-mdt-reward-item-action__amount-wrapper">
@@ -37,42 +31,16 @@
                 disabled
               >{{ `+${amountText}` }}</MDTSecondaryButton>
             </transition>
-            <transition name="deco">
-              <span 
+            <transition 
+              v-for="n in 8" 
+              :key="n" 
+              name="deco"
+            >    
+              <span  
                 v-if="showAmount" 
-                class="deco deco__left deco__left-1"
+                :class="['deco', 'deco-' + n]"
               />
-            </transition>
-            <transition name="deco">
-              <span 
-                v-if="showAmount" 
-                class="deco deco__left deco__left-2"
-              />
-            </transition>
-            <transition name="deco">
-              <span 
-                v-if="showAmount" 
-                class="deco deco__left deco__left-3"
-              />
-            </transition>
-            <transition name="deco">
-              <span 
-                v-if="showAmount" 
-                class="deco deco__right deco__right-1"
-              />
-            </transition>
-            <transition name="deco">
-              <span 
-                v-if="showAmount" 
-                class="deco deco__right deco__right-2"
-              />
-            </transition>
-            <transition name="deco">
-              <span 
-                v-if="showAmount" 
-                class="deco deco__right deco__right-3"
-              />
-            </transition>
+            </transition> 
           </div>
         </div>
       </div>
@@ -239,55 +207,80 @@ export default {
         }
 
         .deco-enter-active {
-          animation-name: vanish;
           animation-duration: 650ms;
           animation-delay: 150ms;
           animation-fill-mode: forwards;
+
+          $positionLeftOfCenterPoint: 75%;
+          $positionTopOfCenterPoint: 50%;
+          $horizontalOffset: 8%;
+          &.deco-1 {
+            animation-name: vanish, moveToTop;
+            top: ($positionTopOfCenterPoint - 30%);
+            left: $positionLeftOfCenterPoint;
+            transform: rotate(90deg);
+            transform-origin: left;
+          }
+
+          &.deco-2 {
+            top: ($positionTopOfCenterPoint - 20%);
+            right: (100% - $positionLeftOfCenterPoint) - ($horizontalOffset/2);
+            animation-name: vanish, moveToTop, moveToRight;
+            transform: rotate(-45deg);
+            transform-origin: right top;
+          }
+
+          &.deco-3 {
+            top: $positionTopOfCenterPoint;
+            right: (100% - $positionLeftOfCenterPoint) - $horizontalOffset;
+            animation-name: vanish, moveToRight;
+            // transform: translateY(-50%);
+          }
+
+          &.deco-4 {
+            top: ($positionTopOfCenterPoint + 20%);
+            right: (100% - $positionLeftOfCenterPoint) - ($horizontalOffset/2);
+            transform: rotate(45deg);
+            animation-name: vanish, moveToBottom, moveToRight;
+            transform-origin: right bottom;
+          }
+
+          &.deco-5 {
+            top: ($positionTopOfCenterPoint + 30%);
+            left: $positionLeftOfCenterPoint;
+            transform: rotate(-90deg);
+            animation-name: vanish, moveToBottom;
+            transform-origin: left;
+          }
+
+          &.deco-6 {
+            top: ($positionTopOfCenterPoint + 20%);
+            left: ($positionLeftOfCenterPoint - $horizontalOffset/2);
+            transform: rotate(-45deg);
+            transform-origin: left bottom;
+            animation-name: vanish, moveToBottom, moveToLeft;
+          }
+
+          &.deco-7 {
+            top: $positionTopOfCenterPoint;
+            left: $positionLeftOfCenterPoint - $horizontalOffset;
+            animation-name: vanish, moveToLeft;
+          }
+
+          &.deco-8 {
+            top: ($positionTopOfCenterPoint - 20%);
+            left: ($positionLeftOfCenterPoint - $horizontalOffset/2);
+            transform: rotate(45deg);
+            transform-origin: left top;
+            animation-name: vanish, moveToTop, moveToLeft;
+          }
         }
 
         .deco {
-          height: 2px;
+          height: 1px;
           width: 0px;
           background-color: $theme-secondary-color;
           position: absolute;
-
-          &.deco__left {
-            left: 0px;
-
-            &.deco__left-1 {
-              top: 16%;
-              transform: translateY(-50%) rotate(10deg);
-            }
-
-            &.deco__left-2 {
-              top: 50%;
-              transform: translateY(-50%);
-            }
-
-            &.deco__left-3 {
-              top: 84%;
-              transform: translateY(-50%) rotate(-10deg);
-            }
-          }
-
-          &.deco__right {
-            right: 0px;
-
-            &.deco__right-1 {
-              top: 16%;
-              transform: translateY(-50%) rotate(-10deg);
-            }
-
-            &.deco__right-2 {
-              top: 50%;
-              transform: translateY(-50%);
-            }
-
-            &.deco__right-3 {
-              top: 84%;
-              transform: translateY(-50%) rotate(10deg);
-            }
-          }
         }
       }
     }
@@ -316,13 +309,32 @@ export default {
 
 @keyframes vanish {
   from {
-    width: 14px;
+    width: 8px;
   }
   to {
     width: 0px;
   }
 }
-
+@keyframes moveToTop {
+  to {
+    margin-top: -10px;
+  }
+}
+@keyframes moveToRight {
+  to {
+    margin-right: -10px;
+  }
+}
+@keyframes moveToBottom {
+  to {
+    margin-top: 10px;
+  }
+}
+@keyframes moveToLeft {
+  to {
+    margin-left: -10px;
+  }
+}
 @keyframes zoomIn {
   from {
     opacity: 0;
