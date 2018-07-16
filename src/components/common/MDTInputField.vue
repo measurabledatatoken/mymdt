@@ -4,12 +4,13 @@
     :error="isInSufficientFund && $t('message.transfer.insufficient_fund')"
   >
     <md-input
-      :value="enteredAmount"
+      v-model="enteredAmount"
       class="amount"
       type="number"
       placeholder="0.0000"
       min="0"
-      @change="numberChanged($event.target.value)"
+      @change="numberChanged($event.target.valueAsNumber)"
+      @blur="handleBlur($event)"
     />
     <span class="md-suffix">MDT</span>
   </BaseField>
@@ -34,7 +35,7 @@ export default {
   },
   data() {
     return {
-      enteredAmount: this.amount,
+      enteredAmount: this.amount === 0 ? undefined : this.amount,
     };
   },
   computed: {
@@ -46,15 +47,22 @@ export default {
     },
   },
   methods: {
-    numberChanged(value) {
-      if (value.length !== 0) {
-        this.enteredAmount = parseInt(value, 10);
+    numberChanged(valueAsNumber) {
+      if (valueAsNumber) {
+        this.enteredAmount = Math.floor(valueAsNumber * 10000) / 10000;
+      } else {
+        this.enteredAmount = undefined;
       }
 
       if (!this.isInSufficientFund) {
         this.$emit('amountEntered', this.enteredAmount);
       } else {
         this.$emit('amountInvalid', this.enteredAmount);
+      }
+    },
+    handleBlur(event) {
+      if (!event.target.valueAsNumber) {
+        this.enteredAmount = undefined;
       }
     },
   },
