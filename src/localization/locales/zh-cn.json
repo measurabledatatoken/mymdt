@@ -190,14 +190,14 @@
   },
   "tutorial": {
     "get_started": "开始使用",
-    "slide_1_title": "我的MDT餘額",
-    "slide_1_description": "當你完成越多任務，獲得的MDT也會越多。在MDT餘額下方顯示的是實時的等值美金餘額，它會隨著MDT兌換美元的匯率而改變。",
-    "slide_2_title": "輕鬆獲獎勵",
-    "slide_2_description": "在MyMDT中，完成一些簡單的任務即可獲得獎勵。當你完成越多任務，獲得的MDT也會越多。",
-    "slide_3_title": "換取更多樂趣",
-    "slide_3_description": "你可以把獲得的 MDT獎勵發送給朋友，轉賬至自己的數字貨幣錢包，或是在 MyMDT中兌換其他有趣的服務！",
+    "slide_1_title": "我的MDT余额",
+    "slide_1_description": "当你完成越多任务，获得的MDT也会越多。在MDT余额下方显示的是实时的等值美金余额，它会随着MDT兑换美元的汇率而改变。",
+    "slide_2_title": "轻松获奖励",
+    "slide_2_description": "在MyMDT中，完成一些简单的任务即可获得奖励。当你完成越多任务，获得的MDT也会越多。",
+    "slide_3_title": "换取更多乐趣",
+    "slide_3_description": "你可以把获得的 MDT奖励发送给朋友，转账至自己的数字货币钱包，或是在 MyMDT中兑换其他有趣的服务！",
     "slide_4_title": "安全第一",
-    "slide_4_description": "所有的交易必須通過你所設置的PIN碼才能驗證。請牢記自己的PIN碼，並綁定手機號碼，使交易更安全。"
+    "slide_4_description": "所有的交易必须通过你所设置的PIN码才能验证。请牢记自己的PIN码，并绑定手机号码，使交易更安全。"
   },
   "recaptcha": {
     "default_txt": "点击按钮开始智能验证",
