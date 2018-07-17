@@ -19,7 +19,9 @@ import betaTesting from './modules/betaTesting';
 Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production';
-
+const persistedState = createPersistedState({
+  paths: ['home', 'login', 'entities', 'betaTesting'],
+});
 export default new Vuex.Store({
   modules: {
     ui,
@@ -36,12 +38,5 @@ export default new Vuex.Store({
     betaTesting,
   },
   strict: debug,
-  plugins: debug
-    ? [
-        createLogger(),
-        createPersistedState({
-          paths: ['home', 'login', 'entities', 'betaTesting'],
-        }),
-      ]
-    : [],
+  plugins: debug ? [createLogger(), persistedState] : [persistedState],
 });
