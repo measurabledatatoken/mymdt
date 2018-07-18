@@ -54,13 +54,15 @@ export default {
 
   .md-card-actions {
     justify-content: center;
-    height: 3em;
+    position: absolute;
+    bottom: 16px;
+    padding: 0px;
+    left: 0;
+    width: 100%;
 
     .md-button.md-raised {
-      position: absolute;
-      bottom: 16px;
       height: 24px;
-      width: 105px;
+      width: 76%;
       border-radius: 16px;
       font-weight: bold;
       letter-spacing: 0.1px;

@@ -12,14 +12,14 @@ const messages = {
   'zh-hk': {
     message: ZH_HK,
   },
-  'zh-Hant': {
+  'zh-hant': {
     message: ZH_HK,
   },
 
   'zh-cn': {
     message: ZH_CN,
   },
-  'zh-Hans': {
+  'zh-hans': {
     message: ZH_CN,
   },
 };
