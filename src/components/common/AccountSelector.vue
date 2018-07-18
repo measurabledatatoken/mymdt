@@ -358,10 +358,12 @@ $menuItemOtherCellHeight: 44px;
 
 .md-menu-content {
   border-radius: 0px 0px 4px 4px !important;
+  background-color: $theme-listing-bgcolor;
   width: 100%;
   left: 0;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
     0 0px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  -webkit-overflow-scrolling: touch;
 
   /deep/ .md-list {
     background-color: $theme-listing-bgcolor;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="transferlist">
     <div class="account">
       <AccountSelector 
         :accounts="allUsers" 
@@ -121,6 +121,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.transferlist {
+  display: flex;
+  flex-direction: column;
+}
+
 .account-selector {
   height: 72px;
   padding-top: 8px;
@@ -129,6 +134,7 @@ export default {
 }
 
 .action-card-list {
+  flex-grow: 2;
   background-color: $theme-listing-bgcolor;
   height: calc(100% - 72px);
 }

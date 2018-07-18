@@ -13,7 +13,7 @@ module.exports = {
         args[0]["process.env"] = {
           ...args[0]["process.env"],
           API_ENDPOINT: `'${process.env.API_ENDPOINT}'`,
-          API_Scheme: `'${process.env.API_Scheme}'`
+          API_SCHEME: `'${process.env.API_SCHEME}'`
         };
       }
       return args;
