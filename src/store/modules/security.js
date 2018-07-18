@@ -39,7 +39,7 @@ export const VERIFY_GOOGLE_AUTHENTICATOR_OTP =
 export const GET_2FA_STATUS = 'security/GET_2FA_STATUS';
 export const ENABLE_2FA = 'security/ENABLE_2FA';
 export const DISABLE_2FA = 'security/DISABLE_2FA';
-export const CHANGE_2FA_OPTIONS = 'security/CHANGE_2FA_OPTIONS';
+export const SET_2FA_OPTION = 'security/SET_2FA_OPTION';
 
 const state = {
   countryDialCode: null,
@@ -239,6 +239,15 @@ const actions = {
     return dispatch(REQUEST, {
       api: api.security.disable2FA,
       args: [pin, verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  [SET_2FA_OPTION]({ dispatch, state, rootGetters }, { usage }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.set2FAOption,
+      args: [usage, account.accessToken],
       setLoading: false,
       openErrorPrompt: true,
     });

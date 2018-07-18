@@ -153,6 +153,19 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
+  set2FAOption(usage, accessToken) {
+    const body = {
+      '2fa_usage': usage,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/2fa/options`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
   generateGoogleAuthSecret(pin, accessToken) {
     const body = {
       pin,
