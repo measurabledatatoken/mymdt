@@ -5,4 +5,5 @@ export default {
   VerifyPhoneNumberAction: 'verify-phone',
   TransferAction: 'transfer',
   ResetPasscodeAction: 'reset-passcode',
+  DisableTwofaAction: 'disable-2fa',
 };

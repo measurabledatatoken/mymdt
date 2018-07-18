@@ -28,6 +28,19 @@ export const ADD_PHONE_NUMBER = 'security/ADD_PHONE_NUMBER';
 export const CHANGE_PHONE_NUMBER = 'security/CHANGE_PHONE_NUMBER';
 export const VERIFY_VERIFICATION_CODE = 'security/VERIFY_VERIFICATION_CODE';
 
+export const GENERATE_GOOGLE_AUTHENTICATOR_SECRET =
+  'security/GENERATE_GOOGLE_AUTHENTICATOR_SECRET';
+export const VERIFY_GOOGLE_AUTHENTICATOR_SECRET =
+  'security/VERIFY_GOOGLE_AUTHENTICATOR_SECRET';
+export const DISABLE_GOOGLE_AUTHENTICATOR =
+  'security/DISABLE_GOOGLE_AUTHENTICATOR';
+export const VERIFY_GOOGLE_AUTHENTICATOR_OTP =
+  'security/VERIFY_GOOGLE_AUTHENTICATOR_OTP';
+export const GET_2FA_STATUS = 'security/GET_2FA_STATUS';
+export const ENABLE_2FA = 'security/ENABLE_2FA';
+export const DISABLE_2FA = 'security/DISABLE_2FA';
+export const CHANGE_2FA_OPTIONS = 'security/CHANGE_2FA_OPTIONS';
+
 const state = {
   countryDialCode: null,
   countryCode: null,
@@ -200,6 +213,81 @@ const actions = {
       api: api.security.verifyCodeForPhoneNumber,
       args: [action, verificationCode, account.accessToken],
       setLoading: true,
+      openErrorPrompt: true,
+    });
+  },
+  [GET_2FA_STATUS]({ dispatch, state, rootGetters }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.get2FAStatus,
+      args: [account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  [ENABLE_2FA]({ dispatch, state, rootGetters }, { pin }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.enable2FA,
+      args: [pin, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  [DISABLE_2FA]({ dispatch, state, rootGetters }, { pin, verificationCode }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.disable2FA,
+      args: [pin, verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  [GENERATE_GOOGLE_AUTHENTICATOR_SECRET](
+    { dispatch, state, rootGetters },
+    { pin },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.generateGoogleAuthSecret,
+      args: [pin, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  [VERIFY_GOOGLE_AUTHENTICATOR_SECRET](
+    { dispatch, state, rootGetters },
+    { verificationCode },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.verifyGoogleAuthSecret,
+      args: [verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  [VERIFY_GOOGLE_AUTHENTICATOR_OTP](
+    { dispatch, state, rootGetters },
+    { verificationCode },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.verifyGoogleAuthOTP,
+      args: [verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  [DISABLE_GOOGLE_AUTHENTICATOR](
+    { dispatch, state, rootGetters },
+    { pin, verificationCode },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.disableGoogleAuth,
+      args: [pin, verificationCode, account.accessToken],
+      setLoading: false,
       openErrorPrompt: true,
     });
   },
