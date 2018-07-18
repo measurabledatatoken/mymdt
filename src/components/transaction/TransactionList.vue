@@ -77,7 +77,10 @@ export default {
 <style lang="scss" scoped>
 .transaction-list {
   overflow-y: scroll;
-  padding-bottom: 80px;
+
+  > li {
+    flex-shrink: 0;
+  }
 }
 
 .list-item__action {
