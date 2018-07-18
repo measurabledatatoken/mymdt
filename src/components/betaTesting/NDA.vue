@@ -66,7 +66,7 @@ export default {
   transition: none;
 
   .nda__close-button {
-    min-width: auto;
+    min-width: 0;
 
     .nda__close-button-icon {
       /deep/ svg {
@@ -79,6 +79,7 @@ export default {
     padding: 0 $defaultPageMargin $defaultPageMargin $defaultPageMargin;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
+    flex: 1;
 
     > h2 {
       margin-top: 0;

@@ -229,6 +229,12 @@ $amountMinHeight: 20px;
     margin-top: $defaultPageMargin;
     min-height: $amountMinHeight;
 
+    &::after {
+      content: '';
+      clear: both;
+      display: table;
+    }
+
     .amount-lbl {
       float: left;
       width: 30%;
@@ -237,7 +243,7 @@ $amountMinHeight: 20px;
     .amount-value {
       float: right;
       font-size: 28px;
-      width: 55%;
+      width: calc(55% - 16px);
       text-align: right;
       line-height: 40px;
     }
@@ -246,7 +252,7 @@ $amountMinHeight: 20px;
       float: right;
       font-size: 16px;
       width: 15%;
-      padding-left: 16px;
+      margin-left: 16px;
       padding-top: 4px;
       line-height: 40px;
     }

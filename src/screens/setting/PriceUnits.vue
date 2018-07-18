@@ -56,5 +56,9 @@ export default {
 <style lang="scss" scoped>
 .price-unit-list {
   padding-top: 0;
+
+  .md-list-item {
+    flex-shrink: 0;
+  }
 }
 </style>

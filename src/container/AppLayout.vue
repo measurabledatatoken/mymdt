@@ -132,7 +132,7 @@ export default {
       const style = {};
       if (this.setFixHeight) {
         style.height = `${this.screenHeight}px`;
-        style.overflow = 'scroll';
+        style.overflow = 'auto';
       }
       return style;
     },
@@ -248,13 +248,12 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 
 .content-router-view {
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -329,5 +328,6 @@ export default {
 .home-tutorial {
   position: absolute;
   z-index: 10;
+  top: 0;
 }
 </style>

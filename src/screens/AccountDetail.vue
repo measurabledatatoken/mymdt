@@ -7,7 +7,7 @@
         @transfer="goToTransfer()"
       />
     </div>
-    <transaction-list :transactions="transactions" />
+    <TransactionList :transactions="transactions" />
     <MDTPrimaryButton 
       :bottom="true"
       @click="goToEarn()"
@@ -86,7 +86,17 @@ $header-padding-top: 2rem;
 .app-view {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+
+  .transaction-list {
+    flex: 1;
+    &:after {
+      content: '';
+      display: block;
+      height: 80px;
+      width: 100%;
+      flex-shrink: 0;
+    }
+  }
 }
 
 .header {
