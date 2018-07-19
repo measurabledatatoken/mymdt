@@ -19,7 +19,6 @@
     <BaseField
       :label="$t('message.reportProblem.comments')"
       :error="$v.comments.$error && $t('message.reportProblem.thisFieldIsMandatory')"
-      md-clearable
     >
       <md-textarea
         :placeholder="$t('message.reportProblem.upTo500Characters')"
