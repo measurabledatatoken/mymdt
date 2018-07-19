@@ -70,7 +70,12 @@ export default {
     },
     goToEarn() {
       trackEvent('Click on Earn MDT button from account page');
-      this.$router.push(RouteDef.EarnMDT.path);
+      this.$router.push({
+        name: RouteDef.EarnMDT.name,
+        params: {
+          userId: this.selectedUser.emailAddress,
+        },
+      });
     },
     ...mapActions({
       fetchTransactions: FETCH_TRANSACTIONS,

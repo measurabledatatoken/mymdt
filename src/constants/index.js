@@ -26,7 +26,7 @@ const RouteDef = {
     path: '/home/transfer/ethwallet/review/success',
     name: 'transferSuccess',
   },
-  EarnMDT: { path: '/home/earn' },
+  EarnMDT: { path: '/home/earn', name: 'earnMDT' },
   AccountDetail: {
     path: '/home/accounts/:account_id',
     name: 'accountDetail',
