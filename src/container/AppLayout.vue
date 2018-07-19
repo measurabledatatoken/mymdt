@@ -232,7 +232,7 @@ export default {
 .header {
   position: absolute;
   top: 0;
-  z-index: 10;
+  z-index: 8;
   height: $header-height;
   background: $home-bgcolor;
   width: 100%;
