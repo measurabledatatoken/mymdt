@@ -101,7 +101,7 @@ export default {
       msg: 'Current MDT Price:',
       showHomeLoadingEnd: false,
       loginTotalClaimed: 0,
-      showTotalClaimedPopup: true,
+      showTotalClaimedPopup: false,
     };
   },
   computed: {
