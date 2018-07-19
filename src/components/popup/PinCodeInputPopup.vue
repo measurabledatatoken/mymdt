@@ -99,7 +99,6 @@ export default {
     height: 32px;
     width: 32px;
     min-width: 32px;
-    padding: 8px;
     margin: 0px;
     position: absolute;
     top: 0px;

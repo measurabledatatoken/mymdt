@@ -228,7 +228,6 @@ export default {
 }
 
 .top-content {
-  position: sticky;
   top: 0;
   z-index: 9;
   background-color: $home-bgcolor;
@@ -239,6 +238,7 @@ export default {
   background-color: $home-bgcolor;
   overflow-y: scroll;
   padding-bottom: 80px;
+  flex: 1;
 }
 
 .balance-title {

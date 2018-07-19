@@ -1,5 +1,5 @@
 <template>
-  <div class="transferlist">
+  <div class="transfer-list-screen">
     <div class="account">
       <AccountSelector 
         :accounts="allUsers" 
@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.transferlist {
+.transfer-list-screen {
   display: flex;
   flex-direction: column;
 }
@@ -134,9 +134,14 @@ export default {
 }
 
 .action-card-list {
-  flex-grow: 2;
   background-color: $theme-listing-bgcolor;
-  height: calc(100% - 72px);
+  flex: 1;
+
+  &::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
 }
 
 .action-card {
