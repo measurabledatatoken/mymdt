@@ -23,7 +23,7 @@
             class="account-info"
           >
             <div 
-              v-if="selectedAccount" 
+              v-if="selectedAccount || selectedOther" 
               class="account-email"
             >
               {{ selectedAccountEmail }}
@@ -35,7 +35,7 @@
               {{ selectedAccountBalance }}
             </div>
             <div 
-              v-if="!selectedAccount" 
+              v-if="!selectedAccount && !selectedOther" 
               class="placeholder"
             > {{ $t('message.transfer.select_account_placeholder') }} </div>
           </div>
@@ -172,13 +172,14 @@ export default {
       return this.selectedAccount.emailAddress;
     },
     selectedAccountEmail() {
+      if (this.selectedOther) {
+        return this.$t('message.transfer.other_emailaddress');
+      }
+
       if (!this.selectedAccount) {
         return '';
       }
 
-      if (this.selectedOther) {
-        return this.$t('message.transfer.other_emailaddress');
-      }
       const emailAddress = this.selectedAccount.emailAddress;
       return emailAddress;
     },
