@@ -23,13 +23,13 @@
             </div>
           </md-list-item>
           <md-divider />
-          <price-unit-lis-item 
+          <price-unit-list-item 
             :selected="method === TwoFactorOption.METHOD.SMS" 
             :title="$t('message.twoFactorAuthentication.methods.sms')" 
             @click="set2FAMethod(TwoFactorOption.METHOD.SMS)"
           />
           <md-divider />
-          <price-unit-lis-item 
+          <price-unit-list-item 
             :selected="method === TwoFactorOption.METHOD.GOOGLE" 
             :title="$t('message.twoFactorAuthentication.methods.google')" 
             @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
@@ -43,19 +43,19 @@
             </div>
           </md-list-item>
           <md-divider />
-          <price-unit-lis-item 
+          <price-unit-list-item 
             :selected="usage === TwoFactorOption.USAGE.TRANSACTION" 
             :title="$t('message.twoFactorAuthentication.appliances.transaction')" 
             @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION)"
           />
           <md-divider />
-          <price-unit-lis-item 
+          <price-unit-list-item 
             :selected="usage === TwoFactorOption.USAGE.LOGIN" 
             :title="$t('message.twoFactorAuthentication.appliances.login')" 
             @click="set2FAUsage(TwoFactorOption.USAGE.LOGIN)"
           />
           <md-divider />
-          <price-unit-lis-item 
+          <price-unit-list-item 
             :selected="usage === TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN" 
             :title="$t('message.twoFactorAuthentication.appliances.transactionAndLogin')" 
             @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN)"
@@ -79,7 +79,7 @@ import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
-import PriceUnitLisItem from '@/components/setting/PriceUnitLisItem';
+import PriceUnitListItem from '@/components/setting/PriceUnitListItem';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
 
@@ -88,7 +88,7 @@ export default {
     MDTPrimaryButton,
     BaseUserSettingPage,
     BaseSettingListItem,
-    PriceUnitLisItem,
+    PriceUnitListItem,
   },
   extends: BasePage,
   props: {
