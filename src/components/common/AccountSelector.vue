@@ -239,6 +239,7 @@ export default {
     },
     selectOther() {
       this.selectedOther = true;
+      this.selectedAccount = null;
       this.$emit('otherSelected');
     },
     menuOpened() {
