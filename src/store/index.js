@@ -15,6 +15,7 @@ import ui from './modules/ui';
 import entities from './modules/entities';
 import security from './modules/security';
 import betaTesting from './modules/betaTesting';
+import transaction from './modules/transaction';
 
 Vue.use(Vuex);
 
@@ -42,6 +43,7 @@ export default new Vuex.Store({
     reportProblem,
     security,
     betaTesting,
+    transaction,
   },
   strict: debug,
   plugins: debug ? [createLogger(), persistedState] : [persistedState],

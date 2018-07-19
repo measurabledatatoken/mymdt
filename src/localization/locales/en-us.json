@@ -113,7 +113,11 @@
     "transferOutToETHWallet": "Transfer out to ETH Wallet",
     "deposit": "Deposit",
     "noTransaction": "No Transaction",
-    "transactionRecord": "Transaction Record"
+    "transactionRecord": "Transaction Record",
+    "refund": "Refund",
+    "cancel": "Cancel",
+    "cancelled": "Cancelled",
+    "pending_to_claim": "Pending..."
   },
   "settings": {
     "title": "Settings",
