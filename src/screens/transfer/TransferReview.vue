@@ -5,8 +5,18 @@
       <div class="from-value">{{ transferFromAccount.emailAddress }}</div>
       <div class="to-lbl">{{ $t('message.transfer.tolbl') }}</div>
       <div class="to-value">{{ transferToStr }}</div>
-      <div class="note-lbl">{{ $t('message.transfer.notelbl') }}</div>
-      <div class="note-value">{{ transferNote }}</div>
+      <div
+        v-if="transferNote" 
+        class="note-lbl"
+      >
+        {{ $t('message.transfer.notelbl') }}
+      </div>
+      <div
+        v-if="transferNote"
+        class="note-value"
+      >
+        {{ transferNote }}
+      </div>
 
       <div 
         v-if="transferType === TransferType.Email" 
