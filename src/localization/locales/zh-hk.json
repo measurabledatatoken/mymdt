@@ -171,7 +171,7 @@
     "comments": "意見",
     "upTo500Characters": "最多輸入五百個字元",
     "submit": "提交",
-    "pleaseInputValidEmailAddress": "請輸入正確的電郵地址",
+    "pleaseInputValidEmailAddress": "無效的電郵地址",
     "thisFieldIsMandatory": "此欄為必填",
     "recaptchaFailed": "reCAPTCHA驗證失敗，請重新驗證",
     "errorMessage": "很抱歉，您的評論無法立即提交。<br />你可以聯繫 <a href=\"mailto:token@mdt.co\">token@mdt.co</a> 尋求幫助"
