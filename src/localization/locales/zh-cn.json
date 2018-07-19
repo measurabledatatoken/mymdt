@@ -1,7 +1,7 @@
 {
   "common": {
     "transferbtn": "转帐",
-    "okay": "OK",
+    "okay": "确定",
     "unknow_error": "出错了......请稍后再试",
     "error_title": "出错了",
     "done": "完成",
@@ -43,7 +43,8 @@
     "settings": "设定",
     "tutorial": "教学",
     "accountnum": "{num} 个帐号",
-    "earn_mdt": "赚取 MDT"
+    "earn_mdt": "赚取 MDT",
+    "cliamed_mdt": "你已认领{num}MDT"
   },
   "transfer": {
     "title": "转帐",

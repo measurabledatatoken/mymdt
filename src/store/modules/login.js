@@ -57,6 +57,7 @@ const actions = {
           const credential = {
             email_address: emailAddress,
             access_token: data.access_token,
+            claimed_amount: data.claimed_amount,
           };
           const credentials = [credential];
           context.commit(SET_CREDENTIALS, credentials);
@@ -104,6 +105,7 @@ const actions = {
         const credentials = data.valid.map(dataItem => ({
           email_address: dataItem.email_address,
           access_token: dataItem.access_token,
+          claimed_amount: dataItem.claimed_amount,
         }));
         commit(SET_CREDENTIALS, credentials);
         commit(SET_INVALIDEMAILS, data.invalid);

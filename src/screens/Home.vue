@@ -5,43 +5,54 @@
       <div class="balance-count">{{ formatAmount(totalMDTBalance) }} MDT</div>
 
       <div class="account-content">
-        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }}  {{ priceUnit }} </div>
+        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }} {{ priceUnit }} </div>
         <div class="accountnum">{{ accountNumStr }}</div>
       </div>
     </div>
 
     <div class="bottom-content">
-      <div 
-        v-for="user in allUsers" 
+      <div
+        v-for="user in allUsers"
         :key="user.emailAddress"
       >
-        <UserInfoCard 
-          :user="user" 
-          @transfer="goToTransfer(user)" 
+        <UserInfoCard
+          :user="user"
+          @transfer="goToTransfer(user)"
           @goToAccountDetail="goToAccountDetail(user)"
         />
       </div>
 
-      <div 
-        v-for="user in invalidUser" 
+      <div
+        v-for="user in invalidUser"
         :key="user.emailAddress"
       >
-        <UserInfoCard 
-          :user="user" 
-          disabled 
-          @transfer="invalidUserClicked(user)" 
+        <UserInfoCard
+          :user="user"
+          disabled
+          @transfer="invalidUserClicked(user)"
           @goToAccountDetail="invalidUserClicked(user)"
         />
       </div>
     </div>
-    <LoadingPopup 
-      v-if="showHomeLoadingEnd" 
+    <LoadingPopup
+      v-if="showHomeLoadingEnd"
       src="static/loadersecondhalf.gif"
     />
-    <MDTPrimaryButton 
+
+    <SuccessPopup 
+      :md-active.sync="showTotalClaimedPopup"
+      :title="$t('message.home.cliamed_mdt', {num: loginTotalClaimed})"
+      :confirm-text="$t('message.common.okay')"
+      icon-src="/static/icons/claim-popup.svg"
+    />
+
+    <MDTPrimaryButton
       :bottom="true"
       @click="onEarnClicked"
-    >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+    >
+      {{ $t('message.home.earn_mdt') }}
+    </MDTPrimaryButton>
+
   </div>
 </template>
 
@@ -69,12 +80,14 @@ import LoadingPopup from '@/components/common/LoadingPopup';
 import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import { formatAmount } from '@/utils';
+import SuccessPopup from '@/components/popup/SuccessPopup';
 
 export default {
   components: {
     UserInfoCard,
     MDTPrimaryButton,
     LoadingPopup,
+    SuccessPopup,
   },
   extends: BasePage,
   metaInfo() {
@@ -87,6 +100,8 @@ export default {
       RouteDef,
       msg: 'Current MDT Price:',
       showHomeLoadingEnd: false,
+      loginTotalClaimed: 0,
+      showTotalClaimedPopup: true,
     };
   },
   computed: {
@@ -94,6 +109,7 @@ export default {
       mdtPrice: state => state.home.mdtPrice,
       priceUnit: state => state.home.priceUnit,
       isUserAccountsDirty: state => state.home.isUserAccountsDirty,
+      credentials: state => state.login.credentials,
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
@@ -204,6 +220,16 @@ export default {
       }).then(() => {
         this.showHomeLoadingEnd = true;
         trackEvent('Successfully logged in ');
+
+        // show the claimed popup
+        this.loginTotalClaimed = this.credentials
+          .map(credential => credential.claimed_amount)
+          .reduce((a, b) => {
+            return a + b;
+          });
+        if (this.loginTotalClaimed > 0) {
+          this.showTotalClaimedPopup = true;
+        }
 
         setTimeout(() => {
           this.showHomeLoadingEnd = false;
