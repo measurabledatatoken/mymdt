@@ -53,6 +53,26 @@ export default {
     /deep/ .md-input-action {
       top: 0;
     }
+
+    /deep/ .md-clear {
+      width: 24px;
+      min-width: 24px;
+      height: 24px;
+      top: 4px;
+
+      .md-icon {
+        background-color: #cccccc;
+        width: 18px;
+        min-width: 18px;
+        height: 18px;
+        border-radius: 100%;
+        padding: 2.15px;
+
+        > svg {
+          fill: white;
+        }
+      }
+    }
   }
 }
 </style>
