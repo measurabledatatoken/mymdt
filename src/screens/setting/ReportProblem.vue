@@ -11,7 +11,9 @@
     >
       <md-input 
         :placeholder="$t('message.reportProblem.optional')" 
-        v-model="$v.email.$model"
+        :value="$v.email.$model"
+        @input="handleEmailInput"
+        @change="$v.email.$touch"
       />
     </BaseField>
     <BaseField
@@ -81,6 +83,10 @@ export default {
     },
   },
   methods: {
+    handleEmailInput(event) {
+      this.$v.email.$reset();
+      this.email = event;
+    },
     handleRecaptchaVerify() {
       this.isVerified = true;
       this.$v.isVerified.$touch();

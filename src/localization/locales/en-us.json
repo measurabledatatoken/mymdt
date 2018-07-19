@@ -171,7 +171,7 @@
     "comments": "Comments",
     "upTo500Characters": "Up to 500 characters",
     "submit": "Submit",
-    "pleaseInputValidEmailAddress": "Please input valid email address",
+    "pleaseInputValidEmailAddress": "Invalid email address",
     "thisFieldIsMandatory": "This field is mandatory",
     "recaptchaFailed": "reCAPTCHA verification failed. Please retry",
     "errorMessage": "Sorry your comments cannot be submitted now.<br />You can contact <a href=\"mailto:token@mdt.co\">token@mdt.co</a> for help."
