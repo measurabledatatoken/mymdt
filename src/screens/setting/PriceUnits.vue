@@ -1,7 +1,7 @@
 <template>
   <md-list class="price-unit-list">
     <template v-for="currency in currencyList">
-      <price-unit-lis-item 
+      <price-unit-list-item 
         :key="currency" 
         :title="currency" 
         :selected="currency === priceUnit" 
@@ -16,14 +16,14 @@
 import { mapState, mapMutations } from 'vuex';
 
 import BasePage from '@/screens/BasePage';
-import PriceUnitLisItem from '@/components/setting/PriceUnitLisItem';
+import PriceUnitListItem from '@/components/setting/PriceUnitListItem';
 import { SET_PRICE_UNIT } from '@/store/modules/home';
 import currencyList from '@/data/currencyList.json';
 import { trackEvent } from '@/utils';
 
 export default {
   components: {
-    PriceUnitLisItem,
+    PriceUnitListItem,
   },
   extends: BasePage,
   metaInfo() {
