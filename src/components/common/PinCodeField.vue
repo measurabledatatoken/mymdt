@@ -151,8 +151,16 @@ export default {
       this.updatePincodeChar(index, undefined);
     },
     onCharKeyDown(index, event) {
-      const key = event.key.toLowerCase();
-      if (key === 'backspace' || key === 'delete') {
+      let isPressBackspace = false;
+      if (event.key !== undefined) {
+        const key = event.key.toLowerCase();
+        isPressBackspace = key === 'backspace' || key === 'delete';
+      } else if (event.which || event.keyCode) {
+        const keyCode = event.which || event.keyCode;
+        isPressBackspace = keyCode === 8 || keyCode === 46;
+      }
+
+      if (isPressBackspace) {
         const currentChar = this.pinCodeChars[index].value;
         if (index > 0 && !this.isValidChar(currentChar)) {
           this.$refs.pinCodeItem[index - 1].focus();
