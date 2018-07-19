@@ -1,8 +1,10 @@
 <template>
-  <iframe
-    :src="url"
-    class="webview-screen"
-  />
+  <div>
+    <iframe
+      :src="url"
+      class="webview-wrapper"
+    />
+  </div>
 </template>
 
 <script>
@@ -19,7 +21,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.webview-screen {
+.webview-wrapper {
   border: none;
+  width: 100%;
 }
 </style>
