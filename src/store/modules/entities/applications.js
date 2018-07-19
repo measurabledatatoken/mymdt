@@ -1,6 +1,5 @@
 import api from '@/api';
 
-export const FETCHING_APPLICATIONS = 'application/FETCHING_APPLICATIONS';
 export const FETCHING_APPLICATIONS_SUCCESS =
   'application/FETCHING_APPLICATIONS_SUCCESS';
 export const FETCHING_APPLICATIONS_FAILURE =
@@ -32,9 +31,6 @@ const mutations = {
 
 const actions = {
   [FETCH_APPLICATIONS]({ commit, rootGetters }, { userId }) {
-    commit(FETCHING_APPLICATIONS, {
-      userId,
-    });
     return api.application
       .getApplications(rootGetters.getUser(userId).accessToken)
       .then(data =>
