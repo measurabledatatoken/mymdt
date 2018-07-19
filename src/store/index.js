@@ -20,7 +20,13 @@ Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production';
 const persistedState = createPersistedState({
-  paths: ['home', 'login', 'entities', 'betaTesting'],
+  paths: [
+    'home',
+    'login',
+    'entities',
+    'betaTesting',
+    'transfer.transferToEmailHistory',
+  ],
 });
 export default new Vuex.Store({
   modules: {
