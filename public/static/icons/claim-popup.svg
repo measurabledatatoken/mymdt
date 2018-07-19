@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+    <g fill="none" fill-rule="evenodd" transform="translate(5 7)">
+        <path stroke="#4187F7" stroke-width="2" d="M30.5 3.5L28 7M6.5 7.5L10 10M17.5.5L18 5"/>
+        <g transform="translate(19 14)">
+            <rect width="35" height="28.875" x="3.5" y="19.25" fill="#AFFAFF" rx="2"/>
+            <path fill="#83CCFC" d="M3.5 22.75h35v3.5h-35z"/>
+            <rect width="42" height="13.125" y="10.5" fill="#4187F7" rx="2"/>
+            <rect width="7" height="39.375" x="17.5" y="9.625" fill="#FEE602" rx="1"/>
+            <g fill="#FEE602" transform="rotate(75 18.062 23.539)">
+                <path d="M.237 5.545l9.489-.058-2.74 12.333-3.663-.627z"/>
+                <circle cx="3.5" cy="4.375" r="3.5"/>
+                <circle cx="6.127" cy="4.549" r="3.704"/>
+            </g>
+            <g fill="#FEE602" transform="scale(-1 1) rotate(75 -3.109 -4.051)">
+                <path d="M.237 5.545l9.489-.058-2.74 12.333-3.663-.627z"/>
+                <circle cx="3.5" cy="4.375" r="3.5"/>
+                <circle cx="6.127" cy="4.549" r="3.704"/>
+            </g>
+        </g>
+        <g fill="#FFF59A" stroke="#FEE602" stroke-width="2" transform="translate(5 29)">
+            <rect width="10" height="3" x="1" y="16" rx="1"/>
+            <rect width="10" height="3" x="1" y="10" rx="1"/>
+            <rect width="10" height="3" x="1" y="13" rx="1"/>
+            <rect width="10" height="3" x="1" y="7" rx="1"/>
+            <rect width="10" height="3" x="1" y="1" rx="1"/>
+            <rect width="10" height="3" x="1" y="4" rx="1"/>
+        </g>
+        <g fill="#FFF59A" stroke="#FEE602" stroke-width="2" transform="translate(0 42)">
+            <rect width="10" height="3" x="1" y="16" rx="1"/>
+            <rect width="10" height="3" x="1" y="10" rx="1"/>
+            <rect width="10" height="3" x="1" y="13" rx="1"/>
+            <rect width="10" height="3" x="1" y="7" rx="1"/>
+            <rect width="10" height="3" x="1" y="1" rx="1"/>
+            <rect width="10" height="3" x="1" y="4" rx="1"/>
+        </g>
+        <g fill="#FFF59A" stroke="#FEE602" stroke-width="2" transform="translate(11 42)">
+            <rect width="10" height="3" x="1" y="16" rx="1"/>
+            <rect width="10" height="3" x="1" y="10" rx="1"/>
+            <rect width="10" height="3" x="1" y="13" rx="1"/>
+            <rect width="10" height="3" x="1" y="7" rx="1"/>
+            <rect width="10" height="3" x="1" y="1" rx="1"/>
+            <rect width="10" height="3" x="1" y="4" rx="1"/>
+        </g>
+        <circle cx="22" cy="57" r="5" fill="#FFF59A" stroke="#FEE602" stroke-width="2"/>
+        <circle cx="15" cy="57" r="5" fill="#FFF59A" stroke="#FEE602" stroke-width="2"/>
+    </g>
+</svg>
