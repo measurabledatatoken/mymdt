@@ -46,7 +46,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-import { trackEvent } from '@/utils';
+import { trackEvent, mapLocale } from '@/utils';
 import {
   DISMISS_ERROR_PROMPT,
   SET_LOCALE,
@@ -175,7 +175,7 @@ export default {
         locale = 'en-us';
       }
     } else {
-      locale = locale.toLowerCase();
+      locale = mapLocale(locale);
       this.setLocale(locale);
     }
     this.$i18n.locale = locale;
@@ -232,7 +232,7 @@ export default {
 .header {
   position: absolute;
   top: 0;
-  z-index: 10;
+  z-index: 8;
   height: $header-height;
   background: $home-bgcolor;
   width: 100%;

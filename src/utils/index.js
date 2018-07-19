@@ -129,6 +129,23 @@ function regTrackingSuperProperties(properties) {
   mixpanel.register(properties);
 }
 
+const mapLocale = originalLocale => {
+  originalLocale = originalLocale.toLowerCase();
+  switch (originalLocale) {
+    case 'zh-hk':
+    case 'zh-hant': {
+      return 'zh-hk';
+    }
+    case 'zh-cn':
+    case 'zh-hans': {
+      return 'zh-cn';
+    }
+    default: {
+      return 'en-us';
+    }
+  }
+};
+
 export {
   isRouteHomePath,
   isRouteChangeBack,
@@ -142,4 +159,5 @@ export {
   forcePromiseToRunForAtLeast,
   trackEvent,
   regTrackingSuperProperties,
+  mapLocale,
 };
