@@ -1,6 +1,7 @@
 <template>
   <md-list-item 
     v-bind="$attrs" 
+    :disabled="disabled"
     v-on="$listeners"
   >
     <slot name="icon" />
