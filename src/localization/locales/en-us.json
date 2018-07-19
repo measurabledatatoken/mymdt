@@ -43,7 +43,8 @@
     "settings": "Settings",
     "tutorial": "Tutorial",
     "accountnum": "{num} Accounts",
-    "earn_mdt": "Earn MDT"
+    "earn_mdt": "Earn MDT",
+    "cliamed_mdt": "You have claimed {num} MDT"
   },
   "transfer": {
     "title": "Transfer Out",

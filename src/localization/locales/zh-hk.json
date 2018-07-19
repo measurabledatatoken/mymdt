@@ -1,7 +1,7 @@
 {
   "common": {
     "transferbtn": "轉帳",
-    "okay": "OK",
+    "okay": "確定",
     "unknow_error": "出錯了......請稍後再試",
     "error_title": "出錯了",
     "done": "完成",
@@ -43,7 +43,8 @@
     "settings": "設定",
     "tutorial": "教學",
     "accountnum": "{num} 個帳號",
-    "earn_mdt": "賺取 MDT"
+    "earn_mdt": "賺取 MDT",
+    "cliamed_mdt": "你已認領{num}MDT"
   },
   "transfer": {
     "title": "轉帳",
