@@ -4,10 +4,10 @@
     v-on="$listeners"
   >
     <md-icon :md-src="iconSrc"/>
-    <md-dialog-title>
+    <div class="md-dialog-title">
       <span class="title">{{ title }}</span>
-    </md-dialog-title>
-    <MDTSubtleButton @click="$emit('md-confirm')">{{ confirmText }}</MDTSubtleButton>
+    </div>
+    <MDTSubtleButton @click="onClick">{{ confirmText }}</MDTSubtleButton>
   </md-dialog>
 </template>
 
@@ -32,6 +32,12 @@ export default {
       default: '',
     },
   },
+  methods: {
+    onClick() {
+      this.$emit('md-confirm');
+      this.$emit('update:mdActive', false);
+    },
+  },
 };
 </script>
 
@@ -48,9 +54,11 @@ export default {
   }
 
   .md-dialog-title {
-    padding-top: 10px;
+    padding-top: 14px;
     margin-bottom: 10px;
     font-size: 20px;
+    line-height: 24px;
+    min-height: 40px;
     text-align: center;
     font-weight: bold;
   }
