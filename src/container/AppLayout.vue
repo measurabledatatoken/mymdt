@@ -46,7 +46,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-import { trackEvent } from '@/utils';
+import { trackEvent, mapLocale } from '@/utils';
 import {
   DISMISS_ERROR_PROMPT,
   SET_LOCALE,
@@ -175,7 +175,7 @@ export default {
         locale = 'en-us';
       }
     } else {
-      locale = locale.toLowerCase();
+      locale = mapLocale(locale);
       this.setLocale(locale);
     }
     this.$i18n.locale = locale;
