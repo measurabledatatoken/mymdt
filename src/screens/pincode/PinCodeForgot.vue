@@ -25,10 +25,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
 import { maskFullPhoneNumber } from '@/helpers/phoneUtil';
-import { REQUEST_VERIFICATION_CODE } from '@/store/modules/security';
+import {
+  REQUEST_VERIFICATION_CODE,
+  SET_SECURITY_USER_PHONE_INFO,
+} from '@/store/modules/security';
 import SetupPINMode from '@/enum/setupPINMode';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BasePage from '@/screens/BasePage';
@@ -63,7 +66,13 @@ export default {
       return maskFullPhoneNumber(fullPhone);
     },
   },
+  created() {
+    this.setSecurityUserInfo(this.selectedSecurityUser);
+  },
   methods: {
+    ...mapMutations({
+      setSecurityUserInfo: SET_SECURITY_USER_PHONE_INFO,
+    }),
     ...mapActions({
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
