@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="transfer_success">
     <template v-if="transferType === TransferType.Email">
       <md-icon md-src="/static/icons/transaction-success.svg"/>
       <div class="message">
-        {{ $t('message.transfer.successdetail_email', { 'finalAmount': formatAmount(finalAmount) }) }}
+        {{ $t('message.transfer.successdetail_email', { 'finalAmount': formatAmount(transaction.amount) }) }}
       </div>
 
     </template>
@@ -17,8 +17,17 @@
     <MDTPrimaryButton 
       :bottom="true"
       @click="onDoneClick"
-    >{{ $t('message.common.done') }}</MDTPrimaryButton>
-    <MDTSubtleButton/>
+    >
+      {{ $t('message.common.done') }}
+    </MDTPrimaryButton>
+    
+    <MDTSubtleButton 
+      v-if="transferType === TransferType.EthWallet"
+      class="view_transactions" 
+      @click="onViewTransactionsClicked"
+    >
+      {{ $t('message.transfer.view_transactions') }}
+    </MDTSubtleButton>
   </div>
 </template>
 
@@ -48,29 +57,6 @@ export default {
       title: this.$t('message.transfer.successtitle'),
     };
   },
-  props: {
-    finalAmount: {
-      type: Number,
-      default: null,
-    },
-    fee: {
-      type: Number,
-      default: null,
-    },
-    totalAmount: {
-      type: Number,
-      default: null,
-    },
-    transferType: {
-      type: String,
-      required: true,
-      validator(value) {
-        return (
-          [TransferType.EthWallet, TransferType.Email].indexOf(value) !== -1
-        );
-      },
-    },
-  },
   data() {
     return {
       RouteDef,
@@ -80,6 +66,8 @@ export default {
   computed: {
     ...mapState({
       transferToAccount: state => state.transfer.transferToAccount,
+      transferType: state => state.ui.transferSuccess.transferType,
+      transaction: state => state.ui.transferSuccess.transaction,
     }),
     ...mapGetters({
       getUser: 'getUser',
@@ -111,22 +99,47 @@ export default {
       this.setIsUserAcctionsDirty(true);
       this.backToPath(RouteDef.Home.path);
     },
+    onViewTransactionsClicked() {
+      this.$router.push({
+        name: RouteDef.TransactionDetail.name,
+        params: {
+          account_id: this.transaction.from_email,
+          transaction_id: this.transaction.id,
+          transaction: this.transaction,
+        },
+      });
+    },
     formatAmount,
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.transfer_success {
+  display: flex;
+  flex-direction: column;
+}
+
 .md-icon {
+  flex: 1;
   height: 72px;
   width: 72px;
-  margin-top: 50%;
+  margin-top: 40%;
 }
 
 .message {
+  flex: 4;
   font-size: 20px;
   line-height: 30px;
   margin: 0px 16px 16px 16px;
   white-space: pre-line;
+}
+
+.md-button.md-raised.primary.primary--bottom {
+  bottom: 4rem;
+}
+
+.view_transactions {
+  bottom: 10px;
 }
 </style>
