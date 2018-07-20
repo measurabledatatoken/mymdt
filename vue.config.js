@@ -18,5 +18,10 @@ module.exports = {
       }
       return args;
     });
+
+    config.plugin("html").tap(args => {
+      args[0].chunksSortMode = "none";
+      return args;
+    })
   }
 };
