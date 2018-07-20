@@ -1,6 +1,9 @@
 <template>
   <div class="navigation-bar">
-    <md-button @click="goBack">
+    <md-button 
+      v-if="!hideBackButton" 
+      @click="goBack"
+    >
       <md-icon md-src="/static/icons/arrow-back-white.svg"/>
     </md-button>
     <div class="title">
@@ -16,6 +19,10 @@ export default {
     title: {
       type: String,
       default: null,
+    },
+    hideBackButton: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {

@@ -34,10 +34,6 @@
         />
       </div>
     </div>
-    <LoadingPopup
-      v-if="showHomeLoadingEnd"
-      src="static/loadersecondhalf.gif"
-    />
 
     <SuccessPopup 
       :md-active.sync="showTotalClaimedPopup"
@@ -64,6 +60,7 @@ import {
   SET_ERROR_MESSAGE,
   SET_ERROR_TITLE,
   SET_SHOW_ERROR_PROMPT,
+  SET_SHOW_HOME_LOADING_END,
 } from '@/store/modules/common';
 import {
   SET_SELECTED_USER,
@@ -81,6 +78,7 @@ import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import { formatAmount } from '@/utils';
 import SuccessPopup from '@/components/popup/SuccessPopup';
+import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
 
 export default {
   components: {
@@ -99,7 +97,6 @@ export default {
     return {
       RouteDef,
       msg: 'Current MDT Price:',
-      showHomeLoadingEnd: false,
       loginTotalClaimed: 0,
       showTotalClaimedPopup: false,
     };
@@ -110,9 +107,11 @@ export default {
       priceUnit: state => state.home.priceUnit,
       isUserAccountsDirty: state => state.home.isUserAccountsDirty,
       credentials: state => state.login.credentials,
+      showHomeLoadingEnd: state => state.common.showHomeLoadingEnd,
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
+      getUser: 'getUser',
       invalidUser: 'getInvalidUser',
     }),
     totalMDTBalance() {
@@ -164,6 +163,8 @@ export default {
       setErrorTitle: SET_ERROR_TITLE,
       setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
       setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
+      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+      setShowHomeLoadingEnd: SET_SHOW_HOME_LOADING_END,
     }),
     ...mapActions({
       requestAutoLogin: REQUEST_AUTO_LOGIN,
@@ -173,7 +174,7 @@ export default {
     }),
     goToTransfer(user) {
       trackEvent('Click on transfer from Home');
-      this.setSelectedUser(user.emailAddress);
+      this.setTransferFromAccount(user);
       this.$router.push(RouteDef.TransferList.path);
     },
     goToAccountDetail(user) {
@@ -218,7 +219,6 @@ export default {
         emails,
         appID,
       }).then(() => {
-        this.showHomeLoadingEnd = true;
         trackEvent('Successfully logged in ');
 
         // show the claimed popup
@@ -231,8 +231,9 @@ export default {
           this.showTotalClaimedPopup = true;
         }
 
+        this.setShowHomeLoadingEnd(true);
         setTimeout(() => {
-          this.showHomeLoadingEnd = false;
+          this.setShowHomeLoadingEnd(false);
         }, 1000);
       });
     },
