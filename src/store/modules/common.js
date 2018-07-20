@@ -11,6 +11,7 @@ export const POP_NAVIGATION_STACK = 'common/POP_NAVIGATION_STACK';
 export const POP_NAVIGATION_STACK_TO_PATH =
   'common/POP_NAVIGATION_STACK_TO_PATH';
 export const FLUSH_NAVIGATION_STACK = 'common./FLUSH_NAVIGATION_STACK';
+export const SET_SHOW_HOME_LOADING_END = 'common/SET_SHOW_HOME_LOADING_END';
 
 // Actions
 export const BACK_TO_FIRSTPAGE = 'common/BACK_TO_FIRSTPAGE';
@@ -27,12 +28,13 @@ const state = {
   navigationTitle: '',
   locale: null,
   navigationStack: [],
+
+  showHomeLoadingEnd: false,
 };
 
 const getters = {
   // eslint-disable-next-line
   isPathExistInNavigationStack: (state, getters, rootState, rootGetters) => (path) => {
-
     for (let i = 0; i < state.navigationStack.length; i += 1) {
       const navigationPath = state.navigationStack[i];
       if (navigationPath === path) {
@@ -92,6 +94,9 @@ const mutations = {
   },
   [FLUSH_NAVIGATION_STACK](state) {
     state.navigationStack = [];
+  },
+  [SET_SHOW_HOME_LOADING_END](state, showHomeLoadingEnd) {
+    state.showHomeLoadingEnd = showHomeLoadingEnd;
   },
 };
 
