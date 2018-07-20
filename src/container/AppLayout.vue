@@ -40,6 +40,11 @@
       src="/static/threedotsloader.gif"
     />
 
+    <LoadingPopup
+      v-if="showHomeLoadingEnd"
+      src="static/loadersecondhalf.gif"
+    />
+
     <HomeTutorial :active.sync="showTutorial"/>
   </div>
 </template>
@@ -104,6 +109,7 @@ export default {
       locale: state => state.common.locale,
       isLoading: state => state.common.isLoading,
       navigationStack: state => state.common.navigationStack,
+      showHomeLoadingEnd: state => state.common.showHomeLoadingEnd,
     }),
     ...mapGetters({
       isPathExistInNavigationStack: 'isPathExistInNavigationStack',
