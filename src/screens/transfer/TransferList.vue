@@ -42,10 +42,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { trackEvent } from '@/utils';
 import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
-import {
-  SET_SELECTED_USER,
-  SET_DONE_CALLBACK_PATH,
-} from '@/store/modules/security';
+import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import AccountSelector from '@/components/common/AccountSelector';
@@ -77,20 +74,17 @@ export default {
     ...mapGetters({
       allUsers: 'getAllUsers',
       selectedUser: 'getSelectedUser',
+      securitySelectedUser: 'getSelectedSecurityUser',
     }),
-  },
-  created() {
-    this.setTransferFromAccount(this.selectedUser);
   },
   methods: {
     ...mapMutations({
       setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
-      setSecuritySelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
     onTransferToEmailClicked() {
       trackEvent('Click on Transfer to an email account');
-      if (!this.selectedUser.isPasscodeSet) {
+      if (!this.transferFromAccount.isPasscodeSet) {
         this.showSetupPinDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEmail.path);
@@ -98,7 +92,7 @@ export default {
     },
     onTransferToEthWalletClicked() {
       trackEvent('Click on transfer to an ETH wallet');
-      if (!this.selectedUser.isPasscodeSet) {
+      if (!this.transferFromAccount.isPasscodeSet) {
         this.showSetupPinDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEthWallet.path);
@@ -110,7 +104,7 @@ export default {
     },
     onConfirmSetupPinDialogClick() {
       trackEvent('Start Setting up PIN from the popup');
-      this.setSecuritySelectedUser(this.selectedUser.emailAddress);
+      this.setSecuritySelectedUser(this.transferFromAccount.emailAddress);
       this.setDoneCallbackPath(RouteDef.TransferList.path);
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
