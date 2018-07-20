@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { trackEvent } from '@/utils';
 
 import BasePage from '@/screens/BasePage';
@@ -28,6 +28,7 @@ import { FETCH_TRANSACTIONS } from '@/store/modules/entities/transactions';
 import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
 
 import { RouteDef } from '@/constants';
+import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
 
 export default {
   components: {
@@ -64,8 +65,12 @@ export default {
     });
   },
   methods: {
+    ...mapMutations({
+      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+    }),
     goToTransfer() {
       trackEvent('Click on transfer from account page');
+      this.setTransferFromAccount(this.selectedUser);
       this.$router.push(RouteDef.TransferList.path);
     },
     goToEarn() {

@@ -53,7 +53,7 @@
     "reviewtitle": "確認",
     "successtitle": "成功",
     "successdetail_email": "{finalAmount} 成功轉帳！",
-    "successdetail_ethwallet": "你的MDT轉帳要求正在處理中。狀態交易記錄中查看。",
+    "successdetail_ethwallet": "你的MDT轉帳要求正在處理中，請到交易記錄中查看。",
     "fromlbl": "由",
     "tolbl": "至",
     "amountlbl": "數量",
@@ -70,7 +70,8 @@
     "final_amount": "最終數量",
     "tutorial_title": "轉帳手續費",
     "tutorial_description": "MDT為ERC20代幣。轉帳至ETH錢包需要支付燃氣費。當您將MDT轉移到ETH錢包時，燃氣費會以MDT計算並從您的交易中扣除。根據網絡的堵塞情況，燃氣費或交易費將會波動。",
-    "insufficient_fund": "帳號MDT數量不夠"
+    "insufficient_fund": "帳號MDT數量不夠",
+    "view_transactions": "前往轉帳細節"
   },
   "qrcode": {
     "title": "掃描二維碼",

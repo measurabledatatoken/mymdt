@@ -13,6 +13,7 @@
         <NavigationHeader 
           v-if="!showHomeHeader && !showCustomHeader" 
           :title="navigationTitle" 
+          :hide-back-button="hideNavigationBackButton"
           class="header-view"
         />
         <router-view 
@@ -38,6 +39,11 @@
     <LoadingPopup 
       v-if="isLoading" 
       src="/static/threedotsloader.gif"
+    />
+
+    <LoadingPopup
+      v-if="showHomeLoadingEnd"
+      src="static/loadersecondhalf.gif"
     />
 
     <HomeTutorial :active.sync="showTutorial"/>
@@ -79,6 +85,7 @@ export default {
   computed: {
     ...mapState({
       navigationTitle: state => state.common.navigationTitle,
+      hideNavigationBackButton: state => state.common.hideNavigationBackButton,
       errorMessage(state) {
         if (typeof state.common.errorMessage === 'string') {
           return state.common.errorMessage;
@@ -104,6 +111,7 @@ export default {
       locale: state => state.common.locale,
       isLoading: state => state.common.isLoading,
       navigationStack: state => state.common.navigationStack,
+      showHomeLoadingEnd: state => state.common.showHomeLoadingEnd,
     }),
     ...mapGetters({
       isPathExistInNavigationStack: 'isPathExistInNavigationStack',

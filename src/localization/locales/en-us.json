@@ -70,7 +70,8 @@
     "final_amount": "Final Amount",
     "tutorial_title": "Transaction Fee",
     "tutorial_description": "MDT is an ERC20 token. Transferring to an ETH wallet incurrs gas fee. When you transfer your MDT to an ETH wallet, the gas fee is calculated in MDT and deducted from your transaction. Depending on how clogged the network is, gas fee or transaction fee will fluctuate.",
-    "insufficient_fund": "Insufficient fund"
+    "insufficient_fund": "Insufficient fund",
+    "view_transactions": "View Transactions"
   },
   "qrcode": {
     "title": "Scan QR Code",

@@ -90,6 +90,10 @@ import {
   SET_SELECTED_USER,
   VALIDATE_PIN_FOR_TRANSFER,
 } from '@/store/modules/security';
+import {
+  SET_TRANSFER_TYPE,
+  SET_TRANSACTIONS,
+} from '@/store/modules/ui/transferSuccess';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
@@ -152,6 +156,8 @@ export default {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setSelectedUser: SET_SELECTED_USER,
+      setTransferSuccessTransferType: SET_TRANSFER_TYPE,
+      setTransferSuccessTransaction: SET_TRANSACTIONS,
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
@@ -174,14 +180,10 @@ export default {
           return this.startTransfer(pinCode);
         })
         .then(responseData => {
+          this.setTransferSuccessTransferType(this.transferType);
+          this.setTransferSuccessTransaction(responseData);
           this.$router.push({
             name: RouteDef.TransferSuccess.name,
-            params: {
-              finalAmount: responseData.amount,
-              fee: responseData.transaction_fee,
-              totalAmount: -responseData.delta,
-              transferType: this.transferType,
-            },
           });
         })
         .catch(err => {
