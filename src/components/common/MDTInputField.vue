@@ -87,6 +87,10 @@ export default {
     &::placeholder {
       color: $theme-placehoder-color;
     }
+
+    &:focus::placeholder {
+      opacity: 0;
+    }
   }
 
   .md-suffix {

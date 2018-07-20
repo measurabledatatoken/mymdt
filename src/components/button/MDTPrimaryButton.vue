@@ -36,6 +36,11 @@ export default {
   &[disabled] {
     background-color: $bluebtn-backgroundcolor-disabled;
     color: $bluebtn-wordcolor-disabled;
+    box-shadow: none;
+  }
+
+  &:active {
+    box-shadow: none;
   }
 
   &.primary--bottom {

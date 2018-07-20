@@ -11,13 +11,14 @@
     >
       <md-input 
         :placeholder="$t('message.reportProblem.optional')" 
-        v-model="$v.email.$model"
+        :value="$v.email.$model"
+        @input="handleEmailInput"
+        @change="$v.email.$touch"
       />
     </BaseField>
     <BaseField
       :label="$t('message.reportProblem.comments')"
       :error="$v.comments.$error && $t('message.reportProblem.thisFieldIsMandatory')"
-      md-clearable
     >
       <md-textarea
         :placeholder="$t('message.reportProblem.upTo500Characters')"
@@ -81,6 +82,10 @@ export default {
     },
   },
   methods: {
+    handleEmailInput(event) {
+      this.$v.email.$reset();
+      this.email = event;
+    },
     handleRecaptchaVerify() {
       this.isVerified = true;
       this.$v.isVerified.$touch();
