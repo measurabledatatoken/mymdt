@@ -15,11 +15,11 @@
         <!-- Button -->
         <md-button 
           :md-ripple="false" 
-          :class="{ 'open': isMenuOpened }" 
+          :class="{ 'other': selectedOther, 'open': isMenuOpened }" 
           :md-menu-trigger="menuTrigger"
         >
           <div 
-            :class="{ 'other': selectedOther, 'open': isMenuOpened }" 
+            :class="{ 'open': isMenuOpened }" 
             class="account-info"
           >
             <div 
@@ -282,17 +282,30 @@ $menuItemOtherCellHeight: 44px;
 
   .md-button {
     width: 100%;
-    height: 100%;
+    height: $menuItemCellHeight;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0s;
 
     &.open {
       box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
       border-radius: 4px 4px 0px 0px;
       background-color: white;
       z-index: 10;
+
+      /deep/ .md-button-content {
+        padding: 0 16px;
+      }
+    }
+
+    &.other {
+      height: $menuItemOtherCellHeight;
     }
 
     /deep/ .md-button-content {
-      width: 100%;
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: padding 50ms;
     }
 
     /deep/ .md-ripple {
@@ -300,9 +313,7 @@ $menuItemOtherCellHeight: 44px;
     }
 
     .md-icon {
-      width: 16%;
       height: 26px;
-      margin-top: 13px;
 
       &.other {
         margin-top: 9px;
@@ -319,19 +330,8 @@ $menuItemOtherCellHeight: 44px;
 }
 
 .account-info {
-  width: 70%;
-  height: 100%;
-  height: $menuItemCellHeight;
+  flex: 1;
   float: left;
-
-  &.open {
-    padding-left: 16px;
-  }
-
-  &.other {
-    padding-top: 7px;
-    height: $menuItemOtherCellHeight;
-  }
 
   .account-email {
     color: $selectedEmailColor;
@@ -345,7 +345,6 @@ $menuItemOtherCellHeight: 44px;
 
   .placeholder {
     color: $mdtAmountColor;
-    line-height: $menuItemCellHeight;
     font-size: 16px;
     text-align: left;
   }

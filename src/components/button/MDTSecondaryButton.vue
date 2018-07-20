@@ -32,6 +32,11 @@ export default {
     border-radius: 1rem;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
 
+    &[disabled],
+    &:active {
+      box-shadow: none;
+    }
+
     &.secondary-button__color--secondary {
       background-color: $theme-secondary-color;
     }

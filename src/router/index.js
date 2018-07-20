@@ -204,6 +204,7 @@ const router = new Router({
         // Earn MDT Route
         {
           path: RouteDef.EarnMDT.path,
+          name: RouteDef.EarnMDT.name,
           component: EarnMDT,
         },
 

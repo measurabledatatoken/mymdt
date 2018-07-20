@@ -46,6 +46,6 @@ export default {
 .captcha {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  margin: 1rem 0;
 }
 </style>

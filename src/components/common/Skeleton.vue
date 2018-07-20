@@ -27,6 +27,7 @@ export default {
   display: block;
   background-color: #eef3f8;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
   position: relative;
   border-radius: 0.125rem;
   margin-top: 0.375rem;
@@ -36,7 +37,7 @@ export default {
     animation: content-placeholder-animation 1s linear infinite;
     background: linear-gradient(
       to right,
-      rgba(15, 15, 15, 0) 0%,
+      rgba(215, 215, 215, 0) 0%,
       rgba(235, 235, 235, 0.4) 50%,
       rgba(255, 255, 255, 0) 100%
     );

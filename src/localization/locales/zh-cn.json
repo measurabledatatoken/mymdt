@@ -20,7 +20,7 @@
     "rewardAlreadyClaimed": "奖励已认领。",
     "invalid_email": "无效的电邮地址",
     "invalid_ethaddress": "无效的以太钱包地址",
-    "insufficient_fund": "该帐号MDT数量不够,请减才少数量或另选帐号。",
+    "insufficient_fund": "该帐号MDT数量不够,请减少数量或另选帐号。",
     "passcodeAlreadySet": "PIN已设置。",
     "passcodeNotSet": "PIN尚未设置。",
     "newPasscodeSameAsOld": "新PIN必需与旧PIN不同。",
@@ -69,7 +69,8 @@
     "transaction_fee": "手续费",
     "final_amount": "最终数量",
     "tutorial_title": "转帐手续费",
-    "tutorial_description": "MDT为ERC20代币。转帐至ETH钱包需要支付燃气费。当您将MDT转移到ETH钱包时，燃气费会以MDT计算并从您的交易中扣除。根据网络的堵塞情况，燃气费或交易费将会波动。"
+    "tutorial_description": "MDT为ERC20代币。转帐至ETH钱包需要支付燃气费。当您将MDT转移到ETH钱包时，燃气费会以MDT计算并从您的交易中扣除。根据网络的堵塞情况，燃气费或交易费将会波动。",
+    "insufficient_fund": "该帐号MDT数量不够"
   },
   "qrcode": {
     "title": "扫描二维码",
@@ -171,7 +172,7 @@
     "comments": "意见",
     "upTo500Characters": "最多输入五百个字符",
     "submit": "提交",
-    "pleaseInputValidEmailAddress": "请输入正确的电邮地址",
+    "pleaseInputValidEmailAddress": "无效的电邮地址",
     "thisFieldIsMandatory": "此栏为必填",
     "recaptchaFailed": "reCAPTCHA验证失败,请重新验证",
     "errorMessage": "很抱歉,您的评论无法立即提交。<br />你可以联系 <a href=\"mailto:token@mdt.co\">token@mdt.co</a> 寻求帮助"
