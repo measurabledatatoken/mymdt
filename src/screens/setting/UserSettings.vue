@@ -41,19 +41,32 @@
               <md-icon md-src="/static/icons/settings-account-3.svg"/>
             </template>
           </base-setting-list-item>
+          <md-divider />          <md-divider />
+          <base-setting-list-item 
+            :title="$t('message.googleAuthenticator.setupTitle')"
+            :disabled="!(getSelectedSecurityUser.isPasscodeSet)"
+            @click="onGoogleAuthClicked"
+          />
+          <md-divider />
+          <md-divider />
+          <base-setting-list-item 
+            :title="$t('message.twoFactorAuthentication.setupTitle')"
+            :disabled="!allowTwoFactorSetup"
+            @click="onTwoFactorClicked"
+          >
+            <template 
+              v-if="getSelectedSecurityUser.isTwofaEnabled"
+              slot="action-data"
+            >
+              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+            </template>
+          </base-setting-list-item>
           <md-divider />
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.passcode.forgot_pin')"
             :disabled="!getSelectedSecurityUser.isPasscodeSet"
             @click="onPasscodeForgotClicked"
-          />
-          <md-divider />
-          <md-divider />
-          <base-setting-list-item 
-            :title="$t('message.twoFactorAuthentication.setupTitle')"
-            :disabled="!(getSelectedSecurityUser.isPasscodeSet && getSelectedSecurityUser.isPhoneConfirmed)"
-            @click="onTwoFactorClicked"
           />
           <md-divider />
         </md-list>
@@ -74,6 +87,18 @@
           :md-confirm-text="$t('message.common.change')"
           :md-cancel-text="$t('message.common.cancel')"
           @md-confirm="onConfirmChangePhoneNumber"
+        />
+
+
+        <!-- will show when the action required to setup pin first -->
+        <MDTConfirmPopup 
+          :md-active.sync="showSetPinDialog"
+          :md-title="$t('message.passcode.please_setup_pin_title')"
+          :md-content="pinSetupPopupDescription"
+          :md-confirm-text="$t('message.passcode.please_setup_pin_action')"
+          :md-cancel-text="$t('message.common.cancel')"
+          class="popup-setup-pin"
+          @md-confirm="onSetupPINClicked"
         />
 
         <PinCodeInputPopup 
@@ -134,6 +159,8 @@ export default {
       showPinCodeInput: false,
       pinCodePopupTitle: '',
       nextRouteNameAfterPINFilled: '',
+      showSetPinDialog: false,
+      pinSetupPopupDescription: '',
     };
   },
   computed: {
@@ -141,6 +168,13 @@ export default {
       getSelectedSecurityUser: 'getSelectedSecurityUser',
       getUser: 'getUser',
     }),
+    allowTwoFactorSetup() {
+      return (
+        this.getSelectedSecurityUser.isPasscodeSet &&
+        (this.getSelectedSecurityUser.isPhoneConfirmed ||
+          this.getSelectedSecurityUser.isGoogleAuthEnabled)
+      );
+    },
     showPhoneNumberSetup() {
       return (
         !this.getSelectedSecurityUser.isPhoneConfirmed &&
@@ -252,6 +286,10 @@ export default {
     onSetupPhoneNumberClicked() {
       trackEvent('Click on Phone Number');
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
+        this.pinSetupPopupDescription = this.$t(
+          'message.phone.please_setup_pin_description',
+        );
+        this.showSetPinDialog = true;
         return;
       }
       // check if the Phone Number has already set and show popup
@@ -260,6 +298,7 @@ export default {
         return;
       }
 
+      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
       this.nextRouteNameAfterPINFilled = RouteDef.AddPhoneNumberInput.name;
       this.showPinCodeInput = true;
     },
@@ -276,20 +315,37 @@ export default {
       this.$router.push(RouteDef.PinCodeForgot.path);
     },
     onTwoFactorClicked() {
-      if (
-        !this.getSelectedSecurityUser.isPasscodeSet ||
-        !this.getSelectedSecurityUser.isPhoneConfirmed
-      ) {
-        return;
+      if (!this.getSelectedSecurityUser.isPasscodeSet) {
+        this.pinSetupPopupDescription = this.$t(
+          'message.twoFactorAuthentication.please_setup_pin_description',
+        );
+        this.showSetPinDialog = true;
+      } else {
+        this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+        this.nextRouteNameAfterPINFilled =
+          RouteDef.TwoFactorAuthenticationSetting.name;
+        this.showPinCodeInput = true;
       }
-      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
-      this.nextRouteNameAfterPINFilled =
-        RouteDef.TwoFactorAuthenticationSetting.name;
-      this.showPinCodeInput = true;
+    },
+    onGoogleAuthClicked() {
+      if (!this.getSelectedSecurityUser.isPasscodeSet) {
+        this.pinSetupPopupDescription = this.$t(
+          'message.googleAuthenticator.please_setup_pin_description',
+        );
+        this.showSetPinDialog = true;
+      } else {
+        this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+        this.showPinCodeInput = true;
+      }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.popup-setup-pin {
+  /deep/ .md-dialog-content {
+    font-size: 14px;
+  }
+}
 </style>
