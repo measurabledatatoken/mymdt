@@ -74,7 +74,6 @@ export default {
     ...mapGetters({
       allUsers: 'getAllUsers',
       selectedUser: 'getSelectedUser',
-      securitySelectedUser: 'getSelectedSecurityUser',
     }),
   },
   methods: {
