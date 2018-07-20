@@ -81,6 +81,7 @@ import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import { formatAmount } from '@/utils';
 import SuccessPopup from '@/components/popup/SuccessPopup';
+import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
 
 export default {
   components: {
@@ -113,6 +114,7 @@ export default {
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
+      getUser: 'getUser',
       invalidUser: 'getInvalidUser',
     }),
     totalMDTBalance() {
@@ -164,6 +166,7 @@ export default {
       setErrorTitle: SET_ERROR_TITLE,
       setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
       setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
+      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
     }),
     ...mapActions({
       requestAutoLogin: REQUEST_AUTO_LOGIN,
@@ -173,7 +176,7 @@ export default {
     }),
     goToTransfer(user) {
       trackEvent('Click on transfer from Home');
-      this.setSelectedUser(user.emailAddress);
+      this.setTransferFromAccount(user);
       this.$router.push(RouteDef.TransferList.path);
     },
     goToAccountDetail(user) {
