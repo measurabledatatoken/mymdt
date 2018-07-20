@@ -5,6 +5,8 @@ export const SET_ERROR_TITLE = 'common/SET_ERROR_TITLE';
 export const SET_SHOW_ERROR_PROMPT = 'common/SET_SHOW_ERROR_PROMPT';
 export const SET_IS_LOADING = 'common/SET_IS_LOADING';
 export const SET_NAVIGATION_TITLE = 'common/SET_NAVIGATION_TITLE';
+export const SET_HIDE_NAVIGATION_BACK_BUTTON =
+  'common/SET_HIDE_NAVIGATION_BACK_BUTTON';
 export const SET_LOCALE = 'common/SET_LOCALE';
 export const ADD_NAVIGATION_STACK = 'common/ADD_NAVIGATION_STACK';
 export const POP_NAVIGATION_STACK = 'common/POP_NAVIGATION_STACK';
@@ -26,6 +28,7 @@ const state = {
   showErrorPrompt: null,
   isLoading: false,
   navigationTitle: '',
+  hideNavigationBackButton: false,
   locale: null,
   navigationStack: [],
 
@@ -72,6 +75,9 @@ const mutations = {
   },
   [SET_NAVIGATION_TITLE](state, navigationTitle) {
     state.navigationTitle = navigationTitle;
+  },
+  [SET_HIDE_NAVIGATION_BACK_BUTTON](state, hideNavigationBackButton) {
+    state.hideNavigationBackButton = hideNavigationBackButton;
   },
   [SET_LOCALE](state, locale) {
     state.locale = locale;
