@@ -13,6 +13,7 @@
         <NavigationHeader 
           v-if="!showHomeHeader && !showCustomHeader" 
           :title="navigationTitle" 
+          :hide-back-button="hideNavigationBackButton"
           class="header-view"
         />
         <router-view 
@@ -84,6 +85,7 @@ export default {
   computed: {
     ...mapState({
       navigationTitle: state => state.common.navigationTitle,
+      hideNavigationBackButton: state => state.common.hideNavigationBackButton,
       errorMessage(state) {
         if (typeof state.common.errorMessage === 'string') {
           return state.common.errorMessage;

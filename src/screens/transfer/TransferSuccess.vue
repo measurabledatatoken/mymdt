@@ -89,6 +89,7 @@ export default {
     trackEvent('Transfer Success', {
       'Transfer Mode': this.TransferType,
     });
+    this.setHideNavigationBackButton(true);
   },
   methods: {
     ...mapMutations({
