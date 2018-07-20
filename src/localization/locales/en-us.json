@@ -165,7 +165,8 @@
     "cant_receive": "Can't receive code?",
     "invalid_phonenumber": "Invalid Phone number",
     "already_setup_title": "You already set up Phone Number",
-    "already_setup_content": "Would you like to change your Phone Number?"
+    "already_setup_content": "Would you like to change your Phone Number?",
+    "please_setup_pin_description": "You can add your phone number after you set up your PIN."
   },
   "passcode": {
     "pin_popup_title": "Please Enter Your PIN",
@@ -179,7 +180,9 @@
     "not_match": "PIN does not match, please try again",
     "pin_setup_successfully": "PIN setup successfully!",
     "pin_setup_remind_title": "Please Set Up Your PIN",
-    "pin_setup_remind_content": "Passcode is important to keep your money safe"
+    "pin_setup_remind_content": "Passcode is important to keep your money safe",
+    "please_setup_pin_action": "Set Up PIN",
+    "please_setup_pin_title": "Please Set Up PIN"
   },
   "reportProblem": {
     "title": "Report Problem",
@@ -255,7 +258,7 @@
   "twoFactorAuthentication": {
     "setupTitle": "Two-Factor Authentication",
     "setupDescription":
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, ",
+      "Two-factor authentication (2FA) is a security feature. It is recommended to turn it on to make your account more secure. When 2FA is turned on, you will be asked to enter an SMS code or use Google 2FA for actions like logging in from an unknown device, or making transactions.",
     "turnOn2FA": "Turn 2FA on?",
     "setupMethodTitle": "2FA Method",
     "methods": {
@@ -267,6 +270,11 @@
       "transaction": "Transaction Only",
       "login": "Unknown Logins Only",
       "transactionAndLogin": "Transaction and Unknown Logins"
-    }
+    },
+    "please_setup_pin_description": "You can set up two-tactor authentication after you set up your PIN and add your phone number or set up Google Authenticator."
+  },
+  "googleAuthenticator": {
+    "setupTitle" : "Google Authenticator",
+    "please_setup_pin_description": "You can set up Google Authenticator after you set up your PIN.<br/><br/>What is Google Authenticator?<br/>Google Authenticator adds a second layer of security to your account. When two-factor authentication is on, you will asked to enter your PIN and a verification code from the Google Authenticator when making transactions or logging into the account. "
   }
 }

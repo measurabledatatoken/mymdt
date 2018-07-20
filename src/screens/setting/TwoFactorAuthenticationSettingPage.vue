@@ -64,11 +64,21 @@
         </div>
       </md-list>
     </div>
+
+    <PinCodeInputPopup 
+      ref="pinCodeInputPopup"
+      :md-active.sync="showPinCodeInput"
+      :email-address="selectedSecurityUser.emailAddress"
+      @codefilled="onPinCodeFilled"
+      @close-click="showPinCodeInput = false"
+      @fotgot-click="onFotgotClicked"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { RouteDef } from '@/constants';
 import {
   GET_2FA_STATUS,
   ENABLE_2FA,
@@ -82,6 +92,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PriceUnitListItem from '@/components/setting/PriceUnitListItem';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
+import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
 export default {
   components: {
@@ -89,6 +100,7 @@ export default {
     BaseUserSettingPage,
     BaseSettingListItem,
     PriceUnitListItem,
+    PinCodeInputPopup,
   },
   extends: BasePage,
   props: {
@@ -98,6 +110,7 @@ export default {
     },
   },
   data: () => ({
+    showPinCodeInput: false,
     TwoFactorOption,
     method: null,
     usage: null,
@@ -122,12 +135,7 @@ export default {
             this.status = true;
           });
         } else {
-          const action = OTPActionType.DisableTwofaAction;
-          this.requestVerificationCode({
-            action,
-          }).then(() => {
-            this.status = 0;
-          });
+          this.disable2FA();
         }
       },
     },
@@ -153,6 +161,24 @@ export default {
       this.set2FAOption({ usage }).then(() => {
         this.usage = usage;
       });
+    },
+    onFotgotClicked() {
+      this.$router.push({
+        name: RouteDef.PinCodeForgot.name,
+      });
+    },
+    onPinCodeFilled(pinCode) {
+      console.log(pinCode);
+    },
+    disable2FA() {
+      this.showPinCodeInput = true;
+      const action = OTPActionType.DisableTwofaAction;
+      console.log(action);
+      // this.requestVerificationCode({
+      //   action,
+      // }).then(() => {
+      //   this.status = 0;
+      // });
     },
   },
 };
@@ -189,15 +215,15 @@ export default {
         &.md-theme-default {
           .md-switch-container {
             background: $theme-disable-color-font;
-            width: 40px;
-            min-width: 40px;
-            height: 20px;
+            width: 52px;
+            min-width: 52px;
+            height: 24px;
           }
           .md-switch-thumb {
             background-color: white;
-            width: 14px;
-            height: 14px;
-            transform: translateX(22%);
+            width: 16px;
+            height: 16px;
+            transform: translateX(30%);
           }
           &.md-checked {
             .md-switch-container {
@@ -205,7 +231,7 @@ export default {
             }
             &.md-primary {
               .md-switch-thumb {
-                transform: translateX(160%);
+                transform: translateX(190%);
               }
             }
           }
