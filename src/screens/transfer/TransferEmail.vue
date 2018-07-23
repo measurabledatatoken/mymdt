@@ -1,15 +1,17 @@
 <template>
-  <div>
+  <BasePageContainer class="transfer-email">
     <MDTInputField 
       :amount="transferAmount" 
       :max-amount="transferFromAccount.mdtBalance" 
+      class="mdtinput"
       @amountEntered="onAmountEntered"
       @amountInvalid="transferAmountInvalid"
     />
     <AccountSelector 
-      :label="$t('message.transfer.fromlbl')" 
-      :accounts="fromUserAccounts"
-      :selected-account="transferFromAccount" 
+      :label="$t('message.transfer.fromlbl')"
+      :accounts="fromUserAccounts" 
+      :selected-account="transferFromAccount"
+      class="transfer-from" 
       @accountSelected="onTransferFromAccountSelected"
       @menuOpened="onTransferFromMenuOpened"
     />
@@ -20,22 +22,24 @@
       :selected-account="transferToAccount" 
       :is-email-valid="isValidEmailAddress"
       :invalid-email-text="$t('message.error.invalid_email')"
+      class="transfer-to"
       @accountSelected="setTransferToAccount"
       @menuOpened="onTransferToMenuOpened"
       @otherSelected="onTransferToOtherSelected"
     />
     <NoteInputField 
       :note="transferNote" 
+      class="note"
       @infoEntered="onNoteEntered"
     />
     <MDTPrimaryButton 
       :disabled="disableNextBtn"
-      :bottom="true" 
+      :bottom="false" 
       @click="onNextClicked"
     >
       {{ $t('message.common.nextbtn') }}
     </MDTPrimaryButton>
-  </div>
+  </BasePageContainer>
 
 </template>
 
@@ -51,10 +55,13 @@ import {
   SET_TRANSFER_TO_ACCOUNT,
   SET_TRANSFER_NOTE,
 } from '@/store/modules/transfer';
+
+import BasePage from '@/screens/BasePage';
+import BasePageContainer from '@/screens/BasePageContainer';
+
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
-import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
 const eventProperties = { 'Transfer Mode': TransferType.Email };
@@ -65,6 +72,7 @@ export default {
     MDTInputField,
     NoteInputField,
     MDTPrimaryButton,
+    BasePageContainer,
   },
   extends: BasePage,
   metaInfo() {
@@ -155,3 +163,25 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss" scoped>
+.transfer-email {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.transfer-from,
+.transfer-to,
+.mdtinput,
+.note {
+  width: 100%;
+  flex: 1;
+}
+
+.md-button.md-raised.primary {
+  margin-top: auto;
+  margin-bottom: 30px;
+}
+</style>

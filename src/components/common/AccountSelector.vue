@@ -264,7 +264,8 @@ $menuItemCellHeight: 60px;
 $menuItemOtherCellHeight: 44px;
 
 .account-selector {
-  margin: 0.5rem 0;
+  margin: 0.4rem 0;
+  min-height: 6rem;
 
   .selector-menu {
     margin: 0;
