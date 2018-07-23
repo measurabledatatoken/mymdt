@@ -71,11 +71,17 @@ export default {
 
 <style lang="scss" scoped>
 .base-field {
+  min-height: 5.5rem;
+  margin-top: 16px;
+
   /deep/ .md-field {
     justify-content: flex-end;
     padding-bottom: 1rem;
   }
 
+  /deep/ .md-field {
+    margin-bottom: 0.5rem;
+  }
   .md-input {
     text-align: right;
 
@@ -95,6 +101,8 @@ export default {
 
   .md-suffix {
     margin-left: 1rem;
+    margin-top: 0.4rem;
+    color: #4a4a4a;
   }
 }
 </style>
