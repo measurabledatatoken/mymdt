@@ -46,14 +46,6 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex';
-// import { RouteDef } from '@/constants';
-// import {
-//   GET_2FA_STATUS,
-//   ENABLE_2FA,
-//   REQUEST_VERIFICATION_CODE,
-//   SET_2FA_OPTION,
-// } from '@/store/modules/security';
 import { mapState, mapActions } from 'vuex';
 import {
   VERIFY_GOOGLE_AUTHENTICATOR_SECRET,
