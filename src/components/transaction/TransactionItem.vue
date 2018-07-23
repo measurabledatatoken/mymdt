@@ -104,7 +104,7 @@ export default {
   text-align: right;
 
   &.action--pending {
-    color: $theme-placehoder-color;
+    color: $theme-placeholder-color;
     font-style: italic;
   }
 
