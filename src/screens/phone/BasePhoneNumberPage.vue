@@ -32,10 +32,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user-info {
-  margin: 16px;
-}
-
 .title {
   font-size: 16px;
   font-weight: bold;
@@ -46,6 +42,6 @@ export default {
   font-size: 16px;
   text-align: left;
   color: $label-color;
-  margin: 0px $defaultPageMargin 10px;
+  margin: 0px 0px 10px;
 }
 </style>

@@ -64,3 +64,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.md-button {
+  min-height: 2rem;
+}
+</style>

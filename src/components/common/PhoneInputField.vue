@@ -206,11 +206,6 @@ export default {
 <style lang="scss" scoped>
 $menuItemHeight: 36px;
 
-.phone-input {
-  margin-left: $defaultPageMargin;
-  margin-right: $defaultPageMargin;
-}
-
 .country-code-selector {
   float: left;
   width: 36%;
