@@ -31,6 +31,7 @@ export default {
 .user-info {
   margin-top: 16px;
   margin-bottom: 16px;
+  width: 100%;
 }
 
 .md-divider {

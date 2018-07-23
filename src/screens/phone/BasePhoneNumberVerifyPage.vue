@@ -1,68 +1,64 @@
 <template>
-  <div>
-    <BasePhoneNumberPage>
-      <template slot="title">
-        {{ title }}
-      </template>
+  <BasePhoneNumberPage>
+    <template slot="title">
+      {{ title }}
+    </template>
 
-      <template slot="content">
-        {{ $t('message.phone.verify_phone_content') }}
-      </template>
+    <template slot="content">
+      {{ $t('message.phone.verify_phone_content') }}
+    </template>
 
-      <template slot="action-area">
-        <div class="phone-number-cointainer">
-          <div class="dail-countrycode">
-            {{ countryDialCode }}
-          </div>
-          <div class="phone-nbumber">
-            {{ maskedPhoneNumber }}
-          </div>
-          <md-button 
-            v-if="editable"
-            :md-ripple="false"
-            class="edit-btn"
-            @click="$router.go(-1)"
-          >{{ $t('message.common.edit') }}</md-button>
+    <template slot="action-area">
+      <div class="phone-number-cointainer">
+        <div class="dail-countrycode">
+          {{ countryDialCode }}
         </div>
+        <div class="phone-nbumber">
+          {{ maskedPhoneNumber }}
+        </div>
+        <md-button 
+          v-if="editable"
+          :md-ripple="false"
+          class="edit-btn"
+          @click="$router.go(-1)"
+        >{{ $t('message.common.edit') }}</md-button>
+      </div>
 
-        <md-field :md-counter="false">
-          <label class="label">{{ $t('message.phone.verification_code') }}</label>
-          <md-input 
-            :maxlength="VerificationCodeLength"
-            :placeholder="$t('message.phone.verification_code_placeholder')"
-            v-model="verificationCode"
-            pattern="\d*"
-            @input="onVerificationCodeInput"
-          />
-        </md-field>
-
-        <CountDownUnlockButton 
-          :seconds-to-count="60"
-          counting-translate-key="message.phone.resend_counting"
-          count-done-translate-key="message.phone.resend"
-          class="resend-btn"
-          @click="onResendClicked()"
+      <md-field :md-counter="false">
+        <label class="label">{{ $t('message.phone.verification_code') }}</label>
+        <md-input 
+          :maxlength="VerificationCodeLength"
+          :placeholder="$t('message.phone.verification_code_placeholder')"
+          v-model="verificationCode"
+          pattern="\d*"
+          @input="onVerificationCodeInput"
         />
-        <br style="clear:both" >
+      </md-field>
 
-        <MDTSubtleButton 
-          :to="RouteDef.ReportProblem.path"
-          class="cant-receive-btn"
-        >{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
-      </template>
+      <CountDownUnlockButton 
+        :seconds-to-count="60"
+        counting-translate-key="message.phone.resend_counting"
+        count-done-translate-key="message.phone.resend"
+        class="resend-btn"
+        @click="onResendClicked()"
+      />
 
-      <template slot="buttons">
-        <MDTPrimaryButton 
-          :disabled="!verificationCodeFilled"
-          :bottom="true"
-          class="done"
-          @click="$emit('doneClick', verificationCode)"
-        >
-          {{ $t('message.common.done') }}
-        </MDTPrimaryButton>
-      </template>
-    </BasePhoneNumberPage>
-  </div>
+      <MDTSubtleButton 
+        :to="RouteDef.ReportProblem.path"
+        class="cant-receive-btn"
+      >{{ $t('message.phone.cant_receive') }}</MDTSubtleButton>
+    </template>
+
+    <template slot="buttons">
+      <MDTPrimaryButton 
+        :disabled="!verificationCodeFilled"
+        class="done"
+        @click="$emit('doneClick', verificationCode)"
+      >
+        {{ $t('message.common.done') }}
+      </MDTPrimaryButton>
+    </template>
+  </BasePhoneNumberPage>
 </template>
 
 <script>
@@ -161,19 +157,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.basepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.content,
 .phone-number-cointainer {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  width: 100%;
+}
+
+.phone-number-cointainer {
   min-height: 20px;
 
   .dail-countrycode,
   .phone-nbumber {
     float: left;
     font-size: 20px;
-  }
-
-  .dail-countrycode {
-    margin-left: $defaultPageMargin;
   }
 
   .phone-nbumber {
@@ -190,22 +192,31 @@ export default {
 }
 
 .md-button {
+  margin-left: 0px;
+
   &.resend-btn,
   &.cant-receive-btn {
-    width: auto;
+    width: 100%;
+    text-align: left;
     font-size: 16px;
-    float: left;
-    margin-left: $defaultPageMargin;
 
     /deep/ .md-ripple {
       padding-left: 0px;
     }
+
+    /deep/ .md-button-content {
+      width: 100%;
+    }
+  }
+
+  /deep/ &.resend-btn .md-button-content {
+    width: 100%;
   }
 }
 
 .md-field {
-  margin: 16px $defaultPageMargin 10px $defaultPageMargin;
-  width: calc(100% - 2 * #{$defaultPageMargin});
+  width: 100%;
+  margin-bottom: 0.5rem;
 
   .label {
     color: $label-color;
@@ -219,5 +230,10 @@ export default {
     margin-top: 8px;
     margin-bottom: 8px;
   }
+}
+
+.md-button.md-raised.primary {
+  margin-top: auto;
+  margin-bottom: 30px;
 }
 </style>
