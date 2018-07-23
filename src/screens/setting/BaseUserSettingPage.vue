@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="base-usersettingpage">
     <PaddedContainer>
       <UserInfo 
         :user="getSelectedSecurityUser" 
