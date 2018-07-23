@@ -11,9 +11,21 @@ const RouteDef = {
     path: '/home/usersettings',
     name: 'UserSettings',
   },
+  GoogleAuthSettingStep1: {
+    path: '/home/usersettings/googleauthstep1',
+    name: 'GoogleAuthStep1',
+  },
+  GoogleAuthSettingStep2: {
+    path: '/home/usersettings/googleauthstep2',
+    name: 'GoogleAuthStep2',
+  },
+  GoogleAuthVerify: {
+    path: '/home/usersettings/googleauthverify',
+    name: 'GoogleAuthVerify',
+  },
   TwoFactorAuthenticationSetting: {
     path: '/home/usersettings/twofactor',
-    name: 'Two-Factor Authentication',
+    name: 'TwoFactorAuthentication',
   },
   PriceUnits: { path: '/home/settings/price-units' },
   ReportProblem: { path: '/home/settings/problems' },
