@@ -12,7 +12,7 @@ export default {};
 
 <style lang="scss">
 .basepage {
-  margin-left: $defaultPageMargin;
-  margin-right: $defaultPageMargin;
+  padding-left: $defaultPageMargin;
+  padding-right: $defaultPageMargin;
 }
 </style>
