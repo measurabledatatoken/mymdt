@@ -1,6 +1,7 @@
 module.exports = {
   runtimeCompiler: true,
   css: {
+    sourceMap: true,
     loaderOptions: {
       sass: {
         data: `@import "@/styles/common.scss";`
