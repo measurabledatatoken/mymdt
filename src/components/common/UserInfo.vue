@@ -16,7 +16,7 @@
         <div class="md-sutitle"> {{ subTitle }}</div>
       </div>
       <UserInfoMDTAmount 
-        v-if="showMDT && small"
+        v-if="showMdt && small"
         :disabled="disabled"
         :amount="user.mdtBalance"
         class="user-info__amount"
@@ -24,7 +24,7 @@
       />
     </div>
     <UserInfoMDTAmount 
-      v-if="showMDT && !small"
+      v-if="showMdt && !small"
       :disabled="disabled"
       :amount="user.mdtBalance"
       class="user-info__amount"
@@ -50,7 +50,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    showMDT: {
+    showMdt: {
       type: Boolean,
       default: true,
     },
