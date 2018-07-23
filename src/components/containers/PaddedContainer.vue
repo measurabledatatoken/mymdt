@@ -5,11 +5,6 @@
   </div>
 </template>
 
-
-<script>
-export default {};
-</script>
-
 <style lang="scss">
 .basepage {
   padding-left: $defaultPageMargin;

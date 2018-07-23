@@ -1,5 +1,5 @@
 <template>
-  <BasePageContainer class="transfer-email">
+  <PaddedContainer class="transfer-email">
     <MDTInputField 
       :amount="transferAmount" 
       :max-amount="transferFromAccount.mdtBalance" 
@@ -39,7 +39,7 @@
     >
       {{ $t('message.common.nextbtn') }}
     </MDTPrimaryButton>
-  </BasePageContainer>
+  </PaddedContainer>
 
 </template>
 
@@ -56,13 +56,13 @@ import {
   SET_TRANSFER_NOTE,
 } from '@/store/modules/transfer';
 
-import BasePage from '@/screens/BasePage';
-import BasePageContainer from '@/screens/BasePageContainer';
-
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import PaddedContainer from '@/components/containers/PaddedContainer';
+
+import BasePage from '@/screens/BasePage';
 
 const eventProperties = { 'Transfer Mode': TransferType.Email };
 
@@ -72,7 +72,7 @@ export default {
     MDTInputField,
     NoteInputField,
     MDTPrimaryButton,
-    BasePageContainer,
+    PaddedContainer,
   },
   extends: BasePage,
   metaInfo() {
@@ -172,9 +172,9 @@ export default {
   align-items: center;
 }
 
+.mdtinput,
 .transfer-from,
 .transfer-to,
-.mdtinput,
 .note {
   width: 100%;
   flex: 1;

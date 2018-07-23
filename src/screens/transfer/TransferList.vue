@@ -7,7 +7,7 @@
         @accountSelected="onAccountSelected"
       />
     </div>
-    <div class="action-card-list">
+    <PaddedContainer class="action-card-list">
       <ActionCard 
         :title="$t('message.transfer.transferlist_emailtitle')" 
         :action-name="$t('message.common.transferbtn')" 
@@ -22,7 +22,7 @@
         img-src="/static/icons/transfer-to-eth.svg" 
         @actionClick="onTransferToEthWalletClicked()"
       />
-    </div>
+    </PaddedContainer>
 
 
     <MDTConfirmPopup 
@@ -47,6 +47,7 @@ import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import AccountSelector from '@/components/common/AccountSelector';
 import ActionCard from '@/components/common/ActionCard';
+import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
 
@@ -55,6 +56,7 @@ export default {
     AccountSelector,
     ActionCard,
     MDTConfirmPopup,
+    PaddedContainer,
   },
   extends: BasePage,
   metaInfo() {
@@ -120,9 +122,8 @@ export default {
 }
 
 .account-selector {
+  padding: 0.5rem 1rem;
   height: 72px;
-  padding-top: 8px;
-  padding-bottom: 8px;
   margin: 0px;
 }
 
