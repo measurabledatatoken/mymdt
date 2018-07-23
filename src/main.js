@@ -2,15 +2,25 @@ import '@babel/polyfill';
 import 'normalize.css';
 
 import Vue from 'vue';
+// import {
+//   MdMenu,
+//   MdButton,
+//   MdDialog,
+//   MdDialogAlert,
+//   MdDialogConfirm,
+//   MdIcon,
+//   MdField,
+//   MdDivider,
+//   MdAvatar,
+//   MdCard,
+//   MdList,
+//   MdSubheader,
+// } from 'vue-material/dist/components';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 import Vuelidate from 'vuelidate';
 import mixpanel from 'mixpanel-browser';
-
-// require styles
-import 'swiper/dist/css/swiper.css';
-import VueAwesomeSwiper from 'vue-awesome-swiper';
 
 import App from './App';
 import router from './router';
@@ -25,9 +35,20 @@ import { SET_IS_LOADING, OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 Vue.config.productionTip = false;
 Vue.use(VueMaterial);
-Vue.use(Vuelidate);
+// Vue.use(MdMenu);
+// Vue.use(MdButton);
+// Vue.use(MdDialog);
+// Vue.use(MdDialogAlert);
+// Vue.use(MdDialogConfirm);
+// Vue.use(MdIcon);
+// Vue.use(MdField);
+// Vue.use(MdDivider);
+// Vue.use(MdAvatar);
+// Vue.use(MdCard);
+// Vue.use(MdList);
+// Vue.use(MdSubheader);
 
-Vue.use(VueAwesomeSwiper);
+Vue.use(Vuelidate);
 
 mixpanel.init('c5e652bf9ccc28d929ee1c8184a0f76b');
 
