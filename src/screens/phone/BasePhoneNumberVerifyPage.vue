@@ -157,13 +157,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.basepage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.base-usersettingpage {
   height: 100%;
-}
 
+  /deep/ .padded-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+}
 .content,
 .phone-number-cointainer {
   width: 100%;
