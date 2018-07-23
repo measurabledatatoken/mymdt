@@ -70,16 +70,30 @@ router.onReady(() => {
   app.$mount('#app');
 });
 
+let loadingTimeoutId = null;
 router.beforeEach((to, from, next) => {
-  store.commit(SET_IS_LOADING, true);
+  if (!loadingTimeoutId) {
+    loadingTimeoutId = setTimeout(
+      () => store.commit(SET_IS_LOADING, true),
+      200,
+    );
+  }
   next();
 });
 
 router.afterEach(() => {
+  if (loadingTimeoutId) {
+    clearTimeout(loadingTimeoutId);
+    loadingTimeoutId = null;
+  }
   store.commit(SET_IS_LOADING, false);
 });
 
 router.onError(() => {
+  if (loadingTimeoutId) {
+    clearTimeout(loadingTimeoutId);
+    loadingTimeoutId = null;
+  }
   store.commit(SET_IS_LOADING, false);
   store.dispatch(OPEN_ERROR_PROMPT, {
     message: {
