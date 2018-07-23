@@ -31,7 +31,9 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
+import { SET_BACK_PATH } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -54,7 +56,13 @@ export default {
       title: this.$t('message.googleAuth.setupTitle'),
     };
   },
+  created() {
+    this.setBackPath(RouteDef.UserSettings.path);
+  },
   methods: {
+    ...mapMutations({
+      setBackPath: SET_BACK_PATH,
+    }),
     goToNext() {
       this.$router.push({
         name: RouteDef.GoogleAuthSettingStep2.name,
