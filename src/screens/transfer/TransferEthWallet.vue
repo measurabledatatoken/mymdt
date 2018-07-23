@@ -1,5 +1,5 @@
 <template>
-  <BasePageContainer class="transfer-ethwallet">
+  <PaddedContainer class="transfer-ethwallet">
     <MDTInputField 
       :amount="transferAmount"
       :max-amount="transferFromAccount.mdtBalance"
@@ -61,7 +61,7 @@
       :md-content="$t('message.transfer.tutorial_description')"
       :md-confirm-text="$t('message.common.okay')"
     />
-  </BasePageContainer>
+  </PaddedContainer>
 </template>
 
 <script>
@@ -77,14 +77,14 @@ import {
   SET_TRANSFER_NOTE,
 } from '@/store/modules/transfer';
 
-import BasePage from '@/screens/BasePage';
-import BasePageContainer from '@/screens/BasePageContainer';
-
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import PaddedContainer from '@/components/containers/PaddedContainer';
+
+import BasePage from '@/screens/BasePage';
 
 const eventProperties = { 'Transfer Mode': TransferType.EthWallet };
 
@@ -95,7 +95,7 @@ export default {
     NoteInputField,
     WalletAddressField,
     MDTPrimaryButton,
-    BasePageContainer,
+    PaddedContainer,
   },
   extends: BasePage,
   metaInfo() {
