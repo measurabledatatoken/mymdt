@@ -62,6 +62,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.base-field {
+  min-height: 5rem;
+}
+
 .md-icon-button {
   height: 36px;
 }
