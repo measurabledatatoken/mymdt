@@ -14,9 +14,6 @@
 
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex';
-import { SET_BACK_PATH } from '@/store/modules/security';
-import { BACK_TO_PATH } from '@/store/modules/common';
 export default {
   props: {
     title: {
@@ -28,25 +25,9 @@ export default {
       default: false,
     },
   },
-  computed: {
-    ...mapState({
-      backPath: state => state.security.backPath,
-    }),
-  },
   methods: {
-    ...mapActions({
-      backToPath: BACK_TO_PATH,
-    }),
-    ...mapMutations({
-      setBackPath: SET_BACK_PATH,
-    }),
     goBack() {
-      if (this.backPath) {
-        this.backToPath(this.backPath);
-        this.setBackPath(null);
-      } else {
-        this.$router.back();
-      }
+      this.$router.back();
     },
   },
 };
