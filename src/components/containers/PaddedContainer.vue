@@ -1,12 +1,12 @@
 
 <template>
-  <div class="basepage">
+  <div class="padded-container">
     <slot/>
   </div>
 </template>
 
 <style lang="scss">
-.basepage {
+.padded-container {
   padding-left: $defaultPageMargin;
   padding-right: $defaultPageMargin;
 }
