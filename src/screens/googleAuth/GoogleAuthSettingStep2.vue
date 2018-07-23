@@ -71,7 +71,7 @@ import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 import GoogleAuthStep from '@/components/googleAuth/GoogleAuthSettingStep';
-import setupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
+import SetupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
 import { GENERATE_GOOGLE_AUTHENTICATOR_SECRET } from '@/store/modules/security';
 
 export default {
@@ -113,7 +113,7 @@ export default {
         name: RouteDef.GoogleAuthVerify.name,
         params: {
           stepTitle: this.$t('message.googleAuth.step3Title'),
-          mode: setupGoogleAuthMode.SETUP,
+          mode: SetupGoogleAuthMode.SETUP,
         },
       });
     },

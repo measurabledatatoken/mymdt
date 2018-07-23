@@ -55,7 +55,7 @@ import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import GoogleAuthStep from '@/components/googleAuth/GoogleAuthSettingStep';
-import setupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
+import SetupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 import { BACK_TO_PATH } from '@/store/modules/common';
 
@@ -118,7 +118,7 @@ export default {
     onDoneClicked() {
       this.doneButtonLoading = true;
       switch (this.mode) {
-        case setupGoogleAuthMode.SETUP:
+        case SetupGoogleAuthMode.SETUP:
           this.verifySecret({ verificationCode: this.verificationCode })
             .then(() => {
               this.doneButtonLoading = false;
@@ -128,7 +128,7 @@ export default {
               this.doneButtonLoading = false;
             });
           break;
-        case setupGoogleAuthMode.DISABLE:
+        case SetupGoogleAuthMode.DISABLE:
           this.disableGoogleAuth({
             pin: this.pin,
             verificationCode: this.verificationCode,

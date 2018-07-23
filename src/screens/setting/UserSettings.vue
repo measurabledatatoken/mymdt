@@ -168,7 +168,7 @@ import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
-import setupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
+import SetupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
 
 export default {
   components: {
@@ -196,7 +196,7 @@ export default {
       showDisableGoogleAuthPopup: false,
       disableGoogleAuthPopupDescription: '',
       showContinueGoogleAuthPopup: false,
-      currentSetupGoogleAuthMode: setupGoogleAuthMode.SETUP,
+      currentSetupGoogleAuthMode: SetupGoogleAuthMode.SETUP,
     };
   },
   computed: {
@@ -369,14 +369,14 @@ export default {
     },
     // start over google auth setup
     setupNewGoogleAuth() {
-      this.currentSetupGoogleAuthMode = setupGoogleAuthMode.SETUP;
+      this.currentSetupGoogleAuthMode = SetupGoogleAuthMode.SETUP;
       this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
       this.nextRouteNameAfterPINFilled = RouteDef.GoogleAuthSettingStep1.name;
       this.showPinCodeInput = true;
     },
     // continue to setup
     continueSetupGoogleAuth() {
-      this.currentSetupGoogleAuthMode = setupGoogleAuthMode.SETUP;
+      this.currentSetupGoogleAuthMode = SetupGoogleAuthMode.SETUP;
       this.goToGoogleAuthVerifyPage();
     },
     disableGoogleAuth() {
@@ -421,7 +421,7 @@ export default {
       }
     },
     onDisableGoogleAuthClicked() {
-      this.currentSetupGoogleAuthMode = setupGoogleAuthMode.DISABLE;
+      this.currentSetupGoogleAuthMode = SetupGoogleAuthMode.DISABLE;
       this.goToGoogleAuthVerifyPage();
     },
   },
