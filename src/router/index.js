@@ -56,7 +56,12 @@ const EarnMDT = () => import('@/screens/EarnMDT');
 const WebView = () => import('@/screens/WebView');
 const TwoFactorAuthenticationSettingPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
-
+const GoogleAuthSettingStep1 = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/setting/GoogleAuthSettingStep1');
+const GoogleAuthSettingStep2 = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/setting/GoogleAuthSettingStep2');
+const GoogleAuthVerify = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/setting/GoogleAuthVerify');
 /**
  *  example code to fail async loading of route
  * 
@@ -238,6 +243,26 @@ const router = new Router({
           path: RouteDef.WebView.path,
           name: RouteDef.WebView.name,
           component: WebView,
+        },
+
+        // Google Authenticator Setting Page Route
+        {
+          path: RouteDef.GoogleAuthSettingStep1.path,
+          name: RouteDef.GoogleAuthSettingStep1.name,
+          component: GoogleAuthSettingStep1,
+          props: true,
+        },
+        {
+          path: RouteDef.GoogleAuthSettingStep2.path,
+          name: RouteDef.GoogleAuthSettingStep2.name,
+          component: GoogleAuthSettingStep2,
+          props: true,
+        },
+        {
+          path: RouteDef.GoogleAuthVerify.path,
+          name: RouteDef.GoogleAuthVerify.name,
+          component: GoogleAuthVerify,
+          props: true,
         },
         // Two Factor Setting Page Route
         {

@@ -4,7 +4,11 @@
     :class="['md-raised', 'primary', { 'primary--bottom': bottom }]" 
     v-on="$listeners"
   >
-    <slot/>
+    <slot v-if="!loading" />
+    <div 
+      v-if="loading" 
+      class="loader"
+    />
   </MDTBaseButton>
 </template>
 
@@ -17,6 +21,10 @@ export default {
   },
   props: {
     bottom: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       default: false,
     },
@@ -48,6 +56,37 @@ export default {
     position: fixed;
     bottom: 1.5rem;
     @include center_horizontal;
+  }
+  html,
+  body {
+    background: black;
+    position: relative;
+    overflow: hidden;
+  }
+  .loader {
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 0.3em solid rgba(255, 255, 255, 0.2);
+    border-right: 0.3em solid rgba(255, 255, 255, 0.2);
+    border-bottom: 0.3em solid rgba(255, 255, 255, 0.2);
+    border-left: 0.3em solid #ffffff;
+    transform: translateZ(0);
+    animation: load8 1.1s infinite linear;
+  }
+  .loader,
+  .loader:after {
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+  }
+  @keyframes load8 {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
 </style>

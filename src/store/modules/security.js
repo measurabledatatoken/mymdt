@@ -252,29 +252,37 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  [GENERATE_GOOGLE_AUTHENTICATOR_SECRET](
+  async [GENERATE_GOOGLE_AUTHENTICATOR_SECRET](
     { dispatch, state, rootGetters },
     { pin },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
-    return dispatch(REQUEST, {
+    const response = await dispatch(REQUEST, {
       api: api.security.generateGoogleAuthSecret,
       args: [pin, account.accessToken],
       setLoading: false,
       openErrorPrompt: true,
     });
+    dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
   },
-  [VERIFY_GOOGLE_AUTHENTICATOR_SECRET](
+  async [VERIFY_GOOGLE_AUTHENTICATOR_SECRET](
     { dispatch, state, rootGetters },
     { verificationCode },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
-    return dispatch(REQUEST, {
+    const response = await dispatch(REQUEST, {
       api: api.security.verifyGoogleAuthSecret,
       args: [verificationCode, account.accessToken],
       setLoading: false,
       openErrorPrompt: true,
     });
+    dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
   },
   [VERIFY_GOOGLE_AUTHENTICATOR_OTP](
     { dispatch, state, rootGetters },
@@ -288,17 +296,21 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  [DISABLE_GOOGLE_AUTHENTICATOR](
+  async [DISABLE_GOOGLE_AUTHENTICATOR](
     { dispatch, state, rootGetters },
     { pin, verificationCode },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
-    return dispatch(REQUEST, {
+    const response = await dispatch(REQUEST, {
       api: api.security.disableGoogleAuth,
       args: [pin, verificationCode, account.accessToken],
       setLoading: false,
       openErrorPrompt: true,
     });
+    dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
   },
 };
 

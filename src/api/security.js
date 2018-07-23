@@ -171,7 +171,7 @@ export default {
       pin,
     };
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/google-auth/generate-secret`,
+      `${APIScheme}://${APIEndPoint}/security/google-auth/generate-secret`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -184,7 +184,7 @@ export default {
       otp: verificationCode,
     };
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/google-auth/verify-secret`,
+      `${APIScheme}://${APIEndPoint}/security/google-auth/verify-secret`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -197,7 +197,7 @@ export default {
       otp: verificationCode,
     };
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/google-auth/verifyotp`,
+      `${APIScheme}://${APIEndPoint}/security/google-auth/verifyotp`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -211,7 +211,7 @@ export default {
       otp: verificationCode,
     };
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/google-auth/disable`,
+      `${APIScheme}://${APIEndPoint}/security/google-auth/disable`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },

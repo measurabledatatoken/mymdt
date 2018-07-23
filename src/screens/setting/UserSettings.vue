@@ -43,15 +43,22 @@
           </base-setting-list-item>
           <md-divider />          <md-divider />
           <base-setting-list-item 
-            :title="$t('message.googleAuthenticator.setupTitle')"
+            :title="$t('message.googleAuth.setupTitle')"
             :disabled="!(getSelectedSecurityUser.isPasscodeSet)"
             @click="onGoogleAuthClicked"
-          />
+          >
+            <template 
+              v-if="getSelectedSecurityUser.isGoogleAuthEnabled"
+              slot="action-data"
+            >
+              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+            </template>
+          </base-setting-list-item>
           <md-divider />
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.twoFactorAuthentication.setupTitle')"
-            :disabled="!allowTwoFactorSetup"
+            :disabled="!getSelectedSecurityUser.isPasscodeSet"
             @click="onTwoFactorClicked"
           >
             <template 
@@ -101,6 +108,7 @@
           @md-confirm="onSetupPINClicked"
         />
 
+        <!-- input Pin popup -->
         <PinCodeInputPopup 
           ref="pinCodeInputPopup"
           :md-active.sync="showPinCodeInput"
@@ -111,6 +119,27 @@
           @fotgot-click="onFotgotClicked"
         />
 
+
+        <!-- disable Google authenticator popup -->
+        <MDTConfirmPopup 
+          :md-active.sync="showDisableGoogleAuthPopup"
+          :md-title="$t('message.googleAuth.disablePopupTitle')"
+          :md-content="disableGoogleAuthPopupDescription"
+          :md-confirm-text="$t('message.common.disable')"
+          :md-cancel-text="$t('message.common.cancel')"
+          @md-confirm="onDisableGoogleAuthClicked"
+        />
+
+        <!-- Continu to setup Google authenticator popup, show if the google auth secret exists -->
+        <MDTConfirmPopup 
+          :md-active.sync="showContinueGoogleAuthPopup"
+          :md-title="$t('message.googleAuth.continueSetupPopupTitle')"
+          :md-content="$t('message.googleAuth.continueSetupPopupDescription')"
+          :md-confirm-text="$t('message.common.continue')"
+          :md-cancel-text="$t('message.common.startOver')"
+          @md-confirm="continueSetupGoogleAuth"
+          @md-cancel="setupNewGoogleAuth"
+        />
       </template>
     </BaseUserSettingPage>
 
@@ -128,6 +157,7 @@ import {
   VALIDATE_PIN_FOR_SECURITY,
   SET_DONE_CALLBACK_PATH,
   REQUEST_VERIFICATION_CODE,
+  GET_2FA_STATUS,
 } from '@/store/modules/security';
 import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
@@ -137,6 +167,8 @@ import SettingListSectionHeader from '@/components/setting/SettingListSectionHea
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import OTPActionType from '@/enum/otpActionType';
+import TwoFactorOption from '@/enum/twoFactorOption';
+import setupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
 
 export default {
   components: {
@@ -161,6 +193,10 @@ export default {
       nextRouteNameAfterPINFilled: '',
       showSetPinDialog: false,
       pinSetupPopupDescription: '',
+      showDisableGoogleAuthPopup: false,
+      disableGoogleAuthPopupDescription: '',
+      showContinueGoogleAuthPopup: false,
+      currentSetupGoogleAuthMode: setupGoogleAuthMode.SETUP,
     };
   },
   computed: {
@@ -199,6 +235,7 @@ export default {
     ...mapActions({
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
+      get2FAStatus: GET_2FA_STATUS,
     }),
     onSetupPINClicked() {
       trackEvent('Click on PIN');
@@ -231,7 +268,6 @@ export default {
         })
         .then(() => {
           this.showPinCodeInput = false;
-
           if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
             trackEvent('Start Setting up PIN from the account security page');
             this.$router.push({
@@ -243,22 +279,26 @@ export default {
             });
           } else if (
             this.nextRouteNameAfterPINFilled ===
-            RouteDef.AddPhoneNumberInput.name
+              RouteDef.TwoFactorAuthenticationSetting.name ||
+            this.nextRouteNameAfterPINFilled ===
+              RouteDef.AddPhoneNumberInput.name
           ) {
             this.$router.push({
-              name: RouteDef.AddPhoneNumberInput.name,
+              name: this.nextRouteNameAfterPINFilled,
               params: {
                 pin: pinCode,
               },
             });
           } else if (
             this.nextRouteNameAfterPINFilled ===
-            RouteDef.TwoFactorAuthenticationSetting.name
+              RouteDef.GoogleAuthSettingStep1.name ||
+            this.nextRouteNameAfterPINFilled === RouteDef.GoogleAuthVerify.name
           ) {
             this.$router.push({
-              name: RouteDef.TwoFactorAuthenticationSetting.name,
+              name: this.nextRouteNameAfterPINFilled,
               params: {
                 pin: pinCode,
+                mode: this.currentSetupGoogleAuthMode,
               },
             });
           } else {
@@ -287,7 +327,7 @@ export default {
       trackEvent('Click on Phone Number');
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
-          'message.phone.please_setup_pin_description',
+          'message.phone.pleaseSetupPinDescription',
         );
         this.showSetPinDialog = true;
         return;
@@ -317,7 +357,7 @@ export default {
     onTwoFactorClicked() {
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
-          'message.twoFactorAuthentication.please_setup_pin_description',
+          'message.twoFactorAuthentication.pleaseSetupPinDescription',
         );
         this.showSetPinDialog = true;
       } else {
@@ -327,16 +367,62 @@ export default {
         this.showPinCodeInput = true;
       }
     },
+    // start over google auth setup
+    setupNewGoogleAuth() {
+      this.currentSetupGoogleAuthMode = setupGoogleAuthMode.SETUP;
+      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+      this.nextRouteNameAfterPINFilled = RouteDef.GoogleAuthSettingStep1.name;
+      this.showPinCodeInput = true;
+    },
+    // continue to setup
+    continueSetupGoogleAuth() {
+      this.currentSetupGoogleAuthMode = setupGoogleAuthMode.SETUP;
+      this.goToGoogleAuthVerifyPage();
+    },
+    disableGoogleAuth() {
+      this.get2FAStatus().then(response => {
+        if (
+          response['is_2fa_enabled'] &&
+          response['2fa_method'] === TwoFactorOption.METHOD.SMS
+        ) {
+          this.disableGoogleAuthPopupDescription = this.$t(
+            'message.googleAuth.disablePopupContentCase1',
+          );
+        } else {
+          this.disableGoogleAuthPopupDescription = this.$t(
+            'message.googleAuth.disablePopupContentCase2',
+          );
+        }
+        this.showDisableGoogleAuthPopup = true;
+      });
+    },
+    setupGoogleAuth(pinCode) {
+      if (this.getSelectedSecurityUser.hasGoogleAuthSecret) {
+        this.showContinueGoogleAuthPopup = true;
+      } else {
+        this.setupNewGoogleAuth(pinCode);
+      }
+    },
+    goToGoogleAuthVerifyPage() {
+      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+      this.nextRouteNameAfterPINFilled = RouteDef.GoogleAuthVerify.name;
+      this.showPinCodeInput = true;
+    },
     onGoogleAuthClicked() {
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
-          'message.googleAuthenticator.please_setup_pin_description',
+          'message.googleAuth.pleaseSetupPinDescription',
         );
         this.showSetPinDialog = true;
+      } else if (this.getSelectedSecurityUser.isGoogleAuthEnabled) {
+        this.disableGoogleAuth();
       } else {
-        this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
-        this.showPinCodeInput = true;
+        this.setupGoogleAuth();
       }
+    },
+    onDisableGoogleAuthClicked() {
+      this.currentSetupGoogleAuthMode = setupGoogleAuthMode.DISABLE;
+      this.goToGoogleAuthVerifyPage();
     },
   },
 };
