@@ -1,12 +1,17 @@
 <template>
-  <PaddedContainer>
-    <UserInfo 
-      :user="getSelectedSecurityUser" 
-      :show-mdt="false"
-    />
-    <md-divider/>
-    <slot name="content"/>
-  </PaddedContainer>
+  <div>
+    <PaddedContainer>
+      <UserInfo 
+        :user="getSelectedSecurityUser" 
+        :show-mdt="false"
+      />
+      <md-divider/>
+      <slot name="content"/>
+    </PaddedContainer>
+    <div>
+      <slot name="unpaded-content"/>
+    </div>
+  </div>
 </template>
 
 <script>
