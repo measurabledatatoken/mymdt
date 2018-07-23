@@ -46,13 +46,17 @@
       src="static/loadersecondhalf.gif"
     />
 
-    <HomeTutorial :active.sync="showTutorial"/>
+    <HomeTutorial 
+      v-if="showTutorial" 
+      :active.sync="showTutorial"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import { trackEvent, mapLocale } from '@/utils';
+import loadComponent from '@/utils/loadComponent';
 import {
   DISMISS_ERROR_PROMPT,
   SET_LOCALE,
@@ -64,7 +68,8 @@ import {
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 import LoadingPopup from '@/components/common/LoadingPopup';
-import HomeTutorial from '@/components/tutorial/HomeTutorial';
+
+const HomeTutorial = loadComponent('HomeTutorial');
 
 export default {
   components: {

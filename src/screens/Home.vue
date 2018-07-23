@@ -140,6 +140,9 @@ export default {
       const emailsStr = this.$route.query.emails;
       const needExit = this.$route.query.needexit;
 
+      // clear url
+      this.$router.replace(RouteDef.Home);
+
       this.setNeedExitBtn(needExit);
       this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
     }
@@ -151,8 +154,6 @@ export default {
       this.setIsUserAcctionsDirty(false);
     }
 
-    // clear url
-    this.$router.replace(RouteDef.Home);
     trackEvent('Home view', { 'Email Number': this.allUsers.length });
   },
   methods: {

@@ -6,43 +6,67 @@ import { RouteDef } from '@/constants';
 
 import AppLayout from '@/container/AppLayout';
 
-import Home from '@/screens/Home';
-import BetaTesting from '@/screens/BetaTesting';
-import Login from '@/screens/Login';
-import Register from '@/screens/Register';
-import ForgetPassword from '@/screens/ForgetPassword';
-import Settings from '@/screens/setting/Settings';
-import UserSettings from '@/screens/setting/UserSettings';
-import PriceUnits from '@/screens/setting/PriceUnits';
-import ReportProblem from '@/screens/setting/ReportProblem';
-import ReportProblemSuccess from '@/screens/setting/ReportProblemSuccess';
-import LegalAndPrivacy from '@/screens/setting/LegalAndPrivacy';
-import AddPhoneNumberInputPage from '@/screens/phone/AddPhoneNumberInputPage';
-import ChangePhoneNumberInputPage from '@/screens/phone/ChangePhoneNumberInputPage';
-import AddPhoneNumberVerifyPage from '@/screens/phone/AddPhoneNumberVerifyPage';
-import ChangePhoneNumberVerifyPage from '@/screens/phone/ChangePhoneNumberVerifyPage';
-import PhoneNumberVerifyPage from '@/screens/phone/PhoneNumberVerifyPage';
-import PinCodeSetup from '@/screens/pincode/PinCodeSetup';
-import PinCodeConfirm from '@/screens/pincode/PinCodeConfirm';
-import PinCodeForgot from '@/screens/pincode/PinCodeForgot';
-import Tutorial from '@/screens/Tutorial';
-import AccountDetail from '@/screens/AccountDetail';
-import TransactionDetail from '@/screens/TransactionDetail';
-import TransferList from '@/screens/transfer/TransferList';
-import TransferEmail from '@/screens/transfer/TransferEmail';
-import TransferEthWallet from '@/screens/transfer/TransferEthWallet';
-import TransferReview from '@/screens/transfer/TransferReview';
-import TransferSuccess from '@/screens/transfer/TransferSuccess';
-import QrCodeScanPage from '@/screens/QRCodeScanPage';
-import EarnMDT from '@/screens/EarnMDT';
-import WebView from '@/screens/WebView';
+const Home = () => import('@/screens/Home');
+const BetaTesting = () => import('@/screens/BetaTesting');
+const Login = () => import('@/screens/Login');
+const Register = () => import('@/screens/Register');
+const ForgetPassword = () => import('@/screens/ForgetPassword');
+const Settings = () => import('@/screens/setting/Settings');
+const UserSettings = () => import('@/screens/setting/UserSettings');
+const PriceUnits = () => import('@/screens/setting/PriceUnits');
+const ReportProblem = () =>
+  import(/* webpackChunkName: "report-problem" */ '@/screens/setting/ReportProblem');
+const ReportProblemSuccess = () =>
+  import(/* webpackChunkName: "report-problem" */ '@/screens/setting/ReportProblemSuccess');
+const LegalAndPrivacy = () => import('@/screens/setting/LegalAndPrivacy');
+const AddPhoneNumberInputPage = () =>
+  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/AddPhoneNumberInputPage');
+const ChangePhoneNumberInputPage = () =>
+  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/ChangePhoneNumberInputPage');
+const AddPhoneNumberVerifyPage = () =>
+  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/AddPhoneNumberVerifyPage');
+const ChangePhoneNumberVerifyPage = () =>
+  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/ChangePhoneNumberVerifyPage');
+const PhoneNumberVerifyPage = () =>
+  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/PhoneNumberVerifyPage');
+const PinCodeSetup = () =>
+  import(/* webpackChunkName: "pin-code" */ '@/screens/pincode/PinCodeSetup');
+const PinCodeConfirm = () =>
+  import(/* webpackChunkName: "pin-code" */ '@/screens/pincode/PinCodeConfirm');
+const PinCodeForgot = () =>
+  import(/* webpackChunkName: "pin-code" */ '@/screens/pincode/PinCodeForgot');
+const Tutorial = () => import('@/screens/Tutorial');
+const AccountDetail = () =>
+  import(/* webpackChunkName: "account-detail" */ '@/screens/AccountDetail');
+const TransactionDetail = () =>
+  import(/* webpackChunkName: "account-detail" */ '@/screens/TransactionDetail');
+const TransferList = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferList');
+const TransferEmail = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferEmail');
+const TransferEthWallet = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferEthWallet');
+const TransferReview = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferReview');
+const TransferSuccess = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferSuccess');
+const QrCodeScanPage = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/QRCodeScanPage');
+const EarnMDT = () => import('@/screens/EarnMDT');
+const WebView = () => import('@/screens/WebView');
+
+/**
+ *  example code to fail async loading of route
+ * 
+const Component = () => {
+  throw new Error('load route failed');
+};
+*/
 
 import BetaTestingHeader from '@/components/header/BetaTestingHeader';
 
 Vue.use(Router);
 Vue.use(Meta);
-
-const landingRoute = RouteDef.BetaTesting;
 
 const router = new Router({
   mode: 'history',
@@ -61,7 +85,7 @@ const router = new Router({
         },
         {
           path: RouteDef.AutoLogin.path,
-          redirect: landingRoute,
+          redirect: RouteDef.Home,
         },
         {
           path: RouteDef.BetaTesting.path,
@@ -222,13 +246,6 @@ const router = new Router({
       ],
     },
   ],
-});
-
-// redirect to landing page
-const originalLocation = router.resolve(window.location.href);
-router.replace({
-  ...originalLocation.location,
-  ...landingRoute,
 });
 
 export default router;
