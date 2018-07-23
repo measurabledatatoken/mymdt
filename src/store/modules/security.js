@@ -9,6 +9,7 @@ export const SET_COUNTRY_CODE = 'phoneVerifyScreen/SET_COUNTRY_CODE';
 export const SET_PHONENUMBER = 'phoneVerifyScreen/SET_PHONENUMBER';
 export const SET_DONE_CALLBACK_PATH =
   'phoneVerifyScreen/SET_DONE_CALLBACK_PATH';
+export const SET_BACK_PATH = 'security/SET_BACK_PATH';
 export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 export const SET_SECURITY_USER_PHONE_INFO =
@@ -66,6 +67,9 @@ const mutations = {
   },
   [SET_DONE_CALLBACK_PATH](state, doneCallBackPath) {
     state.doneCallBackPath = doneCallBackPath;
+  },
+  [SET_BACK_PATH](state, backPath) {
+    state.backPath = backPath;
   },
   [FLUSH_PHONE_STATE](state) {
     state.countryDialCode = null;
