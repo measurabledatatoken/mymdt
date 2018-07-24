@@ -31,7 +31,9 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
+import { SET_PIN_FOR_GOOGLE_AUTH_SETUP } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -49,17 +51,30 @@ export default {
       default: null,
     },
   },
+  computed: {
+    ...mapState({
+      pinForGoogleAuthSetup: state => state.security.pinForGoogleAuthSetup,
+    }),
+  },
+  created() {
+    if (this.pin) {
+      this.setPinForGoogleAuthSetup(this.pin);
+    }
+  },
   metaInfo() {
     return {
       title: this.$t('message.googleAuth.setupTitle'),
     };
   },
   methods: {
+    ...mapMutations({
+      setPinForGoogleAuthSetup: SET_PIN_FOR_GOOGLE_AUTH_SETUP,
+    }),
     goToNext() {
       this.$router.push({
         name: RouteDef.GoogleAuthSettingStep2.name,
         params: {
-          pin: this.pin,
+          pin: this.pin || this.pinForGoogleAuthSetup,
         },
       });
     },
