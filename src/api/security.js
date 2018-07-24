@@ -153,9 +153,10 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
-  set2FAOption(usage, accessToken) {
+  set2FAOption(method, usage, accessToken) {
     const body = {
       '2fa_usage': usage,
+      '2fa_method': method,
     };
     const promise = axios.post(
       `${APIScheme}://${APIEndPoint}/security/2fa/options`,

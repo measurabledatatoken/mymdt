@@ -9,6 +9,7 @@
           
           <md-switch 
             v-model="enabled" 
+            :disabled="!statusLoaded"
             class="md-primary"
           />
         </md-list-item>
@@ -26,12 +27,14 @@
           <price-unit-list-item 
             :selected="method === TwoFactorOption.METHOD.SMS" 
             :title="$t('message.twoFactorAuthentication.methods.sms')" 
+            :disabled="!selectedSecurityUser.isPhoneConfirmed"
             @click="set2FAMethod(TwoFactorOption.METHOD.SMS)"
           />
           <md-divider />
           <price-unit-list-item 
             :selected="method === TwoFactorOption.METHOD.GOOGLE" 
             :title="$t('message.twoFactorAuthentication.methods.google')" 
+            :disabled="!selectedSecurityUser.isGoogleAuthEnabled"
             @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
           />
           <md-divider /><md-list-item>
@@ -68,6 +71,7 @@
     <PinCodeInputPopup 
       ref="pinCodeInputPopup"
       :md-active.sync="showPinCodeInput"
+      :title="$t('message.passcode.pin_popup_title')"
       :email-address="selectedSecurityUser.emailAddress"
       @codefilled="onPinCodeFilled"
       @close-click="showPinCodeInput = false"
@@ -77,20 +81,25 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
 import {
-  GET_2FA_STATUS,
+  DISABLE_2FA,
   ENABLE_2FA,
+  SET_2FA_STATUS,
+  GET_2FA_STATUS,
   REQUEST_VERIFICATION_CODE,
   SET_2FA_OPTION,
+  SET_DONE_CALLBACK_PATH,
+  SET_PIN_FOR_2FA_SETUP,
+  VALIDATE_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PriceUnitListItem from '@/components/setting/PriceUnitListItem';
-import OTPActionType from '@/enum/otpActionType';
+// import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
@@ -112,9 +121,7 @@ export default {
   data: () => ({
     showPinCodeInput: false,
     TwoFactorOption,
-    method: null,
-    usage: null,
-    status: false,
+    statusLoaded: false,
   }),
   metaInfo() {
     return {
@@ -122,29 +129,35 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      method: state => state.security.twoFa.method,
+      usage: state => state.security.twoFa.usage,
+      pinFor2FASetup: state => state.security.pinFor2FASetup,
+      doneCallBackPath: state => state.security.doneCallBackPath,
+      matt: state => state.security.matt,
+    }),
     ...mapGetters({
       selectedSecurityUser: 'getSelectedSecurityUser',
     }),
     enabled: {
       get() {
-        return this.status;
+        return this.selectedSecurityUser.isTwofaEnabled && this.statusLoaded;
       },
-      set() {
-        if (!this.status) {
-          this.enable2FA({ pin: this.pin }).then(() => {
-            this.status = true;
-          });
+      set(value) {
+        if (value) {
+          this.switchOn();
         } else {
-          this.disable2FA();
+          this.showPinCodeInput = true;
         }
       },
     },
   },
   created() {
-    this.get2FAStatus().then(response => {
-      this.status = response['is_2fa_enabled'];
-      this.method = response['2fa_method'];
-      this.usage = response['2fa_usage'];
+    if (this.pin) {
+      this.setPinFor2FASetup(this.pin);
+    }
+    this.get2FAStatus().then(() => {
+      this.statusLoaded = true;
     });
   },
   methods: {
@@ -153,14 +166,41 @@ export default {
       enable2FA: ENABLE_2FA,
       set2FAOption: SET_2FA_OPTION,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
+      validatePIN: VALIDATE_PIN_FOR_SECURITY,
+      disable2FA: DISABLE_2FA,
     }),
+    ...mapMutations({
+      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+      set2FAStatus: SET_2FA_STATUS,
+      setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
+    }),
+    isSelectedSMS(method) {
+      return (
+        method === TwoFactorOption.METHOD.SMS &&
+        this.selectedSecurityUser.isPhoneConfirmed
+      );
+    },
+    isSelectedGoogleAuth(method) {
+      return (
+        method === TwoFactorOption.METHOD.GOOGLE &&
+        this.selectedSecurityUser.isGoogleAuthEnabled
+      );
+    },
     set2FAMethod(method) {
-      this.method = method;
+      if (
+        method !== this.method &&
+        ((method === TwoFactorOption.METHOD.GOOGLE &&
+          this.selectedSecurityUser.isGoogleAuthEnabled) ||
+          (method === TwoFactorOption.METHOD.SMS &&
+            this.selectedSecurityUser.isPhoneConfirmed))
+      ) {
+        this.set2FAOption({ method: method, usage: this.usage });
+      }
     },
     set2FAUsage(usage) {
-      this.set2FAOption({ usage }).then(() => {
-        this.usage = usage;
-      });
+      if (usage !== this.usage) {
+        this.set2FAOption({ method: this.method, usage: usage });
+      }
     },
     onFotgotClicked() {
       this.$router.push({
@@ -168,17 +208,33 @@ export default {
       });
     },
     onPinCodeFilled(pinCode) {
-      console.log(pinCode);
+      this.validatePIN(pinCode)
+        .catch(err => {
+          this.$refs.pinCodeInputPopup.setInvalid();
+          throw err;
+        })
+        .then(() => {
+          this.setPinFor2FASetup(pinCode);
+          this.setDoneCallbackPath(
+            RouteDef.TwoFactorAuthenticationSetting.path,
+          );
+          this.$router.push({
+            name: RouteDef.GoogleAuthVerify.name,
+            params: {
+              pin: pinCode,
+              successCallback: this.switchOff,
+            },
+          });
+        });
     },
-    disable2FA() {
-      this.showPinCodeInput = true;
-      const action = OTPActionType.DisableTwofaAction;
-      console.log(action);
-      // this.requestVerificationCode({
-      //   action,
-      // }).then(() => {
-      //   this.status = 0;
-      // });
+    switchOn() {
+      this.enable2FA({ pin: this.pin || this.pinFor2FASetup });
+    },
+    switchOff({ pin, verificationCode }) {
+      this.disable2FA({ pin, verificationCode });
+    },
+    successCallback() {
+      console.log('SUCCESS CALLBACK');
     },
   },
 };
