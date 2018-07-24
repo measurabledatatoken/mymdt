@@ -24,7 +24,16 @@
       </transition>
     </header>
     <main class="content">
-      <transition :name="'content-' + transitionName">
+      <transition
+        :name="'content-' + transitionName"
+        :css="false"
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @after-enter="afterEnter"        
+        @before-leave="beforeLeave"
+        @leave="leave"
+        @after-leave="afterLeave"
+      >
         <router-view class="content-router-view"/>
       </transition>
     </main>
@@ -70,6 +79,14 @@ import NavigationHeader from '@/components/header/NavigationHeader';
 import LoadingPopup from '@/components/common/LoadingPopup';
 
 const HomeTutorial = loadComponent('HomeTutorial');
+
+const setTransformStyle = (element, value) => {
+  element.style.webkitTransform = value;
+  element.style.MozTransform = value;
+  element.style.msTransform = value;
+  element.style.OTransform = value;
+  element.style.transform = value;
+};
 
 export default {
   components: {
@@ -192,6 +209,7 @@ export default {
       this.setLocale(locale);
     }
     this.$i18n.locale = locale;
+    this.enteringTransition = null;
 
     this.flushNavigationStack();
   },
@@ -222,6 +240,71 @@ export default {
     },
     checkRouteMeta() {
       this.setFixHeight = !!this.$route.meta.setFixHeight;
+    },
+    beforeEnter(el) {
+      el.classList.add('animating');
+      el.classList.add(`animating-${this.transitionName}-enter`);
+    },
+    enter(el, done) {
+      this.enteringTransition = {
+        el,
+        done,
+      };
+    },
+    afterEnter(el) {
+      el.classList.remove('animating');
+      el.classList.remove(`animating-${this.transitionName}-enter`);
+      setTransformStyle(el, '');
+      this.enteringTransition = null;
+    },
+    beforeLeave(el) {
+      el.classList.add('animating');
+      el.classList.add(`animating-${this.transitionName}-leave`);
+    },
+    leave(el, done) {
+      const duration = 250; // ms
+      let end = null;
+
+      const loop = () => {
+        let timeup = false;
+
+        if (this.enteringTransition) {
+          if (!end) {
+            end = +new Date() + duration;
+          }
+
+          const current = +new Date();
+          const remaining = end - current;
+
+          let rate = 1 - remaining / duration;
+          if (remaining < 60) {
+            timeup = true;
+            rate = 1;
+          }
+
+          let translation = '';
+          if (this.transitionName === 'pop-in') {
+            translation = `translateX(-${rate * 100}%)`;
+          } else {
+            translation = `translateX(${rate * 100}%)`;
+          }
+          setTransformStyle(el, translation);
+          setTransformStyle(this.enteringTransition.el, translation);
+        }
+
+        if (timeup) {
+          this.enteringTransition.done();
+          done();
+        } else {
+          requestAnimationFrame(loop);
+        }
+      };
+      loop();
+    },
+    afterLeave(el) {
+      el.classList.remove('animating');
+      el.classList.add(`animating-${this.transitionName}-leave`);
+      setTransformStyle(el, '');
     },
   },
 };
@@ -290,25 +373,20 @@ export default {
   transform: translateX(-100%);
 }
 
-.content-pop-out-enter-active,
-.content-pop-out-leave-active,
-.content-pop-in-enter-active,
-.content-pop-in-leave-active {
-  @include animation-active;
+.content-router-view.animating {
+  position: absolute;
+  width: 100%;
   top: $header-height;
-}
+  bottom: 0;
+  left: 0;
 
-.content-pop-out-enter {
-  transform: translateX(-100%);
-}
-.content-pop-out-leave-active {
-  transform: translateX(100%);
-}
-.content-pop-in-enter {
-  transform: translateX(100%);
-}
-.content-pop-in-leave-active {
-  transform: translateX(-100%);
+  &.animating-pop-in-enter {
+    left: 100%;
+  }
+
+  &.animating-pop-out-enter {
+    left: -100%;
+  }
 }
 
 .md-dialog {
