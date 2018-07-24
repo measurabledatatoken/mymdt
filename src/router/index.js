@@ -54,6 +54,8 @@ const QrCodeScanPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/QRCodeScanPage');
 const EarnMDT = () => import('@/screens/EarnMDT');
 const WebView = () => import('@/screens/WebView');
+const TwoFactorAuthenticationSettingPage = () =>
+  import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
 
 /**
  *  example code to fail async loading of route
@@ -236,6 +238,13 @@ const router = new Router({
           path: RouteDef.WebView.path,
           name: RouteDef.WebView.name,
           component: WebView,
+        },
+        // Two Factor Setting Page Route
+        {
+          path: RouteDef.TwoFactorAuthenticationSetting.path,
+          name: RouteDef.TwoFactorAuthenticationSetting.name,
+          component: TwoFactorAuthenticationSettingPage,
+          props: true,
         },
 
         // Route to Home page for route not defined

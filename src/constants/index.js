@@ -11,6 +11,10 @@ const RouteDef = {
     path: '/home/usersettings',
     name: 'UserSettings',
   },
+  TwoFactorAuthenticationSetting: {
+    path: '/home/usersettings/twofactor',
+    name: 'Two-Factor Authentication',
+  },
   PriceUnits: { path: '/home/settings/price-units' },
   ReportProblem: { path: '/home/settings/problems' },
   ReportProblemSuccess: { path: '/home/settings/problems/success' },
