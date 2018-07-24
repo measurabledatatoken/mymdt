@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { RouteDef } from '@/constants';
 import VueClipboard from 'vue-clipboard2';
 import BasePage from '@/screens/BasePage';
@@ -99,10 +99,20 @@ export default {
       title: this.$t('message.googleAuth.setupTitle'),
     };
   },
+  computed: {
+    ...mapState({
+      pinForGoogleAuthSetup: state => state.security.pinForGoogleAuthSetup,
+    }),
+  },
   created() {
-    this.generateSecret({ pin: this.pin }).then(response => {
-      this.googleAuthSecret = response.secret;
-    });
+    this.generateSecret({ pin: this.pin || this.pinForGoogleAuthSetup }).then(
+      response => {
+        this.googleAuthSecret = response.secret;
+      },
+    );
+  },
+  destroyed() {
+    console.log('I am destroying');
   },
   methods: {
     ...mapActions({

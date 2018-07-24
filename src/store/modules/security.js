@@ -13,6 +13,8 @@ export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 export const SET_SECURITY_USER_PHONE_INFO =
   'security/SET_SECURITY_USER_PHONE_INFO';
+export const SET_PIN_FOR_GOOGLE_AUTH_SETUP =
+  'security/SET_PIN_FOR_GOOGLE_AUTH_SETUP';
 
 // action
 export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
@@ -80,6 +82,9 @@ const mutations = {
     state.countryDialCode = user.countryDialCode;
     state.countryCode = user.countryCode;
     state.phoneNumber = user.phoneNumber;
+  },
+  [SET_PIN_FOR_GOOGLE_AUTH_SETUP](state, pin) {
+    state.pinForGoogleAuthSetup = pin;
   },
 };
 
