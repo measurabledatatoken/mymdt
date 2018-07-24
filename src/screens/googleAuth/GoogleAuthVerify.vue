@@ -52,6 +52,7 @@ import { mapState, mapActions } from 'vuex';
 import {
   VERIFY_GOOGLE_AUTHENTICATOR_SECRET,
   DISABLE_GOOGLE_AUTHENTICATOR,
+  VERIFY_GOOGLE_AUTHENTICATOR_OTP,
 } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
@@ -84,6 +85,10 @@ export default {
       type: String,
       default: null,
     },
+    successCallback: {
+      type: Function,
+      default: null,
+    },
   },
   data() {
     return {
@@ -107,6 +112,7 @@ export default {
   methods: {
     ...mapActions({
       verifySecret: VERIFY_GOOGLE_AUTHENTICATOR_SECRET,
+      verifyOTP: VERIFY_GOOGLE_AUTHENTICATOR_OTP,
       disableGoogleAuth: DISABLE_GOOGLE_AUTHENTICATOR,
       backToPath: BACK_TO_PATH,
     }),
@@ -144,8 +150,18 @@ export default {
             });
           break;
         default:
-          // for verification
-          console.log('default');
+          this.verifyOTP({ verificationCode: this.verificationCode })
+            .then(() => {
+              this.doneButtonLoading = false;
+              this.successCallback({
+                pin: this.pin,
+                verificationCode: this.verificationCode,
+              });
+              this.backToPath(this.doneCallBackPath);
+            })
+            .catch(() => {
+              this.doneButtonLoading = false;
+            });
           break;
       }
     },

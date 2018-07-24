@@ -50,7 +50,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_PIN_FOR_GOOGLE_AUTH_SETUP } from '@/store/modules/security';
+import { SET_PIN_FOR_2FA_SETUP } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     ...mapState({
-      pinForGoogleAuthSetup: state => state.security.pinForGoogleAuthSetup,
+      pinFor2FASetup: state => state.security.pinFor2FASetup,
     }),
     isIOS() {
       return (
@@ -86,9 +86,8 @@ export default {
   },
   created() {
     if (this.pin) {
-      this.setPinForGoogleAuthSetup(this.pin);
+      this.setPinFor2FASetup(this.pin);
     }
-    console.log(userAgent);
   },
   metaInfo() {
     return {
@@ -97,7 +96,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setPinForGoogleAuthSetup: SET_PIN_FOR_GOOGLE_AUTH_SETUP,
+      setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
     }),
     goToNext() {
       this.$router.push({
