@@ -177,7 +177,6 @@ export default {
 .transfer-to,
 .note {
   width: 100%;
-  flex: 1;
 }
 
 .md-button.md-raised.primary {
