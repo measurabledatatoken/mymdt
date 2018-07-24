@@ -115,7 +115,7 @@ const mutations = {
 
 const actions = {
   [START_TRANSFER]({ dispatch, rootState, rootGetters }, pin) {
-    const selectedUser = rootGetters.getSelectedUser;
+    const transferFromAccount = rootState.transfer.transferFromAccount;
     const transferType = rootState.transfer.transferType;
     const transferNote = rootState.transfer.transferNote;
 
@@ -136,7 +136,7 @@ const actions = {
         amount,
         pin,
         transferNote,
-        selectedUser.accessToken,
+        transferFromAccount.accessToken,
       ],
       openErrorPrompt: true,
     });

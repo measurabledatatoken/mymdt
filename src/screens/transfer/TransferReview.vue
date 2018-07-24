@@ -1,5 +1,5 @@
 <template>
-  <div class="transfer-review">
+  <PaddedContainer class="transfer-review">
     <div class="review-content">
       <div class="from-lbl">{{ $t('message.transfer.fromlbl') }}</div>
       <div class="from-value">{{ transferFromAccount.emailAddress }}</div>
@@ -75,7 +75,7 @@
       @close-click="showPinCodeInput = false"
       @fotgot-click="onFotgotClicked"
     />
-  </div>
+  </PaddedContainer>
 </template>
 
 <script>
@@ -97,11 +97,13 @@ import {
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
+import PaddedContainer from '@/components/containers/PaddedContainer';
 
 export default {
   components: {
     MDTPrimaryButton,
     PinCodeInputPopup,
+    PaddedContainer,
   },
   extends: BasePage,
   metaInfo() {
@@ -207,9 +209,6 @@ export default {
 
 <style lang="scss" scoped>
 .transfer-review {
-  margin-left: $defaultPageMargin;
-  margin-right: $defaultPageMargin;
-  width: calc(100% - 2 * #{$defaultPageMargin});
   text-align: left;
 }
 

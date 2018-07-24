@@ -15,7 +15,6 @@
     </template>
 
     <MDTPrimaryButton 
-      :bottom="true"
       @click="onDoneClick"
     >
       {{ $t('message.common.done') }}
@@ -118,6 +117,7 @@ export default {
 .transfer_success {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .md-icon {
@@ -135,11 +135,11 @@ export default {
   white-space: pre-line;
 }
 
-.md-button.md-raised.primary.primary--bottom {
-  bottom: 4rem;
-}
-
 .view_transactions {
   bottom: 10px;
+}
+
+.md-button.md-raised.primary {
+  margin-bottom: 1.5rem;
 }
 </style>

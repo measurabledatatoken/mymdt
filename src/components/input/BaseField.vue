@@ -36,7 +36,6 @@ export default {
 <style lang="scss" scoped>
 .base-field {
   margin: 0.5rem 0;
-  padding: 0px 1rem;
   overflow: auto;
 
   .label {
