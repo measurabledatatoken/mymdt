@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <PaddedContainer class="transfer-ethwallet">
     <MDTInputField 
       :amount="transferAmount"
       :max-amount="transferFromAccount.mdtBalance"
+      class="mdtinput"
       @amountEntered="onAmountEntered"
       @amountInvalid="transferAmountInvalid"
     />
@@ -31,22 +32,24 @@
       :label="$t('message.transfer.fromlbl')"
       :accounts="fromUserAccounts"
       :selected-account="transferFromAccount"
+      class="transfer-from"
       @accountSelected="onTransferFromAccountSelected"
       @menuOpened="onTransferFromMenuOpened"
     />
     <WalletAddressField 
       :label="$t('message.transfer.tolbl')"
       :init-wallet-address="transferToWalletAddress"
+      class="address-field"
       @walletAddressEntered="walletAddressEntered"
       @walletAddressInvalid="walletAddressInvalid"
     />
     <NoteInputField 
       :note="transferNote"
+      class="note"
       @infoEntered="setTransferNote"
     />
     <MDTPrimaryButton 
       :disabled="disableNextBtn"
-      :bottom="true"
       @click="onNextClicked"
     >
       {{ $t('message.common.nextbtn') }}
@@ -58,7 +61,7 @@
       :md-content="$t('message.transfer.tutorial_description')"
       :md-confirm-text="$t('message.common.okay')"
     />
-  </div>
+  </PaddedContainer>
 </template>
 
 <script>
@@ -73,12 +76,15 @@ import {
   SET_TRANSFER_TO_WALLETADDRESS,
   SET_TRANSFER_NOTE,
 } from '@/store/modules/transfer';
+
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
-import BasePage from '@/screens/BasePage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import PaddedContainer from '@/components/containers/PaddedContainer';
+
+import BasePage from '@/screens/BasePage';
 
 const eventProperties = { 'Transfer Mode': TransferType.EthWallet };
 
@@ -89,6 +95,7 @@ export default {
     NoteInputField,
     WalletAddressField,
     MDTPrimaryButton,
+    PaddedContainer,
   },
   extends: BasePage,
   metaInfo() {
@@ -188,6 +195,12 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.transfer-ethwallet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .transaction-fee,
 .final-amount {
   margin-left: $defaultPageMargin;
@@ -251,5 +264,19 @@ export default {
     font-weight: bold;
     text-transform: none;
   }
+}
+
+.mdtinput,
+.transaction-fee,
+.final-amount,
+.transfer-from,
+.address-field,
+.note {
+  width: 100%;
+}
+
+.md-button.md-raised.primary {
+  margin-top: auto;
+  margin-bottom: 30px;
 }
 </style>

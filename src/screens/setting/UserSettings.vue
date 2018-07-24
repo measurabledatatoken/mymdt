@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseUserSettingPage>
-      <template slot="content">
+      <template slot="unpaded-content">
         <md-list>
           <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
           <md-divider />

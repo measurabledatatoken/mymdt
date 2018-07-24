@@ -35,3 +35,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.base-field {
+  min-height: 80px;
+}
+</style>

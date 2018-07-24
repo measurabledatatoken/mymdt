@@ -32,6 +32,7 @@ export default {
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.25);
   font-size: 20px;
   text-transform: none;
+  min-height: 3rem;
 
   &[disabled] {
     background-color: $bluebtn-backgroundcolor-disabled;

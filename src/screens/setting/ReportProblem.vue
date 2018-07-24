@@ -1,39 +1,42 @@
 <template>
-  <form 
-    class="form" 
+  <form
+    class="form"
     @submit.prevent="handleSubmit"
   >
     <p class="description">{{ $t('message.reportProblem.description') }}</p>
-    <BaseField
-      :label="$t('message.reportProblem.emailAddress')"
-      :error="$v.email.$error && $t('message.reportProblem.pleaseInputValidEmailAddress')"
-      md-clearable
-    >
-      <md-input 
-        :placeholder="$t('message.reportProblem.optional')" 
-        :value="$v.email.$model"
-        @input="handleEmailInput"
-        @change="$v.email.$touch"
-      />
-    </BaseField>
-    <BaseField
-      :label="$t('message.reportProblem.comments')"
-      :error="$v.comments.$error && $t('message.reportProblem.thisFieldIsMandatory')"
-    >
-      <md-textarea
-        :placeholder="$t('message.reportProblem.upTo500Characters')"
-        :md-counter="500"
-        :maxlength="500"
-        v-model="$v.comments.$model"
-        md-autogrow
-      />
-    </BaseField>
+    <PaddedContainer>
+      <BaseField
+        :label="$t('message.reportProblem.emailAddress')"
+        :error="$v.email.$error && $t('message.reportProblem.pleaseInputValidEmailAddress')"
+        md-clearable
+      >
+        <md-input
+          :placeholder="$t('message.reportProblem.optional')"
+          :value="$v.email.$model"
+          @input="handleEmailInput"
+          @change="$v.email.$touch"
+        />
+      </BaseField>
+      <BaseField
+        :label="$t('message.reportProblem.comments')"
+        :error="$v.comments.$error && $t('message.reportProblem.thisFieldIsMandatory')"
+      >
+        <md-textarea
+          :placeholder="$t('message.reportProblem.upTo500Characters')"
+          :md-counter="500"
+          :maxlength="500"
+          v-model="$v.comments.$model"
+          md-autogrow
+        />
+      </BaseField>
 
-    <MDTSmartCaptcha @callback="handleRecaptchaVerify"/>
-    <MDTPrimaryButton 
-      :disabled="!$v.isVerified.$dirty || !$v.comments.$dirty || $v.$anyError" 
-      type="submit"
-    >{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
+      <MDTSmartCaptcha @callback="handleRecaptchaVerify" />
+      <MDTPrimaryButton
+        :disabled="!$v.isVerified.$dirty || !$v.comments.$dirty || $v.$anyError"
+        type="submit"
+      >{{ $t('message.reportProblem.submit') }}</MDTPrimaryButton>
+    </PaddedContainer>
+
   </form>
 </template>
 
@@ -47,6 +50,7 @@ import Recaptcha from '@/components/input/Recaptcha';
 import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
 import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
 import { trackEvent } from '@/utils';
+import PaddedContainer from '@/components/containers/PaddedContainer';
 
 const checked = value => !helpers.req(value) || value === true;
 
@@ -56,6 +60,7 @@ export default {
     Recaptcha,
     MDTPrimaryButton,
     MDTSmartCaptcha,
+    PaddedContainer,
   },
   extends: BasePage,
   metaInfo() {
