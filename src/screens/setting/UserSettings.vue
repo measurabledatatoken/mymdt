@@ -53,6 +53,12 @@
             >
               <md-icon md-src="/static/icons/settings-account-3.svg"/>
             </template>
+            <template 
+              v-if="!getSelectedSecurityUser.isGoogleAuthEnabled && getSelectedSecurityUser.hasGoogleAuthSecret"
+              slot="action-data"
+            >
+              <md-icon md-src="/static/icons/settings-incomplete.svg"/>
+            </template>
           </base-setting-list-item>
           <md-divider />
           <md-divider />
