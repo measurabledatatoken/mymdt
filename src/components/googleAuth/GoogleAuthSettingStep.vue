@@ -32,5 +32,11 @@ export default {
     margin: 0 0 24px 0;
     font-weight: bold;
   }
+  .container {
+    padding: 0 8px;
+    .md-button {
+      width: 100%;
+    }
+  }
 }
 </style>

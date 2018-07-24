@@ -10,7 +10,7 @@
 
             <md-avatar class="google-authenticator-screen">
               <img 
-                src="/static/googleAuth/dummy_1.png" 
+                src="/static/googleAuth/ga-code.svg" 
                 alt="Google Authenticator"
               >
             </md-avatar>
@@ -27,12 +27,14 @@
               </md-field>
             </div>
           </md-list-item>
+          <md-list-item>
+            <MDTPrimaryButton 
+              :disabled="!verificationCodeFilled"
+              :loading="doneButtonLoading"
+              @click="onDoneClicked()"
+            > {{ $t('message.common.done') }}</MDTPrimaryButton>
+          </md-list-item>
         </md-list>
-        <MDTPrimaryButton 
-          :disabled="!verificationCodeFilled"
-          :loading="doneButtonLoading"
-          @click="onDoneClicked()"
-        > {{ $t('message.common.done') }}</MDTPrimaryButton>
       </template>
     </GoogleAuthStep>    
     <SuccessPopup 
@@ -142,6 +144,7 @@ export default {
             });
           break;
         default:
+          // for verification
           console.log('default');
           break;
       }
@@ -158,13 +161,30 @@ export default {
   .remark {
     text-align: left;
   }
+  .md-field {
+    margin: 16px $defaultPageMargin 10px $defaultPageMargin;
+    width: calc(100% - 2 * #{$defaultPageMargin});
+
+    .label {
+      color: $label-color;
+      top: 0;
+      opacity: 1;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .md-input {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+  }
   /deep/ .md-avatar {
     &.google-authenticator-screen {
       width: 112px;
       height: 112px;
     }
   }
-  /deep/.md-progress-spinner {
+  /deep/ .md-progress-spinner {
     position: absolute;
     svg {
       .md-progress-spinner-circle {
@@ -175,27 +195,16 @@ export default {
       opacity: 0.7;
     }
   }
-}
-.md-field {
-  margin: 16px $defaultPageMargin 10px $defaultPageMargin;
-  width: calc(100% - 2 * #{$defaultPageMargin});
-
-  .label {
-    color: $label-color;
-    top: 0;
-    opacity: 1;
-    font-size: 14px;
-    font-weight: bold;
-  }
-
-  .md-input {
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-}
-.md-button {
-  &.btn-done {
-    margin-top: 10px;
+  /deep/ .md-list {
+    .md-list-item-content {
+      padding: 6px 8px;
+      .md-button {
+        width: 100%;
+        &.btn-done {
+          margin-top: 10px;
+        }
+      }
+    }
   }
 }
 </style>

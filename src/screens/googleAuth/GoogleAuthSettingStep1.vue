@@ -7,24 +7,41 @@
       <template slot="content">
         <div>
           <img 
-            src="/static/googleAuth/google-auth.jpg" 
-            srcset="/static/googleAuth/google-auth@2x.jpg 2x, /static/googleAuth/google-auth@3x.jpg 3x" 
+            src="/static/googleAuth/google-auth.png" 
+            srcset="/static/googleAuth/google-auth@2x.png 2x, /static/googleAuth/google-auth@3x.png 3x" 
             alt="Google Authenticator"
           >
         </div>
-        <div>
-          <img 
-            src="/static/googleAuth/google-auth.jpg" 
-            srcset="/static/googleAuth/google-auth@2x.jpg 2x, /static/googleAuth/google-auth@3x.jpg 3x" 
-            alt="Google Authenticator"
+        <div class="store-icons">
+          <a 
+            target="_blank" 
+            href="https://itunes.apple.com/app/id914281815"
           >
+            <img 
+              v-if="isIOS"
+              src="/static/googleAuth/app-store-en.svg" 
+          ></a>
+          <a 
+            target="_blank" 
+            href="http://mailti.me/android"
+          >
+            <img 
+              v-if="isAndroid"
+              src="/static/googleAuth/google-play-en.png" 
+              srcset="/static/googleAuth/google-play-en@2x.png 2x, /static/googleAuth/google-play-en@3x.png 3x" 
+              alt="Google Authenticator"
+          ></a>
         </div>
-        <p class="remark">
-          {{ $t('message.googleAuth.step1Remark') }}
-        </p>
-        <MDTPrimaryButton 
-          @click="goToNext()"
-        >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+        <div 
+          class="container"
+        >
+          <p class="remark">
+            {{ $t('message.googleAuth.step1Remark') }}
+          </p>
+          <MDTPrimaryButton 
+            @click="goToNext()"
+          >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+        </div>
       </template>
     </GoogleAuthStep>    
   </div>
@@ -38,6 +55,9 @@ import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import GoogleAuthStep from '@/components/googleAuth/GoogleAuthSettingStep';
+
+const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
 export default {
   components: {
     MDTPrimaryButton,
@@ -55,11 +75,20 @@ export default {
     ...mapState({
       pinForGoogleAuthSetup: state => state.security.pinForGoogleAuthSetup,
     }),
+    isIOS() {
+      return (
+        /ipad|iphone|ipod/.test(userAgent.toLowerCase()) && !window.MSStream
+      );
+    },
+    isAndroid() {
+      return /android/.test(userAgent.toLowerCase()) && !window.MSStream;
+    },
   },
   created() {
     if (this.pin) {
       this.setPinForGoogleAuthSetup(this.pin);
     }
+    console.log(userAgent);
   },
   metaInfo() {
     return {
@@ -88,6 +117,19 @@ export default {
     .remark {
       text-align: left;
     }
+  }
+  .store-icons {
+    margin-top: 24px;
+    img {
+      display: block;
+      margin: 0 auto;
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  .remark {
+    margin-top: 76px;
   }
 }
 </style>

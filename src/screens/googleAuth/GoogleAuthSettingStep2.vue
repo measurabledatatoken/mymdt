@@ -53,10 +53,14 @@
             />
           </li>
         </ul>
-        <MDTPrimaryButton 
-          :disabled="!googleAuthSecret"
-          @click="goToNext()"
-        >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+        <div 
+          class="container"
+        >
+          <MDTPrimaryButton 
+            :disabled="!googleAuthSecret"
+            @click="goToNext()"
+          >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+        </div>
       </template>
     </GoogleAuthStep>    
   </div>
@@ -110,9 +114,6 @@ export default {
         this.googleAuthSecret = response.secret;
       },
     );
-  },
-  destroyed() {
-    console.log('I am destroying');
   },
   methods: {
     ...mapActions({
