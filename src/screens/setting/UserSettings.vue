@@ -49,6 +49,13 @@
             @click="onPasscodeForgotClicked"
           />
           <md-divider />
+          <md-divider />
+          <base-setting-list-item 
+            :title="$t('message.twoFactorAuthentication.setupTitle')"
+            :disabled="!(getSelectedSecurityUser.isPasscodeSet && getSelectedSecurityUser.isPhoneConfirmed)"
+            @click="onTwoFactorClicked"
+          />
+          <md-divider />
         </md-list>
 
         <MDTConfirmPopup 
@@ -210,6 +217,16 @@ export default {
                 pin: pinCode,
               },
             });
+          } else if (
+            this.nextRouteNameAfterPINFilled ===
+            RouteDef.TwoFactorAuthenticationSetting.name
+          ) {
+            this.$router.push({
+              name: RouteDef.TwoFactorAuthenticationSetting.name,
+              params: {
+                pin: pinCode,
+              },
+            });
           } else {
             this.requestVerificationCode({
               action: OTPActionType.VerifyPhoneNumberAction,
@@ -257,6 +274,18 @@ export default {
       }
 
       this.$router.push(RouteDef.PinCodeForgot.path);
+    },
+    onTwoFactorClicked() {
+      if (
+        !this.getSelectedSecurityUser.isPasscodeSet ||
+        !this.getSelectedSecurityUser.isPhoneConfirmed
+      ) {
+        return;
+      }
+      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+      this.nextRouteNameAfterPINFilled =
+        RouteDef.TwoFactorAuthenticationSetting.name;
+      this.showPinCodeInput = true;
     },
   },
 };
