@@ -277,7 +277,7 @@ export default {
           const remaining = end - current;
 
           let rate = 1 - remaining / duration;
-          if (remaining < 60) {
+          if (rate >= 1) {
             timeup = true;
             rate = 1;
           }
