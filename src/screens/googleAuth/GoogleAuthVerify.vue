@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="google-authenticator-verify">
     <BaseUserSettingPage/>
     <GoogleAuthStep
       :step-title="stepTitle || $t('message.googleAuth.verifyTitle')"
@@ -157,7 +157,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.google-authenticator-setting-step {
+.google-authenticator-verify {
   .remark {
     text-align: left;
   }

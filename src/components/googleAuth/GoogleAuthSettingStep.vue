@@ -1,19 +1,24 @@
 <template>
-  <div class="google-authenticator-setting-step">
-    <div class="content">
-      <p class="step-title">
-        {{ stepTitle }}
-      </p>
-      <slot name="content"/>
+  <PaddedContainer>
+    <div class="google-authenticator-setting-step">
+      <div class="content">
+        <p class="step-title">
+          {{ stepTitle }}
+        </p>
+        <slot name="content"/>
+      </div>
     </div>
-  </div>
+  </PaddedContainer>
 </template>
 
 <script>
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import PaddedContainer from '@/components/containers/PaddedContainer';
+
 export default {
   components: {
     MDTPrimaryButton,
+    PaddedContainer,
   },
   props: {
     stepTitle: {
@@ -25,9 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.google-authenticator-setting-step {
+/deep/ .google-authenticator-setting-step {
   font-size: 16px;
-  padding: $defaultPageMargin;
   .step-title {
     margin: 0 0 24px 0;
     font-weight: bold;

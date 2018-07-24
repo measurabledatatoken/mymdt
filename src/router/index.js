@@ -57,11 +57,11 @@ const WebView = () => import('@/screens/WebView');
 const TwoFactorAuthenticationSettingPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
 const GoogleAuthSettingStep1 = () =>
-  import(/* webpackChunkName: "google-auth" */ '@/screens/setting/GoogleAuthSettingStep1');
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep1');
 const GoogleAuthSettingStep2 = () =>
-  import(/* webpackChunkName: "google-auth" */ '@/screens/setting/GoogleAuthSettingStep2');
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep2');
 const GoogleAuthVerify = () =>
-  import(/* webpackChunkName: "google-auth" */ '@/screens/setting/GoogleAuthVerify');
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthVerify');
 /**
  *  example code to fail async loading of route
  * 
