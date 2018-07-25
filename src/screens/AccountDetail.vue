@@ -53,7 +53,16 @@ export default {
       getTransactions: 'getTransactions',
     }),
     transactions() {
-      return this.getTransactions(this.selectedUser.transactions);
+      return this.getTransactions(this.selectedUser.transactions).sort(
+        (a, b) => {
+          if (a.transaction_time > b.transaction_time) {
+            return -1;
+          } else if (a.transaction_time < b.transaction_time) {
+            return 1;
+          }
+          return 0;
+        },
+      );
     },
   },
   created() {
