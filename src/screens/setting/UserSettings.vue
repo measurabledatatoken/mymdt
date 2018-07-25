@@ -136,14 +136,14 @@
           @md-confirm="onDisableGoogleAuthClicked"
         />
 
-        <!-- Continu to setup Google authenticator popup, show if the google auth secret exists -->
+        <!-- Continue to setup Google authenticator popup, show if the google auth secret exists -->
         <MDTConfirmPopup 
           :md-active.sync="showContinueGoogleAuthPopup"
           :md-title="$t('message.googleAuth.continueSetupPopupTitle')"
           :md-content="$t('message.googleAuth.continueSetupPopupDescription')"
           :md-confirm-text="$t('message.common.continue')"
           :md-cancel-text="$t('message.common.startOver')"
-          @md-confirm="continueSetupGoogleAuth"
+          @md-confirm="onContinueSetupGoogleAuthClicked"
           @md-cancel="setupNewGoogleAuth"
         />
       </template>
@@ -333,7 +333,7 @@ export default {
       trackEvent('Click on Phone Number');
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
-          'message.phone.pleaseSetupPinDescription',
+          'message.phone.pinSetupPopupDescription',
         );
         this.showSetPinDialog = true;
         return;
@@ -363,7 +363,7 @@ export default {
     onTwoFactorClicked() {
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
-          'message.twoFactorAuthentication.pleaseSetupPinDescription',
+          'message.twoFactorAuthentication.pinSetupPopupDescription',
         );
         this.showSetPinDialog = true;
       } else {
@@ -381,7 +381,7 @@ export default {
       this.showPinCodeInput = true;
     },
     // continue to setup
-    continueSetupGoogleAuth() {
+    onContinueSetupGoogleAuthClicked() {
       this.currentSetupGoogleAuthMode = SetupGoogleAuthMode.SETUP;
       this.goToGoogleAuthVerifyPage();
     },
@@ -389,17 +389,23 @@ export default {
       this.get2FAStatus().then(response => {
         if (
           response['is_2fa_enabled'] &&
-          response['2fa_method'] === TwoFactorOption.METHOD.SMS
+          response['2fa_method'] === TwoFactorOption.METHOD.GOOGLE
         ) {
-          this.disableGoogleAuthPopupDescription = this.$t(
-            'message.googleAuth.disablePopupContentCase1',
-          );
+          if (this.getSelectedSecurityUser.isPhoneConfirmed) {
+            // will switch 2FA method to SMS
+            this.disableGoogleAuthPopupDescription = this.$t(
+              'message.googleAuth.disablePopupContentCase1',
+            );
+          } else {
+            // will disable 2FA
+            this.disableGoogleAuthPopupDescription = this.$t(
+              'message.googleAuth.disablePopupContentCase2',
+            );
+          }
+          this.showDisableGoogleAuthPopup = true;
         } else {
-          this.disableGoogleAuthPopupDescription = this.$t(
-            'message.googleAuth.disablePopupContentCase2',
-          );
+          this.onDisableGoogleAuthClicked();
         }
-        this.showDisableGoogleAuthPopup = true;
       });
     },
     setupGoogleAuth(pinCode) {
@@ -417,7 +423,7 @@ export default {
     onGoogleAuthClicked() {
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
-          'message.googleAuth.pleaseSetupPinDescription',
+          'message.googleAuth.pinSetupPopupDescription',
         );
         this.showSetPinDialog = true;
       } else if (this.getSelectedSecurityUser.isGoogleAuthEnabled) {
