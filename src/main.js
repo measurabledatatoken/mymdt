@@ -19,6 +19,7 @@ import Vue from 'vue';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
+import '@/styles/vue-material.scss';
 import Vuelidate from 'vuelidate';
 import mixpanel from 'mixpanel-browser';
 
