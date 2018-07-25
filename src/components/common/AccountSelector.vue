@@ -5,10 +5,10 @@
       class="selector-menu"
     >
       <md-menu 
+        :md-offset-y="-60"
         md-size="auto" 
         md-full-width 
-        md-close-on-select 
-        md-align-trigger 
+        md-close-on-select
         @md-opened="menuOpened" 
         @md-closed="menuClosed"
       >
@@ -55,43 +55,34 @@
 
         <!-- Content -->
         <md-menu-content>
-          <md-menu-item 
-            v-for="account in filteredAccounts" 
-            :class="['menu-item-account', { 'menu-item-account--single-line': account.mdtBalance === undefined || account.mdtBalance === null }]"
-            :key="account.emailAddress" 
-            @click="selectAccount(account)"
-          >
-            <md-divider/>
-            <div>
-              <div 
-                :class="{ 'selected' : account.emailAddress === selectedAccountEmail }" 
-                class="account-email"
-              >
-                {{ account.emailAddress }}
-              </div>
-              <div 
-                v-if="account.mdtBalance != undefined" 
-                class="account-balance"
-              >
-                {{ `${$t('message.transfer.amountlbl')}: ${formatAmount(account.mdtBalance)}` }} MDT
-              </div>
-            </div>
-            <div 
-              v-if="account.emailAddress === selectedAccountEmail" 
-              class="icon-container"
-            >
-              <md-icon md-src="/static/icons/done.svg"/>
-            </div>
-
-          </md-menu-item>
+          <AccountSelectorMenuItem
+            v-if="!selectedOther && selectedAccount"
+            :account="selectedAccount"
+            :is-drawer-top-item="true"
+          />
+          <li class="account-selector-sub-menu">
+            <ul class="account-selector-sub-menu-list">
+              <template v-for="(account, index) in filteredAccounts">
+                <md-divider
+                  v-if="index > 0"
+                  :key="`${account.emailAddress}-divider`"
+                />
+                <AccountSelectorMenuItem
+                  :key="account.emailAddress" 
+                  :selected="account.emailAddress === selectedAccountEmail"
+                  :account="account"
+                  @click="selectAccount(account)"
+                />
+              </template>
+            </ul>
+          </li>
 
           <!-- Other email address. Only show if the props  enableOther is true-->
           <md-menu-item 
             v-if="enableOther" 
-            class="other" 
+            class="account-selector-other" 
             @click="selectOther()"
           >
-            <md-divider/>
             <div> {{ $t('message.transfer.other_emailaddress') }} </div>
           </md-menu-item>
         </md-menu-content>
@@ -122,11 +113,13 @@
 
 <script>
 import BaseField from '@/components/input/BaseField';
+import AccountSelectorMenuItem from '@/components/common/AccountSelectorMenuItem';
 import { formatAmount } from '@/utils';
 
 export default {
   components: {
     BaseField,
+    AccountSelectorMenuItem,
   },
   props: {
     label: {
@@ -239,7 +232,6 @@ export default {
     },
     selectOther() {
       this.selectedOther = true;
-      this.selectedAccount = null;
       this.$emit('otherSelected');
     },
     menuOpened() {
@@ -265,7 +257,7 @@ $menuItemOtherCellHeight: 44px;
 
 .account-selector {
   margin: 0.4rem 0;
-  min-height: 6rem;
+  min-height: 4.5rem;
 
   .selector-menu {
     margin: 0;
@@ -286,17 +278,6 @@ $menuItemOtherCellHeight: 44px;
     width: 100%;
     height: $menuItemCellHeight;
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0s;
-
-    &.open {
-      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
-      border-radius: 4px 4px 0px 0px;
-      background-color: white;
-      z-index: 10;
-
-      /deep/ .md-button-content {
-        padding: 0 16px;
-      }
-    }
 
     &.other {
       height: $menuItemOtherCellHeight;
@@ -320,6 +301,10 @@ $menuItemOtherCellHeight: 44px;
       &.other {
         margin-top: 9px;
       }
+
+      /deep/ svg {
+        fill: $selectedEmailColor;
+      }
     }
   }
 
@@ -333,7 +318,8 @@ $menuItemOtherCellHeight: 44px;
 
 .account-info {
   flex: 1;
-  float: left;
+  word-break: break-all;
+  white-space: normal;
 
   .account-email {
     color: $selectedEmailColor;
@@ -372,57 +358,38 @@ $menuItemOtherCellHeight: 44px;
     border-radius: 0px 0px 4px 4px !important;
     padding: 0;
   }
+
+  /deep/ .md-menu-content-container {
+    overflow: hidden;
+
+    .md-list {
+      height: 100%;
+
+      .account-selector-sub-menu {
+        overflow: auto;
+        border-top: solid 1px #eeeeee;
+
+        .account-selector-sub-menu-list {
+          list-style: none;
+          padding: 0;
+        }
+      }
+
+      .account-selector-other {
+        box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
+
+        /deep/ .md-list-item-content {
+          min-height: 40px;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
 }
 
 .md-divider {
-  position: absolute;
-  background-color: transparent;
-  border: solid 1px #eeeeee;
-  width: 96%;
-  top: -1px;
-  left: 2%;
-}
-
-//Menu Item Style
-.menu-item-account {
-  height: $menuItemCellHeight;
-  &.other,
-  &.menu-item-account--single-line {
-    height: $menuItemOtherCellHeight;
-  }
-
-  /deep/ .md-list-item-content {
-    min-height: auto;
-  }
-
-  .account-balance {
-    font-size: 14px;
-    color: $mdtAmountColor;
-  }
-
-  .account-email {
-    color: #4a4a4a;
-
-    &.selected {
-      color: $selectedEmailColor !important;
-    }
-  }
-}
-
-.md-button,
-.md-menu-item {
-  /deep/ .md-icon {
-    float: right;
-    height: 100%;
-
-    svg {
-      fill: $selectedEmailColor;
-    }
-  }
-}
-
-.icon-container {
-  flex: 1;
+  height: 2px;
+  background-color: #eeeeee;
 }
 
 .other-email {

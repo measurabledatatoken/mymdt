@@ -23,7 +23,7 @@
       :is-email-valid="isValidEmailAddress"
       :invalid-email-text="$t('message.error.invalid_email')"
       class="transfer-to"
-      @accountSelected="setTransferToAccount"
+      @accountSelected="onTransferToAccountSelected"
       @menuOpened="onTransferToMenuOpened"
       @otherSelected="onTransferToOtherSelected"
     />
@@ -151,6 +151,7 @@ export default {
     },
     onTransferToOtherSelected() {
       trackEvent('Choose “Other Email Account"', eventProperties);
+      this.setTransferToAccount(null);
     },
     onNoteEntered(note) {
       trackEvent('Input Note', eventProperties);
@@ -177,7 +178,6 @@ export default {
 .transfer-to,
 .note {
   width: 100%;
-  flex: 1;
 }
 
 .md-button.md-raised.primary {
