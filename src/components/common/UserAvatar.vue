@@ -64,7 +64,7 @@ export default {
         ((firstChar.charCodeAt(0) - 'a'.charCodeAt(0)) * colorCodes.length) /
         26;
       index = Math.min(index, colorCodes.length - 1);
-      index = Math.max(0, colorCodes.length - 1);
+      index = Math.max(0, index);
       index = parseInt(index, 10);
       return colorCodes[index];
     },
