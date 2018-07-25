@@ -1,26 +1,28 @@
 <template>
-  <md-list class="transaction-list md-double-line">
+  <md-list
+    ref="transactionList"
+    class="transaction-list md-double-line"
+  >
     <md-subheader>{{ $t('message.account.transactions') }}</md-subheader>
     <md-divider />
     <template v-if="uiState.isFetchingTransactions">
-      <TransactionListLoadingItem />
-      <TransactionListLoadingItem />
-      <TransactionListLoadingItem />
+      <template v-for="n in numberOfLoadingItems">
+        <TransactionListLoadingItem :key="n" />
+      </template>
     </template>
-    <template
-      v-for="transaction in transactions"
-      v-else-if="Array.isArray(transactions) && transactions.length > 0"
-    >
-      <TransactionItem
-        :key="transaction.id"
-        :transaction="transaction"
-        show-avatar
-        @click="onTransactionItemClicked(transaction)"
-      />
-      <md-divider 
-        :key="`${transaction.id}-divider`" 
-        class="list-item-divider"
-      />
+    <template v-if="Array.isArray(transactions) && transactions.length > 0">
+      <template v-for="transaction in transactions">
+        <TransactionItem
+          :key="transaction.id"
+          :transaction="transaction"
+          show-avatar
+          @click="onTransactionItemClicked(transaction)"
+        />
+        <md-divider 
+          :key="`${transaction.id}-divider`" 
+          class="list-item-divider"
+        />
+      </template>
     </template>
     <TransactionListEmptyItem v-else />
   </md-list>
@@ -55,12 +57,26 @@ export default {
   data() {
     return {
       RouteDef,
+      numberOfLoadingItems: 0,
     };
   },
   computed: {
     ...mapState({
       uiState: state => state.ui.transactionList,
     }),
+  },
+  mounted() {
+    if (this.transactions.length > 0) {
+      this.numberOfLoadingItems = 1;
+    } else {
+      this.$nextTick(() => {
+        const LOADING_ITEM_HEIGHT = 72;
+        const contentHeight = this.$refs.transactionList.$el.offsetHeight;
+        this.numberOfLoadingItems = Math.ceil(
+          contentHeight / LOADING_ITEM_HEIGHT,
+        );
+      });
+    }
   },
   methods: {
     onTransactionItemClicked(transaction) {
