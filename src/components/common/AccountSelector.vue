@@ -92,6 +92,7 @@
     <!-- Input field for user after pressed other email -->
     <BaseField 
       v-if="selectedOther" 
+      :error="isEmailValid!=null && !isEmailValid && invalidEmailText"
       class="other-email" 
       md-dense 
       md-inline 
@@ -102,10 +103,6 @@
         :placeholder="$t('message.transfer.enter_emailaddress')"
         @change="onOtherEmailEntered($event.target.value)"
       />
-      <span 
-        v-if="isEmailValid!=null && !isEmailValid" 
-        class="md-helper-text"
-      >{{ invalidEmailText }}</span>
     </BaseField>
   </div>
 
@@ -396,9 +393,5 @@ $menuItemOtherCellHeight: 44px;
   &.base-field {
     margin-top: -0.5rem;
   }
-}
-
-.md-field.md-theme-default .md-helper-text {
-  color: $theme-warning-color;
 }
 </style>
