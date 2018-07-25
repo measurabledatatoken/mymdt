@@ -77,6 +77,16 @@
       @close-click="showPinCodeInput = false"
       @fotgot-click="onFotgotClicked"
     />
+
+    <!-- confirm to turn off 2fa popup -->
+    <MDTConfirmPopup 
+      :md-active.sync="showDisable2FAPopup"
+      :md-title="$t('message.twoFactorAuthentication.disable2FAPopupTitle')"
+      :md-content="$t('message.twoFactorAuthentication.disable2FAPopupDescription')"
+      :md-confirm-text="$t('message.twoFactorAuthentication.turnOff2FA')"
+      :md-cancel-text="$t('message.common.cancel')"
+      @md-confirm="onDisable2FAButtonClicked"
+    />
   </div>
 </template>
 
@@ -98,6 +108,7 @@ import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PriceUnitListItem from '@/components/setting/PriceUnitListItem';
 // import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
@@ -106,6 +117,7 @@ import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 export default {
   components: {
     MDTPrimaryButton,
+    MDTConfirmPopup,
     BaseUserSettingPage,
     BaseSettingListItem,
     PriceUnitListItem,
@@ -122,6 +134,7 @@ export default {
     showPinCodeInput: false,
     TwoFactorOption,
     statusLoaded: false,
+    showDisable2FAPopup: false,
   }),
   metaInfo() {
     return {
@@ -147,7 +160,7 @@ export default {
         if (value) {
           this.switchOn();
         } else {
-          this.showPinCodeInput = true;
+          this.showDisable2FAPopup = true;
         }
       },
     },
@@ -233,8 +246,8 @@ export default {
     switchOff({ pin, verificationCode }) {
       this.disable2FA({ pin, verificationCode });
     },
-    successCallback() {
-      console.log('SUCCESS CALLBACK');
+    onDisable2FAButtonClicked() {
+      this.showPinCodeInput = true;
     },
   },
 };

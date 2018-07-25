@@ -170,7 +170,7 @@
     "invalid_phonenumber": "Invalid Phone number",
     "already_setup_title": "You already set up Phone Number",
     "already_setup_content": "Would you like to change your Phone Number?",
-    "pleaseSetupPinDescription": "You can add your phone number after you set up your PIN."
+    "pinSetupPopupDescription": "You can add your phone number after you set up your PIN."
   },
   "passcode": {
     "pin_popup_title": "Please Enter Your PIN",
@@ -275,11 +275,14 @@
       "login": "Unknown Logins Only",
       "transactionAndLogin": "Transaction and Unknown Logins"
     },
-    "pleaseSetupPinDescription": "You can set up two-tactor authentication after you set up your PIN and add your phone number or set up Google Authenticator."
+    "pinSetupPopupDescription": "You can set up two-tactor authentication after you set up your PIN and add your phone number or set up Google Authenticator.",
+    "disable2FAPopupTitle" : "Turning off 2FA?",
+    "disable2FAPopupDescription" : "2FA is strongly recommended to protect your account and assets.<br/>By turning off 2FA, you agree that you understand the risk for not enabling this security feature.",
+    "turnOff2FA" : "Turn off 2FA"
   },
   "googleAuth": {
     "setupTitle" : "Google Authenticator",
-    "pleaseSetupPinDescription": "You can set up Google Authenticator after you set up your PIN.<br/><br/>What is Google Authenticator?<br/>Google Authenticator adds a second layer of security to your account. When two-factor authentication is on, you will asked to enter your PIN and a verification code from the Google Authenticator when making transactions or logging into the account. ",
+    "pinSetupPopupDescription": "You can set up Google Authenticator after you set up your PIN.<br/><br/>What is Google Authenticator?<br/>Google Authenticator adds a second layer of security to your account. When two-factor authentication is on, you will asked to enter your PIN and a verification code from the Google Authenticator when making transactions or logging into the account. ",
     "step1Title" : "Step 1 Get Google Authenticator App:",
     "step1Remark" : "Please make sure that your Google Authenticator app is installed.",
     "step2Title" : "Step 2 In Google Authenticator:",
