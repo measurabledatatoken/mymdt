@@ -64,7 +64,7 @@
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.twoFactorAuthentication.setupTitle')"
-            :disabled="!getSelectedSecurityUser.isPasscodeSet"
+            :disabled="!allowTwoFactorSetup"
             @click="onTwoFactorClicked"
           >
             <template 
@@ -366,7 +366,7 @@ export default {
           'message.twoFactorAuthentication.pinSetupPopupDescription',
         );
         this.showSetPinDialog = true;
-      } else {
+      } else if (this.allowTwoFactorSetup) {
         this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
         this.nextRouteNameAfterPINFilled =
           RouteDef.TwoFactorAuthenticationSetting.name;
@@ -402,10 +402,13 @@ export default {
               'message.googleAuth.disablePopupContentCase2',
             );
           }
-          this.showDisableGoogleAuthPopup = true;
         } else {
-          this.onDisableGoogleAuthClicked();
+          // will disable google auth
+          this.disableGoogleAuthPopupDescription = this.$t(
+            'message.googleAuth.disablePopupContentCase3',
+          );
         }
+        this.showDisableGoogleAuthPopup = true;
       });
     },
     setupGoogleAuth(pinCode) {
