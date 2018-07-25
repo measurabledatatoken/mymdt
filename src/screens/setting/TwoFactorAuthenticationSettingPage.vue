@@ -110,7 +110,7 @@ import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PriceUnitListItem from '@/components/setting/PriceUnitListItem';
-// import OTPActionType from '@/enum/otpActionType';
+import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
@@ -231,14 +231,36 @@ export default {
           this.setDoneCallbackPath(
             RouteDef.TwoFactorAuthenticationSetting.path,
           );
-          this.$router.push({
-            name: RouteDef.GoogleAuthVerify.name,
-            params: {
-              pin: pinCode,
-              successCallback: this.switchOff,
-            },
-          });
+          if (this.method === TwoFactorOption.METHOD.GOOGLE) {
+            this.goToGoogleAuthVerify();
+          } else {
+            this.goToSMSVerify();
+          }
         });
+    },
+    goToSMSVerify() {
+      this.requestVerificationCode({
+        action: OTPActionType.DisableTwoFAAction,
+      }).then(() => {
+        this.$router.push({
+          name: RouteDef.TwoFactorAuthenticationSMSVerify.name,
+          params: {
+            emailAddress: this.selectedSecurityUser.emailAddress,
+            payloadForCallback: { pin: this.pinFor2FASetup },
+            successCallback: this.switchOff,
+            action: OTPActionType.DisableTwoFAAction,
+          },
+        });
+      });
+    },
+    goToGoogleAuthVerify() {
+      this.$router.push({
+        name: RouteDef.GoogleAuthVerify.name,
+        params: {
+          payloadForCallback: { pin: this.pinFor2FASetup },
+          successCallback: this.switchOff,
+        },
+      });
     },
     switchOn() {
       this.enable2FA({ pin: this.pin || this.pinFor2FASetup });

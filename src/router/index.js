@@ -62,6 +62,8 @@ const GoogleAuthSettingStep2 = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep2');
 const GoogleAuthVerify = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthVerify');
+const TwoFactorAuthenticationSMSVerifyPage = () =>
+  import(/* webpackChunkName: "2fa" */ '@/screens/phone/TwoFactorAuthenticationSMSVerifyPage');
 /**
  *  example code to fail async loading of route
  * 
@@ -271,7 +273,12 @@ const router = new Router({
           component: TwoFactorAuthenticationSettingPage,
           props: true,
         },
-
+        {
+          path: RouteDef.TwoFactorAuthenticationSMSVerify.path,
+          name: RouteDef.TwoFactorAuthenticationSMSVerify.name,
+          component: TwoFactorAuthenticationSMSVerifyPage,
+          props: true,
+        },
         // Route to Home page for route not defined
         {
           path: '*',

@@ -278,7 +278,8 @@
     "pinSetupPopupDescription": "You can set up two-tactor authentication after you set up your PIN and add your phone number or set up Google Authenticator.",
     "disable2FAPopupTitle" : "Turning off 2FA?",
     "disable2FAPopupDescription" : "2FA is strongly recommended to protect your account and assets.<br/>By turning off 2FA, you agree that you understand the risk for not enabling this security feature.",
-    "turnOff2FA" : "Turn off 2FA"
+    "turnOff2FA" : "Turn off 2FA",
+    "verifyTitle" : "Enter Verification Code"
   },
   "googleAuth": {
     "setupTitle" : "Google Authenticator",
@@ -292,10 +293,10 @@
     "step2Procedure3Remark" : "You can screenshot this page to keep a copy",
     "step2Procedure4" : "Make sure “<b>Time Based</b>” is selected and tap “<b>Add</b>” to complete.",
     "step3Title" : "Step 3 Enter Verification Code ",
-    "verifyTitle" : "Enter Verification Code ",
     "disablePopupTitle" : "Disable your Google Authenticator?",
     "disablePopupContentCase1" : "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA will switch to SMS if you proceed.",
     "disablePopupContentCase2" : "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA be disabled if you proceed. You can set up your phone number and turn on 2FA again.",
+    "disablePopupContentCase3" : "You have already set up your Google Authenticator. Do you want to disable it?",
     "continueSetupPopupTitle" : "Continue Setup?",
     "continueSetupPopupDescription": "You are halfway setting up your Google Authenticator. <br/><br/>Click “Continue” to continue setting up your Google Authenticator. You will be asked to input the 6-digit verfication code.<br/><br/>Click “Start Over” to discard current progress and you will be provided with a new key.",
     "setupSuccess" : "Google Authenticator\nSuccessfully Set! "

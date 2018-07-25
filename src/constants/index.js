@@ -20,12 +20,16 @@ const RouteDef = {
     name: 'GoogleAuthStep2',
   },
   GoogleAuthVerify: {
-    path: '/home/usersettings/googleauthverify',
+    path: '/home/2fa/googleauthverify',
     name: 'GoogleAuthVerify',
   },
   TwoFactorAuthenticationSetting: {
     path: '/home/usersettings/twofactor',
     name: 'TwoFactorAuthentication',
+  },
+  TwoFactorAuthenticationSMSVerify: {
+    path: '/home/2fa/smsverify',
+    name: 'TwoFactorAuthenticationSMSVerify',
   },
   PriceUnits: { path: '/home/settings/price-units' },
   ReportProblem: { path: '/home/settings/problems' },

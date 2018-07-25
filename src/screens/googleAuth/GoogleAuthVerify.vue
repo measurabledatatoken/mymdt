@@ -2,7 +2,7 @@
   <div class="google-authenticator-verify">
     <BaseUserSettingPage/>
     <GoogleAuthStep
-      :step-title="stepTitle || $t('message.googleAuth.verifyTitle')"
+      :step-title="stepTitle || $t('message.twoFactorAuthentication.verifyTitle')"
     >
       <template slot="content">
         <md-list class="md-triple-line">
@@ -87,7 +87,15 @@ export default {
     },
     successCallback: {
       type: Function,
-      default: null,
+      default: payload => {
+        return payload;
+      },
+    },
+    payloadForCallback: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
   },
   data() {
@@ -153,10 +161,8 @@ export default {
           this.verifyOTP({ verificationCode: this.verificationCode })
             .then(() => {
               this.doneButtonLoading = false;
-              this.successCallback({
-                pin: this.pin,
-                verificationCode: this.verificationCode,
-              });
+              this.payloadForCallback.verificationCode = this.verificationCode;
+              this.successCallback(this.payloadForCallback);
               this.backToPath(this.doneCallBackPath);
             })
             .catch(() => {
