@@ -99,7 +99,7 @@ const actions = {
     const locale = rootState.common.locale;
     return api.auth
       .autoLogin(appCredentials, appID, locale)
-      .then(data => {
+      .then(async data => {
         commit(SET_LOGIN_ERRORCODE, null);
 
         const credentials = data.valid.map(dataItem => ({
@@ -109,7 +109,7 @@ const actions = {
         }));
         commit(SET_CREDENTIALS, credentials);
         commit(SET_INVALIDEMAILS, data.invalid);
-        return dispatch(REQUEST_USER_ACCOUNTS);
+        return await dispatch(REQUEST_USER_ACCOUNTS);
       })
       .then(() => {
         commit(SET_APP_ID, appID);

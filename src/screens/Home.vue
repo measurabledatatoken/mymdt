@@ -37,16 +37,26 @@
 
     <SuccessPopup 
       :md-active.sync="showTotalClaimedPopup"
-      :title="$t('message.home.cliamed_mdt', {num: loginTotalClaimed})"
+      :title="$t('message.home.claimed_mdt', {num: loginTotalClaimed})"
       :confirm-text="$t('message.common.okay')"
       icon-src="/static/icons/claim-popup.svg"
+    />
+    
+    <SuccessPopup
+      :md-active.sync="showTotalClaimablePopup"
+      :title="$t('message.home.claimable_mdt', {num: claimableMDT})"
+      :confirm-text="$t('message.common.claim')"
+      :cancel-text="$t('message.common.later')"
+      icon-src="/static/icons/claim-popup.svg"
+      @confirmClicked="onEarnClicked"
     />
 
     <MDTPrimaryButton
       :bottom="true"
+      :class="[' btn-earn-mdt', { 'mdt-claimable' : claimableMDT > 0 }]"
       @click="onEarnClicked"
     >
-      {{ $t('message.home.earn_mdt') }}
+      <span class="btn-content">{{ $t('message.home.earn_mdt') }} </span>
     </MDTPrimaryButton>
 
   </div>
@@ -79,6 +89,7 @@ import BasePage from '@/screens/BasePage';
 import { formatAmount } from '@/utils';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
+import { FETCH_ALL_REWARDS } from '@/store/modules/entities/rewards';
 
 export default {
   components: {
@@ -99,6 +110,8 @@ export default {
       msg: 'Current MDT Price:',
       loginTotalClaimed: 0,
       showTotalClaimedPopup: false,
+      showTotalClaimablePopup: false,
+      claimablePopupContent: '',
     };
   },
   computed: {
@@ -112,6 +125,7 @@ export default {
     ...mapGetters({
       allUsers: 'getAllUsers',
       getUser: 'getUser',
+      getRewardsOfAllUsers: 'getRewardsOfAllUsers',
       invalidUser: 'getInvalidUser',
     }),
     totalMDTBalance() {
@@ -131,6 +145,15 @@ export default {
       return this.$t('message.home.accountnum', this.allUsers.length, {
         num: this.allUsers.length,
       });
+    },
+    claimableMDT() {
+      let total = 0;
+      this.getRewardsOfAllUsers.forEach(reward => {
+        if (!reward.claimed) {
+          total += reward.value;
+        }
+      });
+      return total;
     },
   },
   mounted() {
@@ -172,6 +195,7 @@ export default {
       requstMDTPrice: REQUEST_MDT_PRICE,
       requestAppConfig: REQUEST_APP_CONFIG,
       requestUserAccounts: REQUEST_USER_ACCOUNTS,
+      fetchAllRewards: FETCH_ALL_REWARDS,
     }),
     goToTransfer(user) {
       trackEvent('Click on transfer from Home');
@@ -221,6 +245,13 @@ export default {
         appID,
       }).then(() => {
         trackEvent('Successfully logged in ');
+
+        // show claimable MDT popup
+        this.fetchAllRewards().then(() => {
+          if (this.claimableMDT > 0) {
+            this.showTotalClaimablePopup = true;
+          }
+        });
 
         // show the claimed popup
         this.loginTotalClaimed = this.credentials
@@ -305,5 +336,20 @@ export default {
   padding-bottom: 4px;
   text-align: left;
   color: white;
+}
+
+.btn-earn-mdt.mdt-claimable {
+  .btn-content::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    opacity: 0.5;
+    border-radius: 50%;
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 </style>

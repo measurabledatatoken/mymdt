@@ -24,6 +24,7 @@ const moduleGetters = {
   getReward: state => id => state.byId[id],
   getRewards: (state, getters) => (ids = []) =>
     ids.map(id => getters.getReward(id)),
+  getRewardsOfAllUsers: state => state.allIds.map(id => state.byId[id]),
 };
 
 const mutations = {
@@ -38,6 +39,7 @@ const mutations = {
   [CLAIMING_REWARD_SUCCESS](state, payload) {
     const { rewardId } = payload;
     state.byId[rewardId].status = 4;
+    state.byId[rewardId].claimed = true;
   },
 };
 
