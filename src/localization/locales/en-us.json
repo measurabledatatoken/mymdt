@@ -12,7 +12,9 @@
     "unknown_error": "Unknown Error, Please contact us with following information.",
     "change": "Change",
     "setup": "Setup",
-    "none": "None"
+    "none": "None",
+    "later": "Later",
+    "claim": "Claim"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -44,7 +46,8 @@
     "tutorial": "Tutorial",
     "accountnum": "{num} Accounts",
     "earn_mdt": "Earn MDT",
-    "cliamed_mdt": "You have claimed {num} MDT"
+    "claimed_mdt": "You have claimed {num} MDT",
+    "claimable_mdt": "You have {num} MDT to claim today!"
   },
   "transfer": {
     "title": "Transfer Out",

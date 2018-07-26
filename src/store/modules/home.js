@@ -95,7 +95,7 @@ const actions = {
       }
     });
 
-    api.account
+    return api.account
       .getUserAccountsData(validCredentials)
       .then(normalizeduserAccountData => {
         if (normalizeduserAccountData.result.length > 0) {
