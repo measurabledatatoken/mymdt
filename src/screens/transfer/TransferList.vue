@@ -122,8 +122,7 @@ export default {
 }
 
 .account-selector {
-  padding: 0.5rem 1rem;
-  height: 72px;
+  padding: 0 1rem;
   margin: 0px;
 }
 
