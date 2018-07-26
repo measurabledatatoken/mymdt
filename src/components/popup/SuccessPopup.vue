@@ -8,10 +8,10 @@
       <span class="title">{{ title }}</span>
     </div>
     <md-dialog-actions v-if="confirmText && cancelText && hasConfirmClickedListener">
-      <md-button @click="onClick">{{ cancelText }}</md-button>
+      <md-button @click="onCancelClicked">{{ cancelText }}</md-button>
       <md-button 
         class="md-primary" 
-        @click="onConfirmClicked"
+        @click="onClick"
       >{{ confirmText }}</md-button>
     </md-dialog-actions>
     <MDTSubtleButton 
@@ -48,12 +48,12 @@ export default {
   },
   computed: {
     hasConfirmClickedListener() {
-      return this.$listeners && this.$listeners.confirmClicked;
+      return this.$listeners && this.$listeners['md-confirm'];
     },
   },
   methods: {
-    onConfirmClicked() {
-      this.$emit('confirmClicked');
+    onCancelClicked() {
+      this.$emit('md-cancel');
       this.$emit('update:mdActive', false);
     },
     onClick() {
