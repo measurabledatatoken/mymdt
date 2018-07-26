@@ -65,7 +65,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-import { trackEvent } from '@/utils';
+import { trackEvent, delay } from '@/utils';
 
 import {
   SET_ERROR_MESSAGE,
@@ -148,13 +148,10 @@ export default {
       });
     },
     claimableMDT() {
-      let total = 0;
-      this.getRewardsOfAllUsers.forEach(reward => {
-        if (!reward.claimed) {
-          total += reward.value;
-        }
-      });
-      return total;
+      return this.getRewardsOfAllUsers.reduce(
+        (total, reward) => total + (reward.claimed ? 0 : reward.value),
+        0,
+      );
     },
   },
   mounted() {
@@ -216,7 +213,7 @@ export default {
     invalidUserClicked(user) {
       window.location.href = `mdtwallet://relogin?email=${user.emailAddress}`;
     },
-    autoLogin(appID, tokensStr, emailsStr) {
+    async autoLogin(appID, tokensStr, emailsStr) {
       if (appID === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
         this.setErrorMessage('Need to define appid in url parameter');
@@ -240,35 +237,51 @@ export default {
 
       const authTokens = tokensStr.split(',');
       const emails = emailsStr.split(',');
-      this.requestAutoLogin({
-        authTokens,
-        emails,
-        appID,
-      }).then(() => {
-        trackEvent('Successfully logged in ');
-
-        // show claimable MDT popup
-        this.fetchAllRewards().then(() => {
-          if (this.claimableMDT > 0) {
-            this.showTotalClaimablePopup = true;
-          }
+      try {
+        await this.requestAutoLogin({
+          authTokens,
+          emails,
+          appID,
+        }).then(() => {
+          trackEvent('Successfully logged in ');
         });
 
-        // show the claimed popup
+        let showPopup = null;
+
         this.loginTotalClaimed = this.credentials
           .map(credential => credential.claimed_amount)
           .reduce((a, b) => {
             return a + b;
           });
         if (this.loginTotalClaimed > 0) {
-          this.showTotalClaimedPopup = true;
+          showPopup = 'claimed';
+        } else {
+          this.setIsLoading(true);
+          await this.fetchAllRewards();
+          this.setIsLoading(false);
+          if (this.claimableMDT > 0) {
+            showPopup = 'claimable';
+          }
         }
 
         this.setShowHomeLoadingEnd(true);
-        setTimeout(() => {
-          this.setShowHomeLoadingEnd(false);
-        }, 1000);
-      });
+        await delay(1000);
+        this.setShowHomeLoadingEnd(false);
+
+        switch (showPopup) {
+          case 'claimed':
+            this.showTotalClaimedPopup = true;
+            break;
+          case 'claimable':
+            this.showTotalClaimablePopup = true;
+            break;
+        }
+      } catch (error) {
+        this.setIsLoading(false);
+        this.setErrorTitle(this.$t('message.common.error_title'));
+        this.setErrorMessage(this.$t('message.common.unknow_error'));
+        this.setShowErrorPrompt(true);
+      }
     },
     onEarnClicked() {
       trackEvent('Click on Earn MDT button from home page');
