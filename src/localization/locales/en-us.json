@@ -270,7 +270,7 @@
       "sms": "SMS",
       "google": "Google"
     },
-    "setupApplianceTitle": "Use 2FA For...",
+    "setupUsageTitle": "Use 2FA For...",
     "usage": {
       "transaction": "Transaction Only",
       "login": "Unknown Logins Only",

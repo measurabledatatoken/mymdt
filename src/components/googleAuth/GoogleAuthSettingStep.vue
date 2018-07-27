@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ .google-authenticator-setting-step {
+.google-authenticator-setting-step {
   font-size: 16px;
   .step-title {
     margin: 24px 0;
