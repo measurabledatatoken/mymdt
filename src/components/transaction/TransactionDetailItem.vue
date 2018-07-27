@@ -2,7 +2,13 @@
   <md-list-item :class="['item', { 'item--single-line': singleLine }]">
     <div class="transaction-detail-item__text">
       <span class="transaction-detail-item__text-title">{{ title }}</span>
-      <span class="transaction-detail-item__text-description">{{ description }}</span>
+      <div class="transaction-detail-item__text-description">
+        <span>{{ description }}</span>
+        <slot
+          v-if="!description"
+          name="description"
+        />
+      </div>
     </div>
   </md-list-item>
 </template>

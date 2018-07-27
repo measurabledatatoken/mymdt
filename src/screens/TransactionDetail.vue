@@ -41,6 +41,19 @@
       :description="`${formatAmount(transaction.account_balance, { type: 'long' })} MDT`"
       :single-line="true"
     />
+    <TransactionDetailItem
+      v-if="transaction.ethereum_transaction && transaction.ethereum_transaction.etherscan_link"
+      :title="$t('message.transaction.transactionRecord')"
+    >
+      <template
+        slot="description"
+      >
+        <WebViewLink
+          :to="transaction.ethereum_transaction.etherscan_link"
+          external
+        >{{ transaction.ethereum_transaction.etherscan_link }}</WebViewLink>
+      </template>
+    </TransactionDetailItem>
   </md-list>
 </template>
 
@@ -48,6 +61,7 @@
 import BasePage from '@/screens/BasePage';
 import TransactionItem from '@/components/transaction/TransactionItem';
 import TransactionDetailItem from '@/components/transaction/TransactionDetailItem';
+import WebViewLink from '@/components/common/WebViewLink';
 
 import { transactionType } from '@/enum';
 import { formatAmount } from '@/utils';
@@ -56,6 +70,7 @@ export default {
   components: {
     TransactionItem,
     TransactionDetailItem,
+    WebViewLink,
   },
   extends: BasePage,
   metaInfo() {
