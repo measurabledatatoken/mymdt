@@ -14,6 +14,12 @@
       </div>
     </template>
 
+    <div 
+      v-if="shouldShowNonUserNote" 
+      class="nonuser-note"
+    >
+      {{ $t("message.transfer.successdetail_email_nonuser") }}
+    </div>
     <MDTPrimaryButton 
       @click="onDoneClick"
     >
@@ -71,6 +77,9 @@ export default {
     ...mapGetters({
       getUser: 'getUser',
     }),
+    shouldShowNonUserNote() {
+      return this.transaction.is_cancelable;
+    },
   },
   created() {
     trackEvent('Transfer Success', {
@@ -133,6 +142,12 @@ export default {
   line-height: 30px;
   margin: 0px 16px 16px 16px;
   white-space: pre-line;
+}
+
+.nonuser-note {
+  margin: 1rem 1.5rem;
+  text-align: left;
+  color: $label-color;
 }
 
 .view_transactions {
