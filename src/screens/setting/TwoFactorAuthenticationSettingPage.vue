@@ -9,7 +9,6 @@
           
           <md-switch 
             v-model="enabled" 
-            :disabled="!statusLoaded"
             class="md-primary"
           />
         </md-list-item>
@@ -133,7 +132,6 @@ export default {
   data: () => ({
     showPinCodeInput: false,
     TwoFactorOption,
-    statusLoaded: false,
     showDisable2FAPopup: false,
   }),
   metaInfo() {
@@ -154,7 +152,7 @@ export default {
     }),
     enabled: {
       get() {
-        return this.selectedSecurityUser.isTwofaEnabled && this.statusLoaded;
+        return this.selectedSecurityUser.isTwofaEnabled;
       },
       set(value) {
         if (value) {
@@ -169,9 +167,7 @@ export default {
     if (this.pin) {
       this.setPinFor2FASetup(this.pin);
     }
-    this.get2FAStatus().then(() => {
-      this.statusLoaded = true;
-    });
+    this.get2FAStatus();
   },
   methods: {
     ...mapActions({

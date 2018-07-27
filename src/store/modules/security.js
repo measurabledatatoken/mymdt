@@ -235,7 +235,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.get2FAStatus,
       args: [account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
     commit(SET_2FA_STATUS, response);
@@ -246,7 +246,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.enable2FA,
       args: [pin, account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {
@@ -263,7 +263,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.disable2FA,
       args: [pin, verificationCode, account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {
@@ -279,7 +279,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.set2FAOption,
       args: [method, usage, account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
     commit(SET_2FA_STATUS, response);
@@ -293,7 +293,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.generateGoogleAuthSecret,
       args: [pin, account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {
@@ -337,7 +337,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.disableGoogleAuth,
       args: [pin, verificationCode, account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {

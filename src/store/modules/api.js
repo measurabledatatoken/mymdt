@@ -20,8 +20,9 @@ const actions = {
       throw new Error('api should be a function');
     }
 
+    let timeoutId = null;
     if (setLoading) {
-      commit(SET_IS_LOADING, true);
+      timeoutId = setTimeout(() => commit(SET_IS_LOADING, true), 200); // do not show loading animation if the request is completed in short time
     }
 
     try {
@@ -32,12 +33,13 @@ const actions = {
       );
 
       if (setLoading) {
+        if (timeoutId) clearTimeout(timeoutId);
         commit(SET_IS_LOADING, false);
       }
-
       return response;
     } catch (error) {
       if (setLoading) {
+        if (timeoutId) clearTimeout(timeoutId);
         commit(SET_IS_LOADING, false);
       }
 
