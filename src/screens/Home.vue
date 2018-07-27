@@ -49,7 +49,6 @@
       :cancel-text="$t('message.common.later')"
       icon-src="/static/icons/claim-popup.svg"
       @md-confirm="onEarnClicked"
-      @md-cancel="showTotalClaimablePopup = false"
     />
 
     <MDTPrimaryButton
