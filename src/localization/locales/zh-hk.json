@@ -108,7 +108,8 @@
     "transferInFromEmail": "轉入自{email}",
     "transferOutToETHWallet": "轉出至以太錢包",
     "deposit": "存入",
-    "noTransaction": "沒有交易"
+    "noTransaction": "沒有交易",
+    "transactionRecord": "交易紀錄"
   },
   "settings": {
     "title": "設定",
