@@ -12,7 +12,9 @@
     "unknown_error": "未知错误,请提供以下信息与我们联系。",
     "change": "更改",
     "setup": "设置",
-    "none": "没有"
+    "none": "没有",
+    "later": "稍后",
+    "claim": "认领"
   },
   "error": {
     "userNotExist": "用户电邮不存在。",
@@ -44,7 +46,8 @@
     "tutorial": "教学",
     "accountnum": "{num} 个帐号",
     "earn_mdt": "赚取 MDT",
-    "cliamed_mdt": "你已认领{num}MDT"
+    "claimed_mdt": "你已认领{num}MDT",
+    "claimable_mdt": "你今天有{num}MDT可认领！"
   },
   "transfer": {
     "title": "转帐",
