@@ -44,7 +44,8 @@
     "otpExpired": "Verification code has been expired.",
     "deviceIsAlreadyRegistered": "Device has alreadu registered.",
     "accessCodeIsNotValid": "Access Code is not valid.",
-    "accessCodeIsUsed": "Access Code is already used."
+    "accessCodeIsUsed": "Access Code is already used.",
+    "googleAuthTokenInvalid": "Google authentication token is invalid"
   },
   "home": {
     "total_balance": "Total Balance",

@@ -41,7 +41,8 @@
               <md-icon md-src="/static/icons/settings-account-3.svg"/>
             </template>
           </base-setting-list-item>
-          <md-divider />          <md-divider />
+          <md-divider />
+          <md-divider />
           <base-setting-list-item 
             :title="$t('message.googleAuth.setupTitle')"
             :disabled="!(getSelectedSecurityUser.isPasscodeSet)"
