@@ -42,7 +42,10 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { trackEvent } from '@/utils';
 import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
-import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
+import {
+  SET_DONE_CALLBACK_PATH,
+  SET_SELECTED_USER,
+} from '@/store/modules/security';
 import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import AccountSelector from '@/components/common/AccountSelector';
@@ -81,6 +84,7 @@ export default {
   methods: {
     ...mapMutations({
       setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+      setSecuritySelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
     onTransferToEmailClicked() {
