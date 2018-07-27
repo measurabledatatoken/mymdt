@@ -242,9 +242,8 @@ export default {
           authTokens,
           emails,
           appID,
-        }).then(() => {
-          trackEvent('Successfully logged in ');
         });
+        trackEvent('Successfully logged in ');
 
         let showPopup = null;
 
