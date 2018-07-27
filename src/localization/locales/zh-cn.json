@@ -17,7 +17,11 @@
     "claim": "认领",
     "go_back": "上一步",
     "confirm": "确定",
-    "close": "关闭"
+    "close": "关闭",
+    "copy": "复制",
+    "disable": "禁用",
+    "continue": "继续",
+    "startOver": "重新开始"
   },
   "error": {
     "userNotExist": "用户电邮不存在。",
@@ -165,7 +169,8 @@
     "cant_receive": "无法接收代码？",
     "invalid_phonenumber": "无效的电话号码",
     "already_setup_title": "您已经设置了电话号码",
-    "already_setup_content": "您想更改电话号码吗？"
+    "already_setup_content": "您想更改电话号码吗？",
+    "pinSetupPopupDescription": "您可以在设置PIN码后添加电话号码。"
   },
   "passcode": {
     "pin_popup_title": "请输入您的PIN码",
@@ -179,7 +184,9 @@
     "not_match": "PIN不符,请重试",
     "pin_setup_successfully": "成功设定PIN！",
     "pin_setup_remind_title": "请设定你的PIN",
-    "pin_setup_remind_content": "PIN可以保护你的资产"
+    "pin_setup_remind_content": "PIN可以保护你的资产",
+    "please_setup_pin_action": "设置PIN码",
+    "please_setup_pin_title": "请设置PIN码"
   },
   "reportProblem": {
     "title": "反馈问题",
@@ -251,5 +258,46 @@
   },
   "legalAndPrivacy": {
     "termsOfUse": "使用条款"
+  },
+  "twoFactorAuthentication": {
+    "setupTitle": "双因素身份验证",
+    "setupDescription": "双因素身份验证（2FA）是一项安全功能。建议将其打开以使您的帐户更安全。启用2FA后,系统会要求您输入短信代码或使用Google 2FA执行记录等操作来自未知设备或进行交易。",
+    "turnOn2FA": "打开2FA？",
+    "setupMethodTitle": "2FA方法",
+    "methods": {
+      "sms": "短信",
+      "google": "Google"
+    },
+    "setupApplianceTitle": "使用2FA For ...",
+    "usage": {
+      "transaction": "仅限交易",
+      "login": "仅限未知登录",
+      "transactionAndLogin": "交易和未知登录"
+    },
+    "pinSetupPopupDescription": "您可以在设置PIN并添加电话号码或设置Google身份验证器后设置双智能验证。",
+    "disable2FAPopupTitle": "关闭2FA？",
+    "disable2FAPopupDescription": "强烈建议2FA保护您的帐户和资产。<br/>通过关闭2FA,即表示您同意您了解未启用此安全功能的风险。",
+    "turnOff2FA": "关闭2FA",
+    "verifyTitle": "输入验证码"
+  },
+  "googleAuth": {
+    "setupTitle": "Google身份验证器",
+    "pinSetupPopupDescription": "您可以在设置PIN后设置Google身份验证器。<br/> <br/>什么是Google身份验证器？<br/> Google身份验证器为您的帐户添加了第二层安全保护。系数身份验证已启用,系统会要求您在进行交易或登录帐户时输入您的个人识别码和Google身份验证器的验证码。",
+    "step1Title": "步骤1获取Google身份验证器应用:",
+    "step1Remark": "请确保您的Google身份验证器应用已安装。",
+    "step2Title": "Google身份验证器中的第2步:",
+    "step2Procedure1": "如果您是Google身份验证员的新用户,请点按“<b>开始</ b>”或“<b>开始设置</ b>”<br/> <br/>如果您使用过应用之前,点击“<b> + </ b>”添加帐户。",
+    "step2Procedure2": "选择“<b>手动输入</ b>”或“<b>输入提供的密钥”</ b>。",
+    "step2Procedure3": "使用以下作为密钥。",
+    "step2Procedure3Remark": "你可以截图这个页面来保存副本",
+    "step2Procedure4": "确保“<b>基于时间</ b>”被选中并点击“<b>添加</ b>”完成。",
+    "step3Title": "步骤3输入验证码",
+    "disablePopupTitle": "停用您的Google身份验证器？",
+    "disablePopupContentCase1": "您已经设置了Google身份验证器。是否要禁用它？<br/> <br/>您当前的2FA正在使用Google身份验证器。如果继续,您的2FA将切换为短信。",
+    "disablePopupContentCase2": "您已经设置了Google身份验证器。是否要禁用它？<br/> <br/>您当前的2FA正在使用Google身份验证器。如果继续,您的2FA将被禁用。您可以设置电话号码再次打开2FA。",
+    "disablePopupContentCase3": "您已经设置了Google身份验证器。是否要禁用它？",
+    "continueSetupPopupTitle": "继续安装？",
+    "continueSetupPopupDescription": "您正在设置Google身份验证器。<br/>点击“继续”继续设置您的Google身份验证器。系统会要求您输入6位数的验证码。<br / > <br/>点击“重新开始”以放弃当前进度,您将获得一个新密钥。",
+    "setupSuccess": "Google身份验证器\n成功设置！"
   }
 }

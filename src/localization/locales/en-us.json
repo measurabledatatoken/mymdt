@@ -271,7 +271,7 @@
       "google": "Google"
     },
     "setupApplianceTitle": "Use 2FA For...",
-    "appliances": {
+    "usage": {
       "transaction": "Transaction Only",
       "login": "Unknown Logins Only",
       "transactionAndLogin": "Transaction and Unknown Logins"

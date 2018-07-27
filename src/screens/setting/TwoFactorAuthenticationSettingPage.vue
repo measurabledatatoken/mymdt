@@ -48,19 +48,19 @@
           <md-divider />
           <price-unit-list-item 
             :selected="usage === TwoFactorOption.USAGE.TRANSACTION" 
-            :title="$t('message.twoFactorAuthentication.appliances.transaction')" 
+            :title="$t('message.twoFactorAuthentication.usage.transaction')" 
             @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION)"
           />
           <md-divider />
           <price-unit-list-item 
             :selected="usage === TwoFactorOption.USAGE.LOGIN" 
-            :title="$t('message.twoFactorAuthentication.appliances.login')" 
+            :title="$t('message.twoFactorAuthentication.usage.login')" 
             @click="set2FAUsage(TwoFactorOption.USAGE.LOGIN)"
           />
           <md-divider />
           <price-unit-list-item 
             :selected="usage === TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN" 
-            :title="$t('message.twoFactorAuthentication.appliances.transactionAndLogin')" 
+            :title="$t('message.twoFactorAuthentication.usage.transactionAndLogin')" 
             @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN)"
           />
           <md-divider />
