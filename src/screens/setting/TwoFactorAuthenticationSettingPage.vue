@@ -13,15 +13,8 @@
           />
         </md-list-item>
         <md-divider />
-        <div v-if="enabled">
-          <md-list-item>
-            <div 
-              class="md-list-item-text" 
-              disabled
-            >
-              {{ $t('message.twoFactorAuthentication.setupMethodTitle') }}
-            </div>
-          </md-list-item>
+        <template v-if="enabled">
+          <setting-list-section-header>{{ $t('message.twoFactorAuthentication.setupMethodTitle') }}</setting-list-section-header>
           <md-divider />
           <price-unit-list-item 
             :selected="method === TwoFactorOption.METHOD.SMS" 
@@ -36,14 +29,8 @@
             :disabled="!selectedSecurityUser.isGoogleAuthEnabled"
             @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
           />
-          <md-divider /><md-list-item>
-            <div 
-              class="md-list-item-text" 
-              disabled
-            >
-              {{ $t('message.twoFactorAuthentication.setupApplianceTitle') }}
-            </div>
-          </md-list-item>
+          <md-divider />
+          <setting-list-section-header>{{ $t('message.twoFactorAuthentication.setupUsageTitle') }}</setting-list-section-header>
           <md-divider />
           <price-unit-list-item 
             :selected="usage === TwoFactorOption.USAGE.TRANSACTION" 
@@ -63,7 +50,7 @@
             @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN)"
           />
           <md-divider />
-        </div>
+        </template>
       </md-list>
     </div>
 
@@ -112,6 +99,7 @@ import PriceUnitListItem from '@/components/setting/PriceUnitListItem';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
+import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 
 export default {
   components: {
@@ -121,6 +109,7 @@ export default {
     BaseSettingListItem,
     PriceUnitListItem,
     PinCodeInputPopup,
+    SettingListSectionHeader,
   },
   extends: BasePage,
   props: {
@@ -323,6 +312,9 @@ export default {
             }
           }
         }
+      }
+      /deep/ .header {
+        padding-top: 8px;
       }
     }
   }

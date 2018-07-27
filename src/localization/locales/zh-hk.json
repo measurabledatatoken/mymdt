@@ -268,7 +268,7 @@
       "sms": "短信",
       "google": "Google"
     },
-    "setupApplianceTitle": "使用2FA For ...",
+    "setupUsageTitle": "使用2FA For ...",
     "usage": {
       "transaction": "僅限交易",
       "login": "僅限未知登錄",
