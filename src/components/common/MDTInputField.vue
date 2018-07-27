@@ -71,7 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .base-field {
-  min-height: 5.5rem;
+  min-height: 6rem;
   margin-top: 16px;
 
   /deep/ .md-field {
