@@ -7,7 +7,17 @@
     <div class="md-dialog-title">
       <span class="title">{{ title }}</span>
     </div>
-    <MDTSubtleButton @click="onClick">{{ confirmText }}</MDTSubtleButton>
+    <md-dialog-actions v-if="confirmText && cancelText && hasConfirmClickedListener">
+      <md-button @click="onCancelClicked">{{ cancelText }}</md-button>
+      <md-button 
+        class="md-primary" 
+        @click="onClick"
+      >{{ confirmText }}</md-button>
+    </md-dialog-actions>
+    <MDTSubtleButton 
+      v-else 
+      @click="onClick"
+    >{{ confirmText }}</MDTSubtleButton>
   </md-dialog>
 </template>
 
@@ -31,8 +41,21 @@ export default {
       type: String,
       default: '',
     },
+    cancelText: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    hasConfirmClickedListener() {
+      return this.$listeners && this.$listeners['md-confirm'];
+    },
   },
   methods: {
+    onCancelClicked() {
+      this.$emit('md-cancel');
+      this.$emit('update:mdActive', false);
+    },
     onClick() {
       this.$emit('md-confirm');
       this.$emit('update:mdActive', false);
@@ -68,6 +91,15 @@ export default {
     width: 100%;
     font-weight: bold;
     bottom: 10px;
+  }
+
+  /deep/ .md-dialog-actions {
+    justify-content: space-between;
+    padding-right: 24px;
+
+    .md-ripple {
+      padding: 0px;
+    }
   }
 }
 </style>

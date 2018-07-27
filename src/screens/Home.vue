@@ -37,16 +37,26 @@
 
     <SuccessPopup 
       :md-active.sync="showTotalClaimedPopup"
-      :title="$t('message.home.cliamed_mdt', {num: loginTotalClaimed})"
+      :title="$t('message.home.claimed_mdt', {num: loginTotalClaimed})"
       :confirm-text="$t('message.common.okay')"
       icon-src="/static/icons/claim-popup.svg"
+    />
+    
+    <SuccessPopup
+      :md-active.sync="showTotalClaimablePopup"
+      :title="$t('message.home.claimable_mdt', {num: claimableMDT})"
+      :confirm-text="$t('message.common.claim')"
+      :cancel-text="$t('message.common.later')"
+      icon-src="/static/icons/claim-popup.svg"
+      @md-confirm="onEarnClicked"
     />
 
     <MDTPrimaryButton
       :bottom="true"
+      :class="[' btn-earn-mdt', { 'mdt-claimable' : claimableMDT > 0 }]"
       @click="onEarnClicked"
     >
-      {{ $t('message.home.earn_mdt') }}
+      <span class="btn-content">{{ $t('message.home.earn_mdt') }} </span>
     </MDTPrimaryButton>
 
   </div>
@@ -54,7 +64,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-import { trackEvent } from '@/utils';
+import { trackEvent, delay } from '@/utils';
 
 import {
   SET_ERROR_MESSAGE,
@@ -79,6 +89,7 @@ import BasePage from '@/screens/BasePage';
 import { formatAmount } from '@/utils';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
+import { FETCH_ALL_REWARDS } from '@/store/modules/entities/rewards';
 
 export default {
   components: {
@@ -99,6 +110,8 @@ export default {
       msg: 'Current MDT Price:',
       loginTotalClaimed: 0,
       showTotalClaimedPopup: false,
+      showTotalClaimablePopup: false,
+      claimablePopupContent: '',
     };
   },
   computed: {
@@ -112,6 +125,7 @@ export default {
     ...mapGetters({
       allUsers: 'getAllUsers',
       getUser: 'getUser',
+      getRewardsOfAllUsers: 'getRewardsOfAllUsers',
       invalidUser: 'getInvalidUser',
     }),
     totalMDTBalance() {
@@ -131,6 +145,12 @@ export default {
       return this.$t('message.home.accountnum', this.allUsers.length, {
         num: this.allUsers.length,
       });
+    },
+    claimableMDT() {
+      return this.getRewardsOfAllUsers.reduce(
+        (total, reward) => total + (reward.claimed ? 0 : reward.value),
+        0,
+      );
     },
   },
   mounted() {
@@ -172,6 +192,7 @@ export default {
       requstMDTPrice: REQUEST_MDT_PRICE,
       requestAppConfig: REQUEST_APP_CONFIG,
       requestUserAccounts: REQUEST_USER_ACCOUNTS,
+      fetchAllRewards: FETCH_ALL_REWARDS,
     }),
     goToTransfer(user) {
       trackEvent('Click on transfer from Home');
@@ -191,7 +212,7 @@ export default {
     invalidUserClicked(user) {
       window.location.href = `mdtwallet://relogin?email=${user.emailAddress}`;
     },
-    autoLogin(appID, tokensStr, emailsStr) {
+    async autoLogin(appID, tokensStr, emailsStr) {
       if (appID === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
         this.setErrorMessage('Need to define appid in url parameter');
@@ -215,28 +236,50 @@ export default {
 
       const authTokens = tokensStr.split(',');
       const emails = emailsStr.split(',');
-      this.requestAutoLogin({
-        authTokens,
-        emails,
-        appID,
-      }).then(() => {
+      try {
+        await this.requestAutoLogin({
+          authTokens,
+          emails,
+          appID,
+        });
         trackEvent('Successfully logged in ');
 
-        // show the claimed popup
+        let showPopup = null;
+
         this.loginTotalClaimed = this.credentials
           .map(credential => credential.claimed_amount)
           .reduce((a, b) => {
             return a + b;
           });
         if (this.loginTotalClaimed > 0) {
-          this.showTotalClaimedPopup = true;
+          showPopup = 'claimed';
+        } else {
+          this.setIsLoading(true);
+          await this.fetchAllRewards();
+          this.setIsLoading(false);
+          if (this.claimableMDT > 0) {
+            showPopup = 'claimable';
+          }
         }
 
         this.setShowHomeLoadingEnd(true);
-        setTimeout(() => {
-          this.setShowHomeLoadingEnd(false);
-        }, 1000);
-      });
+        await delay(1000);
+        this.setShowHomeLoadingEnd(false);
+
+        switch (showPopup) {
+          case 'claimed':
+            this.showTotalClaimedPopup = true;
+            break;
+          case 'claimable':
+            this.showTotalClaimablePopup = true;
+            break;
+        }
+      } catch (error) {
+        this.setIsLoading(false);
+        this.setErrorTitle(this.$t('message.common.error_title'));
+        this.setErrorMessage(this.$t('message.common.unknow_error'));
+        this.setShowErrorPrompt(true);
+      }
     },
     onEarnClicked() {
       trackEvent('Click on Earn MDT button from home page');
@@ -305,5 +348,20 @@ export default {
   padding-bottom: 4px;
   text-align: left;
   color: white;
+}
+
+.btn-earn-mdt.mdt-claimable {
+  .btn-content::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    opacity: 0.5;
+    border-radius: 50%;
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 </style>
