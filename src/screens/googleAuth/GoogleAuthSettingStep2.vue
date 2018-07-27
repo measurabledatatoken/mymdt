@@ -95,7 +95,7 @@ export default {
   },
   data() {
     return {
-      googleAuthSecret: false,
+      googleAuthSecret: '',
     };
   },
   metaInfo() {
@@ -105,11 +105,11 @@ export default {
   },
   computed: {
     ...mapState({
-      pinForGoogleAuthSetup: state => state.security.pinForGoogleAuthSetup,
+      pinFor2FASetup: state => state.security.pinFor2FASetup,
     }),
   },
   created() {
-    this.generateSecret({ pin: this.pin || this.pinForGoogleAuthSetup }).then(
+    this.generateSecret({ pin: this.pin || this.pinFor2FASetup }).then(
       response => {
         this.googleAuthSecret = response.secret;
       },
