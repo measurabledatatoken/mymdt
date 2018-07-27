@@ -102,7 +102,7 @@ export default {
       this.$router.push({
         name: RouteDef.GoogleAuthSettingStep2.name,
         params: {
-          pin: this.pin || this.pinForGoogleAuthSetup,
+          pin: this.pin || this.pinFor2FASetup,
         },
       });
     },
