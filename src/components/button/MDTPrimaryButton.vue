@@ -6,7 +6,7 @@
   >
     <slot v-if="!loading" />
     <div 
-      v-if="loading" 
+      v-else
       class="loader"
     />
   </MDTBaseButton>
@@ -57,11 +57,13 @@ export default {
     bottom: 1.5rem;
     @include center_horizontal;
   }
-  html,
-  body {
-    background: black;
-    position: relative;
-    overflow: hidden;
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
   .loader {
     font-size: 10px;
@@ -72,21 +74,13 @@ export default {
     border-bottom: 0.3em solid rgba(255, 255, 255, 0.2);
     border-left: 0.3em solid #ffffff;
     transform: translateZ(0);
-    animation: load8 1.1s infinite linear;
+    animation: loading 1.1s infinite linear;
   }
   .loader,
   .loader:after {
     border-radius: 50%;
     width: 28px;
     height: 28px;
-  }
-  @keyframes load8 {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
   }
 }
 </style>

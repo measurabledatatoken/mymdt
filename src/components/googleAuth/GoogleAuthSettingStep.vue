@@ -33,7 +33,7 @@ export default {
 /deep/ .google-authenticator-setting-step {
   font-size: 16px;
   .step-title {
-    margin: 0 0 24px 0;
+    margin: 24px 0;
     font-weight: bold;
   }
   .container {
