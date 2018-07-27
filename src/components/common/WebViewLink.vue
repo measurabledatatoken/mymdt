@@ -1,5 +1,8 @@
 <template>
-  <a @click="handleClick">
+  <a
+    v-bind="$attrs"
+    @click="handleClick"
+  >
     <slot />
   </a>
 </template>
@@ -13,6 +16,10 @@ export default {
       type: String,
       default: null,
     },
+    external: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     handleClick() {
@@ -20,12 +27,18 @@ export default {
         return;
       }
 
-      this.$router.push({
-        name: RouteDef.WebView.name,
-        params: {
-          url: this.to,
-        },
-      });
+      if (external) {
+        window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
+          this.to,
+        )}`;
+      } else {
+        this.$router.push({
+          name: RouteDef.WebView.name,
+          params: {
+            url: this.to,
+          },
+        });
+      }
     },
   },
 };

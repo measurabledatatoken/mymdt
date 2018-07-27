@@ -108,7 +108,8 @@
     "transferInFromEmail": "Transfer in from {email}",
     "transferOutToETHWallet": "Transfer out to ETH Wallet",
     "deposit": "Deposit",
-    "noTransaction": "No Transaction"
+    "noTransaction": "No Transaction",
+    "transactionRecord": "Transaction Record"
   },
   "settings": {
     "title": "Settings",
