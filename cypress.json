@@ -1,3 +1,8 @@
 {
-  "pluginsFile": "tests/e2e/plugins/index.js"
+  "pluginsFile": "tests/e2e/plugins/index.js",
+  "env": {
+    "configFile": "production"
+  },
+  "viewportHeight": 568,
+  "viewportWidth": 320
 }
