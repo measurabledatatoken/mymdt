@@ -30,7 +30,7 @@ export default {
       messageId: 'message.transaction.expired',
     },
     7: {
-      messageId: 'message.transaction.pending_to_claim',
+      messageId: 'message.transaction.pendingToClaim',
     },
   },
 };

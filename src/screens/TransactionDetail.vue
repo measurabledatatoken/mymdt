@@ -57,11 +57,10 @@
       </TransactionDetailItem>
       <md-list-item 
         v-if="transaction.status === transactionStatus.PENDING_TO_CLAIM && transaction.transaction_type === transactionType.INTERNAL_TRANSFER"
-        :class="['item', 'item--single-line']"
+        :class="['item', 'item--single-line', 'item--problem']"
+        @click="showProblemSupportDialog = true"
       >
-        <MDTPrimaryButton 
-          @click="onCancelClicked"
-        >{{ $t("message.transaction.cancel") }}</MDTPrimaryButton>
+        {{ $t('message.transaction.problemWithTransation') }}
       </md-list-item>
     </md-list>
     <PinCodeInputPopup 
@@ -71,6 +70,35 @@
       @codefilled="onPinCodeFilled" 
       @close-click="showPinCodeInput = false"
       @fotgot-click="onFotgotClicked"
+    />
+
+    <!-- Problem List popup -->
+    <md-dialog 
+      :md-active.sync="showProblemSupportDialog" 
+      :md-fullscreen="false"
+    >
+      <md-dialog-content>
+        <ul class="transaction-problem-list"> 
+          <li @click="onProblemDidNotMakeItClicked">{{ $t('message.transaction.problemDidNotMakeIt') }}</li>
+          <li @click="onProblemMakeItAccidentallyClicked">{{ $t('message.transaction.problemMakeItAccidentally') }}</li>
+        </ul>
+      </md-dialog-content>
+      <md-dialog-actions>
+        <md-button 
+          @click="showProblemSupportDialog = false"
+        >{{ $t('message.common.cancel') }}</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
+    <!-- Confirm to cancel popup -->
+    <MDTConfirmPopup 
+      :md-active.sync="showConfirmToCancelDialog"
+      :md-title="$t('message.transaction.popupCancelTitle')"
+      :md-content="$t('message.transaction.popupCancelDescription')"
+      :md-confirm-text="$t('message.common.confirm')"
+      :md-cancel-text="$t('message.common.go_back')"
+      @md-confirm="onConfirmToCancelClicked"
+      @md-cancel="onGoBackClicked"
     />
   </div>
 </template>
@@ -83,6 +111,8 @@ import TransactionDetailItem from '@/components/transaction/TransactionDetailIte
 import WebViewLink from '@/components/common/WebViewLink';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
+import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
 
 import { transactionType, transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
@@ -100,6 +130,7 @@ export default {
     TransactionDetailItem,
     WebViewLink,
     MDTPrimaryButton,
+    MDTConfirmPopup,
     PinCodeInputPopup,
   },
   extends: BasePage,
@@ -113,6 +144,8 @@ export default {
       transactionType,
       transactionStatus,
       showPinCodeInput: false,
+      showProblemSupportDialog: false,
+      showConfirmToCancelDialog: false,
     };
   },
   computed: {
@@ -158,16 +191,35 @@ export default {
     ...mapActions({
       cancelTransaction: CANCEL_TRANSACTION,
       validatePIN: VALIDATE_PIN_FOR_SELECTED_USER,
+      reportProblem: REPORT_PROBLEM,
     }),
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setSelectedUser: SET_SELECTED_USER,
     }),
     formatAmount,
-    onCancelClicked() {
+    onConfirmToCancelClicked() {
+      this.showConfirmToCancelDialog = false;
       this.showPinCodeInput = true;
     },
-
+    onProblemMakeItAccidentallyClicked() {
+      this.showProblemSupportDialog = false;
+      this.showConfirmToCancelDialog = true;
+    },
+    onProblemDidNotMakeItClicked() {
+      this.showProblemSupportDialog = false;
+      this.reportProblem({
+        email_address: this.transaction.from_email,
+        comments:
+          this.$t('message.transaction.problemDidNotMakeIt') +
+          'transaction id: ' +
+          this.transaction.id,
+      });
+    },
+    onGoBackClicked() {
+      this.showConfirmToCancelDialog = false;
+      this.showProblemSupportDialog = true;
+    },
     onPinCodeFilled(pin) {
       this.validatePIN(pin)
         .catch(err => {
@@ -206,6 +258,43 @@ export default {
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
+  }
+  /deep/ .md-list-item {
+    &.item--problem {
+      .md-list-item-content {
+        color: $theme-color;
+        min-height: 48px;
+      }
+    }
+  }
+}
+.md-dialog {
+  // width: 80%;
+  /deep/ .md-dialog-content {
+    padding-bottom: 0px;
+    ul.transaction-problem-list {
+      padding: 0;
+      list-style: none;
+      li {
+        color: $theme-color;
+        &:not(:last-child) {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+  /deep/ .md-dialog-actions {
+    justify-content: space-between;
+    padding-right: 24px;
+
+    .md-ripple {
+      padding: 0px;
+      justify-content: left;
+    }
+  }
+
+  /deep/ .md-button-content {
+    text-transform: none;
   }
 }
 </style>
