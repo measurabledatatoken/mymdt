@@ -135,7 +135,6 @@ export default {
     }),
     ...mapGetters({
       selectedSecurityUser: 'getSelectedSecurityUser',
-      backToPath: BACK_TO_PATH,
     }),
     method() {
       return this.selectedSecurityUser.twofaMethod;
@@ -168,6 +167,7 @@ export default {
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
       disable2FA: DISABLE_2FA,
+      backToPath: BACK_TO_PATH,
     }),
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
