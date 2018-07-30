@@ -27,7 +27,7 @@ export default {
         return;
       }
 
-      if (external) {
+      if (this.external) {
         window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
           this.to,
         )}`;
