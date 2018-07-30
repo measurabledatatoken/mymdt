@@ -317,6 +317,7 @@ export default {
         }
       }
       /deep/ .header {
+        color: #a3b5d0;
         padding-top: 8px;
       }
     }
