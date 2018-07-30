@@ -15,6 +15,14 @@
       </div>
     </div>
     <NDA :active.sync="showNDA" />
+
+    <md-dialog-alert
+      :md-active.sync="showOSNotSupportedError"
+      :md-title="$t('message.betaTesting.importAccounts')"
+      :md-content="$t('message.betaTesting.importAccounts')"
+      :md-confirm-text="$t('message.common.okay')"
+      @md-closed="returnCallback"
+    />
   </form>
 </template>
 
@@ -34,7 +42,7 @@ import {
 } from '@/store/modules/betaTesting';
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
-import { RouteDef } from '@/constants';
+import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
 
 const checked = value => !helpers.req(value) || value === true;
 
@@ -52,6 +60,7 @@ export default {
       showScreen: false,
       failed: false,
       showNDA: false,
+      showOSNotSupportedError: false,
     };
   },
   validations: {
@@ -66,6 +75,9 @@ export default {
     ...mapState({
       savedDeviceId: state => state.betaTesting.deviceId,
     }),
+    test() {
+      return true;
+    },
     accessCodeError() {
       if (this.failed) {
         return this.$t('message.betaTesting.accessCodeIsNotValid');
@@ -79,8 +91,23 @@ export default {
     deviceId() {
       return this.$route.query.deviceid || this.savedDeviceId;
     },
+    isOSSupported() {
+      var ua = navigator.userAgent;
+      if (ua.indexOf('Android') >= 0) {
+        var androidversion = parseFloat(ua.slice(ua.indexOf('Android') + 8));
+        return androidversion >= 4.4;
+      } else if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        return !(
+          /OS [2-8]_\d(_\d)? like Mac OS X/i.test(navigator.userAgent) || // ios 2 - 8
+          /CPU like Mac OS X/i.test(navigator.userAgent)
+        );
+      } else {
+        return true;
+      }
+    },
   },
   created() {
+    this.showOSNotSupportedError = !this.isOSSupported;
     if (!this.deviceId) {
       this.openErrorPrompt({
         message: {
@@ -118,6 +145,10 @@ export default {
         ...RouteDef.Home,
         query: this.$route.query,
       });
+    },
+    returnCallback() {
+      console.log(ExitFromWalletWebviewURL);
+      window.location = ExitFromWalletWebviewURL;
     },
     handleInput(value) {
       this.failed = false;
