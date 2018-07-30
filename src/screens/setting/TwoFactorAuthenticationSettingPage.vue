@@ -82,8 +82,6 @@ import { RouteDef } from '@/constants';
 import {
   DISABLE_2FA,
   ENABLE_2FA,
-  SET_2FA_STATUS,
-  GET_2FA_STATUS,
   REQUEST_VERIFICATION_CODE,
   SET_2FA_OPTION,
   SET_DONE_CALLBACK_PATH,
@@ -100,6 +98,7 @@ import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
+import { BACK_TO_PATH } from '@/store/modules/common';
 
 export default {
   components: {
@@ -130,15 +129,20 @@ export default {
   },
   computed: {
     ...mapState({
-      method: state => state.security.twoFa.method,
-      usage: state => state.security.twoFa.usage,
       pinFor2FASetup: state => state.security.pinFor2FASetup,
       doneCallBackPath: state => state.security.doneCallBackPath,
       matt: state => state.security.matt,
     }),
     ...mapGetters({
       selectedSecurityUser: 'getSelectedSecurityUser',
+      backToPath: BACK_TO_PATH,
     }),
+    method() {
+      return this.selectedSecurityUser.twofaMethod;
+    },
+    usage() {
+      return this.selectedSecurityUser.twofaUsage;
+    },
     enabled: {
       get() {
         return this.selectedSecurityUser.isTwofaEnabled;
@@ -156,11 +160,9 @@ export default {
     if (this.pin) {
       this.setPinFor2FASetup(this.pin);
     }
-    this.get2FAStatus();
   },
   methods: {
     ...mapActions({
-      get2FAStatus: GET_2FA_STATUS,
       enable2FA: ENABLE_2FA,
       set2FAOption: SET_2FA_OPTION,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
@@ -169,7 +171,6 @@ export default {
     }),
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
-      set2FAStatus: SET_2FA_STATUS,
       setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
     }),
     isSelectedSMS(method) {
@@ -242,6 +243,7 @@ export default {
       this.$router.push({
         name: RouteDef.GoogleAuthVerify.name,
         params: {
+          showUserInfo: true,
           payloadForCallback: { pin: this.pinFor2FASetup },
           successCallback: this.switchOff,
         },
@@ -251,6 +253,7 @@ export default {
       this.enable2FA({ pin: this.pin || this.pinFor2FASetup });
     },
     switchOff({ pin, verificationCode }) {
+      this.backToPath(RouteDef.TwoFactorAuthenticationSetting.path);
       this.disable2FA({ pin, verificationCode });
     },
     onDisable2FAButtonClicked() {

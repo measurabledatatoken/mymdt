@@ -18,7 +18,6 @@ import {
 } from '@/store/modules/security';
 import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage';
 import BasePage from '@/screens/BasePage';
-import { BACK_TO_PATH } from '@/store/modules/common';
 
 export default {
   components: {
@@ -74,13 +73,10 @@ export default {
     }),
     ...mapActions({
       verifyVerificationCode: VERIFY_VERIFICATION_CODE,
-      backToPath: BACK_TO_PATH,
     }),
     onDoneClicked(verificationCode) {
       this.payloadForCallback.verificationCode = verificationCode;
-      console.log(this.payloadForCallback);
       this.successCallback(this.payloadForCallback);
-      this.backToPath(this.doneCallBackPath);
     },
   },
 };

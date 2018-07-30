@@ -44,7 +44,8 @@
     "otpExpired": "驗證碼已過期。",
     "deviceIsAlreadyRegistered": "此設備已被註冊。",
     "accessCodeIsNotValid": "代碼無效。",
-    "accessCodeIsUsed": "代碼已被使用。"
+    "accessCodeIsUsed": "代碼已被使用。",
+    "googleAuthTokenInvalid": "Google身份驗證令牌無效"
   },
   "home": {
     "total_balance": "總結餘",

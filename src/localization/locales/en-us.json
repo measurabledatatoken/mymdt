@@ -42,7 +42,7 @@
     "smsDailyLimitReached": "SMS daily limit reached",
     "otpInvalid": "Verification code is not valid.",
     "otpExpired": "Verification code has been expired.",
-    "deviceIsAlreadyRegistered": "Device has alreadu registered.",
+    "deviceIsAlreadyRegistered": "Device has already registered.",
     "accessCodeIsNotValid": "Access Code is not valid.",
     "accessCodeIsUsed": "Access Code is already used.",
     "googleAuthTokenInvalid": "Google authentication token is invalid"
