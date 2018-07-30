@@ -121,6 +121,7 @@ export default {
     }),
     goToNext() {
       this.$router.push({
+        showUserInfo: true,
         name: RouteDef.GoogleAuthVerify.name,
         params: {
           stepTitle: this.$t('message.googleAuth.step3Title'),

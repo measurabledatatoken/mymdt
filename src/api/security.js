@@ -117,15 +117,15 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
-  get2FAStatus(accessToken) {
-    const promise = axios.get(
-      `${APIScheme}://${APIEndPoint}/security/2fa/status`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      },
-    );
-    return handleGeneralResponse(promise, { allowEmptyData: true });
-  },
+  // get2FAStatus(accessToken) {
+  //   const promise = axios.get(
+  //     `${APIScheme}://${APIEndPoint}/security/2fa/status`,
+  //     {
+  //       headers: { Authorization: `Bearer ${accessToken}` },
+  //     },
+  //   );
+  //   return handleGeneralResponse(promise, { allowEmptyData: true });
+  // },
   enable2FA(pin, accessToken) {
     const body = {
       pin,

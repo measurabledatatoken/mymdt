@@ -164,7 +164,6 @@ import {
   VALIDATE_PIN_FOR_SECURITY,
   SET_DONE_CALLBACK_PATH,
   REQUEST_VERIFICATION_CODE,
-  GET_2FA_STATUS,
 } from '@/store/modules/security';
 import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
@@ -242,7 +241,6 @@ export default {
     ...mapActions({
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
-      get2FAStatus: GET_2FA_STATUS,
     }),
     onSetupPINClicked() {
       trackEvent('Click on PIN');
@@ -387,30 +385,29 @@ export default {
       this.goToGoogleAuthVerifyPage();
     },
     disableGoogleAuth() {
-      this.get2FAStatus().then(response => {
-        if (
-          response['is_2fa_enabled'] &&
-          response['2fa_method'] === TwoFactorOption.METHOD.GOOGLE
-        ) {
-          if (this.getSelectedSecurityUser.isPhoneConfirmed) {
-            // will switch 2FA method to SMS
-            this.disableGoogleAuthPopupDescription = this.$t(
-              'message.googleAuth.disablePopupContentCase1',
-            );
-          } else {
-            // will disable 2FA
-            this.disableGoogleAuthPopupDescription = this.$t(
-              'message.googleAuth.disablePopupContentCase2',
-            );
-          }
-        } else {
-          // will disable google auth
+      if (
+        this.getSelectedSecurityUser.isTwofaEnabled &&
+        this.getSelectedSecurityUser.twofaMethod ===
+          TwoFactorOption.METHOD.GOOGLE
+      ) {
+        if (this.getSelectedSecurityUser.isPhoneConfirmed) {
+          // will switch 2FA method to SMS
           this.disableGoogleAuthPopupDescription = this.$t(
-            'message.googleAuth.disablePopupContentCase3',
+            'message.googleAuth.disablePopupContentCase1',
+          );
+        } else {
+          // will disable 2FA
+          this.disableGoogleAuthPopupDescription = this.$t(
+            'message.googleAuth.disablePopupContentCase2',
           );
         }
-        this.showDisableGoogleAuthPopup = true;
-      });
+      } else {
+        // will disable google auth
+        this.disableGoogleAuthPopupDescription = this.$t(
+          'message.googleAuth.disablePopupContentCase3',
+        );
+      }
+      this.showDisableGoogleAuthPopup = true;
     },
     setupGoogleAuth(pinCode) {
       if (this.getSelectedSecurityUser.hasGoogleAuthSecret) {

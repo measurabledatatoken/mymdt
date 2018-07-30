@@ -1,6 +1,6 @@
 <template>
   <div class="google-authenticator-verify">
-    <BaseUserSettingPage/>
+    <BaseUserSettingPage v-if="showUserInfo"/>
     <GoogleAuthStep
       :step-title="stepTitle || $t('message.twoFactorAuthentication.verifyTitle')"
     >
@@ -73,6 +73,10 @@ export default {
   },
   extends: BasePage,
   props: {
+    showUserInfo: {
+      type: Boolean,
+      default: false,
+    },
     pin: {
       type: String,
       default: null,
@@ -163,7 +167,6 @@ export default {
               this.doneButtonLoading = false;
               this.payloadForCallback.verificationCode = this.verificationCode;
               this.successCallback(this.payloadForCallback);
-              this.backToPath(this.doneCallBackPath);
             })
             .catch(() => {
               this.doneButtonLoading = false;
