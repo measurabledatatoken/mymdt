@@ -107,30 +107,33 @@ export default {
     },
   },
   created() {
-    this.showOSNotSupportedError = !this.isOSSupported;
-    if (!this.deviceId) {
-      this.openErrorPrompt({
-        message: {
-          messageId: 'message.common.unknow_error',
-        },
-        title: {
-          messageId: 'message.common.error_title',
-        },
-      });
-    } else {
-      const isAdmin = this.$route.query.isadmin;
-      if (isAdmin) {
-        this.goToHome();
+    if (this.isOSSupported) {
+      if (!this.deviceId) {
+        this.openErrorPrompt({
+          message: {
+            messageId: 'message.common.unknow_error',
+          },
+          title: {
+            messageId: 'message.common.error_title',
+          },
+        });
       } else {
-        this.showScreen = true;
+        const isAdmin = this.$route.query.isadmin;
+        if (isAdmin) {
+          this.goToHome();
+        } else {
+          this.showScreen = true;
+        }
+        // this.getBetaTestingSession(this.deviceId).then(sessionExists => {
+        //   if (!sessionExists) {
+        //     this.showScreen = true;
+        //   } else {
+        //     this.goToHome();
+        //   }
+        // });
       }
-      // this.getBetaTestingSession(this.deviceId).then(sessionExists => {
-      //   if (!sessionExists) {
-      //     this.showScreen = true;
-      //   } else {
-      //     this.goToHome();
-      //   }
-      // });
+    } else {
+      this.showOSNotSupportedError = true;
     }
     trackEvent('Open Beta Testing url ');
   },
@@ -147,7 +150,6 @@ export default {
       });
     },
     returnCallback() {
-      console.log(ExitFromWalletWebviewURL);
       window.location = ExitFromWalletWebviewURL;
     },
     handleInput(value) {
