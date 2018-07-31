@@ -116,7 +116,7 @@ import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
 
 import { transactionType, transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
-import { CANCEL_TRANSACTION } from '@/store/modules/transaction';
+import { CANCEL_TRANSACTION } from '@/store/modules/entities/transactions';
 import { RouteDef } from '@/constants';
 import {
   SET_DONE_CALLBACK_PATH,
@@ -220,26 +220,24 @@ export default {
       this.showConfirmToCancelDialog = false;
       this.showProblemSupportDialog = true;
     },
-    onPinCodeFilled(pin) {
-      this.validatePIN(pin)
-        .catch(err => {
-          this.$refs.pinCodeInputPopup.setInvalid();
-          throw err;
-        })
-        .then(() => {
-          this.showPinCodeInput = false;
-          this.cancelTransaction({
+    async onPinCodeFilled(pin) {
+      try {
+        await this.validatePIN(pin);
+        this.showPinCodeInput = false;
+        try {
+          await this.cancelTransaction({
             applicationId: this.transaction.application_id,
             transactionId: this.transaction.id,
             pin,
-          })
-            .then(() => {
-              this.$router.back();
-            })
-            .catch(err => {
-              console.log(`error in cancelTransaction: ${err.message}`);
-            });
-        });
+          });
+          this.$router.back();
+        } catch (err) {
+          console.log(`error in cancelTransaction: ${err.message}`);
+        }
+      } catch (err) {
+        console.log(`error in validating: ${err.message}`);
+        this.$refs.pinCodeInputPopup.setInvalid();
+      }
     },
     onFotgotClicked() {
       this.setSelectedUser(this.selectedUser.emailAddress);
@@ -256,7 +254,6 @@ export default {
   padding-top: 0;
   /deep/ .md-button {
     left: 50%;
-    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
   }
   /deep/ .md-list-item {

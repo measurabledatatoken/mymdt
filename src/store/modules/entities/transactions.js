@@ -1,6 +1,7 @@
 import api from '@/api';
 import { delay } from '@/utils';
 
+import { REQUEST } from '@/store/modules/api';
 import { FETCH_USER } from '@/store/modules/entities/users';
 
 export const FETCHING_TRANSACTIONS = 'transaction/FETCHING_TRANSACTIONS';
@@ -10,6 +11,7 @@ export const FETCHING_TRANSACTIONS_FAILURE =
   'transaction/FETCHING_TRANSACTIONS_FAILURE';
 
 export const FETCH_TRANSACTIONS = 'transaction/FETCH_TRANSACTIONS';
+export const CANCEL_TRANSACTION = 'transaction/CANCEL_TRANSACTION';
 
 const state = {
   byId: {},
@@ -87,6 +89,19 @@ const actions = {
           error,
         }),
       );
+  },
+  [CANCEL_TRANSACTION](
+    { dispatch, rootGetters },
+    { applicationId, transactionId, pin },
+  ) {
+    const account = rootGetters.getSelectedUser;
+
+    return dispatch(REQUEST, {
+      api: api.transaction.cancelTransaction,
+      args: [applicationId, transactionId, pin, account.accessToken],
+      setLoading: true,
+      openErrorPrompt: true,
+    });
   },
 };
 
