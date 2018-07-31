@@ -7,11 +7,11 @@ import VueScript2 from 'vue-script2';
 
 const url = {
   g: {
-    base: '//g.alicdn.com/sd/nvc/1.1.112/guide.js?t=2015052012',
+    base: '//g.alicdn.com/sd/nvc/1.1.112/guide.js',
     pc: '//g.alicdn.com/sd/smartCaptcha/0.0.1/index.js',
   },
   aeis: {
-    base: '//aeis.alicdn.com/sd/nvc/1.1.112/guide.js?t=2015052012',
+    base: '//aeis.alicdn.com/sd/nvc/1.1.112/guide.js',
     pc: '//aeis.alicdn.com/sd/smartCaptcha/0.0.1/index.js',
   },
 };
@@ -61,6 +61,9 @@ export default {
       }
     },
     $_setOpt() {
+      if (window.NVC_Opt) {
+        return;
+      }
       const option = this.option || {};
       const ncScene = this.h5 ? this.h5scene : this.scene;
 
