@@ -49,10 +49,6 @@ const state = {
   phoneNumber: null,
   doneCallBackPath: null,
   selectedUserId: null,
-  twoFa: {
-    method: null,
-    usage: null,
-  },
   pinFor2FASetup: null,
 };
 

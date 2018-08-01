@@ -1,7 +1,7 @@
 <template>
   <div class="two-factor-authentication-setting-page">
     <BaseUserSettingPage>
-      <template slot="content">
+      <template slot="unpaded-content">
         <p class="description">{{ $t('message.twoFactorAuthentication.setupDescription') }}</p>
         <div class="content">
           <md-list>
@@ -54,28 +54,27 @@
             </template>
           </md-list>
         </div>
-
-        <PinCodeInputPopup 
-          ref="pinCodeInputPopup"
-          :md-active.sync="showPinCodeInput"
-          :title="$t('message.passcode.pin_popup_title')"
-          :email-address="selectedSecurityUser.emailAddress"
-          @codefilled="onPinCodeFilled"
-          @close-click="showPinCodeInput = false"
-          @fotgot-click="onFotgotClicked"
-        />
-
-        <!-- confirm to turn off 2fa popup -->
-        <MDTConfirmPopup 
-          :md-active.sync="showDisable2FAPopup"
-          :md-title="$t('message.twoFactorAuthentication.disable2FAPopupTitle')"
-          :md-content="$t('message.twoFactorAuthentication.disable2FAPopupDescription')"
-          :md-confirm-text="$t('message.twoFactorAuthentication.turnOff2FA')"
-          :md-cancel-text="$t('message.common.cancel')"
-          @md-confirm="onDisable2FAButtonClicked"
-        />
       </template>
     </BaseUserSettingPage>
+    <PinCodeInputPopup 
+      ref="pinCodeInputPopup"
+      :md-active.sync="showPinCodeInput"
+      :title="$t('message.passcode.pin_popup_title')"
+      :email-address="selectedSecurityUser.emailAddress"
+      @codefilled="onPinCodeFilled"
+      @close-click="showPinCodeInput = false"
+      @fotgot-click="onFotgotClicked"
+    />
+
+    <!-- confirm to turn off 2fa popup -->
+    <MDTConfirmPopup 
+      :md-active.sync="showDisable2FAPopup"
+      :md-title="$t('message.twoFactorAuthentication.disable2FAPopupTitle')"
+      :md-content="$t('message.twoFactorAuthentication.disable2FAPopupDescription')"
+      :md-confirm-text="$t('message.twoFactorAuthentication.turnOff2FA')"
+      :md-cancel-text="$t('message.common.cancel')"
+      @md-confirm="onDisable2FAButtonClicked"
+    />
   </div>
 </template>
 
@@ -88,7 +87,6 @@ import {
   REQUEST_VERIFICATION_CODE,
   SET_2FA_OPTION,
   SET_DONE_CALLBACK_PATH,
-  SET_PIN_FOR_2FA_SETUP,
   VALIDATE_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
@@ -114,12 +112,6 @@ export default {
     SettingListSectionHeader,
   },
   extends: BasePage,
-  props: {
-    pin: {
-      type: String,
-      default: null,
-    },
-  },
   data: () => ({
     showPinCodeInput: false,
     TwoFactorOption,
@@ -134,7 +126,6 @@ export default {
     ...mapState({
       pinFor2FASetup: state => state.security.pinFor2FASetup,
       doneCallBackPath: state => state.security.doneCallBackPath,
-      matt: state => state.security.matt,
     }),
     ...mapGetters({
       selectedSecurityUser: 'getSelectedSecurityUser',
@@ -158,11 +149,6 @@ export default {
       },
     },
   },
-  created() {
-    if (this.pin) {
-      this.setPinFor2FASetup(this.pin);
-    }
-  },
   methods: {
     ...mapActions({
       enable2FA: ENABLE_2FA,
@@ -174,7 +160,6 @@ export default {
     }),
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
-      setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
     }),
     isSelectedSMS(method) {
       return (
@@ -216,7 +201,6 @@ export default {
           throw err;
         })
         .then(() => {
-          this.setPinFor2FASetup(pinCode);
           this.setDoneCallbackPath(
             RouteDef.TwoFactorAuthenticationSetting.path,
           );
@@ -246,14 +230,13 @@ export default {
       this.$router.push({
         name: RouteDef.GoogleAuthVerify.name,
         params: {
-          showUserInfo: true,
           payloadForCallback: { pin: this.pinFor2FASetup },
           successCallback: this.switchOff,
         },
       });
     },
     switchOn() {
-      this.enable2FA({ pin: this.pin || this.pinFor2FASetup });
+      this.enable2FA({ pin: this.pinFor2FASetup });
     },
     switchOff({ pin, verificationCode }) {
       this.backToPath(RouteDef.TwoFactorAuthenticationSetting.path);
@@ -276,9 +259,11 @@ export default {
     text-align: left;
     white-space: pre-line;
   }
-  /deep/ .basepage {
-    .md-divider {
-      height: 0;
+  /deep/ .base-usersettingpage {
+    .padded-container {
+      .md-divider {
+        height: 0;
+      }
     }
   }
   .content {
