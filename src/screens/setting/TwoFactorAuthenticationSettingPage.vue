@@ -194,27 +194,25 @@ export default {
         name: RouteDef.PinCodeForgot.name,
       });
     },
-    onPinCodeFilled(pinCode) {
-      this.validatePIN(pinCode)
-        .catch(err => {
-          this.$refs.pinCodeInputPopup.setInvalid();
-          throw err;
-        })
-        .then(() => {
-          this.setDoneCallbackPath(
-            RouteDef.TwoFactorAuthenticationSetting.path,
-          );
-          if (this.method === TwoFactorOption.METHOD.GOOGLE) {
-            this.goToGoogleAuthVerify();
-          } else {
-            this.goToSMSVerify();
-          }
-        });
+    async onPinCodeFilled(pinCode) {
+      try {
+        await this.validatePIN(pinCode);
+        this.setDoneCallbackPath(RouteDef.TwoFactorAuthenticationSetting.path);
+        if (this.method === TwoFactorOption.METHOD.GOOGLE) {
+          this.goToGoogleAuthVerify();
+        } else {
+          this.goToSMSVerify();
+        }
+      } catch (error) {
+        console.log(`error in validating: ${error.message}`);
+        this.$refs.pinCodeInputPopup.setInvalid();
+      }
     },
-    goToSMSVerify() {
-      this.requestVerificationCode({
-        action: OTPActionType.DisableTwoFAAction,
-      }).then(() => {
+    async goToSMSVerify() {
+      try {
+        await this.requestVerificationCode({
+          action: OTPActionType.DisableTwoFAAction,
+        });
         this.$router.push({
           name: RouteDef.TwoFactorAuthenticationSMSVerify.name,
           params: {
@@ -224,7 +222,9 @@ export default {
             action: OTPActionType.DisableTwoFAAction,
           },
         });
-      });
+      } catch (error) {
+        console.log(`error in requesting verification code: ${error.message}`);
+      }
     },
     goToGoogleAuthVerify() {
       this.$router.push({
