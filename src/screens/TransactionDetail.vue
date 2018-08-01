@@ -224,19 +224,20 @@ export default {
       try {
         await this.validatePIN(pin);
         this.showPinCodeInput = false;
-        try {
-          await this.cancelTransaction({
-            applicationId: this.transaction.application_id,
-            transactionId: this.transaction.id,
-            pin,
-          });
-          this.$router.back();
-        } catch (err) {
-          console.log(`error in cancelTransaction: ${err.message}`);
-        }
       } catch (err) {
         console.log(`error in validating: ${err.message}`);
         this.$refs.pinCodeInputPopup.setInvalid();
+        return;
+      }
+      try {
+        await this.cancelTransaction({
+          applicationId: this.transaction.application_id,
+          transactionId: this.transaction.id,
+          pin,
+        });
+        this.$router.back();
+      } catch (err) {
+        console.log(`error in cancelTransaction: ${err.message}`);
       }
     },
     onFotgotClicked() {
