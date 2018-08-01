@@ -1,7 +1,7 @@
 <template>
   <div class="google-authenticator-setting-page-2">
     <BaseUserSettingPage>
-      <template slot="content">
+      <template slot="unpaded-content">
         <GoogleAuthStep
           :step-title="$t('message.googleAuth.step2Title')"
         >
@@ -90,12 +90,6 @@ export default {
     MDTSecondaryButton,
   },
   extends: BasePage,
-  props: {
-    pin: {
-      type: String,
-      default: null,
-    },
-  },
   data() {
     return {
       googleAuthSecret: '',
@@ -112,11 +106,9 @@ export default {
     }),
   },
   created() {
-    this.generateSecret({ pin: this.pin || this.pinFor2FASetup }).then(
-      response => {
-        this.googleAuthSecret = response.secret;
-      },
-    );
+    this.generateSecret({ pin: this.pinFor2FASetup }).then(response => {
+      this.googleAuthSecret = response.secret;
+    });
   },
   methods: {
     ...mapActions({
@@ -164,6 +156,7 @@ export default {
         }
         .md-button-copy {
           margin: 0;
+          width: inherit;
         }
         .remark {
           font-size: 14px;

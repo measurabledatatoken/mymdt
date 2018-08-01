@@ -36,9 +36,9 @@ export default {
     margin: 24px 0;
     font-weight: bold;
   }
-  .container {
+  .content {
     padding: 0 8px;
-    .md-button {
+    /deep/ .md-button {
       width: 100%;
     }
   }

@@ -1,42 +1,45 @@
 <template>
   <div class="google-authenticator-verify">
-    <BaseUserSettingPage v-if="showUserInfo"/>
-    <GoogleAuthStep
-      :step-title="stepTitle || $t('message.twoFactorAuthentication.verifyTitle')"
-    >
-      <template slot="content">
-        <md-list class="md-triple-line">
-          <md-list-item>
+    <BaseUserSettingPage>
+      <template slot="unpaded-content">
+        <GoogleAuthStep
+          :step-title="stepTitle || $t('message.twoFactorAuthentication.verifyTitle')"
+        >
+          <template slot="content">
+            <md-list class="md-triple-line">
+              <md-list-item>
 
-            <md-avatar class="google-authenticator-screen">
-              <img 
-                src="/static/googleAuth/ga-code.svg" 
-                alt="Google Authenticator"
-              >
-            </md-avatar>
-            <div class="md-list-item-text">
-              <md-field :md-counter="false">
-                <label class="label">{{ $t('message.phone.verification_code') }}</label>
-                <md-input 
-                  :maxlength="VerificationCodeLength"
-                  :placeholder="$t('message.phone.verification_code_placeholder')"
-                  v-model="verificationCode"
-                  pattern="\d*"
-                  @input="onVerificationCodeInput"
-                />
-              </md-field>
-            </div>
-          </md-list-item>
-          <md-list-item>
-            <MDTPrimaryButton 
-              :disabled="!verificationCodeFilled"
-              :loading="doneButtonLoading"
-              @click="onDoneClicked()"
-            > {{ $t('message.common.done') }}</MDTPrimaryButton>
-          </md-list-item>
-        </md-list>
+                <md-avatar class="google-authenticator-screen">
+                  <img 
+                    src="/static/googleAuth/ga-code.svg" 
+                    alt="Google Authenticator"
+                  >
+                </md-avatar>
+                <div class="md-list-item-text">
+                  <md-field :md-counter="false">
+                    <label class="label">{{ $t('message.phone.verification_code') }}</label>
+                    <md-input 
+                      :maxlength="VerificationCodeLength"
+                      :placeholder="$t('message.phone.verification_code_placeholder')"
+                      v-model="verificationCode"
+                      pattern="\d*"
+                      @input="onVerificationCodeInput"
+                    />
+                  </md-field>
+                </div>
+              </md-list-item>
+              <md-list-item>
+                <MDTPrimaryButton 
+                  :disabled="!verificationCodeFilled"
+                  :loading="doneButtonLoading"
+                  @click="onDoneClicked()"
+                > {{ $t('message.common.done') }}</MDTPrimaryButton>
+              </md-list-item>
+            </md-list>
+          </template>
+        </GoogleAuthStep>    
       </template>
-    </GoogleAuthStep>    
+    </BaseUserSettingPage>
     <SuccessPopup 
       :title="$t('message.googleAuth.setupSuccess')"
       :md-active.sync="showGoogleAuthSetupSuccessPopup"
@@ -73,14 +76,6 @@ export default {
   },
   extends: BasePage,
   props: {
-    showUserInfo: {
-      type: Boolean,
-      default: false,
-    },
-    pin: {
-      type: String,
-      default: null,
-    },
     stepTitle: {
       type: String,
       default: '',
@@ -114,6 +109,7 @@ export default {
   computed: {
     ...mapState({
       doneCallBackPath: state => state.security.doneCallBackPath,
+      pinFor2FASetup: state => state.security.pinFor2FASetup,
     }),
   },
   metaInfo() {
@@ -150,7 +146,7 @@ export default {
           break;
         case SetupGoogleAuthMode.DISABLE:
           this.disableGoogleAuth({
-            pin: this.pin,
+            pin: this.pinFor2FASetup,
             verificationCode: this.verificationCode,
           })
             .then(() => {

@@ -1,7 +1,6 @@
 <template>
   <md-list-item 
     :class="{ 'list-item--selected': selected }" 
-    :disabled="disabled"
     v-bind="$attrs" 
     @click="$emit('click')"
   >
@@ -22,10 +21,6 @@ export default {
       default: '',
     },
     selected: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
       type: Boolean,
       default: false,
     },

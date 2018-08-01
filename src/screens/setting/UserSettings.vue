@@ -164,6 +164,7 @@ import {
   VALIDATE_PIN_FOR_SECURITY,
   SET_DONE_CALLBACK_PATH,
   REQUEST_VERIFICATION_CODE,
+  SET_PIN_FOR_2FA_SETUP,
 } from '@/store/modules/security';
 import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
@@ -237,6 +238,7 @@ export default {
       setSelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setSecurityUserInfo: SET_SECURITY_USER_PHONE_INFO,
+      setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
     }),
     ...mapActions({
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
@@ -272,6 +274,7 @@ export default {
           throw err;
         })
         .then(() => {
+          this.setPinFor2FASetup(pinCode);
           this.showPinCodeInput = false;
           if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
             trackEvent('Start Setting up PIN from the account security page');

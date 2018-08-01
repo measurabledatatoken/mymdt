@@ -1,7 +1,7 @@
 <template>
   <div class="google-authenticator-setting-page-1">
     <BaseUserSettingPage>
-      <template slot="content">
+      <template slot="unpaded-content">
         <GoogleAuthStep
           :step-title="$t('message.googleAuth.step1Title')"
         >
@@ -33,9 +33,7 @@
                   alt="Google Authenticator"
               ></a>
             </div>
-            <div 
-              class="container"
-            >
+            <div>
               <p class="remark">
                 {{ $t('message.googleAuth.step1Remark') }}
               </p>
@@ -51,9 +49,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_PIN_FOR_2FA_SETUP } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -68,16 +64,7 @@ export default {
     GoogleAuthStep,
   },
   extends: BasePage,
-  props: {
-    pin: {
-      type: String,
-      default: null,
-    },
-  },
   computed: {
-    ...mapState({
-      pinFor2FASetup: state => state.security.pinFor2FASetup,
-    }),
     isIOS() {
       return (
         /ipad|iphone|ipod/.test(userAgent.toLowerCase()) && !window.MSStream
@@ -87,26 +74,15 @@ export default {
       return /android/.test(userAgent.toLowerCase()) && !window.MSStream;
     },
   },
-  created() {
-    if (this.pin) {
-      this.setPinFor2FASetup(this.pin);
-    }
-  },
   metaInfo() {
     return {
       title: this.$t('message.googleAuth.setupTitle'),
     };
   },
   methods: {
-    ...mapMutations({
-      setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
-    }),
     goToNext() {
       this.$router.push({
         name: RouteDef.GoogleAuthSettingStep2.name,
-        params: {
-          pin: this.pin || this.pinFor2FASetup,
-        },
       });
     },
   },
