@@ -8,9 +8,8 @@
             <md-list-item>
               <span class="md-list-item-text">{{ $t('message.twoFactorAuthentication.turnOn2FA') }}</span>
           
-              <md-switch 
+              <MDTSwitch
                 v-model="enabled" 
-                class="md-primary"
               />
             </md-list-item>
             <md-divider />
@@ -100,6 +99,7 @@ import TwoFactorOption from '@/enum/twoFactorOption';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 import { BACK_TO_PATH } from '@/store/modules/common';
+import MDTSwitch from '@/components/input/MDTSwitch';
 
 export default {
   components: {
@@ -110,6 +110,7 @@ export default {
     PriceUnitListItem,
     PinCodeInputPopup,
     SettingListSectionHeader,
+    MDTSwitch,
   },
   extends: BasePage,
   data: () => ({
@@ -141,6 +142,7 @@ export default {
         return this.selectedSecurityUser.isTwofaEnabled;
       },
       set(value) {
+        console.log('SETTING VALUE');
         if (value) {
           this.switchOn();
         } else {
@@ -276,32 +278,6 @@ export default {
       /deep/ .md-icon {
         svg {
           fill: $theme-color;
-        }
-      }
-      /deep/ .md-switch {
-        &.md-theme-default {
-          .md-switch-container {
-            background: $theme-disable-color-font;
-            width: 52px;
-            min-width: 52px;
-            height: 24px;
-          }
-          .md-switch-thumb {
-            background-color: white;
-            width: 16px;
-            height: 16px;
-            transform: translateX(30%);
-          }
-          &.md-checked {
-            .md-switch-container {
-              background: $bluebtn-backgroundcolor;
-            }
-            &.md-primary {
-              .md-switch-thumb {
-                transform: translateX(190%);
-              }
-            }
-          }
         }
       }
       /deep/ .header {
