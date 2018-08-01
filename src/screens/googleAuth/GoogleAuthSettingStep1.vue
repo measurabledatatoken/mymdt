@@ -1,49 +1,52 @@
 <template>
   <div class="google-authenticator-setting-page-1">
-    <BaseUserSettingPage/>
-    <GoogleAuthStep
-      :step-title="$t('message.googleAuth.step1Title')"
-    >
+    <BaseUserSettingPage>
       <template slot="content">
-        <div>
-          <img 
-            src="/static/googleAuth/google-auth.png" 
-            srcset="/static/googleAuth/google-auth@2x.png 2x, /static/googleAuth/google-auth@3x.png 3x" 
-            alt="Google Authenticator"
-          >
-        </div>
-        <div class="store-icons">
-          <a 
-            target="_blank" 
-            href="https://itunes.apple.com/app/id914281815"
-          >
-            <img 
-              v-if="isIOS"
-              src="/static/googleAuth/app-store-en.svg" 
-          ></a>
-          <a 
-            target="_blank" 
-            href="http://mailti.me/android"
-          >
-            <img 
-              v-if="isAndroid"
-              src="/static/googleAuth/google-play-en.png" 
-              srcset="/static/googleAuth/google-play-en@2x.png 2x, /static/googleAuth/google-play-en@3x.png 3x" 
-              alt="Google Authenticator"
-          ></a>
-        </div>
-        <div 
-          class="container"
+        <GoogleAuthStep
+          :step-title="$t('message.googleAuth.step1Title')"
         >
-          <p class="remark">
-            {{ $t('message.googleAuth.step1Remark') }}
-          </p>
-          <MDTPrimaryButton 
-            @click="goToNext()"
-          >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
-        </div>
+          <template slot="content">
+            <div>
+              <img 
+                src="/static/googleAuth/google-auth.png" 
+                srcset="/static/googleAuth/google-auth@2x.png 2x, /static/googleAuth/google-auth@3x.png 3x" 
+                alt="Google Authenticator"
+              >
+            </div>
+            <div class="store-icons">
+              <a 
+                target="_blank" 
+                href="https://itunes.apple.com/app/id914281815"
+              >
+                <img 
+                  v-if="isIOS"
+                  src="/static/googleAuth/app-store-en.svg" 
+              ></a>
+              <a 
+                target="_blank" 
+                href="http://mailti.me/android"
+              >
+                <img 
+                  v-if="isAndroid"
+                  src="/static/googleAuth/google-play-en.png" 
+                  srcset="/static/googleAuth/google-play-en@2x.png 2x, /static/googleAuth/google-play-en@3x.png 3x" 
+                  alt="Google Authenticator"
+              ></a>
+            </div>
+            <div 
+              class="container"
+            >
+              <p class="remark">
+                {{ $t('message.googleAuth.step1Remark') }}
+              </p>
+              <MDTPrimaryButton 
+                @click="goToNext()"
+              >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+            </div>
+          </template>
+        </GoogleAuthStep> 
       </template>
-    </GoogleAuthStep>    
+    </BaseUserSettingPage>
   </div>
 </template>
 

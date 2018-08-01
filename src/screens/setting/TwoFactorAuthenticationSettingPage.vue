@@ -1,78 +1,81 @@
 <template>
   <div class="two-factor-authentication-setting-page">
-    <BaseUserSettingPage/>
-    <p class="description">{{ $t('message.twoFactorAuthentication.setupDescription') }}</p>
-    <div class="content">
-      <md-list>
-        <md-list-item>
-          <span class="md-list-item-text">{{ $t('message.twoFactorAuthentication.turnOn2FA') }}</span>
+    <BaseUserSettingPage>
+      <template slot="content">
+        <p class="description">{{ $t('message.twoFactorAuthentication.setupDescription') }}</p>
+        <div class="content">
+          <md-list>
+            <md-list-item>
+              <span class="md-list-item-text">{{ $t('message.twoFactorAuthentication.turnOn2FA') }}</span>
           
-          <md-switch 
-            v-model="enabled" 
-            class="md-primary"
-          />
-        </md-list-item>
-        <md-divider />
-        <template v-if="enabled">
-          <setting-list-section-header>{{ $t('message.twoFactorAuthentication.setupMethodTitle') }}</setting-list-section-header>
-          <md-divider />
-          <price-unit-list-item 
-            :selected="method === TwoFactorOption.METHOD.SMS" 
-            :title="$t('message.twoFactorAuthentication.methods.sms')" 
-            :disabled="!selectedSecurityUser.isPhoneConfirmed"
-            @click="set2FAMethod(TwoFactorOption.METHOD.SMS)"
-          />
-          <md-divider />
-          <price-unit-list-item 
-            :selected="method === TwoFactorOption.METHOD.GOOGLE" 
-            :title="$t('message.twoFactorAuthentication.methods.google')" 
-            :disabled="!selectedSecurityUser.isGoogleAuthEnabled"
-            @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
-          />
-          <md-divider />
-          <setting-list-section-header>{{ $t('message.twoFactorAuthentication.setupUsageTitle') }}</setting-list-section-header>
-          <md-divider />
-          <price-unit-list-item 
-            :selected="usage === TwoFactorOption.USAGE.TRANSACTION" 
-            :title="$t('message.twoFactorAuthentication.usage.transaction')" 
-            @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION)"
-          />
-          <md-divider />
-          <price-unit-list-item 
-            :selected="usage === TwoFactorOption.USAGE.LOGIN" 
-            :title="$t('message.twoFactorAuthentication.usage.login')" 
-            @click="set2FAUsage(TwoFactorOption.USAGE.LOGIN)"
-          />
-          <md-divider />
-          <price-unit-list-item 
-            :selected="usage === TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN" 
-            :title="$t('message.twoFactorAuthentication.usage.transactionAndLogin')" 
-            @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN)"
-          />
-          <md-divider />
-        </template>
-      </md-list>
-    </div>
+              <md-switch 
+                v-model="enabled" 
+                class="md-primary"
+              />
+            </md-list-item>
+            <md-divider />
+            <template v-if="enabled">
+              <setting-list-section-header>{{ $t('message.twoFactorAuthentication.setupMethodTitle') }}</setting-list-section-header>
+              <md-divider />
+              <price-unit-list-item 
+                :selected="method === TwoFactorOption.METHOD.SMS" 
+                :title="$t('message.twoFactorAuthentication.methods.sms')" 
+                :disabled="!selectedSecurityUser.isPhoneConfirmed"
+                @click="set2FAMethod(TwoFactorOption.METHOD.SMS)"
+              />
+              <md-divider />
+              <price-unit-list-item 
+                :selected="method === TwoFactorOption.METHOD.GOOGLE" 
+                :title="$t('message.twoFactorAuthentication.methods.google')" 
+                :disabled="!selectedSecurityUser.isGoogleAuthEnabled"
+                @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
+              />
+              <md-divider />
+              <setting-list-section-header>{{ $t('message.twoFactorAuthentication.setupUsageTitle') }}</setting-list-section-header>
+              <md-divider />
+              <price-unit-list-item 
+                :selected="usage === TwoFactorOption.USAGE.TRANSACTION" 
+                :title="$t('message.twoFactorAuthentication.usage.transaction')" 
+                @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION)"
+              />
+              <md-divider />
+              <price-unit-list-item 
+                :selected="usage === TwoFactorOption.USAGE.LOGIN" 
+                :title="$t('message.twoFactorAuthentication.usage.login')" 
+                @click="set2FAUsage(TwoFactorOption.USAGE.LOGIN)"
+              />
+              <md-divider />
+              <price-unit-list-item 
+                :selected="usage === TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN" 
+                :title="$t('message.twoFactorAuthentication.usage.transactionAndLogin')" 
+                @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN)"
+              />
+              <md-divider />
+            </template>
+          </md-list>
+        </div>
 
-    <PinCodeInputPopup 
-      ref="pinCodeInputPopup"
-      :md-active.sync="showPinCodeInput"
-      :title="$t('message.passcode.pin_popup_title')"
-      :email-address="selectedSecurityUser.emailAddress"
-      @codefilled="onPinCodeFilled"
-      @close-click="showPinCodeInput = false"
-      @fotgot-click="onFotgotClicked"
-    />
+        <PinCodeInputPopup 
+          ref="pinCodeInputPopup"
+          :md-active.sync="showPinCodeInput"
+          :title="$t('message.passcode.pin_popup_title')"
+          :email-address="selectedSecurityUser.emailAddress"
+          @codefilled="onPinCodeFilled"
+          @close-click="showPinCodeInput = false"
+          @fotgot-click="onFotgotClicked"
+        />
 
-    <!-- confirm to turn off 2fa popup -->
-    <MDTConfirmPopup 
-      :md-active.sync="showDisable2FAPopup"
-      :md-title="$t('message.twoFactorAuthentication.disable2FAPopupTitle')"
-      :md-content="$t('message.twoFactorAuthentication.disable2FAPopupDescription')"
-      :md-confirm-text="$t('message.twoFactorAuthentication.turnOff2FA')"
-      :md-cancel-text="$t('message.common.cancel')"
-      @md-confirm="onDisable2FAButtonClicked"
-    />
+        <!-- confirm to turn off 2fa popup -->
+        <MDTConfirmPopup 
+          :md-active.sync="showDisable2FAPopup"
+          :md-title="$t('message.twoFactorAuthentication.disable2FAPopupTitle')"
+          :md-content="$t('message.twoFactorAuthentication.disable2FAPopupDescription')"
+          :md-confirm-text="$t('message.twoFactorAuthentication.turnOff2FA')"
+          :md-cancel-text="$t('message.common.cancel')"
+          @md-confirm="onDisable2FAButtonClicked"
+        />
+      </template>
+    </BaseUserSettingPage>
   </div>
 </template>
 

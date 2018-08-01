@@ -1,68 +1,71 @@
 <template>
   <div class="google-authenticator-setting-page-2">
-    <BaseUserSettingPage/>
-    <GoogleAuthStep
-      :step-title="$t('message.googleAuth.step2Title')"
-    >
+    <BaseUserSettingPage>
       <template slot="content">
-        <ul class="procedures">
-          <li class="procedure">
-            <div>
-              <md-avatar class="md-avatar-icon md-small md-primary">1</md-avatar>
-            </div>
-            <div 
-              class="procedure-content"
-              v-html="$t('message.googleAuth.step2Procedure1')"
-            />
-          </li>
-          <li class="procedure">
-            <div>
-              <md-avatar class="md-avatar-icon md-small md-primary">2</md-avatar>
-            </div>
-            <div 
-              class="procedure-content"
-              v-html="$t('message.googleAuth.step2Procedure2')"
-            />
-          </li>
-          <li class="procedure">
-            <div>
-              <md-avatar class="md-avatar-icon md-small md-primary">3</md-avatar>
-            </div>
-            <div 
-              class="procedure-content"
-            >
-              <div>{{ $t('message.googleAuth.step2Procedure3') }}</div>
-              <div class="google-auth-secret">{{ googleAuthSecret }}</div>
-              <MDTSecondaryButton 
-                v-clipboard:copy="googleAuthSecret" 
-                class="md-button-copy"
-              >
-                {{ $t('message.common.copy') }}
-              </MDTSecondaryButton>
-              <div class="remark">{{ $t('message.googleAuth.step2Procedure3Remark') }}</div>
-            </div>
-          </li>
-
-          <li class="procedure">
-            <div>
-              <md-avatar class="md-avatar-icon md-small md-primary">4</md-avatar>
-            </div>
-            <div 
-              class="procedure-content"
-              v-html="$t('message.googleAuth.step2Procedure4')"
-            />
-          </li>
-        </ul>
-        <div 
-          class="container"
+        <GoogleAuthStep
+          :step-title="$t('message.googleAuth.step2Title')"
         >
-          <MDTPrimaryButton 
-            :disabled="!googleAuthSecret"
-            @click="goToNext()"
-          >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
-        </div>
+          <template slot="content">
+            <ul class="procedures">
+              <li class="procedure">
+                <div>
+                  <md-avatar class="md-avatar-icon md-small md-primary">1</md-avatar>
+                </div>
+                <div 
+                  class="procedure-content"
+                  v-html="$t('message.googleAuth.step2Procedure1')"
+                />
+              </li>
+              <li class="procedure">
+                <div>
+                  <md-avatar class="md-avatar-icon md-small md-primary">2</md-avatar>
+                </div>
+                <div 
+                  class="procedure-content"
+                  v-html="$t('message.googleAuth.step2Procedure2')"
+                />
+              </li>
+              <li class="procedure">
+                <div>
+                  <md-avatar class="md-avatar-icon md-small md-primary">3</md-avatar>
+                </div>
+                <div 
+                  class="procedure-content"
+                >
+                  <div>{{ $t('message.googleAuth.step2Procedure3') }}</div>
+                  <div class="google-auth-secret">{{ googleAuthSecret }}</div>
+                  <MDTSecondaryButton 
+                    v-clipboard:copy="googleAuthSecret" 
+                    class="md-button-copy"
+                  >
+                    {{ $t('message.common.copy') }}
+                  </MDTSecondaryButton>
+                  <div class="remark">{{ $t('message.googleAuth.step2Procedure3Remark') }}</div>
+                </div>
+              </li>
+
+              <li class="procedure">
+                <div>
+                  <md-avatar class="md-avatar-icon md-small md-primary">4</md-avatar>
+                </div>
+                <div 
+                  class="procedure-content"
+                  v-html="$t('message.googleAuth.step2Procedure4')"
+                />
+              </li>
+            </ul>
+            <div 
+              class="container"
+            >
+              <MDTPrimaryButton 
+                :disabled="!googleAuthSecret"
+                @click="goToNext()"
+              >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
+            </div>
+          </template>
+        </GoogleAuthStep>  
       </template>
-    </GoogleAuthStep>    
+    </BaseUserSettingPage>  
   </div>
 </template>
 
