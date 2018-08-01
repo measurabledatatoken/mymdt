@@ -267,64 +267,63 @@ export default {
       this.nextRouteNameAfterPINFilled = RouteDef.PinCodeSetup.name;
       this.showPinCodeInput = true;
     },
-    onPinCodeFilled(pinCode) {
-      this.validatePIN(pinCode)
-        .catch(err => {
-          this.$refs.pinCodeInputPopup.setInvalid();
-          throw err;
-        })
-        .then(() => {
-          this.setPinFor2FASetup(pinCode);
-          this.showPinCodeInput = false;
-          if (this.nextRouteNameAfterPINFilled === RouteDef.PinCodeSetup.name) {
-            trackEvent('Start Setting up PIN from the account security page');
-            this.$router.push({
-              name: RouteDef.PinCodeSetup.name,
-              params: {
-                mode: SetupPINMode.CHANGE,
-                oldPIN: pinCode,
-              },
-            });
-          } else if (
-            this.nextRouteNameAfterPINFilled ===
-              RouteDef.TwoFactorAuthenticationSetting.name ||
-            this.nextRouteNameAfterPINFilled ===
-              RouteDef.AddPhoneNumberInput.name
-          ) {
-            this.$router.push({
-              name: this.nextRouteNameAfterPINFilled,
-              params: {
-                pin: pinCode,
-              },
-            });
-          } else if (
-            this.nextRouteNameAfterPINFilled ===
-              RouteDef.GoogleAuthSettingStep1.name ||
-            this.nextRouteNameAfterPINFilled === RouteDef.GoogleAuthVerify.name
-          ) {
-            this.$router.push({
-              name: this.nextRouteNameAfterPINFilled,
-              params: {
-                pin: pinCode,
-                mode: this.currentSetupGoogleAuthMode,
-              },
-            });
-          } else {
-            this.requestVerificationCode({
+    async onPinCodeFilled(pinCode) {
+      try {
+        await this.validatePIN(pinCode);
+        this.setPinFor2FASetup(pinCode);
+        this.showPinCodeInput = false;
+      } catch (error) {
+        console.log(`error in validating: ${error.message}`);
+        this.$refs.pinCodeInputPopup.setInvalid();
+        return;
+      }
+
+      switch (this.nextRouteNameAfterPINFilled) {
+        case RouteDef.PinCodeSetup.name:
+          trackEvent('Start Setting up PIN from the account security page');
+          this.$router.push({
+            name: RouteDef.PinCodeSetup.name,
+            params: {
+              mode: SetupPINMode.CHANGE,
+              oldPIN: pinCode,
+            },
+          });
+          break;
+        case RouteDef.TwoFactorAuthenticationSetting.name:
+        case RouteDef.AddPhoneNumberInput.name:
+          this.$router.push({
+            name: this.nextRouteNameAfterPINFilled,
+          });
+          break;
+        case RouteDef.GoogleAuthSettingStep1.name:
+        case RouteDef.GoogleAuthVerify.name:
+          this.$router.push({
+            name: this.nextRouteNameAfterPINFilled,
+            params: {
+              mode: this.currentSetupGoogleAuthMode,
+            },
+          });
+          break;
+        default:
+          try {
+            await this.requestVerificationCode({
               action: OTPActionType.VerifyPhoneNumberAction,
-            }).then(() => {
-              this.$router.push({
-                name: RouteDef.PhoneNumberVerify.name,
-                params: {
-                  emailAddress: this.getSelectedSecurityUser.emailAddress,
-                  nextPagePathName: RouteDef.ChangePhoneNumberInput.name,
-                  payloadForNextPage: { pin: pinCode },
-                  action: OTPActionType.VerifyPhoneNumberAction,
-                },
-              });
             });
+            this.$router.push({
+              name: RouteDef.PhoneNumberVerify.name,
+              params: {
+                emailAddress: this.getSelectedSecurityUser.emailAddress,
+                nextPagePathName: RouteDef.ChangePhoneNumberInput.name,
+                payloadForNextPage: { pin: pinCode },
+                action: OTPActionType.VerifyPhoneNumberAction,
+              },
+            });
+          } catch (error) {
+            console.log(
+              `error in requesting verification code: ${error.message}`,
+            );
           }
-        });
+      }
     },
     onFotgotClicked() {
       this.$router.push({
