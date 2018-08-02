@@ -1,11 +1,13 @@
 <template>
   <div class="app-view">
     <div class="header">
-      <div class="header__background"/>
-      <user-info-card 
-        :user="selectedUser" 
-        @transfer="goToTransfer()"
-      />
+      <div class="header-wrapper">
+        <div class="header__background"/>
+        <user-info-card 
+          :user="selectedUser" 
+          @transfer="goToTransfer()"
+        />
+      </div>
     </div>
     <TransactionList :transactions="transactions" />
     <MDTPrimaryButton 
@@ -119,8 +121,10 @@ $header-padding-top: 2rem;
 }
 
 .header {
-  padding-top: $header-padding-top;
-  position: relative;
+  .header-wrapper {
+    padding-top: $header-padding-top;
+    position: relative;
+  }
 
   .header__background {
     background-color: $home-bgcolor;
