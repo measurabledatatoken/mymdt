@@ -68,8 +68,8 @@ const DisableGoogleAuthVerifyPage = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/DisableGoogleAuthVerifyPage');
 const TwoFactorAuthenticationSMSVerifyPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/phone/TwoFactorAuthenticationSMSVerifyPage');
-const DisableTwoFactorAuthenticationVerifyPage = () =>
-  import(/* webpackChunkName: "2fa" */ '@/screens/googleAuth/DisableTwoFactorAuthenticationVerifyPage');
+const DisableTwoFactorAuthenticationVerifyGoogleAuthPage = () =>
+  import(/* webpackChunkName: "2fa" */ '@/screens/googleAuth/DisableTwoFactorAuthenticationVerifyGoogleAuthPage');
 /**
  *  example code to fail async loading of route
  * 
@@ -287,9 +287,11 @@ const router = new Router({
           props: true,
         },
         {
-          path: RouteDef.DisableTwoFactorAuthenticationVerifyPage.path,
-          name: RouteDef.DisableTwoFactorAuthenticationVerifyPage.name,
-          component: DisableTwoFactorAuthenticationVerifyPage,
+          path:
+            RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.path,
+          name:
+            RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.name,
+          component: DisableTwoFactorAuthenticationVerifyGoogleAuthPage,
         },
         {
           path: RouteDef.TwoFactorAuthenticationSMSVerify.path,
