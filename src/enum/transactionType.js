@@ -4,6 +4,7 @@ export default {
   INTERNAL_TRANSFER: 2,
   EXTERNAL_TRANSFER: 3,
   DEPOSIT: 4,
+  REFUND: 5,
   properties: {
     0: {
       messageId: 'message.transaction.reward',
@@ -19,6 +20,9 @@ export default {
     },
     4: {
       messageId: 'message.transaction.deposit',
+    },
+    5: {
+      messageId: 'message.transaction.refund',
     },
   },
 };

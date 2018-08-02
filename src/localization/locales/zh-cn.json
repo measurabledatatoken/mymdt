@@ -14,7 +14,10 @@
     "setup": "设置",
     "none": "没有",
     "later": "稍后",
-    "claim": "认领"
+    "claim": "认领",
+    "go_back": "上一步",
+    "confirm": "确定",
+    "close": "关闭"
   },
   "error": {
     "userNotExist": "用户电邮不存在。",
@@ -113,7 +116,15 @@
     "transferOutToETHWallet": "转出至以太钱包",
     "deposit": "存入",
     "noTransaction": "没有交易",
-    "transactionRecord": "交易纪录"
+    "transactionRecord": "交易纪录",
+    "refund": "退款",
+    "cancelled": "已取消",
+    "pendingToClaim": "处理中...",
+    "problemWithTransation": "此次交易的问题？",
+    "problemDidNotMakeIt": "我没有进行此交易。",
+    "problemMakeItAccidentally": "我错误地做了此交易。",
+    "popupCancelTitle": "您的交易将被取消",
+    "popupCancelDescription": "我们不会在您取消交易时向收件人发送电子邮件通知。"
   },
   "settings": {
     "title": "设置",
