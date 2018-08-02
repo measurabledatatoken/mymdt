@@ -61,11 +61,11 @@ export default {
 
 .md-card-actions {
   justify-content: center;
-  height: 3em;
 
   .md-button {
     font-weight: bold;
     width: 100%;
+    min-height: 2rem;
 
     /deep/ .md-button-content {
       text-transform: none;
