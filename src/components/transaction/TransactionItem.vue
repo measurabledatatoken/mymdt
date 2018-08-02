@@ -17,7 +17,7 @@
       <span>{{ formattedAmount }} MDT</span>
       <span
         v-if="showStatus"
-        class="action-status"
+        :class="[ 'action-status', { 'action-status-danger' : transaction.status === transactionStatus.CANCELLED}]"
       >
         {{ getStatusText }}
       </span>
@@ -50,6 +50,11 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  data() {
+    return {
+      transactionStatus,
+    };
   },
   computed: {
     ...mapGetters(['getApplication']),
@@ -117,6 +122,9 @@ export default {
 
   .action-status {
     font-size: $secondary-font-size;
+    &.action-status-danger {
+      color: $error-color;
+    }
   }
 }
 </style>

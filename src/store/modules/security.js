@@ -17,6 +17,8 @@ export const SET_SECURITY_USER_PHONE_INFO =
 // action
 export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
 export const VALIDATE_PIN_FOR_TRANSFER = 'security/VALIDATE_PIN_FOR_TRANSFER';
+export const VALIDATE_PIN_FOR_SELECTED_USER =
+  'security/VALIDATE_PIN_FOR_SELECTED_USER';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 export const RESET_PIN = 'security/RESET_PIN';
@@ -72,6 +74,15 @@ const actions = {
   [VALIDATE_PIN_FOR_SECURITY]({ state, dispatch, rootGetters }, pin) {
     const account = rootGetters.getUser(state.selectedUserId);
 
+    return dispatch(REQUEST, {
+      api: api.security.validatePIN,
+      args: [pin, account.accessToken],
+      setLoading: true,
+      openErrorPrompt: false,
+    });
+  },
+  [VALIDATE_PIN_FOR_SELECTED_USER]({ dispatch, rootGetters }, pin) {
+    const account = rootGetters.getSelectedUser;
     return dispatch(REQUEST, {
       api: api.security.validatePIN,
       args: [pin, account.accessToken],

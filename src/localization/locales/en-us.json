@@ -14,7 +14,10 @@
     "setup": "Setup",
     "none": "None",
     "later": "Later",
-    "claim": "Claim"
+    "claim": "Claim",
+    "go_back": "Go back",
+    "confirm": "Confirm",
+    "close": "Close"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -113,7 +116,15 @@
     "transferOutToETHWallet": "Transfer out to ETH Wallet",
     "deposit": "Deposit",
     "noTransaction": "No Transaction",
-    "transactionRecord": "Transaction Record"
+    "transactionRecord": "Transaction Record",
+    "refund": "Refund",
+    "cancelled": "Cancelled",
+    "pendingToClaim": "Pending...",
+    "problemWithTransation" : "Promblem with this transaction?",
+    "problemDidNotMakeIt": "I did not make this transaction.",
+    "problemMakeItAccidentally": "I made this transaction by accident.",
+    "popupCancelTitle": "Your transaction will be canceled",
+    "popupCancelDescription": "We will not send the recipient an email notification when you cancel your transaction."
   },
   "settings": {
     "title": "Settings",

@@ -40,6 +40,9 @@ export default {
         case transactionType.DEPOSIT: {
           return this.$t('message.transaction.deposit');
         }
+        case transactionType.REFUND: {
+          return this.$t('message.transaction.refund');
+        }
         default: {
           return 'title';
         }

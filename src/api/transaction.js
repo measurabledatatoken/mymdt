@@ -20,4 +20,20 @@ export default {
       schema: transactionsSchema,
     });
   },
+  cancelTransaction(applicationId, transactionId, pin, accessToken) {
+    const body = {
+      pin,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/apps/${applicationId}/user/transactions/${transactionId}/cancel`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+
+    return handleGeneralResponse(promise, {
+      schema: transactionsSchema,
+    });
+  },
 };
