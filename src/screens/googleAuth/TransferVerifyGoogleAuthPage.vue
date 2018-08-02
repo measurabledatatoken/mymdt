@@ -7,12 +7,8 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
-import {
-  VERIFY_GOOGLE_AUTHENTICATOR_OTP,
-  DISABLE_2FA,
-} from '@/store/modules/security';
+import { VERIFY_GOOGLE_AUTHENTICATOR_OTP } from '@/store/modules/security';
 import BaseGoogleAuthVerify from '@/components/googleAuth/BaseGoogleAuthVerify';
-import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
 import { START_TRANSFER, SET_TRANSFER_TYPE } from '@/store/modules/transfer';
 import { RouteDef } from '@/constants';
@@ -41,16 +37,12 @@ export default {
   },
   computed: {
     ...mapState({
-      doneCallBackPath: state => state.security.doneCallBackPath,
-      pinFor2FASetup: state => state.security.pinFor2FASetup,
       transferType: state => state.transfer.transferType,
     }),
   },
   methods: {
     ...mapActions({
       verifyOTP: VERIFY_GOOGLE_AUTHENTICATOR_OTP,
-      backToPath: BACK_TO_PATH,
-      disable2FA: DISABLE_2FA,
       startTransfer: START_TRANSFER,
     }),
     ...mapMutations({

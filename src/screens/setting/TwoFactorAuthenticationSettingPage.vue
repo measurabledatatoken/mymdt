@@ -81,7 +81,6 @@
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
 import {
-  DISABLE_2FA,
   ENABLE_2FA,
   REQUEST_VERIFICATION_CODE,
   SET_2FA_OPTION,
@@ -156,7 +155,6 @@ export default {
       set2FAOption: SET_2FA_OPTION,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
-      disable2FA: DISABLE_2FA,
       backToPath: BACK_TO_PATH,
     }),
     ...mapMutations({
@@ -215,13 +213,7 @@ export default {
           action: OTPActionType.DisableTwoFAAction,
         });
         this.$router.push({
-          name: RouteDef.TwoFactorAuthenticationSMSVerify.name,
-          params: {
-            emailAddress: this.selectedSecurityUser.emailAddress,
-            payloadForCallback: { pin: this.pinFor2FASetup },
-            successCallback: this.switchOff,
-            action: OTPActionType.DisableTwoFAAction,
-          },
+          name: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.name,
         });
       } catch (error) {
         console.log(`error in requesting verification code: ${error.message}`);

@@ -31,6 +31,10 @@ const RouteDef = {
     path: '/home/2fa/disable2faverifygoogleauth',
     name: 'DisableTwoFactorAuthenticationVerifyGoogleAuth',
   },
+  DisableTwoFactorAuthenticationVerifySMSPage: {
+    path: '/home/2fa/disable2faverifysms',
+    name: 'DisableTwoFactorAuthenticationVerifySMS',
+  },
   TwoFactorAuthenticationSetting: {
     path: '/home/usersettings/twofactor',
     name: 'TwoFactorAuthentication',
@@ -54,9 +58,13 @@ const RouteDef = {
     path: '/home/transfer/ethwallet/review/success',
     name: 'transferSuccess',
   },
-  TransferVerifyPage: {
-    path: '/home/transfer/transfererify',
-    name: 'TransferVerify',
+  TransferVerifyGoogleAuthPage: {
+    path: '/home/transfer/transfererifygoogleauth',
+    name: 'TransferVerifyGoogleAuth',
+  },
+  TransferVerifySMSPage: {
+    path: '/home/transfer/transfererifysms',
+    name: 'TransferVerifySMS',
   },
   EarnMDT: { path: '/home/earn', name: 'earnMDT' },
   AccountDetail: {

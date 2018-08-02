@@ -420,7 +420,7 @@ export default {
           break;
         case 'disable':
           this.nextRouteNameAfterPINFilled =
-            RouteDef.GoogleAuthSettingDisableVerifyPage.name;
+            RouteDef.DisableGoogleAuthVerifyPage.name;
           break;
         default:
           break;

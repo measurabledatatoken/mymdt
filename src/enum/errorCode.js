@@ -118,10 +118,10 @@ errorCode.properties = {
   [errorCode.SMSDailyLimitReached]: {
     messageId: 'message.error.smsDailyLimitReached',
   },
-  [errorCode.OTPInvalid]: {
+  [errorCode.SMSOtpInvalid]: {
     messageId: 'message.error.otpInvalid',
   },
-  [errorCode.OTPExpired]: {
+  [errorCode.SMSOtpExpired]: {
     messageId: 'message.error.otpExpired',
   },
   [errorCode.DeviceIsAlreadyRegistered]: {
