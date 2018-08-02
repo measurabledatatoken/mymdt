@@ -229,7 +229,7 @@ export default {
     },
     goToGoogleAuthVerify() {
       this.$router.push({
-        name: RouteDef.DisableTwoFactorAuthenticationVerifyPage.name,
+        name: RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.name,
       });
     },
   },

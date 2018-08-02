@@ -27,9 +27,9 @@ const RouteDef = {
     path: '/home/2fa/disablegoogleauth',
     name: 'DisableGoogleAuth',
   },
-  DisableTwoFactorAuthenticationVerifyPage: {
-    path: '/home/2fa/disable2fa',
-    name: 'DisableTwoFactorAuthenticationVerify',
+  DisableTwoFactorAuthenticationVerifyGoogleAuthPage: {
+    path: '/home/2fa/disable2faverifygoogleauth',
+    name: 'DisableTwoFactorAuthenticationVerifyGoogleAuth',
   },
   TwoFactorAuthenticationSetting: {
     path: '/home/usersettings/twofactor',
