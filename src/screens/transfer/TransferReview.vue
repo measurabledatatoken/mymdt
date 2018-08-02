@@ -182,12 +182,9 @@ export default {
           action: OTPActionType.TransferAction,
         });
         this.$router.push({
-          name: RouteDef.TwoFactorAuthenticationSMSVerify.name,
+          name: RouteDef.TransferVerifySMSPage.name,
           params: {
-            emailAddress: this.selectedSecurityUser.emailAddress,
-            payloadForCallback: { pin: pinCode },
-            successCallback: this.requestToStartTransfer,
-            action: OTPActionType.TransferAction,
+            pin: pinCode,
           },
         });
       } catch (error) {
@@ -203,7 +200,7 @@ export default {
         this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
       ) {
         this.$router.push({
-          name: RouteDef.TransferVerifyPage.name,
+          name: RouteDef.TransferVerifyGoogleAuthPage.name,
           params: {
             pin: pinCode,
           },
