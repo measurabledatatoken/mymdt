@@ -78,7 +78,6 @@ import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 import GoogleAuthStep from '@/components/googleAuth/GoogleAuthSettingStep';
-import SetupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
 import { GENERATE_GOOGLE_AUTHENTICATOR_SECRET } from '@/store/modules/security';
 
 export default {
@@ -105,10 +104,13 @@ export default {
       pinFor2FASetup: state => state.security.pinFor2FASetup,
     }),
   },
-  created() {
-    this.generateSecret({ pin: this.pinFor2FASetup }).then(response => {
+  async created() {
+    try {
+      const response = await this.generateSecret({ pin: this.pinFor2FASetup });
       this.googleAuthSecret = response.secret;
-    });
+    } catch (error) {
+      console.log(`error in generating google auth secret: ${error.message}`);
+    }
   },
   methods: {
     ...mapActions({
@@ -116,12 +118,7 @@ export default {
     }),
     goToNext() {
       this.$router.push({
-        showUserInfo: true,
-        name: RouteDef.GoogleAuthVerify.name,
-        params: {
-          stepTitle: this.$t('message.googleAuth.step3Title'),
-          mode: SetupGoogleAuthMode.SETUP,
-        },
+        name: RouteDef.GoogleAuthSettingStep3.name,
       });
     },
   },

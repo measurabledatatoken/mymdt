@@ -2,7 +2,6 @@
   <md-switch 
     :class="['md-primary', 'mdt-switch']"
     v-model="model"
-    @change="onChange"
   />
 </template>
 <script>
@@ -14,13 +13,13 @@ export default {
     },
   },
   computed: {
-    model() {
-      return this.value;
-    },
-  },
-  methods: {
-    onChange(value) {
-      this.$emit('input', value);
+    model: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      },
     },
   },
 };

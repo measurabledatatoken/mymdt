@@ -12,12 +12,10 @@
 </template>
 
 <script>
-import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 export default {
   components: {
-    MDTPrimaryButton,
     PaddedContainer,
   },
   props: {

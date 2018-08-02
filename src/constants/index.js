@@ -12,16 +12,24 @@ const RouteDef = {
     name: 'UserSettings',
   },
   GoogleAuthSettingStep1: {
-    path: '/home/usersettings/googleauthstep1',
+    path: '/home/2fa/googleauthstep1',
     name: 'GoogleAuthStep1',
   },
   GoogleAuthSettingStep2: {
-    path: '/home/usersettings/googleauthstep2',
+    path: '/home/2fa/googleauthstep2',
     name: 'GoogleAuthStep2',
   },
-  GoogleAuthVerify: {
-    path: '/home/2fa/googleauthverify',
-    name: 'GoogleAuthVerify',
+  GoogleAuthSettingStep3: {
+    path: '/home/2fa/googleauthstep3',
+    name: 'GoogleAuthStep3',
+  },
+  DisableGoogleAuthVerifyPage: {
+    path: '/home/2fa/disablegoogleauth',
+    name: 'DisableGoogleAuth',
+  },
+  DisableTwoFactorAuthenticationVerifyPage: {
+    path: '/home/2fa/disable2fa',
+    name: 'DisableTwoFactorAuthenticationVerify',
   },
   TwoFactorAuthenticationSetting: {
     path: '/home/usersettings/twofactor',
@@ -45,6 +53,10 @@ const RouteDef = {
   TransferSuccess: {
     path: '/home/transfer/ethwallet/review/success',
     name: 'transferSuccess',
+  },
+  TransferVerifyPage: {
+    path: '/home/transfer/transfererify',
+    name: 'TransferVerify',
   },
   EarnMDT: { path: '/home/earn', name: 'earnMDT' },
   AccountDetail: {

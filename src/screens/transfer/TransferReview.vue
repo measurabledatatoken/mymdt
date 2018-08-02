@@ -174,12 +174,13 @@ export default {
       validatePIN: VALIDATE_PIN_FOR_TRANSFER,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
-    goToSMSVerify(pinCode) {
+    async goToSMSVerify(pinCode) {
       this.setCountryDialCode(this.selectedSecurityUser.countryDialCode);
       this.setPhoneNumber(this.selectedSecurityUser.phoneNumber);
-      this.requestVerificationCode({
-        action: OTPActionType.TransferAction,
-      }).then(() => {
+      try {
+        await this.requestVerificationCode({
+          action: OTPActionType.TransferAction,
+        });
         this.$router.push({
           name: RouteDef.TwoFactorAuthenticationSMSVerify.name,
           params: {
@@ -189,16 +190,9 @@ export default {
             action: OTPActionType.TransferAction,
           },
         });
-      });
-    },
-    goToGoogleAuthVerify(pinCode) {
-      this.$router.push({
-        name: RouteDef.GoogleAuthVerify.name,
-        params: {
-          payloadForCallback: { pin: pinCode },
-          successCallback: this.requestToStartTransfer,
-        },
-      });
+      } catch (error) {
+        console.log(`error in requesting verification code: ${error.message}`);
+      }
     },
     start2FAVerify(pinCode) {
       if (
@@ -208,17 +202,25 @@ export default {
       } else if (
         this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
       ) {
-        this.goToGoogleAuthVerify(pinCode);
+        this.$router.push({
+          name: RouteDef.TransferVerifyPage.name,
+          params: {
+            pin: pinCode,
+          },
+        });
       }
     },
-    requestToStartTransfer(payload) {
-      this.startTransfer(payload).then(responseData => {
+    async requestToStartTransfer(payload) {
+      try {
+        const responseData = await this.startTransfer(payload);
         this.setTransferSuccessTransferType(this.transferType);
         this.setTransferSuccessTransaction(responseData);
         this.$router.push({
           name: RouteDef.TransferSuccess.name,
         });
-      });
+      } catch (error) {
+        console.log(`error in requesting verification code: ${error.message}`);
+      }
     },
     transferMDT() {
       trackEvent('Click on Transfer button', {
@@ -226,33 +228,34 @@ export default {
       });
       this.showPinCodeInput = true;
     },
-    onPinCodeFilled(pinCode) {
-      this.validatePIN(pinCode)
-        .catch(err => {
-          this.$refs.pinCodeInputPopup.setInvalid();
-          throw err;
-        })
-        .then(() => {
-          this.showPinCodeInput = false;
-          this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
-          if (
-            this.selectedSecurityUser.isTwofaEnabled &&
-            [
-              TwoFactorOption.USAGE.TRANSACTION,
-              TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN,
-            ].includes(this.selectedSecurityUser.twofaUsage)
-          ) {
-            this.start2FAVerify(pinCode);
-          } else {
-            return this.requestToStartTransfer({ pin: pinCode });
-          }
-        })
-        .catch(err => {
-          console.log(`error in onPinCodeFilled: ${err.message}`);
-          trackEvent('Transfer Failure', {
-            'Transfer Mode': this.TransferType,
-          });
+    async onPinCodeFilled(pinCode) {
+      try {
+        await this.validatePIN(pinCode);
+        this.showPinCodeInput = false;
+        this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
+      } catch (error) {
+        this.$refs.pinCodeInputPopup.setInvalid();
+        return;
+      }
+
+      try {
+        if (
+          this.selectedSecurityUser.isTwofaEnabled &&
+          [
+            TwoFactorOption.USAGE.TRANSACTION,
+            TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN,
+          ].includes(this.selectedSecurityUser.twofaUsage)
+        ) {
+          this.start2FAVerify(pinCode);
+        } else {
+          this.requestToStartTransfer({ pin: pinCode });
+        }
+      } catch (error) {
+        console.log(`error in onPinCodeFilled: ${error.message}`);
+        trackEvent('Transfer Failure', {
+          'Transfer Mode': this.TransferType,
         });
+      }
     },
     onFotgotClicked() {
       this.setDoneCallbackPath(RouteDef.TransferReview.path);

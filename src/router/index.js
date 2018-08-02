@@ -52,6 +52,8 @@ const TransferSuccess = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferSuccess');
 const QrCodeScanPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/QRCodeScanPage');
+const TransferVerifyPage = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/googleAuth/TransferVerifyPage');
 const EarnMDT = () => import('@/screens/EarnMDT');
 const WebView = () => import('@/screens/WebView');
 const TwoFactorAuthenticationSettingPage = () =>
@@ -60,10 +62,14 @@ const GoogleAuthSettingStep1 = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep1');
 const GoogleAuthSettingStep2 = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep2');
-const GoogleAuthVerify = () =>
-  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthVerify');
+const GoogleAuthSettingStep3 = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep3');
+const DisableGoogleAuthVerifyPage = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/DisableGoogleAuthVerifyPage');
 const TwoFactorAuthenticationSMSVerifyPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/phone/TwoFactorAuthenticationSMSVerifyPage');
+const DisableTwoFactorAuthenticationVerifyPage = () =>
+  import(/* webpackChunkName: "2fa" */ '@/screens/googleAuth/DisableTwoFactorAuthenticationVerifyPage');
 /**
  *  example code to fail async loading of route
  * 
@@ -233,7 +239,12 @@ const router = new Router({
           component: TransferSuccess,
           props: true,
         },
-
+        {
+          path: RouteDef.TransferVerifyPage.path,
+          name: RouteDef.TransferVerifyPage.name,
+          component: TransferVerifyPage,
+          props: true,
+        },
         // Earn MDT Route
         {
           path: RouteDef.EarnMDT.path,
@@ -252,19 +263,21 @@ const router = new Router({
           path: RouteDef.GoogleAuthSettingStep1.path,
           name: RouteDef.GoogleAuthSettingStep1.name,
           component: GoogleAuthSettingStep1,
-          props: true,
         },
         {
           path: RouteDef.GoogleAuthSettingStep2.path,
           name: RouteDef.GoogleAuthSettingStep2.name,
           component: GoogleAuthSettingStep2,
-          props: true,
         },
         {
-          path: RouteDef.GoogleAuthVerify.path,
-          name: RouteDef.GoogleAuthVerify.name,
-          component: GoogleAuthVerify,
-          props: true,
+          path: RouteDef.GoogleAuthSettingStep3.path,
+          name: RouteDef.GoogleAuthSettingStep3.name,
+          component: GoogleAuthSettingStep3,
+        },
+        {
+          path: RouteDef.DisableGoogleAuthVerifyPage.path,
+          name: RouteDef.DisableGoogleAuthVerifyPage.name,
+          component: DisableGoogleAuthVerifyPage,
         },
         // Two Factor Setting Page Route
         {
@@ -272,6 +285,11 @@ const router = new Router({
           name: RouteDef.TwoFactorAuthenticationSetting.name,
           component: TwoFactorAuthenticationSettingPage,
           props: true,
+        },
+        {
+          path: RouteDef.DisableTwoFactorAuthenticationVerifyPage.path,
+          name: RouteDef.DisableTwoFactorAuthenticationVerifyPage.name,
+          component: DisableTwoFactorAuthenticationVerifyPage,
         },
         {
           path: RouteDef.TwoFactorAuthenticationSMSVerify.path,
