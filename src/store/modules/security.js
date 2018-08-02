@@ -2,7 +2,7 @@ import api from '@/api';
 import { regTrackingSuperProperties } from '@/utils';
 import { FETCH_USER } from '@/store/modules/entities/users';
 import { REQUEST } from '@/store/modules/api';
-
+import { SET_IS_LOADING } from '@/store/modules/common';
 // mutation
 export const SET_COUNTRY_DIALCODE = 'phoneVerifyScreen/SET_COUNTRY_DIALCODE';
 export const SET_COUNTRY_CODE = 'phoneVerifyScreen/SET_COUNTRY_CODE';
@@ -243,25 +243,31 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.disable2FA,
       args: [pin, verificationCode, account.accessToken],
-      setLoading: true,
+      setLoading: false,
       openErrorPrompt: true,
     });
-    dispatch(FETCH_USER, {
+    await dispatch(FETCH_USER, {
       userId: state.selectedUserId,
     });
     return response;
   },
-  async [SET_2FA_OPTION]({ dispatch, state, rootGetters }, { method, usage }) {
+  async [SET_2FA_OPTION](
+    { dispatch, state, rootGetters, commit },
+    { method, usage },
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
+    const timeoutId = setTimeout(() => commit(SET_IS_LOADING, true), 200);
     const response = await dispatch(REQUEST, {
       api: api.security.set2FAOption,
       args: [method, usage, account.accessToken],
-      setLoading: true,
+      setLoading: false,
       openErrorPrompt: true,
     });
-    dispatch(FETCH_USER, {
+    await dispatch(FETCH_USER, {
       userId: state.selectedUserId,
     });
+    if (timeoutId) clearTimeout(timeoutId);
+    commit(SET_IS_LOADING, false);
     return response;
   },
   async [GENERATE_GOOGLE_AUTHENTICATOR_SECRET](
@@ -316,7 +322,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.disableGoogleAuth,
       args: [pin, verificationCode, account.accessToken],
-      setLoading: true,
+      setLoading: false,
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {

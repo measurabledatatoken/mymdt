@@ -72,7 +72,7 @@
       :md-content="$t('message.twoFactorAuthentication.disable2FAPopupDescription')"
       :md-confirm-text="$t('message.twoFactorAuthentication.turnOff2FA')"
       :md-cancel-text="$t('message.common.cancel')"
-      @md-confirm="onDisable2FAButtonClicked"
+      @md-confirm="showPinCodeInput = true"
     />
   </div>
 </template>
@@ -142,9 +142,8 @@ export default {
         return this.selectedSecurityUser.isTwofaEnabled;
       },
       set(value) {
-        console.log('SETTING VALUE');
         if (value) {
-          this.switchOn();
+          this.enable2FA({ pin: this.pinFor2FASetup });
         } else {
           this.showDisable2FAPopup = true;
         }
@@ -230,22 +229,8 @@ export default {
     },
     goToGoogleAuthVerify() {
       this.$router.push({
-        name: RouteDef.GoogleAuthVerify.name,
-        params: {
-          payloadForCallback: { pin: this.pinFor2FASetup },
-          successCallback: this.switchOff,
-        },
+        name: RouteDef.DisableTwoFactorAuthenticationVerifyPage.name,
       });
-    },
-    switchOn() {
-      this.enable2FA({ pin: this.pinFor2FASetup });
-    },
-    switchOff({ pin, verificationCode }) {
-      this.backToPath(RouteDef.TwoFactorAuthenticationSetting.path);
-      this.disable2FA({ pin, verificationCode });
-    },
-    onDisable2FAButtonClicked() {
-      this.showPinCodeInput = true;
     },
   },
 };

@@ -134,7 +134,7 @@
           :md-content="disableGoogleAuthPopupDescription"
           :md-confirm-text="$t('message.common.disable')"
           :md-cancel-text="$t('message.common.cancel')"
-          @md-confirm="onDisableGoogleAuthClicked"
+          @md-confirm="goToGoogleAuthSetting('disable')"
         />
 
         <!-- Continue to setup Google authenticator popup, show if the google auth secret exists -->
@@ -144,8 +144,8 @@
           :md-content="$t('message.googleAuth.continueSetupPopupDescription')"
           :md-confirm-text="$t('message.common.continue')"
           :md-cancel-text="$t('message.common.startOver')"
-          @md-confirm="onContinueSetupGoogleAuthClicked"
-          @md-cancel="setupNewGoogleAuth"
+          @md-confirm="goToGoogleAuthSetting('continue')"
+          @md-cancel="goToGoogleAuthSetting('setup-new')"
         />
       </template>
     </BaseUserSettingPage>
@@ -175,7 +175,6 @@ import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
-import SetupGoogleAuthMode from '@/enum/setupGoogleAuthMode';
 
 export default {
   components: {
@@ -203,7 +202,6 @@ export default {
       showDisableGoogleAuthPopup: false,
       disableGoogleAuthPopupDescription: '',
       showContinueGoogleAuthPopup: false,
-      currentSetupGoogleAuthMode: SetupGoogleAuthMode.SETUP,
     };
   },
   computed: {
@@ -289,22 +287,7 @@ export default {
             },
           });
           break;
-        case RouteDef.TwoFactorAuthenticationSetting.name:
-        case RouteDef.AddPhoneNumberInput.name:
-          this.$router.push({
-            name: this.nextRouteNameAfterPINFilled,
-          });
-          break;
-        case RouteDef.GoogleAuthSettingStep1.name:
-        case RouteDef.GoogleAuthVerify.name:
-          this.$router.push({
-            name: this.nextRouteNameAfterPINFilled,
-            params: {
-              mode: this.currentSetupGoogleAuthMode,
-            },
-          });
-          break;
-        default:
+        case RouteDef.ChangePhoneNumberInput.name:
           try {
             await this.requestVerificationCode({
               action: OTPActionType.VerifyPhoneNumberAction,
@@ -323,6 +306,11 @@ export default {
               `error in requesting verification code: ${error.message}`,
             );
           }
+          break;
+        default:
+          this.$router.push({
+            name: this.nextRouteNameAfterPINFilled,
+          });
       }
     },
     onFotgotClicked() {
@@ -351,6 +339,7 @@ export default {
     },
     onConfirmChangePhoneNumber() {
       this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+      this.nextRouteNameAfterPINFilled = RouteDef.ChangePhoneNumberInput.name;
       this.showPinCodeInput = true;
     },
     onPasscodeForgotClicked() {
@@ -373,18 +362,6 @@ export default {
           RouteDef.TwoFactorAuthenticationSetting.name;
         this.showPinCodeInput = true;
       }
-    },
-    // start over google auth setup
-    setupNewGoogleAuth() {
-      this.currentSetupGoogleAuthMode = SetupGoogleAuthMode.SETUP;
-      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
-      this.nextRouteNameAfterPINFilled = RouteDef.GoogleAuthSettingStep1.name;
-      this.showPinCodeInput = true;
-    },
-    // continue to setup
-    onContinueSetupGoogleAuthClicked() {
-      this.currentSetupGoogleAuthMode = SetupGoogleAuthMode.SETUP;
-      this.goToGoogleAuthVerifyPage();
     },
     disableGoogleAuth() {
       if (
@@ -411,17 +388,12 @@ export default {
       }
       this.showDisableGoogleAuthPopup = true;
     },
-    setupGoogleAuth(pinCode) {
+    setupGoogleAuth() {
       if (this.getSelectedSecurityUser.hasGoogleAuthSecret) {
         this.showContinueGoogleAuthPopup = true;
       } else {
-        this.setupNewGoogleAuth(pinCode);
+        this.goToGoogleAuthSetting('setup-new');
       }
-    },
-    goToGoogleAuthVerifyPage() {
-      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
-      this.nextRouteNameAfterPINFilled = RouteDef.GoogleAuthVerify.name;
-      this.showPinCodeInput = true;
     },
     onGoogleAuthClicked() {
       if (!this.getSelectedSecurityUser.isPasscodeSet) {
@@ -435,9 +407,25 @@ export default {
         this.setupGoogleAuth();
       }
     },
-    onDisableGoogleAuthClicked() {
-      this.currentSetupGoogleAuthMode = SetupGoogleAuthMode.DISABLE;
-      this.goToGoogleAuthVerifyPage();
+    goToGoogleAuthSetting(action) {
+      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+      switch (action) {
+        case 'setup-new':
+          this.nextRouteNameAfterPINFilled =
+            RouteDef.GoogleAuthSettingStep1.name;
+          break;
+        case 'continue':
+          this.nextRouteNameAfterPINFilled =
+            RouteDef.GoogleAuthSettingStep3.name;
+          break;
+        case 'disable':
+          this.nextRouteNameAfterPINFilled =
+            RouteDef.GoogleAuthSettingDisableVerifyPage.name;
+          break;
+        default:
+          break;
+      }
+      this.showPinCodeInput = true;
     },
   },
 };
