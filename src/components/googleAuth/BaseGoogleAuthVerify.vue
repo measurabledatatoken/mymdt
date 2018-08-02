@@ -67,17 +67,6 @@ export default {
       VerificationCodeLength,
     };
   },
-  // computed: {
-  //   ...mapState({
-  //     doneCallBackPath: state => state.security.doneCallBackPath,
-  //     pinFor2FASetup: state => state.security.pinFor2FASetup,
-  //   }),
-  // },
-  // metaInfo() {
-  //   return {
-  //     title: this.$t('message.googleAuth.setupTitle'),
-  //   };
-  // },
   methods: {
     onVerificationCodeInput(value) {
       if (value.length === VerificationCodeLength) {
@@ -88,43 +77,6 @@ export default {
     },
     async onDoneClicked() {
       this.$emit('md-confirm', this.verificationCode);
-      // this.doneButtonLoading = true;
-      // switch (this.mode) {
-      //   case SetupGoogleAuthMode.SETUP:
-      //     this.verifySecret({ verificationCode: this.verificationCode })
-      //       .then(() => {
-      //         this.doneButtonLoading = false;
-      //         this.showGoogleAuthSetupSuccessPopup = true;
-      //       })
-      //       .catch(() => {
-      //         this.doneButtonLoading = false;
-      //       });
-      //     break;
-      //   case SetupGoogleAuthMode.DISABLE:
-      //     this.disableGoogleAuth({
-      //       pin: this.pinFor2FASetup,
-      //       verificationCode: this.verificationCode,
-      //     })
-      //       .then(() => {
-      //         this.doneButtonLoading = false;
-      //         this.backToPath(this.doneCallBackPath);
-      //       })
-      //       .catch(() => {
-      //         this.doneButtonLoading = false;
-      //       });
-      //     break;
-      //   default:
-      //     this.verifyOTP({ verificationCode: this.verificationCode })
-      //       .then(() => {
-      //         this.doneButtonLoading = false;
-      //         this.payloadForCallback.verificationCode = this.verificationCode;
-      //         this.successCallback(this.payloadForCallback);
-      //       })
-      //       .catch(() => {
-      //         this.doneButtonLoading = false;
-      //       });
-      //     break;
-      // }
     },
   },
 };

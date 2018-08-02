@@ -35,7 +35,6 @@ export default {
   computed: {
     ...mapState({
       doneCallBackPath: state => state.security.doneCallBackPath,
-      pinFor2FASetup: state => state.security.pinFor2FASetup,
     }),
   },
   methods: {
