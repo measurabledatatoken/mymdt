@@ -1,6 +1,10 @@
 import api from '@/api';
 import TransferType from '@/enum/transferType';
 import { REQUEST } from '@/store/modules/api';
+import {
+  SET_TRANSACTIONS,
+  SET_TRANSFER_TYPE_FOR_SUCCESS,
+} from '@/store/modules/ui/transferSuccess';
 
 // mutation
 export const SET_TRANSFER_AMOUNT = 'transfer/SET_TRANSFER_AMOUNT';
@@ -114,8 +118,8 @@ const mutations = {
 };
 
 const actions = {
-  [START_TRANSFER](
-    { dispatch, rootState, rootGetters },
+  async [START_TRANSFER](
+    { dispatch, rootState, rootGetters, commit },
     { pin, verificationCode },
   ) {
     const transferFromAccount = rootState.transfer.transferFromAccount;
@@ -131,7 +135,7 @@ const actions = {
       toAddress = rootState.transfer.transferToAccount.emailAddress;
     }
 
-    return dispatch(REQUEST, {
+    const responseData = await dispatch(REQUEST, {
       api: api.transfer.transfer,
       args: [
         toAddress,
@@ -144,6 +148,8 @@ const actions = {
       ],
       openErrorPrompt: true,
     });
+    commit(SET_TRANSACTIONS, responseData);
+    commit(SET_TRANSFER_TYPE_FOR_SUCCESS, transferType);
   },
 };
 

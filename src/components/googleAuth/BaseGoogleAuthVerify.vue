@@ -3,15 +3,15 @@
     <BaseUserSettingPage>
       <template slot="content">
         <div class="title">{{ title || $t('message.twoFactorAuthentication.verifyTitle') }}</div> 
-        <md-list class="md-triple-line">
-          <md-list-item>
+        <div class="container">
+          <div class="google-authenticator-container">
             <md-avatar class="google-authenticator-screen">
               <img 
                 src="/static/googleAuth/ga-code.svg" 
                 alt="Google Authenticator"
               >
             </md-avatar>
-            <div class="md-list-item-text">
+            <div>
               <md-field :md-counter="false">
                 <label class="label">{{ $t('message.phone.verification_code') }}</label>
                 <md-input 
@@ -23,15 +23,13 @@
                 />
               </md-field>
             </div>
-          </md-list-item>
-          <md-list-item>
-            <MDTPrimaryButton 
-              :disabled="!verificationCodeFilled"
-              :loading="doneButtonLoading"
-              @click="onDoneClicked()"
-            > {{ $t('message.common.done') }}</MDTPrimaryButton>
-          </md-list-item>
-        </md-list> 
+          </div>
+          <MDTPrimaryButton 
+            :disabled="!verificationCodeFilled"
+            :loading="doneButtonLoading"
+            @click="onDoneClicked()"
+          > {{ $t('message.common.done') }}</MDTPrimaryButton>
+        </div>
       </template>
     </BaseUserSettingPage>
   </div>
@@ -83,6 +81,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.md-field {
+  margin: 16px $defaultPageMargin 10px $defaultPageMargin;
+  width: calc(100% - 2 * #{$defaultPageMargin});
+  .label {
+    color: $label-color;
+    top: 0;
+    opacity: 1;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .md-input {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
 .google-authenticator-verify {
   font-size: 16px;
   .title {
@@ -92,48 +106,23 @@ export default {
   .remark {
     text-align: left;
   }
-  .md-field {
-    margin: 16px $defaultPageMargin 10px $defaultPageMargin;
-    width: calc(100% - 2 * #{$defaultPageMargin});
-
-    .label {
-      color: $label-color;
-      top: 0;
-      opacity: 1;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .md-input {
-      margin-top: 8px;
-      margin-bottom: 8px;
-    }
-  }
-  /deep/ .md-avatar {
-    &.google-authenticator-screen {
-      width: 112px;
-      height: 112px;
-    }
-  }
-  /deep/ .md-progress-spinner {
-    position: absolute;
-    svg {
-      .md-progress-spinner-circle {
-        stroke: white;
+  .container {
+    padding: 6px 8px;
+    text-align: left;
+    .google-authenticator-container {
+      display: flex;
+      margin-bottom: 20px;
+      /deep/ .md-avatar {
+        &.google-authenticator-screen {
+          width: 112px;
+          height: 112px;
+        }
       }
     }
-    &.spinner-layer {
-      opacity: 0.7;
-    }
-  }
-  /deep/ .md-list {
-    .md-list-item-content {
-      padding: 6px 8px;
-      .md-button {
-        width: 100%;
-        &.btn-done {
-          margin-top: 10px;
-        }
+    /deep/ .md-button {
+      width: 100%;
+      &.btn-done {
+        margin-top: 10px;
       }
     }
   }

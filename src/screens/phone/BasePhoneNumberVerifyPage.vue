@@ -9,7 +9,7 @@
     </template>
 
     <template slot="action-area">
-      <div class="phone-number-cointainer">
+      <div class="phone-number-container">
         <div class="dail-countrycode">
           {{ countryDialCode }}
         </div>
@@ -168,11 +168,11 @@ export default {
   }
 }
 .content,
-.phone-number-cointainer {
+.phone-number-container {
   width: 100%;
 }
 
-.phone-number-cointainer {
+.phone-number-container {
   min-height: 20px;
 
   .dail-countrycode,

@@ -30,6 +30,7 @@ export default {
 <style lang="scss" scoped>
 .google-authenticator-setting-step {
   font-size: 16px;
+  padding-bottom: 16px;
   .step-title {
     margin: 24px 0;
     font-weight: bold;
