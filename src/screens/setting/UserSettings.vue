@@ -310,6 +310,9 @@ export default {
         default:
           this.$router.push({
             name: this.nextRouteNameAfterPINFilled,
+            params: {
+              pin: pinCode,
+            },
           });
       }
     },
