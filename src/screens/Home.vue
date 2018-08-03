@@ -17,6 +17,7 @@
       >
         <UserInfoCard
           :user="user"
+          :hover="false"
           @transfer="goToTransfer(user)"
           @goToAccountDetail="goToAccountDetail(user)"
         />
@@ -28,6 +29,7 @@
       >
         <UserInfoCard
           :user="user"
+          :hover="false"
           disabled
           @transfer="invalidUserClicked(user)"
           @goToAccountDetail="invalidUserClicked(user)"
