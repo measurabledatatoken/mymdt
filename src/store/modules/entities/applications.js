@@ -1,4 +1,5 @@
 import api from '@/api';
+import { REQUEST } from '@/store/modules/api';
 
 export const FETCHING_APPLICATIONS_SUCCESS =
   'application/FETCHING_APPLICATIONS_SUCCESS';
@@ -30,21 +31,22 @@ const mutations = {
 };
 
 const actions = {
-  [FETCH_APPLICATIONS]({ commit, rootGetters }, { userId }) {
-    return api.application
-      .getApplications(rootGetters.getUser(userId).accessToken)
-      .then(data =>
-        commit(FETCHING_APPLICATIONS_SUCCESS, {
-          userId,
-          data,
-        }),
-      )
-      .catch(error =>
-        commit(FETCHING_APPLICATIONS_FAILURE, {
-          userId,
-          error,
-        }),
-      );
+  async [FETCH_APPLICATIONS]({ commit, dispatch, rootGetters }, { userId }) {
+    try {
+      const data = dispatch(REQUEST, {
+        api: api.application.getApplications,
+        args: [rootGetters.getUser(userId).accessToken],
+      });
+      commit(FETCHING_APPLICATIONS_SUCCESS, {
+        userId,
+        data,
+      });
+    } catch (error) {
+      commit(FETCHING_APPLICATIONS_FAILURE, {
+        userId,
+        error,
+      });
+    }
   },
 };
 
