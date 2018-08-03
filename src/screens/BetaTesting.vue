@@ -91,7 +91,12 @@ export default {
         },
       });
     } else {
-      this.showScreen = true;
+      const isAdmin = this.$route.query.isadmin;
+      if (isAdmin) {
+        this.goToHome();
+      } else {
+        this.showScreen = true;
+      }
       // this.getBetaTestingSession(this.deviceId).then(sessionExists => {
       //   if (!sessionExists) {
       //     this.showScreen = true;
