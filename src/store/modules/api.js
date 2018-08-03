@@ -77,7 +77,7 @@ const actions = {
       defaultErrorPromptTitle = {
         messageId: 'message.common.error_title',
       },
-      openErrorPromptForErrorCodes,
+      openErrorPromptForErrorCodes = { [ErrorCode.UnAuthorizedAccess]: true },
     } = payload;
 
     if (openErrorPrompt || openErrorPromptForErrorCodes) {
@@ -86,6 +86,7 @@ const actions = {
 
       let message = defaultErrorPromptMessage;
       let title = defaultErrorPromptTitle;
+      let redirectUrl = null;
 
       if (error.response.data && error.response.data.error_code) {
         const errorCode = error.response.data.error_code;
@@ -111,7 +112,12 @@ const actions = {
                   messageId: ErrorCode.properties[errorCode].titleId,
                 };
               }
+
+              if (ErrorCode.properties[errorCode].redirectUrl) {
+                redirectUrl = ErrorCode.properties[errorCode].redirectUrl;
+              }
             }
+            shouldOpen = true;
             break;
           }
           case false: {
@@ -129,6 +135,7 @@ const actions = {
         dispatch(OPEN_ERROR_PROMPT, {
           message,
           title,
+          redirectUrl,
         });
       }
     }

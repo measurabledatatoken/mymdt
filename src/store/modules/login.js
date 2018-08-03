@@ -47,7 +47,7 @@ const mutations = {
 
 const actions = {
   async [REQUEST_LOGIN](
-    { context, dispatch },
+    { commit, dispatch },
     { emailAddress, password, appID },
   ) {
     try {
@@ -56,7 +56,7 @@ const actions = {
         args: [emailAddress, password, appID],
         openErrorPrompt: true,
       });
-      context.commit(SET_LOGIN_ERRORCODE, null);
+      commit(SET_LOGIN_ERRORCODE, null);
 
       if (data.length > 0) {
         const credential = {
@@ -65,16 +65,16 @@ const actions = {
           claimed_amount: data.claimed_amount,
         };
         const credentials = [credential];
-        context.commit(SET_CREDENTIALS, credentials);
+        commit(SET_CREDENTIALS, credentials);
       }
-      context.commit(SET_APP_ID, appID);
+      commit(SET_APP_ID, appID);
 
       return null;
     } catch (error) {
       if (error.response && error.response.data) {
-        context.commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
+        commit(SET_LOGIN_ERRORCODE, error.response.data.error_code);
       } else {
-        context.commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
+        commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
       }
       throw error;
     }
