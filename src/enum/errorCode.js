@@ -1,3 +1,5 @@
+import { accessTokenExpiredUrl } from '@/constants';
+
 const errorCode = {
   UnknownError: 100,
   MissingParameters: 101,
@@ -135,6 +137,10 @@ errorCode.properties = {
   },
   [errorCode.GoogleAuthTokenInvalid]: {
     messageId: 'message.error.googleAuthTokenInvalid',
+  },
+  [errorCode.UnAuthorizedAccess]: {
+    messageId: 'message.error.sessionExpired',
+    redirectUrl: accessTokenExpiredUrl,
   },
 };
 

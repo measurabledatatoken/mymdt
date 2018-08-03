@@ -45,7 +45,8 @@
     "deviceIsAlreadyRegistered": "Device has already registered.",
     "accessCodeIsNotValid": "Access Code is not valid.",
     "accessCodeIsUsed": "Access Code is already used.",
-    "googleAuthTokenInvalid": "Google authentication token is invalid"
+    "googleAuthTokenInvalid": "Google authentication token is invalid",
+    "sessionExpired": "Your session has been expired"
   },
   "home": {
     "total_balance": "Total Balance",

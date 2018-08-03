@@ -79,13 +79,13 @@ const actions = {
       console.log('getMDTPrice failed', error);
     }
   },
-  async [REQUEST_APP_CONFIG]({ context, dispatch }) {
+  async [REQUEST_APP_CONFIG]({ commit, dispatch }) {
     try {
       const data = await dispatch(REQUEST, {
         api: api.misc.getAppConfig,
         openErrorPrompt: true,
       });
-      context.commit(SET_APP_CONFIG, data);
+      commit(SET_APP_CONFIG, data);
     } catch (error) {
       console.log('getAppConfig failed', error);
     }
