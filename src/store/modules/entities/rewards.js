@@ -53,29 +53,30 @@ const actions = {
       ),
     );
   },
-  [FETCH_REWARDS]({ commit, rootState, rootGetters }, { userId }) {
+  async [FETCH_REWARDS](
+    { commit, dispatch, rootState, rootGetters },
+    { userId },
+  ) {
     commit(FETCHING_REWARDS, {
       id: userId,
     });
-    return delay(750)
-      .then(() =>
-        api.reward.getRewards(
-          rootState.home.appID,
-          rootGetters.getUser(userId).accessToken,
-        ),
-      )
-      .then(data =>
-        commit(FETCHING_REWARDS_SUCCESS, {
-          id: userId,
-          data,
-        }),
-      )
-      .catch(error =>
-        commit(FETCHING_REWARDS_FAILURE, {
-          id: userId,
-          error,
-        }),
-      );
+    try {
+      await delay(750);
+      const data = await dispatch(REQUEST, {
+        api: api.reward.getRewards,
+        args: [rootState.home.appID, rootGetters.getUser(userId).accessToken],
+        openErrorPrompt: true,
+      });
+      commit(FETCHING_REWARDS_SUCCESS, {
+        id: userId,
+        data,
+      });
+    } catch (error) {
+      commit(FETCHING_REWARDS_FAILURE, {
+        id: userId,
+        error,
+      });
+    }
   },
   async [CLAIM_REWARD](
     { commit, dispatch, rootState, rootGetters },

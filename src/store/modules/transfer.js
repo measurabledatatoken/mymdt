@@ -146,6 +146,7 @@ const actions = {
         transferNote,
         transferFromAccount.accessToken,
       ],
+      setLoading: true,
       openErrorPrompt: true,
     });
     commit(SET_TRANSACTIONS, responseData);

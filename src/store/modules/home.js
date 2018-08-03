@@ -2,6 +2,7 @@ import api from '@/api';
 
 import { SET_USERS } from '@/store/modules/entities/users';
 import { regTrackingSuperProperties } from '@/utils';
+import { REQUEST } from '@/store/modules/api';
 
 // Mutations
 export const SET_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -60,34 +61,37 @@ const mutations = {
 };
 
 const actions = {
-  [REQUEST_MDT_PRICE]({ commit, state }) {
+  async [REQUEST_MDT_PRICE]({ commit, dispatch, state }) {
     const priceUnit = state.priceUnit;
-    api.misc
-      .getMDTPrice(priceUnit)
-      .then(data => {
-        if (!priceUnit) {
-          commit(SET_MDT_PRICE, data.price_usd);
-        } else {
-          const priceUnitKey = `price_${priceUnit.toLowerCase()}`;
-          commit(SET_MDT_PRICE, data[priceUnitKey]);
-        }
-      })
-      .catch(error => {
-        console.log('getMDTPrice failed', error);
+    try {
+      const data = await dispatch(REQUEST, {
+        api: api.misc.getMDTPrice,
+        args: [priceUnit],
+        openErrorPrompt: true,
       });
+      if (!priceUnit) {
+        commit(SET_MDT_PRICE, data.price_usd);
+      } else {
+        const priceUnitKey = `price_${priceUnit.toLowerCase()}`;
+        commit(SET_MDT_PRICE, data[priceUnitKey]);
+      }
+    } catch (error) {
+      console.log('getMDTPrice failed', error);
+    }
   },
-  [REQUEST_APP_CONFIG](context) {
-    api.misc
-      .getAppConfig()
-      .then(data => {
-        context.commit(SET_APP_CONFIG, data);
-      })
-      .catch(error => {
-        console.log('getAppConfig failed', error);
+  async [REQUEST_APP_CONFIG]({ context, dispatch }) {
+    try {
+      const data = await dispatch(REQUEST, {
+        api: api.misc.getAppConfig,
+        openErrorPrompt: true,
       });
+      context.commit(SET_APP_CONFIG, data);
+    } catch (error) {
+      console.log('getAppConfig failed', error);
+    }
   },
-  [REQUEST_USER_ACCOUNTS](context) {
-    const credentials = context.rootState.login.credentials;
+  async [REQUEST_USER_ACCOUNTS]({ commit, rootState, dispatch }) {
+    const credentials = rootState.login.credentials;
     const validCredentials = [];
     credentials.forEach(credential => {
       if (credential.access_token.length > 0) {
@@ -95,24 +99,24 @@ const actions = {
       }
     });
 
-    return api.account
-      .getUserAccountsData(validCredentials)
-      .then(normalizeduserAccountData => {
-        if (normalizeduserAccountData.result.length > 0) {
-          context.commit(SET_USERS, {
-            byId: normalizeduserAccountData.entities.users,
-            allIds: normalizeduserAccountData.result,
-          });
-
-          context.commit(
-            SET_SELECTED_USER,
-            normalizeduserAccountData.result[0],
-          );
-        }
-      })
-      .catch(err => {
-        console.log(`Error in REQUEST_USER_ACCOUNTS${err}`);
+    try {
+      const normalizeduserAccountData = await dispatch(REQUEST, {
+        api: api.account.getUserAccountsData,
+        args: [validCredentials],
+        setLoading: true,
+        openErrorPrompt: true,
       });
+      if (normalizeduserAccountData.result.length > 0) {
+        commit(SET_USERS, {
+          byId: normalizeduserAccountData.entities.users,
+          allIds: normalizeduserAccountData.result,
+        });
+
+        commit(SET_SELECTED_USER, normalizeduserAccountData.result[0]);
+      }
+    } catch (error) {
+      console.log(`Error in REQUEST_USER_ACCOUNTS${error}`);
+    }
   },
 };
 
