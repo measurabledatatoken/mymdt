@@ -26,6 +26,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 $switch-width: 52px;
+$switch-height: 24px;
 $thumb-size: 16px;
 $padding-between-switch-and-thumb: 5px;
 .mdt-switch {
@@ -33,14 +34,14 @@ $padding-between-switch-and-thumb: 5px;
     &.md-theme-default {
       .md-switch-container {
         background: $theme-disable-color-font;
-        width: 52px;
-        min-width: 52px;
-        height: 24px;
+        width: $switch-width;
+        min-width: $switch-width;
+        height: $switch-height;
       }
       .md-switch-thumb {
         background-color: white;
-        width: 16px;
-        height: 16px;
+        width: $thumb-size;
+        height: $thumb-size;
         transform: translate3d($padding-between-switch-and-thumb, 0, 0);
       }
       &.md-checked {
