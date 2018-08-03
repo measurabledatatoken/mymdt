@@ -93,10 +93,6 @@ import {
   VALIDATE_PIN_FOR_TRANSFER,
   REQUEST_VERIFICATION_CODE,
 } from '@/store/modules/security';
-import {
-  SET_TRANSFER_TYPE,
-  SET_TRANSACTIONS,
-} from '@/store/modules/ui/transferSuccess';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
@@ -157,15 +153,13 @@ export default {
   },
   created() {
     trackEvent('View "Transfer review" Page', {
-      'Transfer Mode': this.TransferType,
+      'Transfer Mode': this.transferType,
     });
   },
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setSelectedSecurityUser: SET_SELECTED_USER,
-      setTransferSuccessTransferType: SET_TRANSFER_TYPE,
-      setTransferSuccessTransaction: SET_TRANSACTIONS,
       setCountryDialCode: SET_COUNTRY_DIALCODE,
       setPhoneNumber: SET_PHONENUMBER,
     }),
@@ -209,9 +203,7 @@ export default {
     },
     async requestToStartTransfer(payload) {
       try {
-        const responseData = await this.startTransfer(payload);
-        this.setTransferSuccessTransferType(this.transferType);
-        this.setTransferSuccessTransaction(responseData);
+        await this.startTransfer(payload);
         this.$router.push({
           name: RouteDef.TransferSuccess.name,
         });

@@ -83,7 +83,7 @@ export default {
   },
   created() {
     trackEvent('Transfer Success', {
-      'Transfer Mode': this.TransferType,
+      'Transfer Mode': this.transferType,
     });
     this.setHideNavigationBackButton(true);
   },

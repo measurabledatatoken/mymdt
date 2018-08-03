@@ -6,13 +6,12 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { VERIFY_GOOGLE_AUTHENTICATOR_OTP } from '@/store/modules/security';
 import BaseGoogleAuthVerify from '@/components/googleAuth/BaseGoogleAuthVerify';
 import BasePage from '@/screens/BasePage';
-import { START_TRANSFER, SET_TRANSFER_TYPE } from '@/store/modules/transfer';
+import { START_TRANSFER } from '@/store/modules/transfer';
 import { RouteDef } from '@/constants';
-import { SET_TRANSACTIONS } from '@/store/modules/ui/transferSuccess';
 
 export default {
   components: {
@@ -45,10 +44,6 @@ export default {
       verifyOTP: VERIFY_GOOGLE_AUTHENTICATOR_OTP,
       startTransfer: START_TRANSFER,
     }),
-    ...mapMutations({
-      setTransferSuccessTransferType: SET_TRANSFER_TYPE,
-      setTransferSuccessTransaction: SET_TRANSACTIONS,
-    }),
     async onDoneClicked(verificationCode) {
       try {
         this.doneButtonLoading = true;
@@ -62,12 +57,10 @@ export default {
       }
 
       try {
-        const responseData = await this.startTransfer({
+        await this.startTransfer({
           pin: this.pin,
           verificationCode: verificationCode,
         });
-        this.setTransferSuccessTransferType(this.transferType);
-        this.setTransferSuccessTransaction(responseData);
         this.$router.push({
           name: RouteDef.TransferSuccess.name,
         });

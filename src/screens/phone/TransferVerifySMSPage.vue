@@ -7,13 +7,12 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { VERIFY_VERIFICATION_CODE } from '@/store/modules/security';
 import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage';
 import BasePage from '@/screens/BasePage';
 import { RouteDef } from '@/constants';
-import { SET_TRANSFER_TYPE, START_TRANSFER } from '@/store/modules/transfer';
-import { SET_TRANSACTIONS } from '@/store/modules/ui/transferSuccess';
+import { START_TRANSFER } from '@/store/modules/transfer';
 import OTPActionType from '@/enum/otpActionType';
 
 export default {
@@ -42,10 +41,6 @@ export default {
       verifyVerificationCode: VERIFY_VERIFICATION_CODE,
       startTransfer: START_TRANSFER,
     }),
-    ...mapMutations({
-      setTransferSuccessTransferType: SET_TRANSFER_TYPE,
-      setTransferSuccessTransaction: SET_TRANSACTIONS,
-    }),
     async onDoneClicked(verificationCode) {
       try {
         await this.verifyVerificationCode({
@@ -57,12 +52,10 @@ export default {
         return;
       }
       try {
-        const responseData = await this.startTransfer({
+        await this.startTransfer({
           pin: this.pin,
           verificationCode: verificationCode,
         });
-        this.setTransferSuccessTransferType(this.transferType);
-        this.setTransferSuccessTransaction(responseData);
         this.$router.push({
           name: RouteDef.TransferSuccess.name,
         });
