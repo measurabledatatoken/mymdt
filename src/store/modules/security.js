@@ -15,6 +15,7 @@ export const SET_SECURITY_USER_PHONE_INFO =
   'security/SET_SECURITY_USER_PHONE_INFO';
 export const SET_PIN_FOR_2FA_SETUP = 'security/SET_PIN_FOR_2FA_SETUP';
 // export const SET_2FA_STATUS = 'security/SET_2FA_STATUS';
+export const SET_VALIDATING_PIN = 'security/SET_VALIDATING_PIN';
 
 // action
 export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
@@ -50,6 +51,7 @@ const state = {
   doneCallBackPath: null,
   selectedUserId: null,
   pinFor2FASetup: null,
+  validatingPIN: false,
 };
 
 const getters = {
@@ -69,6 +71,9 @@ const mutations = {
   },
   [SET_DONE_CALLBACK_PATH](state, doneCallBackPath) {
     state.doneCallBackPath = doneCallBackPath;
+  },
+  [SET_VALIDATING_PIN](state, validatingPIN) {
+    state.validatingPIN = validatingPIN;
   },
   [FLUSH_PHONE_STATE](state) {
     state.countryDialCode = null;
@@ -90,15 +95,19 @@ const mutations = {
 };
 
 const actions = {
-  [VALIDATE_PIN_FOR_SECURITY]({ state, dispatch, rootGetters }, pin) {
+  async [VALIDATE_PIN_FOR_SECURITY](
+    { state, commit, dispatch, rootGetters },
+    pin,
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
-
-    return dispatch(REQUEST, {
+    commit(SET_VALIDATING_PIN, true);
+    await dispatch(REQUEST, {
       api: api.security.validatePIN,
       args: [pin, account.accessToken],
-      setLoading: true,
+      setLoading: false,
       openErrorPrompt: false,
     });
+    commit(SET_VALIDATING_PIN, false);
   },
   [VALIDATE_PIN_FOR_SELECTED_USER]({ dispatch, rootGetters }, pin) {
     const account = rootGetters.getSelectedUser;
@@ -109,15 +118,16 @@ const actions = {
       openErrorPrompt: false,
     });
   },
-  [VALIDATE_PIN_FOR_TRANSFER]({ dispatch, rootState }, pin) {
+  async [VALIDATE_PIN_FOR_TRANSFER]({ commit, dispatch, rootState }, pin) {
     const transferFromAccount = rootState.transfer.transferFromAccount;
-
-    return dispatch(REQUEST, {
+    commit(SET_VALIDATING_PIN, true);
+    await dispatch(REQUEST, {
       api: api.security.validatePIN,
       args: [pin, transferFromAccount.accessToken],
-      setLoading: true,
+      setLoading: false,
       openErrorPrompt: false,
     });
+    commit(SET_VALIDATING_PIN, false);
   },
   [RESET_PIN](
     { dispatch, state, rootGetters },
