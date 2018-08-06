@@ -255,7 +255,10 @@
     "importAccounts": "Import Account(s)",
     "NDA": "NDA for Beta Testing with MailTime",
     "agreementCheckbox1": "I agree to {0} of MDT Wallet Beta Testing",
-    "agreementCheckbox2": "the rules"
+    "agreementCheckbox2": "the rules",
+    "betaEndTitle": "MyMDT Closed Beta Testing",
+    "betaEndDescription": "The testing has ended. Thank you very much for your participation.<br/>You will receive an email from support@mailtime.com, regarding your final rewards and distribution.",
+    "contactus": "If you have any questions, contact <a href=\"mailto:my@mdt.co\" >my@mdt.co</a>.<br/>You may also join the MyMDT beta tester WeChat group — Please add “carina111018” on WeChat and comment “MyMDT 内测人员”."
   },
   "legalAndPrivacy": {
     "termsOfUse": "Terms of Use"

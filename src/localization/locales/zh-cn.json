@@ -255,7 +255,10 @@
     "importAccounts": "导入邮箱账号",
     "NDA": "保密协议",
     "agreementCheckbox1": "我同意有关 MDT 钱包 Beta 测试版的{0}",
-    "agreementCheckbox2": "相关规定"
+    "agreementCheckbox2": "相关规定",
+    "betaEndTitle": "MyMDT封闭Beta测试",
+    "betaEndDescription": "测试已经结束。非常感谢您的参与。<br/>您将收到来自support@mailtime.com的电子邮件，内容涉及您的最终奖励和分发。",
+    "contactus": "如果您有任何疑问，请联系<a href=\"mailto:my@mdt.co\"> my@mdt.co </a>。您也可以加入MyMDT beta测试人员 微信群组 - 请在微信上添加“carina111018”并发表评论“MyMDT内测人员”。"
   },
   "legalAndPrivacy": {
     "termsOfUse": "使用条款"

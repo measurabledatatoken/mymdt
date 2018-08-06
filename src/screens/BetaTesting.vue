@@ -4,35 +4,14 @@
     @submit.prevent="handleSubmit"
   >
     <div :class="['beta-testing-form__wrapper', { 'beta-testing-form__wrapper--active': showScreen }]">
+      <div class="beta-testing-form__header">
+        <h1>{{ $t('message.betaTesting.betaEndTitle') }}</h1>
+      </div>
       <div class="beta-testing-form__content">
-        <h1>{{ $t('message.betaTesting.title') }}</h1>
-        <p>{{ $t('message.betaTesting.description') }}</p>
-        <BaseField :error="accessCodeError">
-          <md-input
-            :placeholder="$t('message.betaTesting.accessCode')"
-            :value="$v.accessCode.$model"
-            class="beta-testing-form__content-input"
-            @input="handleInput($event)"
-          />
-        </BaseField>
+        <p v-html="$t('message.betaTesting.betaEndDescription')"/>
       </div>
       <div class="beta-testing-form__footer">
-        <Checkbox v-model="$v.agree.$model">
-          <template
-            slot="title"
-          >
-            <i18n path="message.betaTesting.agreementCheckbox1">
-              <a @click.prevent.stop="handleClickNDA">{{ $t('message.betaTesting.agreementCheckbox2') }}</a>
-            </i18n>
-          </template>
-        </Checkbox>
-        <p>{{ $t('message.betaTesting.agreementDetail') }}</p>
-        <MDTPrimaryButton
-          :disabled="!$v.$dirty || $v.$anyError"
-          type="submit"
-        >
-          {{ $t('message.betaTesting.importAccounts') }}
-        </MDTPrimaryButton>
+        <p v-html="$t('message.betaTesting.contactus')"/>
       </div>
     </div>
     <NDA :active.sync="showNDA" />
@@ -112,13 +91,19 @@ export default {
         },
       });
     } else {
-      this.getBetaTestingSession(this.deviceId).then(sessionExists => {
-        if (!sessionExists) {
-          this.showScreen = true;
-        } else {
-          this.goToHome();
-        }
-      });
+      const isAdmin = this.$route.query.isadmin;
+      if (isAdmin) {
+        this.goToHome();
+      } else {
+        this.showScreen = true;
+      }
+      // this.getBetaTestingSession(this.deviceId).then(sessionExists => {
+      //   if (!sessionExists) {
+      //     this.showScreen = true;
+      //   } else {
+      //     this.goToHome();
+      //   }
+      // });
     }
     trackEvent('Open Beta Testing url ');
   },
@@ -178,8 +163,7 @@ export default {
       opacity: 1;
     }
   }
-
-  .beta-testing-form__content {
+  .beta-testing-form__header {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -191,45 +175,27 @@ export default {
       font-weight: 600;
       color: #ffffff;
     }
-
+  }
+  .beta-testing-form__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 2;
     p {
       font-size: 1rem;
       color: #ffffff;
-    }
-
-    .base-field {
-      width: 100%;
-
-      /deep/ .md-field {
-        &:after {
-          background-color: rgba(255, 255, 255, 0.6);
-        }
-      }
-
-      .beta-testing-form__content-input {
-        color: white;
-        -webkit-text-fill-color: white;
-        text-align: center;
-        padding-right: 0;
-
-        &::placeholder {
-          color: #aaaaaa;
-        }
-
-        &:-webkit-autofill {
-          box-shadow: 0 0 0 30px $home-bgcolor inset;
-        }
-      }
+      text-align: left;
     }
   }
-
   .beta-testing-form__footer {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-
+    flex-grow: 2;
     p {
       font-size: 0.875rem;
       color: #ffffff;
