@@ -17,7 +17,11 @@
     "claim": "Claim",
     "go_back": "Go back",
     "confirm": "Confirm",
-    "close": "Close"
+    "close": "Close",
+    "copy": "Copy",
+    "disable": "Disable",
+    "continue": "Continue",
+    "startOver": "Start Over"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -38,9 +42,10 @@
     "smsDailyLimitReached": "SMS daily limit reached",
     "otpInvalid": "Verification code is not valid.",
     "otpExpired": "Verification code has been expired.",
-    "deviceIsAlreadyRegistered": "Device has alreadu registered.",
+    "deviceIsAlreadyRegistered": "Device has already registered.",
     "accessCodeIsNotValid": "Access Code is not valid.",
-    "accessCodeIsUsed": "Access Code is already used."
+    "accessCodeIsUsed": "Access Code is already used.",
+    "googleAuthTokenInvalid": "Google authentication token is invalid"
   },
   "home": {
     "total_balance": "Total Balance",
@@ -165,7 +170,8 @@
     "cant_receive": "Can't receive code?",
     "invalid_phonenumber": "Invalid Phone number",
     "already_setup_title": "You already set up Phone Number",
-    "already_setup_content": "Would you like to change your Phone Number?"
+    "already_setup_content": "Would you like to change your Phone Number?",
+    "pinSetupPopupDescription": "You can add your phone number after you set up your PIN."
   },
   "passcode": {
     "pin_popup_title": "Please Enter Your PIN",
@@ -179,7 +185,9 @@
     "not_match": "PIN does not match, please try again",
     "pin_setup_successfully": "PIN setup successfully!",
     "pin_setup_remind_title": "Please Set Up Your PIN",
-    "pin_setup_remind_content": "Passcode is important to keep your money safe"
+    "pin_setup_remind_content": "Passcode is important to keep your money safe",
+    "please_setup_pin_action": "Set Up PIN",
+    "please_setup_pin_title": "Please Set Up PIN"
   },
   "reportProblem": {
     "title": "Report Problem",
@@ -254,5 +262,47 @@
   },
   "legalAndPrivacy": {
     "termsOfUse": "Terms of Use"
+  },
+  "twoFactorAuthentication": {
+    "setupTitle": "Two-Factor Authentication",
+    "setupDescription":
+      "Two-factor authentication (2FA) is a security feature. It is recommended to turn it on to make your account more secure. When 2FA is turned on, you will be asked to enter an SMS code or use Google 2FA for actions like logging in from an unknown device, or making transactions.",
+    "turnOn2FA": "Turn 2FA on?",
+    "setupMethodTitle": "2FA Method",
+    "methods": {
+      "sms": "SMS",
+      "google": "Google"
+    },
+    "setupUsageTitle": "Use 2FA For...",
+    "usage": {
+      "transaction": "Transaction Only",
+      "login": "Unknown Logins Only",
+      "transactionAndLogin": "Transaction and Unknown Logins"
+    },
+    "pinSetupPopupDescription": "You can set up two-tactor authentication after you set up your PIN and add your phone number or set up Google Authenticator.",
+    "disable2FAPopupTitle" : "Turning off 2FA?",
+    "disable2FAPopupDescription" : "2FA is strongly recommended to protect your account and assets.<br/>By turning off 2FA, you agree that you understand the risk for not enabling this security feature.",
+    "turnOff2FA" : "Turn off 2FA",
+    "verifyTitle" : "Enter Verification Code"
+  },
+  "googleAuth": {
+    "setupTitle" : "Google Authenticator",
+    "pinSetupPopupDescription": "You can set up Google Authenticator after you set up your PIN.<br/><br/>What is Google Authenticator?<br/>Google Authenticator adds a second layer of security to your account. When two-factor authentication is on, you will asked to enter your PIN and a verification code from the Google Authenticator when making transactions or logging into the account. ",
+    "step1Title" : "Step 1 Get Google Authenticator App:",
+    "step1Remark" : "Please make sure that your Google Authenticator app is installed.",
+    "step2Title" : "Step 2 In Google Authenticator:",
+    "step2Procedure1" : "If you are new to Google Authenticator, tap on “<b>BEGIN</b>” or “<b>BEGIN SETUP</b>”<br/><br/>If you have used the app before, tap “<b>+</b>” to add an account.",
+    "step2Procedure2" : "Select “<b>Manual entry</b>” or “<b>Enter a provided key”</b>.",
+    "step2Procedure3" : "Use the following as your key.",
+    "step2Procedure3Remark" : "You can screenshot this page to keep a copy",
+    "step2Procedure4" : "Make sure “<b>Time Based</b>” is selected and tap “<b>Add</b>” to complete.",
+    "step3Title" : "Step 3 Enter Verification Code ",
+    "disablePopupTitle" : "Disable your Google Authenticator?",
+    "disablePopupContentCase1" : "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA will switch to SMS if you proceed.",
+    "disablePopupContentCase2" : "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA be disabled if you proceed. You can set up your phone number and turn on 2FA again.",
+    "disablePopupContentCase3" : "You have already set up your Google Authenticator. Do you want to disable it?",
+    "continueSetupPopupTitle" : "Continue Setup?",
+    "continueSetupPopupDescription": "You are halfway setting up your Google Authenticator. <br/><br/>Click “Continue” to continue setting up your Google Authenticator. You will be asked to input the 6-digit verfication code.<br/><br/>Click “Start Over” to discard current progress and you will be provided with a new key.",
+    "setupSuccess" : "Google Authenticator\nSuccessfully Set! "
   }
 }

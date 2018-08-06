@@ -256,7 +256,7 @@ $menuItemHeight: 36px;
       float: left;
       width: 20%;
       font-size: 14px;
-      color: $theme-placehoder-color;
+      color: $theme-placeholder-color;
     }
 
     .dial-code {
@@ -310,7 +310,7 @@ $menuItemHeight: 36px;
   }
 
   label {
-    color: $theme-placehoder-color;
+    color: $theme-placeholder-color;
     top: 8px;
   }
 

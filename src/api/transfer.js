@@ -4,7 +4,15 @@ import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  transfer(toAddress, transferType, amount, pin, note, accessToken) {
+  transfer(
+    toAddress,
+    transferType,
+    amount,
+    pin,
+    verificationCode,
+    note,
+    accessToken,
+  ) {
     let transferEndpoint = '';
     let body = {};
 
@@ -13,6 +21,7 @@ export default {
       body = {
         eth_address: toAddress,
         pin,
+        otp: verificationCode,
         amount,
         note,
       };
@@ -21,6 +30,7 @@ export default {
       body = {
         email_address: toAddress,
         pin,
+        otp: verificationCode,
         amount,
         note,
       };

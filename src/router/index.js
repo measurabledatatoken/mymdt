@@ -52,9 +52,26 @@ const TransferSuccess = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferSuccess');
 const QrCodeScanPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/QRCodeScanPage');
+const TransferVerifyGoogleAuthPage = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/googleAuth/TransferVerifyGoogleAuthPage');
+const TransferVerifySMSPage = () =>
+  import(/* webpackChunkName: "transfer" */ '@/screens/phone/TransferVerifySMSPage');
 const EarnMDT = () => import('@/screens/EarnMDT');
 const WebView = () => import('@/screens/WebView');
-
+const TwoFactorAuthenticationSettingPage = () =>
+  import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
+const DisableTwoFactorAuthenticationVerifyGoogleAuthPage = () =>
+  import(/* webpackChunkName: "2fa" */ '@/screens/googleAuth/DisableTwoFactorAuthenticationVerifyGoogleAuthPage');
+const DisableTwoFactorAuthenticationVerifySMSPage = () =>
+  import(/* webpackChunkName: "2fa" */ '@/screens/phone/DisableTwoFactorAuthenticationVerifySMSPage');
+const GoogleAuthSettingStep1 = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep1');
+const GoogleAuthSettingStep2 = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep2');
+const GoogleAuthSettingStep3 = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep3');
+const DisableGoogleAuthVerifyPage = () =>
+  import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/DisableGoogleAuthVerifyPage');
 /**
  *  example code to fail async loading of route
  * 
@@ -224,7 +241,18 @@ const router = new Router({
           component: TransferSuccess,
           props: true,
         },
-
+        {
+          path: RouteDef.TransferVerifyGoogleAuthPage.path,
+          name: RouteDef.TransferVerifyGoogleAuthPage.name,
+          component: TransferVerifyGoogleAuthPage,
+          props: true,
+        },
+        {
+          path: RouteDef.TransferVerifySMSPage.path,
+          name: RouteDef.TransferVerifySMSPage.name,
+          component: TransferVerifySMSPage,
+          props: true,
+        },
         // Earn MDT Route
         {
           path: RouteDef.EarnMDT.path,
@@ -238,6 +266,47 @@ const router = new Router({
           component: WebView,
         },
 
+        // Google Authenticator Setting Page Route
+        {
+          path: RouteDef.GoogleAuthSettingStep1.path,
+          name: RouteDef.GoogleAuthSettingStep1.name,
+          component: GoogleAuthSettingStep1,
+        },
+        {
+          path: RouteDef.GoogleAuthSettingStep2.path,
+          name: RouteDef.GoogleAuthSettingStep2.name,
+          component: GoogleAuthSettingStep2,
+        },
+        {
+          path: RouteDef.GoogleAuthSettingStep3.path,
+          name: RouteDef.GoogleAuthSettingStep3.name,
+          component: GoogleAuthSettingStep3,
+        },
+        {
+          path: RouteDef.DisableGoogleAuthVerifyPage.path,
+          name: RouteDef.DisableGoogleAuthVerifyPage.name,
+          component: DisableGoogleAuthVerifyPage,
+        },
+        // Two Factor Setting Page Route
+        {
+          path: RouteDef.TwoFactorAuthenticationSetting.path,
+          name: RouteDef.TwoFactorAuthenticationSetting.name,
+          component: TwoFactorAuthenticationSettingPage,
+          props: true,
+        },
+        {
+          path:
+            RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.path,
+          name:
+            RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.name,
+          component: DisableTwoFactorAuthenticationVerifyGoogleAuthPage,
+        },
+        {
+          path: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.path,
+          name: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.name,
+          component: DisableTwoFactorAuthenticationVerifySMSPage,
+          props: true,
+        },
         // Route to Home page for route not defined
         {
           path: '*',

@@ -88,16 +88,17 @@ import { START_TRANSFER } from '@/store/modules/transfer';
 import {
   SET_DONE_CALLBACK_PATH,
   SET_SELECTED_USER,
+  SET_COUNTRY_DIALCODE,
+  SET_PHONENUMBER,
   VALIDATE_PIN_FOR_TRANSFER,
+  REQUEST_VERIFICATION_CODE,
 } from '@/store/modules/security';
-import {
-  SET_TRANSFER_TYPE,
-  SET_TRANSACTIONS,
-} from '@/store/modules/ui/transferSuccess';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import PaddedContainer from '@/components/containers/PaddedContainer';
+import OTPActionType from '@/enum/otpActionType';
+import TwoFactorOption from '@/enum/twoFactorOption';
 
 export default {
   components: {
@@ -129,6 +130,7 @@ export default {
     ...mapGetters({
       transactionFee: 'transactionFee',
       finalAmount: 'finalAmount',
+      selectedSecurityUser: 'getSelectedSecurityUser',
     }),
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
@@ -151,53 +153,102 @@ export default {
   },
   created() {
     trackEvent('View "Transfer review" Page', {
-      'Transfer Mode': this.TransferType,
+      'Transfer Mode': this.transferType,
     });
   },
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
-      setSelectedUser: SET_SELECTED_USER,
-      setTransferSuccessTransferType: SET_TRANSFER_TYPE,
-      setTransferSuccessTransaction: SET_TRANSACTIONS,
+      setSelectedSecurityUser: SET_SELECTED_USER,
+      setCountryDialCode: SET_COUNTRY_DIALCODE,
+      setPhoneNumber: SET_PHONENUMBER,
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
       validatePIN: VALIDATE_PIN_FOR_TRANSFER,
+      requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
+    async goToSMSVerify(pinCode) {
+      this.setCountryDialCode(this.selectedSecurityUser.countryDialCode);
+      this.setPhoneNumber(this.selectedSecurityUser.phoneNumber);
+      try {
+        await this.requestVerificationCode({
+          action: OTPActionType.TransferAction,
+        });
+        this.$router.push({
+          name: RouteDef.TransferVerifySMSPage.name,
+          params: {
+            pin: pinCode,
+          },
+        });
+      } catch (error) {
+        console.log(`error in requesting verification code: ${error.message}`);
+      }
+    },
+    start2FAVerify(pinCode) {
+      if (
+        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.SMS
+      ) {
+        this.goToSMSVerify(pinCode);
+      } else if (
+        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
+      ) {
+        this.$router.push({
+          name: RouteDef.TransferVerifyGoogleAuthPage.name,
+          params: {
+            pin: pinCode,
+          },
+        });
+      }
+    },
+    async requestToStartTransfer(payload) {
+      try {
+        await this.startTransfer(payload);
+        this.$router.push({
+          name: RouteDef.TransferSuccess.name,
+        });
+      } catch (error) {
+        console.log(`error in requesting verification code: ${error.message}`);
+      }
+    },
     transferMDT() {
       trackEvent('Click on Transfer button', {
         'Transfer Mode': this.TransferType,
       });
       this.showPinCodeInput = true;
     },
-    onPinCodeFilled(pinCode) {
-      this.validatePIN(pinCode)
-        .catch(err => {
-          this.$refs.pinCodeInputPopup.setInvalid();
-          throw err;
-        })
-        .then(() => {
-          this.showPinCodeInput = false;
-          return this.startTransfer(pinCode);
-        })
-        .then(responseData => {
-          this.setTransferSuccessTransferType(this.transferType);
-          this.setTransferSuccessTransaction(responseData);
-          this.$router.push({
-            name: RouteDef.TransferSuccess.name,
-          });
-        })
-        .catch(err => {
-          console.log(`error in onPinCodeFilled: ${err.message}`);
-          trackEvent('Transfer Failure', {
-            'Transfer Mode': this.TransferType,
-          });
+    async onPinCodeFilled(pinCode) {
+      try {
+        await this.validatePIN(pinCode);
+        this.showPinCodeInput = false;
+        this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
+      } catch (error) {
+        this.$refs.pinCodeInputPopup.setInvalid();
+        return;
+      }
+
+      try {
+        if (
+          this.selectedSecurityUser.isTwofaEnabled &&
+          [
+            TwoFactorOption.USAGE.TRANSACTION,
+            TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN,
+          ].includes(this.selectedSecurityUser.twofaUsage)
+        ) {
+          this.start2FAVerify(pinCode);
+        } else {
+          this.requestToStartTransfer({ pin: pinCode });
+        }
+      } catch (error) {
+        console.log(`error in onPinCodeFilled: ${error.message}`);
+        trackEvent('Transfer Failure', {
+          'Transfer Mode': this.TransferType,
         });
+      }
     },
     onFotgotClicked() {
       this.setDoneCallbackPath(RouteDef.TransferReview.path);
-      this.setSelectedUser(this.transferFromAccount.emailAddress);
+      this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
       this.$router.push({
         name: RouteDef.PinCodeForgot.name,
       });

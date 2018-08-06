@@ -117,4 +117,107 @@ export default {
     );
     return handleGeneralResponse(promise, { allowEmptyData: true });
   },
+  // get2FAStatus(accessToken) {
+  //   const promise = axios.get(
+  //     `${APIScheme}://${APIEndPoint}/security/2fa/status`,
+  //     {
+  //       headers: { Authorization: `Bearer ${accessToken}` },
+  //     },
+  //   );
+  //   return handleGeneralResponse(promise, { allowEmptyData: true });
+  // },
+  enable2FA(pin, accessToken) {
+    const body = {
+      pin,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/2fa/enable`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  disable2FA(pin, verificationCode, accessToken) {
+    const body = {
+      pin,
+      otp: verificationCode,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/2fa/disable`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  set2FAOption(method, usage, accessToken) {
+    const body = {
+      '2fa_usage': usage,
+      '2fa_method': method,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/2fa/options`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  generateGoogleAuthSecret(pin, accessToken) {
+    const body = {
+      pin,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/google-auth/generate-secret`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  verifyGoogleAuthSecret(verificationCode, accessToken) {
+    const body = {
+      otp: verificationCode,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/google-auth/verify-secret`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  verifyGoogleAuthOTP(verificationCode, accessToken) {
+    const body = {
+      otp: verificationCode,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/google-auth/verifyotp`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
+  disableGoogleAuth(pin, verificationCode, accessToken) {
+    const body = {
+      pin,
+      otp: verificationCode,
+    };
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/security/google-auth/disable`,
+      body,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
 };
