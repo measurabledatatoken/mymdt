@@ -77,8 +77,13 @@ const actions = {
       defaultErrorPromptTitle = {
         messageId: 'message.common.error_title',
       },
-      openErrorPromptForErrorCodes = { [ErrorCode.UnAuthorizedAccess]: true },
     } = payload;
+
+    let { openErrorPromptForErrorCodes } = payload;
+    openErrorPromptForErrorCodes = {
+      [ErrorCode.UnAuthorizedAccess]: true,
+      ...openErrorPromptForErrorCodes,
+    };
 
     if (openErrorPrompt || openErrorPromptForErrorCodes) {
       let shouldOpen = !!openErrorPrompt;

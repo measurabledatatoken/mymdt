@@ -107,7 +107,6 @@ const actions = {
         api: api.auth.autoLogin,
         args: [appCredentials, appID, locale],
         setLoading: true,
-        openErrorPrompt: true,
       });
       commit(SET_LOGIN_ERRORCODE, null);
       const credentials = data.valid.map(dataItem => ({
