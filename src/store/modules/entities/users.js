@@ -3,6 +3,7 @@ import { delay } from '@/utils';
 
 import { FETCHING_REWARDS_SUCCESS } from '@/store/modules/entities/rewards';
 import { FETCHING_TRANSACTIONS_SUCCESS } from '@/store/modules/entities/transactions';
+import { REQUEST } from '@/store/modules/api';
 
 export const FETCHING_USER_SUCCESS = 'users/FETCHING_USER_SUCCESS';
 export const FETCHING_USER_FAILURE = 'users/FETCHING_USER_FAILURE';
@@ -81,21 +82,23 @@ const mutations = {
 };
 
 const actions = {
-  [FETCH_USER]({ commit, getters }, { userId }) {
-    return api.account
-      .getAccount(getters.getUser(userId).accessToken)
-      .then(data =>
-        commit(FETCHING_USER_SUCCESS, {
-          userId,
-          data,
-        }),
-      )
-      .catch(error =>
-        commit(FETCHING_USER_FAILURE, {
-          userId,
-          error,
-        }),
-      );
+  async [FETCH_USER]({ commit, dispatch, getters }, { userId }) {
+    try {
+      const data = await dispatch(REQUEST, {
+        api: api.account.getAccount,
+        args: [getters.getUser(userId).accessToken],
+        openErrorPrompt: true,
+      });
+      commit(FETCHING_USER_SUCCESS, {
+        userId,
+        data,
+      });
+    } catch (error) {
+      commit(FETCHING_USER_FAILURE, {
+        userId,
+        error,
+      });
+    }
   },
   [FETCH_ALL_TASKS]({ state, dispatch }) {
     return Promise.all(
@@ -106,29 +109,27 @@ const actions = {
       ),
     );
   },
-  [FETCH_TASKS]({ commit, rootState, getters }, { userId }) {
+  async [FETCH_TASKS]({ commit, dispatch, rootState, getters }, { userId }) {
     commit(FETCHING_TASKS, {
       id: userId,
     });
-    return delay(750)
-      .then(() =>
-        api.task.getTasks(
-          rootState.home.appID,
-          getters.getUser(userId).accessToken,
-        ),
-      )
-      .then(data =>
-        commit(FETCHING_TASKS_SUCCESS, {
-          id: userId,
-          data,
-        }),
-      )
-      .catch(error =>
-        commit(FETCHING_TASKS_FAILURE, {
-          id: userId,
-          error,
-        }),
-      );
+    try {
+      await delay(750);
+      const data = await dispatch(REQUEST, {
+        api: api.task.getTasks,
+        args: [rootState.home.appID, getters.getUser(userId).accessToken],
+        openErrorPrompt: true,
+      });
+      commit(FETCHING_TASKS_SUCCESS, {
+        id: userId,
+        data,
+      });
+    } catch (error) {
+      commit(FETCHING_TASKS_FAILURE, {
+        id: userId,
+        error,
+      });
+    }
   },
 };
 

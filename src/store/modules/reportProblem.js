@@ -1,36 +1,38 @@
 import api from '@/api';
 import router from '@/router';
 import { RouteDef } from '@/constants';
-import { SET_IS_LOADING, OPEN_ERROR_PROMPT } from '@/store/modules/common';
+import { REQUEST } from '@/store/modules/api';
 
 export const REPORT_PROBLEM = 'reportProblem/REPORT_PROBLEM';
 
 const state = null;
 
 const actions = {
-  [REPORT_PROBLEM]({ commit, dispatch, rootState, rootGetters }, payload) {
-    commit(SET_IS_LOADING, true);
-    return api.account
-      .reportProblem(
-        rootState.home.appID,
-        payload,
-        rootGetters.getSelectedUser.accessToken,
-      )
-      .then(() => {
-        commit(SET_IS_LOADING, false);
-        router.push(RouteDef.ReportProblemSuccess.path);
-      })
-      .catch(() => {
-        commit(SET_IS_LOADING, false);
-        dispatch(OPEN_ERROR_PROMPT, {
+  async [REPORT_PROBLEM]({ dispatch, rootState, rootGetters }, payload) {
+    try {
+      await dispatch(REQUEST, {
+        api: api.account.reportProblem,
+        args: [
+          rootState.home.appID,
+          payload,
+          rootGetters.getSelectedUser.accessToken,
+        ],
+        setLoading: true,
+        openErrorPrompt: true,
+        defaultErrorPromptMessage: {
           message: {
             messageId: 'message.reportProblem.errorMessage',
           },
           title: {
             messageId: 'message.common.error_title',
           },
-        });
+        },
       });
+
+      router.push(RouteDef.ReportProblemSuccess.path);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 

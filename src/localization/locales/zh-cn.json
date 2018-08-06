@@ -45,7 +45,8 @@
     "deviceIsAlreadyRegistered": "此设备已被注册。",
     "accessCodeIsNotValid": "代码无效。",
     "accessCodeIsUsed": "代码已被使用。",
-    "googleAuthTokenInvalid": "Google身份验证令牌无效"
+    "googleAuthTokenInvalid": "Google身份验证令牌无效",
+    "sessionExpired": "您的使用期限已过"
   },
   "home": {
     "total_balance": "总余额",

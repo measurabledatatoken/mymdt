@@ -113,6 +113,7 @@ export default {
 
         return '';
       },
+      errorRedirect: state => state.common.errorRedirect,
       locale: state => state.common.locale,
       isLoading: state => state.common.isLoading,
       navigationStack: state => state.common.navigationStack,
@@ -126,6 +127,9 @@ export default {
         return this.$store.state.common.showErrorPrompt;
       },
       set() {
+        if (/^(mdtwallet):\/\//.test(this.errorRedirect)) {
+          window.location = this.errorRedirect;
+        }
         this.dismissErrorPrompt();
       },
     },
@@ -313,7 +317,7 @@ export default {
 
 .md-dialog {
   text-align: left;
-
+  z-index: 99;
   /deep/ .md-dialog-container {
     width: 100%;
   }

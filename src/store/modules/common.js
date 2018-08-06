@@ -2,6 +2,7 @@ import router from '@/router';
 
 export const SET_ERROR_MESSAGE = 'common/SET_ERROR_MESSAGE';
 export const SET_ERROR_TITLE = 'common/SET_ERROR_TITLE';
+export const SET_ERROR_REDIRECT = 'common/SET_ERROR_REDIRECT';
 export const SET_SHOW_ERROR_PROMPT = 'common/SET_SHOW_ERROR_PROMPT';
 export const SET_IS_LOADING = 'common/SET_IS_LOADING';
 export const SET_NAVIGATION_TITLE = 'common/SET_NAVIGATION_TITLE';
@@ -67,6 +68,9 @@ const mutations = {
   [SET_ERROR_TITLE](state, errorTitle) {
     state.errorTitle = errorTitle;
   },
+  [SET_ERROR_REDIRECT](state, errorRedirect) {
+    state.errorRedirect = errorRedirect;
+  },
   [SET_SHOW_ERROR_PROMPT](state, showErrorPrompt) {
     state.showErrorPrompt = showErrorPrompt;
   },
@@ -115,14 +119,16 @@ const actions = {
     const depth = context.getters.getPathDepthInNavigationStack(path);
     router.go(-depth);
   },
-  [OPEN_ERROR_PROMPT]({ commit }, { message, title }) {
+  [OPEN_ERROR_PROMPT]({ commit }, { message, title, redirectUrl }) {
     commit(SET_ERROR_MESSAGE, message);
     commit(SET_ERROR_TITLE, title);
+    commit(SET_ERROR_REDIRECT, redirectUrl);
     commit(SET_SHOW_ERROR_PROMPT, true);
   },
   [DISMISS_ERROR_PROMPT]({ commit }) {
     commit(SET_ERROR_MESSAGE, null);
     commit(SET_ERROR_TITLE, null);
+    commit(SET_ERROR_REDIRECT, null);
     commit(SET_SHOW_ERROR_PROMPT, false);
   },
 };
