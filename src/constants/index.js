@@ -110,8 +110,13 @@ const RouteDef = {
 };
 
 const ExitFromWalletWebviewURL = 'mdtwallet://exit';
-
+const accessTokenExpiredUrl = 'mdtwallet://accesstoken-expired';
 // in px, please also change $header-height in scss
 const HeaderHeight = 52;
 
-export { RouteDef, ExitFromWalletWebviewURL, HeaderHeight };
+export {
+  RouteDef,
+  ExitFromWalletWebviewURL,
+  HeaderHeight,
+  accessTokenExpiredUrl,
+};

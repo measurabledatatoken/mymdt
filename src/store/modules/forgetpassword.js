@@ -1,4 +1,5 @@
 import api from '@/api';
+import { REQUEST } from '@/store/modules/api';
 
 // Mutations
 export const SET_FORGET_SUCCESS = 'forgetPassword/SET_FORGET_SUCCESS';
@@ -17,13 +18,17 @@ const mutations = {
 };
 
 const actions = {
-  [REQUEST_FORGET_PASSWORD](context, emailAddress) {
-    api.auth
-      .forgetPassword(emailAddress)
-      .then(() => context.commit([SET_FORGET_SUCCESS], true))
-      .catch(() => {
-        context.commit([SET_FORGET_SUCCESS], false);
+  async [REQUEST_FORGET_PASSWORD]({ commit, dispatch }, emailAddress) {
+    try {
+      await dispatch(REQUEST, {
+        api: api.auth.forgetPassword,
+        args: [emailAddress],
       });
+      commit([SET_FORGET_SUCCESS], true);
+    } catch (error) {
+      console.log('REQUEST_FORGET_PASSWORD ERROR: ' + error);
+      commit([SET_FORGET_SUCCESS], false);
+    }
   },
 };
 

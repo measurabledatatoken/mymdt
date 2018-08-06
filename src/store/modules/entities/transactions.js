@@ -47,48 +47,49 @@ function getLatestTimeFromTransactions(transactions) {
 }
 
 const actions = {
-  [FETCH_TRANSACTIONS]({ commit, dispatch, getters, rootGetters }, { userId }) {
+  async [FETCH_TRANSACTIONS](
+    { commit, dispatch, getters, rootGetters },
+    { userId },
+  ) {
     commit(FETCHING_TRANSACTIONS, {
       userId,
     });
-    return delay(750)
-      .then(() =>
-        api.transaction.getTransactions(
-          rootGetters.getUser(userId).accessToken,
-        ),
-      )
-      .then(data => {
-        const currentTransactionIds = rootGetters.getUser(userId).transactions;
-        const currentTransactions = getters
-          .getTransactions(currentTransactionIds)
-          .filter(transactions => transactions);
-        const currentLatestTime = getLatestTimeFromTransactions(
-          currentTransactions,
-        );
-        const fetchedTransactions = data.result.map(
-          tranactionId => data.entities.transactions[tranactionId],
-        );
-        const fetchedLatestTime = getLatestTimeFromTransactions(
-          fetchedTransactions,
-        );
-
-        if (fetchedLatestTime > currentLatestTime) {
-          dispatch(FETCH_USER, {
-            userId,
-          });
-        }
-
-        commit(FETCHING_TRANSACTIONS_SUCCESS, {
-          userId,
-          data,
-        });
-      })
-      .catch(error =>
-        commit(FETCHING_TRANSACTIONS_FAILURE, {
-          userId,
-          error,
-        }),
+    try {
+      await delay(750);
+      const data = await dispatch(REQUEST, {
+        api: api.transaction.getTransactions,
+        args: [rootGetters.getUser(userId).accessToken],
+      });
+      const currentTransactionIds = rootGetters.getUser(userId).transactions;
+      const currentTransactions = getters
+        .getTransactions(currentTransactionIds)
+        .filter(transactions => transactions);
+      const currentLatestTime = getLatestTimeFromTransactions(
+        currentTransactions,
       );
+      const fetchedTransactions = data.result.map(
+        tranactionId => data.entities.transactions[tranactionId],
+      );
+      const fetchedLatestTime = getLatestTimeFromTransactions(
+        fetchedTransactions,
+      );
+
+      if (fetchedLatestTime > currentLatestTime) {
+        dispatch(FETCH_USER, {
+          userId,
+        });
+      }
+
+      commit(FETCHING_TRANSACTIONS_SUCCESS, {
+        userId,
+        data,
+      });
+    } catch (error) {
+      commit(FETCHING_TRANSACTIONS_FAILURE, {
+        userId,
+        error,
+      });
+    }
   },
   [CANCEL_TRANSACTION](
     { dispatch, rootGetters },
