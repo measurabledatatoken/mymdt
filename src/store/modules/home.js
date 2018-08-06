@@ -67,7 +67,6 @@ const actions = {
       const data = await dispatch(REQUEST, {
         api: api.misc.getMDTPrice,
         args: [priceUnit],
-        openErrorPrompt: true,
       });
       if (!priceUnit) {
         commit(SET_MDT_PRICE, data.price_usd);
@@ -83,7 +82,6 @@ const actions = {
     try {
       const data = await dispatch(REQUEST, {
         api: api.misc.getAppConfig,
-        openErrorPrompt: true,
       });
       commit(SET_APP_CONFIG, data);
     } catch (error) {
@@ -104,7 +102,6 @@ const actions = {
         api: api.account.getUserAccountsData,
         args: [validCredentials],
         setLoading: true,
-        openErrorPrompt: true,
       });
       if (normalizeduserAccountData.result.length > 0) {
         commit(SET_USERS, {

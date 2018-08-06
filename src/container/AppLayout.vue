@@ -127,7 +127,7 @@ export default {
         return this.$store.state.common.showErrorPrompt;
       },
       set() {
-        if (/^(http|https|mdtwallet):\/\//.test(this.errorRedirect)) {
+        if (/^(mdtwallet):\/\//.test(this.errorRedirect)) {
           window.location = this.errorRedirect;
         }
         this.dismissErrorPrompt();
