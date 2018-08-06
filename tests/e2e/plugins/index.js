@@ -27,7 +27,7 @@ function getConfigurationByFile(file) {
     __dirname,
     '..',
     'config',
-    `${file}.json`,
+    'local.json',
   );
 
   let localConfig = {};
