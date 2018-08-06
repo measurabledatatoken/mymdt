@@ -11,6 +11,38 @@ const RouteDef = {
     path: '/home/usersettings',
     name: 'UserSettings',
   },
+  GoogleAuthSettingStep1: {
+    path: '/home/2fa/googleauthstep1',
+    name: 'GoogleAuthStep1',
+  },
+  GoogleAuthSettingStep2: {
+    path: '/home/2fa/googleauthstep2',
+    name: 'GoogleAuthStep2',
+  },
+  GoogleAuthSettingStep3: {
+    path: '/home/2fa/googleauthstep3',
+    name: 'GoogleAuthStep3',
+  },
+  DisableGoogleAuthVerifyPage: {
+    path: '/home/2fa/disablegoogleauth',
+    name: 'DisableGoogleAuth',
+  },
+  DisableTwoFactorAuthenticationVerifyGoogleAuthPage: {
+    path: '/home/2fa/disable2faverifygoogleauth',
+    name: 'DisableTwoFactorAuthenticationVerifyGoogleAuth',
+  },
+  DisableTwoFactorAuthenticationVerifySMSPage: {
+    path: '/home/2fa/disable2faverifysms',
+    name: 'DisableTwoFactorAuthenticationVerifySMS',
+  },
+  TwoFactorAuthenticationSetting: {
+    path: '/home/usersettings/twofactor',
+    name: 'TwoFactorAuthentication',
+  },
+  TwoFactorAuthenticationSMSVerify: {
+    path: '/home/2fa/smsverify',
+    name: 'TwoFactorAuthenticationSMSVerify',
+  },
   PriceUnits: { path: '/home/settings/price-units' },
   ReportProblem: { path: '/home/settings/problems' },
   ReportProblemSuccess: { path: '/home/settings/problems/success' },
@@ -25,6 +57,14 @@ const RouteDef = {
   TransferSuccess: {
     path: '/home/transfer/ethwallet/review/success',
     name: 'transferSuccess',
+  },
+  TransferVerifyGoogleAuthPage: {
+    path: '/home/transfer/transfererifygoogleauth',
+    name: 'TransferVerifyGoogleAuth',
+  },
+  TransferVerifySMSPage: {
+    path: '/home/transfer/transfererifysms',
+    name: 'TransferVerifySMS',
   },
   EarnMDT: { path: '/home/earn', name: 'earnMDT' },
   AccountDetail: {

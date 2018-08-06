@@ -2,7 +2,7 @@ import api from '@/api';
 import { regTrackingSuperProperties } from '@/utils';
 import { FETCH_USER } from '@/store/modules/entities/users';
 import { REQUEST } from '@/store/modules/api';
-
+import { SET_IS_LOADING } from '@/store/modules/common';
 // mutation
 export const SET_COUNTRY_DIALCODE = 'phoneVerifyScreen/SET_COUNTRY_DIALCODE';
 export const SET_COUNTRY_CODE = 'phoneVerifyScreen/SET_COUNTRY_CODE';
@@ -13,6 +13,8 @@ export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
 export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 export const SET_SECURITY_USER_PHONE_INFO =
   'security/SET_SECURITY_USER_PHONE_INFO';
+export const SET_PIN_FOR_2FA_SETUP = 'security/SET_PIN_FOR_2FA_SETUP';
+// export const SET_2FA_STATUS = 'security/SET_2FA_STATUS';
 
 // action
 export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
@@ -28,12 +30,26 @@ export const ADD_PHONE_NUMBER = 'security/ADD_PHONE_NUMBER';
 export const CHANGE_PHONE_NUMBER = 'security/CHANGE_PHONE_NUMBER';
 export const VERIFY_VERIFICATION_CODE = 'security/VERIFY_VERIFICATION_CODE';
 
+export const GENERATE_GOOGLE_AUTHENTICATOR_SECRET =
+  'security/GENERATE_GOOGLE_AUTHENTICATOR_SECRET';
+export const VERIFY_GOOGLE_AUTHENTICATOR_SECRET =
+  'security/VERIFY_GOOGLE_AUTHENTICATOR_SECRET';
+export const DISABLE_GOOGLE_AUTHENTICATOR =
+  'security/DISABLE_GOOGLE_AUTHENTICATOR';
+export const VERIFY_GOOGLE_AUTHENTICATOR_OTP =
+  'security/VERIFY_GOOGLE_AUTHENTICATOR_OTP';
+// export const GET_2FA_STATUS = 'security/GET_2FA_STATUS';
+export const ENABLE_2FA = 'security/ENABLE_2FA';
+export const DISABLE_2FA = 'security/DISABLE_2FA';
+export const SET_2FA_OPTION = 'security/SET_2FA_OPTION';
+
 const state = {
   countryDialCode: null,
   countryCode: null,
   phoneNumber: null,
   doneCallBackPath: null,
   selectedUserId: null,
+  pinFor2FASetup: null,
 };
 
 const getters = {
@@ -67,6 +83,9 @@ const mutations = {
     state.countryDialCode = user.countryDialCode;
     state.countryCode = user.countryCode;
     state.phoneNumber = user.phoneNumber;
+  },
+  [SET_PIN_FOR_2FA_SETUP](state, pin) {
+    state.pinFor2FASetup = pin;
   },
 };
 
@@ -202,6 +221,114 @@ const actions = {
       setLoading: true,
       openErrorPrompt: true,
     });
+  },
+  async [ENABLE_2FA]({ dispatch, state, rootGetters }, { pin }) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    const response = await dispatch(REQUEST, {
+      api: api.security.enable2FA,
+      args: [pin, account.accessToken],
+      setLoading: true,
+      openErrorPrompt: true,
+    });
+    dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
+  },
+  async [DISABLE_2FA](
+    { dispatch, state, rootGetters },
+    { pin, verificationCode },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    const response = await dispatch(REQUEST, {
+      api: api.security.disable2FA,
+      args: [pin, verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+    await dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
+  },
+  async [SET_2FA_OPTION](
+    { dispatch, state, rootGetters, commit },
+    { method, usage },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    const timeoutId = setTimeout(() => commit(SET_IS_LOADING, true), 200);
+    const response = await dispatch(REQUEST, {
+      api: api.security.set2FAOption,
+      args: [method, usage, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+    await dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    if (timeoutId) clearTimeout(timeoutId);
+    commit(SET_IS_LOADING, false);
+    return response;
+  },
+  async [GENERATE_GOOGLE_AUTHENTICATOR_SECRET](
+    { dispatch, state, rootGetters },
+    { pin },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    const response = await dispatch(REQUEST, {
+      api: api.security.generateGoogleAuthSecret,
+      args: [pin, account.accessToken],
+      setLoading: true,
+      openErrorPrompt: true,
+    });
+    dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
+  },
+  async [VERIFY_GOOGLE_AUTHENTICATOR_SECRET](
+    { dispatch, state, rootGetters },
+    { verificationCode },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    const response = await dispatch(REQUEST, {
+      api: api.security.verifyGoogleAuthSecret,
+      args: [verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+    dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
+  },
+  [VERIFY_GOOGLE_AUTHENTICATOR_OTP](
+    { dispatch, state, rootGetters },
+    { verificationCode },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    return dispatch(REQUEST, {
+      api: api.security.verifyGoogleAuthOTP,
+      args: [verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+  },
+  async [DISABLE_GOOGLE_AUTHENTICATOR](
+    { dispatch, state, rootGetters },
+    { pin, verificationCode },
+  ) {
+    const account = rootGetters.getUser(state.selectedUserId);
+    const response = await dispatch(REQUEST, {
+      api: api.security.disableGoogleAuth,
+      args: [pin, verificationCode, account.accessToken],
+      setLoading: false,
+      openErrorPrompt: true,
+    });
+    dispatch(FETCH_USER, {
+      userId: state.selectedUserId,
+    });
+    return response;
   },
 };
 

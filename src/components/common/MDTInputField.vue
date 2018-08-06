@@ -91,7 +91,7 @@ export default {
     }
 
     &::placeholder {
-      color: $theme-placehoder-color;
+      color: $theme-placeholder-color;
     }
 
     &:focus::placeholder {

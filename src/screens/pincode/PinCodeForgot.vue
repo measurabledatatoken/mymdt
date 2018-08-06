@@ -112,7 +112,7 @@ export default {
   margin-bottom: 20px;
 
   &.none {
-    color: $theme-placehoder-color;
+    color: $theme-placeholder-color;
   }
 }
 

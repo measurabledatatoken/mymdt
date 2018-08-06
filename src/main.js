@@ -23,6 +23,10 @@ import '@/styles/vue-material.scss';
 import Vuelidate from 'vuelidate';
 import mixpanel from 'mixpanel-browser';
 
+// require styles
+// eslint-disable-next-line
+import 'swiper/dist/css/swiper.css';
+import VueClipboard from 'vue-clipboard2';
 import App from './App';
 import router from './router';
 import store from './store';
@@ -50,6 +54,7 @@ Vue.use(VueMaterial);
 // Vue.use(MdSubheader);
 
 Vue.use(Vuelidate);
+Vue.use(VueClipboard);
 
 mixpanel.init('c5e652bf9ccc28d929ee1c8184a0f76b');
 

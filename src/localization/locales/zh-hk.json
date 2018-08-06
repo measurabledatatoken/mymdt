@@ -17,7 +17,11 @@
     "claim": "認領",
     "go_back": "上一步",
     "confirm": "確定",
-    "close": "關閉"
+    "close": "關閉",
+    "copy": "複製",
+    "disable": "禁用",
+    "continue": "繼續",
+    "startOver": "重新開始"
   },
   "error": {
     "userNotExist": "用戶電郵不存在。",
@@ -40,7 +44,8 @@
     "otpExpired": "驗證碼已過期。",
     "deviceIsAlreadyRegistered": "此設備已被註冊。",
     "accessCodeIsNotValid": "代碼無效。",
-    "accessCodeIsUsed": "代碼已被使用。"
+    "accessCodeIsUsed": "代碼已被使用。",
+    "googleAuthTokenInvalid": "Google身份驗證令牌無效"
   },
   "home": {
     "total_balance": "總結餘",
@@ -165,7 +170,8 @@
     "cant_receive": "無法接收代碼？",
     "invalid_phonenumber": "無效的電話號碼",
     "already_setup_title": "您已經設置了電話號碼",
-    "already_setup_content": "你想更改你的電話號碼嗎？"
+    "already_setup_content": "你想更改你的電話號碼嗎？",
+    "pinSetupPopupDescription": "您可以在設置PIN碼後添加電話號碼。"
   },
   "passcode": {
     "pin_popup_title": "請輸入您的PIN碼",
@@ -179,7 +185,9 @@
     "not_match": "PIN不符,請重試",
     "pin_setup_successfully": "成功設定PIN！",
     "pin_setup_remind_title": "請設定你的PIN",
-    "pin_setup_remind_content": "PIN可以保護你的資產"
+    "pin_setup_remind_content": "PIN可以保護你的資產",
+    "please_setup_pin_action": "設置PIN碼",
+    "please_setup_pin_title": "請設定PIN碼"
   },
   "reportProblem": {
     "title": "回報問題",
@@ -254,5 +262,46 @@
   },
   "legalAndPrivacy": {
     "termsOfUse": "使用條款"
+  },
+  "twoFactorAuthentication": {
+    "setupTitle": "雙因素身份驗證",
+    "setupDescription": "雙因素身份驗證（2FA）是一項安全功能。建議將其打開以使您的帳戶更安全。啟用2FA後,系統會要求您輸入短信代碼或使用Google 2FA執行記錄等操作來自未知設備或進行交易。",
+    "turnOn2FA": "打開2FA？",
+    "setupMethodTitle": "2FA方法",
+    "methods": {
+      "sms": "短信",
+      "google": "Google"
+    },
+    "setupUsageTitle": "使用2FA For ...",
+    "usage": {
+      "transaction": "僅限交易",
+      "login": "僅限未知登錄",
+      "transactionAndLogin": "交易和未知登錄"
+    },
+    "pinSetupPopupDescription": "您可以在設置PIN並添加電話號碼或設置Google身份驗證器後設置雙智能驗證。",
+    "disable2FAPopupTitle": "關閉2FA？",
+    "disable2FAPopupDescription": "強烈建議2FA保護您的帳戶和資產。<br/>通過關閉2FA,即表示您同意您了解未啟用此安全功能的風險。",
+    "turnOff2FA": "關閉2FA",
+    "verifyTitle": "輸入驗證碼"
+  },
+  "googleAuth": {
+    "setupTitle": "Google身份驗證器",
+    "pinSetupPopupDescription": "您可以在設置PIN後設置Google身份驗證器。<br/> <br/>什麼是Google身份驗證器？<br/> Google身份驗證器為您的帳戶添加了第二層安全保護。係數身份驗證已啟用,系統會要求您在進行交易或登錄帳戶時輸入您的個人識別碼和Google身份驗證器的驗證碼。",
+    "step1Title": "步驟1：獲取Google身份驗證器應用:",
+    "step1Remark": "請確保您的Google身份驗證器應用已安裝。",
+    "step2Title": "步驟2：Google身份驗證器",
+    "step2Procedure1": "如果您是Google身份驗證員的新用戶,請點按“<b>開始</b>”或“<b>開始設置</b>”<br/> <br/>如果您使用過應用之前,點擊“<b> + </b>”添加帳戶。",
+    "step2Procedure2": "選擇“<b>手動輸入</b>”或“<b>輸入提供的密鑰”</b>。",
+    "step2Procedure3": "使用以下作為密鑰。",
+    "step2Procedure3Remark": "你可以截圖這個頁面來保存副本",
+    "step2Procedure4": "確保“<b>基於時間</b>”被選中並點擊“<b>添加</b>”完成。",
+    "step3Title": "步驟3：輸入驗證碼",
+    "disablePopupTitle": "停用您的Google身份驗證器？",
+    "disablePopupContentCase1": "您已經設置了Google身份驗證器。是否要禁用它？<br/> <br/>您當前的2FA正在使用Google身份驗證器。如果繼續,您的2FA將切換為短信。",
+    "disablePopupContentCase2": "您已經設置了Google身份驗證器。是否要禁用它？<br/> <br/>您當前的2FA正在使用Google身份驗證器。如果繼續,您的2FA將被禁用。您可以設置電話號碼再次打開2FA。",
+    "disablePopupContentCase3": "您已經設置了Google身份驗證器。是否要禁用它？",
+    "continueSetupPopupTitle": "繼續安裝？",
+    "continueSetupPopupDescription": "您正在設置Google身份驗證器。<br/>點擊“繼續”繼續設置您的Google身份驗證器。系統會要求您輸入6位數的驗證碼。<br / > <br/>點擊“重新開始”以放棄當前進度,您將獲得一個新密鑰。",
+    "setupSuccess": "Google身份驗證器\n成功設置！"
   }
 }
