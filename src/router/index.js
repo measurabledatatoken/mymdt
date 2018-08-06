@@ -111,7 +111,7 @@ const router = new Router({
             header: BetaTestingHeader,
           },
           meta: {
-            setFixHeight: true,
+            setFixHeight: false,
           },
         },
         {
