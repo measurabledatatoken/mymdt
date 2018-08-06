@@ -33,7 +33,7 @@ const mutations = {
 const actions = {
   async [FETCH_APPLICATIONS]({ commit, dispatch, rootGetters }, { userId }) {
     try {
-      const data = dispatch(REQUEST, {
+      const data = await dispatch(REQUEST, {
         api: api.application.getApplications,
         args: [rootGetters.getUser(userId).accessToken],
       });

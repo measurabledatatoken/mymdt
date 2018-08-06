@@ -132,7 +132,7 @@ const actions = {
       });
     }
   },
-  [VALIDATE_PASSCODE](dispatch, { passcode, credential }) {
+  [VALIDATE_PASSCODE]({ dispatch }, { passcode, credential }) {
     return dispatch(REQUEST, {
       api: api.auth.validatePasscode,
       args: [passcode, credential],
