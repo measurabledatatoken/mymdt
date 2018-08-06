@@ -30,7 +30,7 @@ export default {
   computed: {
     ...mapState({
       doneCallBackPath: state => state.security.doneCallBackPath,
-      pinFor2FASetup: state => state.security.pinFor2FASetup,
+      pin: state => state.security.pin,
     }),
   },
   methods: {
@@ -53,7 +53,7 @@ export default {
       }
       try {
         await this.disable2FA({
-          pin: this.pinFor2FASetup,
+          pin: this.pin,
           verificationCode: verificationCode,
         });
         this.setIsLoading(false);
