@@ -1,5 +1,4 @@
 import api from '@/api';
-import { regTrackingSuperProperties } from '@/utils';
 import { FETCH_USER } from '@/store/modules/entities/users';
 import { REQUEST } from '@/store/modules/api';
 import { SET_IS_LOADING } from '@/store/modules/common';
@@ -10,17 +9,13 @@ export const SET_PHONENUMBER = 'phoneVerifyScreen/SET_PHONENUMBER';
 export const SET_DONE_CALLBACK_PATH =
   'phoneVerifyScreen/SET_DONE_CALLBACK_PATH';
 export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
-export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
 export const SET_SECURITY_USER_PHONE_INFO =
   'security/SET_SECURITY_USER_PHONE_INFO';
 export const SET_PIN_FOR_2FA_SETUP = 'security/SET_PIN_FOR_2FA_SETUP';
 // export const SET_2FA_STATUS = 'security/SET_2FA_STATUS';
 
 // action
-export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
-export const VALIDATE_PIN_FOR_TRANSFER = 'security/VALIDATE_PIN_FOR_TRANSFER';
-export const VALIDATE_PIN_FOR_SELECTED_USER =
-  'security/VALIDATE_PIN_FOR_SELECTED_USER';
+export const VALIDATE_PIN = 'security/VALIDATE_PIN';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 export const RESET_PIN = 'security/RESET_PIN';
@@ -48,13 +43,7 @@ const state = {
   countryCode: null,
   phoneNumber: null,
   doneCallBackPath: null,
-  selectedUserId: null,
   pinFor2FASetup: null,
-};
-
-const getters = {
-  // eslint-disable-next-line
-  getSelectedSecurityUser: (state, getters, rootState, rootGetters) => rootGetters.getUser(state.selectedUserId),
 };
 
 const mutations = {
@@ -75,10 +64,6 @@ const mutations = {
     state.countryCode = null;
     state.phoneNumber = null;
   },
-  [SET_SELECTED_USER](state, emailAddress) {
-    state.selectedUserId = emailAddress;
-    regTrackingSuperProperties({ 'Email Address': emailAddress });
-  },
   [SET_SECURITY_USER_PHONE_INFO](state, user) {
     state.countryDialCode = user.countryDialCode;
     state.countryCode = user.countryCode;
@@ -90,40 +75,21 @@ const mutations = {
 };
 
 const actions = {
-  [VALIDATE_PIN_FOR_SECURITY]({ state, dispatch, rootGetters }, pin) {
-    const account = rootGetters.getUser(state.selectedUserId);
-
-    return dispatch(REQUEST, {
-      api: api.security.validatePIN,
-      args: [pin, account.accessToken],
-      setLoading: true,
-      openErrorPrompt: false,
-    });
-  },
-  [VALIDATE_PIN_FOR_SELECTED_USER]({ dispatch, rootGetters }, pin) {
+  [VALIDATE_PIN]({ dispatch, rootGetters }, pin) {
     const account = rootGetters.getSelectedUser;
-    return dispatch(REQUEST, {
-      api: api.security.validatePIN,
-      args: [pin, account.accessToken],
-      setLoading: true,
-      openErrorPrompt: false,
-    });
-  },
-  [VALIDATE_PIN_FOR_TRANSFER]({ dispatch, rootState }, pin) {
-    const transferFromAccount = rootState.transfer.transferFromAccount;
 
     return dispatch(REQUEST, {
       api: api.security.validatePIN,
-      args: [pin, transferFromAccount.accessToken],
+      args: [pin, account.accessToken],
       setLoading: true,
       openErrorPrompt: false,
     });
   },
   [RESET_PIN](
-    { dispatch, state, rootGetters },
+    { dispatch, rootGetters },
     { pin, confirmedPIN, verificationCode },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
 
     dispatch(REQUEST, {
       api: api.security.resetPIN,
@@ -132,8 +98,11 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  async [SETUP_PIN]({ dispatch, state, rootGetters }, { pin, confirmedPIN }) {
-    const account = rootGetters.getUser(state.selectedUserId);
+  async [SETUP_PIN](
+    { dispatch, rootState, rootGetters },
+    { pin, confirmedPIN },
+  ) {
+    const account = rootGetters.getSelectedUser;
     try {
       const response = await dispatch(REQUEST, {
         api: api.security.setupPIN,
@@ -143,7 +112,7 @@ const actions = {
       });
 
       dispatch(FETCH_USER, {
-        userId: state.selectedUserId,
+        userId: rootState.home.selectedUserId,
       });
 
       return response;
@@ -151,11 +120,8 @@ const actions = {
       throw error;
     }
   },
-  [CHANGE_PIN](
-    { dispatch, state, rootGetters },
-    { oldPIN, newPIN, confirmedPIN },
-  ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+  [CHANGE_PIN]({ dispatch, rootGetters }, { oldPIN, newPIN, confirmedPIN }) {
+    const account = rootGetters.getSelectedUser;
     return dispatch(REQUEST, {
       api: api.security.changePIN,
       args: [oldPIN, newPIN, confirmedPIN, account.accessToken],
@@ -164,7 +130,7 @@ const actions = {
     });
   },
   [REQUEST_VERIFICATION_CODE]({ dispatch, state, rootGetters }, { action }) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     return dispatch(REQUEST, {
       api: api.security.sendVerificationCodeToPhone,
       args: [
@@ -177,10 +143,10 @@ const actions = {
     });
   },
   async [ADD_PHONE_NUMBER](
-    { dispatch, state, rootGetters },
+    { dispatch, rootState, rootGetters },
     { pin, verificationCode },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     try {
       const response = await dispatch(REQUEST, {
         api: api.security.addPhoneNumber,
@@ -190,7 +156,7 @@ const actions = {
       });
 
       dispatch(FETCH_USER, {
-        userId: state.selectedUserId,
+        userId: rootState.home.selectedUserId,
       });
       return response;
     } catch (error) {
@@ -198,10 +164,10 @@ const actions = {
     }
   },
   [CHANGE_PHONE_NUMBER](
-    { dispatch, state, rootGetters },
+    { dispatch, rootGetters },
     { oldVerificationCode, verificationCode, pin },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     return dispatch(REQUEST, {
       api: api.security.changePhoneNumber,
       args: [oldVerificationCode, verificationCode, pin, account.accessToken],
@@ -210,10 +176,10 @@ const actions = {
     });
   },
   [VERIFY_VERIFICATION_CODE](
-    { dispatch, state, rootGetters },
+    { dispatch, rootGetters },
     { action, verificationCode },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
 
     return dispatch(REQUEST, {
       api: api.security.verifyCodeForPhoneNumber,
@@ -222,8 +188,8 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  async [ENABLE_2FA]({ dispatch, state, rootGetters }, { pin }) {
-    const account = rootGetters.getUser(state.selectedUserId);
+  async [ENABLE_2FA]({ dispatch, rootState, rootGetters }, { pin }) {
+    const account = rootGetters.getSelectedUser;
     const response = await dispatch(REQUEST, {
       api: api.security.enable2FA,
       args: [pin, account.accessToken],
@@ -231,15 +197,15 @@ const actions = {
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {
-      userId: state.selectedUserId,
+      userId: rootState.home.selectedUserId,
     });
     return response;
   },
   async [DISABLE_2FA](
-    { dispatch, state, rootGetters },
+    { dispatch, rootState, rootGetters },
     { pin, verificationCode },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     const response = await dispatch(REQUEST, {
       api: api.security.disable2FA,
       args: [pin, verificationCode, account.accessToken],
@@ -247,15 +213,15 @@ const actions = {
       openErrorPrompt: true,
     });
     await dispatch(FETCH_USER, {
-      userId: state.selectedUserId,
+      userId: rootState.home.selectedUserId,
     });
     return response;
   },
   async [SET_2FA_OPTION](
-    { dispatch, state, rootGetters, commit },
+    { dispatch, rootState, rootGetters, commit },
     { method, usage },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     const timeoutId = setTimeout(() => commit(SET_IS_LOADING, true), 200);
     const response = await dispatch(REQUEST, {
       api: api.security.set2FAOption,
@@ -264,17 +230,17 @@ const actions = {
       openErrorPrompt: true,
     });
     await dispatch(FETCH_USER, {
-      userId: state.selectedUserId,
+      userId: rootState.home.selectedUserId,
     });
     if (timeoutId) clearTimeout(timeoutId);
     commit(SET_IS_LOADING, false);
     return response;
   },
   async [GENERATE_GOOGLE_AUTHENTICATOR_SECRET](
-    { dispatch, state, rootGetters },
+    { dispatch, rootState, rootGetters },
     { pin },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     const response = await dispatch(REQUEST, {
       api: api.security.generateGoogleAuthSecret,
       args: [pin, account.accessToken],
@@ -282,15 +248,15 @@ const actions = {
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {
-      userId: state.selectedUserId,
+      userId: rootState.home.selectedUserId,
     });
     return response;
   },
   async [VERIFY_GOOGLE_AUTHENTICATOR_SECRET](
-    { dispatch, state, rootGetters },
+    { dispatch, rootState, rootGetters },
     { verificationCode },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     const response = await dispatch(REQUEST, {
       api: api.security.verifyGoogleAuthSecret,
       args: [verificationCode, account.accessToken],
@@ -298,15 +264,15 @@ const actions = {
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {
-      userId: state.selectedUserId,
+      userId: rootState.home.selectedUserId,
     });
     return response;
   },
   [VERIFY_GOOGLE_AUTHENTICATOR_OTP](
-    { dispatch, state, rootGetters },
+    { dispatch, rootGetters },
     { verificationCode },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     return dispatch(REQUEST, {
       api: api.security.verifyGoogleAuthOTP,
       args: [verificationCode, account.accessToken],
@@ -315,10 +281,10 @@ const actions = {
     });
   },
   async [DISABLE_GOOGLE_AUTHENTICATOR](
-    { dispatch, state, rootGetters },
+    { dispatch, rootState, rootGetters },
     { pin, verificationCode },
   ) {
-    const account = rootGetters.getUser(state.selectedUserId);
+    const account = rootGetters.getSelectedUser;
     const response = await dispatch(REQUEST, {
       api: api.security.disableGoogleAuth,
       args: [pin, verificationCode, account.accessToken],
@@ -326,7 +292,7 @@ const actions = {
       openErrorPrompt: true,
     });
     dispatch(FETCH_USER, {
-      userId: state.selectedUserId,
+      userId: rootState.home.selectedUserId,
     });
     return response;
   },
@@ -334,7 +300,6 @@ const actions = {
 
 export default {
   state,
-  getters,
   mutations,
   actions,
 };

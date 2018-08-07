@@ -45,15 +45,13 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 import { RouteDef } from '@/constants';
 import { trackEvent } from '@/utils';
 
-import {
-  SET_SELECTED_USER,
-  SET_SECURITY_USER_PHONE_INFO,
-} from '@/store/modules/security';
+import { SET_SECURITY_USER_PHONE_INFO } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import UserAvatar from '@/components/common/UserAvatar';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListUserItem from '@/components/setting/SettingListUserItem';
+import { SET_SELECTED_USER } from '@/store/modules/home';
 
 export default {
   components: {
@@ -79,18 +77,18 @@ export default {
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
-      getUser: 'getUser',
+      getSelectedUser: 'getSelectedUser',
     }),
   },
   methods: {
     ...mapMutations({
-      setSelectedUser: SET_SELECTED_USER,
       setSecurityUserInfo: SET_SECURITY_USER_PHONE_INFO,
+      setSelectedUser: SET_SELECTED_USER,
     }),
     onUserClicked(emailAddress) {
       trackEvent('Click on an account under security section');
       this.setSelectedUser(emailAddress);
-      this.setSecurityUserInfo(this.getUser(emailAddress));
+      this.setSecurityUserInfo(this.getSelectedUser);
       this.$router.push({
         name: RouteDef.UserSettings.name,
       });

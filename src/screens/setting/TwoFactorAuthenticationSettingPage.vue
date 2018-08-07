@@ -19,14 +19,14 @@
               <price-unit-list-item 
                 :selected="method === TwoFactorOption.METHOD.SMS" 
                 :title="$t('message.twoFactorAuthentication.methods.sms')" 
-                :disabled="!selectedSecurityUser.isPhoneConfirmed"
+                :disabled="!getSelectedUser.isPhoneConfirmed"
                 @click="set2FAMethod(TwoFactorOption.METHOD.SMS)"
               />
               <md-divider />
               <price-unit-list-item 
                 :selected="method === TwoFactorOption.METHOD.GOOGLE" 
                 :title="$t('message.twoFactorAuthentication.methods.google')" 
-                :disabled="!selectedSecurityUser.isGoogleAuthEnabled"
+                :disabled="!getSelectedUser.isGoogleAuthEnabled"
                 @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
               />
               <md-divider />
@@ -59,7 +59,7 @@
       ref="pinCodeInputPopup"
       :md-active.sync="showPinCodeInput"
       :title="$t('message.passcode.pin_popup_title')"
-      :email-address="selectedSecurityUser.emailAddress"
+      :email-address="getSelectedUser.emailAddress"
       @codefilled="onPinCodeFilled"
       @close-click="showPinCodeInput = false"
       @fotgot-click="onFotgotClicked"
@@ -85,7 +85,7 @@ import {
   REQUEST_VERIFICATION_CODE,
   SET_2FA_OPTION,
   SET_DONE_CALLBACK_PATH,
-  VALIDATE_PIN_FOR_SECURITY,
+  VALIDATE_PIN,
 } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
@@ -128,17 +128,17 @@ export default {
       doneCallBackPath: state => state.security.doneCallBackPath,
     }),
     ...mapGetters({
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      getSelectedUser: 'getSelectedUser',
     }),
     method() {
-      return this.selectedSecurityUser.twofaMethod;
+      return this.getSelectedUser.twofaMethod;
     },
     usage() {
-      return this.selectedSecurityUser.twofaUsage;
+      return this.getSelectedUser.twofaUsage;
     },
     enabled: {
       get() {
-        return this.selectedSecurityUser.isTwofaEnabled;
+        return this.getSelectedUser.isTwofaEnabled;
       },
       set(value) {
         if (value) {
@@ -154,7 +154,7 @@ export default {
       enable2FA: ENABLE_2FA,
       set2FAOption: SET_2FA_OPTION,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
-      validatePIN: VALIDATE_PIN_FOR_SECURITY,
+      validatePIN: VALIDATE_PIN,
       backToPath: BACK_TO_PATH,
     }),
     ...mapMutations({
@@ -163,22 +163,22 @@ export default {
     isSelectedSMS(method) {
       return (
         method === TwoFactorOption.METHOD.SMS &&
-        this.selectedSecurityUser.isPhoneConfirmed
+        this.getSelectedUser.isPhoneConfirmed
       );
     },
     isSelectedGoogleAuth(method) {
       return (
         method === TwoFactorOption.METHOD.GOOGLE &&
-        this.selectedSecurityUser.isGoogleAuthEnabled
+        this.getSelectedUser.isGoogleAuthEnabled
       );
     },
     set2FAMethod(method) {
       if (
         method !== this.method &&
         ((method === TwoFactorOption.METHOD.GOOGLE &&
-          this.selectedSecurityUser.isGoogleAuthEnabled) ||
+          this.getSelectedUser.isGoogleAuthEnabled) ||
           (method === TwoFactorOption.METHOD.SMS &&
-            this.selectedSecurityUser.isPhoneConfirmed))
+            this.getSelectedUser.isPhoneConfirmed))
       ) {
         this.set2FAOption({ method: method, usage: this.usage });
       }

@@ -87,10 +87,9 @@ import { RouteDef } from '@/constants';
 import { START_TRANSFER } from '@/store/modules/transfer';
 import {
   SET_DONE_CALLBACK_PATH,
-  SET_SELECTED_USER,
   SET_COUNTRY_DIALCODE,
   SET_PHONENUMBER,
-  VALIDATE_PIN_FOR_TRANSFER,
+  VALIDATE_PIN,
   REQUEST_VERIFICATION_CODE,
 } from '@/store/modules/security';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -99,6 +98,7 @@ import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
+import { SET_SELECTED_USER } from '@/store/modules/home';
 
 export default {
   components: {
@@ -130,7 +130,7 @@ export default {
     ...mapGetters({
       transactionFee: 'transactionFee',
       finalAmount: 'finalAmount',
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      getSelectedUser: 'getSelectedUser',
     }),
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
@@ -159,18 +159,18 @@ export default {
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
-      setSelectedSecurityUser: SET_SELECTED_USER,
+      setSelectedUser: SET_SELECTED_USER,
       setCountryDialCode: SET_COUNTRY_DIALCODE,
       setPhoneNumber: SET_PHONENUMBER,
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
-      validatePIN: VALIDATE_PIN_FOR_TRANSFER,
+      validatePIN: VALIDATE_PIN,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     async goToSMSVerify(pinCode) {
-      this.setCountryDialCode(this.selectedSecurityUser.countryDialCode);
-      this.setPhoneNumber(this.selectedSecurityUser.phoneNumber);
+      this.setCountryDialCode(this.getSelectedUser.countryDialCode);
+      this.setPhoneNumber(this.getSelectedUser.phoneNumber);
       try {
         await this.requestVerificationCode({
           action: OTPActionType.TransferAction,
@@ -186,12 +186,10 @@ export default {
       }
     },
     start2FAVerify(pinCode) {
-      if (
-        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.SMS
-      ) {
+      if (this.getSelectedUser.twofaMethod === TwoFactorOption.METHOD.SMS) {
         this.goToSMSVerify(pinCode);
       } else if (
-        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
+        this.getSelectedUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
       ) {
         this.$router.push({
           name: RouteDef.TransferVerifyGoogleAuthPage.name,
@@ -221,7 +219,7 @@ export default {
       try {
         await this.validatePIN(pinCode);
         this.showPinCodeInput = false;
-        this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
+        this.setSelectedUser(this.transferFromAccount.emailAddress);
       } catch (error) {
         this.$refs.pinCodeInputPopup.setInvalid();
         return;
@@ -229,11 +227,11 @@ export default {
 
       try {
         if (
-          this.selectedSecurityUser.isTwofaEnabled &&
+          this.getSelectedUser.isTwofaEnabled &&
           [
             TwoFactorOption.USAGE.TRANSACTION,
             TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN,
-          ].includes(this.selectedSecurityUser.twofaUsage)
+          ].includes(this.getSelectedUser.twofaUsage)
         ) {
           this.start2FAVerify(pinCode);
         } else {
@@ -248,7 +246,7 @@ export default {
     },
     onFotgotClicked() {
       this.setDoneCallbackPath(RouteDef.TransferReview.path);
-      this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
+      this.setSelectedUser(this.transferFromAccount.emailAddress);
       this.$router.push({
         name: RouteDef.PinCodeForgot.name,
       });

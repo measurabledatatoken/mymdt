@@ -118,11 +118,8 @@ import { transactionType, transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
 import { CANCEL_TRANSACTION } from '@/store/modules/entities/transactions';
 import { RouteDef } from '@/constants';
-import {
-  SET_DONE_CALLBACK_PATH,
-  SET_SELECTED_USER,
-  VALIDATE_PIN_FOR_SELECTED_USER,
-} from '@/store/modules/security';
+import { SET_DONE_CALLBACK_PATH, VALIDATE_PIN } from '@/store/modules/security';
+import { SET_SELECTED_USER } from '@/store/modules/home';
 
 export default {
   components: {
@@ -190,7 +187,7 @@ export default {
   methods: {
     ...mapActions({
       cancelTransaction: CANCEL_TRANSACTION,
-      validatePIN: VALIDATE_PIN_FOR_SELECTED_USER,
+      validatePIN: VALIDATE_PIN,
       reportProblem: REPORT_PROBLEM,
     }),
     ...mapMutations({

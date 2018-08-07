@@ -10,13 +10,13 @@
             @click="onSetupPINClicked"
           >
             <template 
-              v-if="!getSelectedSecurityUser.isPasscodeSet"
+              v-if="!getSelectedUser.isPasscodeSet"
               slot="action-data"
             >
               {{ $t('message.settings.setUpNow') }}
             </template>
             <template 
-              v-if="getSelectedSecurityUser.isPasscodeSet"
+              v-if="getSelectedUser.isPasscodeSet"
               slot="action-data"
             >
               <md-icon md-src="/static/icons/settings-account-3.svg"/>
@@ -25,7 +25,7 @@
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.settings.phoneNumber')"
-            :disabled="!getSelectedSecurityUser.isPasscodeSet"
+            :disabled="!getSelectedUser.isPasscodeSet"
             @click="onSetupPhoneNumberClicked"
           >
             <template 
@@ -35,7 +35,7 @@
               {{ $t('message.settings.setUpNow') }}
             </template>
             <template 
-              v-if="getSelectedSecurityUser.isPhoneConfirmed"
+              v-if="getSelectedUser.isPhoneConfirmed"
               slot="action-data"
             >
               <md-icon md-src="/static/icons/settings-account-3.svg"/>
@@ -45,17 +45,17 @@
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.googleAuth.setupTitle')"
-            :disabled="!(getSelectedSecurityUser.isPasscodeSet)"
+            :disabled="!(getSelectedUser.isPasscodeSet)"
             @click="onGoogleAuthClicked"
           >
             <template 
-              v-if="getSelectedSecurityUser.isGoogleAuthEnabled"
+              v-if="getSelectedUser.isGoogleAuthEnabled"
               slot="action-data"
             >
               <md-icon md-src="/static/icons/settings-account-3.svg"/>
             </template>
             <template 
-              v-if="!getSelectedSecurityUser.isGoogleAuthEnabled && getSelectedSecurityUser.hasGoogleAuthSecret"
+              v-if="!getSelectedUser.isGoogleAuthEnabled && getSelectedUser.hasGoogleAuthSecret"
               slot="action-data"
             >
               <md-icon md-src="/static/icons/settings-incomplete.svg"/>
@@ -69,7 +69,7 @@
             @click="onTwoFactorClicked"
           >
             <template 
-              v-if="getSelectedSecurityUser.isTwofaEnabled"
+              v-if="getSelectedUser.isTwofaEnabled"
               slot="action-data"
             >
               <md-icon md-src="/static/icons/settings-account-3.svg"/>
@@ -79,7 +79,7 @@
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.passcode.forgot_pin')"
-            :disabled="!getSelectedSecurityUser.isPasscodeSet"
+            :disabled="!getSelectedUser.isPasscodeSet"
             @click="onPasscodeForgotClicked"
           />
           <md-divider />
@@ -120,7 +120,7 @@
           ref="pinCodeInputPopup"
           :md-active.sync="showPinCodeInput"
           :title="pinCodePopupTitle"
-          :email-address="getSelectedSecurityUser.emailAddress"
+          :email-address="getSelectedUser.emailAddress"
           @codefilled="onPinCodeFilled"
           @close-click="showPinCodeInput = false"
           @fotgot-click="onFotgotClicked"
@@ -159,9 +159,8 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { trackEvent } from '@/utils';
 import { RouteDef } from '@/constants';
 import {
-  SET_SELECTED_USER,
   SET_SECURITY_USER_PHONE_INFO,
-  VALIDATE_PIN_FOR_SECURITY,
+  VALIDATE_PIN,
   SET_DONE_CALLBACK_PATH,
   REQUEST_VERIFICATION_CODE,
   SET_PIN_FOR_2FA_SETUP,
@@ -175,6 +174,7 @@ import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
+import { SET_SELECTED_USER } from '@/store/modules/home';
 
 export default {
   components: {
@@ -206,20 +206,20 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getSelectedSecurityUser: 'getSelectedSecurityUser',
+      getSelectedUser: 'getSelectedUser',
       getUser: 'getUser',
     }),
     allowTwoFactorSetup() {
       return (
-        this.getSelectedSecurityUser.isPasscodeSet &&
-        (this.getSelectedSecurityUser.isPhoneConfirmed ||
-          this.getSelectedSecurityUser.isGoogleAuthEnabled)
+        this.getSelectedUser.isPasscodeSet &&
+        (this.getSelectedUser.isPhoneConfirmed ||
+          this.getSelectedUser.isGoogleAuthEnabled)
       );
     },
     showPhoneNumberSetup() {
       return (
-        !this.getSelectedSecurityUser.isPhoneConfirmed &&
-        this.getSelectedSecurityUser.isPasscodeSet
+        !this.getSelectedUser.isPhoneConfirmed &&
+        this.getSelectedUser.isPasscodeSet
       );
     },
   },
@@ -239,14 +239,14 @@ export default {
       setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
     }),
     ...mapActions({
-      validatePIN: VALIDATE_PIN_FOR_SECURITY,
+      validatePIN: VALIDATE_PIN,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onSetupPINClicked() {
       trackEvent('Click on PIN');
 
       // check if the PIN has already set and show popup
-      if (this.getSelectedSecurityUser.isPasscodeSet) {
+      if (this.getSelectedUser.isPasscodeSet) {
         this.showAlreadySetPinDialog = true;
         return;
       }
@@ -295,7 +295,7 @@ export default {
             this.$router.push({
               name: RouteDef.PhoneNumberVerify.name,
               params: {
-                emailAddress: this.getSelectedSecurityUser.emailAddress,
+                emailAddress: this.getSelectedUser.emailAddress,
                 nextPagePathName: RouteDef.ChangePhoneNumberInput.name,
                 payloadForNextPage: { pin: pinCode },
                 action: OTPActionType.VerifyPhoneNumberAction,
@@ -323,7 +323,7 @@ export default {
     },
     onSetupPhoneNumberClicked() {
       trackEvent('Click on Phone Number');
-      if (!this.getSelectedSecurityUser.isPasscodeSet) {
+      if (!this.getSelectedUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
           'message.phone.pinSetupPopupDescription',
         );
@@ -331,7 +331,7 @@ export default {
         return;
       }
       // check if the Phone Number has already set and show popup
-      if (this.getSelectedSecurityUser.isPhoneConfirmed) {
+      if (this.getSelectedUser.isPhoneConfirmed) {
         this.showAlreadySetPhoneDialog = true;
         return;
       }
@@ -347,14 +347,14 @@ export default {
     },
     onPasscodeForgotClicked() {
       trackEvent('Click on forgot PIN');
-      if (!this.getSelectedSecurityUser.isPasscodeSet) {
+      if (!this.getSelectedUser.isPasscodeSet) {
         return;
       }
 
       this.$router.push(RouteDef.PinCodeForgot.path);
     },
     onTwoFactorClicked() {
-      if (!this.getSelectedSecurityUser.isPasscodeSet) {
+      if (!this.getSelectedUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
           'message.twoFactorAuthentication.pinSetupPopupDescription',
         );
@@ -368,11 +368,10 @@ export default {
     },
     disableGoogleAuth() {
       if (
-        this.getSelectedSecurityUser.isTwofaEnabled &&
-        this.getSelectedSecurityUser.twofaMethod ===
-          TwoFactorOption.METHOD.GOOGLE
+        this.getSelectedUser.isTwofaEnabled &&
+        this.getSelectedUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
       ) {
-        if (this.getSelectedSecurityUser.isPhoneConfirmed) {
+        if (this.getSelectedUser.isPhoneConfirmed) {
           // will switch 2FA method to SMS
           this.disableGoogleAuthPopupDescription = this.$t(
             'message.googleAuth.disablePopupContentCase1',
@@ -392,19 +391,19 @@ export default {
       this.showDisableGoogleAuthPopup = true;
     },
     setupGoogleAuth() {
-      if (this.getSelectedSecurityUser.hasGoogleAuthSecret) {
+      if (this.getSelectedUser.hasGoogleAuthSecret) {
         this.showContinueGoogleAuthPopup = true;
       } else {
         this.goToGoogleAuthSetting('setup-new');
       }
     },
     onGoogleAuthClicked() {
-      if (!this.getSelectedSecurityUser.isPasscodeSet) {
+      if (!this.getSelectedUser.isPasscodeSet) {
         this.pinSetupPopupDescription = this.$t(
           'message.googleAuth.pinSetupPopupDescription',
         );
         this.showSetPinDialog = true;
-      } else if (this.getSelectedSecurityUser.isGoogleAuthEnabled) {
+      } else if (this.getSelectedUser.isGoogleAuthEnabled) {
         this.disableGoogleAuth();
       } else {
         this.setupGoogleAuth();

@@ -42,10 +42,7 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import { trackEvent } from '@/utils';
 import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
-import {
-  SET_DONE_CALLBACK_PATH,
-  SET_SELECTED_USER,
-} from '@/store/modules/security';
+import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import AccountSelector from '@/components/common/AccountSelector';
@@ -53,6 +50,7 @@ import ActionCard from '@/components/common/ActionCard';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
+import { SET_SELECTED_USER } from '@/store/modules/home';
 
 export default {
   components: {
