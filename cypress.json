@@ -3,6 +3,7 @@
   "env": {
     "configFile": "production"
   },
+  "blacklistHosts": ["*.mixpanel.com"],
   "viewportHeight": 568,
   "viewportWidth": 320
 }
