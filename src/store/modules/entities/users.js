@@ -11,6 +11,7 @@ export const FETCHING_TASKS = 'users/FETCHING_TASKS';
 export const FETCHING_TASKS_SUCCESS = 'users/FETCHING_TASKS_SUCCESS';
 export const FETCHING_TASKS_FAILURE = 'users/FETCHING_TASKS_FAILURE';
 export const SET_USERS = 'users/SET_USERS';
+export const UPDATE_USER_INFO = 'users/UPDATE_USER_INFO';
 
 export const FETCH_USER = 'users/FETCH_USER';
 export const FETCH_ALL_TASKS = 'users/FETCH_ALL_TASKS';
@@ -31,6 +32,16 @@ const mutations = {
     const { byId, allIds } = payload;
     state.byId = byId;
     state.allIds = allIds;
+  },
+  [UPDATE_USER_INFO](state, payload) {
+    const { userId, data } = payload;
+    state.byId = {
+      ...state.byId,
+      [userId]: {
+        ...state.byId[userId],
+        ...data,
+      },
+    };
   },
   [FETCHING_USER_SUCCESS](state, payload) {
     const { userId, data } = payload;
