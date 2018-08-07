@@ -110,24 +110,9 @@ export default {
     },
   },
   created() {
-    if (this.isOSSupported) {
-      if (!this.deviceId) {
-        this.openErrorPrompt({
-          message: {
-            messageId: 'message.common.unknow_error',
-          },
-          title: {
-            messageId: 'message.common.error_title',
-          },
-        });
-      } else {
-        const isAdmin = this.$route.query.isadmin;
-        if (isAdmin || this.ndaAgreement) {
-          this.goToHome();
-        } else {
-          this.showScreen = true;
-        }
-      }
+    const isAdmin = this.$route.query.isadmin;
+    if ((isAdmin || this.ndaAgreement) && this.isOSSupported) {
+      this.goToHome();
     } else {
       this.showScreen = true;
     }
