@@ -5,31 +5,48 @@
   >
     <div :class="['beta-testing-form__wrapper', { 'beta-testing-form__wrapper--active': showScreen }]">
       <div class="beta-testing-form__header">
-        <h1>{{ $t('message.betaTesting.betaEndTitle') }}</h1>
+        <h1>{{ $t('message.welcome.title') }}</h1>
       </div>
       <div class="beta-testing-form__content">
-        <p v-html="$t('message.betaTesting.betaEndDescription')"/>
+        <p 
+          v-if="isOSSupported" 
+          v-html="$t('message.betaTesting.betaEndDescription')"
+        />
+        <p 
+          v-else
+          v-html="$t('message.welcome.OSNotSupported')"
+        />
       </div>
-      <div class="beta-testing-form__footer">
-        <p v-html="$t('message.betaTesting.contactus')"/>
+      <div 
+        v-if="isOSSupported" 
+        class="beta-testing-form__footer"
+      >
+        <Checkbox v-model="$v.agree.$model">
+          <template
+            slot="title"
+          >
+            <i18n path="message.welcome.agreementCheckbox1">
+              <a @click.prevent.stop="handleClickNDA">{{ $t('message.welcome.agreementCheckbox2') }}</a>
+            </i18n>
+          </template>
+        </Checkbox>
+        <p>{{ $t('message.welcome.agreementDetail') }}</p>
+        <MDTPrimaryButton
+          :disabled="!$v.$dirty || $v.$anyError"
+          type="submit"
+        >
+          {{ $t('message.welcome.importAccounts') }}
+        </MDTPrimaryButton>
       </div>
     </div>
     <NDA :active.sync="showNDA" />
-
-    <md-dialog-alert
-      :md-active.sync="showOSNotSupportedError"
-      :md-title="$t('message.betaTesting.importAccounts')"
-      :md-content="$t('message.betaTesting.importAccounts')"
-      :md-confirm-text="$t('message.common.okay')"
-      @md-closed="returnCallback"
-    />
   </form>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import { trackEvent } from '@/utils';
-import { required, helpers } from 'vuelidate/lib/validators';
+import { helpers } from 'vuelidate/lib/validators';
 
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Checkbox from '@/components/input/Checkbox';
@@ -43,6 +60,7 @@ import {
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
+import { SET_NDA_AGREEMENT } from '@/store/modules/home';
 
 const checked = value => !helpers.req(value) || value === true;
 
@@ -60,13 +78,9 @@ export default {
       showScreen: false,
       failed: false,
       showNDA: false,
-      showOSNotSupportedError: false,
     };
   },
   validations: {
-    accessCode: {
-      required,
-    },
     agree: {
       checked,
     },
@@ -74,24 +88,13 @@ export default {
   computed: {
     ...mapState({
       savedDeviceId: state => state.betaTesting.deviceId,
+      ndaAgreement: state => state.home.ndaAgreement,
     }),
-    test() {
-      return true;
-    },
-    accessCodeError() {
-      if (this.failed) {
-        return this.$t('message.betaTesting.accessCodeIsNotValid');
-      }
-
-      if (this.$v.accessCode.$error) {
-        return this.$t('message.betaTesting.pleaseEnterAccessCode');
-      }
-      return '';
-    },
     deviceId() {
       return this.$route.query.deviceid || this.savedDeviceId;
     },
     isOSSupported() {
+      // return false;
       var ua = navigator.userAgent;
       if (ua.indexOf('Android') >= 0) {
         var androidversion = parseFloat(ua.slice(ua.indexOf('Android') + 8));
@@ -119,25 +122,21 @@ export default {
         });
       } else {
         const isAdmin = this.$route.query.isadmin;
-        if (isAdmin) {
+        if (isAdmin || this.ndaAgreement) {
           this.goToHome();
         } else {
           this.showScreen = true;
         }
-        // this.getBetaTestingSession(this.deviceId).then(sessionExists => {
-        //   if (!sessionExists) {
-        //     this.showScreen = true;
-        //   } else {
-        //     this.goToHome();
-        //   }
-        // });
       }
     } else {
-      this.showOSNotSupportedError = true;
+      this.showScreen = true;
     }
     trackEvent('Open Beta Testing url ');
   },
   methods: {
+    ...mapMutations({
+      setNDAAgreement: SET_NDA_AGREEMENT,
+    }),
     ...mapActions({
       getBetaTestingSession: GET_BETA_TESTING_SESSION,
       requestBetaTestingSession: REQUEST_BETA_TESTING_SESSION,
@@ -152,24 +151,12 @@ export default {
     returnCallback() {
       window.location = ExitFromWalletWebviewURL;
     },
-    handleInput(value) {
-      this.failed = false;
-      this.$v.accessCode.$model = value;
-    },
     handleSubmit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         trackEvent('Enter access code');
-        this.requestBetaTestingSession({
-          deviceId: this.deviceId,
-          accessCode: this.accessCode,
-        }).then(requestSuccess => {
-          if (requestSuccess) {
-            this.goToHome();
-          } else {
-            this.failed = true;
-          }
-        });
+        this.setNDAAgreement(true);
+        this.goToHome();
       }
     },
     handleClickNDA() {
@@ -213,9 +200,9 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    flex-grow: 2;
+    flex-grow: 3;
     p {
       font-size: 1rem;
       color: #ffffff;
@@ -227,12 +214,15 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: center;
+    align-items: left;
     flex-grow: 2;
     p {
       font-size: 0.875rem;
       color: #ffffff;
       text-align: left;
+    }
+    .md-button {
+      width: 100%;
     }
   }
 }
