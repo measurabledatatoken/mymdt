@@ -1,3 +1,5 @@
+import twoFactorOption from './../../../src/enum/twoFactorOption';
+
 describe('Transfer MDT', () => {
   beforeEach(() => {
     const fromUser = 'testmailtime001@gmail.com';
@@ -50,7 +52,65 @@ describe('Transfer MDT', () => {
       .click();
   };
 
-  context('pincode is not set', () => {
+  const goToTransferToEmailScreenAndInputRelatedInfo = () => {
+    clickTransferToEmailAccount();
+
+    cy.location('pathname').should('eq', '/home/transfer/email');
+
+    cy.getCurrentContentRouterView()
+      .find('.mdtinput')
+      .find('input')
+      .type(1);
+
+    cy.get('.transfer-to')
+      .find('button')
+      .click();
+
+    cy.get('@toUser').then(toUser => {
+      cy.get('.md-menu-content')
+        .contains(toUser)
+        .click();
+    });
+  };
+
+  const goToTransferToETHWalletScreenAndInputRelatedInfo = () => {
+    clickTransferToETHWallet();
+
+    cy.location('pathname').should('eq', '/home/transfer/ethwallet');
+
+    cy.getCurrentContentRouterView()
+      .find('.mdtinput')
+      .find('input')
+      .focus()
+      .type(16)
+      .blur();
+
+    cy.get('@toETHWalletAddress').then(toETHWalletAddress => {
+      cy.get('.address-field')
+        .find('textarea')
+        .focus()
+        .type(toETHWalletAddress)
+        .blur();
+    });
+  };
+
+  const goToTransferReviewScreenAndInputPin = () => {
+    cy.getCurrentContentRouterView()
+      .find('button')
+      .last()
+      .click();
+
+    cy.location('pathname').should('eq', '/home/transfer/review');
+
+    cy.getCurrentContentRouterView()
+      .find('button')
+      .last()
+      .click();
+
+    cy.inputPinCode();
+  };
+
+  context('failed as pincode is not set', () => {
     beforeEach(() => {
       cy.server();
       cy.get('@fromUser').then(fromUser => {
@@ -69,6 +129,7 @@ describe('Transfer MDT', () => {
       clickTransferToEmailAccount();
       cy.get('.md-dialog').should('exist');
 
+      // click cancel button
       cy.get('.md-dialog-actions')
         .find('button')
         .first()
@@ -79,15 +140,9 @@ describe('Transfer MDT', () => {
     });
   });
 
-  context('pincode is set', () => {
+  describe('successful transfer', () => {
     beforeEach(function() {
       cy.server();
-      cy.fixture('users.json').then(response => {
-        const users = response.data;
-        const user = users.find(user => user.email_address === this.fromUser);
-        user.is_passcode_set = true;
-        cy.route('POST', '/api/usersdata', response).as('getUsers');
-      });
       cy.fixture('transaction.json').then(response => {
         const transaction = response.data;
         cy.route(
@@ -113,88 +168,144 @@ describe('Transfer MDT', () => {
       });
 
       cy.stubPinVerify();
-
-      goToTransferScreen();
     });
 
-    it(`can transfer to email address`, () => {
-      clickTransferToEmailAccount();
+    context('pincode is set but 2fa is not enabled', () => {
+      beforeEach(function() {
+        cy.server();
+        cy.fixture('users.json').then(response => {
+          const users = response.data;
+          const user = users.find(user => user.email_address === this.fromUser);
+          user.is_passcode_set = true;
+          user.is_2fa_enabled = false;
+          cy.route('POST', '/api/usersdata', response).as('getUsers');
+        });
 
-      cy.location('pathname').should('eq', '/home/transfer/email');
-
-      cy.getCurrentContentRouterView()
-        .find('.mdtinput')
-        .find('input')
-        .type(1);
-
-      cy.get('.transfer-to')
-        .find('button')
-        .click();
-
-      cy.get('@toUser').then(toUser => {
-        cy.get('.md-menu-content')
-          .contains(toUser)
-          .click();
+        goToTransferScreen();
       });
 
-      cy.getCurrentContentRouterView()
-        .find('button')
-        .last()
-        .click();
+      it(`can transfer to email address`, () => {
+        goToTransferToEmailScreenAndInputRelatedInfo();
 
-      cy.location('pathname').should('eq', '/home/transfer/review');
+        goToTransferReviewScreenAndInputPin();
 
-      cy.getCurrentContentRouterView()
-        .find('button')
-        .last()
-        .click();
-
-      cy.inputPinCode();
-
-      cy.location('pathname').should(
-        'eq',
-        '/home/transfer/ethwallet/review/success',
-      );
-    });
-
-    it(`can transfer to ETH wallet`, () => {
-      clickTransferToETHWallet();
-
-      cy.location('pathname').should('eq', '/home/transfer/ethwallet');
-
-      cy.getCurrentContentRouterView()
-        .find('.mdtinput')
-        .find('input')
-        .focus()
-        .type(16)
-        .blur();
-
-      cy.get('@toETHWalletAddress').then(toETHWalletAddress => {
-        cy.get('.address-field')
-          .find('textarea')
-          .focus()
-          .type(toETHWalletAddress)
-          .blur();
+        cy.location('pathname').should(
+          'eq',
+          '/home/transfer/ethwallet/review/success',
+        );
       });
 
-      cy.getCurrentContentRouterView()
-        .find('button')
-        .last()
-        .click();
+      it(`can transfer to ETH wallet`, () => {
+        goToTransferToETHWalletScreenAndInputRelatedInfo();
 
-      cy.location('pathname').should('eq', '/home/transfer/review');
+        goToTransferReviewScreenAndInputPin();
 
-      cy.getCurrentContentRouterView()
-        .find('button')
-        .last()
-        .click();
-
-      cy.inputPinCode();
-
-      cy.location('pathname').should(
-        'eq',
-        '/home/transfer/ethwallet/review/success',
-      );
+        cy.location('pathname').should(
+          'eq',
+          '/home/transfer/ethwallet/review/success',
+        );
+      });
     });
+
+    context(
+      'pincode is set, 2fa for transaction is enabled with google authenticator',
+      () => {
+        beforeEach(function() {
+          cy.server();
+          cy.fixture('users.json').then(response => {
+            const users = response.data;
+            const user = users.find(
+              user => user.email_address === this.fromUser,
+            );
+            user.is_passcode_set = true;
+            user.is_2fa_enabled = true;
+            user['2fa_method'] = twoFactorOption.METHOD.GOOGLE;
+            user['2fa_usage'] = twoFactorOption.USAGE.TRANSACTION;
+            cy.route('POST', '/api/usersdata', response).as('getUsers');
+          });
+
+          cy.stubGoogleVerify();
+
+          goToTransferScreen();
+        });
+
+        it(`can transfer to email address`, () => {
+          goToTransferToEmailScreenAndInputRelatedInfo();
+
+          goToTransferReviewScreenAndInputPin();
+
+          cy.inputGoogleAuthVerificationCode();
+
+          cy.location('pathname').should(
+            'eq',
+            '/home/transfer/ethwallet/review/success',
+          );
+        });
+
+        it(`can transfer to ETH wallet`, () => {
+          goToTransferToETHWalletScreenAndInputRelatedInfo();
+
+          goToTransferReviewScreenAndInputPin();
+
+          cy.inputGoogleAuthVerificationCode();
+
+          cy.location('pathname').should(
+            'eq',
+            '/home/transfer/ethwallet/review/success',
+          );
+        });
+      },
+    );
+
+    context(
+      'pincode is set, 2fa for transaction is enabled with SMS verification',
+      () => {
+        beforeEach(function() {
+          cy.server();
+          cy.fixture('users.json').then(response => {
+            const users = response.data;
+            const user = users.find(
+              user => user.email_address === this.fromUser,
+            );
+            user.is_passcode_set = true;
+            user.is_2fa_enabled = true;
+            user.is_phone_confirmed = true;
+            user['2fa_method'] = twoFactorOption.METHOD.SMS;
+            user['2fa_usage'] = twoFactorOption.USAGE.TRANSACTION;
+            cy.route('POST', '/api/usersdata', response).as('getUsers');
+          });
+
+          cy.stubSMSRequestAndVerify();
+
+          goToTransferScreen();
+        });
+
+        it(`can transfer to email address`, () => {
+          goToTransferToEmailScreenAndInputRelatedInfo();
+
+          goToTransferReviewScreenAndInputPin();
+
+          cy.inputSMSVerificationCode();
+
+          cy.location('pathname').should(
+            'eq',
+            '/home/transfer/ethwallet/review/success',
+          );
+        });
+
+        it(`can transfer to ETH wallet`, () => {
+          goToTransferToETHWalletScreenAndInputRelatedInfo();
+
+          goToTransferReviewScreenAndInputPin();
+
+          cy.inputSMSVerificationCode();
+
+          cy.location('pathname').should(
+            'eq',
+            '/home/transfer/ethwallet/review/success',
+          );
+        });
+      },
+    );
   });
 });
