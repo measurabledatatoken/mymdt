@@ -43,6 +43,22 @@ Cypress.Commands.add('stubPinVerify', (shouldFail = false) => {
   });
 });
 
+Cypress.Commands.add('inputPinCode', (pin = '111111') => {
+  expect(pin).to.have.lengthOf(6);
+
+  cy.get('.md-dialog').should('exist');
+
+  cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
+
+  cy.get('.pin-code-field')
+    .find('input')
+    .then($input => {
+      Cypress._.each($input, (el, index) => {
+        cy.wrap(el).type(pin[index]);
+      });
+    });
+});
+
 Cypress.Commands.add('getCurrentContentRouterView', () => {
   cy.get('.content-router-view').last();
 });

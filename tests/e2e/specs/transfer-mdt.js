@@ -111,42 +111,46 @@ describe('Transfer MDT', () => {
           }),
         );
       });
+
       cy.stubPinVerify();
+
       goToTransferScreen();
     });
 
     it(`can transfer to email address`, () => {
       clickTransferToEmailAccount();
+
       cy.location('pathname').should('eq', '/home/transfer/email');
+
       cy.getCurrentContentRouterView()
         .find('.mdtinput')
         .find('input')
         .type(1);
+
       cy.get('.transfer-to')
         .find('button')
         .click();
+
       cy.get('@toUser').then(toUser => {
         cy.get('.md-menu-content')
           .contains(toUser)
           .click();
       });
+
       cy.getCurrentContentRouterView()
         .find('button')
         .last()
         .click();
+
       cy.location('pathname').should('eq', '/home/transfer/review');
+
       cy.getCurrentContentRouterView()
         .find('button')
         .last()
         .click();
-      cy.get('.md-dialog').should('exist');
-      cy.get('.pin-code-field')
-        .find('input')
-        .then($input => {
-          Cypress._.each($input, el => {
-            cy.wrap(el).type(1);
-          });
-        });
+
+      cy.inputPinCode();
+
       cy.location('pathname').should(
         'eq',
         '/home/transfer/ethwallet/review/success',
@@ -155,11 +159,16 @@ describe('Transfer MDT', () => {
 
     it(`can transfer to ETH wallet`, () => {
       clickTransferToETHWallet();
+
       cy.location('pathname').should('eq', '/home/transfer/ethwallet');
+
       cy.getCurrentContentRouterView()
         .find('.mdtinput')
         .find('input')
-        .type(16);
+        .focus()
+        .type(16)
+        .blur();
+
       cy.get('@toETHWalletAddress').then(toETHWalletAddress => {
         cy.get('.address-field')
           .find('textarea')
@@ -167,23 +176,21 @@ describe('Transfer MDT', () => {
           .type(toETHWalletAddress)
           .blur();
       });
+
       cy.getCurrentContentRouterView()
         .find('button')
         .last()
         .click();
+
       cy.location('pathname').should('eq', '/home/transfer/review');
+
       cy.getCurrentContentRouterView()
         .find('button')
         .last()
         .click();
-      cy.get('.md-dialog').should('exist');
-      cy.get('.pin-code-field')
-        .find('input')
-        .then($input => {
-          Cypress._.each($input, el => {
-            cy.wrap(el).type(1);
-          });
-        });
+
+      cy.inputPinCode();
+
       cy.location('pathname').should(
         'eq',
         '/home/transfer/ethwallet/review/success',
