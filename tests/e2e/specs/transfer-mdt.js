@@ -110,33 +110,35 @@ describe('Transfer MDT', () => {
     cy.inputPinCode();
   };
 
-  context('failed as pincode is not set', () => {
-    beforeEach(() => {
-      cy.server();
-      cy.get('@fromUser').then(fromUser => {
-        cy.fixture('users.json').then(response => {
-          const users = response.data;
-          const user = users.find(user => user.email_address === fromUser);
-          user.is_passcode_set = false;
-          cy.route('POST', '/api/usersdata', response).as('getUsers');
+  describe('failed transfer', () => {
+    context('pincode is not set', () => {
+      beforeEach(() => {
+        cy.server();
+        cy.get('@fromUser').then(fromUser => {
+          cy.fixture('users.json').then(response => {
+            const users = response.data;
+            const user = users.find(user => user.email_address === fromUser);
+            user.is_passcode_set = false;
+            cy.route('POST', '/api/usersdata', response).as('getUsers');
+          });
         });
+
+        goToTransferScreen();
       });
 
-      goToTransferScreen();
-    });
+      it('cannot transfer to neither email account nor ETH Wallet', () => {
+        clickTransferToEmailAccount();
+        cy.get('.md-dialog').should('exist');
 
-    it('cannot transfer to neither email account nor ETH Wallet', () => {
-      clickTransferToEmailAccount();
-      cy.get('.md-dialog').should('exist');
+        // click cancel button
+        cy.get('.md-dialog-actions')
+          .find('button')
+          .first()
+          .click();
 
-      // click cancel button
-      cy.get('.md-dialog-actions')
-        .find('button')
-        .first()
-        .click();
-
-      clickTransferToETHWallet();
-      cy.get('.md-dialog').should('exist');
+        clickTransferToETHWallet();
+        cy.get('.md-dialog').should('exist');
+      });
     });
   });
 
@@ -154,7 +156,8 @@ describe('Transfer MDT', () => {
               to_email: this.toUser,
             }),
           }),
-        );
+        ).as('postTransferToEmail');
+
         cy.route(
           'POST',
           '/api/transfer/eth-address',
@@ -164,7 +167,7 @@ describe('Transfer MDT', () => {
               to_eth_wallet: this.toETHWalletAddress,
             }),
           }),
-        );
+        ).as('postTransferToETH');
       });
 
       cy.stubPinVerify();
@@ -236,6 +239,8 @@ describe('Transfer MDT', () => {
 
           cy.inputGoogleAuthVerificationCode();
 
+          cy.wait('@postTransferToEmail');
+
           cy.location('pathname').should(
             'eq',
             '/home/transfer/ethwallet/review/success',
@@ -248,6 +253,8 @@ describe('Transfer MDT', () => {
           goToTransferReviewScreenAndInputPin();
 
           cy.inputGoogleAuthVerificationCode();
+
+          cy.wait('@postTransferToETH');
 
           cy.location('pathname').should(
             'eq',
@@ -287,6 +294,8 @@ describe('Transfer MDT', () => {
 
           cy.inputSMSVerificationCode();
 
+          cy.wait('@postTransferToEmail');
+
           cy.location('pathname').should(
             'eq',
             '/home/transfer/ethwallet/review/success',
@@ -299,6 +308,8 @@ describe('Transfer MDT', () => {
           goToTransferReviewScreenAndInputPin();
 
           cy.inputSMSVerificationCode();
+
+          cy.wait('@postTransferToETH');
 
           cy.location('pathname').should(
             'eq',
