@@ -29,6 +29,9 @@ npm run test:e2e
 
 For a detailed explanation on how things work, check out the [guide](https://cli.vuejs.org).
 
+## Development Guideline
+- If your changes might affect e2e testing scenarios, please run `npm run test:e2e` in local to make sure it works before creating PR
+
 ## Contribution Guideline (Draft)
 Refer to Vue readme in https://bitbucket.org/mailtimeapp/devwelcomekit/commits/73d55f350a3a19c76671d73558014621e2edc066
 

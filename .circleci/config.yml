@@ -25,6 +25,31 @@ jobs:
           name: Run unit tests
           command: npm run test:unit
 
+  e2e-test:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/mdtwallet-webapp
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1-deps-{{ .Branch }}
+          key: v1-deps
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - save_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run:
+          name: Run e2e test
+          command: npm run test:e2e -- --headless --record --key ${CYPRESS_KEY}
+
   build-and-publish-images:
     docker:
       - image: circleci/node:9.11.1-browsers
@@ -102,6 +127,12 @@ workflows:
                 - development
                 - staging
                 - dev/gary/circleci
+      - e2e-test:
+          filters:
+            branches:
+              only:
+                - development
+                - staging
       # - build-and-publish-images:
       #     requires:
       #       - unit-test
@@ -114,6 +145,7 @@ workflows:
       - deploy-staging:
           requires:
             - unit-test
+            - e2e-test
           filters:
             branches:
               only: staging
