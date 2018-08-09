@@ -14,14 +14,25 @@
       <div class="subtitle">{{ emailAddress }}</div>
     </md-dialog-title>
     <div class="content">
-      <PinCodeField 
-        ref="pinCodeField" 
-        :length="6" 
-        :should-auto-focus="true" 
-        @filled="onCodeFilled"
-      />
-      <div class="forgot">
-        <a @click="$emit('fotgot-click')">{{ $t('message.passcode.forgot_pin') }}</a>
+      <template v-if="!validatingPIN">
+        <PinCodeField 
+          ref="pinCodeField" 
+          :length="6" 
+          :should-auto-focus="true" 
+          @filled="onCodeFilled"
+        />
+        <div class="forgot">
+          <a @click="$emit('fotgot-click')">{{ $t('message.passcode.forgot_pin') }}</a>
+        </div>
+        
+      </template>
+      <div 
+        v-else 
+        class="spinner-cointainer"
+      >
+        <img 
+          src="/static/threedotsloader.gif" 
+        >
       </div>
     </div>
   </md-dialog>
@@ -29,6 +40,7 @@
 
 <script>
 import PinCodeField from '@/components/common/PinCodeField';
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -52,6 +64,11 @@ export default {
     return {
       shouldShake: false,
     };
+  },
+  computed: {
+    ...mapState({
+      validatingPIN: state => state.security.validatingPIN,
+    }),
   },
   methods: {
     setInvalid() {
@@ -121,6 +138,16 @@ export default {
   }
 }
 
+.content {
+  flex: 1;
+  position: relative;
+  .spinner-cointainer {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    @include center_horizontal_and_Vertical;
+  }
+}
 .pin-code-field {
   margin-top: 16px;
   width: auto;
