@@ -3,6 +3,7 @@ import { ErrorCode } from '@/enum';
 import { SET_IS_LOADING, OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 import { forcePromiseToRunForAtLeast } from '@/utils';
+import { LoadingPopupDelayInMillisecond } from '@/constants';
 
 export const REQUEST = 'api/REQUEST';
 export const HANDLE_ERROR_CODE = 'api/HANDLE_ERROR_CODE';
@@ -22,7 +23,10 @@ const actions = {
 
     let timeoutId = null;
     if (setLoading) {
-      timeoutId = setTimeout(() => commit(SET_IS_LOADING, true), 200); // do not show loading animation if the request is completed in short time
+      timeoutId = setTimeout(
+        () => commit(SET_IS_LOADING, true),
+        LoadingPopupDelayInMillisecond,
+      ); // do not show loading animation if the request is completed in short time
     }
 
     try {

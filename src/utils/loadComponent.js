@@ -1,5 +1,6 @@
 import store from '@/store';
 import { SET_IS_LOADING, OPEN_ERROR_PROMPT } from '@/store/modules/common';
+import { LoadingPopupDelayInMillisecond } from '@/constants';
 
 const importModule = name => {
   switch (name) {
@@ -18,7 +19,10 @@ const importModule = name => {
  */
 const loadComponent = name => async () => {
   try {
-    const timeoutId = setTimeout(() => store.commit(SET_IS_LOADING, true), 200);
+    const timeoutId = setTimeout(
+      () => store.commit(SET_IS_LOADING, true),
+      LoadingPopupDelayInMillisecond,
+    );
     const module = await importModule(name);
     clearTimeout(timeoutId); // do not show loading animation if the module can be imported in short time
     store.commit(SET_IS_LOADING, false);
