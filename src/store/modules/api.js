@@ -9,11 +9,12 @@ export const REQUEST = 'api/REQUEST';
 export const HANDLE_ERROR_CODE = 'api/HANDLE_ERROR_CODE';
 
 const actions = {
-  async [REQUEST]({ commit, dispatch, rootState }, payload) {
+  async [REQUEST]({ commit, dispatch }, payload) {
     const {
       api,
       args,
       setLoading = false,
+      persistLoading = false,
       runForAtLeast = 0,
       ...errorOptions
     } = payload;
@@ -38,7 +39,7 @@ const actions = {
 
       if (setLoading) {
         if (timeoutId) clearTimeout(timeoutId);
-        if (!rootState.common.persistLoadingOnComplete) {
+        if (!persistLoading) {
           commit(SET_IS_LOADING, false);
         }
       }
