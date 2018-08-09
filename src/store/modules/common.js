@@ -5,6 +5,7 @@ export const SET_ERROR_TITLE = 'common/SET_ERROR_TITLE';
 export const SET_ERROR_REDIRECT = 'common/SET_ERROR_REDIRECT';
 export const SET_SHOW_ERROR_PROMPT = 'common/SET_SHOW_ERROR_PROMPT';
 export const SET_IS_LOADING = 'common/SET_IS_LOADING';
+
 export const SET_NAVIGATION_TITLE = 'common/SET_NAVIGATION_TITLE';
 export const SET_HIDE_NAVIGATION_BACK_BUTTON =
   'common/SET_HIDE_NAVIGATION_BACK_BUTTON';

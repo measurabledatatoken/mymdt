@@ -107,6 +107,7 @@ const actions = {
         api: api.auth.autoLogin,
         args: [appCredentials, appID, locale],
         setLoading: true,
+        persistLoading: true,
       });
       commit(SET_LOGIN_ERRORCODE, null);
       const credentials = data.valid.map(dataItem => ({
@@ -124,7 +125,6 @@ const actions = {
       } else {
         commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
       }
-      // commit(SET_IS_LOADING, false);
       dispatch(HANDLE_ERROR_CODE, {
         error,
         openErrorPrompt: 'default',

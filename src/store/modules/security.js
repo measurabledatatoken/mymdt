@@ -1,8 +1,8 @@
 import api from '@/api';
 import { regTrackingSuperProperties } from '@/utils';
-import { FETCH_USER } from '@/store/modules/entities/users';
+import { UPDATE_USER_INFO } from '@/store/modules/entities/users';
 import { REQUEST } from '@/store/modules/api';
-import { SET_IS_LOADING } from '@/store/modules/common';
+import { LoadingPopupDelayInMillisecond } from '@/constants';
 // mutation
 export const SET_COUNTRY_DIALCODE = 'phoneVerifyScreen/SET_COUNTRY_DIALCODE';
 export const SET_COUNTRY_CODE = 'phoneVerifyScreen/SET_COUNTRY_CODE';
@@ -15,6 +15,7 @@ export const SET_SECURITY_USER_PHONE_INFO =
   'security/SET_SECURITY_USER_PHONE_INFO';
 export const SET_PIN_FOR_2FA_SETUP = 'security/SET_PIN_FOR_2FA_SETUP';
 // export const SET_2FA_STATUS = 'security/SET_2FA_STATUS';
+export const SET_VALIDATING_PIN = 'security/SET_VALIDATING_PIN';
 
 // action
 export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
@@ -50,6 +51,7 @@ const state = {
   doneCallBackPath: null,
   selectedUserId: null,
   pinFor2FASetup: null,
+  validatingPIN: false,
 };
 
 const getters = {
@@ -69,6 +71,9 @@ const mutations = {
   },
   [SET_DONE_CALLBACK_PATH](state, doneCallBackPath) {
     state.doneCallBackPath = doneCallBackPath;
+  },
+  [SET_VALIDATING_PIN](state, validatingPIN) {
+    state.validatingPIN = validatingPIN;
   },
   [FLUSH_PHONE_STATE](state) {
     state.countryDialCode = null;
@@ -90,34 +95,71 @@ const mutations = {
 };
 
 const actions = {
-  [VALIDATE_PIN_FOR_SECURITY]({ state, dispatch, rootGetters }, pin) {
+  async [VALIDATE_PIN_FOR_SECURITY](
+    { state, commit, dispatch, rootGetters },
+    pin,
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
-
-    return dispatch(REQUEST, {
-      api: api.security.validatePIN,
-      args: [pin, account.accessToken],
-      setLoading: true,
-      openErrorPrompt: false,
-    });
+    const timeoutId = setTimeout(
+      () => commit(SET_VALIDATING_PIN, true),
+      LoadingPopupDelayInMillisecond,
+    );
+    try {
+      await dispatch(REQUEST, {
+        api: api.security.validatePIN,
+        args: [pin, account.accessToken],
+        setLoading: false,
+        openErrorPrompt: false,
+      });
+    } catch (error) {
+      throw error;
+    } finally {
+      if (timeoutId) clearTimeout(timeoutId);
+      commit(SET_VALIDATING_PIN, false);
+    }
   },
-  [VALIDATE_PIN_FOR_SELECTED_USER]({ dispatch, rootGetters }, pin) {
+  async [VALIDATE_PIN_FOR_SELECTED_USER](
+    { dispatch, commit, rootGetters },
+    pin,
+  ) {
     const account = rootGetters.getSelectedUser;
-    return dispatch(REQUEST, {
-      api: api.security.validatePIN,
-      args: [pin, account.accessToken],
-      setLoading: true,
-      openErrorPrompt: false,
-    });
+    const timeoutId = setTimeout(
+      () => commit(SET_VALIDATING_PIN, true),
+      LoadingPopupDelayInMillisecond,
+    );
+    try {
+      await dispatch(REQUEST, {
+        api: api.security.validatePIN,
+        args: [pin, account.accessToken],
+        setLoading: false,
+        openErrorPrompt: false,
+      });
+    } catch (error) {
+      throw error;
+    } finally {
+      if (timeoutId) clearTimeout(timeoutId);
+      commit(SET_VALIDATING_PIN, false);
+    }
   },
-  [VALIDATE_PIN_FOR_TRANSFER]({ dispatch, rootState }, pin) {
+  async [VALIDATE_PIN_FOR_TRANSFER]({ commit, dispatch, rootState }, pin) {
     const transferFromAccount = rootState.transfer.transferFromAccount;
-
-    return dispatch(REQUEST, {
-      api: api.security.validatePIN,
-      args: [pin, transferFromAccount.accessToken],
-      setLoading: true,
-      openErrorPrompt: false,
-    });
+    const timeoutId = setTimeout(
+      () => commit(SET_VALIDATING_PIN, true),
+      LoadingPopupDelayInMillisecond,
+    );
+    try {
+      await dispatch(REQUEST, {
+        api: api.security.validatePIN,
+        args: [pin, transferFromAccount.accessToken],
+        setLoading: false,
+        openErrorPrompt: false,
+      });
+    } catch (error) {
+      throw error;
+    } finally {
+      if (timeoutId) clearTimeout(timeoutId);
+      commit(SET_VALIDATING_PIN, false);
+    }
   },
   [RESET_PIN](
     { dispatch, state, rootGetters },
@@ -132,7 +174,10 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  async [SETUP_PIN]({ dispatch, state, rootGetters }, { pin, confirmedPIN }) {
+  async [SETUP_PIN](
+    { dispatch, state, rootGetters, commit },
+    { pin, confirmedPIN },
+  ) {
     const account = rootGetters.getUser(state.selectedUserId);
     try {
       const response = await dispatch(REQUEST, {
@@ -142,8 +187,11 @@ const actions = {
         openErrorPrompt: true,
       });
 
-      dispatch(FETCH_USER, {
+      commit(UPDATE_USER_INFO, {
         userId: state.selectedUserId,
+        data: {
+          isPasscodeSet: true,
+        },
       });
 
       return response;
@@ -177,7 +225,7 @@ const actions = {
     });
   },
   async [ADD_PHONE_NUMBER](
-    { dispatch, state, rootGetters },
+    { dispatch, state, rootGetters, commit },
     { pin, verificationCode },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
@@ -189,24 +237,38 @@ const actions = {
         openErrorPrompt: true,
       });
 
-      dispatch(FETCH_USER, {
+      commit(UPDATE_USER_INFO, {
         userId: state.selectedUserId,
+        data: {
+          countryDialCode: state.countryDialCode,
+          countryCode: state.countryCode,
+          phoneNumber: state.phoneNumber,
+          isPhoneConfirmed: true,
+        },
       });
       return response;
     } catch (error) {
       throw error;
     }
   },
-  [CHANGE_PHONE_NUMBER](
-    { dispatch, state, rootGetters },
+  async [CHANGE_PHONE_NUMBER](
+    { dispatch, state, rootGetters, commit },
     { oldVerificationCode, verificationCode, pin },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
-    return dispatch(REQUEST, {
+    await dispatch(REQUEST, {
       api: api.security.changePhoneNumber,
       args: [oldVerificationCode, verificationCode, pin, account.accessToken],
       setLoading: true,
       openErrorPrompt: true,
+    });
+    commit(UPDATE_USER_INFO, {
+      userId: state.selectedUserId,
+      data: {
+        countryDialCode: state.countryDialCode,
+        countryCode: state.countryCode,
+        phoneNumber: state.phoneNumber,
+      },
     });
   },
   [VERIFY_VERIFICATION_CODE](
@@ -222,7 +284,7 @@ const actions = {
       openErrorPrompt: true,
     });
   },
-  async [ENABLE_2FA]({ dispatch, state, rootGetters }, { pin }) {
+  async [ENABLE_2FA]({ dispatch, state, rootGetters, commit }, { pin }) {
     const account = rootGetters.getUser(state.selectedUserId);
     const response = await dispatch(REQUEST, {
       api: api.security.enable2FA,
@@ -230,13 +292,18 @@ const actions = {
       setLoading: true,
       openErrorPrompt: true,
     });
-    dispatch(FETCH_USER, {
+    commit(UPDATE_USER_INFO, {
       userId: state.selectedUserId,
+      data: {
+        isTwofaEnabled: response.is_2fa_enabled,
+        twofaMethod: response['2fa_method'],
+        twofaUsage: response['2fa_usage'],
+      },
     });
     return response;
   },
   async [DISABLE_2FA](
-    { dispatch, state, rootGetters },
+    { dispatch, state, rootGetters, commit },
     { pin, verificationCode },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
@@ -246,8 +313,13 @@ const actions = {
       setLoading: false,
       openErrorPrompt: true,
     });
-    await dispatch(FETCH_USER, {
+    commit(UPDATE_USER_INFO, {
       userId: state.selectedUserId,
+      data: {
+        isTwofaEnabled: response.is_2fa_enabled,
+        twofaMethod: response['2fa_method'],
+        twofaUsage: response['2fa_usage'],
+      },
     });
     return response;
   },
@@ -256,22 +328,23 @@ const actions = {
     { method, usage },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
-    const timeoutId = setTimeout(() => commit(SET_IS_LOADING, true), 200);
     const response = await dispatch(REQUEST, {
       api: api.security.set2FAOption,
       args: [method, usage, account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
-    await dispatch(FETCH_USER, {
+    commit(UPDATE_USER_INFO, {
       userId: state.selectedUserId,
+      data: {
+        twofaMethod: response['2fa_method'],
+        twofaUsage: response['2fa_usage'],
+      },
     });
-    if (timeoutId) clearTimeout(timeoutId);
-    commit(SET_IS_LOADING, false);
     return response;
   },
   async [GENERATE_GOOGLE_AUTHENTICATOR_SECRET](
-    { dispatch, state, rootGetters },
+    { dispatch, state, rootGetters, commit },
     { pin },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
@@ -281,13 +354,16 @@ const actions = {
       setLoading: true,
       openErrorPrompt: true,
     });
-    dispatch(FETCH_USER, {
+    commit(UPDATE_USER_INFO, {
       userId: state.selectedUserId,
+      data: {
+        hasGoogleAuthSecret: true,
+      },
     });
     return response;
   },
   async [VERIFY_GOOGLE_AUTHENTICATOR_SECRET](
-    { dispatch, state, rootGetters },
+    { dispatch, state, rootGetters, commit },
     { verificationCode },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
@@ -297,8 +373,11 @@ const actions = {
       setLoading: false,
       openErrorPrompt: true,
     });
-    dispatch(FETCH_USER, {
+    commit(UPDATE_USER_INFO, {
       userId: state.selectedUserId,
+      data: {
+        isGoogleAuthEnabled: true,
+      },
     });
     return response;
   },
@@ -315,7 +394,7 @@ const actions = {
     });
   },
   async [DISABLE_GOOGLE_AUTHENTICATOR](
-    { dispatch, state, rootGetters },
+    { dispatch, state, rootGetters, commit },
     { pin, verificationCode },
   ) {
     const account = rootGetters.getUser(state.selectedUserId);
@@ -325,8 +404,15 @@ const actions = {
       setLoading: false,
       openErrorPrompt: true,
     });
-    dispatch(FETCH_USER, {
+    commit(UPDATE_USER_INFO, {
       userId: state.selectedUserId,
+      data: {
+        hasGoogleAuthSecret: false,
+        isGoogleAuthEnabled: response.is_google_auth_enabled,
+        twofaMethod: response['2fa_method'],
+        twofaUsage: response['2fa_usage'],
+        isTwofaEnabled: response.is_2fa_enabled,
+      },
     });
     return response;
   },

@@ -114,9 +114,12 @@ const accessTokenExpiredUrl = 'mdtwallet://accesstoken-expired';
 // in px, please also change $header-height in scss
 const HeaderHeight = 52;
 
+const LoadingPopupDelayInMillisecond = 200;
+
 export {
   RouteDef,
   ExitFromWalletWebviewURL,
   HeaderHeight,
   accessTokenExpiredUrl,
+  LoadingPopupDelayInMillisecond,
 };
