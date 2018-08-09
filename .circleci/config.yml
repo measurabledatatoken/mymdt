@@ -48,7 +48,7 @@ jobs:
             - ~/.cache
       - run:
           name: Run e2e test
-          command: npm run test:e2e -- --headless --record --key 722e1ee7-b29b-4ad0-8b17-3e20bd1f183b
+          command: npm run test:e2e -- --headless --record --key ${CYPRESS_KEY}
 
   build-and-publish-images:
     docker:
