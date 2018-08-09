@@ -2,6 +2,7 @@ import api from '@/api';
 import { ErrorCode } from '@/enum';
 import { REQUEST_USER_ACCOUNTS, SET_APP_ID } from '@/store/modules/home';
 import { HANDLE_ERROR_CODE, REQUEST } from '@/store/modules/api';
+import { SET_PERSIST_LOADING_ON_COMPLETE } from '@/store/modules/common';
 
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
@@ -103,6 +104,7 @@ const actions = {
     const locale = rootState.common.locale;
 
     try {
+      commit(SET_PERSIST_LOADING_ON_COMPLETE, true);
       const data = await dispatch(REQUEST, {
         api: api.auth.autoLogin,
         args: [appCredentials, appID, locale],
@@ -117,6 +119,7 @@ const actions = {
       commit(SET_CREDENTIALS, credentials);
       commit(SET_INVALIDEMAILS, data.invalid);
       await dispatch(REQUEST_USER_ACCOUNTS);
+      commit(SET_PERSIST_LOADING_ON_COMPLETE, false);
       commit(SET_APP_ID, appID);
     } catch (error) {
       if (error.response && error.response.data) {
@@ -124,7 +127,7 @@ const actions = {
       } else {
         commit(SET_LOGIN_ERRORCODE, ErrorCode.UnknownError);
       }
-      // commit(SET_IS_LOADING, false);
+      commit(SET_PERSIST_LOADING_ON_COMPLETE, false);
       dispatch(HANDLE_ERROR_CODE, {
         error,
         openErrorPrompt: 'default',

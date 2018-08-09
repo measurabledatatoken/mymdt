@@ -298,7 +298,7 @@ const actions = {
     const response = await dispatch(REQUEST, {
       api: api.security.set2FAOption,
       args: [method, usage, account.accessToken],
-      setLoading: false,
+      setLoading: true,
       openErrorPrompt: true,
     });
     commit(UPDATE_USER_INFO, {
