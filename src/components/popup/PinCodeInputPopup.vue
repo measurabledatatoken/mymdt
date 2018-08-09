@@ -40,8 +40,7 @@
 
 <script>
 import PinCodeField from '@/components/common/PinCodeField';
-import { mapState, mapMutations } from 'vuex';
-import { SET_VALIDATING_PIN } from '@/store/modules/security';
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -71,15 +70,8 @@ export default {
       validatingPIN: state => state.security.validatingPIN,
     }),
   },
-  created() {
-    this.setValidatingPIN(false);
-  },
   methods: {
-    ...mapMutations({
-      setValidatingPIN: SET_VALIDATING_PIN,
-    }),
-    async setInvalid() {
-      await this.setValidatingPIN(false);
+    setInvalid() {
       this.$refs.pinCodeField.setInvalid();
       this.shouldShake = true;
     },
