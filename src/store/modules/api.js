@@ -8,7 +8,7 @@ export const REQUEST = 'api/REQUEST';
 export const HANDLE_ERROR_CODE = 'api/HANDLE_ERROR_CODE';
 
 const actions = {
-  async [REQUEST]({ commit, dispatch }, payload) {
+  async [REQUEST]({ commit, dispatch, rootState }, payload) {
     const {
       api,
       args,
@@ -34,7 +34,9 @@ const actions = {
 
       if (setLoading) {
         if (timeoutId) clearTimeout(timeoutId);
-        commit(SET_IS_LOADING, false);
+        if (!rootState.common.persistLoadingOnComplete) {
+          commit(SET_IS_LOADING, false);
+        }
       }
       return response;
     } catch (error) {
