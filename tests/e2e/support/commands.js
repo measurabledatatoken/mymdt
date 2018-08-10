@@ -24,6 +24,8 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+import { createAPIResponse } from '../utils';
+
 Cypress.Commands.add('login', (deviceId = 'someArbitraryDeviceId') => {
   cy.visit(
     `/autologin?appid=${Cypress.env('APP_ID')}&tokens=${Cypress.env(
@@ -119,20 +121,15 @@ Cypress.Commands.add(
           ),
         );
 
-        cy.route('POST', '/api/usersdata', {
-          data: selectedUsers,
-          meta: {
-            record_count: 1,
-            status: 200,
-          },
-        }).as('getUsers');
+        cy.route('POST', '/api/usersdata', createAPIResponse(selectedUsers)).as(
+          'getUsers',
+        );
 
-        cy.route('GET', '/api/account/data', {
-          data: selectedUsers[0],
-          meta: {
-            status: 200,
-          },
-        }).as('getUser');
+        cy.route(
+          'GET',
+          '/api/account/data',
+          createAPIResponse(selectedUsers[0]),
+        ).as('getUser');
 
         cy.wrap(
           Array.isArray(options.emailAddresses)
