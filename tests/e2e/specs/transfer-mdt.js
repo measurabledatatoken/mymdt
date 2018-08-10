@@ -1,3 +1,5 @@
+import { createAPIResponse } from '../utils';
+
 describe('Transfer MDT', () => {
   beforeEach(() => {
     const fromUser = 'testmailtime001@gmail.com';
@@ -5,10 +7,7 @@ describe('Transfer MDT', () => {
     const toETHWalletAddress = '0x0000000000000000000000000000000000000000';
 
     cy.server();
-    cy.route('GET', '/api/apps/*/user/rewards', {
-      data: [],
-      meta: { record_count: 0, status: 200 },
-    });
+    cy.route('GET', '/api/apps/*/user/rewards', createAPIResponse([]));
 
     cy.wrap(fromUser).as('fromUser');
     cy.wrap(toUser).as('toUser');
@@ -139,25 +138,27 @@ describe('Transfer MDT', () => {
     beforeEach(function() {
       cy.server();
       cy.fixture('transaction/index').then(transaction => {
-        cy.route('POST', '/api/transfer/email', {
-          data: Object.assign({}, transaction, {
-            from_email: this.fromUser,
-            to_email: this.toUser,
-          }),
-          meta: {
-            status: 200,
-          },
-        }).as('postTransferToEmail');
+        cy.route(
+          'POST',
+          '/api/transfer/email',
+          createAPIResponse(
+            Object.assign({}, transaction, {
+              from_email: this.fromUser,
+              to_email: this.toUser,
+            }),
+          ),
+        ).as('postTransferToEmail');
 
-        cy.route('POST', '/api/transfer/eth-address', {
-          data: Object.assign({}, transaction, {
-            from_email: this.fromUser,
-            to_eth_wallet: this.toETHWalletAddress,
-          }),
-          meta: {
-            status: 200,
-          },
-        }).as('postTransferToETH');
+        cy.route(
+          'POST',
+          '/api/transfer/eth-address',
+          createAPIResponse(
+            Object.assign({}, transaction, {
+              from_email: this.fromUser,
+              to_eth_wallet: this.toETHWalletAddress,
+            }),
+          ),
+        ).as('postTransferToETH');
       });
 
       cy.stubPinVerify();

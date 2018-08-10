@@ -1,3 +1,5 @@
+import { createAPIResponse } from '../utils';
+
 describe('Transaction', () => {
   beforeEach(() => {
     cy.server();
@@ -5,31 +7,21 @@ describe('Transaction', () => {
     cy.stubUserListingAndDetail('user/index');
     cy.stubPinVerify();
 
-    cy.route('GET', '/api/apps/*/user/rewards', {
-      data: [],
-      meta: { record_count: 0, status: 200 },
-    });
+    cy.route('GET', '/api/apps/*/user/rewards', createAPIResponse([]));
 
     cy.fixture('transaction/cancellable').then(transaction => {
       const transactionId = transaction.id;
 
-      cy.route('GET', '/api/user/transactions', {
-        data: [transaction],
-        meta: {
-          record_count: 1,
-          status: 200,
-        },
-      }).as('getTransactions');
+      cy.route(
+        'GET',
+        '/api/user/transactions',
+        createAPIResponse([transaction]),
+      ).as('getTransactions');
 
       cy.route(
         'POST',
         `/api/apps/*/user/transactions/${transactionId}/cancel`,
-        {
-          data: transaction,
-          meta: {
-            status: 200,
-          },
-        },
+        createAPIResponse(transaction),
       ).as('cancelTransaction');
 
       cy.wrap(transactionId).as('transactionId');

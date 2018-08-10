@@ -1,3 +1,5 @@
+import { createAPIResponse } from '../utils';
+
 describe('Earn MDT Screen', () => {
   beforeEach(() => {
     cy.server();
@@ -7,21 +9,16 @@ describe('Earn MDT Screen', () => {
     cy.fixture('reward/claimable').then(reward => {
       const rewardAmount = reward.value;
 
-      cy.route('GET', '/api/apps/*/user/rewards', {
-        data: [reward],
-        meta: {
-          record_count: 1,
-          status: 200,
-        },
-      }).as('getRewards');
+      cy.route(
+        'GET',
+        '/api/apps/*/user/rewards',
+        createAPIResponse([reward]),
+      ).as('getRewards');
 
       cy.wrap(rewardAmount).as('rewardAmount');
     });
 
-    cy.route('GET', '/api/apps/*/user/tasks', {
-      data: [],
-      meta: { record_count: 0, status: 200 },
-    });
+    cy.route('GET', '/api/apps/*/user/tasks', createAPIResponse([]));
 
     cy.route('POST', '/api/apps/*/user/rewards/*/claim', '').as('claimReward');
   });
