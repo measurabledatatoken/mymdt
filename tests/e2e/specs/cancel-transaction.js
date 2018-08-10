@@ -1,11 +1,8 @@
-const fromUser = 'testmailtime001@gmail.com';
-const transactionId = '8b69560a867d400ba242dce8cc9c7501';
-
 describe('Transaction', () => {
   beforeEach(() => {
     cy.server();
 
-    cy.stubUserListingAndDetail(fromUser);
+    cy.stubUserListingAndDetail('user/index');
     cy.stubPinVerify();
 
     cy.route('GET', '/api/apps/*/user/rewards', {
@@ -13,24 +10,13 @@ describe('Transaction', () => {
       meta: { record_count: 0, status: 200 },
     });
 
-    cy.fixture('transaction.json').then(response => {
-      const transaction = response.data;
-      transaction.id = transactionId;
-      transaction.amount = 1;
-      transaction.delta = -1;
-      transaction.expiry_time = '2018-08-15T03:35:37.344786Z';
-      transaction.is_cancelable = true;
-      transaction.status = 7;
-      transaction.from_email = fromUser;
-      transaction.to_email = 'some_random_email@mailtime.com';
-      transaction.from_eth_wallet = '';
-      transaction.to_eth_wallet = '';
-      transaction.transaction_type = 2;
+    cy.fixture('transaction/cancellable').then(transaction => {
+      const transactionId = transaction.id;
 
       cy.route('GET', '/api/user/transactions', {
         data: [transaction],
         meta: {
-          record_count: 15,
+          record_count: 1,
           status: 200,
         },
       }).as('getTransactions');
@@ -45,6 +31,8 @@ describe('Transaction', () => {
           },
         },
       ).as('cancelTransaction');
+
+      cy.wrap(transactionId).as('transactionId');
     });
   });
 
@@ -53,13 +41,18 @@ describe('Transaction', () => {
 
     cy.wait('@getUsers');
 
-    cy.get('.bottom-content')
-      .contains(fromUser)
-      .parents('.md-card')
-      .find('.md-card-header')
-      .click();
+    cy.get('@selectedUserEmail').then(selectedUserEmail => {
+      cy.get('.bottom-content')
+        .contains(selectedUserEmail)
+        .parents('.md-card')
+        .find('.md-card-header')
+        .click();
 
-    cy.location('pathname').should('eq', `/home/accounts/${fromUser}`);
+      cy.location('pathname').should(
+        'eq',
+        `/home/accounts/${selectedUserEmail}`,
+      );
+    });
   };
 
   const goToTransactionDetailScreen = () => {
@@ -71,10 +64,14 @@ describe('Transaction', () => {
       .first()
       .click();
 
-    cy.location('pathname').should(
-      'eq',
-      `/home/accounts/${fromUser}/transactions/${transactionId}`,
-    );
+    cy.get('@transactionId').then(transactionId => {
+      cy.get('@selectedUserEmail').then(selectedUserEmail => {
+        cy.location('pathname').should(
+          'eq',
+          `/home/accounts/${selectedUserEmail}/transactions/${transactionId}`,
+        );
+      });
+    });
   };
 
   it('can be cancelled', () => {
@@ -103,6 +100,11 @@ describe('Transaction', () => {
 
     cy.wait('@cancelTransaction');
 
-    cy.location('pathname').should('eq', `/home/accounts/${fromUser}`);
+    cy.get('@selectedUserEmail').then(selectedUserEmail => {
+      cy.location('pathname').should(
+        'eq',
+        `/home/accounts/${selectedUserEmail}`,
+      );
+    });
   });
 });
