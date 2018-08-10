@@ -5,6 +5,7 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 /tests/e2e/config/local.json
+/tests/e2e/__generatedFixtures__/
 
 # local env files
 .env.local

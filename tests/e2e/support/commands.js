@@ -26,9 +26,11 @@
 
 Cypress.Commands.add('login', (deviceId = 'someArbitraryDeviceId') => {
   cy.visit(
-    `/autologin?appid=${Cypress.env(
-      'APP_ID',
-    )}&tokens=AA3sx3rvtfedy5327smh11uppeu,a9d323flfos38tydaio6tz261,ctnxz4pbthrjob9ivu3hefzc4,exdmch39wyp64upo2g6auc1ny,9sn72u7630a31s815onxd08gx,AAcgmay7gvspdaqiq1jxy5x8o0q&emails=test001@jianxinapp.com,test002@jianxinapp.com,mailtimeai@yahoo.com,appmailtime@163.com,testmailtime001@gmail.com,gem@mailtime.com&lang=en-us&needexit=true&deviceid=${deviceId}&isadmin=true`,
+    `/autologin?appid=${Cypress.env('APP_ID')}&tokens=${Cypress.env(
+      'TOKENS',
+    )}&emails=${Cypress.env('EMAILS')}&lang=${Cypress.env(
+      'LANG',
+    )}&needexit=${Cypress.env('NEED_EXIT')}&deviceid=${deviceId}&isadmin=true`,
   );
 });
 
@@ -87,28 +89,57 @@ Cypress.Commands.add('stubSMSRequestAndVerify', options => {
 
 Cypress.Commands.add(
   'stubUserListingAndDetail',
-  (emailAddress, userProperties = {}) => {
-    cy.fixture('users.json').then(response => {
-      const user = Object.assign(
-        {},
-        response.data.find(user => user.email_address === emailAddress),
-        userProperties,
+  (fixture, options, overriderUserProperties) => {
+    options = Object.assign(
+      {},
+      {
+        emailAddresses: 'testmailtime001@gmail.com',
+      },
+      options,
+    );
+
+    cy.fixture('user/users').then(users => {
+      let selectedUsers = users.filter(
+        user =>
+          Array.isArray(options.emailAddresses)
+            ? options.emailAddresses.includes(user.email_address)
+            : user.email_address === options.emailAddresses,
       );
 
-      cy.route('POST', '/api/usersdata', {
-        data: [user],
-        meta: {
-          record_count: 1,
-          status: 200,
-        },
-      }).as('getUsers');
+      cy.fixture(fixture).then(userProperties => {
+        selectedUsers = selectedUsers.map(selectedUser =>
+          Object.assign(
+            {},
+            selectedUser,
+            userProperties,
+            {
+              email_address: selectedUser.email_address,
+            },
+            overriderUserProperties,
+          ),
+        );
 
-      cy.route('GET', '/api/account/data', {
-        data: user,
-        meta: {
-          status: 200,
-        },
-      }).as('getUser');
+        cy.route('POST', '/api/usersdata', {
+          data: selectedUsers,
+          meta: {
+            record_count: 1,
+            status: 200,
+          },
+        }).as('getUsers');
+
+        cy.route('GET', '/api/account/data', {
+          data: selectedUsers[0],
+          meta: {
+            status: 200,
+          },
+        }).as('getUser');
+
+        cy.wrap(
+          Array.isArray(options.emailAddresses)
+            ? options.emailAddresses[0]
+            : options.emailAddresses,
+        ).as('selectedUserEmail');
+      });
     });
   },
 );
