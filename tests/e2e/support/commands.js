@@ -85,6 +85,34 @@ Cypress.Commands.add('stubSMSRequestAndVerify', options => {
   });
 });
 
+Cypress.Commands.add(
+  'stubUserListingAndDetail',
+  (emailAddress, userProperties = {}) => {
+    cy.fixture('users.json').then(response => {
+      const user = Object.assign(
+        {},
+        response.data.find(user => user.email_address === emailAddress),
+        userProperties,
+      );
+
+      cy.route('POST', '/api/usersdata', {
+        data: [user],
+        meta: {
+          record_count: 1,
+          status: 200,
+        },
+      }).as('getUsers');
+
+      cy.route('GET', '/api/account/data', {
+        data: user,
+        meta: {
+          status: 200,
+        },
+      }).as('getUser');
+    });
+  },
+);
+
 Cypress.Commands.add('inputPinCode', (pin = '111111') => {
   expect(pin).to.have.lengthOf(6);
 
