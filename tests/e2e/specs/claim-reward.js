@@ -42,10 +42,6 @@ describe('Earn MDT Screen', () => {
       .last()
       .click();
 
-    cy.get('.content')
-      .find('.btn-earn-mdt')
-      .click();
-
     cy.location('pathname').should('eq', '/home/earn');
   };
 
