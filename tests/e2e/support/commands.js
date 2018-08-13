@@ -173,9 +173,7 @@ Cypress.Commands.add('inputGoogleAuthVerificationCode', (otp = 'ABCDEF') => {
     .blur();
 
   // click done button
-  cy.get('.container')
-    .find('button')
-    .click();
+  cy.get('button:contains("Done")').click();
 });
 
 Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
@@ -190,9 +188,7 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
     .blur();
 
   // click done button
-  cy.get('button')
-    .last()
-    .click();
+  cy.get('button:contains("Done")').click();
 });
 
 Cypress.Commands.add('getCurrentContentRouterView', () => {
