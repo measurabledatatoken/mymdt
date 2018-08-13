@@ -36,10 +36,8 @@ describe('Earn MDT Screen', () => {
 
     cy.wait('@getUsers');
 
-    cy.get('.md-dialog')
-      .find('.md-dialog-actions')
-      .find('button')
-      .last()
+    cy.get('.content')
+      .find('.btn-earn-mdt')
       .click();
 
     cy.location('pathname').should('eq', '/home/earn');
