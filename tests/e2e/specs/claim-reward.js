@@ -6,6 +6,14 @@ describe('Earn MDT Screen', () => {
 
     cy.stubUserListingAndDetail('user/index');
 
+    cy.fixture('auth/autologin').then(credentials => {
+      cy.route(
+        'POST',
+        '/api/account/autologin',
+        createAPIResponse(credentials),
+      );
+    });
+
     cy.fixture('reward/claimable').then(reward => {
       const rewardAmount = reward.value;
 
@@ -28,12 +36,14 @@ describe('Earn MDT Screen', () => {
 
     cy.wait('@getUsers');
 
-    cy.wait('@getRewards');
-
     cy.get('.md-dialog')
       .find('.md-dialog-actions')
       .find('button')
       .last()
+      .click();
+
+    cy.get('.content')
+      .find('.btn-earn-mdt')
       .click();
 
     cy.location('pathname').should('eq', '/home/earn');
