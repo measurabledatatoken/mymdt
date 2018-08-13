@@ -114,6 +114,7 @@ const actions = {
         email_address: dataItem.email_address,
         access_token: dataItem.access_token,
         claimed_amount: dataItem.claimed_amount,
+        claimable_amount: dataItem.claimable_amount,
       }));
       commit(SET_CREDENTIALS, credentials);
       commit(SET_INVALIDEMAILS, data.invalid);
