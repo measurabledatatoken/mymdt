@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     ...mapState({
-      pinFor2FASetup: state => state.security.pinFor2FASetup,
+      pin: state => state.security.pin,
       doneCallBackPath: state => state.security.doneCallBackPath,
     }),
     ...mapGetters({
@@ -142,7 +142,7 @@ export default {
       },
       set(value) {
         if (value) {
-          this.enable2FA({ pin: this.pinFor2FASetup });
+          this.enable2FA({ pin: this.pin });
         } else {
           this.showDisable2FAPopup = true;
         }

@@ -101,12 +101,12 @@ export default {
   },
   computed: {
     ...mapState({
-      pinFor2FASetup: state => state.security.pinFor2FASetup,
+      pin: state => state.security.pin,
     }),
   },
   async created() {
     try {
-      const response = await this.generateSecret({ pin: this.pinFor2FASetup });
+      const response = await this.generateSecret({ pin: this.pin });
       this.googleAuthSecret = response.secret;
     } catch (error) {
       console.log(`error in generating google auth secret: ${error.message}`);

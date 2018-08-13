@@ -164,7 +164,7 @@ import {
   VALIDATE_PIN_FOR_SECURITY,
   SET_DONE_CALLBACK_PATH,
   REQUEST_VERIFICATION_CODE,
-  SET_PIN_FOR_2FA_SETUP,
+  SET_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
 import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
@@ -236,7 +236,7 @@ export default {
       setSelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setSecurityUserInfo: SET_SECURITY_USER_PHONE_INFO,
-      setPinFor2FASetup: SET_PIN_FOR_2FA_SETUP,
+      setPinForSecuirty: SET_PIN_FOR_SECURITY,
     }),
     ...mapActions({
       validatePIN: VALIDATE_PIN_FOR_SECURITY,
@@ -268,7 +268,7 @@ export default {
     async onPinCodeFilled(pinCode) {
       try {
         await this.validatePIN(pinCode);
-        this.setPinFor2FASetup(pinCode);
+        this.setPinForSecuirty(pinCode);
         this.showPinCodeInput = false;
       } catch (error) {
         console.log(`error in validating: ${error.message}`);
