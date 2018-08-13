@@ -26,6 +26,7 @@ import {
   CHANGE_PIN,
   RESET_PIN,
   SET_DONE_CALLBACK_PATH,
+  SET_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
@@ -87,6 +88,7 @@ export default {
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+      setPinForSecuirty: SET_PIN_FOR_SECURITY,
     }),
     ...mapActions({
       setupPIN: SETUP_PIN,
@@ -96,6 +98,7 @@ export default {
     }),
     onDoneClicked(pincode) {
       trackEvent('Enter PIN for the second time');
+      this.setPinForSecuirty(pincode);
       switch (this.mode) {
         case SetupPINMode.RESET: {
           this.resetPIN({

@@ -32,12 +32,6 @@ export default {
     BasePhoneNumberVerifyPage,
     SuccessPopup,
   },
-  props: {
-    pin: {
-      type: String,
-      default: null,
-    },
-  },
   data() {
     return {
       showPhoneSetupSuccessPopup: false,
@@ -46,6 +40,7 @@ export default {
   computed: {
     ...mapState({
       doneCallBackPath: state => state.security.doneCallBackPath,
+      pin: state => state.security.pin,
     }),
   },
   methods: {

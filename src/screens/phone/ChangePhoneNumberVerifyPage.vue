@@ -33,10 +33,6 @@ export default {
     SuccessPopup,
   },
   props: {
-    pin: {
-      type: String,
-      default: null,
-    },
     verificationCode: {
       type: String,
       default: null,
@@ -50,6 +46,7 @@ export default {
   computed: {
     ...mapState({
       doneCallBackPath: state => state.security.doneCallBackPath,
+      pin: state => state.security.pin,
     }),
   },
   methods: {

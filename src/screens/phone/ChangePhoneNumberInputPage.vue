@@ -26,10 +26,6 @@ export default {
     };
   },
   props: {
-    pin: {
-      type: String,
-      default: null,
-    },
     verificationCode: {
       type: String,
       default: null,
@@ -47,7 +43,6 @@ export default {
         this.$router.push({
           name: RouteDef.ChangePhoneNumberVerify.name,
           params: {
-            pin: this.pin,
             verificationCode: this.verificationCode,
             action,
           },

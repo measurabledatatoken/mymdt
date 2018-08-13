@@ -25,12 +25,6 @@ export default {
       title: this.$t('message.settings.phoneNumber'),
     };
   },
-  props: {
-    pin: {
-      type: String,
-      default: null,
-    },
-  },
   methods: {
     ...mapActions({
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
@@ -43,7 +37,6 @@ export default {
         this.$router.push({
           name: RouteDef.AddPhoneNumberVerify.name,
           params: {
-            pin: this.pin,
             action,
           },
         });
