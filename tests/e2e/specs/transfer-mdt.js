@@ -1,4 +1,4 @@
-import twoFactorOption from './../../../src/enum/twoFactorOption';
+import { createAPIResponse } from '../utils';
 
 describe('Transfer MDT', () => {
   beforeEach(() => {
@@ -7,12 +7,7 @@ describe('Transfer MDT', () => {
     const toETHWalletAddress = '0x0000000000000000000000000000000000000000';
 
     cy.server();
-    cy.fixture('users.json').as('response');
-    cy.route('POST', '/api/usersdata', '@response').as('getUsers');
-    cy.route('GET', '/api/apps/*/user/rewards', {
-      data: [],
-      meta: { record_count: 0, status: 200 },
-    });
+    cy.route('GET', '/api/apps/*/user/rewards', createAPIResponse([]));
 
     cy.wrap(fromUser).as('fromUser');
     cy.wrap(toUser).as('toUser');
@@ -115,11 +110,8 @@ describe('Transfer MDT', () => {
       beforeEach(() => {
         cy.server();
         cy.get('@fromUser').then(fromUser => {
-          cy.fixture('users.json').then(response => {
-            const users = response.data;
-            const user = users.find(user => user.email_address === fromUser);
-            user.is_passcode_set = false;
-            cy.route('POST', '/api/usersdata', response).as('getUsers');
+          cy.stubUserListingAndDetail('user/index', {
+            emailAddress: fromUser,
           });
         });
 
@@ -145,28 +137,27 @@ describe('Transfer MDT', () => {
   describe('successful transfer', () => {
     beforeEach(function() {
       cy.server();
-      cy.fixture('transaction.json').then(response => {
-        const transaction = response.data;
+      cy.fixture('transaction/index').then(transaction => {
         cy.route(
           'POST',
           '/api/transfer/email',
-          Object.assign({}, response, {
-            data: Object.assign({}, transaction, {
+          createAPIResponse(
+            Object.assign({}, transaction, {
               from_email: this.fromUser,
               to_email: this.toUser,
             }),
-          }),
+          ),
         ).as('postTransferToEmail');
 
         cy.route(
           'POST',
           '/api/transfer/eth-address',
-          Object.assign({}, response, {
-            data: Object.assign({}, transaction, {
+          createAPIResponse(
+            Object.assign({}, transaction, {
               from_email: this.fromUser,
               to_eth_wallet: this.toETHWalletAddress,
             }),
-          }),
+          ),
         ).as('postTransferToETH');
       });
 
@@ -176,12 +167,8 @@ describe('Transfer MDT', () => {
     context('pincode is set but 2fa is not enabled', () => {
       beforeEach(function() {
         cy.server();
-        cy.fixture('users.json').then(response => {
-          const users = response.data;
-          const user = users.find(user => user.email_address === this.fromUser);
-          user.is_passcode_set = true;
-          user.is_2fa_enabled = false;
-          cy.route('POST', '/api/usersdata', response).as('getUsers');
+        cy.stubUserListingAndDetail('user/passcodeSet', {
+          emailAddresses: [this.fromUser, this.toUser],
         });
 
         goToTransferScreen();
@@ -215,16 +202,8 @@ describe('Transfer MDT', () => {
       () => {
         beforeEach(function() {
           cy.server();
-          cy.fixture('users.json').then(response => {
-            const users = response.data;
-            const user = users.find(
-              user => user.email_address === this.fromUser,
-            );
-            user.is_passcode_set = true;
-            user.is_2fa_enabled = true;
-            user['2fa_method'] = twoFactorOption.METHOD.GOOGLE;
-            user['2fa_usage'] = twoFactorOption.USAGE.TRANSACTION;
-            cy.route('POST', '/api/usersdata', response).as('getUsers');
+          cy.stubUserListingAndDetail('user/2faEnabledWithGoogle', {
+            emailAddresses: [this.fromUser, this.toUser],
           });
 
           cy.stubGoogleVerify();
@@ -269,17 +248,8 @@ describe('Transfer MDT', () => {
       () => {
         beforeEach(function() {
           cy.server();
-          cy.fixture('users.json').then(response => {
-            const users = response.data;
-            const user = users.find(
-              user => user.email_address === this.fromUser,
-            );
-            user.is_passcode_set = true;
-            user.is_2fa_enabled = true;
-            user.is_phone_confirmed = true;
-            user['2fa_method'] = twoFactorOption.METHOD.SMS;
-            user['2fa_usage'] = twoFactorOption.USAGE.TRANSACTION;
-            cy.route('POST', '/api/usersdata', response).as('getUsers');
+          cy.stubUserListingAndDetail('user/2faEnabledWithSms', {
+            emailAddresses: [this.fromUser, this.toUser],
           });
 
           cy.stubSMSRequestAndVerify();

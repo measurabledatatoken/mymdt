@@ -3,6 +3,8 @@
 const path = require('path');
 const fs = require('fs');
 
+const generateFixtures = require('./generateFixtures');
+
 /**
  * make config to be set environment-wise using trick described at https://docs.cypress.io/api/plugins/configuration-api.html#Promises
  * What's more, one can provide a local.json to override all configs
@@ -42,6 +44,11 @@ function getConfigurationByFile(file) {
 }
 
 module.exports = (on, config) => {
+  // on('task', {
+  //   'defaults:fixtures': () => generateFixtures(),
+  // });
+  generateFixtures();
+
   const envConfig = getConfigurationByFile(
     config.env.configFile || 'production',
   );
@@ -53,7 +60,7 @@ module.exports = (on, config) => {
     {},
     config,
     {
-      fixturesFolder: 'tests/e2e/fixtures',
+      fixturesFolder: 'tests/e2e/__generatedFixtures__',
       integrationFolder: 'tests/e2e/specs',
       screenshotsFolder: 'tests/e2e/screenshots',
       videosFolder: 'tests/e2e/videos',
