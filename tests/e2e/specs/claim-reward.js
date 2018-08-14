@@ -6,14 +6,6 @@ describe('Earn MDT Screen', () => {
 
     cy.stubUserListingAndDetail('user/index');
 
-    cy.fixture('auth/autologin').then(credentials => {
-      cy.route(
-        'POST',
-        '/api/account/autologin',
-        createAPIResponse(credentials),
-      );
-    });
-
     cy.fixture('reward/claimable').then(reward => {
       const rewardAmount = reward.value;
 

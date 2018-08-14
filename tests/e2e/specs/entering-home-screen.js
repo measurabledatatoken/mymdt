@@ -1,4 +1,9 @@
 describe('Entering Home Screen', () => {
+  beforeEach(() => {
+    cy.server();
+
+    cy.stubUserListingAndDetail('user/index');
+  });
   context('with Beta Testing screen', () => {
     beforeEach(function() {
       const deviceId = 'registeredDeviceId';
