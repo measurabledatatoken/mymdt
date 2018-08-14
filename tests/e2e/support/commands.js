@@ -92,21 +92,15 @@ Cypress.Commands.add('stubSMSRequestAndVerify', options => {
 Cypress.Commands.add(
   'stubUserListingAndDetail',
   (fixture, options, overriderUserProperties) => {
-    options = Object.assign(
-      {},
-      {
-        emailAddresses: 'testmailtime001@gmail.com',
-      },
-      options,
-    );
-
     cy.fixture('user/users').then(users => {
-      let selectedUsers = users.filter(
-        user =>
-          Array.isArray(options.emailAddresses)
-            ? options.emailAddresses.includes(user.email_address)
-            : user.email_address === options.emailAddresses,
-      );
+      let selectedUsers = options
+        ? users.filter(
+            user =>
+              Array.isArray(options.emailAddresses)
+                ? options.emailAddresses.includes(user.email_address)
+                : user.email_address === options.emailAddress,
+          )
+        : users;
 
       cy.fixture(fixture).then(userProperties => {
         selectedUsers = selectedUsers.map(selectedUser =>
@@ -131,11 +125,7 @@ Cypress.Commands.add(
           createAPIResponse(selectedUsers[0]),
         ).as('getUser');
 
-        cy.wrap(
-          Array.isArray(options.emailAddresses)
-            ? options.emailAddresses[0]
-            : options.emailAddresses,
-        ).as('selectedUserEmail');
+        cy.wrap(selectedUsers[0].email_address).as('selectedUserEmail');
       });
     });
   },
