@@ -90,7 +90,7 @@ export default {
   },
   reportProblem(appId, payload, accessToken) {
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/apps/${appId}/user/problems`,
+      `${APIScheme}://${APIEndPoint}/user/apps/${appId}/problems`,
       payload,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
