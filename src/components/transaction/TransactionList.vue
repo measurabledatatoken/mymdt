@@ -1,43 +1,58 @@
 <template>    
-  <pull-to 
-    ref="transactionContainer"
-    :top-load-method="getNewTransactions" 
-    :bottom-load-method="getOldTransactions" 
-    :top-config="PULLTO_TOP_CONFIG"
-    :bottom-config="PULLTO_BOTTOM_CONFIG"
-  >
-    <div
-      class="transaction-list"
-    >
-      <!-- <md-subheader>{{ $t('message.account.transactions') }}</md-subheader>
-    <md-divider /> -->
-      <md-list 
-        class="md-double-line"
-      >
-        <template v-if="uiState.isFetchingTransactions">
-          <template v-for="n in numberOfLoadingItems">
-            <TransactionListLoadingItem :key="n" />
-          </template>
-        </template>
-        <template v-if="Array.isArray(transactions) && transactions.length > 0">
-
-          <template v-for="transaction in transactions">
-            <TransactionItem
-              :key="transaction.id"
-              :transaction="transaction"
-              show-avatar
-              @click="onTransactionItemClicked(transaction)"
-            />
-            <md-divider 
-              :key="`${transaction.id}-divider`" 
-              class="list-item-divider"
-            />
-          </template>
-        </template>
-        <TransactionListEmptyItem v-else />
-      </md-list>
+  <div class="view-wrapper">
+    <div class="header-wrapper">
+      <md-subheader>{{ $t('message.account.transactions') }}</md-subheader>
+      <md-divider />
     </div>
-  </pull-to>
+    <pull-to 
+      ref="transactionContainer"
+      :top-load-method="getNewTransactions" 
+      :bottom-load-method="getOldTransactions" 
+      :top-config="PULLTO_TOP_CONFIG"
+      :bottom-config="PULLTO_BOTTOM_CONFIG"
+      @bottom-state-change="bottomStateChange"
+    >
+      <div
+        class="transaction-list"
+      >
+        <md-list 
+          class="md-double-line"
+        >
+          <template v-if="uiState.isFetchingTransactions">
+            <template v-for="n in numberOfLoadingItems">
+              <TransactionListLoadingItem :key="n" />
+            </template>
+          </template>
+          <template v-if="Array.isArray(transactions) && transactions.length > 0">
+
+            <template v-for="transaction in transactions">
+              <TransactionItem
+                :key="transaction.id"
+                :transaction="transaction"
+                show-avatar
+                @click="onTransactionItemClicked(transaction)"
+              />
+              <md-divider 
+                :key="`${transaction.id}-divider`" 
+                class="list-item-divider"
+              />
+            </template>
+          </template>
+          <TransactionListEmptyItem v-else />
+        </md-list>
+      </div>
+      <template 
+        slot="bottom-block" 
+        slot-scope="props"
+      >
+        <p 
+          v-show="showBottomText"
+          class="default-text"
+        >{{ props.stateText }}</p>
+      </template>
+    </pull-to>
+  </div>
+  
 </template>
 
 <script>
@@ -81,6 +96,7 @@ export default {
       numberOfItemsPerPage: 5,
       PULLTO_TOP_CONFIG,
       PULLTO_BOTTOM_CONFIG,
+      showBottomText: false,
     };
   },
   computed: {
@@ -152,46 +168,58 @@ export default {
       });
       loaded('done');
     },
+    bottomStateChange(state) {
+      this.showBottomText = [
+        'pull',
+        'trigger',
+        'loading',
+        'loaded-done',
+      ].includes(state);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.vue-pull-to-wrapper {
+.view-wrapper {
   flex: 1;
-  position: relative;
-  /deep/ .scroll-container {
-    z-index: 100;
-  }
-  /deep/ .action-block {
-    position: absolute;
-    &:last-child {
-      bottom: 1.5rem;
-      margin-bottom: 0 !important;
-    }
-    p {
-      margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .header-wrapper {
+    .md-subheader {
+      position: relative;
+      z-index: 1;
+      background: white;
     }
   }
-}
-.transaction-list {
-  // overflow-y: hidden;
-  .md-subheader {
+  .vue-pull-to-wrapper {
+    flex: 1;
     position: relative;
-    z-index: 1;
-    background: white;
-  }
-  .view-wrapper {
-    height: 100%;
-  }
-  /deep/ .vue-pull-to-wrapper {
-    .default-text {
-      line-height: initial;
+    /deep/ .scroll-container {
+      z-index: 100;
+    }
+    /deep/ .action-block {
+      position: absolute;
+      &:last-child {
+        bottom: 1.5rem;
+        margin-bottom: 0 !important;
+      }
+      p {
+        margin: 0;
+      }
     }
   }
-  // .md-list > li {
-  //   flex-shrink: 0;
-  // }
+  .transaction-list {
+    /deep/ .vue-pull-to-wrapper {
+      .default-text {
+        line-height: initial;
+      }
+    }
+    .md-list > li {
+      flex-shrink: 0;
+    }
+  }
 }
 
 .list-item__action {
