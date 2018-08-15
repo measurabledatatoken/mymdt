@@ -130,7 +130,15 @@
     "problemDidNotMakeIt": "我沒有進行此交易。",
     "problemMakeItAccidentally": "我錯誤地做了此交易。",
     "popupCancelTitle": "您的交易將被取消",
-    "popupCancelDescription": "我們不會在您取消交易時向收件人發送電子郵件通知。"
+    "popupCancelDescription": "我們不會在您取消交易時向收件人發送電子郵件通知。",
+    "listing" : {
+      "pullDownText": "下拉刷新",
+      "pullUpText": "上拉加載",
+      "triggerText": "釋放更新",
+      "loadingText": "加載中...",
+      "doneText": "加載完成",
+      "failText": "加載失敗"
+    }
   },
   "settings": {
     "title": "設定",
