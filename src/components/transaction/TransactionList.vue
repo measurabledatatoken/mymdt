@@ -67,20 +67,7 @@ import PullTo from 'vue-pull-to';
 
 import { RouteDef } from '@/constants';
 import { FETCH_TRANSACTIONS } from '@/store/modules/entities/transactions';
-const PULLTO_TOP_CONFIG = {
-  pullText: '下拉刷新',
-  triggerText: '釋放更新',
-  loadingText: '加載中...',
-  doneText: '加載完成',
-  failText: '加載失敗',
-};
-const PULLTO_BOTTOM_CONFIG = {
-  pullText: '上拉加載',
-  triggerText: '釋放更新',
-  loadingText: '加載中...',
-  doneText: '加載完成',
-  failText: '加載失敗',
-};
+
 export default {
   components: {
     TransactionItem,
@@ -94,8 +81,20 @@ export default {
       RouteDef,
       numberOfLoadingItems: 0,
       numberOfItemsPerPage: 5,
-      PULLTO_TOP_CONFIG,
-      PULLTO_BOTTOM_CONFIG,
+      PULLTO_TOP_CONFIG: {
+        pullText: this.$t('message.transaction.listing.pullDownText'),
+        triggerText: this.$t('message.transaction.listing.triggerText'),
+        loadingText: this.$t('message.transaction.listing.loadingText'),
+        doneText: this.$t('message.transaction.listing.doneText'),
+        failText: this.$t('message.transaction.listing.failText'),
+      },
+      PULLTO_BOTTOM_CONFIG: {
+        pullText: this.$t('message.transaction.listing.pullUpText'),
+        triggerText: this.$t('message.transaction.listing.triggerText'),
+        loadingText: this.$t('message.transaction.listing.loadingText'),
+        doneText: this.$t('message.transaction.listing.doneText'),
+        failText: this.$t('message.transaction.listing.failText'),
+      },
       showBottomText: false,
     };
   },

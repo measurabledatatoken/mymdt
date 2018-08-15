@@ -130,7 +130,15 @@
     "problemDidNotMakeIt": "I did not make this transaction.",
     "problemMakeItAccidentally": "I made this transaction by accident.",
     "popupCancelTitle": "Your transaction will be canceled",
-    "popupCancelDescription": "We will not send the recipient an email notification when you cancel your transaction."
+    "popupCancelDescription": "We will not send the recipient an email notification when you cancel your transaction.",
+    "listing" : {
+      "pullDownText": "Pull down to Refresh",
+      "pullUpText": "Pull up to Load More",
+      "triggerText": "Release to Update",
+      "loadingText": "Loading...",
+      "doneText": "Load completed",
+      "failText": "Load failed"
+    }
   },
   "settings": {
     "title": "Settings",
