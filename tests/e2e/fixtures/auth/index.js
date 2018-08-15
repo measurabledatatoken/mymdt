@@ -1,4 +1,7 @@
-const userEmails = require('../shared/userEmails');
+const config = require('./../../config/config').getConfig();
+
+const userEmailsStr = config.env.EMAILS;
+const userEmails = userEmailsStr.split(',');
 
 const userObjects = userEmails.map(userEmail => {
   return {
