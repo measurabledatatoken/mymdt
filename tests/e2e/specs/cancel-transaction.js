@@ -9,6 +9,14 @@ describe('Transaction', () => {
 
     cy.route('GET', '/api/apps/*/user/rewards', createAPIResponse([]));
 
+    cy.fixture('account/registeredApps').then(registeredApps => {
+      cy.route(
+        'GET',
+        '/api/account/registered-apps',
+        createAPIResponse(registeredApps),
+      );
+    });
+
     cy.fixture('transaction/cancellable').then(transaction => {
       const transactionId = transaction.id;
 

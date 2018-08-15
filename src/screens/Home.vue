@@ -46,7 +46,7 @@
     
     <SuccessPopup
       :md-active.sync="showTotalClaimablePopup"
-      :title="$t('message.home.claimable_mdt', {num: claimableMDT})"
+      :title="$t('message.home.claimable_mdt', {num: loginClaimableMDT})"
       :confirm-text="$t('message.common.claim')"
       :cancel-text="$t('message.common.later')"
       icon-src="/static/icons/claim-popup.svg"
@@ -55,7 +55,7 @@
 
     <MDTPrimaryButton
       :bottom="true"
-      :class="[' btn-earn-mdt', { 'mdt-claimable' : claimableMDT > 0 }]"
+      :class="[' btn-earn-mdt', { 'mdt-claimable' : loginClaimableMDT > 0 }]"
       @click="onEarnClicked"
     >
       <span class="btn-content">{{ $t('message.home.earn_mdt') }} </span>
@@ -111,6 +111,7 @@ export default {
       RouteDef,
       msg: 'Current MDT Price:',
       loginTotalClaimed: 0,
+      loginClaimableMDT: 0,
       showTotalClaimedPopup: false,
       showTotalClaimablePopup: false,
       claimablePopupContent: '',
@@ -147,12 +148,6 @@ export default {
       return this.$t('message.home.accountnum', this.allUsers.length, {
         num: this.allUsers.length,
       });
-    },
-    claimableMDT() {
-      return this.getRewardsOfAllUsers.reduce(
-        (total, reward) => total + (reward.claimed ? 0 : reward.value),
-        0,
-      );
     },
   },
   mounted() {
@@ -256,10 +251,12 @@ export default {
         if (this.loginTotalClaimed > 0) {
           showPopup = 'claimed';
         } else {
-          this.setIsLoading(true);
-          await this.fetchAllRewards();
-          this.setIsLoading(false);
-          if (this.claimableMDT > 0) {
+          this.loginClaimableMDT = this.credentials
+            .map(credential => credential.claimable_amount)
+            .reduce((a, b) => {
+              return a + b;
+            });
+          if (this.loginClaimableMDT > 0) {
             showPopup = 'claimable';
           }
         }

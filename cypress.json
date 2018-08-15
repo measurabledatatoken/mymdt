@@ -1,8 +1,5 @@
 {
   "pluginsFile": "tests/e2e/plugins/index.js",
-  "env": {
-    "configFile": "production"
-  },
   "blacklistHosts": [
     "*.mixpanel.com"
   ],
