@@ -3,23 +3,26 @@ import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  getTasks(appId, accessToken) {
-    const promise = axios.get(
-      `${APIScheme}://${APIEndPoint}/apps/${appId}/user/tasks`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
+  getTasks(appIds = '', locale, accessToken) {
+    const promise = axios.get(`${APIScheme}://${APIEndPoint}/user/tasks`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      params: {
+        appIds,
+        locale,
       },
-    );
+    });
 
     return handleGeneralResponse(promise, 'No tasks');
   },
-  getFinishedTasks(appId, accessToken) {
-    const promise = axios.get(
-      `${APIScheme}://${APIEndPoint}/apps/${appId}/user/tasks/finished`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
+  getFinishedTasks(appIds = '', locale, accessToken) {
+    const promise = axios.get(`${APIScheme}://${APIEndPoint}/user/tasks/`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      params: {
+        status: 'finished',
+        appIds,
+        locale,
       },
-    );
+    });
 
     return handleGeneralResponse(promise, 'No tasks');
   },

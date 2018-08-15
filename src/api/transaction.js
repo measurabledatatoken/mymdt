@@ -8,24 +8,27 @@ const transactionSchema = new schema.Entity('transactions');
 const transactionsSchema = [transactionSchema];
 
 export default {
-  getTransactions(accessToken) {
+  getTransactions(sortby, order, limit, cursor, accessToken) {
+    const { after, before } = cursor;
     const promise = axios.get(
       `${APIScheme}://${APIEndPoint}/user/transactions`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
+        params: { sortby, order, limit, after, before },
       },
     );
 
     return handleGeneralResponse(promise, {
       schema: transactionsSchema,
+      includeMeta: true,
     });
   },
-  cancelTransaction(applicationId, transactionId, pin, accessToken) {
+  cancelTransaction(transactionId, pin, accessToken) {
     const body = {
       pin,
     };
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/apps/${applicationId}/user/transactions/${transactionId}/cancel`,
+      `${APIScheme}://${APIEndPoint}/user/transactions/${transactionId}/cancel`,
       body,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
