@@ -3,7 +3,9 @@ const { loadConfigurationByFile } = require('./../config/config');
 const generateFixtures = require('./generateFixtures');
 
 module.exports = (on, config) => {
-  const envConfig = loadConfigurationByFile(config.env.configFile || 'qa');
+  const envConfig = loadConfigurationByFile(
+    config.env.configFile || 'production',
+  );
   generateFixtures();
 
   const env = Object.assign({}, config.env, envConfig.env);
