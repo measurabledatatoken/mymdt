@@ -32,7 +32,7 @@ function handleGeneralResponse(promise, options) {
     }
 
     if (options.includeMeta) {
-      data.meta = response.data.meta;
+      data.meta = response.data && response.data.meta;
     }
     return data;
   });
