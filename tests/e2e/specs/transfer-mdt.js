@@ -24,9 +24,13 @@ describe('Transfer MDT', () => {
         .parents('.md-card')
         .find('button')
         .click();
+      cy.location('pathname').should(
+        'eq',
+        `/home/accounts/${fromUser}/transfer`,
+      );
     });
 
-    return cy.location('pathname').should('eq', '/home/transfer');
+    // return cy.location('pathname').should('eq', '/home/transfer');
   };
 
   const clickTransferToEmailAccount = () => {

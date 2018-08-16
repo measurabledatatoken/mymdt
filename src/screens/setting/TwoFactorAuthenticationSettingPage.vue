@@ -62,7 +62,6 @@
       :email-address="selectedSecurityUser.emailAddress"
       @codefilled="onPinCodeFilled"
       @close-click="showPinCodeInput = false"
-      @fotgot-click="onFotgotClicked"
     />
 
     <!-- confirm to turn off 2fa popup -->
@@ -188,15 +187,10 @@ export default {
         this.set2FAOption({ method: this.method, usage: usage });
       }
     },
-    onFotgotClicked() {
-      this.$router.push({
-        name: RouteDef.PinCodeForgot.name,
-      });
-    },
     async onPinCodeFilled(pinCode) {
       try {
         await this.validatePIN(pinCode);
-        this.setDoneCallbackPath(RouteDef.TwoFactorAuthenticationSetting.path);
+        this.setDoneCallbackPath(this.$router.currentRoute.path);
         if (this.method === TwoFactorOption.METHOD.GOOGLE) {
           this.goToGoogleAuthVerify();
         } else {

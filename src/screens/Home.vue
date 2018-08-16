@@ -75,7 +75,6 @@ import {
   SET_SHOW_HOME_LOADING_END,
 } from '@/store/modules/common';
 import {
-  SET_SELECTED_USER,
   REQUEST_MDT_PRICE,
   REQUEST_APP_CONFIG,
   REQUEST_USER_ACCOUNTS,
@@ -90,7 +89,6 @@ import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import { formatAmount } from '@/utils';
 import SuccessPopup from '@/components/popup/SuccessPopup';
-import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
 import { FETCH_ALL_REWARDS } from '@/store/modules/entities/rewards';
 
 export default {
@@ -176,12 +174,10 @@ export default {
   methods: {
     ...mapMutations({
       setNeedExitBtn: SET_NEED_EXIT_BTN,
-      setSelectedUser: SET_SELECTED_USER,
       setErrorMessage: SET_ERROR_MESSAGE,
       setErrorTitle: SET_ERROR_TITLE,
       setShowErrorPrompt: SET_SHOW_ERROR_PROMPT,
       setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
-      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
       setShowHomeLoadingEnd: SET_SHOW_HOME_LOADING_END,
     }),
     ...mapActions({
@@ -193,12 +189,15 @@ export default {
     }),
     goToTransfer(user) {
       trackEvent('Click on transfer from Home');
-      this.setTransferFromAccount(user);
-      this.$router.push(RouteDef.TransferList.path);
+      this.$router.push({
+        name: RouteDef.TransferList.name,
+        params: {
+          account_id: user.emailAddress,
+        },
+      });
     },
     goToAccountDetail(user) {
       trackEvent('Click on account cards from home page to account page');
-      this.setSelectedUser(user.emailAddress);
       this.$router.push({
         name: RouteDef.AccountDetail.name,
         params: {

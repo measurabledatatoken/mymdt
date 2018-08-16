@@ -25,7 +25,7 @@ export const START_TRANSFER = 'transfer/START_TRANSFER';
 const clearState = state => {
   state.transferAmount = null;
   state.transferType = null;
-  state.transferFromAccount = null;
+  state.transferFromUserId = null;
   state.transferToAccount = null;
   state.transferToWalletAddress = null;
   state.transferNote = null;
@@ -34,20 +34,22 @@ const clearState = state => {
 const state = {
   transferAmount: null,
   transferType: null,
-  transferFromAccount: null,
+  // transferFromAccount: null,
   transferToAccount: null,
   transferToWalletAddress: null,
   transferNote: null,
   transferToEmailHistory: [],
+  transferFromUserId: null,
 };
 
 const getters = {
   // eslint-disable-next-line
+  transferFromAccount: (state, getters, rootState, rootGetters) => rootGetters.getUser(state.transferFromUserId),
   transferToAccounts: (state, getters, rootState, rootGetters) => {
     const tempAccounts = rootGetters.getAllUsers.filter(
       user =>
-        !state.transferFromAccount ||
-        user.emailAddress !== state.transferFromAccount.emailAddress,
+        !rootGetters.transferFromAccount ||
+        user.emailAddress !== rootGetters.transferFromAccount.emailAddress,
     );
 
     for (let i = 0; i < state.transferToEmailHistory.length; i += 1) {
@@ -81,8 +83,8 @@ const mutations = {
   [SET_TRANSFER_TYPE](state, transferType) {
     state.transferType = transferType;
   },
-  [SET_TRANSFER_FROM_ACCOUNT](state, transferFromAccount) {
-    state.transferFromAccount = transferFromAccount;
+  [SET_TRANSFER_FROM_ACCOUNT](state, transferFromUserId) {
+    state.transferFromUserId = transferFromUserId;
   },
   [SET_TRANSFER_TO_ACCOUNT](state, transferToAccount) {
     state.transferToAccount = transferToAccount;
@@ -122,7 +124,7 @@ const actions = {
     { dispatch, rootState, rootGetters, commit },
     { pin, verificationCode },
   ) {
-    const transferFromAccount = rootState.transfer.transferFromAccount;
+    const transferFromAccount = rootGetters.transferFromAccount;
     const transferType = rootState.transfer.transferType;
     const transferNote = rootState.transfer.transferNote;
 
