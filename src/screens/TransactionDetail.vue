@@ -67,9 +67,9 @@
       ref="pinCodeInputPopup" 
       :md-active.sync="showPinCodeInput" 
       :title="$t('message.passcode.pin_popup_title')"
+      :email-address="selectedUser.emailAddress"
       @codefilled="onPinCodeFilled" 
       @close-click="showPinCodeInput = false"
-      @fotgot-click="onFotgotClicked"
     />
 
     <!-- Problem List popup -->
@@ -113,14 +113,12 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
-
 import { transactionType, transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
 import { CANCEL_TRANSACTION } from '@/store/modules/entities/transactions';
 import { RouteDef } from '@/constants';
 import {
   SET_DONE_CALLBACK_PATH,
-  SET_SELECTED_USER,
   VALIDATE_PIN_FOR_SELECTED_USER,
 } from '@/store/modules/security';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
@@ -198,7 +196,6 @@ export default {
     }),
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
-      setSelectedUser: SET_SELECTED_USER,
       setIsUserAcctionsDirty: SET_IS_USER_ACCOUNTS_DIRTY,
     }),
     formatAmount,
@@ -244,12 +241,6 @@ export default {
       } catch (err) {
         console.log(`error in cancelTransaction: ${err.message}`);
       }
-    },
-    onFotgotClicked() {
-      this.setSelectedUser(this.selectedUser.emailAddress);
-      this.$router.push({
-        name: RouteDef.PinCodeForgot.name,
-      });
     },
   },
 };

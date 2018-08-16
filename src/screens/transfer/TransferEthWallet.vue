@@ -85,6 +85,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
+import { SET_SELECTED_SECURITY_USER } from '@/store/modules/security';
 
 const eventProperties = { 'Transfer Mode': TransferType.EthWallet };
 
@@ -113,7 +114,6 @@ export default {
   computed: {
     ...mapState({
       transferAmount: state => state.transfer.transferAmount,
-      transferFromAccount: state => state.transfer.transferFromAccount,
       transferToWalletAddress: state => state.transfer.transferToWalletAddress,
       transferNote: state => state.transfer.transferNote,
       ethAddressScanned: state => state.qrcode.ethAddressScanned,
@@ -122,6 +122,7 @@ export default {
       fromUserAccounts: 'getAllUsers',
       transactionFee: 'transactionFee',
       finalAmount: 'finalAmount',
+      transferFromAccount: 'transferFromAccount',
     }),
     disableNextBtn() {
       if (
@@ -161,6 +162,7 @@ export default {
       setTransferType: SET_TRANSFER_TYPE,
       setTransferNote: SET_TRANSFER_NOTE,
       setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+      setSelectedSecurityUser: SET_SELECTED_SECURITY_USER,
       setTransferToWalletAddress: SET_TRANSFER_TO_WALLETADDRESS,
     }),
     transferAmountInvalid() {
@@ -180,7 +182,8 @@ export default {
     },
     onTransferFromAccountSelected(account) {
       trackEvent('Choose account for "from"', eventProperties);
-      this.setTransferFromAccount(account);
+      this.setTransferFromAccount(account.emailAddress);
+      this.setSelectedSecurityUser(account.emailAddress);
     },
     onTransferFromMenuOpened() {
       trackEvent('Click on the dropdown arrow for "from"', eventProperties);
