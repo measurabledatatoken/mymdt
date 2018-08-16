@@ -9,7 +9,7 @@
         />
       </div>
     </div>
-    <TransactionList :transactions="transactions" />
+    <TransactionList/>
     <MDTPrimaryButton 
       :bottom="true"
       @click="goToEarn()"
@@ -26,7 +26,6 @@ import UserInfoCard from '@/components/common/UserInfoCard';
 import TransactionList from '@/components/transaction/TransactionList';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 
-import { FETCH_TRANSACTIONS } from '@/store/modules/entities/transactions';
 import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
 
 import { RouteDef } from '@/constants';
@@ -52,26 +51,10 @@ export default {
   computed: {
     ...mapGetters({
       selectedUser: 'getSelectedUser',
-      getTransactions: 'getTransactions',
     }),
-    transactions() {
-      return this.getTransactions(this.selectedUser.transactions).sort(
-        (a, b) => {
-          if (a.transaction_time > b.transaction_time) {
-            return -1;
-          } else if (a.transaction_time < b.transaction_time) {
-            return 1;
-          }
-          return 0;
-        },
-      );
-    },
   },
   created() {
     this.fetchApplications({
-      userId: this.selectedUser.emailAddress,
-    });
-    this.fetchTransactions({
       userId: this.selectedUser.emailAddress,
     });
   },
@@ -94,7 +77,6 @@ export default {
       });
     },
     ...mapActions({
-      fetchTransactions: FETCH_TRANSACTIONS,
       fetchApplications: FETCH_APPLICATIONS,
     }),
   },
@@ -108,7 +90,7 @@ $header-padding-top: 2rem;
   display: flex;
   flex-direction: column;
 
-  .transaction-list {
+  /deep/ .transaction-list {
     flex: 1;
     &:after {
       content: '';

@@ -8,22 +8,23 @@ const rewardSchema = new schema.Entity('rewards');
 const rewardsSchema = [rewardSchema];
 
 export default {
-  getRewards(appId, accessToken) {
-    const promise = axios.get(
-      `${APIScheme}://${APIEndPoint}/apps/${appId}/user/rewards`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
+  getRewards(appIds = '', locale, accessToken) {
+    const promise = axios.get(`${APIScheme}://${APIEndPoint}/user/rewards`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      params: {
+        appIds,
+        locale,
       },
-    );
+    });
 
     return handleGeneralResponse(promise, {
       emptyDataMsg: 'No rewards',
       schema: rewardsSchema,
     });
   },
-  claimReward(appId, rewardId, accessToken) {
+  claimReward(rewardId, accessToken) {
     const promise = axios.post(
-      `${APIScheme}://${APIEndPoint}/apps/${appId}/user/rewards/${rewardId}/claim`,
+      `${APIScheme}://${APIEndPoint}/user/rewards/${rewardId}/claim`,
       null,
       {
         headers: { Authorization: `Bearer ${accessToken}` },

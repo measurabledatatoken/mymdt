@@ -78,15 +78,45 @@ const mutations = {
     };
   },
   [FETCHING_TRANSACTIONS_SUCCESS](state, payload) {
-    const { userId, data } = payload;
+    const {
+      userId,
+      data: {
+        result,
+        meta: {
+          paging: {
+            cursors: { before, after },
+          },
+        },
+      },
+      cursorDirection,
+    } = payload;
     const orginalTransactions =
       (state.byId[userId] && state.byId[userId].transactions) || [];
 
+    let cursors = {};
+    switch (cursorDirection) {
+      case 'before':
+        cursors = { before };
+        break;
+      case 'after':
+        cursors = { after };
+        break;
+      default:
+        cursors = {
+          before,
+          after,
+        };
+        break;
+    }
     state.byId = {
       ...state.byId,
       [userId]: {
         ...state.byId[userId],
-        transactions: [...new Set([...orginalTransactions, ...data.result])],
+        transactions: [...new Set([...orginalTransactions, ...result])],
+        transactionCursors: {
+          ...state.byId[userId].transactionCursors,
+          ...cursors,
+        },
       },
     };
   },
@@ -126,9 +156,14 @@ const actions = {
     });
     try {
       await delay(750);
+      const appIds = '';
       const data = await dispatch(REQUEST, {
         api: api.task.getTasks,
-        args: [rootState.home.appID, getters.getUser(userId).accessToken],
+        args: [
+          appIds,
+          rootState.common.locale,
+          getters.getUser(userId).accessToken,
+        ],
         openErrorPrompt: true,
       });
       commit(FETCHING_TASKS_SUCCESS, {

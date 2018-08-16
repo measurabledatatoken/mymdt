@@ -22,13 +22,13 @@ describe('Transaction', () => {
 
       cy.route(
         'GET',
-        '/api/user/transactions',
-        createAPIResponse([transaction]),
+        '/api/user/transactions?*',
+        createAPIResponse([transaction], { paging: true }),
       ).as('getTransactions');
 
       cy.route(
         'POST',
-        `/api/apps/*/user/transactions/${transactionId}/cancel`,
+        '/api/user/transactions/${transactionId}/cancel',
         createAPIResponse(transaction),
       ).as('cancelTransaction');
 
@@ -100,11 +100,6 @@ describe('Transaction', () => {
 
     cy.wait('@cancelTransaction');
 
-    cy.get('@selectedUserEmail').then(selectedUserEmail => {
-      cy.location('pathname').should(
-        'eq',
-        `/home/accounts/${selectedUserEmail}`,
-      );
-    });
+    cy.location('pathname').should('eq', '/');
   });
 });

@@ -9,18 +9,16 @@ describe('Earn MDT Screen', () => {
     cy.fixture('reward/claimable').then(reward => {
       const rewardAmount = reward.value;
 
-      cy.route(
-        'GET',
-        '/api/apps/*/user/rewards',
-        createAPIResponse([reward]),
-      ).as('getRewards');
+      cy.route('GET', '/api/user/rewards?*', createAPIResponse([reward])).as(
+        'getRewards',
+      );
 
       cy.wrap(rewardAmount).as('rewardAmount');
     });
 
-    cy.route('GET', '/api/apps/*/user/tasks', createAPIResponse([]));
+    cy.route('GET', '/api/user/tasks?*', createAPIResponse([]));
 
-    cy.route('POST', '/api/apps/*/user/rewards/*/claim', '').as('claimReward');
+    cy.route('POST', '/api/user/rewards/*/claim', '').as('claimReward');
   });
 
   const goToEarnMDTScreen = () => {

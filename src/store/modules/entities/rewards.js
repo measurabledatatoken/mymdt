@@ -62,9 +62,14 @@ const actions = {
     });
     try {
       await delay(750);
+      const appIds = '';
       const data = await dispatch(REQUEST, {
         api: api.reward.getRewards,
-        args: [rootState.home.appID, rootGetters.getUser(userId).accessToken],
+        args: [
+          appIds,
+          rootState.common.locale,
+          rootGetters.getUser(userId).accessToken,
+        ],
         openErrorPrompt: true,
       });
       commit(FETCHING_REWARDS_SUCCESS, {
@@ -79,7 +84,7 @@ const actions = {
     }
   },
   async [CLAIM_REWARD](
-    { commit, dispatch, rootState, rootGetters },
+    { commit, dispatch, rootGetters },
     { rewardId, userId },
   ) {
     commit(CLAIMING_REWARD, {
@@ -89,11 +94,7 @@ const actions = {
     try {
       await dispatch(REQUEST, {
         api: api.reward.claimReward,
-        args: [
-          rootState.home.appID,
-          rewardId,
-          rootGetters.getUser(userId).accessToken,
-        ],
+        args: [rewardId, rootGetters.getUser(userId).accessToken],
         openErrorPrompt: true,
         defaultErrorPromptMessage: {
           messageId: 'message.earnMDT.rewardErrorMessage',

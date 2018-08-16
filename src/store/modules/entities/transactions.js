@@ -49,17 +49,36 @@ function getLatestTimeFromTransactions(transactions) {
 const actions = {
   async [FETCH_TRANSACTIONS](
     { commit, dispatch, getters, rootGetters },
-    { userId },
-  ) {
-    commit(FETCHING_TRANSACTIONS, {
+    {
       userId,
-    });
+      sortby = 'transaction_time',
+      order = 'desc',
+      cursorDirection,
+      limit = 2,
+    },
+  ) {
+    if (!cursorDirection) {
+      commit(FETCHING_TRANSACTIONS, {
+        userId,
+      });
+    }
+    let { after, before } =
+      rootGetters.getSelectedUser.transactionCursors || {};
     try {
       await delay(750);
       const data = await dispatch(REQUEST, {
         api: api.transaction.getTransactions,
-        args: [rootGetters.getUser(userId).accessToken],
+        args: [
+          rootGetters.getUser(userId).accessToken,
+          {
+            sortby,
+            order,
+            limit,
+            cursors: cursorDirection === 'before' ? { before } : { after },
+          },
+        ],
       });
+
       const currentTransactionIds = rootGetters.getUser(userId).transactions;
       const currentTransactions = getters
         .getTransactions(currentTransactionIds)
@@ -83,6 +102,7 @@ const actions = {
       commit(FETCHING_TRANSACTIONS_SUCCESS, {
         userId,
         data,
+        cursorDirection,
       });
     } catch (error) {
       commit(FETCHING_TRANSACTIONS_FAILURE, {
@@ -91,15 +111,12 @@ const actions = {
       });
     }
   },
-  [CANCEL_TRANSACTION](
-    { dispatch, rootGetters },
-    { applicationId, transactionId, pin },
-  ) {
+  [CANCEL_TRANSACTION]({ dispatch, rootGetters }, { transactionId, pin }) {
     const account = rootGetters.getSelectedUser;
 
     return dispatch(REQUEST, {
       api: api.transaction.cancelTransaction,
-      args: [applicationId, transactionId, pin, account.accessToken],
+      args: [transactionId, pin, account.accessToken],
       setLoading: true,
       openErrorPrompt: true,
     });
