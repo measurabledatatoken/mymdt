@@ -69,10 +69,12 @@ const actions = {
       const data = await dispatch(REQUEST, {
         api: api.transaction.getTransactions,
         args: [
-          sortby,
-          order,
-          limit,
-          cursorDirection === 'before' ? { before } : { after },
+          {
+            sortby,
+            order,
+            limit,
+            cursors: cursorDirection === 'before' ? { before } : { after },
+          },
           rootGetters.getUser(userId).accessToken,
         ],
       });
