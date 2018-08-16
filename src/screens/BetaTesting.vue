@@ -10,7 +10,7 @@
       <div class="beta-testing-form__content">
         <p 
           v-if="isOSSupported" 
-          v-html="$t('message.betaTesting.betaEndDescription')"
+          v-html="$t('message.welcome.description')"
         />
         <p 
           v-else
