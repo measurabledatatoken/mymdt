@@ -22,6 +22,12 @@ export default function(data, options) {
     status: options.status,
   };
 
+  if (options.paging) {
+    meta.paging = {
+      cursors: { before: 'xxx', after: 'xxx' },
+    };
+  }
+
   if (Array.isArray(data)) {
     meta.record_count = data.length;
   }

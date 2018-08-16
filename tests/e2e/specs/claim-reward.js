@@ -11,16 +11,20 @@ describe('Earn MDT Screen', () => {
 
       cy.route(
         'GET',
-        '/api/apps/*/user/rewards',
+        /^\/api\/user\/rewards\?appIds=&locale=(en-us|zh-hk|zh-cn)+$/,
         createAPIResponse([reward]),
       ).as('getRewards');
 
       cy.wrap(rewardAmount).as('rewardAmount');
     });
 
-    cy.route('GET', '/api/apps/*/user/tasks', createAPIResponse([]));
+    cy.route(
+      'GET',
+      /^\/api\/user\/tasks\?appIds=&locale=(en-us|zh-hk|zh-cn)+$/,
+      createAPIResponse([]),
+    );
 
-    cy.route('POST', '/api/apps/*/user/rewards/*/claim', '').as('claimReward');
+    cy.route('POST', '/api/user/rewards/*/claim', '').as('claimReward');
   });
 
   const goToEarnMDTScreen = () => {
