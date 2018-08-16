@@ -15,6 +15,7 @@ function handleGeneralResponse(promise, options) {
   // eslint-disable-next-line
   options = {
     schema: null,
+    includeMeta: false,
     ...options,
   };
 
@@ -30,6 +31,9 @@ function handleGeneralResponse(promise, options) {
       data = normalize(data, options.schema);
     }
 
+    if (options.includeMeta) {
+      data.meta = response.data && response.data.meta;
+    }
     return data;
   });
 }
