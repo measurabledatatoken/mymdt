@@ -28,7 +28,7 @@ describe('Transaction', () => {
 
       cy.route(
         'POST',
-        '/api/user/transactions/${transactionId}/cancel',
+        `/api/user/transactions/${transactionId}/cancel`,
         createAPIResponse(transaction),
       ).as('cancelTransaction');
 
