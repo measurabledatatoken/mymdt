@@ -271,7 +271,8 @@
   },
   "welcome": {
     "title": "Welcome to MyMDT!",
-    "agreementCheckbox1": "I agree to {0} of MDT Wallet Beta Testing",
+    "description" : "This is the welcome content",
+    "agreementCheckbox1": "I agree to {0} of MDT Wallet",
     "agreementCheckbox2": "the rules",
     "OSNotSupported":"Sorry, this feature is not supported on your device.\nMyMDT requires Android version 4.4 and above.",
     "agreementDetail": "By clicking the button below, your email accounts in MailTime will automatically logged into the MDT wallet.",
