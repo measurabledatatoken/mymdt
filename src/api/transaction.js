@@ -8,8 +8,13 @@ const transactionSchema = new schema.Entity('transactions');
 const transactionsSchema = [transactionSchema];
 
 export default {
-  getTransactions(sortby, order, limit, cursor, accessToken) {
-    const { after, before } = cursor;
+  getTransactions(paginationOptions, accessToken) {
+    const {
+      sortby,
+      order,
+      limit,
+      cursors: { after, before },
+    } = paginationOptions;
     const promise = axios.get(
       `${APIScheme}://${APIEndPoint}/user/transactions`,
       {

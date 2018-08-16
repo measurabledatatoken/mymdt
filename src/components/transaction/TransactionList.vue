@@ -124,6 +124,7 @@ export default {
       this.numberOfLoadingItems = 1;
       this.fetchTransactions({
         userId: this.selectedUser.emailAddress,
+        cursorDirection: 'before',
         limit: this.numberOfItemsPerPage,
       });
     } else {

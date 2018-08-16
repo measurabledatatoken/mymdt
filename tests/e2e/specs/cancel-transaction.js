@@ -22,7 +22,7 @@ describe('Transaction', () => {
 
       cy.route(
         'GET',
-        /^\/api\/user\/transactions\?sortby=\w+&order=\w+&limit=\d+$/,
+        `/api/user/transactions?*`,
         createAPIResponse([transaction], { paging: true }),
       ).as('getTransactions');
 
