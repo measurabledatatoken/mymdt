@@ -70,7 +70,6 @@
       ref="pinCodeInputPopup" 
       :md-active.sync="showPinCodeInput" 
       :title="$t('message.passcode.pin_popup_title')"
-      :email-address="transferFromAccount.emailAddress" 
       @codefilled="onPinCodeFilled" 
       @close-click="showPinCodeInput = false"
     />
@@ -88,7 +87,7 @@ import {
   SET_DONE_CALLBACK_PATH,
   SET_COUNTRY_DIALCODE,
   SET_PHONENUMBER,
-  VALIDATE_PIN_FOR_TRANSFER,
+  VALIDATE_PIN,
   REQUEST_VERIFICATION_CODE,
 } from '@/store/modules/security';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -162,7 +161,7 @@ export default {
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
-      validatePIN: VALIDATE_PIN_FOR_TRANSFER,
+      validatePIN: VALIDATE_PIN,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     async goToSMSVerify(pinCode) {

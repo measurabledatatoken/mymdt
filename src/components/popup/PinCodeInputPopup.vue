@@ -11,7 +11,7 @@
 
     <md-dialog-title>
       <div class="title">{{ title }}</div>
-      <div class="subtitle">{{ emailAddress }}</div>
+      <div class="subtitle">{{ selectedSecurityUser.emailAddress }}</div>
     </md-dialog-title>
     <div class="content">
       <template v-if="!validatingPIN">
@@ -40,7 +40,7 @@
 
 <script>
 import PinCodeField from '@/components/common/PinCodeField';
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 import { RouteDef } from '@/constants';
 import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 
@@ -50,10 +50,6 @@ export default {
   },
   props: {
     title: {
-      type: String,
-      default: '',
-    },
-    emailAddress: {
       type: String,
       default: '',
     },
@@ -74,6 +70,9 @@ export default {
   computed: {
     ...mapState({
       validatingPIN: state => state.security.validatingPIN,
+    }),
+    ...mapGetters({
+      selectedSecurityUser: 'getSelectedSecurityUser',
     }),
     getCallbackPath() {
       return this.callbackPath || this.$router.currentRoute.path;
