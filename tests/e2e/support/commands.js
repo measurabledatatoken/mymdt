@@ -169,7 +169,10 @@ Cypress.Commands.add('inputGoogleAuthVerificationCode', (otp = 'ABCDEF') => {
 Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
   expect(otp).to.have.lengthOf(6);
 
-  cy.location('pathname').should('eq', '/home/transfer/transfererifysms');
+  cy.location('pathname').should('oneOf', [
+    '/home/transfer/transfererifysms',
+    '/home/settings/phone/add/verify',
+  ]);
 
   cy.getCurrentContentRouterView()
     .find('input')
@@ -181,6 +184,25 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
   cy.get('button:contains("Done")').click();
 });
 
+Cypress.Commands.add('goToSettingPage', () => {
+  cy.location('pathname').should('oneOf', ['/home', '/']);
+  cy.get('.settingsbtn').click();
+  cy.fixture('user/users').then(users => {
+    users.forEach(user => {
+      cy.get('.md-list.md-double-line').contains(user.email_address);
+    });
+  });
+});
+Cypress.Commands.add('goToUserSettingPage', () => {
+  cy.location('pathname').should('eq', '/home/settings');
+  cy.get('@selectedUserEmail').then(selectedUserEmail => {
+    cy.get('.md-list.md-double-line')
+      .contains(selectedUserEmail)
+      .parents('.md-list-item')
+      .click();
+    cy.location('pathname').should('eq', '/home/usersettings');
+  });
+});
 Cypress.Commands.add('getCurrentContentRouterView', () => {
   cy.get('.content-router-view').last();
 });

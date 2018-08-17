@@ -19,7 +19,10 @@
               v-if="getSelectedSecurityUser.isPasscodeSet"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                class="icon-complete" 
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
@@ -38,7 +41,10 @@
               v-if="getSelectedSecurityUser.isPhoneConfirmed"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                class="icon-complete" 
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
@@ -52,7 +58,10 @@
               v-if="getSelectedSecurityUser.isGoogleAuthEnabled"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                class="icon-complete" 
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
             <template 
               v-if="!getSelectedSecurityUser.isGoogleAuthEnabled && getSelectedSecurityUser.hasGoogleAuthSecret"
@@ -72,7 +81,10 @@
               v-if="getSelectedSecurityUser.isTwofaEnabled"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                class="icon-complete" 
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
