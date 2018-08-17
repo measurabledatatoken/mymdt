@@ -67,7 +67,6 @@
       ref="pinCodeInputPopup" 
       :md-active.sync="showPinCodeInput" 
       :title="$t('message.passcode.pin_popup_title')"
-      :email-address="selectedUser.emailAddress"
       @codefilled="onPinCodeFilled" 
       @close-click="showPinCodeInput = false"
     />
@@ -117,10 +116,7 @@ import { transactionType, transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
 import { CANCEL_TRANSACTION } from '@/store/modules/entities/transactions';
 import { RouteDef } from '@/constants';
-import {
-  SET_DONE_CALLBACK_PATH,
-  VALIDATE_PIN_FOR_SELECTED_USER,
-} from '@/store/modules/security';
+import { SET_DONE_CALLBACK_PATH, VALIDATE_PIN } from '@/store/modules/security';
 import { SET_IS_USER_ACCOUNTS_DIRTY } from '@/store/modules/home';
 import { BACK_TO_PATH } from '@/store/modules/common';
 
@@ -190,7 +186,7 @@ export default {
   methods: {
     ...mapActions({
       cancelTransaction: CANCEL_TRANSACTION,
-      validatePIN: VALIDATE_PIN_FOR_SELECTED_USER,
+      validatePIN: VALIDATE_PIN,
       reportProblem: REPORT_PROBLEM,
       backToPath: BACK_TO_PATH,
     }),

@@ -120,7 +120,6 @@
           ref="pinCodeInputPopup"
           :md-active.sync="showPinCodeInput"
           :title="pinCodePopupTitle"
-          :email-address="selectedSecurityUser.emailAddress"
           @codefilled="onPinCodeFilled"
           @close-click="showPinCodeInput = false"
         />
@@ -160,7 +159,7 @@ import { RouteDef } from '@/constants';
 import {
   SET_SELECTED_SECURITY_USER,
   SET_SECURITY_USER_PHONE_INFO,
-  VALIDATE_PIN_FOR_SECURITY,
+  VALIDATE_PIN,
   SET_DONE_CALLBACK_PATH,
   REQUEST_VERIFICATION_CODE,
   SET_PIN_FOR_SECURITY,
@@ -236,7 +235,7 @@ export default {
       setPinForSecuirty: SET_PIN_FOR_SECURITY,
     }),
     ...mapActions({
-      validatePIN: VALIDATE_PIN_FOR_SECURITY,
+      validatePIN: VALIDATE_PIN,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     onSetupPINClicked() {
