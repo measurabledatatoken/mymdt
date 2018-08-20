@@ -12,6 +12,7 @@ export const SET_APP_CONFIG = 'home/SET_APP_CONFIG';
 export const SET_PRICE_UNIT = 'home/SET_PRICE_UNIT';
 export const SET_IS_USER_ACCOUNTS_DIRTY = 'home/SET_IS_USER_ACCOUNTS_DIRTY';
 export const SET_APP_ID = 'home/SET_APP_ID';
+export const SET_NDA_AGREEMENT = 'home/SET_NDA_AGREEMENT';
 
 // Actions
 export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -25,7 +26,7 @@ const state = {
   selectedUserId: null,
   isUserAccountsDirty: false,
   priceUnit: 'USD',
-
+  ndaAgreement: false,
   // AppConfig
   appConfig: null,
 };
@@ -57,6 +58,9 @@ const mutations = {
   },
   [SET_APP_ID](state, appID) {
     state.appID = appID;
+  },
+  [SET_NDA_AGREEMENT](state, ndaAgreement) {
+    state.ndaAgreement = ndaAgreement;
   },
 };
 
