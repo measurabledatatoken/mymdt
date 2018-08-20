@@ -1,7 +1,7 @@
 const RouteDef = {
   Login: { path: '/login' },
   AutoLogin: { path: '/autologin' },
-  BetaTesting: { path: '/beta' },
+  Welcome: { path: '/welcome' },
   Register: { path: '/register' },
   ForgetPassword: { path: '/forgetpassword' },
   TransactionHistory: { path: '/account/:id/transactionhistory' },

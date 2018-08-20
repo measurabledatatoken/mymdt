@@ -1,13 +1,13 @@
 <template>
   <form 
-    class="beta-testing-form" 
+    class="welcome-form" 
     @submit.prevent="handleSubmit"
   >
-    <div :class="['beta-testing-form__wrapper', { 'beta-testing-form__wrapper--active': showScreen }]">
-      <div class="beta-testing-form__header">
+    <div :class="['welcome-form__wrapper', { 'welcome-form__wrapper--active': showScreen }]">
+      <div class="welcome-form__header">
         <h1>{{ $t('message.welcome.title') }}</h1>
       </div>
-      <div class="beta-testing-form__content">
+      <div class="welcome-form__content">
         <p 
           v-if="isOSSupported" 
           v-html="$t('message.welcome.description')"
@@ -19,7 +19,7 @@
       </div>
       <div 
         v-if="isOSSupported" 
-        class="beta-testing-form__footer"
+        class="welcome-form__footer"
       >
         <Checkbox v-model="$v.agree.$model">
           <template
@@ -53,10 +53,6 @@ import Checkbox from '@/components/input/Checkbox';
 import BaseField from '@/components/input/BaseField';
 import NDA from '@/components/betaTesting/NDA';
 
-import {
-  GET_BETA_TESTING_SESSION,
-  REQUEST_BETA_TESTING_SESSION,
-} from '@/store/modules/betaTesting';
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 import { RouteDef } from '@/constants';
@@ -87,12 +83,8 @@ export default {
   },
   computed: {
     ...mapState({
-      savedDeviceId: state => state.betaTesting.deviceId,
       ndaAgreement: state => state.home.ndaAgreement,
     }),
-    deviceId() {
-      return this.$route.query.deviceid || this.savedDeviceId;
-    },
     isOSSupported() {
       // return false;
       var ua = navigator.userAgent;
@@ -123,8 +115,6 @@ export default {
       setNDAAgreement: SET_NDA_AGREEMENT,
     }),
     ...mapActions({
-      getBetaTestingSession: GET_BETA_TESTING_SESSION,
-      requestBetaTestingSession: REQUEST_BETA_TESTING_SESSION,
       openErrorPrompt: OPEN_ERROR_PROMPT,
     }),
     goToHome() {
@@ -149,23 +139,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.beta-testing-form {
+.welcome-form {
   background-color: $home-bgcolor;
   padding: 1.5rem;
   display: flex;
 
-  .beta-testing-form__wrapper {
+  .welcome-form__wrapper {
     display: flex;
     flex-direction: column;
     flex: 1;
     opacity: 0;
     transition: opacity 300ms;
 
-    &.beta-testing-form__wrapper--active {
+    &.welcome-form__wrapper--active {
       opacity: 1;
     }
   }
-  .beta-testing-form__header {
+  .welcome-form__header {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -178,7 +168,7 @@ export default {
       color: #ffffff;
     }
   }
-  .beta-testing-form__content {
+  .welcome-form__content {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -191,7 +181,7 @@ export default {
       text-align: left;
     }
   }
-  .beta-testing-form__footer {
+  .welcome-form__footer {
     flex: 1;
     display: flex;
     flex-direction: column;

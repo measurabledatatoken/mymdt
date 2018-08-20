@@ -65,7 +65,7 @@ const app = new Vue({
   render: h => h(App),
 });
 
-const landingRoute = RouteDef.BetaTesting;
+const landingRoute = RouteDef.Welcome;
 const originalLocation = router.resolve(window.location.href);
 router.replace({
   ...originalLocation.location,
