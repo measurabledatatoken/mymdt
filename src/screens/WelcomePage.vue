@@ -21,7 +21,10 @@
         v-if="isOSSupported" 
         class="welcome-form__footer"
       >
-        <Checkbox v-model="$v.agree.$model">
+        <Checkbox 
+          v-model="$v.agree.$model" 
+          data-cy="agree-nda"
+        >
           <template
             slot="title"
           >
@@ -33,6 +36,7 @@
         <p>{{ $t('message.welcome.agreementDetail') }}</p>
         <MDTPrimaryButton
           :disabled="!$v.$dirty || $v.$anyError"
+          data-cy="import-account"
           type="submit"
         >
           {{ $t('message.welcome.importAccounts') }}
