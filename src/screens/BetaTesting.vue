@@ -59,7 +59,7 @@ import {
 } from '@/store/modules/betaTesting';
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
-import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
+import { RouteDef } from '@/constants';
 import { SET_NDA_AGREEMENT } from '@/store/modules/home';
 
 const checked = value => !helpers.req(value) || value === true;
@@ -132,9 +132,6 @@ export default {
         ...RouteDef.Home,
         query: this.$route.query,
       });
-    },
-    returnCallback() {
-      window.location = ExitFromWalletWebviewURL;
     },
     handleSubmit() {
       this.$v.$touch();
