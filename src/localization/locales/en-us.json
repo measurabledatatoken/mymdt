@@ -269,6 +269,15 @@
     "betaEndDescription": "The testing has ended. Thank you very much for your participation.<br/>You will receive an email from support@mailtime.com, regarding your final rewards and distribution.",
     "contactus": "If you have any questions, contact <a href=\"mailto:my@mdt.co\" >my@mdt.co</a>.<br/>You may also join the MyMDT beta tester WeChat group — Please add “carina111018” on WeChat and comment “MyMDT 内测人员”."
   },
+  "welcome": {
+    "title": "Welcome to MyMDT!",
+    "description" : "This is the welcome content",
+    "agreementCheckbox1": "I agree to {0} of MDT Wallet",
+    "agreementCheckbox2": "the rules",
+    "OSNotSupported":"Sorry, this feature is not supported on your device.\nMyMDT requires Android version 4.4 and above.",
+    "agreementDetail": "By clicking the button below, your email accounts in MailTime will automatically logged into the MDT wallet.",
+    "importAccounts": "Import Account(s)"
+  },
   "legalAndPrivacy": {
     "termsOfUse": "Terms of Use"
   },

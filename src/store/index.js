@@ -14,19 +14,12 @@ import reportProblem from './modules/reportProblem';
 import ui from './modules/ui';
 import entities from './modules/entities';
 import security from './modules/security';
-import betaTesting from './modules/betaTesting';
 
 Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production';
 const persistedState = createPersistedState({
-  paths: [
-    'home',
-    'login',
-    'entities',
-    'betaTesting',
-    'transfer.transferToEmailHistory',
-  ],
+  paths: ['home', 'login', 'entities', 'transfer.transferToEmailHistory'],
 });
 export default new Vuex.Store({
   modules: {
@@ -41,7 +34,6 @@ export default new Vuex.Store({
     qrcode,
     reportProblem,
     security,
-    betaTesting,
   },
   strict: debug,
   plugins: debug ? [createLogger(), persistedState] : [persistedState],
