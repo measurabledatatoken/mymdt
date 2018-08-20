@@ -26,13 +26,13 @@
 
 import { createAPIResponse } from '../utils';
 
-Cypress.Commands.add('login', (deviceId = 'someArbitraryDeviceId') => {
+Cypress.Commands.add('login', (isadmin = true) => {
   cy.visit(
     `/autologin?appid=${Cypress.env('APP_ID')}&tokens=${Cypress.env(
       'TOKENS',
     )}&emails=${Cypress.env('EMAILS')}&lang=${Cypress.env(
       'LANG',
-    )}&needexit=${Cypress.env('NEED_EXIT')}&deviceid=${deviceId}&isadmin=true`,
+    )}&needexit=${Cypress.env('NEED_EXIT')}${isadmin ? '&isadmin=1' : ''}`,
   );
 });
 
