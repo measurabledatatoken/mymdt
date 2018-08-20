@@ -19,7 +19,6 @@ export const SET_VALIDATING_PIN = 'security/SET_VALIDATING_PIN';
 
 // action
 export const VALIDATE_PIN = 'security/VALIDATE_PIN';
-('security/VALIDATE_PIN');
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 export const RESET_PIN = 'security/RESET_PIN';

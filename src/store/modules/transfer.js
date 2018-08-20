@@ -48,8 +48,8 @@ const getters = {
   transferToAccounts: (state, getters, rootState, rootGetters) => {
     const tempAccounts = rootGetters.getAllUsers.filter(
       user =>
-        !rootGetters.transferFromAccount ||
-        user.emailAddress !== rootGetters.transferFromAccount.emailAddress,
+        !state.transferFromUserId ||
+        user.emailAddress !== state.transferFromUserId,
     );
 
     for (let i = 0; i < state.transferToEmailHistory.length; i += 1) {
