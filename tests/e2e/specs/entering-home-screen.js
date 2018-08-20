@@ -34,4 +34,7 @@ describe('Entering Home Screen', () => {
         .should('exist');
     });
   });
+
+  //TODO: tests for unsupported os version, cypress doesn't support to change the useragent during test run
+  // https://github.com/cypress-io/cypress/issues/2100
 });
