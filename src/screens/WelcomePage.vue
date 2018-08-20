@@ -69,10 +69,8 @@ export default {
   },
   data() {
     return {
-      accessCode: '',
       agree: false,
       showScreen: false,
-      failed: false,
       showNDA: false,
     };
   },
