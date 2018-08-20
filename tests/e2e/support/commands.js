@@ -26,6 +26,18 @@
 
 import { createAPIResponse } from '../utils';
 
+const inputPINForSetup = (pin = '111111') => {
+  expect(pin).to.have.lengthOf(6);
+  cy.wait(750);
+  cy.getCurrentContentRouterView()
+    .find('.pin-code-field')
+    .find('input')
+    .then($input => {
+      Cypress._.each($input, (el, index) => {
+        cy.wrap(el).type(pin[index]);
+      });
+    });
+};
 Cypress.Commands.add('login', (isadmin = true) => {
   cy.visit(
     `/autologin?appid=${Cypress.env('APP_ID')}&tokens=${Cypress.env(
@@ -186,22 +198,85 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
 
 Cypress.Commands.add('goToSettingPage', () => {
   cy.location('pathname').should('oneOf', ['/home', '/']);
-  cy.get('.settingsbtn').click();
+  cy.get('[data-cy="settings"]').click();
   cy.fixture('user/users').then(users => {
     users.forEach(user => {
-      cy.get('.md-list.md-double-line').contains(user.email_address);
+      cy.get('[data-cy="setting-list-user-item"]').contains(user.email_address);
     });
   });
 });
 Cypress.Commands.add('goToUserSettingPage', () => {
   cy.location('pathname').should('eq', '/home/settings');
   cy.get('@selectedUserEmail').then(selectedUserEmail => {
-    cy.get('.md-list.md-double-line')
+    cy.get('[data-cy="setting-list-user-item"]')
       .contains(selectedUserEmail)
-      .parents('.md-list-item')
       .click();
     cy.location('pathname').should('eq', '/home/usersettings');
   });
+});
+Cypress.Commands.add(
+  'addPhoneNumber',
+  (countryCode = '852', phone = '61111111') => {
+    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
+      'requestotp',
+    );
+    cy.route('POST', '/api/security/phonenumber/add', createAPIResponse([]));
+    cy.location('pathname').should('eq', '/home/settings/phone/add');
+
+    // input mobile number
+    cy.getCurrentContentRouterView()
+      .find('input[type="number"]')
+      .then($input => {
+        cy.wrap($input).type(phone);
+      });
+
+    // select country code
+    cy.getCurrentContentRouterView()
+      .find('input[type="text"]')
+      .click();
+    const regCountryCode = new RegExp(`^\\+(${countryCode})$`, 'i');
+    cy.get('[data-cy="country-code-item"]')
+      .contains(regCountryCode)
+      .click();
+    cy.getCurrentContentRouterView()
+      .find('[data-cy="next"]')
+      .click();
+
+    //requesting otp
+    cy.wait('@requestotp');
+    cy.inputSMSVerificationCode();
+
+    // add phone success popup
+    cy.get('.md-dialog')
+      .find('[data-cy="confirm"]')
+      .click();
+  },
+);
+Cypress.Commands.add('setupPIN', (pin = '111111') => {
+  cy.route('POST', '/api/security/pin/setup', createAPIResponse([])).as(
+    'setupPin',
+  );
+  // setup pin page
+  cy.location('pathname').should('eq', '/home/settings/pincode/setup');
+
+  inputPINForSetup(pin);
+  cy.getCurrentContentRouterView()
+    .find('[data-cy="next"]')
+    .click();
+
+  // setup pin confirm page
+  cy.location('pathname').should('eq', '/home/settings/pincode/confirm');
+  inputPINForSetup(pin);
+  cy.getCurrentContentRouterView()
+    .find('[data-cy="next"]')
+    .click();
+
+  cy.wait('@setupPin');
+
+  // setup pin success popup
+  cy.get('.md-dialog')
+    .find('[data-cy="confirm"]')
+    .click();
 });
 Cypress.Commands.add('getCurrentContentRouterView', () => {
   cy.get('.content-router-view').last();

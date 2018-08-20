@@ -7,6 +7,7 @@
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.passcode.pin_setup_title')"
+            data-cy="setting-setup-pin" 
             @click="onSetupPINClicked"
           >
             <template 
@@ -20,7 +21,7 @@
               slot="action-data"
             >
               <md-icon 
-                class="icon-complete" 
+                data-cy="icon-complete"
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
@@ -29,6 +30,7 @@
           <base-setting-list-item 
             :title="$t('message.settings.phoneNumber')"
             :disabled="!getSelectedSecurityUser.isPasscodeSet"
+            data-cy="setting-setup-phone" 
             @click="onSetupPhoneNumberClicked"
           >
             <template 
@@ -42,7 +44,7 @@
               slot="action-data"
             >
               <md-icon 
-                class="icon-complete" 
+                data-cy="icon-complete"
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
@@ -52,6 +54,7 @@
           <base-setting-list-item 
             :title="$t('message.googleAuth.setupTitle')"
             :disabled="!(getSelectedSecurityUser.isPasscodeSet)"
+            data-cy="setting-setup-google-auth" 
             @click="onGoogleAuthClicked"
           >
             <template 
@@ -59,7 +62,7 @@
               slot="action-data"
             >
               <md-icon 
-                class="icon-complete" 
+                data-cy="icon-complete"
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
@@ -67,7 +70,10 @@
               v-if="!getSelectedSecurityUser.isGoogleAuthEnabled && getSelectedSecurityUser.hasGoogleAuthSecret"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-incomplete.svg"/>
+              <md-icon 
+                data-cy="icon-incomplete" 
+                md-src="/static/icons/settings-incomplete.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
@@ -75,6 +81,7 @@
           <base-setting-list-item 
             :title="$t('message.twoFactorAuthentication.setupTitle')"
             :disabled="!allowTwoFactorSetup"
+            data-cy="setting-setup-2fa" 
             @click="onTwoFactorClicked"
           >
             <template 
@@ -82,7 +89,7 @@
               slot="action-data"
             >
               <md-icon 
-                class="icon-complete" 
+                data-cy="icon-complete"
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
@@ -91,7 +98,7 @@
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.passcode.forgot_pin')"
-            :disabled="!getSelectedSecurityUser.isPasscodeSet"
+            :disabled="!getSelectedSecurityUser.isPasscodeSet" 
             @click="onPasscodeForgotClicked"
           />
           <md-divider />
