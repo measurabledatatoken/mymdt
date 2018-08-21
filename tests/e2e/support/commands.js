@@ -163,9 +163,10 @@ Cypress.Commands.add('inputGoogleAuthVerificationCode', (otp = 'ABCDEF') => {
   expect(otp).to.have.lengthOf(6);
 
   cy.location('pathname').should('oneOf', [
-    '/home/transfer/transfererifygoogleauth',
+    '/home/transfer/transferverifygoogleauth',
     '/home/2fa/googleauthstep3',
     '/home/2fa/disablegoogleauth',
+    '/home/2fa/disable2faverifygoogleauth',
   ]);
 
   cy.getCurrentContentRouterView()
@@ -185,6 +186,7 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
   cy.location('pathname').should('oneOf', [
     '/home/transfer/transfererifysms',
     '/home/settings/phone/add/verify',
+    '/home/2fa/disable2faverifysms',
   ]);
 
   cy.getCurrentContentRouterView()
