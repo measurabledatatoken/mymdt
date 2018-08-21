@@ -162,10 +162,11 @@ Cypress.Commands.add('inputPinCode', (pin = '111111') => {
 Cypress.Commands.add('inputGoogleAuthVerificationCode', (otp = 'ABCDEF') => {
   expect(otp).to.have.lengthOf(6);
 
-  cy.location('pathname').should(
-    'eq',
+  cy.location('pathname').should('oneOf', [
     '/home/transfer/transfererifygoogleauth',
-  );
+    '/home/2fa/googleauthstep3',
+    '/home/2fa/disablegoogleauth',
+  ]);
 
   cy.getCurrentContentRouterView()
     .find('.google-authenticator-container')

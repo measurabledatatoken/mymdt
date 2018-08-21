@@ -59,6 +59,7 @@
             >
               <MDTPrimaryButton 
                 :disabled="!googleAuthSecret"
+                data-cy="next"
                 @click="goToNext()"
               >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
             </div>
