@@ -153,6 +153,7 @@
           :md-content="disableGoogleAuthPopupDescription"
           :md-confirm-text="$t('message.common.disable')"
           :md-cancel-text="$t('message.common.cancel')"
+          data-cy="popup-disable-google-auth"
           @md-confirm="goToGoogleAuthSetting('disable')"
         />
 
@@ -163,6 +164,7 @@
           :md-content="$t('message.googleAuth.continueSetupPopupDescription')"
           :md-confirm-text="$t('message.common.continue')"
           :md-cancel-text="$t('message.common.startOver')"
+          data-cy="popup-continue-setup-google-auth"
           @md-confirm="goToGoogleAuthSetting('continue')"
           @md-cancel="goToGoogleAuthSetting('setup-new')"
         />
