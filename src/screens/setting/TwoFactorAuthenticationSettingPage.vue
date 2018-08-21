@@ -10,6 +10,7 @@
           
               <MDTSwitch
                 v-model="enabled" 
+                data-cy="switch"
               />
             </md-list-item>
             <md-divider />
@@ -20,6 +21,7 @@
                 :selected="method === TwoFactorOption.METHOD.SMS" 
                 :title="$t('message.twoFactorAuthentication.methods.sms')" 
                 :disabled="!selectedSecurityUser.isPhoneConfirmed"
+                data-cy="method-sms"
                 @click="set2FAMethod(TwoFactorOption.METHOD.SMS)"
               />
               <md-divider />
@@ -27,6 +29,7 @@
                 :selected="method === TwoFactorOption.METHOD.GOOGLE" 
                 :title="$t('message.twoFactorAuthentication.methods.google')" 
                 :disabled="!selectedSecurityUser.isGoogleAuthEnabled"
+                data-cy="method-google"
                 @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
               />
               <md-divider />
@@ -35,18 +38,21 @@
               <price-unit-list-item 
                 :selected="usage === TwoFactorOption.USAGE.TRANSACTION" 
                 :title="$t('message.twoFactorAuthentication.usage.transaction')" 
+                data-cy="usage-transaction"
                 @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION)"
               />
               <md-divider />
               <price-unit-list-item 
                 :selected="usage === TwoFactorOption.USAGE.LOGIN" 
                 :title="$t('message.twoFactorAuthentication.usage.login')" 
+                data-cy="usage-login"
                 @click="set2FAUsage(TwoFactorOption.USAGE.LOGIN)"
               />
               <md-divider />
               <price-unit-list-item 
                 :selected="usage === TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN" 
                 :title="$t('message.twoFactorAuthentication.usage.transactionAndLogin')" 
+                data-cy="usage-transaction-login"
                 @click="set2FAUsage(TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN)"
               />
               <md-divider />
@@ -72,6 +78,7 @@
       :md-content="$t('message.twoFactorAuthentication.disable2FAPopupDescription')"
       :md-confirm-text="$t('message.twoFactorAuthentication.turnOff2FA')"
       :md-cancel-text="$t('message.common.cancel')"
+      data-cy="popup-disable-2fa"
       @md-confirm="showPinCodeInput = true"
     />
   </div>
