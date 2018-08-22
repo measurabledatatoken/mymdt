@@ -7,7 +7,7 @@ describe('Setup Phone', () => {
   });
 
   it('can setup phone number', () => {
-    cy.stubUserListingAndDetail('user/passcodeset');
+    cy.stubUserListingAndDetail('user/passcodeSet');
     cy.login();
     cy.goToSettingPage();
     cy.goToUserSettingPage();
@@ -26,7 +26,7 @@ describe('Setup Phone', () => {
       '/api/security/phonenumber/change',
       createAPIResponse([]),
     ).as('changePhoneNumber');
-    cy.stubUserListingAndDetail('user/passcodeset', null, {
+    cy.stubUserListingAndDetail('user/passcodeSet', null, {
       is_phone_confirmed: true,
     });
     cy.login();
