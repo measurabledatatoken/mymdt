@@ -1,6 +1,14 @@
+import createAPIResponse from '../../utils/createAPIResponse';
+
 describe('Setup PIN', () => {
+  const setupPIN = (pin = '111111') => {
+    cy.route('POST', '/api/security/pin/setup', createAPIResponse([])).as(
+      'setupPin',
+    );
+    cy.inputPINForSetup(pin);
+  };
+
   beforeEach(() => {
-    cy.clearLocalStorage();
     cy.stubUserListingAndDetail('user/index');
     cy.stubPinVerify();
     cy.login();
@@ -10,7 +18,7 @@ describe('Setup PIN', () => {
 
   it('can setup pin', () => {
     cy.get('[data-cy="setting-setup-pin"]').click();
-    cy.setupPIN();
+    setupPIN();
     // Add your phone number page
     cy.getCurrentContentRouterView()
       .find('[data-cy="skip"]')
@@ -28,9 +36,10 @@ describe('Setup PIN', () => {
       .find('[data-cy="icon-complete"]')
       .should('exist');
   });
+
   it('can setup pin and phone', () => {
     cy.get('[data-cy="setting-setup-pin"]').click();
-    cy.setupPIN();
+    setupPIN();
     cy.addPhoneNumber();
 
     // check if the setup pin indicator icon exists
