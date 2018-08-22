@@ -11,6 +11,7 @@
 
     <md-button 
       class="md-icon-button settingsbtn"
+      data-cy="settings"
       @click="onSettingsClick"
     >
       <md-icon md-src="/static/icons/settings-white.svg"/>

@@ -26,6 +26,40 @@
 
 import { createAPIResponse } from '../utils';
 
+const fillPinCode = (pin = '111111') => {
+  expect(pin).to.have.lengthOf(6);
+  cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
+  cy.get('.pin-code-field')
+    .find('input')
+    .then($input => {
+      Cypress._.each($input, (el, index) => {
+        cy.wrap(el).type(pin[index]);
+      });
+    });
+};
+
+Cypress.Commands.add('inputPINForSetup', (pin = '111111') => {
+  // setup pin page
+  cy.location('pathname').should('eq', '/home/settings/pincode/setup');
+
+  fillPinCode(pin);
+  cy.getCurrentContentRouterView()
+    .find('[data-cy="next"]')
+    .click();
+
+  // setup pin confirm page
+  cy.location('pathname').should('eq', '/home/settings/pincode/confirm');
+  fillPinCode(pin);
+  cy.getCurrentContentRouterView()
+    .find('[data-cy="next"]')
+    .click();
+
+  // setup pin success popup
+  cy.get('.md-dialog')
+    .find('[data-cy="confirm"]')
+    .click();
+});
+
 Cypress.Commands.add('login', (isadmin = true) => {
   cy.visit(
     `/autologin?appid=${Cypress.env('APP_ID')}&tokens=${Cypress.env(
@@ -132,28 +166,19 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('inputPinCode', (pin = '111111') => {
-  expect(pin).to.have.lengthOf(6);
-
   cy.get('.md-dialog').should('exist');
-
-  cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
-
-  cy.get('.pin-code-field')
-    .find('input')
-    .then($input => {
-      Cypress._.each($input, (el, index) => {
-        cy.wrap(el).type(pin[index]);
-      });
-    });
+  fillPinCode(pin);
 });
 
 Cypress.Commands.add('inputGoogleAuthVerificationCode', (otp = 'ABCDEF') => {
   expect(otp).to.have.lengthOf(6);
 
-  cy.location('pathname').should(
-    'eq',
-    '/home/transfer/transfererifygoogleauth',
-  );
+  cy.location('pathname').should('oneOf', [
+    '/home/transfer/transferverifygoogleauth',
+    '/home/2fa/googleauthstep3',
+    '/home/2fa/disablegoogleauth',
+    '/home/2fa/disable2faverifygoogleauth',
+  ]);
 
   cy.getCurrentContentRouterView()
     .find('.google-authenticator-container')
@@ -169,7 +194,13 @@ Cypress.Commands.add('inputGoogleAuthVerificationCode', (otp = 'ABCDEF') => {
 Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
   expect(otp).to.have.lengthOf(6);
 
-  cy.location('pathname').should('eq', '/home/transfer/transfererifysms');
+  cy.location('pathname').should('oneOf', [
+    '/home/transfer/transfererifysms',
+    '/home/settings/phone/add/verify',
+    '/home/settings/phone/change/verify',
+    '/home/2fa/disable2faverifysms',
+    '/home/settings/phone/verify',
+  ]);
 
   cy.getCurrentContentRouterView()
     .find('input')
@@ -180,6 +211,71 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
   // click done button
   cy.get('button:contains("Done")').click();
 });
+
+Cypress.Commands.add('goToSettingPage', () => {
+  cy.location('pathname').should('oneOf', ['/home', '/']);
+  cy.get('[data-cy="settings"]').click();
+  cy.fixture('user/users').then(users => {
+    users.forEach(user => {
+      cy.get('[data-cy="setting-list-user-item"]').contains(user.email_address);
+    });
+  });
+});
+
+Cypress.Commands.add('goToUserSettingPage', () => {
+  cy.location('pathname').should('eq', '/home/settings');
+  cy.get('@selectedUserEmail').then(selectedUserEmail => {
+    cy.get('[data-cy="setting-list-user-item"]')
+      .contains(selectedUserEmail)
+      .click();
+    cy.location('pathname').should('eq', '/home/usersettings');
+  });
+});
+
+Cypress.Commands.add(
+  'addPhoneNumber',
+  (phone = '61111111', countryCode = '852') => {
+    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
+      'requestotp',
+    );
+    cy.route('POST', '/api/security/phonenumber/add', createAPIResponse([]));
+    cy.location('pathname').should('oneOf', [
+      '/home/settings/phone/add',
+      '/home/settings/phone/change',
+    ]);
+
+    // input mobile number
+    cy.getCurrentContentRouterView()
+      .find('input[type="number"]')
+      .clear()
+      .then($input => {
+        cy.wrap($input).type(phone);
+      });
+
+    // select country code
+    cy.getCurrentContentRouterView()
+      .find('input[type="text"]')
+      .clear()
+      .type(countryCode);
+
+    const regCountryCode = new RegExp(`^\\+(${countryCode})$`, 'i');
+    cy.get('[data-cy="country-code-item"]')
+      .contains(regCountryCode)
+      .click();
+    cy.getCurrentContentRouterView()
+      .find('[data-cy="next"]')
+      .click();
+
+    //requesting otp
+    cy.wait('@requestotp');
+    cy.inputSMSVerificationCode();
+
+    // add phone success popup
+    cy.get('.md-dialog')
+      .find('[data-cy="confirm"]')
+      .click();
+  },
+);
 
 Cypress.Commands.add('getCurrentContentRouterView', () => {
   cy.get('.content-router-view').last();

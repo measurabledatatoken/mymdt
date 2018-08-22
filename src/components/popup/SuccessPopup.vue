@@ -8,14 +8,19 @@
       <span class="title">{{ title }}</span>
     </div>
     <md-dialog-actions v-if="confirmText && cancelText && hasConfirmClickedListener">
-      <md-button @click="onCancelClicked">{{ cancelText }}</md-button>
+      <md-button 
+        data-cy="cancel" 
+        @click="onCancelClicked"
+      >{{ cancelText }}</md-button>
       <md-button 
         class="md-primary" 
+        data-cy="confirm"
         @click="onClick"
       >{{ confirmText }}</md-button>
     </md-dialog-actions>
     <MDTSubtleButton 
       v-else 
+      data-cy="confirm"
       @click="onClick"
     >{{ confirmText }}</MDTSubtleButton>
   </md-dialog>
