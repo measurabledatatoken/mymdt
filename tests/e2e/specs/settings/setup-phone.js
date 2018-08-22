@@ -4,12 +4,7 @@ describe('Setup Phone', () => {
   beforeEach(() => {
     cy.clearLocalStorage();
     cy.stubPinVerify();
-    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
-      'requestotp',
-    );
-    cy.route('POST', '/api/security/sms/verifyotp', createAPIResponse([])).as(
-      'verifySMSOtp',
-    );
+    cy.stubSMSRequestAndVerify();
   });
   it('can setup phone number', () => {
     cy.stubUserListingAndDetail('user/passcodeset');
