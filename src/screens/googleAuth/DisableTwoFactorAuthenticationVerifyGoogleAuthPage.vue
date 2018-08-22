@@ -60,6 +60,7 @@ export default {
           verificationCode: verificationCode,
         });
         this.doneButtonLoading = false;
+        console.log(this.doneCallBackPath);
         this.backToPath(this.doneCallBackPath);
       } catch (error) {
         console.log(`error in disabling 2FA: ${error.message}`);

@@ -43,6 +43,11 @@ describe('Setup Phone', () => {
     cy.inputPinCode();
     cy.inputSMSVerificationCode();
     cy.addPhoneNumber('6222222', '853');
-    cy.location('pathname').should('eq', '/home/usersettings');
+    cy.get('@selectedUserEmail').then(selectedUserEmail => {
+      cy.location('pathname').should(
+        'eq',
+        `/home/usersettings/${selectedUserEmail}`,
+      );
+    });
   });
 });

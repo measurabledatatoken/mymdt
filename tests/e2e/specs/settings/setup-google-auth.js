@@ -43,7 +43,12 @@ describe('Setup Google Authenticator', () => {
       .find('[data-cy="confirm"]')
       .click();
 
-    cy.location('pathname').should('eq', '/home/usersettings');
+    cy.get('@selectedUserEmail').then(selectedUserEmail => {
+      cy.location('pathname').should(
+        'eq',
+        `/home/usersettings/${selectedUserEmail}`,
+      );
+    });
     cy.getCurrentContentRouterView()
       .find('[data-cy="setting-setup-google-auth"]')
       .find('[data-cy="icon-complete"]')
@@ -75,7 +80,12 @@ describe('Setup Google Authenticator', () => {
     cy.inputPinCode();
     cy.inputGoogleAuthVerificationCode();
 
-    cy.location('pathname').should('eq', '/home/usersettings');
+    cy.get('@selectedUserEmail').then(selectedUserEmail => {
+      cy.location('pathname').should(
+        'eq',
+        `/home/usersettings/${selectedUserEmail}`,
+      );
+    });
     cy.get('[data-cy="setting-setup-google-auth"]')
       .find('[data-cy="icon-complete"]')
       .should('not.exist');
@@ -99,7 +109,12 @@ describe('Setup Google Authenticator', () => {
     cy.get('[data-cy="back"]').click();
     cy.get('[data-cy="back"]').click();
 
-    cy.location('pathname').should('eq', '/home/usersettings');
+    cy.get('@selectedUserEmail').then(selectedUserEmail => {
+      cy.location('pathname').should(
+        'eq',
+        `/home/usersettings/${selectedUserEmail}`,
+      );
+    });
     cy.get('[data-cy="setting-setup-google-auth"]')
       .find('[data-cy="icon-incomplete"]')
       .should('exist');
