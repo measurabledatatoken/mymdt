@@ -16,7 +16,7 @@ describe('Forgot PIN', () => {
   };
 
   beforeEach(() => {
-    cy.stubUserListingAndDetail('user/passcodeset', null, {
+    cy.stubUserListingAndDetail('user/passcodeSet', null, {
       is_phone_confirmed: true,
       phone_number: '6111111',
       country_code: '+852',
