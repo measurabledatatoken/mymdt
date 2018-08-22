@@ -16,7 +16,7 @@ describe('Setup Google Authenticator', () => {
   });
 
   it('can setup google authenticator', () => {
-    cy.stubUserListingAndDetail('user/passcodeset');
+    cy.stubUserListingAndDetail('user/passcodeSet');
     cy.login();
     cy.goToSettingPage();
     cy.goToUserSettingPage();
@@ -56,7 +56,7 @@ describe('Setup Google Authenticator', () => {
       '/api/security/google-auth/disable',
       createAPIResponse([]),
     ).as('disable2fa');
-    cy.stubUserListingAndDetail('user/passcodeset', null, {
+    cy.stubUserListingAndDetail('user/passcodeSet', null, {
       is_google_auth_enabled: true,
     });
     cy.login();
@@ -82,7 +82,7 @@ describe('Setup Google Authenticator', () => {
   });
 
   it('can continue to setup google authenticator if the setup process is interrupted after step 1', () => {
-    cy.stubUserListingAndDetail('user/passcodeset');
+    cy.stubUserListingAndDetail('user/passcodeSet');
     cy.login();
     cy.goToSettingPage();
     cy.goToUserSettingPage();
