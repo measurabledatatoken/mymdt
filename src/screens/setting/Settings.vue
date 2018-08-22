@@ -16,6 +16,7 @@
         <SettingListUserItem
           :key="user.emailAddress"
           :user="user"
+          data-cy="setting-list-user-item"
           @click="onUserClicked(user.emailAddress)"
         />
         <md-divider :key="`${user.emailAddress}-divider`" />

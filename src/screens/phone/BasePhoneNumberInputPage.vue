@@ -25,13 +25,15 @@
           :disabled="isPhoneInvalid" 
           :class="{ 'hasSkip': needSkip }" 
           class="next-button" 
+          data-cy="next"
           @click="onNextClicked"
         >
           {{ $t('message.common.nextbtn') }}
         </MDTPrimaryButton>
         <MDTSubtleButton 
           v-if="needSkip" 
-          class="skip-btn" 
+          class="skip-btn"
+          data-cy="skip" 
           @click="onSkipClicked"
         >
           {{ $t('message.common.skip') }}

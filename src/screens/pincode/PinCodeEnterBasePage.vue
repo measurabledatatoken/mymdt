@@ -15,6 +15,7 @@
         <MDTPrimaryButton
           slot="button"
           :disabled="!isPinFilled"
+          data-cy="next"
           class="pincode-base-page__button"
           @click="$emit('click', pincode)"
         >

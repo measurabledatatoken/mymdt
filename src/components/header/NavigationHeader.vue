@@ -2,6 +2,7 @@
   <div class="navigation-bar">
     <md-button 
       v-if="!hideBackButton" 
+      data-cy="back"
       @click="goBack"
     >
       <md-icon md-src="/static/icons/arrow-back-white.svg"/>
