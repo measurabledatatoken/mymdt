@@ -22,7 +22,10 @@
           @filled="onCodeFilled"
         />
         <div class="forgot">
-          <a @click="onForgotClicked">{{ $t('message.passcode.forgot_pin') }}</a>
+          <a 
+            data-cy="forgot-pin-click" 
+            @click="onForgotClicked"
+          >{{ $t('message.passcode.forgot_pin') }}</a>
         </div>
         
       </template>

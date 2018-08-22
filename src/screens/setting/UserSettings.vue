@@ -7,6 +7,7 @@
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.passcode.pin_setup_title')"
+            data-cy="setting-setup-pin" 
             @click="onSetupPINClicked"
           >
             <template 
@@ -19,13 +20,17 @@
               v-if="selectedSecurityUser.isPasscodeSet"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                data-cy="icon-complete"
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
           <base-setting-list-item 
             :title="$t('message.settings.phoneNumber')"
             :disabled="!selectedSecurityUser.isPasscodeSet"
+            data-cy="setting-setup-phone" 
             @click="onSetupPhoneNumberClicked"
           >
             <template 
@@ -38,7 +43,10 @@
               v-if="selectedSecurityUser.isPhoneConfirmed"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                data-cy="icon-complete"
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
@@ -46,19 +54,26 @@
           <base-setting-list-item 
             :title="$t('message.googleAuth.setupTitle')"
             :disabled="!(selectedSecurityUser.isPasscodeSet)"
+            data-cy="setting-setup-google-auth" 
             @click="onGoogleAuthClicked"
           >
             <template 
               v-if="selectedSecurityUser.isGoogleAuthEnabled"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                data-cy="icon-complete"
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
             <template 
               v-if="!selectedSecurityUser.isGoogleAuthEnabled && selectedSecurityUser.hasGoogleAuthSecret"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-incomplete.svg"/>
+              <md-icon 
+                data-cy="icon-incomplete" 
+                md-src="/static/icons/settings-incomplete.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
@@ -66,13 +81,17 @@
           <base-setting-list-item 
             :title="$t('message.twoFactorAuthentication.setupTitle')"
             :disabled="!allowTwoFactorSetup"
+            data-cy="setting-setup-2fa" 
             @click="onTwoFactorClicked"
           >
             <template 
               v-if="selectedSecurityUser.isTwofaEnabled"
               slot="action-data"
             >
-              <md-icon md-src="/static/icons/settings-account-3.svg"/>
+              <md-icon 
+                data-cy="icon-complete"
+                md-src="/static/icons/settings-account-3.svg"
+              />
             </template>
           </base-setting-list-item>
           <md-divider />
@@ -80,6 +99,7 @@
           <base-setting-list-item 
             :title="$t('message.passcode.forgot_pin')"
             :disabled="!selectedSecurityUser.isPasscodeSet"
+            data-cy="forgot-pin"
             @click="onPasscodeForgotClicked"
           />
           <md-divider />
@@ -91,6 +111,7 @@
           :md-content="$t('message.passcode.already_setup_content')"
           :md-confirm-text="$t('message.common.change')"
           :md-cancel-text="$t('message.common.cancel')"
+          data-cy="popup-change-pin"
           @md-confirm="onConfirmChangePIN"
         />
 
@@ -100,6 +121,7 @@
           :md-content="$t('message.phone.already_setup_content')"
           :md-confirm-text="$t('message.common.change')"
           :md-cancel-text="$t('message.common.cancel')"
+          data-cy="popup-change-phone"
           @md-confirm="onConfirmChangePhoneNumber"
         />
 
@@ -132,6 +154,7 @@
           :md-content="disableGoogleAuthPopupDescription"
           :md-confirm-text="$t('message.common.disable')"
           :md-cancel-text="$t('message.common.cancel')"
+          data-cy="popup-disable-google-auth"
           @md-confirm="goToGoogleAuthSetting('disable')"
         />
 
@@ -142,6 +165,7 @@
           :md-content="$t('message.googleAuth.continueSetupPopupDescription')"
           :md-confirm-text="$t('message.common.continue')"
           :md-cancel-text="$t('message.common.startOver')"
+          data-cy="popup-continue-setup-google-auth"
           @md-confirm="goToGoogleAuthSetting('continue')"
           @md-cancel="goToGoogleAuthSetting('setup-new')"
         />
