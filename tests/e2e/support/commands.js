@@ -49,7 +49,7 @@ const inputPINForSetup = (pin = '111111') => {
 };
 const fillPinCode = (pin = '111111') => {
   expect(pin).to.have.lengthOf(6);
-  cy.wait(750);
+  cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
   cy.get('.pin-code-field')
     .find('input')
     .then($input => {
