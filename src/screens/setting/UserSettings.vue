@@ -99,6 +99,7 @@
           <base-setting-list-item 
             :title="$t('message.passcode.forgot_pin')"
             :disabled="!getSelectedSecurityUser.isPasscodeSet" 
+            data-cy="forgot-pin"
             @click="onPasscodeForgotClicked"
           />
           <md-divider />

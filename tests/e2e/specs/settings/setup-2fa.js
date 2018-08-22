@@ -47,19 +47,6 @@ describe('Setup Google Authenticator', () => {
     cy.location('pathname').should('eq', '/home/usersettings');
   };
   beforeEach(() => {
-    cy.route(
-      'POST',
-      '/api/security/google-auth/verifyotp',
-      createAPIResponse([]),
-    ).as('verifyGoogleOtp');
-
-    cy.route('POST', '/api/security/sms/verifyotp', createAPIResponse([])).as(
-      'verifySMSOtp',
-    );
-
-    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
-      'requestSMSOtp',
-    );
     cy.clearLocalStorage();
     cy.stubUserListingAndDetail(
       'user/passcodeSetPhoneConfirmedEnabledGoogleAuth',
@@ -80,6 +67,7 @@ describe('Setup Google Authenticator', () => {
   });
 
   it('can disable with SMS verification Method', () => {
+    cy.stubSMSRequestAndVerify();
     enable2FA('sms');
     disable2FA();
     cy.inputSMSVerificationCode();
@@ -89,6 +77,7 @@ describe('Setup Google Authenticator', () => {
       .should('not.exist');
   });
   it('can disable with Google Authenticator verification Method', () => {
+    cy.stubGoogleVerify();
     enable2FA('google');
     disable2FA();
     cy.inputGoogleAuthVerificationCode();

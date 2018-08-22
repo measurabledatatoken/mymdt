@@ -27,10 +27,30 @@
 import { createAPIResponse } from '../utils';
 
 const inputPINForSetup = (pin = '111111') => {
+  // setup pin page
+  cy.location('pathname').should('eq', '/home/settings/pincode/setup');
+
+  fillPinCode(pin);
+  cy.getCurrentContentRouterView()
+    .find('[data-cy="next"]')
+    .click();
+
+  // setup pin confirm page
+  cy.location('pathname').should('eq', '/home/settings/pincode/confirm');
+  fillPinCode(pin);
+  cy.getCurrentContentRouterView()
+    .find('[data-cy="next"]')
+    .click();
+
+  // setup pin success popup
+  cy.get('.md-dialog')
+    .find('[data-cy="confirm"]')
+    .click();
+};
+const fillPinCode = (pin = '111111') => {
   expect(pin).to.have.lengthOf(6);
   cy.wait(750);
-  cy.getCurrentContentRouterView()
-    .find('.pin-code-field')
+  cy.get('.pin-code-field')
     .find('input')
     .then($input => {
       Cypress._.each($input, (el, index) => {
@@ -144,19 +164,8 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('inputPinCode', (pin = '111111') => {
-  expect(pin).to.have.lengthOf(6);
-
   cy.get('.md-dialog').should('exist');
-
-  cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
-
-  cy.get('.pin-code-field')
-    .find('input')
-    .then($input => {
-      Cypress._.each($input, (el, index) => {
-        cy.wrap(el).type(pin[index]);
-      });
-    });
+  fillPinCode(pin);
 });
 
 Cypress.Commands.add('inputGoogleAuthVerificationCode', (otp = 'ABCDEF') => {
@@ -267,27 +276,20 @@ Cypress.Commands.add('setupPIN', (pin = '111111') => {
   cy.route('POST', '/api/security/pin/setup', createAPIResponse([])).as(
     'setupPin',
   );
-  // setup pin page
-  cy.location('pathname').should('eq', '/home/settings/pincode/setup');
-
   inputPINForSetup(pin);
+});
+Cypress.Commands.add('forgotPIN', () => {
+  cy.route('POST', '/api/security/pin/reset', createAPIResponse([])).as(
+    'resetPin',
+  );
+  cy.location('pathname').should('eq', '/home/settings/pincode/forgot');
+  cy.stubSMSRequestAndVerify();
   cy.getCurrentContentRouterView()
-    .find('[data-cy="next"]')
+    .find('[data-cy="resend"]')
     .click();
 
-  // setup pin confirm page
-  cy.location('pathname').should('eq', '/home/settings/pincode/confirm');
-  inputPINForSetup(pin);
-  cy.getCurrentContentRouterView()
-    .find('[data-cy="next"]')
-    .click();
-
-  cy.wait('@setupPin');
-
-  // setup pin success popup
-  cy.get('.md-dialog')
-    .find('[data-cy="confirm"]')
-    .click();
+  cy.inputSMSVerificationCode();
+  inputPINForSetup('222222');
 });
 Cypress.Commands.add('getCurrentContentRouterView', () => {
   cy.get('.content-router-view').last();
