@@ -1,69 +1,35 @@
 import createAPIResponse from '../../utils/createAPIResponse';
 
 describe('Setup Google Authenticator', () => {
-  beforeEach(() => {
-    cy.clearLocalStorage();
-    cy.stubUserListingAndDetail(
-      'user/passcodeSetPhoneConfirmedEnabledGoogleAuth',
-    );
-    cy.stubPinVerify();
-
-    cy.route(
-      'POST',
-      '/api/security/2fa/enable',
-      createAPIResponse({
-        is_2fa_enabled: true,
-        '2fa_method': 1,
-        '2fa_usage': 1,
-      }),
-    ).as('enable2fa');
-
-    cy.route(
-      'POST',
-      '/api/security/2fa/disable',
-      createAPIResponse({
-        is_2fa_enabled: false,
-        '2fa_method': 1,
-        '2fa_usage': 1,
-      }),
-    ).as('disable2fa');
-
-    cy.route(
-      'POST',
-      '/api/security/2fa/options',
-      createAPIResponse({
-        '2fa_method': 2,
-        '2fa_usage': 2,
-      }),
-    ).as('setOptions');
-
-    cy.route(
-      'POST',
-      '/api/security/google-auth/verifyotp',
-      createAPIResponse([]),
-    ).as('verifyGoogleOtp');
-
-    cy.route('POST', '/api/security/sms/verifyotp', createAPIResponse([])).as(
-      'verifySMSOtp',
-    );
-
-    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
-      'requestSMSOtp',
-    );
-  });
   const goTo2FASettingPage = () => {
     cy.getCurrentContentRouterView()
       .find('[data-cy="setting-setup-2fa"]')
       .click();
     cy.inputPinCode();
   };
-  const enable2FA = () => {
+  const enable2FA = (method = 'sms') => {
+    cy.route(
+      'POST',
+      '/api/security/2fa/enable',
+      createAPIResponse({
+        is_2fa_enabled: true,
+        '2fa_method': method == 'sms' ? 1 : 2,
+        '2fa_usage': 1,
+      }),
+    ).as('enable2fa');
     cy.location('pathname').should('eq', '/home/usersettings/twofactor');
     cy.getCurrentContentRouterView()
       .find('[data-cy="switch"]')
       .click();
   };
   const disable2FA = () => {
+    cy.route(
+      'POST',
+      '/api/security/2fa/disable',
+      createAPIResponse({
+        is_2fa_enabled: false,
+      }),
+    ).as('disable2fa');
     cy.getCurrentContentRouterView()
       .find('[data-cy="switch"]')
       .click();
@@ -80,36 +46,67 @@ describe('Setup Google Authenticator', () => {
     cy.get('[data-cy="back"]').click();
     cy.location('pathname').should('eq', '/home/usersettings');
   };
+  beforeEach(() => {
+    cy.route(
+      'POST',
+      '/api/security/google-auth/verifyotp',
+      createAPIResponse([]),
+    ).as('verifyGoogleOtp');
 
-  it('can enable google authenticator', () => {
+    cy.route('POST', '/api/security/sms/verifyotp', createAPIResponse([])).as(
+      'verifySMSOtp',
+    );
+
+    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
+      'requestSMSOtp',
+    );
+    cy.clearLocalStorage();
+    cy.stubUserListingAndDetail(
+      'user/passcodeSetPhoneConfirmedEnabledGoogleAuth',
+    );
+    cy.stubPinVerify();
     cy.login();
     cy.goToSettingPage();
     cy.goToUserSettingPage();
-
     goTo2FASettingPage();
+  });
+
+  it('can enable google authenticator', () => {
     enable2FA();
-
     backToUserSetting();
-
     cy.get('[data-cy="setting-setup-2fa"]')
       .find('[data-cy="icon-complete"]')
       .should('exist');
   });
 
-  it('can disable google authenticator with SMS verification Method', () => {
-    goTo2FASettingPage();
+  it('can disable with SMS verification Method', () => {
+    enable2FA('sms');
     disable2FA();
     cy.inputSMSVerificationCode();
-
     backToUserSetting();
-
+    cy.get('[data-cy="setting-setup-2fa"]')
+      .find('[data-cy="icon-complete"]')
+      .should('not.exist');
+  });
+  it('can disable with Google Authenticator verification Method', () => {
+    enable2FA('google');
+    disable2FA();
+    cy.inputGoogleAuthVerificationCode();
+    backToUserSetting();
     cy.get('[data-cy="setting-setup-2fa"]')
       .find('[data-cy="icon-complete"]')
       .should('not.exist');
   });
 
   it('can change google authenticator options', () => {
-    goTo2FASettingPage();
+    cy.route(
+      'POST',
+      '/api/security/2fa/options',
+      createAPIResponse({
+        '2fa_method': 2,
+        '2fa_usage': 2,
+      }),
+    ).as('setOptions');
     enable2FA();
     cy.getCurrentContentRouterView()
       .find('[data-cy="method-google"]')
@@ -117,22 +114,11 @@ describe('Setup Google Authenticator', () => {
     cy.wait('@setOptions');
 
     cy.getCurrentContentRouterView()
-      .find('.list-item--selected[data-cy="method-google"]')
-      .should('exist');
+      .find('[data-cy="method-google"]')
+      .should('has.class', 'list-item--selected');
 
     cy.getCurrentContentRouterView()
-      .find('.list-item--selected[data-cy="usage-login"]')
-      .should('exist');
-  });
-
-  it('can disable google authenticator with Google Authenticator verification Method', () => {
-    disable2FA();
-    cy.inputGoogleAuthVerificationCode();
-
-    backToUserSetting();
-
-    cy.get('[data-cy="setting-setup-2fa"]')
-      .find('[data-cy="icon-complete"]')
-      .should('not.exist');
+      .find('[data-cy="usage-login"]')
+      .should('has.class', 'list-item--selected');
   });
 });

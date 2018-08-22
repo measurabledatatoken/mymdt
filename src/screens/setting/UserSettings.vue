@@ -110,6 +110,7 @@
           :md-content="$t('message.passcode.already_setup_content')"
           :md-confirm-text="$t('message.common.change')"
           :md-cancel-text="$t('message.common.cancel')"
+          data-cy="popup-change-pin"
           @md-confirm="onConfirmChangePIN"
         />
 
@@ -119,6 +120,7 @@
           :md-content="$t('message.phone.already_setup_content')"
           :md-confirm-text="$t('message.common.change')"
           :md-cancel-text="$t('message.common.cancel')"
+          data-cy="popup-change-phone"
           @md-confirm="onConfirmChangePhoneNumber"
         />
 

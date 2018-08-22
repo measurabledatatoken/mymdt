@@ -186,7 +186,9 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
   cy.location('pathname').should('oneOf', [
     '/home/transfer/transfererifysms',
     '/home/settings/phone/add/verify',
+    '/home/settings/phone/change/verify',
     '/home/2fa/disable2faverifysms',
+    '/home/settings/phone/verify',
   ]);
 
   cy.getCurrentContentRouterView()
@@ -219,16 +221,20 @@ Cypress.Commands.add('goToUserSettingPage', () => {
 });
 Cypress.Commands.add(
   'addPhoneNumber',
-  (countryCode = '852', phone = '61111111') => {
+  (phone = '61111111', countryCode = '852') => {
     cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
       'requestotp',
     );
     cy.route('POST', '/api/security/phonenumber/add', createAPIResponse([]));
-    cy.location('pathname').should('eq', '/home/settings/phone/add');
+    cy.location('pathname').should('oneOf', [
+      '/home/settings/phone/add',
+      '/home/settings/phone/change',
+    ]);
 
     // input mobile number
     cy.getCurrentContentRouterView()
       .find('input[type="number"]')
+      .clear()
       .then($input => {
         cy.wrap($input).type(phone);
       });
@@ -236,7 +242,9 @@ Cypress.Commands.add(
     // select country code
     cy.getCurrentContentRouterView()
       .find('input[type="text"]')
-      .click();
+      .clear()
+      .type(countryCode);
+
     const regCountryCode = new RegExp(`^\\+(${countryCode})$`, 'i');
     cy.get('[data-cy="country-code-item"]')
       .contains(regCountryCode)
