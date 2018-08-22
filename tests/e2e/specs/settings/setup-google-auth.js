@@ -2,7 +2,6 @@ import createAPIResponse from '../../utils/createAPIResponse';
 
 describe('Setup Google Authenticator', () => {
   beforeEach(() => {
-    cy.clearLocalStorage();
     cy.stubPinVerify();
     cy.route(
       'POST',
@@ -15,6 +14,7 @@ describe('Setup Google Authenticator', () => {
       createAPIResponse([]),
     ).as('verifySecret');
   });
+
   it('can setup google authenticator', () => {
     cy.stubUserListingAndDetail('user/passcodeset');
     cy.login();
@@ -49,6 +49,7 @@ describe('Setup Google Authenticator', () => {
       .find('[data-cy="icon-complete"]')
       .should('exist');
   });
+
   it('can disable google authenticator', () => {
     cy.route(
       'POST',
@@ -79,6 +80,7 @@ describe('Setup Google Authenticator', () => {
       .find('[data-cy="icon-complete"]')
       .should('not.exist');
   });
+
   it('can continue to setup google authenticator if the setup process is interrupted after step 1', () => {
     cy.stubUserListingAndDetail('user/passcodeset');
     cy.login();

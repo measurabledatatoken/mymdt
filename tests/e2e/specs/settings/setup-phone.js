@@ -2,10 +2,10 @@ import createAPIResponse from '../../utils/createAPIResponse';
 
 describe('Setup Phone', () => {
   beforeEach(() => {
-    cy.clearLocalStorage();
     cy.stubPinVerify();
     cy.stubSMSRequestAndVerify();
   });
+
   it('can setup phone number', () => {
     cy.stubUserListingAndDetail('user/passcodeset');
     cy.login();
@@ -19,6 +19,7 @@ describe('Setup Phone', () => {
       .find('[data-cy="icon-complete"]')
       .should('exist');
   });
+
   it('can change phone number', () => {
     cy.route(
       'POST',

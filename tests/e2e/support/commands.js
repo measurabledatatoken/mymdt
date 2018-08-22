@@ -26,7 +26,19 @@
 
 import { createAPIResponse } from '../utils';
 
-const inputPINForSetup = (pin = '111111') => {
+const fillPinCode = (pin = '111111') => {
+  expect(pin).to.have.lengthOf(6);
+  cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
+  cy.get('.pin-code-field')
+    .find('input')
+    .then($input => {
+      Cypress._.each($input, (el, index) => {
+        cy.wrap(el).type(pin[index]);
+      });
+    });
+};
+
+Cypress.Commands.add('inputPINForSetup', (pin = '111111') => {
   // setup pin page
   cy.location('pathname').should('eq', '/home/settings/pincode/setup');
 
@@ -46,18 +58,8 @@ const inputPINForSetup = (pin = '111111') => {
   cy.get('.md-dialog')
     .find('[data-cy="confirm"]')
     .click();
-};
-const fillPinCode = (pin = '111111') => {
-  expect(pin).to.have.lengthOf(6);
-  cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
-  cy.get('.pin-code-field')
-    .find('input')
-    .then($input => {
-      Cypress._.each($input, (el, index) => {
-        cy.wrap(el).type(pin[index]);
-      });
-    });
-};
+});
+
 Cypress.Commands.add('login', (isadmin = true) => {
   cy.visit(
     `/autologin?appid=${Cypress.env('APP_ID')}&tokens=${Cypress.env(
@@ -219,6 +221,7 @@ Cypress.Commands.add('goToSettingPage', () => {
     });
   });
 });
+
 Cypress.Commands.add('goToUserSettingPage', () => {
   cy.location('pathname').should('eq', '/home/settings');
   cy.get('@selectedUserEmail').then(selectedUserEmail => {
@@ -228,6 +231,7 @@ Cypress.Commands.add('goToUserSettingPage', () => {
     cy.location('pathname').should('eq', '/home/usersettings');
   });
 });
+
 Cypress.Commands.add(
   'addPhoneNumber',
   (phone = '61111111', countryCode = '852') => {
@@ -272,25 +276,7 @@ Cypress.Commands.add(
       .click();
   },
 );
-Cypress.Commands.add('setupPIN', (pin = '111111') => {
-  cy.route('POST', '/api/security/pin/setup', createAPIResponse([])).as(
-    'setupPin',
-  );
-  inputPINForSetup(pin);
-});
-Cypress.Commands.add('forgotPIN', () => {
-  cy.route('POST', '/api/security/pin/reset', createAPIResponse([])).as(
-    'resetPin',
-  );
-  cy.location('pathname').should('eq', '/home/settings/pincode/forgot');
-  cy.stubSMSRequestAndVerify();
-  cy.getCurrentContentRouterView()
-    .find('[data-cy="resend"]')
-    .click();
 
-  cy.inputSMSVerificationCode();
-  inputPINForSetup('222222');
-});
 Cypress.Commands.add('getCurrentContentRouterView', () => {
   cy.get('.content-router-view').last();
 });

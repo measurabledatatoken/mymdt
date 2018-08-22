@@ -7,6 +7,7 @@ describe('Setup Google Authenticator', () => {
       .click();
     cy.inputPinCode();
   };
+
   const enable2FA = (method = 'sms') => {
     cy.route(
       'POST',
@@ -22,6 +23,7 @@ describe('Setup Google Authenticator', () => {
       .find('[data-cy="switch"]')
       .click();
   };
+
   const disable2FA = () => {
     cy.route(
       'POST',
@@ -42,12 +44,13 @@ describe('Setup Google Authenticator', () => {
 
     cy.inputPinCode();
   };
+
   const backToUserSetting = () => {
     cy.get('[data-cy="back"]').click();
     cy.location('pathname').should('eq', '/home/usersettings');
   };
+
   beforeEach(() => {
-    cy.clearLocalStorage();
     cy.stubUserListingAndDetail(
       'user/passcodeSetPhoneConfirmedEnabledGoogleAuth',
     );
@@ -76,6 +79,7 @@ describe('Setup Google Authenticator', () => {
       .find('[data-cy="icon-complete"]')
       .should('not.exist');
   });
+
   it('can disable with Google Authenticator verification Method', () => {
     cy.stubGoogleVerify();
     enable2FA('google');
