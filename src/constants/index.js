@@ -36,7 +36,7 @@ const RouteDef = {
     name: 'DisableTwoFactorAuthenticationVerifySMS',
   },
   TwoFactorAuthenticationSetting: {
-    path: '/home/usersettings/twofactor',
+    path: '/home/2fa/setting',
     name: 'TwoFactorAuthentication',
   },
   TwoFactorAuthenticationSMSVerify: {
