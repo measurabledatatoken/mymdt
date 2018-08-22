@@ -13,6 +13,7 @@
       <MDSubtleButton 
         :disabled="!selectedSecurityUser.phoneNumber"
         class="resend"
+        data-cy="resend"
         @click="onSendVerificationCodePressed"
       >
         {{ $t('message.phone.send') }}

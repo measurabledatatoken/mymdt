@@ -33,6 +33,7 @@
         <md-menu-item 
           v-for="countryCodeItem in filteredCountryCodeList" 
           :key="countryCodeItem.code"
+          data-cy="country-code-item"
           @click="selectCountryCode(countryCodeItem)"
         >
           <div class="country-code">{{ countryCodeItem.code }}</div>

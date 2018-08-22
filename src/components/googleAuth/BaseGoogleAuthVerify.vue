@@ -27,6 +27,7 @@
           <MDTPrimaryButton 
             :disabled="!verificationCodeFilled"
             :loading="doneButtonLoading"
+            data-cy="done"
             @click="onDoneClicked()"
           > {{ $t('message.common.done') }}</MDTPrimaryButton>
         </div>

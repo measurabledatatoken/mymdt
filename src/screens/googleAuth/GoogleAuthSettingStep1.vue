@@ -38,6 +38,7 @@
                 {{ $t('message.googleAuth.step1Remark') }}
               </p>
               <MDTPrimaryButton 
+                data-cy="next"
                 @click="goToNext()"
               >{{ $t('message.common.nextbtn') }}</MDTPrimaryButton>
             </div>

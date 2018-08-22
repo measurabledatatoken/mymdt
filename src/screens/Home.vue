@@ -10,7 +10,10 @@
       </div>
     </div>
 
-    <div class="bottom-content">
+    <div 
+      class="bottom-content" 
+      data-cy="account-list"
+    >
       <div
         v-for="user in allUsers"
         :key="user.emailAddress"

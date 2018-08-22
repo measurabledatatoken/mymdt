@@ -7,7 +7,7 @@ import { RouteDef } from '@/constants';
 import AppLayout from '@/container/AppLayout';
 
 const Home = () => import('@/screens/Home');
-const BetaTesting = () => import('@/screens/BetaTesting');
+const Welcome = () => import('@/screens/WelcomePage');
 const Login = () => import('@/screens/Login');
 const Register = () => import('@/screens/Register');
 const ForgetPassword = () => import('@/screens/ForgetPassword');
@@ -105,9 +105,9 @@ const router = new Router({
           redirect: RouteDef.Home,
         },
         {
-          path: RouteDef.BetaTesting.path,
+          path: RouteDef.Welcome.path,
           components: {
-            default: BetaTesting,
+            default: Welcome,
             header: BetaTestingHeader,
           },
           meta: {
