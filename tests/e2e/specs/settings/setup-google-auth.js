@@ -3,28 +3,20 @@ import createAPIResponse from '../../utils/createAPIResponse';
 describe('Setup Google Authenticator', () => {
   beforeEach(() => {
     cy.clearLocalStorage();
-    cy.stubUserListingAndDetail('user/passcodeset');
     cy.stubPinVerify();
-
     cy.route(
       'POST',
       '/api/security/google-auth/generate-secret',
       createAPIResponse({ secret: 'xxx' }),
     ).as('generateSecret');
-
     cy.route(
       'POST',
       '/api/security/google-auth/verify-secret',
       createAPIResponse([]),
     ).as('verifySecret');
-
-    cy.route(
-      'POST',
-      '/api/security/google-auth/disable',
-      createAPIResponse([]),
-    ).as('disable2fa');
   });
   it('can setup google authenticator', () => {
+    cy.stubUserListingAndDetail('user/passcodeset');
     cy.login();
     cy.goToSettingPage();
     cy.goToUserSettingPage();
@@ -58,6 +50,17 @@ describe('Setup Google Authenticator', () => {
       .should('exist');
   });
   it('can disable google authenticator', () => {
+    cy.route(
+      'POST',
+      '/api/security/google-auth/disable',
+      createAPIResponse([]),
+    ).as('disable2fa');
+    cy.stubUserListingAndDetail('user/passcodeset', null, {
+      is_google_auth_enabled: true,
+    });
+    cy.login();
+    cy.goToSettingPage();
+    cy.goToUserSettingPage();
     cy.getCurrentContentRouterView()
       .find('[data-cy="setting-setup-google-auth"]')
       .click();
@@ -77,6 +80,10 @@ describe('Setup Google Authenticator', () => {
       .should('not.exist');
   });
   it('can continue to setup google authenticator if the setup process is interrupted after step 1', () => {
+    cy.stubUserListingAndDetail('user/passcodeset');
+    cy.login();
+    cy.goToSettingPage();
+    cy.goToUserSettingPage();
     cy.get('[data-cy="setting-setup-google-auth"]').click();
     cy.inputPinCode();
 
