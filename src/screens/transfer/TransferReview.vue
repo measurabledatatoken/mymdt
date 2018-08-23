@@ -70,10 +70,8 @@
       ref="pinCodeInputPopup" 
       :md-active.sync="showPinCodeInput" 
       :title="$t('message.passcode.pin_popup_title')"
-      :email-address="transferFromAccount.emailAddress" 
       @codefilled="onPinCodeFilled" 
       @close-click="showPinCodeInput = false"
-      @fotgot-click="onFotgotClicked"
     />
   </PaddedContainer>
 </template>
@@ -87,10 +85,9 @@ import { RouteDef } from '@/constants';
 import { START_TRANSFER } from '@/store/modules/transfer';
 import {
   SET_DONE_CALLBACK_PATH,
-  SET_SELECTED_USER,
   SET_COUNTRY_DIALCODE,
   SET_PHONENUMBER,
-  VALIDATE_PIN_FOR_TRANSFER,
+  VALIDATE_PIN,
   REQUEST_VERIFICATION_CODE,
 } from '@/store/modules/security';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
@@ -122,7 +119,6 @@ export default {
     ...mapState({
       transferAmount: state => state.transfer.transferAmount,
       transferType: state => state.transfer.transferType,
-      transferFromAccount: state => state.transfer.transferFromAccount,
       transferToAccount: state => state.transfer.transferToAccount,
       transferNote: state => state.transfer.transferNote,
       transferToWalletAddress: state => state.transfer.transferToWalletAddress,
@@ -130,6 +126,7 @@ export default {
     ...mapGetters({
       transactionFee: 'transactionFee',
       finalAmount: 'finalAmount',
+      transferFromAccount: 'transferFromAccount',
       selectedSecurityUser: 'getSelectedSecurityUser',
     }),
     transferToStr() {
@@ -159,13 +156,12 @@ export default {
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
-      setSelectedSecurityUser: SET_SELECTED_USER,
       setCountryDialCode: SET_COUNTRY_DIALCODE,
       setPhoneNumber: SET_PHONENUMBER,
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
-      validatePIN: VALIDATE_PIN_FOR_TRANSFER,
+      validatePIN: VALIDATE_PIN,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
     async goToSMSVerify(pinCode) {
@@ -221,7 +217,6 @@ export default {
       try {
         await this.validatePIN(pinCode);
         this.showPinCodeInput = false;
-        this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
       } catch (error) {
         this.$refs.pinCodeInputPopup.setInvalid();
         return;
@@ -229,11 +224,11 @@ export default {
 
       try {
         if (
-          this.selectedSecurityUser.isTwofaEnabled &&
+          this.transferFromAccount.isTwofaEnabled &&
           [
             TwoFactorOption.USAGE.TRANSACTION,
             TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN,
-          ].includes(this.selectedSecurityUser.twofaUsage)
+          ].includes(this.transferFromAccount.twofaUsage)
         ) {
           this.start2FAVerify(pinCode);
         } else {
@@ -245,13 +240,6 @@ export default {
           'Transfer Mode': this.TransferType,
         });
       }
-    },
-    onFotgotClicked() {
-      this.setDoneCallbackPath(RouteDef.TransferReview.path);
-      this.setSelectedSecurityUser(this.transferFromAccount.emailAddress);
-      this.$router.push({
-        name: RouteDef.PinCodeForgot.name,
-      });
     },
     formatAmount,
   },

@@ -228,7 +228,10 @@ Cypress.Commands.add('goToUserSettingPage', () => {
     cy.get('[data-cy="setting-list-user-item"]')
       .contains(selectedUserEmail)
       .click();
-    cy.location('pathname').should('eq', '/home/usersettings');
+    cy.location('pathname').should(
+      'eq',
+      `/home/usersettings/${selectedUserEmail}`,
+    );
   });
 });
 

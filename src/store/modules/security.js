@@ -10,7 +10,7 @@ export const SET_PHONENUMBER = 'phoneVerifyScreen/SET_PHONENUMBER';
 export const SET_DONE_CALLBACK_PATH =
   'phoneVerifyScreen/SET_DONE_CALLBACK_PATH';
 export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
-export const SET_SELECTED_USER = 'security/SET_SELECTED_USER';
+export const SET_SELECTED_SECURITY_USER = 'security/SET_SELECTED_SECURITY_USER';
 export const SET_SECURITY_USER_PHONE_INFO =
   'security/SET_SECURITY_USER_PHONE_INFO';
 export const SET_PIN_FOR_SECURITY = 'security/SET_PIN_FOR_SECURITY';
@@ -18,10 +18,7 @@ export const SET_PIN_FOR_SECURITY = 'security/SET_PIN_FOR_SECURITY';
 export const SET_VALIDATING_PIN = 'security/SET_VALIDATING_PIN';
 
 // action
-export const VALIDATE_PIN_FOR_SECURITY = 'security/VALIDATE_PIN_FOR_SECURITY';
-export const VALIDATE_PIN_FOR_TRANSFER = 'security/VALIDATE_PIN_FOR_TRANSFER';
-export const VALIDATE_PIN_FOR_SELECTED_USER =
-  'security/VALIDATE_PIN_FOR_SELECTED_USER';
+export const VALIDATE_PIN = 'security/VALIDATE_PIN';
 export const SETUP_PIN = 'security/SETUP_PIN';
 export const CHANGE_PIN = 'security/CHANGE_PIN';
 export const RESET_PIN = 'security/RESET_PIN';
@@ -80,7 +77,7 @@ const mutations = {
     state.countryCode = null;
     state.phoneNumber = null;
   },
-  [SET_SELECTED_USER](state, emailAddress) {
+  [SET_SELECTED_SECURITY_USER](state, emailAddress) {
     state.selectedUserId = emailAddress;
     regTrackingSuperProperties({ 'Email Address': emailAddress });
   },
@@ -95,10 +92,7 @@ const mutations = {
 };
 
 const actions = {
-  async [VALIDATE_PIN_FOR_SECURITY](
-    { state, commit, dispatch, rootGetters },
-    pin,
-  ) {
+  async [VALIDATE_PIN]({ state, commit, dispatch, rootGetters }, pin) {
     const account = rootGetters.getUser(state.selectedUserId);
     const timeoutId = setTimeout(
       () => commit(SET_VALIDATING_PIN, true),
@@ -108,49 +102,6 @@ const actions = {
       await dispatch(REQUEST, {
         api: api.security.validatePIN,
         args: [pin, account.accessToken],
-        setLoading: false,
-        openErrorPrompt: false,
-      });
-    } catch (error) {
-      throw error;
-    } finally {
-      if (timeoutId) clearTimeout(timeoutId);
-      commit(SET_VALIDATING_PIN, false);
-    }
-  },
-  async [VALIDATE_PIN_FOR_SELECTED_USER](
-    { dispatch, commit, rootGetters },
-    pin,
-  ) {
-    const account = rootGetters.getSelectedUser;
-    const timeoutId = setTimeout(
-      () => commit(SET_VALIDATING_PIN, true),
-      LoadingPopupDelayInMillisecond,
-    );
-    try {
-      await dispatch(REQUEST, {
-        api: api.security.validatePIN,
-        args: [pin, account.accessToken],
-        setLoading: false,
-        openErrorPrompt: false,
-      });
-    } catch (error) {
-      throw error;
-    } finally {
-      if (timeoutId) clearTimeout(timeoutId);
-      commit(SET_VALIDATING_PIN, false);
-    }
-  },
-  async [VALIDATE_PIN_FOR_TRANSFER]({ commit, dispatch, rootState }, pin) {
-    const transferFromAccount = rootState.transfer.transferFromAccount;
-    const timeoutId = setTimeout(
-      () => commit(SET_VALIDATING_PIN, true),
-      LoadingPopupDelayInMillisecond,
-    );
-    try {
-      await dispatch(REQUEST, {
-        api: api.security.validatePIN,
-        args: [pin, transferFromAccount.accessToken],
         setLoading: false,
         openErrorPrompt: false,
       });

@@ -217,6 +217,7 @@ const router = new Router({
         // Transfer Route
         {
           path: RouteDef.TransferList.path,
+          name: RouteDef.TransferList.name,
           component: TransferList,
         },
         {

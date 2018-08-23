@@ -8,7 +8,7 @@ const RouteDef = {
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
   UserSettings: {
-    path: '/home/usersettings',
+    path: '/home/usersettings/:account_id',
     name: 'UserSettings',
   },
   GoogleAuthSettingStep1: {
@@ -36,7 +36,7 @@ const RouteDef = {
     name: 'DisableTwoFactorAuthenticationVerifySMS',
   },
   TwoFactorAuthenticationSetting: {
-    path: '/home/usersettings/twofactor',
+    path: '/home/2fa/setting',
     name: 'TwoFactorAuthentication',
   },
   TwoFactorAuthenticationSMSVerify: {
@@ -49,7 +49,10 @@ const RouteDef = {
   LegalAndPrivacy: { path: '/home/settings/legal' },
   WebView: { path: '/home/webview', name: 'webview' },
   Tutorial: { path: '/home/tutorial' },
-  TransferList: { path: '/home/transfer' },
+  TransferList: {
+    path: '/home/accounts/:account_id/transfer',
+    name: 'TransferList',
+  },
   TransferEmail: { path: '/home/transfer/email' },
   TransferEthWallet: { path: '/home/transfer/ethwallet' },
   TransferReview: { path: '/home/transfer/review' },
