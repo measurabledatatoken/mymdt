@@ -321,5 +321,8 @@
     "continueSetupPopupTitle": "继续安装？",
     "continueSetupPopupDescription": "您正在设置Google身份验证器。<br/>点击“继续”继续设置您的Google身份验证器。系统会要求您输入6位数的验证码。<br / > <br/>点击“重新开始”以放弃当前进度,您将获得一个新密钥。",
     "setupSuccess": "Google身份验证器\n成功设置！"
+  },
+  "maintenance" : {
+    "description" : "维护进行中"
   }
 }
