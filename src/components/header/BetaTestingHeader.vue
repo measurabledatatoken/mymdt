@@ -10,7 +10,6 @@
 </template>
 <script>
 import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
-import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -18,11 +17,6 @@ export default {
       RouteDef,
       transactionHistoryURL: `${RouteDef.TransactionHistory.path}`,
     };
-  },
-  computed: {
-    ...mapState({
-      needExit: state => state.home.needExit,
-    }),
   },
   methods: {
     returnCallback() {

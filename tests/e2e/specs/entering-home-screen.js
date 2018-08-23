@@ -1,3 +1,5 @@
+import createAPIResponse from '../utils/createAPIResponse';
+
 describe('Entering Home Screen', () => {
   beforeEach(() => {
     cy.stubUserListingAndDetail('user/index');
@@ -13,6 +15,16 @@ describe('Entering Home Screen', () => {
     cy.get('[data-cy="account-list"]')
       .children()
       .should('exist');
+  });
+
+  it('can show maintenance message', () => {
+    cy.route(
+      'GET',
+      '/api/system/config',
+      createAPIResponse({ server_status: 'maintenance' }),
+    );
+    cy.login(false);
+    cy.get('[data-cy="maintenance-message"]').should('exist');
   });
 
   //TODO: tests for unsupported os version, cypress doesn't support to change the useragent during test run

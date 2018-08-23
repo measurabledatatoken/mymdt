@@ -121,6 +121,7 @@ export default {
   computed: {
     ...mapState({
       mdtPrice: state => state.home.mdtPrice,
+      appConfig: state => state.home.appConfig,
       priceUnit: state => state.home.priceUnit,
       isUserAccountsDirty: state => state.home.isUserAccountsDirty,
       credentials: state => state.login.credentials,
@@ -151,7 +152,7 @@ export default {
       });
     },
   },
-  mounted() {
+  async mounted() {
     if (this.$route.query.appid && this.$route.query.tokens) {
       const appID = this.$route.query.appid;
       const tokensStr = this.$route.query.tokens;
@@ -163,9 +164,15 @@ export default {
 
       this.setNeedExitBtn(needExit);
       this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
+    } else {
+      // navigate from other pages
+      await this.requestAppConfig();
+      if (this.appConfig.server_status !== 'active') {
+        this.$router.replace(RouteDef.Welcome.path);
+        return;
+      }
     }
     this.requstMDTPrice();
-    this.requestAppConfig();
 
     if (this.isUserAccountsDirty) {
       this.requestUserAccounts();
