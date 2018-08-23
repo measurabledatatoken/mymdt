@@ -18,7 +18,7 @@ describe('Setup Google Authenticator', () => {
         '2fa_usage': 1,
       }),
     ).as('enable2fa');
-    cy.location('pathname').should('eq', '/home/usersettings/twofactor');
+    cy.location('pathname').should('eq', '/home/2fa/setting');
     cy.getCurrentContentRouterView()
       .find('[data-cy="switch"]')
       .click();
@@ -47,7 +47,12 @@ describe('Setup Google Authenticator', () => {
 
   const backToUserSetting = () => {
     cy.get('[data-cy="back"]').click();
-    cy.location('pathname').should('eq', '/home/usersettings');
+    cy.get('@selectedUserEmail').then(selectedUserEmail => {
+      cy.location('pathname').should(
+        'eq',
+        `/home/usersettings/${selectedUserEmail}`,
+      );
+    });
   };
 
   beforeEach(() => {

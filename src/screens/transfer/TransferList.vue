@@ -39,12 +39,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { trackEvent } from '@/utils';
 import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
 import {
   SET_DONE_CALLBACK_PATH,
-  SET_SELECTED_USER,
+  SET_SELECTED_SECURITY_USER,
 } from '@/store/modules/security';
 import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
@@ -53,6 +53,7 @@ import ActionCard from '@/components/common/ActionCard';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
+import { SET_SELECTED_USER } from '@/store/modules/home';
 
 export default {
   components: {
@@ -73,18 +74,23 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      transferFromAccount: state => state.transfer.transferFromAccount,
-    }),
     ...mapGetters({
       allUsers: 'getAllUsers',
       selectedUser: 'getSelectedUser',
+      transferFromAccount: 'transferFromAccount',
     }),
+  },
+  created() {
+    const emailAddress = this.$route.params.account_id;
+    this.setSelectedUser(emailAddress);
+    this.setSelectedSecurityUser(emailAddress);
+    this.setTransferFromAccount(emailAddress);
   },
   methods: {
     ...mapMutations({
       setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
-      setSecuritySelectedUser: SET_SELECTED_USER,
+      setSelectedSecurityUser: SET_SELECTED_SECURITY_USER,
+      setSelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
     onTransferToEmailClicked() {
@@ -105,12 +111,12 @@ export default {
     },
     onAccountSelected(account) {
       trackEvent('Switch accounts on Transfer Methods Select');
-      this.setTransferFromAccount(account);
+      this.setTransferFromAccount(account.emailAddress);
+      this.setSelectedSecurityUser(account.emailAddress);
     },
     onConfirmSetupPinDialogClick() {
       trackEvent('Start Setting up PIN from the popup');
-      this.setSecuritySelectedUser(this.transferFromAccount.emailAddress);
-      this.setDoneCallbackPath(RouteDef.TransferList.path);
+      this.setDoneCallbackPath(this.$router.currentRoute.path);
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
       });

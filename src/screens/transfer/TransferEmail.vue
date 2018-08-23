@@ -63,6 +63,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
+import { SET_SELECTED_SECURITY_USER } from '@/store/modules/security';
 
 const eventProperties = { 'Transfer Mode': TransferType.Email };
 
@@ -88,11 +89,11 @@ export default {
   computed: {
     ...mapState({
       transferAmount: state => state.transfer.transferAmount,
-      transferFromAccount: state => state.transfer.transferFromAccount,
       transferToAccount: state => state.transfer.transferToAccount,
       transferNote: state => state.transfer.transferNote,
     }),
     ...mapGetters({
+      transferFromAccount: 'transferFromAccount',
       transferToAccounts: 'transferToAccounts',
       fromUserAccounts: 'getAllUsers',
     }),
@@ -127,6 +128,7 @@ export default {
       setTransferNote: SET_TRANSFER_NOTE,
       setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
       setTransferToAccount: SET_TRANSFER_TO_ACCOUNT,
+      setSelectedSecurityUser: SET_SELECTED_SECURITY_USER,
     }),
     transferAmountInvalid() {
       this.setTransferAmount(0);
@@ -137,7 +139,8 @@ export default {
     },
     onTransferFromAccountSelected(account) {
       trackEvent('Choose account for "from"', eventProperties);
-      this.setTransferFromAccount(account);
+      this.setTransferFromAccount(account.emailAddress);
+      this.setSelectedSecurityUser(account.emailAddress);
     },
     onTransferFromMenuOpened() {
       trackEvent('Click on the dropdown arrow for "from"', eventProperties);

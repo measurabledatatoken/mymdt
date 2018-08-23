@@ -11,7 +11,7 @@
 
     <md-dialog-title>
       <div class="title">{{ title }}</div>
-      <div class="subtitle">{{ emailAddress }}</div>
+      <div class="subtitle">{{ selectedSecurityUser.emailAddress }}</div>
     </md-dialog-title>
     <div class="content">
       <template v-if="!validatingPIN">
@@ -24,7 +24,7 @@
         <div class="forgot">
           <a 
             data-cy="forgot-pin-click" 
-            @click="$emit('fotgot-click')"
+            @click="onForgotClicked"
           >{{ $t('message.passcode.forgot_pin') }}</a>
         </div>
         
@@ -43,7 +43,9 @@
 
 <script>
 import PinCodeField from '@/components/common/PinCodeField';
-import { mapState } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
+import { RouteDef } from '@/constants';
+import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 
 export default {
   components: {
@@ -54,13 +56,13 @@ export default {
       type: String,
       default: '',
     },
-    emailAddress: {
-      type: String,
-      default: '',
-    },
     autoFocus: {
       default: true,
       type: Boolean,
+    },
+    callbackPath: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -72,8 +74,17 @@ export default {
     ...mapState({
       validatingPIN: state => state.security.validatingPIN,
     }),
+    ...mapGetters({
+      selectedSecurityUser: 'getSelectedSecurityUser',
+    }),
+    getCallbackPath() {
+      return this.callbackPath || this.$router.currentRoute.path;
+    },
   },
   methods: {
+    ...mapMutations({
+      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+    }),
     setInvalid() {
       this.$refs.pinCodeField.setInvalid();
       this.shouldShake = true;
@@ -87,6 +98,12 @@ export default {
       setTimeout(() => {
         this.$refs.pinCodeField.focus(0);
       }, 300);
+    },
+    onForgotClicked() {
+      this.setDoneCallbackPath(this.getCallbackPath);
+      this.$router.push({
+        name: RouteDef.PinCodeForgot.name,
+      });
     },
   },
 };

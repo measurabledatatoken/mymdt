@@ -29,7 +29,8 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
 
 import { RouteDef } from '@/constants';
-import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
+import { SET_SELECTED_USER } from '@/store/modules/home';
+import { SET_SELECTED_SECURITY_USER } from '@/store/modules/security';
 
 export default {
   components: {
@@ -54,18 +55,26 @@ export default {
     }),
   },
   created() {
+    const emailAddress = this.$route.params.account_id;
+    this.setSelectedUser(emailAddress);
+    this.setSelectedSecurityUser(emailAddress);
     this.fetchApplications({
       userId: this.selectedUser.emailAddress,
     });
   },
   methods: {
     ...mapMutations({
-      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
+      setSelectedUser: SET_SELECTED_USER,
+      setSelectedSecurityUser: SET_SELECTED_SECURITY_USER,
     }),
     goToTransfer() {
       trackEvent('Click on transfer from account page');
-      this.setTransferFromAccount(this.selectedUser);
-      this.$router.push(RouteDef.TransferList.path);
+      this.$router.push({
+        name: RouteDef.TransferList.name,
+        params: {
+          account_id: this.selectedUser.emailAddress,
+        },
+      });
     },
     goToEarn() {
       trackEvent('Click on Earn MDT button from account page');

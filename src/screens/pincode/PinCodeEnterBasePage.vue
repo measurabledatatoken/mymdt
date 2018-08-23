@@ -27,8 +27,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import PinCodeField from '@/components/common/PinCodeField';
@@ -65,11 +63,6 @@ export default {
       isPinFilled: false,
       pincode: '',
     };
-  },
-  computed: {
-    ...mapGetters({
-      getSelectedSecurityUser: 'getSelectedSecurityUser',
-    }),
   },
   methods: {
     onFilled(pincode) {

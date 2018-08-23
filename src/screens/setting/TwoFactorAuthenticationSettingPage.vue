@@ -65,10 +65,8 @@
       ref="pinCodeInputPopup"
       :md-active.sync="showPinCodeInput"
       :title="$t('message.passcode.pin_popup_title')"
-      :email-address="selectedSecurityUser.emailAddress"
       @codefilled="onPinCodeFilled"
       @close-click="showPinCodeInput = false"
-      @fotgot-click="onFotgotClicked"
     />
 
     <!-- confirm to turn off 2fa popup -->
@@ -92,7 +90,7 @@ import {
   REQUEST_VERIFICATION_CODE,
   SET_2FA_OPTION,
   SET_DONE_CALLBACK_PATH,
-  VALIDATE_PIN_FOR_SECURITY,
+  VALIDATE_PIN,
 } from '@/store/modules/security';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
@@ -161,7 +159,7 @@ export default {
       enable2FA: ENABLE_2FA,
       set2FAOption: SET_2FA_OPTION,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
-      validatePIN: VALIDATE_PIN_FOR_SECURITY,
+      validatePIN: VALIDATE_PIN,
       backToPath: BACK_TO_PATH,
     }),
     ...mapMutations({
@@ -195,15 +193,10 @@ export default {
         this.set2FAOption({ method: this.method, usage: usage });
       }
     },
-    onFotgotClicked() {
-      this.$router.push({
-        name: RouteDef.PinCodeForgot.name,
-      });
-    },
     async onPinCodeFilled(pinCode) {
       try {
         await this.validatePIN(pinCode);
-        this.setDoneCallbackPath(RouteDef.TwoFactorAuthenticationSetting.path);
+        this.setDoneCallbackPath(this.$router.currentRoute.path);
         if (this.method === TwoFactorOption.METHOD.GOOGLE) {
           this.goToGoogleAuthVerify();
         } else {
