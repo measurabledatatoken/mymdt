@@ -74,6 +74,9 @@ router.replace({
 
 router.onReady(() => {
   app.$mount('#app');
+  if (window.Cypress) {
+    window.app = app;
+  }
 });
 
 let loadingTimeoutId = null;

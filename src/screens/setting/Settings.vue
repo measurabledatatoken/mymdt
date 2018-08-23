@@ -28,6 +28,7 @@
       <base-setting-list-item 
         :title="$t('message.settings.reportProblem')" 
         :show-action="false" 
+        data-cy="report-problem"
         @click="onReportProblemClick"
       />
       <md-divider />
