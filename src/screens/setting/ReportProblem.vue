@@ -13,6 +13,7 @@
         <md-input
           :placeholder="$t('message.reportProblem.optional')"
           :value="$v.email.$model"
+          data-cy="email"
           @input="handleEmailInput"
           @change="$v.email.$touch"
         />
@@ -26,6 +27,7 @@
           :md-counter="500"
           :maxlength="500"
           v-model="$v.comments.$model"
+          data-cy="problem"
           md-autogrow
         />
       </BaseField>
