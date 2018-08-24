@@ -1,13 +1,12 @@
 import createAPIResponse from '../utils/createAPIResponse';
 
-describe('Setup Google Authenticator', () => {
+describe('Report Problem', () => {
   beforeEach(() => {
     cy.stubUserListingAndDetail('user/index');
     cy.stubPinVerify();
     cy.login();
   });
 
-  //   const getStore = () => cy.window().its('applicationCache');
   it('can report problem', () => {
     const email = 'xxx@xxx.com';
     const comment = 'Houston, we have a problem';
