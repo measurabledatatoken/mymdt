@@ -9,7 +9,12 @@
       </div>
       <div class="welcome-form__content">
         <p 
-          v-if="isOSSupported" 
+          v-if="inMaintenance"
+          data-cy="maintenance-message" 
+          v-html="$t('message.maintenance.description')"
+        />
+        <p 
+          v-else-if="isOSSupported" 
           v-html="$t('message.welcome.description')"
         />
         <p 
@@ -18,7 +23,7 @@
         />
       </div>
       <div 
-        v-if="isOSSupported" 
+        v-if="isAvailable" 
         class="welcome-form__footer"
       >
         <Checkbox 
@@ -60,7 +65,7 @@ import NDA from '@/components/betaTesting/NDA';
 import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 import { RouteDef } from '@/constants';
-import { SET_NDA_AGREEMENT } from '@/store/modules/home';
+import { SET_NDA_AGREEMENT, REQUEST_APP_CONFIG } from '@/store/modules/home';
 
 const checked = value => !helpers.req(value) || value === true;
 
@@ -86,7 +91,11 @@ export default {
   computed: {
     ...mapState({
       ndaAgreement: state => state.home.ndaAgreement,
+      appConfig: state => state.home.appConfig,
     }),
+    isAvailable() {
+      return this.isOSSupported && !this.inMaintenance;
+    },
     isOSSupported() {
       // return false;
       var ua = navigator.userAgent;
@@ -102,10 +111,16 @@ export default {
         return true;
       }
     },
+    isAdmin() {
+      return this.$route.query.isadmin;
+    },
+    inMaintenance() {
+      return !this.appConfig || this.appConfig.server_status !== 'active';
+    },
   },
-  created() {
-    const isAdmin = this.$route.query.isadmin;
-    if ((isAdmin || this.ndaAgreement) && this.isOSSupported) {
+  async created() {
+    await this.requestAppConfig();
+    if ((this.isAvailable && this.ndaAgreement) || this.isAdmin) {
       this.goToHome();
     } else {
       this.showScreen = true;
@@ -118,6 +133,7 @@ export default {
     }),
     ...mapActions({
       openErrorPrompt: OPEN_ERROR_PROMPT,
+      requestAppConfig: REQUEST_APP_CONFIG,
     }),
     goToHome() {
       this.$router.replace({

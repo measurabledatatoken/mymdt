@@ -24,7 +24,7 @@ describe('Setup Phone', () => {
     cy.route(
       'POST',
       '/api/security/phonenumber/change',
-      createAPIResponse([]),
+      createAPIResponse(),
     ).as('changePhoneNumber');
     cy.stubUserListingAndDetail('user/passcodeSet', null, {
       is_phone_confirmed: true,
