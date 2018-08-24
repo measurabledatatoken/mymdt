@@ -12,7 +12,7 @@ describe('Setup Google Authenticator', () => {
     const email = 'xxx@xxx.com';
     const comment = 'Houston, we have a problem';
     const getVuex = () => cy.window({ log: false }).its('app.$store');
-    cy.route('POST', '/api/user/apps/*/problems', createAPIResponse([]));
+    cy.route('POST', '/api/user/apps/*/problems', createAPIResponse());
     cy.goToSettingPage();
     cy.getCurrentContentRouterView()
       .find('[data-cy="report-problem"]')

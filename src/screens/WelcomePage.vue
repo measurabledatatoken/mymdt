@@ -81,7 +81,6 @@ export default {
       agree: false,
       showScreen: false,
       showNDA: false,
-      inMaintenance: false,
     };
   },
   validations: {
@@ -95,7 +94,7 @@ export default {
       appConfig: state => state.home.appConfig,
     }),
     isAvailable() {
-      return this.isAdmin || (this.isOSSupported && !this.inMaintenance);
+      return this.isOSSupported && !this.inMaintenance;
     },
     isOSSupported() {
       // return false;
@@ -115,10 +114,12 @@ export default {
     isAdmin() {
       return this.$route.query.isadmin;
     },
+    inMaintenance() {
+      return this.appConfig && this.appConfig.server_status !== 'active';
+    },
   },
   async created() {
     await this.requestAppConfig();
-    this.inMaintenance = this.appConfig.server_status !== 'active';
     if ((this.isAvailable && this.ndaAgreement) || this.isAdmin) {
       this.goToHome();
     } else {
