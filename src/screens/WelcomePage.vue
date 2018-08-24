@@ -115,7 +115,7 @@ export default {
       return this.$route.query.isadmin;
     },
     inMaintenance() {
-      return this.appConfig && this.appConfig.server_status !== 'active';
+      return !this.appConfig || this.appConfig.server_status !== 'active';
     },
   },
   async created() {

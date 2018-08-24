@@ -2,7 +2,7 @@ import createAPIResponse from '../../utils/createAPIResponse';
 
 describe('Forgot PIN', () => {
   const forgotPIN = () => {
-    cy.route('POST', '/api/security/pin/reset', createAPIResponse([])).as(
+    cy.route('POST', '/api/security/pin/reset', createAPIResponse()).as(
       'resetPin',
     );
     cy.location('pathname').should('eq', '/home/settings/pincode/forgot');
