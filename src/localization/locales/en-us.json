@@ -322,5 +322,8 @@
     "continueSetupPopupTitle" : "Continue Setup?",
     "continueSetupPopupDescription": "You are halfway setting up your Google Authenticator. <br/><br/>Click “Continue” to continue setting up your Google Authenticator. You will be asked to input the 6-digit verfication code.<br/><br/>Click “Start Over” to discard current progress and you will be provided with a new key.",
     "setupSuccess" : "Google Authenticator\nSuccessfully Set! "
+  },
+  "maintenance" : {
+    "description" : "Maintenance in Progress"
   }
 }

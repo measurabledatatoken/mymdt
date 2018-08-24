@@ -11,7 +11,7 @@ describe('Setup Google Authenticator', () => {
     cy.route(
       'POST',
       '/api/security/google-auth/verify-secret',
-      createAPIResponse([]),
+      createAPIResponse(),
     ).as('verifySecret');
   });
 
@@ -59,7 +59,7 @@ describe('Setup Google Authenticator', () => {
     cy.route(
       'POST',
       '/api/security/google-auth/disable',
-      createAPIResponse([]),
+      createAPIResponse({}),
     ).as('disable2fa');
     cy.stubUserListingAndDetail('user/passcodeSet', null, {
       is_google_auth_enabled: true,
