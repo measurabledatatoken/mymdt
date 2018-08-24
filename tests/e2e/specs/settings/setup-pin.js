@@ -2,7 +2,7 @@ import createAPIResponse from '../../utils/createAPIResponse';
 
 describe('Setup PIN', () => {
   const setupPIN = (pin = '111111') => {
-    cy.route('POST', '/api/security/pin/setup', createAPIResponse([])).as(
+    cy.route('POST', '/api/security/pin/setup', createAPIResponse()).as(
       'setupPin',
     );
     cy.inputPINForSetup(pin);

@@ -238,10 +238,10 @@ Cypress.Commands.add('goToUserSettingPage', () => {
 Cypress.Commands.add(
   'addPhoneNumber',
   (phone = '61111111', countryCode = '852') => {
-    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse([])).as(
+    cy.route('POST', '/api/security/sms/requestotp', createAPIResponse()).as(
       'requestotp',
     );
-    cy.route('POST', '/api/security/phonenumber/add', createAPIResponse([]));
+    cy.route('POST', '/api/security/phonenumber/add', createAPIResponse());
     cy.location('pathname').should('oneOf', [
       '/home/settings/phone/add',
       '/home/settings/phone/change',
