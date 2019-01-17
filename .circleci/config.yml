@@ -114,7 +114,7 @@ jobs:
       - run:
           name: Deploy to staging server
           command: |
-            ssh -o "StrictHostKeyChecking no" mailtime@staging.mdt.app "cd mdtwallet-webapp && git fetch --all && git checkout --force $CIRCLE_SHA1 && make build-staging && make run-staging"
+            ssh -o "StrictHostKeyChecking no" mailtime@mymdt-alpha.measurable.ai "cd mdtwallet-webapp && git fetch --all && git checkout --force $CIRCLE_SHA1 && make build-staging && make run-staging"
 
 workflows:
   version: 2

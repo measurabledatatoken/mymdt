@@ -16,7 +16,7 @@ WORKDIR /app
 COPY . .
 
 # Build the vue app in production mode
-RUN API_SCHEME=https API_ENDPOINT=staging.mdt.app/api npm run build
+RUN API_SCHEME=https API_ENDPOINT=mymdt-alpha.measurable.ai/api npm run build
 
 FROM nginx:stable-alpine
 
