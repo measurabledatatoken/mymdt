@@ -1,20 +1,23 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
-  'extends': [
-    'plugin:vue/recommended',
-    '@vue/prettier'
-  ],
+  extends: ['plugin:vue/recommended', '@vue/prettier'],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console':
+      process.env.NODE_ENV === 'production'
+        ? ['error', { allow: ['warn', 'error'] }]
+        : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/html-closing-bracket-newline': ["error", {
-      "multiline": "always"
-    }]
+    'vue/html-closing-bracket-newline': [
+      'error',
+      {
+        multiline: 'always',
+      },
+    ],
   },
   parserOptions: {
-    parser: 'babel-eslint'
-  }
-}
+    parser: 'babel-eslint',
+  },
+};
