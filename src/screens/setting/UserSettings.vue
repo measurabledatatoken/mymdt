@@ -4,69 +4,65 @@
       <template slot="unpaded-content">
         <md-list>
           <setting-list-section-header>{{ $t('message.settings.accountSecurity') }}</setting-list-section-header>
-          <md-divider />
-          <base-setting-list-item 
+          <md-divider/>
+          <base-setting-list-item
             :title="$t('message.passcode.pin_setup_title')"
-            data-cy="setting-setup-pin" 
+            data-cy="setting-setup-pin"
             @click="onSetupPINClicked"
           >
-            <template 
+            <template
               v-if="!selectedSecurityUser.isPasscodeSet"
               slot="action-data"
-            >
-              {{ $t('message.settings.setUpNow') }}
-            </template>
+            >{{ $t('message.settings.setUpNow') }}</template>
             <template 
-              v-if="selectedSecurityUser.isPasscodeSet"
+              v-if="selectedSecurityUser.isPasscodeSet" 
               slot="action-data"
             >
               <md-icon 
-                data-cy="icon-complete"
+                data-cy="icon-complete" 
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
           </base-setting-list-item>
-          <md-divider />
-          <base-setting-list-item 
+          <md-divider/>
+          <base-setting-list-item
             :title="$t('message.settings.phoneNumber')"
             :disabled="!selectedSecurityUser.isPasscodeSet"
-            data-cy="setting-setup-phone" 
+            data-cy="setting-setup-phone"
             @click="onSetupPhoneNumberClicked"
           >
-            <template 
+            <template
               v-if="showPhoneNumberSetup"
               slot="action-data"
-            >
-              {{ $t('message.settings.setUpNow') }}
-            </template>
+            >{{ $t('message.settings.setUpNow') }}</template>
             <template 
-              v-if="selectedSecurityUser.isPhoneConfirmed"
+              v-if="selectedSecurityUser.isPhoneConfirmed" 
               slot="action-data"
             >
               <md-icon 
-                data-cy="icon-complete"
+                data-cy="icon-complete" 
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
           </base-setting-list-item>
-          <md-divider />
-          <md-divider />
-          <base-setting-list-item 
+          <md-divider/>
+          <md-divider/>
+          <base-setting-list-item
             :title="$t('message.googleAuth.setupTitle')"
             :disabled="!(selectedSecurityUser.isPasscodeSet)"
-            data-cy="setting-setup-google-auth" 
+            data-cy="setting-setup-google-auth"
             @click="onGoogleAuthClicked"
           >
             <template 
-              v-if="selectedSecurityUser.isGoogleAuthEnabled"
+              v-if="selectedSecurityUser.isGoogleAuthEnabled" 
               slot="action-data"
             >
               <md-icon 
-                data-cy="icon-complete"
+                data-cy="icon-complete" 
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
-            <template 
+            <template
               v-if="!selectedSecurityUser.isGoogleAuthEnabled && selectedSecurityUser.hasGoogleAuthSecret"
               slot="action-data"
             >
@@ -76,36 +72,36 @@
               />
             </template>
           </base-setting-list-item>
-          <md-divider />
-          <md-divider />
-          <base-setting-list-item 
+          <md-divider/>
+          <md-divider/>
+          <base-setting-list-item
             :title="$t('message.twoFactorAuthentication.setupTitle')"
             :disabled="!allowTwoFactorSetup"
-            data-cy="setting-setup-2fa" 
+            data-cy="setting-setup-2fa"
             @click="onTwoFactorClicked"
           >
             <template 
-              v-if="selectedSecurityUser.isTwofaEnabled"
+              v-if="selectedSecurityUser.isTwofaEnabled" 
               slot="action-data"
             >
               <md-icon 
-                data-cy="icon-complete"
+                data-cy="icon-complete" 
                 md-src="/static/icons/settings-account-3.svg"
               />
             </template>
           </base-setting-list-item>
-          <md-divider />
-          <md-divider />
-          <base-setting-list-item 
+          <md-divider/>
+          <md-divider/>
+          <base-setting-list-item
             :title="$t('message.passcode.forgot_pin')"
             :disabled="!selectedSecurityUser.isPasscodeSet"
             data-cy="forgot-pin"
             @click="onPasscodeForgotClicked"
           />
-          <md-divider />
+          <md-divider/>
         </md-list>
 
-        <MDTConfirmPopup 
+        <MDTConfirmPopup
           :md-active.sync="showAlreadySetPinDialog"
           :md-title="$t('message.passcode.already_setup_title')"
           :md-content="$t('message.passcode.already_setup_content')"
@@ -115,7 +111,7 @@
           @md-confirm="onConfirmChangePIN"
         />
 
-        <MDTConfirmPopup 
+        <MDTConfirmPopup
           :md-active.sync="showAlreadySetPhoneDialog"
           :md-title="$t('message.phone.already_setup_title')"
           :md-content="$t('message.phone.already_setup_content')"
@@ -125,9 +121,8 @@
           @md-confirm="onConfirmChangePhoneNumber"
         />
 
-
         <!-- will show when the action required to setup pin first -->
-        <MDTConfirmPopup 
+        <MDTConfirmPopup
           :md-active.sync="showSetPinDialog"
           :md-title="$t('message.passcode.please_setup_pin_title')"
           :md-content="pinSetupPopupDescription"
@@ -138,7 +133,7 @@
         />
 
         <!-- input Pin popup -->
-        <PinCodeInputPopup 
+        <PinCodeInputPopup
           ref="pinCodeInputPopup"
           :md-active.sync="showPinCodeInput"
           :title="pinCodePopupTitle"
@@ -146,9 +141,8 @@
           @close-click="showPinCodeInput = false"
         />
 
-
         <!-- disable Google authenticator popup -->
-        <MDTConfirmPopup 
+        <MDTConfirmPopup
           :md-active.sync="showDisableGoogleAuthPopup"
           :md-title="$t('message.googleAuth.disablePopupTitle')"
           :md-content="disableGoogleAuthPopupDescription"
@@ -159,7 +153,7 @@
         />
 
         <!-- Continue to setup Google authenticator popup, show if the google auth secret exists -->
-        <MDTConfirmPopup 
+        <MDTConfirmPopup
           :md-active.sync="showContinueGoogleAuthPopup"
           :md-title="$t('message.googleAuth.continueSetupPopupTitle')"
           :md-content="$t('message.googleAuth.continueSetupPopupDescription')"
@@ -171,9 +165,7 @@
         />
       </template>
     </BaseUserSettingPage>
-
   </div>
-
 </template>
 
 <script>
@@ -322,7 +314,7 @@ export default {
               },
             });
           } catch (error) {
-            console.log(
+            console.error(
               `error in requesting verification code: ${error.message}`,
             );
           }
