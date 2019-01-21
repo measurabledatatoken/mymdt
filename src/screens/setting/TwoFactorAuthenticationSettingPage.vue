@@ -203,7 +203,7 @@ export default {
           this.goToSMSVerify();
         }
       } catch (error) {
-        console.log(`error in validating: ${error.message}`);
+        console.error(`error in validating: ${error.message}`);
         this.$refs.pinCodeInputPopup.setInvalid();
       }
     },
@@ -216,7 +216,9 @@ export default {
           name: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.name,
         });
       } catch (error) {
-        console.log(`error in requesting verification code: ${error.message}`);
+        console.error(
+          `error in requesting verification code: ${error.message}`,
+        );
       }
     },
     goToGoogleAuthVerify() {

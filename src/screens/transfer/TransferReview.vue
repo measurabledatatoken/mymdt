@@ -178,7 +178,9 @@ export default {
           },
         });
       } catch (error) {
-        console.log(`error in requesting verification code: ${error.message}`);
+        console.error(
+          `error in requesting verification code: ${error.message}`,
+        );
       }
     },
     start2FAVerify(pinCode) {
@@ -204,7 +206,9 @@ export default {
           name: RouteDef.TransferSuccess.name,
         });
       } catch (error) {
-        console.log(`error in requesting verification code: ${error.message}`);
+        console.error(
+          `error in requesting verification code: ${error.message}`,
+        );
       }
     },
     transferMDT() {
@@ -235,7 +239,7 @@ export default {
           this.requestToStartTransfer({ pin: pinCode });
         }
       } catch (error) {
-        console.log(`error in onPinCodeFilled: ${error.message}`);
+        console.error(`error in onPinCodeFilled: ${error.message}`);
         trackEvent('Transfer Failure', {
           'Transfer Mode': this.TransferType,
         });

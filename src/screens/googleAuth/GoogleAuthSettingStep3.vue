@@ -57,7 +57,9 @@ export default {
         this.doneButtonLoading = false;
         this.showGoogleAuthSetupSuccessPopup = true;
       } catch (error) {
-        console.log(`error in verifying google auth secret: ${error.message}`);
+        console.error(
+          `error in verifying google auth secret: ${error.message}`,
+        );
         this.doneButtonLoading = false;
       }
     },

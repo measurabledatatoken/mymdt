@@ -47,7 +47,7 @@ export default {
           verificationCode,
         });
       } catch (error) {
-        console.log(`error in verifying 2FA otp: ${error.message}`);
+        console.error(`error in verifying 2FA otp: ${error.message}`);
         this.setIsLoading(false);
         return;
       }
@@ -59,7 +59,7 @@ export default {
         this.setIsLoading(false);
         this.backToPath(this.doneCallBackPath);
       } catch (error) {
-        console.log(`error in disabling 2FA: ${error.message}`);
+        console.error(`error in disabling 2FA: ${error.message}`);
         this.setIsLoading(false);
       }
     },

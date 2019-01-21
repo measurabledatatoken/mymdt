@@ -51,7 +51,7 @@ export default {
           verificationCode: verificationCode,
         });
       } catch (error) {
-        console.log(`error in verify google auth otp: ${error.message}`);
+        console.error(`error in verify google auth otp: ${error.message}`);
         this.doneButtonLoading = false;
         return;
       }
@@ -65,7 +65,7 @@ export default {
           name: RouteDef.TransferSuccess.name,
         });
       } catch (error) {
-        console.log(`error in starting transfer: ${error.message}`);
+        console.error(`error in starting transfer: ${error.message}`);
       }
     },
   },

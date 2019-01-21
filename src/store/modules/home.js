@@ -116,7 +116,7 @@ const actions = {
         commit(SET_SELECTED_USER, normalizeduserAccountData.result[0]);
       }
     } catch (error) {
-      console.log(`Error in REQUEST_USER_ACCOUNTS${error}`);
+      console.error(`error in REQUEST_USER_ACCOUNTS${error}`);
     }
   },
 };

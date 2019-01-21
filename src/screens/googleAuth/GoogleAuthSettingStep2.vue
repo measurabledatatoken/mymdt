@@ -110,7 +110,7 @@ export default {
       const response = await this.generateSecret({ pin: this.pin });
       this.googleAuthSecret = response.secret;
     } catch (error) {
-      console.log(`error in generating google auth secret: ${error.message}`);
+      console.error(`error in generating google auth secret: ${error.message}`);
     }
   },
   methods: {
