@@ -222,7 +222,7 @@ export default {
         await this.validatePIN(pin);
         this.showPinCodeInput = false;
       } catch (err) {
-        console.log(`error in validating: ${err.message}`);
+        console.error(`error in validating: ${err.message}`);
         this.$refs.pinCodeInputPopup.setInvalid();
         return;
       }
@@ -235,7 +235,7 @@ export default {
         this.setIsUserAcctionsDirty(true);
         this.backToPath(RouteDef.Home.path);
       } catch (err) {
-        console.log(`error in cancelTransaction: ${err.message}`);
+        console.error(`error in cancelTransaction: ${err.message}`);
       }
     },
   },

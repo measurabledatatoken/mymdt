@@ -291,7 +291,7 @@ export default {
         this.setPinForSecuirty(pinCode);
         this.showPinCodeInput = false;
       } catch (error) {
-        console.log(`error in validating: ${error.message}`);
+        console.error(`error in validating: ${error.message}`);
         this.$refs.pinCodeInputPopup.setInvalid();
         return;
       }

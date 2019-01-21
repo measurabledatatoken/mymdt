@@ -48,7 +48,7 @@ export default {
           verificationCode,
         });
       } catch (error) {
-        console.log(`error in verifying 2FA otp: ${error.message}`);
+        console.error(`error in verifying 2FA otp: ${error.message}`);
         return;
       }
       try {
@@ -60,7 +60,7 @@ export default {
           name: RouteDef.TransferSuccess.name,
         });
       } catch (error) {
-        console.log(`error in starting transfer: ${error.message}`);
+        console.error(`error in starting transfer: ${error.message}`);
       }
     },
   },

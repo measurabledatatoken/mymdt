@@ -1,6 +1,6 @@
 <template>
   <BaseGoogleAuthVerify 
-    :done-button-loading="doneButtonLoading"
+    :done-button-loading="doneButtonLoading" 
     @md-confirm="onDoneClicked"
   />
 </template>
@@ -48,7 +48,7 @@ export default {
         this.doneButtonLoading = false;
         this.backToPath(this.doneCallBackPath);
       } catch (error) {
-        console.log(`error in disabling google auth: ${error.message}`);
+        console.error(`error in disabling google auth: ${error.message}`);
         this.doneButtonLoading = false;
       }
     },

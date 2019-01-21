@@ -6,9 +6,11 @@
       placeholder="Email Address"
     >
     <button @click="confirmForgetPassword">Confirm</button>
-    <p>{{
-      errorMessage
-    }}</p>
+    <p>
+      {{
+        errorMessage
+      }}
+    </p>
   </div>
 </template>
 
@@ -47,10 +49,9 @@ export default {
     },
   },
   watch: {
-    emailChanged(newEmailAddress, oldEmailAddress) {
+    emailChanged() {
       // TODO: Do real time validation
       this.setForgetSuccess(null);
-      console.log(`watch emailAddress ${newEmailAddress} ${oldEmailAddress}`);
     },
   },
   methods: {

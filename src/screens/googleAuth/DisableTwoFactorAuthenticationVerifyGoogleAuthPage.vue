@@ -49,7 +49,7 @@ export default {
           verificationCode: verificationCode,
         });
       } catch (error) {
-        console.log(`error in verify google auth otp: ${error.message}`);
+        console.error(`error in verify google auth otp: ${error.message}`);
         this.doneButtonLoading = false;
         return;
       }
@@ -62,7 +62,7 @@ export default {
         this.doneButtonLoading = false;
         this.backToPath(this.doneCallBackPath);
       } catch (error) {
-        console.log(`error in disabling 2FA: ${error.message}`);
+        console.error(`error in disabling 2FA: ${error.message}`);
         this.doneButtonLoading = false;
       }
     },
