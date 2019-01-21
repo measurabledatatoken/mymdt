@@ -10,7 +10,6 @@ services:
     networks:
       - mdtwallet-api_api
     ports:
-      - '80:80'
       - '8443:443'
     volumes:
       - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
