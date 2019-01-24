@@ -138,7 +138,9 @@
       "loadingText": "加載中...",
       "doneText": "加載完成",
       "failText": "加載失敗"
-    }
+    },
+    "monthlyReward" : "每月獎勵",
+    "viewRewardDetail" : "查看獎勵詳情"
   },
   "settings": {
     "title": "設定",

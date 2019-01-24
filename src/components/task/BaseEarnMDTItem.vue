@@ -9,10 +9,26 @@
         class="base-earn-mdt-item__icon"
       />
       <div class="md-list-item-text">
-        <span 
+        <div
           v-if="title" 
           class="base-earn-mdt-item__info-title"
-        >{{ title }}</span>
+        >
+          <span>{{ title }}</span>
+          <template v-if="isMonthlyReward">
+            <md-icon 
+              class="base-earn-mdt-item__icon-details"
+              md-src="/static/icons/settings-incomplete.svg"
+            />
+            <router-link 
+              :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: userId }}" 
+              class="base-earn-mdt-item__info-details"
+            >Details</router-link>
+          </template>
+        </div> 
+        <span 
+          v-if="isMonthlyReward" 
+          class="base-earn-mdt-item__info-description"
+        >{{ reward.description }}</span>
         <TaskStepList
           v-if="task.max_completion > 1 && task.max_completion <= 5"
           :task="task"
@@ -28,6 +44,8 @@
 </template>
 
 <script>
+import { RouteDef } from '@/constants';
+
 import TaskStepList from '@/components/task/TaskStepList';
 
 export default {
@@ -53,6 +71,26 @@ export default {
         return {};
       },
     },
+    reward: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    userId: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      RouteDef,
+    };
+  },
+  computed: {
+    isMonthlyReward() {
+      return Array.isArray(this.reward.data_point);
+    },
   },
 };
 </script>
@@ -77,19 +115,32 @@ export default {
       min-width: 0;
       margin-right: 0.625rem;
     }
+    .base-earn-mdt-item__icon-details {
+      margin-left: 0.5rem;
+      margin-right: 0.25rem;
+    }
+    .base-earn-mdt-item__info-details {
+      color: $secondary-text-color;
+      font-weight: normal;
+    }
 
     /deep/ .md-list-item-text {
       * {
         line-height: 1.25rem;
       }
-    }
-
-    .base-earn-mdt-item__info-title {
-      font-weight: bold;
+      .base-earn-mdt-item__info-title {
+        font-weight: bold;
+        * {
+          width: auto;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
     }
 
     .base-earn-mdt-item__info-description {
       color: $secondary-text-color;
+      white-space: normal;
     }
   }
 }
