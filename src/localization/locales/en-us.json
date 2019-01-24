@@ -138,7 +138,9 @@
       "loadingText": "Loading...",
       "doneText": "Load completed",
       "failText": "Load failed"
-    }
+    },
+    "monthlyReward" : "Monthly Reward",
+    "viewRewardDetail" : "View Reward Detail"
   },
   "settings": {
     "title": "Settings",

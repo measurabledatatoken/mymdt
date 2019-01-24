@@ -22,8 +22,89 @@ const state = {
 
 const moduleGetters = {
   getReward: state => id => state.byId[id],
-  getRewards: (state, getters) => (ids = []) =>
-    ids.map(id => getters.getReward(id)),
+  getRewards: (state, getters) => (ids = []) => {
+    return ids.map(id => getters.getReward(id)).concat([
+      {
+        id: 'testing-id',
+        name: 'Monthly MDT Reward',
+        description:
+          'Rewards from anonymous data sharing. Maximum 500.00 MDT. Expires 02/11/2019 ',
+        currency: 'MDT',
+        value: 5,
+        claimed: true,
+        expiry_time: '2020-08-16T04:17:21.717621Z',
+        status: 1,
+        startDate: '2018-08-16T04:17:21.717621Z',
+        endDate: '2019-08-16T04:17:21.717621Z',
+        data_point: [
+          {
+            label: 'In App Purcahse Receipt',
+            value: 12.0,
+          },
+          {
+            label: 'Category X',
+            value: 3.0,
+          },
+          {
+            label: 'Category Y',
+            value: 9.0,
+          },
+          {
+            label: 'Category Z',
+            value: 3.0,
+          },
+          {
+            label: 'Category A',
+            value: 49.0,
+          },
+          {
+            label: 'Category B',
+            value: 32.0,
+          },
+        ],
+      },
+      {
+        id: 'testing-id-2',
+        name: 'Monthly MDT Reward',
+        description:
+          'Rewards from anonymous data sharing. Maximum 500.00 MDT. Expires 02/11/2019 ',
+        currency: 'MDT',
+        value: 5,
+        claimed: true,
+        expiry_time: '2019-08-16T04:17:21.717621Z',
+        status: 4,
+        startDate: '2016-08-16T04:17:21.717621Z',
+        endDate: '2017-08-16T04:17:21.717621Z',
+        data_point: [
+          {
+            label: 'In App Purcahse Receipt',
+            value: 132.0,
+          },
+          {
+            label: 'Category X',
+            value: 32.0,
+          },
+          {
+            label: 'Category Y',
+            value: 91.0,
+          },
+          {
+            label: 'Category Z',
+            value: 13.0,
+          },
+        ],
+      },
+    ]);
+  },
+  getRewardsWithDataPoints: (state, getters) => (ids = []) =>
+    getters
+      .getRewards(ids)
+      .filter(
+        reward =>
+          reward &&
+          Array.isArray(reward.data_point) &&
+          reward.data_point.length > 0,
+      ),
   getRewardsOfAllUsers: state => state.allIds.map(id => state.byId[id]),
 };
 

@@ -15,31 +15,44 @@
         :description="$d(new Date(transaction.transaction_time), 'long')"
       />
       <!-- <TransactionDetailItem v-if="!!transaction.detail" :title="$t('message.transaction.detail')" :description="transaction.detail" /> -->
-      <TransactionDetailItem 
-        v-if="!!from" 
-        :title="$t('message.transaction.from')" 
-        :description="from"
-      />
-      <TransactionDetailItem 
-        v-if="!!to" 
-        :title="$t('message.transaction.to')" 
-        :description="to"
-      />
-      <TransactionDetailItem 
-        v-if="!!transaction.note" 
-        :title="$t('message.transaction.note')" 
-        :description="transaction.note"
-      />
-      <TransactionDetailItem
-        v-if="typeof transaction.transaction_fee === 'number'"
-        :title="$t('message.transaction.transactionFee')"
-        :description="`${formatAmount(transaction.transaction_fee, { type: 'long' })} MDT`"
-        :single-line="true"
-      />
+      <template v-if="transaction.transaction_type === transactionType.MONTHLY_REWARD || true">
+        <TransactionDetailItem  
+          :title="$t('message.transaction.detail')" 
+        >
+          <template
+            slot="description"
+          > 
+            <router-link :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: selectedUser.emailAddress }}">{{ $t('message.transaction.viewRewardDetail') }}</router-link> 
+          </template>
+        </TransactionDetailItem>
+      </template>
+      <template v-else>
+        <TransactionDetailItem 
+          v-if="!!from" 
+          :title="$t('message.transaction.from')" 
+          :description="from"
+        />
+        <TransactionDetailItem 
+          v-if="!!to" 
+          :title="$t('message.transaction.to')" 
+          :description="to"
+        />
+        <TransactionDetailItem 
+          v-if="!!transaction.note" 
+          :title="$t('message.transaction.note')" 
+          :description="transaction.note"
+        />
+        <TransactionDetailItem
+          v-if="typeof transaction.transaction_fee === 'number'"
+          :title="$t('message.transaction.transactionFee')"
+          :description="`${formatAmount(transaction.transaction_fee, { type: 'short' })} MDT`"
+          :single-line="true"
+        />
+      </template>
       <TransactionDetailItem
         v-if="typeof transaction.account_balance === 'number'"
         :title="$t('message.transaction.accountBalance')"
-        :description="`${formatAmount(transaction.account_balance, { type: 'long' })} MDT`"
+        :description="`${formatAmount(transaction.account_balance, { type: 'short' })} MDT`"
         :single-line="true"
       />
       <TransactionDetailItem
@@ -137,6 +150,7 @@ export default {
   },
   data() {
     return {
+      RouteDef,
       transactionType,
       transactionStatus,
       showPinCodeInput: false,
