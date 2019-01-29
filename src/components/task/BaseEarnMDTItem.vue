@@ -20,7 +20,7 @@
               md-src="/static/icons/settings-incomplete.svg"
             />
             <router-link 
-              :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: userId }}" 
+              :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: userId, rewardId: reward.id }}" 
               class="base-earn-mdt-item__info-details"
             >Details</router-link>
           </template>

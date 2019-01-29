@@ -22,7 +22,7 @@
           <template
             slot="description"
           > 
-            <router-link :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: selectedUser.emailAddress }}">{{ $t('message.transaction.viewRewardDetail') }}</router-link> 
+            <router-link :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: selectedUser.emailAddress, rewardId: transaction.rewardId}}">{{ $t('message.transaction.viewRewardDetail') }}</router-link> 
           </template>
         </TransactionDetailItem>
       </template>
