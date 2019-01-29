@@ -4,58 +4,98 @@
       :user="selectedUser" 
       :small="true"
     /> 
-    <div class="title-time label-bolded">Time</div>
-    <md-list md-expand-single="true">
-      <md-list-item 
-        v-for="reward in getRewardsWithDataPoints(selectedUser.rewards).filter(reward => reward)"
-        :key="reward.id" 
-        :md-expanded.sync="activeReward[reward.id]"
-        md-expand 
+    <padded-container>
+      <div class="label-time label-bolded">Time</div>
+      <md-menu 
+        :md-offset-y="-44"  
+        class="reward-selector"
+        md-size="auto" 
+        md-full-width 
+        md-close-on-select 
+        md-align-trigger 
       >
-        <span class="md-list-item-text">{{ formateDate(reward.startDate) }} - {{ formateDate(reward.endDate) }}</span>
-        <md-list slot="md-expand">
-          <md-list-item> 
-            <div class="md-body-1 description">
-              Because you opted in for anonymous data sharing through MyMDT, you will get rewards on a monthly basis. See below for your reward details. 
-            </div>
-          </md-list-item>
-          <md-list-item>
-            <div class="chart-container">
-              <v-chart 
-                v-if="activeReward[reward.id]"
-                :options="createChartOption(reward.data_point)"
-                autoresize
-              />
-            </div>
-          </md-list-item>
-          <md-list-item
-            v-for="(category, index) in reward.data_point"
-            :key="category.label"
-            class="legend"
+        <md-button 
+          :md-ripple="false" 
+          :class="{ 'open': isMenuOpened }" 
+          md-menu-trigger
+        >
+          <div 
+            :class="{ 'open': isMenuOpened }" 
+            class="reward-info"
           >
-            <span 
-              :style="`background-color: ${COLORS[index]}`"  
-              class="color-box"
-            />
-            <span class="label-bolded">{{ category.label }}</span>
-            <span class="amount">{{ `${formatAmount(category.value)} MDT` }} </span> 
-          </md-list-item>
-          <md-divider/>
-          <md-list-item>
-            <span class="label-bolded">
-              Total
-            </span> 
-            <span class="amount"><span class="amount-total">{{ `${formatAmount(reward.value)}` }}</span> MDT</span> 
-          </md-list-item>
-          <md-list-item>
-            <div class="remark">Reward expires on {{ formateDate(reward.expiry_time) }}. </div>
-          </md-list-item>
-          <md-list-item>
-            <div class="remark">Terms and conditions apply.</div>
-          </md-list-item>
-        </md-list>
-      </md-list-item>
-    </md-list>
+            <div 
+              v-if="getSelectedReward" 
+              class="reward-date"
+            >
+              {{ formateDate(getSelectedReward.startDate) }} - {{ formateDate(getSelectedReward.endDate) }}
+            </div>
+          </div>
+          <md-icon 
+            v-show="!isMenuOpened" 
+            md-src="/static/icons/keyboard_arrow_down.svg"
+          />
+          <md-icon 
+            v-show="isMenuOpened" 
+            md-src="/static/icons/keyboard_arrow_up.svg"
+          />
+        </md-button>
+
+        <md-menu-content :class="{ 'reward-selector-menu-content--selected': getSelectedReward }">
+          <SelectorMenuItem
+            v-if="getSelectedReward"
+            :primary-text="`${formateDate(getSelectedReward.startDate)} - ${formateDate(getSelectedReward.endDate)}`"
+            :is-drawer-top-item="true"
+          /> 
+          <SelectorMenuItem
+            v-for="reward in rewards"
+            :key="reward.id" 
+            :selected="reward.id === getSelectedReward.id"
+            :primary-text="`${formateDate(reward.startDate)} - ${formateDate(reward.endDate)}`"
+            @click="selectReward(reward)"
+          />
+        </md-menu-content>
+      </md-menu>
+      <div 
+        v-if="getSelectedReward" 
+        class="reward-detail"
+      >
+        <div class="description">
+          Because you opted in for anonymous data sharing through MyMDT, you will get rewards on a monthly basis. See below for your reward details. 
+        </div>
+        <div class="chart-container">
+          <v-chart 
+            v-if="getSelectedReward" 
+            :options="createChartOption(getSelectedReward.data_point)"
+            autoresize
+          />
+        </div>
+        <div
+          v-for="(category, index) in getSelectedReward.data_point"
+          :key="category.label"
+          class="row legend"
+        > 
+          <span  
+            :style="`background-color: ${COLORS[index]}`"  
+            class="color-box"
+          />
+          <span class="label-bolded">{{ category.label }}</span>
+          <span class="amount">{{ `${formatAmount(category.value)} MDT` }} </span> 
+        </div>
+        <md-divider />
+        <div class="row row-total">
+          <span class="label-bolded">
+            Total
+          </span> 
+          <span class="amount"><span class="amount-total">{{ `${formatAmount(getSelectedReward.value)}` }}</span> MDT</span> 
+        </div>
+        <div>
+          <div class="remark">Reward expires on {{ formateDate(getSelectedReward.expiry_time) }}. </div>
+        </div>
+        <div>
+          <div class="remark">Terms and conditions apply.</div>
+        </div>
+      </div>
+    </padded-container>
 </div></template>
 
 <script>
@@ -68,6 +108,8 @@ import BasePage from '@/screens/BasePage';
 import UserInfoCard from '@/components/common/UserInfoCard';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
+import SelectorMenuItem from '@/components/common/SelectorMenuItem';
+
 import { formatAmount } from '@/utils';
 import { FETCH_REWARDS } from '@/store/modules/entities/rewards';
 
@@ -83,6 +125,7 @@ const COLORS = [
 export default {
   components: {
     UserInfoCard,
+    SelectorMenuItem,
     PaddedContainer,
     MDTSecondaryButton,
     'v-chart': ECharts,
@@ -96,7 +139,8 @@ export default {
   data() {
     return {
       COLORS,
-      activeReward: {},
+      selectedReward: null,
+      isMenuOpened: false,
     };
   },
   computed: {
@@ -108,6 +152,9 @@ export default {
       return this.getRewardsWithDataPoints(this.selectedUser.rewards).filter(
         reward => reward,
       );
+    },
+    getSelectedReward() {
+      return this.selectedReward || this.rewards[0];
     },
   },
   created() {
@@ -123,6 +170,9 @@ export default {
     formatAmount,
     formateDate(dateString) {
       return this.$i18n.d(new Date(dateString), 'long', 'numeric');
+    },
+    selectReward(reward) {
+      this.selectedReward = reward;
     },
     createChartOption(dataPoints) {
       return {
@@ -151,69 +201,157 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bolded {
+$selectedRewardDateColor: $theme-color;
+$menuItemCellHeight: 44px;
+
+.md-divider {
+  margin: 0;
+}
+
+.label-bolded {
   font-weight: bold;
 }
-.title-time {
+
+.label-time {
   text-align: left;
-  margin: 16px 0 0 16px;
+  margin-top: 16px;
 }
-.padded-container {
+
+.md-menu {
   width: 100%;
-}
-.description {
-  color: $secondary-text-color;
-  white-space: normal;
-}
-.remark {
-  color: $secondary-text-color;
-}
-.chart-container {
-  display: inline-block;
-  position: relative;
-  margin: 24px auto;
-  min-width: calc(40vw + 4em);
-  width: 100%;
-  .echarts {
+
+  .md-button {
     width: 100%;
-    min-width: 0;
-    height: 75vw;
+    height: $menuItemCellHeight;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0s;
+
+    /deep/ .md-button-content {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: padding 50ms;
+    }
+
+    /deep/ .md-ripple {
+      padding: 0px;
+    }
+
+    .md-icon {
+      height: 26px;
+
+      &.other {
+        margin-top: 9px;
+      }
+
+      /deep/ svg {
+        fill: $selectedRewardDateColor;
+      }
+    }
+  }
+
+  .md-button:not([disabled]).md-focused:before,
+  .md-button:not([disabled]):active:before,
+  .md-button:not([disabled]):hover:before {
+    background-color: white;
+    opacity: 1;
   }
 }
-.color-box {
-  width: 12px;
-  height: 12px;
-  margin-right: 4px;
-}
-.amount {
-  flex-grow: 1;
-  text-align: right;
-  .amount-total {
-    font-size: 28px;
+
+.reward-info {
+  flex: 1;
+  word-break: break-all;
+  white-space: normal;
+  .reward-date {
+    text-align: left;
+    color: $selectedRewardDateColor;
+    text-transform: none;
+    font-size: 16px;
   }
 }
-.md-list {
-  /deep/ .md-list-item {
-    .md-list-item-expand.md-active {
-      border: none;
+
+.md-menu-content {
+  border-radius: 0px 0px 4px 4px !important;
+  background-color: $theme-listing-bgcolor;
+  max-height: 38vh;
+  width: 100%;
+  left: 0;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 0px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  -webkit-overflow-scrolling: touch;
+
+  &.reward-selector-menu-content--selected {
+    max-height: 46vh;
+  }
+
+  /deep/ .md-menu-content-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .md-list {
+      flex: 1;
+      background-color: $theme-listing-bgcolor;
+      border-radius: 0px 0px 4px 4px !important;
+      padding: 0;
     }
-    .md-list-item-content {
-      min-height: 36px;
-      .md-list-item-text {
-        color: $theme-color;
-      }
-      svg {
-        fill: $theme-color;
-      }
+  }
+}
+
+.md-icon {
+  /deep/ &.selected-icon {
+    svg {
+      fill: $selectedRewardDateColor;
     }
-    &.legend {
-      .md-list-item-content {
-        align-items: baseline;
-      }
+  }
+}
+
+.reward-detail {
+  text-align: left;
+  padding-bottom: 20px;
+  .row {
+    display: flex;
+  }
+  .description {
+    color: $secondary-text-color;
+    white-space: normal;
+  }
+  .chart-container {
+    display: inline-block;
+    position: relative;
+    margin: 24px auto;
+    min-width: calc(40vw + 4em);
+    width: 100%;
+    .echarts {
+      width: 100%;
+      min-width: 0;
+      height: 75vw;
     }
-    &.button-claim {
-      align-self: flex-end;
+  }
+  .legend {
+    align-items: baseline;
+    margin-bottom: 20px;
+    .color-box {
+      width: 12px;
+      height: 12px;
+      margin-right: 4px;
+      display: inline-block;
     }
+  }
+  .row-total {
+    margin: 20px 0;
+  }
+  .amount {
+    flex-grow: 1;
+    text-align: right;
+    font-size: 16px;
+    .amount-total {
+      font-size: 1.75em;
+      margin-right: 8px;
+    }
+  }
+  .remark {
+    color: $secondary-text-color;
   }
 }
 </style>
