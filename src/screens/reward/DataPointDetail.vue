@@ -154,10 +154,16 @@ export default {
       );
     },
     getSelectedReward() {
-      return this.selectedReward || this.rewards[0];
+      return (
+        this.selectedReward ||
+        this.rewards.filter(
+          reward => reward.id === this.$route.params.rewardId,
+        )[0] ||
+        this.rewards[0]
+      );
     },
   },
-  created() {
+  mounted() {
     const userId = this.$route.params.userId;
     this.fetchRewards({
       userId,

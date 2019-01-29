@@ -8,7 +8,7 @@ const RouteDef = {
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
   DataPointRewardDetail: {
-    path: '/reward/datapoint/:userId',
+    path: '/account/:userId/datapointreward/:rewardId',
     name: 'DataPointRewardDetail',
   },
   UserSettings: {
