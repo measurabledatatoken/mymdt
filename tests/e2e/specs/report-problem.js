@@ -17,6 +17,7 @@ describe('Report Problem', () => {
       .find('[data-cy="report-problem"]')
       .click();
 
+    cy.location('pathname').should('eq', '/home/settings/problems');
     cy.getCurrentContentRouterView()
       .find('[data-cy="email"]')
       .focus()
