@@ -19,6 +19,7 @@ describe('Setup PIN', () => {
   it('can setup pin', () => {
     cy.get('[data-cy="setting-setup-pin"]').click();
     setupPIN();
+    cy.location('pathname').should('eq', '/home/settings/phone/add');
     // Add your phone number page
     cy.getCurrentContentRouterView()
       .find('[data-cy="skip"]')
