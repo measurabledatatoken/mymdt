@@ -5,7 +5,7 @@
       :small="true"
     /> 
     <padded-container>
-      <div class="label-time label-bolded">Time</div>
+      <div class="label-time label-bolded">{{ $t('message.transaction.time') }}</div>
       <md-menu 
         :md-offset-y="-44"  
         class="reward-selector"
@@ -27,7 +27,7 @@
               v-if="getSelectedReward" 
               class="reward-date"
             >
-              {{ formateDate(getSelectedReward.startDate) }} - {{ formateDate(getSelectedReward.endDate) }}
+              {{ formateDate(getSelectedReward.start_date) }} - {{ formateDate(getSelectedReward.end_date) }}
             </div>
           </div>
           <md-icon 
@@ -43,20 +43,20 @@
         <md-menu-content :class="{ 'reward-selector-menu-content--selected': getSelectedReward }">
           <SelectorMenuItem
             v-if="getSelectedReward"
-            :primary-text="`${formateDate(getSelectedReward.startDate)} - ${formateDate(getSelectedReward.endDate)}`"
+            :primary-text="`${formateDate(getSelectedReward.start_date)} - ${formateDate(getSelectedReward.end_date)}`"
             :is-drawer-top-item="true"
           /> 
           <SelectorMenuItem
             v-for="reward in rewards"
             :key="reward.id" 
             :selected="reward.id === getSelectedReward.id"
-            :primary-text="`${formateDate(reward.startDate)} - ${formateDate(reward.endDate)}`"
+            :primary-text="`${formateDate(reward.start_date)} - ${formateDate(reward.end_date)}`"
             @click="selectReward(reward)"
           />
         </md-menu-content>
       </md-menu>
       <div 
-        v-if="getSelectedReward" 
+        v-if="getSelectedReward && getSelectedReward.data_points_payload" 
         class="reward-detail"
       >
         <div class="description">
@@ -65,34 +65,36 @@
         <div class="chart-container">
           <v-chart 
             v-if="getSelectedReward" 
-            :options="createChartOption(getSelectedReward.data_point)"
+            :options="createChartOption(getSelectedReward.data_points_payload)"
             autoresize
           />
         </div>
         <div
-          v-for="(category, index) in getSelectedReward.data_point"
-          :key="category.label"
+          v-for="(value, name, index) in JSON.parse(getSelectedReward.data_points_payload)"
+          :key="name"
           class="row legend"
         > 
           <span  
             :style="`background-color: ${COLORS[index]}`"  
             class="color-box"
           />
-          <span class="label-bolded">{{ category.label }}</span>
-          <span class="amount">{{ `${formatAmount(category.value)} MDT` }} </span> 
+          <span class="label-bolded">{{ $t(`message.earnMDT.dataPointsReward.dataPointsType.${name}`) }}</span>
+          <span class="amount">{{ `${formatAmount(value)} MDT` }} </span> 
         </div>
         <md-divider />
         <div class="row row-total">
           <span class="label-bolded">
-            Total
+            {{ $t('message.common.total') }}
           </span> 
           <span class="amount"><span class="amount-total">{{ `${formatAmount(getSelectedReward.value)}` }}</span> MDT</span> 
         </div>
         <div>
-          <div class="remark">Reward expires on {{ formateDate(getSelectedReward.expiry_time) }}. </div>
+          <div class="remark">{{ $t('message.earnMDT.rewardExpiresOn', {
+            time: formateDate(getSelectedReward.expiry_time)
+          }) }} </div>
         </div>
         <div>
-          <div class="remark">Terms and conditions apply.</div>
+          <div class="remark">{{ $t('message.common.termsAndConditionsApply') }}</div>
         </div>
       </div>
     </padded-container>
@@ -181,6 +183,7 @@ export default {
       this.selectedReward = reward;
     },
     createChartOption(dataPoints) {
+      const points = JSON.parse(dataPoints);
       return {
         series: {
           type: 'pie',
@@ -194,9 +197,9 @@ export default {
               show: false,
             },
           },
-          data: dataPoints.map((datum, index) => ({
-            value: datum.value,
-            name: datum.label,
+          data: Object.keys(points).map((key, index) => ({
+            value: points[key],
+            name: key,
             itemStyle: { color: COLORS[index] },
           })),
         },

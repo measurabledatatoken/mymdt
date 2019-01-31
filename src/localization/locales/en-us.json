@@ -21,7 +21,10 @@
     "copy": "Copy",
     "disable": "Disable",
     "continue": "Continue",
-    "startOver": "Start Over"
+    "startOver": "Start Over",
+    "total": "Total",
+    "detail" : "Detail",
+    "termsAndConditionsApply": "Terms and conditions apply"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -224,7 +227,14 @@
     "claim": "Claim",
     "invite": "Invite",
     "maximumAmountToEarn": "Maximum {amount} {currency}",
-    "rewardErrorMessage": "Failed to claim reward. Please refresh and try again."
+    "rewardErrorMessage": "Failed to claim reward. Please refresh and try again.",
+    "rewardExpiresOn" : "Reward expires on {time}",
+    "dataPointsReward": {
+      "dataPointsType" : {
+        "ios_iap" : "In App Purchase Receipt",
+        "uber_ride": "Uber Riding Receipt"
+      }
+    }
   },
   "tutorial": {
     "get_started": "Get Started",

@@ -21,7 +21,10 @@
     "copy": "复制",
     "disable": "禁用",
     "continue": "继续",
-    "startOver": "重新开始"
+    "startOver": "重新开始",
+    "total": "总计",
+    "detail" : "详情",
+    "termsAndConditionsApply": "条款和条件适用"
   },
   "error": {
     "userNotExist": "用户电邮不存在。",
@@ -224,7 +227,14 @@
     "claim": "认领",
     "invite": "邀请",
     "maximumAmountToEarn": "最多 {amount} {currency}",
-    "rewardErrorMessage": "未能认领奖励。请刷新并重试"
+    "rewardErrorMessage": "未能认领奖励。请刷新并重试",
+    "rewardExpiresOn" : "奖励将于{time}到期",
+    "dataPointsReward": {
+      "dataPointsType" : {
+        "ios_iap" : "应用程序内购买收据",
+        "uber_ride": "Uber收据" 
+      }
+    }
   },
   "tutorial": {
     "get_started": "开始使用",

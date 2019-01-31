@@ -14,7 +14,7 @@
           class="base-earn-mdt-item__info-title"
         >
           <span>{{ title }}</span>
-          <template v-if="isMonthlyReward">
+          <template v-if="isDataPointReward">
             <md-icon 
               class="base-earn-mdt-item__icon-details"
               md-src="/static/icons/settings-incomplete.svg"
@@ -22,11 +22,11 @@
             <router-link 
               :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: userId, rewardId: reward.id }}" 
               class="base-earn-mdt-item__info-details"
-            >Details</router-link>
+            >{{ $t('message.common.detail') }}</router-link>
           </template>
         </div> 
         <span 
-          v-if="isMonthlyReward" 
+          v-if="isDataPointReward" 
           class="base-earn-mdt-item__info-description"
         >{{ reward.description }}</span>
         <TaskStepList
@@ -88,8 +88,8 @@ export default {
     };
   },
   computed: {
-    isMonthlyReward() {
-      return Array.isArray(this.reward.data_point);
+    isDataPointReward() {
+      return this.reward.data_points_payload;
     },
   },
 };
