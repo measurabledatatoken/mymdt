@@ -60,7 +60,7 @@
         class="reward-detail"
       >
         <div class="description">
-          Because you opted in for anonymous data sharing through MyMDT, you will get rewards on a monthly basis. See below for your reward details. 
+          (TBD) Because you opted in for anonymous data sharing through MyMDT, you will get rewards on a monthly basis. See below for your reward details. 
         </div>
         <div class="chart-container">
           <v-chart 
@@ -78,7 +78,7 @@
             :style="`background-color: ${COLORS[index]}`"  
             class="color-box"
           />
-          <span class="label-bolded">{{ $t(`message.earnMDT.dataPointsReward.dataPointsType.${name}`) }}</span>
+          <span class="label-bolded">{{ getDataPointType(name) }}</span>
           <span class="amount">{{ `${formatAmount(value)} MDT` }} </span> 
         </div>
         <md-divider />
@@ -114,6 +114,8 @@ import SelectorMenuItem from '@/components/common/SelectorMenuItem';
 
 import { formatAmount } from '@/utils';
 import { FETCH_REWARDS } from '@/store/modules/entities/rewards';
+
+import { rewardDataPointType } from '@/enum';
 
 const COLORS = [
   '#65f6a1',
@@ -178,6 +180,11 @@ export default {
     formatAmount,
     formateDate(dateString) {
       return this.$i18n.d(new Date(dateString), 'long', 'numeric');
+    },
+    getDataPointType(dataPointKey) {
+      return rewardDataPointType.properties[dataPointKey]
+        ? this.$t(rewardDataPointType.properties[dataPointKey].messageId)
+        : this.$t('message.common.other');
     },
     selectReward(reward) {
       this.selectedReward = reward;

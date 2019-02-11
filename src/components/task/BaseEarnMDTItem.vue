@@ -1,7 +1,8 @@
 <template>
   <md-list-item 
-    v-bind="$attrs" 
+    v-bind="$attrs"
     class="base-earn-mdt-item"
+    @click="onClick"
   >
     <div class="base-earn-mdt-item__info">
       <md-icon 
@@ -19,10 +20,9 @@
               class="base-earn-mdt-item__icon-details"
               md-src="/static/icons/settings-incomplete.svg"
             />
-            <router-link 
-              :to="{ name: RouteDef.DataPointRewardDetail.name, params: { userId: userId, rewardId: reward.id }}" 
+            <span
               class="base-earn-mdt-item__info-details"
-            >{{ $t('message.common.detail') }}</router-link>
+            >{{ $t('message.common.detail') }}</span>
           </template>
         </div> 
         <span 
@@ -90,6 +90,16 @@ export default {
   computed: {
     isDataPointReward() {
       return this.reward.data_points_payload;
+    },
+  },
+  methods: {
+    onClick() {
+      if (this.isDataPointReward) {
+        this.$router.push({
+          name: RouteDef.DataPointRewardDetail.name,
+          params: { userId: this.userId, rewardId: this.reward.id },
+        });
+      }
     },
   },
 };

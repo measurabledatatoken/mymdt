@@ -24,7 +24,8 @@
     "startOver": "Start Over",
     "total": "Total",
     "detail" : "Detail",
-    "termsAndConditionsApply": "Terms and conditions apply"
+    "termsAndConditionsApply": "Terms and conditions apply",
+    "other" : "Other"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -231,8 +232,10 @@
     "rewardExpiresOn" : "Reward expires on {time}",
     "dataPointsReward": {
       "dataPointsType" : {
-        "ios_iap" : "In App Purchase Receipt",
-        "uber_ride": "Uber Riding Receipt"
+        "AppleReceiptItemType" : "In App Purchase Receipt",
+        "UberReceiptType": "Uber Receipt",
+        "LyftReceiptType": "Lyft Receipt",
+        "GrabReceiptType": "Grab Receipt"
       }
     }
   },
