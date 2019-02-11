@@ -24,7 +24,8 @@
     "startOver": "重新开始",
     "total": "总计",
     "detail" : "详情",
-    "termsAndConditionsApply": "条款和条件适用"
+    "termsAndConditionsApply": "条款和条件适用",
+    "other" : "其他"
   },
   "error": {
     "userNotExist": "用户电邮不存在。",
@@ -231,8 +232,10 @@
     "rewardExpiresOn" : "奖励将于{time}到期",
     "dataPointsReward": {
       "dataPointsType" : {
-        "ios_iap" : "应用程序内购买收据",
-        "uber_ride": "Uber收据" 
+        "AppleReceiptItemType" : "应用程序内购买收据",
+        "UberReceiptType": "Uber收据", 
+        "LyftReceiptType": "Lyft收据",
+        "GrabReceiptType": "Grab收据"
       }
     }
   },
