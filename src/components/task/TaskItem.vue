@@ -38,11 +38,9 @@ export default {
         return {};
       },
     },
-    user: {
-      type: Object,
-      default() {
-        return {};
-      },
+    userId: {
+      type: String,
+      default: '',
     },
   },
   computed: {
@@ -53,7 +51,7 @@ export default {
       if (!this.task.task_url) {
         return '';
       }
-      return this.task.task_url.replace('[email]', this.user.emailAddress);
+      return this.task.task_url.replace('[email]', this.userId);
     },
     description() {
       return this.task.max_completion > 1

@@ -59,7 +59,7 @@ function formatAmount(amount, options) {
 
   // eslint-disable-next-line
   options = {
-    type: 'medium',
+    type: 'short',
     ...options,
   };
 

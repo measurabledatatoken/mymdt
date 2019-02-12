@@ -4,8 +4,8 @@ services:
   mdtwallet-app:
     build:
       context: .
-      dockerfile: docker/staging/Dockerfile
-    image: mdtwallet/app:staging
+      dockerfile: docker/alpha/Dockerfile
+    image: mdtwallet/app:alpha
     hostname: mdtwallet-app
     networks:
       - mdtwallet-api_api

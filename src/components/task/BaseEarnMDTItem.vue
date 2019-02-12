@@ -1,7 +1,8 @@
 <template>
   <md-list-item 
-    v-bind="$attrs" 
+    v-bind="$attrs"
     class="base-earn-mdt-item"
+    @click="onClick"
   >
     <div class="base-earn-mdt-item__info">
       <md-icon 
@@ -9,10 +10,25 @@
         class="base-earn-mdt-item__icon"
       />
       <div class="md-list-item-text">
-        <span 
+        <div
           v-if="title" 
           class="base-earn-mdt-item__info-title"
-        >{{ title }}</span>
+        >
+          <span>{{ title }}</span>
+          <template v-if="isDataPointReward">
+            <md-icon 
+              class="base-earn-mdt-item__icon-details"
+              md-src="/static/icons/settings-incomplete.svg"
+            />
+            <span
+              class="base-earn-mdt-item__info-details"
+            >{{ $t('message.common.detail') }}</span>
+          </template>
+        </div> 
+        <span 
+          v-if="isDataPointReward" 
+          class="base-earn-mdt-item__info-description"
+        >{{ reward.description }}</span>
         <TaskStepList
           v-if="task.max_completion > 1 && task.max_completion <= 5"
           :task="task"
@@ -28,6 +44,8 @@
 </template>
 
 <script>
+import { RouteDef } from '@/constants';
+
 import TaskStepList from '@/components/task/TaskStepList';
 
 export default {
@@ -53,6 +71,36 @@ export default {
         return {};
       },
     },
+    reward: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    userId: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      RouteDef,
+    };
+  },
+  computed: {
+    isDataPointReward() {
+      return this.reward.data_points_payload;
+    },
+  },
+  methods: {
+    onClick() {
+      if (this.isDataPointReward) {
+        this.$router.push({
+          name: RouteDef.DataPointRewardDetail.name,
+          params: { userId: this.userId, rewardId: this.reward.id },
+        });
+      }
+    },
   },
 };
 </script>
@@ -77,19 +125,32 @@ export default {
       min-width: 0;
       margin-right: 0.625rem;
     }
+    .base-earn-mdt-item__icon-details {
+      margin-left: 0.5rem;
+      margin-right: 0.25rem;
+    }
+    .base-earn-mdt-item__info-details {
+      color: $secondary-text-color;
+      font-weight: normal;
+    }
 
     /deep/ .md-list-item-text {
       * {
         line-height: 1.25rem;
       }
-    }
-
-    .base-earn-mdt-item__info-title {
-      font-weight: bold;
+      .base-earn-mdt-item__info-title {
+        font-weight: bold;
+        * {
+          width: auto;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
     }
 
     .base-earn-mdt-item__info-description {
       color: $secondary-text-color;
+      white-space: normal;
     }
   }
 }

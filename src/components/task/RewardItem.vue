@@ -1,6 +1,8 @@
 <template>
   <BaseEarnMDTItem
     :title="reward.name"
+    :reward="reward"
+    :user-id="userId"
     v-bind="$attrs"
     class="earn-mdt-reward-item"
     md-src="/static/icons/done.svg"

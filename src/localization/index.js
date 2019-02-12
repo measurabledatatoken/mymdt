@@ -76,6 +76,18 @@ const dateTimeFormats = {
       hour12: false,
     },
   },
+  numeric: {
+    short: {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    },
+    long: {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    },
+  },
 };
 
 Vue.use(VueI18n);

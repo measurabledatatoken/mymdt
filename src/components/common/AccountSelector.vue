@@ -55,9 +55,10 @@
 
         <!-- Content -->
         <md-menu-content :class="{ 'account-selector-menu-content--selected': selectedAccount }">
-          <AccountSelectorMenuItem
+          <SelectorMenuItem
             v-if="!selectedOther && selectedAccount"
-            :account="selectedAccount"
+            :primary-text="selectedAccount.emailAddress"
+            :secondary-text="getFormattedMDTAmount(selectedAccount.mdtBalance)"
             :is-drawer-top-item="true"
           />
           <li class="account-selector-sub-menu">
@@ -67,10 +68,11 @@
                   v-if="index > 0"
                   :key="`${account.emailAddress}-divider`"
                 />
-                <AccountSelectorMenuItem
+                <SelectorMenuItem
                   :key="account.emailAddress" 
                   :selected="account.emailAddress === selectedAccountEmail"
-                  :account="account"
+                  :primary-text="account.emailAddress"
+                  :secondary-text="getFormattedMDTAmount(account.mdtBalance)"
                   @click="selectAccount(account)"
                 />
               </template>
@@ -110,13 +112,13 @@
 
 <script>
 import BaseField from '@/components/input/BaseField';
-import AccountSelectorMenuItem from '@/components/common/AccountSelectorMenuItem';
+import SelectorMenuItem from '@/components/common/SelectorMenuItem';
 import { formatAmount } from '@/utils';
 
 export default {
   components: {
     BaseField,
-    AccountSelectorMenuItem,
+    SelectorMenuItem,
   },
   props: {
     label: {
@@ -243,6 +245,15 @@ export default {
       this.$emit('accountSelected', { emailAddress: value });
     },
     formatAmount,
+    getFormattedMDTAmount(mdtBalance) {
+      if (mdtBalance === undefined || mdtBalance === null) {
+        return null;
+      }
+
+      return `${this.$t('message.transfer.amountlbl')}: ${formatAmount(
+        mdtBalance,
+      )} MDT`;
+    },
   },
 };
 </script>

@@ -14,7 +14,6 @@
         :title="$t('message.transaction.time')" 
         :description="$d(new Date(transaction.transaction_time), 'long')"
       />
-      <!-- <TransactionDetailItem v-if="!!transaction.detail" :title="$t('message.transaction.detail')" :description="transaction.detail" /> -->
       <TransactionDetailItem 
         v-if="!!from" 
         :title="$t('message.transaction.from')" 
@@ -33,13 +32,13 @@
       <TransactionDetailItem
         v-if="typeof transaction.transaction_fee === 'number'"
         :title="$t('message.transaction.transactionFee')"
-        :description="`${formatAmount(transaction.transaction_fee, { type: 'long' })} MDT`"
+        :description="`${formatAmount(transaction.transaction_fee, { type: 'short' })} MDT`"
         :single-line="true"
       />
       <TransactionDetailItem
         v-if="typeof transaction.account_balance === 'number'"
         :title="$t('message.transaction.accountBalance')"
-        :description="`${formatAmount(transaction.account_balance, { type: 'long' })} MDT`"
+        :description="`${formatAmount(transaction.account_balance, { type: 'short' })} MDT`"
         :single-line="true"
       />
       <TransactionDetailItem
@@ -137,6 +136,7 @@ export default {
   },
   data() {
     return {
+      RouteDef,
       transactionType,
       transactionStatus,
       showPinCodeInput: false,

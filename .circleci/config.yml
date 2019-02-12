@@ -85,8 +85,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
               make build-dev
               # TODO(GARY): push images to Docker registry
-            elif [ "${CIRCLE_BRANCH}" == "staging" ];
-              make build-staging
+            elif [ "${CIRCLE_BRANCH}" == "alpha" ];
+              make build-alpha
               # TODO(GARY): push images to Docker registry
             fi
 
@@ -107,14 +107,14 @@ jobs:
       #     name: Cleanup Docker containers
       #     command: make clean-dev
 
-  deploy-staging:
+  deploy-alpha:
     docker:
       - image: circleci/node:9.11.1-browsers
     steps:
       - run:
-          name: Deploy to staging server
+          name: Deploy to alpha server
           command: |
-            ssh -o "StrictHostKeyChecking no" mailtime@mymdt-alpha.measurable.ai "cd mdtwallet-webapp && git fetch --all && git checkout --force $CIRCLE_SHA1 && make build-staging && make run-staging"
+            ssh -o "StrictHostKeyChecking no" mailtime@mymdt-alpha.measurable.ai "cd mdtwallet-webapp && export CIRCLE_SHA1=$CIRCLE_SHA1 && export CIRCLE_BRANCH=$CIRCLE_BRANCH && sh .circleci/deploy.sh"
 
 workflows:
   version: 2
@@ -125,14 +125,14 @@ workflows:
             branches:
               only:
                 - development
-                - staging
+                - alpha
                 - dev/gary/circleci
-      # - e2e-test:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - development
-      #           - staging
+      - e2e-test:
+          filters:
+            branches:
+              only:
+                - development
+                - alpha
       # - build-and-publish-images:
       #     requires:
       #       - unit-test
@@ -140,12 +140,12 @@ workflows:
       #       branches:
       #         only:
       #           - development
-      #           - staging
+      #           - alpha
       #           - dev/gary/circleci
-      - deploy-staging:
+      - deploy-alpha:
           requires:
             - unit-test
             # - e2e-test
           filters:
             branches:
-              only: staging
+              only: alpha

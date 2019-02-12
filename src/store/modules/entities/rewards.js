@@ -24,6 +24,10 @@ const moduleGetters = {
   getReward: state => id => state.byId[id],
   getRewards: (state, getters) => (ids = []) =>
     ids.map(id => getters.getReward(id)),
+  getRewardsWithDataPoints: (state, getters) => (ids = []) =>
+    getters
+      .getRewards(ids)
+      .filter(reward => reward && reward.data_points_payload),
   getRewardsOfAllUsers: state => state.allIds.map(id => state.byId[id]),
 };
 
