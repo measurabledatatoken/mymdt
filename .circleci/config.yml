@@ -125,14 +125,11 @@ workflows:
             branches:
               only:
                 - development
-                - alpha
-                - dev/gary/circleci
       - e2e-test:
           filters:
             branches:
               only:
                 - development
-                - alpha
       # - build-and-publish-images:
       #     requires:
       #       - unit-test
@@ -145,7 +142,7 @@ workflows:
       - deploy-alpha:
           requires:
             - unit-test
-            # - e2e-test
+            - e2e-test
           filters:
             branches:
               only: alpha
