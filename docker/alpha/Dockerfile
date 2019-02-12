@@ -21,8 +21,8 @@ RUN API_SCHEME=https API_ENDPOINT=mymdt-alpha.measurable.ai/api npm run build
 FROM nginx:stable-alpine
 
 # Copy nginx conf
-COPY docker/staging/nginx.conf /etc/nginx/nginx.conf
-COPY docker/staging/default.conf /etc/nginx/conf.d/
+COPY docker/alpha/nginx.conf /etc/nginx/nginx.conf
+COPY docker/alpha/default.conf /etc/nginx/conf.d/
 
 # Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*

@@ -8,7 +8,10 @@
     "build-report": "vue-cli-service build --report",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "build-docker": "bash docker/docker.sh build",
+    "run-docker": "bash docker/docker.sh run",
+    "clean-docker": "bash docker/docker.sh clean"
   },
   "dependencies": {
     "axios": "^0.18.0",
