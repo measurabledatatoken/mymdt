@@ -1,77 +1,81 @@
 <template>
-  <ul 
-    ref="accountList" 
-    class="account-list"
+  <div 
+    ref="rewardsContainer" 
+    class="rewards-container"
   >
-    <li 
-      v-for="user in users" 
-      :id="user.emailAddress"
-      :key="user.emailAddress"
-    >
-      <UserInfoCard 
-        :user="user" 
-        :hover="false" 
-        small
+    <padded-container ref="accountSelectorContainer">
+      <AccountSelector 
+        
+        :accounts="allUsers" 
+        :selected-account="selectedUser" 
+        @accountSelected="onAccountSelected"
       />
-      <md-list class="account-task-list">
-        <template v-if="uiState.users[user.emailAddress].isFetchingRewards">
+    </padded-container>
+    <md-divider />
+    <padded-container>
+      <md-list 
+        class="account-task-list"
+      >
+        <template v-if="uiState.users[selectedUser.emailAddress].isFetchingRewards">
           <template v-for="n in numberOfRewardLoadingItems">
             <EarnMDTLoadingItem :key="`reward-loading-${n}`" />
             <md-divider :key="`reward-loading-divider-${n}`" />
           </template>
         </template>
         <template
-          v-for="reward in getRewards(user.rewards).filter(reward => reward)"
-          v-else-if="Array.isArray(user.rewards) && user.rewards.length > 0"
+          v-for="reward in getRewards(selectedUser.rewards).filter(reward => reward)"
+          v-else-if="Array.isArray(selectedUser.rewards) && selectedUser.rewards.length > 0"
         >
           <RewardItem
             :key="reward.id"
             :reward="reward"
-            :user-id="user.emailAddress"
+            :user-id="selectedUser.emailAddress"
           />
           <md-divider :key="`${reward.id}-divider`" />
         </template>
-        <template v-if="uiState.users[user.emailAddress].isFetchingTasks">
+        <template v-if="uiState.users[selectedUser.emailAddress].isFetchingTasks">
           <template v-for="n in numberOfTaskLoadingItems">
             <EarnMDTLoadingItem :key="`task-loading-${n}`"/>
             <md-divider :key="`task-loading-divider-${n}`" />
           </template>
         </template>
         <template
-          v-for="task in user.tasks.filter(task => !task.is_task_completed)"
-          v-else-if="Array.isArray(user.tasks) && user.tasks.filter(task => !task.is_task_completed).length > 0"
+          v-for="task in selectedUser.tasks.filter(task => !task.is_task_completed)"
+          v-else-if="Array.isArray(selectedUser.tasks) && selectedUser.tasks.filter(task => !task.is_task_completed).length > 0"
         >
           <TaskItem
             :key="task.task_id"
             :task="task"
-            :user="user"
+            :user-id="selectedUser.emailAddress"
           />
           <md-divider :key="`${task.task_id}-divider`" />
         </template>
       </md-list>
-    </li>
-  </ul>
+    </padded-container>
+  </div>
+  
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 import BasePage from '@/screens/BasePage';
 import Skeleton from '@/components/common/Skeleton';
-import UserInfoCard from '@/components/common/UserInfoCard';
+import AccountSelector from '@/components/common/AccountSelector';
 import EarnMDTLoadingItem from '@/components/task/EarnMDTLoadingItem';
 import RewardItem from '@/components/task/RewardItem';
 import TaskItem from '@/components/task/TaskItem';
+import PaddedContainer from '@/components/containers/PaddedContainer';
 
-import { FETCH_ALL_TASKS, FETCH_TASKS } from '@/store/modules/entities/users';
-import {
-  FETCH_ALL_REWARDS,
-  FETCH_REWARDS,
-} from '@/store/modules/entities/rewards';
+import { FETCH_TASKS } from '@/store/modules/entities/users';
+import { FETCH_REWARDS } from '@/store/modules/entities/rewards';
+import { SET_SELECTED_USER } from '@/store/modules/home';
+import { trackEvent } from '@/utils';
 
 export default {
   components: {
-    UserInfoCard,
+    PaddedContainer,
+    AccountSelector,
     Skeleton,
     EarnMDTLoadingItem,
     RewardItem,
@@ -86,7 +90,6 @@ export default {
   data() {
     return {
       clicked: false,
-      showAmount: false,
       numberOfRewardLoadingItems: 0,
       numberOfTaskLoadingItems: 0,
     };
@@ -96,39 +99,21 @@ export default {
       uiState: state => state.ui.earnMDTScreen,
     }),
     ...mapGetters({
-      getUser: 'getUser',
+      selectedUser: 'getSelectedUser',
       allUsers: 'getAllUsers',
       getRewards: 'getRewards',
     }),
-    users() {
-      if (this.$route.params && this.$route.params.userId) {
-        return [this.getUser(this.$route.params.userId)];
-      } else {
-        return this.allUsers;
-      }
-    },
   },
   created() {
-    if (this.$route.params && this.$route.params.userId) {
-      const userId = this.$route.params.userId;
-      this.fetchTasks({
-        userId,
-      });
-      this.fetchRewards({
-        userId,
-      });
-    } else {
-      this.fetchAllTasks();
-      this.fetchAllRewards();
-    }
+    this.fetchData(this.selectedUser.emailAddress);
   },
   mounted() {
     // improve loading effect by filling loading items on whole screen
     this.$nextTick(() => {
-      const ACCOUNT_CARD_HEIGHT = 86;
-      const LOADING_ITEM_HEIGHT = 66;
+      const LOADING_ITEM_HEIGHT = 78;
       const contentHeight =
-        this.$refs.accountList.offsetHeight - ACCOUNT_CARD_HEIGHT;
+        this.$refs.rewardsContainer.offsetHeight -
+        this.$refs.accountSelectorContainer.$el.offsetHeight;
       const numberOfLoadingItems = Math.ceil(
         contentHeight / LOADING_ITEM_HEIGHT,
       );
@@ -137,29 +122,46 @@ export default {
     });
   },
   methods: {
-    afterLeave() {
-      this.showAmount = true;
-    },
     ...mapActions({
-      fetchAllTasks: FETCH_ALL_TASKS,
       fetchTasks: FETCH_TASKS,
-      fetchAllRewards: FETCH_ALL_REWARDS,
       fetchRewards: FETCH_REWARDS,
     }),
+    ...mapMutations({
+      setSelectedUser: SET_SELECTED_USER,
+    }),
+    fetchData(userId) {
+      this.fetchTasks({
+        userId,
+      });
+      this.fetchRewards({
+        userId,
+      });
+    },
+    onAccountSelected(account) {
+      trackEvent('Switch accounts on Reward List');
+      this.setSelectedUser(account.emailAddress);
+      this.fetchData(account.emailAddress);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.account-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 0;
-
+.rewards-container {
+  /deep/ .md-divider {
+    margin: 0;
+  }
   .account-task-list {
     list-style: none;
     padding: 0;
     margin-top: 0;
+    margin-bottom: 0;
+
+    /deep/ .md-list-item {
+      .md-list-item-content {
+        padding: 12px 8px;
+      }
+    }
 
     li:last-of-type {
       display: none;

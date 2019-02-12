@@ -21,7 +21,11 @@
     "copy": "Copy",
     "disable": "Disable",
     "continue": "Continue",
-    "startOver": "Start Over"
+    "startOver": "Start Over",
+    "total": "Total",
+    "detail" : "Detail",
+    "termsAndConditionsApply": "Terms and conditions apply",
+    "other" : "Other"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -138,7 +142,9 @@
       "loadingText": "Loading...",
       "doneText": "Load completed",
       "failText": "Load failed"
-    }
+    },
+    "monthlyReward" : "Monthly Reward",
+    "viewRewardDetail" : "View Reward Detail"
   },
   "settings": {
     "title": "Settings",
@@ -222,7 +228,16 @@
     "claim": "Claim",
     "invite": "Invite",
     "maximumAmountToEarn": "Maximum {amount} {currency}",
-    "rewardErrorMessage": "Failed to claim reward. Please refresh and try again."
+    "rewardErrorMessage": "Failed to claim reward. Please refresh and try again.",
+    "rewardExpiresOn" : "Reward expires on {time}",
+    "dataPointsReward": {
+      "dataPointsType" : {
+        "AppleReceiptItemType" : "In App Purchase Receipt",
+        "UberReceiptType": "Uber Receipt",
+        "LyftReceiptType": "Lyft Receipt",
+        "GrabReceiptType": "Grab Receipt"
+      }
+    }
   },
   "tutorial": {
     "get_started": "Get Started",

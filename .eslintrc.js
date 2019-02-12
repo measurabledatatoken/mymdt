@@ -7,7 +7,7 @@ module.exports = {
   rules: {
     'no-console':
       process.env.NODE_ENV === 'production'
-        ? ['error', { allow: ['warn', 'error'] }]
+        ? ['error', { allow: ['error'] }]
         : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/html-closing-bracket-newline': [
