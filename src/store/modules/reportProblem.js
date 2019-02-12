@@ -31,7 +31,7 @@ const actions = {
 
       router.push(RouteDef.ReportProblemSuccess.path);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 };
