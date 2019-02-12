@@ -114,7 +114,7 @@ jobs:
       - run:
           name: Deploy to alpha server
           command: |
-            ssh -o "StrictHostKeyChecking no" mailtime@mymdt-alpha.measurable.ai "cd mdtwallet-webapp && export CIRCLE_SHA1=$CIRCLE_SHA1 && export CIRCLE_BRANCH=$CIRCLE_BRANCH && sh deploy/deploy.sh"
+            ssh -o "StrictHostKeyChecking no" mailtime@mymdt-alpha.measurable.ai "cd mdtwallet-webapp && export CIRCLE_SHA1=$CIRCLE_SHA1 && export CIRCLE_BRANCH=$CIRCLE_BRANCH && sh .circleci/deploy.sh"
 
 workflows:
   version: 2
