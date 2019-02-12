@@ -45,34 +45,34 @@ Refer to Vue readme in https://bitbucket.org/mailtimeapp/devwelcomekit/commits/7
 
 ``` bash
 # build docker images
-make build-dev
+npm run build-docker
 
 # run docker containers
-make run-dev
+npm run run-docker
 
 # cleanup
-make clean-dev
+npm run clean-docker
 ```
 
-## Docker Staging Environment
+## Docker alpha Environment
 
 ``` bash
 # build docker images
-make build-staging
+npm run build-docker alpha
 
 # run docker containers
-make run-staging
+npm run run-docker alpha
 
 # cleanup
-make clean-staging
+npm run clean-docker alpha
 ```
 
 ## View Logs
 
 ``` bash
-# view staging logs
-make staging-logs
+# view docker compose logs
+npm run logs-docker 
 
 # view app logs
-make app-logs
+docker logs [container ID]
 ```
