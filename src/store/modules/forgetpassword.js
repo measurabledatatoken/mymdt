@@ -26,7 +26,7 @@ const actions = {
       });
       commit([SET_FORGET_SUCCESS], true);
     } catch (error) {
-      console.log('REQUEST_FORGET_PASSWORD ERROR: ' + error);
+      console.error('REQUEST_FORGET_PASSWORD ERROR: ' + error);
       commit([SET_FORGET_SUCCESS], false);
     }
   },

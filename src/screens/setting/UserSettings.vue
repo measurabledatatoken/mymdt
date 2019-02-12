@@ -322,7 +322,7 @@ export default {
               },
             });
           } catch (error) {
-            console.log(
+            console.error(
               `error in requesting verification code: ${error.message}`,
             );
           }

@@ -8,7 +8,7 @@ module.exports = {
     '@vue/prettier'
   ],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': ["error", { allow: [ "error"] }],
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/html-closing-bracket-newline': ["error", {
       "multiline": "always"

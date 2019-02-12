@@ -79,7 +79,7 @@ const actions = {
         commit(SET_MDT_PRICE, data[priceUnitKey]);
       }
     } catch (error) {
-      console.log('getMDTPrice failed', error);
+      console.error('getMDTPrice failed', error);
     }
   },
   async [REQUEST_APP_CONFIG]({ commit, dispatch }) {
@@ -89,7 +89,7 @@ const actions = {
       });
       commit(SET_APP_CONFIG, data);
     } catch (error) {
-      console.log('getAppConfig failed', error);
+      console.error('getAppConfig failed', error);
     }
   },
   async [REQUEST_USER_ACCOUNTS]({ commit, rootState, dispatch }) {

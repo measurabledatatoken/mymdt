@@ -45,11 +45,7 @@ export default {
       title: this.$t('message.settings.legalAndPrivacy'),
     };
   },
-  methods: {
-    handleClickUrl(url) {
-      console.log(url);
-    },
-  },
+  methods: {},
 };
 </script>
 
