@@ -57,13 +57,19 @@ const getters = {
     }
     return tempAccounts;
   },
+  minAmount: (state, getters, rootState) => {
+    return parseFloat(rootState.home.appConfig.mdt_min_transfer_amount);
+  },
   // eslint-disable-next-line
   transactionFee: (state, getters, rootState, rootGetters) => {
     if (!rootState.home.appConfig) {
       return 0;
     }
-    const feePercentage = rootState.home.appConfig.mdt_transaction_fee / 100.0;
-    const minFee = parseFloat(rootState.home.appConfig.mdt_min_transaction_fee);
+    const feePercentage =
+      rootState.home.appConfig.mdt_transaction_fee_in_percentage / 100.0;
+    const minFee =
+      parseFloat(rootState.home.appConfig.mdt_transaction_fee_in_usd) /
+      rootState.home.mdtPrice;
     const minFeeByPercentage =
       state.transferAmount * parseFloat(feePercentage, 10);
     const finalFee = minFeeByPercentage < minFee ? minFee : minFeeByPercentage;
