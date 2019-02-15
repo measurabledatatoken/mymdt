@@ -145,4 +145,5 @@ workflows:
             - e2e-test
           filters:
             branches:
-              only: alpha
+              only: 
+                - alpha
