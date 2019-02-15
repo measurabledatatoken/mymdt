@@ -125,11 +125,13 @@ workflows:
             branches:
               only:
                 - development
+                - alpha
       - e2e-test:
           filters:
             branches:
               only:
                 - development
+                - alpha
       # - build-and-publish-images:
       #     requires:
       #       - unit-test
