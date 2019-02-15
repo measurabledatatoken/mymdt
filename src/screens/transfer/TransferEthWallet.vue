@@ -7,6 +7,15 @@
       @amountEntered="onAmountEntered"
       @amountInvalid="transferAmountInvalid"
     />
+
+    <div class="min-amount">
+      <div class="min-amount-lbl">{{ $t('message.transfer.min_amount') }}</div>
+      <div 
+        :class="{ 'negative': isAmountSmallerThanMin }"
+        class="min-amount-value"
+      > {{ formatAmount(minAmount) }} MDT</div>
+    </div>
+
     <div class="transaction-fee">
       <div class="transaction-fee-lbl">{{ $t('message.transfer.transaction_fee') }}</div>
       <md-button 
@@ -22,7 +31,7 @@
     <div class="final-amount">
       <div class="final-amount-lbl">{{ $t('message.transfer.final_amount') }}</div>
       <div 
-        :class="{ 'negative': isFinalAmountSmallerThanZero }"
+        :class="{ 'negative': isFinalAmountSmallerAndEqualZero }"
         class="final-amount-value"
       > {{ finalAmountStr }} MDT</div>
     </div>
@@ -121,6 +130,7 @@ export default {
     ...mapGetters({
       fromUserAccounts: 'getAllUsers',
       transactionFee: 'transactionFee',
+      minAmount: 'minAmount',
       finalAmount: 'finalAmount',
       transferFromAccount: 'transferFromAccount',
     }),
@@ -129,8 +139,9 @@ export default {
         this.transferAmount > 0 &&
         this.transferToWalletAddress &&
         this.isWalletAddressValid &&
-        this.finalAmount > 0 &&
-        this.isWalletAmountValid
+        this.isWalletAmountValid &&
+        !this.isFinalAmountSmallerAndEqualZero &&
+        !this.isAmountSmallerThanMin
       ) {
         return false;
       }
@@ -142,11 +153,11 @@ export default {
     isWalletAmountValid() {
       return this.transferAmount <= this.transferFromAccount.mdtBalance;
     },
-    isFinalAmountSmallerThanZero() {
-      if (this.finalAmount <= 0) {
-        return true;
-      }
-      return false;
+    isAmountSmallerThanMin() {
+      return this.transferAmount < this.minAmount;
+    },
+    isFinalAmountSmallerAndEqualZero() {
+      return this.finalAmount <= 0;
     },
   },
   created() {
@@ -205,6 +216,7 @@ export default {
 }
 
 .transaction-fee,
+.min-amount,
 .final-amount {
   margin-left: $defaultPageMargin;
   margin-right: $defaultPageMargin;
@@ -214,6 +226,7 @@ export default {
 }
 
 .transaction-fee-lbl,
+.min-amount-lbl,
 .final-amount-lbl {
   float: left;
   width: auto;
@@ -240,12 +253,14 @@ export default {
   text-align: right;
 }
 
+.min-amount-value,
 .final-amount-value {
   float: right;
   width: 60%;
   text-align: right;
 }
 
+.min-amount-value.negative,
 .final-amount-value.negative {
   color: $theme-warning-color;
 }
@@ -271,6 +286,7 @@ export default {
 
 .mdtinput,
 .transaction-fee,
+.min-amount,
 .final-amount,
 .transfer-from,
 .address-field,
