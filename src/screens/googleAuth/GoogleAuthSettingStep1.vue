@@ -15,23 +15,25 @@
             </div>
             <div class="store-icons">
               <a 
+                v-if="isIOS"
                 target="_blank" 
-                href="https://itunes.apple.com/app/id914281815"
+                href="http://appstore.com/googleauthenticator"
               >
                 <img 
-                  v-if="isIOS"
                   src="/static/googleAuth/app-store-en.svg" 
-              ></a>
+                >
+              </a>
               <a 
+                v-if="isAndroid"
                 target="_blank" 
-                href="http://mailti.me/android"
+                href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
               >
                 <img 
-                  v-if="isAndroid"
                   src="/static/googleAuth/google-play-en.png" 
                   srcset="/static/googleAuth/google-play-en@2x.png 2x, /static/googleAuth/google-play-en@3x.png 3x" 
                   alt="Google Authenticator"
-              ></a>
+                >
+              </a>
             </div>
             <div>
               <p class="remark">
