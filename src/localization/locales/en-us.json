@@ -144,7 +144,7 @@
       "doneText": "Load completed",
       "failText": "Load failed"
     },
-    "monthlyReward" : "Monthly Reward",
+    "dataPointReward" : "Data Point Reward",
     "viewRewardDetail" : "View Reward Detail"
   },
   "settings": {
