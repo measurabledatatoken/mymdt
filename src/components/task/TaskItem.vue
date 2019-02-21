@@ -12,8 +12,8 @@
         <span class="earn-mdt-task-item-action__amount-to-earn">{{ amountText }}</span>
         <MDTSecondaryButton
           class="earn-mdt-task-item-action__claim-button"
-          @click="onGoToTaskClicked"
-        >
+          @click.stop="onGoToTaskClicked"
+        > 
           {{ $t('message.earnMDT.go') }}
         </MDTSecondaryButton>
       </div>
