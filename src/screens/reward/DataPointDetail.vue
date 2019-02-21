@@ -137,7 +137,7 @@ export default {
   extends: BasePage,
   metaInfo() {
     return {
-      title: this.$t('message.transaction.monthlyReward'),
+      title: this.$t('message.transaction.dataPointReward'),
     };
   },
   data() {

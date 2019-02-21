@@ -144,7 +144,7 @@
       "doneText": "加载完成",
       "failText": "加载失败"
     },
-    "monthlyReward" : "每月奖励",
+    "dataPointReward" : "数据奖励",
     "viewRewardDetail" : "查看奖励详情"
   },
   "settings": {
