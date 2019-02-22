@@ -237,7 +237,8 @@
         "UberReceiptType": "Uber收據", 
         "LyftReceiptType": "Lyft收據",
         "GrabReceiptType": "Grab收據"
-      }
+      },
+      "reachMaximumRemark" : "*每月獎勵的最高金額為{amount} MDT"
     }
   },
   "tutorial": {

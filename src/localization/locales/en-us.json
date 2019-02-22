@@ -237,7 +237,8 @@
         "UberReceiptType": "Uber Receipt",
         "LyftReceiptType": "Lyft Receipt",
         "GrabReceiptType": "Grab Receipt"
-      }
+      },
+      "reachMaximumRemark" : "*The Maximum of Monthly Reward is {amount} MDT."
     }
   },
   "tutorial": {
