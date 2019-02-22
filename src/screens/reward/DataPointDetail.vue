@@ -119,7 +119,6 @@
         <div class="remark">{{ $t('message.earnMDT.rewardExpiresOn', {
           time: formateDate(getSelectedReward.expiry_time)
         }) }}</div>
-        <div class="remark">{{ $t('message.common.termsAndConditionsApply') }}</div>
       </div>
     </padded-container>
 </div></template>
