@@ -144,7 +144,7 @@
       "doneText": "Load completed",
       "failText": "Load failed"
     },
-    "monthlyReward" : "Monthly Reward",
+    "dataPointReward" : "Data Point Reward",
     "viewRewardDetail" : "View Reward Detail"
   },
   "settings": {
@@ -237,7 +237,8 @@
         "UberReceiptType": "Uber Receipt",
         "LyftReceiptType": "Lyft Receipt",
         "GrabReceiptType": "Grab Receipt"
-      }
+      },
+      "reachMaximumRemark" : "*The Maximum of Monthly Reward is {amount} MDT."
     }
   },
   "tutorial": {

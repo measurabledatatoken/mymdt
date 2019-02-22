@@ -144,7 +144,7 @@
       "doneText": "加載完成",
       "failText": "加載失敗"
     },
-    "monthlyReward" : "每月獎勵",
+    "dataPointReward" : "數據奬勵",
     "viewRewardDetail" : "查看獎勵詳情"
   },
   "settings": {
@@ -237,7 +237,8 @@
         "UberReceiptType": "Uber收據", 
         "LyftReceiptType": "Lyft收據",
         "GrabReceiptType": "Grab收據"
-      }
+      },
+      "reachMaximumRemark" : "*每月獎勵的最高金額為{amount} MDT"
     }
   },
   "tutorial": {

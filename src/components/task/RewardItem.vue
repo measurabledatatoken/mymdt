@@ -20,7 +20,7 @@
               :style="claimButtonStyle"
               class="earn-mdt-reward-item-action__claim-button"
               color="secondary"
-              @click="handleClickClaimButton"
+              @click.stop="handleClickClaimButton"
             >
               {{ buttonText + " " + amountText }}
             </MDTSecondaryButton>

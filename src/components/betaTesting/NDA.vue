@@ -23,6 +23,7 @@
       2.	The Recipient and any members within The Recipient’s organization undertakes not to use the Confidential Information for any purpose except the Purpose, without first obtaining the written agreement of the Discloser.
 
       3.	The Recipient undertakes to keep the Confidential Information secure and not to disclose it to any third party except to its employees and professional advisers who need to know the same for the Purpose, who know they owe a duty of confidence to the Discloser and who are bound by obligations equivalent to those in clause 2 above and this clause 3.
+      
       4.	The undertakings in clauses 2 and 3 above apply to all of the information disclosed by the Discloser to the Recipient, regardless of the way or form in which it is disclosed or recorded but they do not apply to:
 
       a)	any information which is or in future comes into the public domain (unless as a result of the breach of this Agreement); or
