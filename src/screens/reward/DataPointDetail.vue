@@ -82,20 +82,43 @@
           <span class="amount">{{ `${formatAmount(value)} MDT` }} </span> 
         </div>
         <md-divider />
-        <div class="row row-total">
-          <span class="label-bolded">
-            {{ $t('message.common.total') }}
-          </span> 
-          <span class="amount"><span class="amount-total">{{ `${formatAmount(getSelectedReward.value)}` }}</span> MDT</span> 
-        </div>
-        <div>
-          <div class="remark">{{ $t('message.earnMDT.rewardExpiresOn', {
-            time: formateDate(getSelectedReward.expiry_time)
-          }) }} </div>
-        </div>
-        <div>
-          <div class="remark">{{ $t('message.common.termsAndConditionsApply') }}</div>
-        </div>
+        <template v-if="reachMaxEarnableMDT">
+          <div 
+            class="row row-total"
+          >
+            <span class="label-bolded">
+              {{ $t('message.common.total') }}
+            </span> 
+            <div class="amount">
+              <span class="amount-deleted">{{ `${formatAmount(getSelectedReward.value)}` }} MDT</span>
+            </div> 
+          </div>
+          <div 
+            class="row row-total"
+          >
+            <div class="amount">
+              <span class="amount-highlighted">{{ `${formatAmount(selectedRewardTotalDataPoints)}` }}*</span> MDT
+            </div> 
+          </div>
+          <div 
+            class="remark"
+          >{{ $t('message.earnMDT.dataPointsReward.reachMaximumRemark', { 
+            amount: formatAmount(getSelectedReward.value)
+          }) }}</div>
+        </template>
+        <template v-else>
+          <div class="row row-total">
+            <span class="label-bolded">
+              {{ $t('message.common.total') }}
+            </span> 
+            <div class="amount">
+              <span class="amount-highlighted">{{ `${formatAmount(getSelectedReward.value)}` }}</span> MDT
+            </div> 
+          </div>
+        </template>
+        <div class="remark">{{ $t('message.earnMDT.rewardExpiresOn', {
+          time: formateDate(getSelectedReward.expiry_time)
+        }) }}</div>
       </div>
     </padded-container>
 </div></template>
@@ -137,7 +160,7 @@ export default {
   extends: BasePage,
   metaInfo() {
     return {
-      title: this.$t('message.transaction.monthlyReward'),
+      title: this.$t('message.transaction.dataPointReward'),
     };
   },
   data() {
@@ -165,6 +188,13 @@ export default {
         )[0] ||
         this.rewards[0]
       );
+    },
+    selectedRewardTotalDataPoints() {
+      const points = JSON.parse(this.getSelectedReward.data_points_payload);
+      return Object.values(points).reduce((a, b) => a + b);
+    },
+    reachMaxEarnableMDT() {
+      return this.selectedRewardTotalDataPoints > this.getSelectedReward.value;
     },
   },
   mounted() {
@@ -361,9 +391,12 @@ $menuItemCellHeight: 44px;
     flex-grow: 1;
     text-align: right;
     font-size: 16px;
-    .amount-total {
-      font-size: 1.75em;
-      margin-right: 8px;
+    .amount-deleted {
+      color: $mdtAmountColor;
+      text-decoration: line-through;
+    }
+    .amount-highlighted {
+      font-size: 28px;
     }
   }
   .remark {
