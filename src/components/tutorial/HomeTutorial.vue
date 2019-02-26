@@ -30,20 +30,11 @@
         <TutorialItem 
           :title="$t('message.tutorial.slide_3_title')"
           :description="$t('message.tutorial.slide_3_description')"
+          :is-final-page="true"
           img-src="/static/icons/tutorial-3.svg"
           @click="onStartClicked"
         />
       </swiper-slide>
-      <swiper-slide>
-        <TutorialItem 
-          :title="$t('message.tutorial.slide_4_title')"
-          :description="$t('message.tutorial.slide_4_description')"
-          :is-final-page="true"
-          img-src="/static/icons/tutorial-4.svg"
-          @click="onStartClicked"
-        />
-      </swiper-slide>
-
       <div 
         slot="pagination"
         class="swiper-pagination"
