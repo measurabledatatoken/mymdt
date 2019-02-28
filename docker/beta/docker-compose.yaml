@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  mdtwallet-app:
+    build:
+      context: .
+      dockerfile: docker/beta/Dockerfile
+    image: mdtwallet/app:beta
+    hostname: mdtwallet-app
+    networks:
+      - mdtwallet-api_api
+    ports:
+      - '8443:443'
+    volumes:
+      - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /home/ubuntu/certs/star_measurable_ai.crt:/etc/letsencrypt/live/measurable.ai/fullchain.pem
+      - /home/ubuntu/certs/star_measurable_ai.key:/etc/letsencrypt/live/measurable.ai/privkey.pem
+    restart: always
+
+networks:
+  mdtwallet-api_api:
+    external: true

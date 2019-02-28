@@ -116,6 +116,15 @@ jobs:
           command: |
             ssh -o "StrictHostKeyChecking no" mailtime@mymdt-alpha.measurable.ai "cd mdtwallet-webapp && export CIRCLE_SHA1=$CIRCLE_SHA1 && export CIRCLE_BRANCH=$CIRCLE_BRANCH && sh .circleci/deploy.sh"
 
+  deploy-beta:
+    docker:
+      - image: circleci/node:9.11.1-browsers
+    steps:
+      - run:
+          name: Deploy to beta server
+          command: |
+            ssh -o "StrictHostKeyChecking no" ubuntu@beta.measurable.ai "cd mdtwallet-webapp && export CIRCLE_SHA1=$CIRCLE_SHA1 && export CIRCLE_BRANCH=$CIRCLE_BRANCH && sh .circleci/deploy.sh"
+
 workflows:
   version: 2
   test-and-deploy:
@@ -132,15 +141,7 @@ workflows:
               only:
                 - development
                 - alpha
-      # - build-and-publish-images:
-      #     requires:
-      #       - unit-test
-      #     filters:
-      #       branches:
-      #         only:
-      #           - development
-      #           - alpha
-      #           - dev/gary/circleci
+
       - deploy-alpha:
           requires:
             - unit-test
@@ -149,3 +150,11 @@ workflows:
             branches:
               only: 
                 - alpha
+  
+  test-and-deploy-beta:
+    jobs:
+      - deploy-beta:
+          filters:
+            branches:
+              only: 
+                - beta
