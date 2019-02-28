@@ -60,7 +60,7 @@
         class="reward-detail"
       >
         <div class="description">
-          (TBD) Because you opted in for anonymous data sharing through MyMDT, you will get rewards on a monthly basis. See below for your reward details. 
+          {{ $t('message.earnMDT.dataPointsReward.description') }}
         </div>
         <div class="chart-container">
           <v-chart 
