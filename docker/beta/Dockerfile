@@ -16,7 +16,7 @@ WORKDIR /app
 COPY . .
 
 # Build the vue app in production mode
-RUN API_SCHEME=https API_ENDPOINT=beta.measurable.ai:8443/api npm run build
+RUN API_SCHEME=https API_ENDPOINT=mymdt-beta.measurable.ai:8443/api npm run build
 
 FROM nginx:stable-alpine
 
