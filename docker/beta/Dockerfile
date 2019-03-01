@@ -21,8 +21,8 @@ RUN API_SCHEME=https API_ENDPOINT=beta.measurable.ai:8443/api npm run build
 FROM nginx:stable-alpine
 
 # Copy nginx conf
-COPY docker/alpha/nginx.conf /etc/nginx/nginx.conf
-COPY docker/alpha/default.conf /etc/nginx/conf.d/
+COPY docker/beta/nginx.conf /etc/nginx/nginx.conf
+COPY docker/beta/default.conf /etc/nginx/conf.d/
 
 # Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
