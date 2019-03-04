@@ -143,7 +143,7 @@
       "doneText": "加載完成",
       "failText": "加載失敗"
     },
-    "monthlyReward" : "每月獎勵",
+    "dataPointReward" : "我的數據收益",
     "viewRewardDetail" : "查看獎勵詳情"
   },
   "settings": {
