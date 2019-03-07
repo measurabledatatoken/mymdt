@@ -15,6 +15,7 @@
               :description="$t('message.tutorial.slide_1_description')"
               img-src="/static/icons/tutorial-1.svg"
             />
+            <p class="md-caption powered-by-mdt">Powered by MyMDT</p>
           </swiper-slide>
           <swiper-slide>
             <TutorialItem 
@@ -22,6 +23,7 @@
               :description="$t('message.tutorial.slide_2_description')"
               img-src="/static/icons/tutorial-2.svg"
             />
+            <p class="md-caption powered-by-mdt">Powered by MyMDT</p>
           </swiper-slide>
           <swiper-slide>
             <TutorialItem 
@@ -56,6 +58,7 @@
                 </div>
               </template>
             </TutorialItem> 
+            <p class="md-caption powered-by-mdt">Powered by MyMDT</p>
           </swiper-slide>
           <div 
             slot="pagination"
@@ -169,7 +172,7 @@ export default {
     } else {
       this.showScreen = true;
     }
-    trackEvent('Open Beta Testing url ');
+    trackEvent('Open Welcome Page');
   },
   methods: {
     ...mapMutations({
@@ -206,10 +209,16 @@ export default {
   width: 100%;
   height: 100%;
   padding-bottom: 8%;
+  padding-top: 1.5rem;
+}
+
+.swiper-slide {
+  width: 100%;
+  height: auto;
 }
 
 .swiper-pagination {
-  bottom: 37%;
+  top: 0;
   /deep/ .swiper-pagination-bullet {
     margin: 0 10px;
   }
@@ -219,6 +228,7 @@ export default {
   /deep/ {
     padding: 0;
     width: 100%;
+    height: 100%;
     .tutorial-item__title {
       margin-top: 20px;
     }
@@ -229,8 +239,11 @@ export default {
     }
   }
 }
+.powered-by-mdt {
+  margin-top: -10px;
+}
 .welcome-form {
-  padding: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
   width: 100%;
   height: 100%;
   &.welcome-form-invalid {
