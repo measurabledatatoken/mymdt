@@ -33,9 +33,9 @@
       />
       <md-divider />
       <base-setting-list-item 
-        :title="$t('message.settings.legalAndPrivacy')" 
+        :title="$t('message.settings.termsOfUse')" 
         :show-action="false"
-        @click="onLegalAndPrivacyClick"
+        @click="onTermsOfUseClick"
       />
       <md-divider />
     </md-list>
@@ -98,7 +98,7 @@ export default {
       trackEvent('Click on report a problem');
       this.$router.push(RouteDef.ReportProblem.path);
     },
-    onLegalAndPrivacyClick() {
+    onTermsOfUseClick() {
       trackEvent('Click on Legal and Privacy');
       this.$router.push(RouteDef.LegalAndPrivacy.path);
     },

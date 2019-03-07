@@ -152,7 +152,7 @@
     "security": "Security",
     "help": "Help",
     "reportProblem": "Report Problem",
-    "legalAndPrivacy": "Legal & Privacy",
+    "termsOfUse": "Terms of Use",
     "phoneNumber": "Phone Number",
     "setUpNow": "Set Up Now",
     "accountSecurity": "Account Security",
@@ -294,8 +294,8 @@
     "agreementDetail": "By clicking the button below, your email accounts in MailTime will automatically be imported into MailTime Rewards Program.",
     "importAccounts": "Import Account(s)"
   },
-  "legalAndPrivacy": {
-    "termsOfUse": "Terms of Use"
+  "termsOfUse": {
+    "title": "Terms of Use"
   },
   "twoFactorAuthentication": {
     "setupTitle": "Two-Factor Authentication",

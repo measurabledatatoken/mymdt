@@ -13,6 +13,7 @@ export const SET_PRICE_UNIT = 'home/SET_PRICE_UNIT';
 export const SET_IS_USER_ACCOUNTS_DIRTY = 'home/SET_IS_USER_ACCOUNTS_DIRTY';
 export const SET_APP_ID = 'home/SET_APP_ID';
 export const SET_NDA_AGREEMENT = 'home/SET_NDA_AGREEMENT';
+export const SET_HEADER_BACKGROUND_COLOR = 'home/SET_HEADER_BACKGROUND_COLOR';
 
 // Actions
 export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -29,6 +30,7 @@ const state = {
   ndaAgreement: false,
   // AppConfig
   appConfig: null,
+  headerBackgroundColor: null,
 };
 
 const getters = {
@@ -62,6 +64,9 @@ const mutations = {
   },
   [SET_NDA_AGREEMENT](state, ndaAgreement) {
     state.ndaAgreement = ndaAgreement;
+  },
+  [SET_HEADER_BACKGROUND_COLOR](state, headerBackgroundColor) {
+    state.headerBackgroundColor = headerBackgroundColor;
   },
 };
 
