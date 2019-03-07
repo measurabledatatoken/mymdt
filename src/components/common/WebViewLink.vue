@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.legal-and-privacy-screen {
+.terms-of-use-screen {
   text-align: left;
   padding: 0 $defaultPageMargin $defaultPageMargin $defaultPageMargin;
 

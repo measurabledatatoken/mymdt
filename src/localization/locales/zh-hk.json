@@ -4,7 +4,7 @@
     "okay": "確定",
     "unknow_error": "出錯了......請稍後再試",
     "error_title": "出錯了",
-    "done": "無",
+    "done": "完成",
     "cancel": "取消",
     "skip": "跳過",
     "edit": "編輯",
@@ -152,7 +152,7 @@
     "security": "安全",
     "help": "幫助",
     "reportProblem": "反饋問題",
-    "legalAndPrivacy": "法律和隱私",
+    "termsOfUse": "使用條款",
     "phoneNumber": "電話號碼",
     "setUpNow": "現在設定",
     "accountSecurity": "賬號安全",
@@ -293,8 +293,8 @@
     "agreementDetail": "點擊“導入郵箱賬號”，您在 MailTime 簡信積分簡信中登錄的郵箱賬號將自動登入 簡信積分。",
     "importAccounts": "導入郵箱賬號"
   },
-  "legalAndPrivacy": {
-    "termsOfUse": "使用條款"
+  "termsOfUse": {
+    "title": "使用條款"
   },
   "twoFactorAuthentication": {
     "setupTitle": "二次驗證",

@@ -81,7 +81,7 @@ const Component = () => {
 };
 */
 
-import BetaTestingHeader from '@/components/header/BetaTestingHeader';
+import SimpleHeader from '@/components/header/SimpleHeader';
 
 Vue.use(Router);
 Vue.use(Meta);
@@ -109,7 +109,7 @@ const router = new Router({
           path: RouteDef.Welcome.path,
           components: {
             default: Welcome,
-            header: BetaTestingHeader,
+            header: SimpleHeader,
           },
           meta: {
             setFixHeight: false,

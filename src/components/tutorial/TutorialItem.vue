@@ -8,14 +8,19 @@
     </div>
     <div class="tutorial-item__title">{{ title }}</div>
     <div class="tutorial-item__description">{{ description }}</div>
-    <MDTSubtleButton 
-      v-if="!isFinalPage" 
-      @click="$emit('click')"
-    >{{ $t("message.tutorial.get_started") }}</MDTSubtleButton>
-    <MDTPrimaryButton 
-      v-if="isFinalPage" 
-      @click="$emit('click')"
-    >{{ $t("message.tutorial.get_started") }}</MDTPrimaryButton>
+    <template v-if="hasClickListener">
+      <MDTSubtleButton 
+        v-if="!isFinalPage" 
+        class="action-button"
+        @click="$emit('click')"
+      >{{ $t("message.tutorial.get_started") }}</MDTSubtleButton>
+      <MDTPrimaryButton 
+        v-if="isFinalPage" 
+        class="action-button"
+        @click="$emit('click')"
+      >{{ $t("message.tutorial.get_started") }}</MDTPrimaryButton>
+    </template>
+    <slot name="action" />
   </div>
 </template>
 
@@ -44,6 +49,11 @@ export default {
     isFinalPage: {
       type: Boolean,
       default: false,
+    },
+  },
+  computed: {
+    hasClickListener() {
+      return this.$listeners && this.$listeners.click;
     },
   },
 };
@@ -84,7 +94,7 @@ export default {
     font-size: 16px;
   }
 
-  .md-button {
+  .action-button {
     position: absolute;
     width: calc(100% - #{24px * 2});
     bottom: 4%;

@@ -1,86 +1,128 @@
 <template>
   <form 
-    class="welcome-form" 
+    :class="['welcome-form', { 'welcome-form-invalid' : !isAvailable } ]" 
     @submit.prevent="handleSubmit"
   >
     <div :class="['welcome-form__wrapper', { 'welcome-form__wrapper--active': showScreen }]">
-      <div class="welcome-form__header">
-        <h1>{{ $t('message.welcome.title') }}</h1>
-      </div>
-      <div class="welcome-form__content">
-        <p 
-          v-if="inMaintenance"
-          data-cy="maintenance-message" 
-          v-html="$t('message.maintenance.description')"
-        />
-        <p 
-          v-else-if="isOSSupported" 
-          v-html="$t('message.welcome.description')"
-        />
-        <p 
-          v-else
-          v-html="$t('message.welcome.OSNotSupported')"
-        />
-      </div>
-      <div 
-        v-if="isAvailable" 
-        class="welcome-form__footer"
-      >
-        <Checkbox 
-          v-model="$v.agree.$model" 
-          data-cy="agree-nda"
+      <div v-if="isAvailable"> 
+        <swiper
+          :options="swiperOption"
         >
-          <template
-            slot="title"
-          >
-            <i18n path="message.welcome.agreementCheckbox1">
-              <a @click.prevent.stop="handleClickNDA">{{ $t('message.welcome.agreementCheckbox2') }}</a>
-            </i18n>
-          </template>
-        </Checkbox>
-        <p>{{ $t('message.welcome.agreementDetail') }}</p>
-        <MDTPrimaryButton
-          :disabled="!$v.$dirty || $v.$anyError"
-          data-cy="import-account"
-          type="submit"
-        >
-          {{ $t('message.welcome.importAccounts') }}
-        </MDTPrimaryButton>
+          <!-- slides -->
+          <swiper-slide> 
+            <TutorialItem 
+              :title="$t('message.tutorial.slide_1_title')"
+              :description="$t('message.tutorial.slide_1_description')"
+              img-src="/static/icons/tutorial-1.svg"
+            />
+          </swiper-slide>
+          <swiper-slide>
+            <TutorialItem 
+              :title="$t('message.tutorial.slide_2_title')"
+              :description="$t('message.tutorial.slide_2_description')"
+              img-src="/static/icons/tutorial-2.svg"
+            />
+          </swiper-slide>
+          <swiper-slide>
+            <TutorialItem 
+              :title="$t('message.tutorial.slide_3_title')"
+              :description="$t('message.tutorial.slide_3_description')"
+              img-src="/static/icons/tutorial-3.svg"
+            >
+              <template slot="action">
+                <div 
+                  class="welcome-form__footer"
+                >
+                  <Checkbox 
+                    v-model="$v.agree.$model" 
+                    data-cy="agree-nda"
+                  >
+                    <template
+                      slot="title"
+                    >
+                      <i18n path="message.welcome.agreementCheckbox1">
+                        <a @click.prevent.stop="handleClickNDA">{{ $t('message.welcome.agreementCheckbox2') }}</a>
+                      </i18n>
+                    </template>
+                  </Checkbox>
+                  <p>{{ $t('message.welcome.agreementDetail') }}</p>
+                  <MDTPrimaryButton
+                    :disabled="!$v.$dirty || $v.$anyError"
+                    data-cy="import-account"
+                    type="submit"
+                  >
+                    {{ $t('message.welcome.importAccounts') }}
+                  </MDTPrimaryButton>
+                </div>
+              </template>
+            </TutorialItem> 
+          </swiper-slide>
+          <div 
+            slot="pagination"
+            class="swiper-pagination"
+          />
+        </swiper> 
       </div>
-    </div>
-    <NDA :active.sync="showNDA" />
+      <div v-else>
+        <div class="welcome-form__header">
+          <h1>{{ $t('message.welcome.title') }}</h1>
+        </div>
+        <div class="welcome-form__content">
+          <p 
+            v-if="inMaintenance"
+            data-cy="maintenance-message" 
+            v-html="$t('message.maintenance.description')"
+          />
+          <p 
+            v-else
+            v-html="$t('message.welcome.OSNotSupported')"
+          />
+        </div>
+      </div>
+    </div> 
   </form>
 </template>
 
 <script>
+import 'swiper/dist/css/swiper.css';
 import { mapState, mapActions, mapMutations } from 'vuex';
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import { trackEvent } from '@/utils';
 import { helpers } from 'vuelidate/lib/validators';
 
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Checkbox from '@/components/input/Checkbox';
-import BaseField from '@/components/input/BaseField';
-import NDA from '@/components/betaTesting/NDA';
-
-import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
+import TutorialItem from '@/components/tutorial/TutorialItem';
 
 import { RouteDef } from '@/constants';
-import { SET_NDA_AGREEMENT, REQUEST_APP_CONFIG } from '@/store/modules/home';
+import {
+  SET_NDA_AGREEMENT,
+  REQUEST_APP_CONFIG,
+  SET_HEADER_BACKGROUND_COLOR,
+} from '@/store/modules/home';
 
 const checked = value => !helpers.req(value) || value === true;
 
 export default {
   components: {
+    TutorialItem,
     MDTPrimaryButton,
     Checkbox,
-    BaseField,
-    NDA,
+    swiper,
+    swiperSlide,
   },
   data() {
     return {
       agree: false,
       showScreen: false,
       showNDA: false,
+      swiperOption: {
+        slidesPerView: 1,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      },
     };
   },
   validations: {
@@ -120,7 +162,9 @@ export default {
   },
   async created() {
     await this.requestAppConfig();
+    this.setHeaderBackgroundColor(this.isAvailable && 'white');
     if ((this.isAvailable && this.ndaAgreement) || this.isAdmin) {
+      this.setHeaderBackgroundColor(null);
       this.goToHome();
     } else {
       this.showScreen = true;
@@ -130,9 +174,9 @@ export default {
   methods: {
     ...mapMutations({
       setNDAAgreement: SET_NDA_AGREEMENT,
+      setHeaderBackgroundColor: SET_HEADER_BACKGROUND_COLOR,
     }),
     ...mapActions({
-      openErrorPrompt: OPEN_ERROR_PROMPT,
       requestAppConfig: REQUEST_APP_CONFIG,
     }),
     goToHome() {
@@ -150,36 +194,58 @@ export default {
       }
     },
     handleClickNDA() {
-      this.showNDA = true;
+      trackEvent('Click on Terms and Condition');
+      this.$router.push(RouteDef.LegalAndPrivacy.path);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 8%;
+}
+
+.swiper-pagination {
+  bottom: 37%;
+  /deep/ .swiper-pagination-bullet {
+    margin: 0 10px;
+  }
+}
+
+.tutorial-item {
+  /deep/ {
+    padding: 0;
+    width: 100%;
+    .tutorial-item__title {
+      margin-top: 20px;
+    }
+    .tutorial-item__img-container {
+      .icon {
+        margin-top: 2%;
+      }
+    }
+  }
+}
 .welcome-form {
-  background-color: $home-bgcolor;
   padding: 1.5rem;
-  display: flex;
+  width: 100%;
+  height: 100%;
+  &.welcome-form-invalid {
+    background-color: $home-bgcolor;
+  }
 
   .welcome-form__wrapper {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
     opacity: 0;
     transition: opacity 300ms;
-
+    width: 100%;
     &.welcome-form__wrapper--active {
       opacity: 1;
     }
   }
   .welcome-form__header {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
     h1 {
       font-size: 1.25rem;
       font-weight: 600;
@@ -187,12 +253,7 @@ export default {
     }
   }
   .welcome-form__content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex-grow: 3;
+    margin-top: 30px;
     p {
       font-size: 1rem;
       color: #ffffff;
@@ -200,15 +261,25 @@ export default {
     }
   }
   .welcome-form__footer {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: left;
-    flex-grow: 2;
+    padding-top: 50px;
+    /deep/ .mdt-checkbox__checkmark {
+      border-color: var(
+        --md-theme-default-text-accent-on-background-variant,
+        rgba(0, 0, 0, 0.54)
+      );
+    }
+    /deep/ .mdt-checkbox__title {
+      color: var(
+        --md-theme-default-text-accent-on-background-variant,
+        rgba(0, 0, 0, 0.54)
+      );
+    }
     p {
       font-size: 0.875rem;
-      color: #ffffff;
+      color: var(
+        --md-theme-default-text-accent-on-background-variant,
+        rgba(0, 0, 0, 0.54)
+      );
       text-align: left;
     }
     .md-button {

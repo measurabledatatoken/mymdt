@@ -1,5 +1,8 @@
 <template>
-  <div class="home-header">
+  <div 
+    :style="style"  
+    class="home-header"
+  >
     <md-button 
       class="md-icon-button" 
       @click="returnCallback"
@@ -9,6 +12,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 import { RouteDef, ExitFromWalletWebviewURL } from '@/constants';
 
 export default {
@@ -17,6 +21,17 @@ export default {
       RouteDef,
       transactionHistoryURL: `${RouteDef.TransactionHistory.path}`,
     };
+  },
+  computed: {
+    ...mapState({
+      headerBackgroundColor: state => state.home.headerBackgroundColor,
+    }),
+    style() {
+      return (
+        this.headerBackgroundColor &&
+        `background-color: ${this.headerBackgroundColor}`
+      );
+    },
   },
   methods: {
     returnCallback() {
