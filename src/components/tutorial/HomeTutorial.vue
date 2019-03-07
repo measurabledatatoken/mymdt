@@ -109,11 +109,6 @@ export default {
   height: 100%;
 }
 
-.swipe-slide {
-  width: 100%;
-  height: 100%;
-}
-
 .swiper-pagination {
   bottom: 20%;
 
