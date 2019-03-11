@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: docker/alpha/Dockerfile
     image: mdtwallet/app:alpha
-    hostname: mdtwallet-app
     networks:
       - mdtwallet-api_api
     ports:
