@@ -209,7 +209,7 @@ export default {
   width: 100%;
   height: 100%;
   padding-bottom: 8%;
-  padding-top: 1.5rem;
+  padding-top: 4%;
 }
 
 .swiper-slide {
@@ -243,7 +243,7 @@ export default {
   margin-top: -10px;
 }
 .welcome-form {
-  padding: 0 1.5rem 1.5rem;
+  padding: 0 1.5rem;
   width: 100%;
   height: 100%;
   &.welcome-form-invalid {

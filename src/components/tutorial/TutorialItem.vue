@@ -13,7 +13,7 @@
         v-if="!isFinalPage" 
         class="action-button"
         @click="$emit('click')"
-      >{{ $t("message.tutorial.get_started") }}</MDTSubtleButton>
+      >{{ $t("message.common.skip") }}</MDTSubtleButton>
       <MDTPrimaryButton 
         v-if="isFinalPage" 
         class="action-button"
