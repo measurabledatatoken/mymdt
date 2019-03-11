@@ -219,6 +219,7 @@ export default {
 
 .swiper-pagination {
   top: 0;
+  height: 20px;
   /deep/ .swiper-pagination-bullet {
     margin: 0 10px;
   }
