@@ -7,7 +7,14 @@
       class="md-icon-button" 
       @click="returnCallback"
     >
-      <md-icon md-src="/static/icons/close-white.svg"/>
+      <md-icon 
+        v-if="headerBackgroundColor === 'white' || headerBackgroundColor === '#FFFFFF'" 
+        md-src="/static/icons/close-gray.svg"
+      />
+      <md-icon 
+        v-else 
+        md-src="/static/icons/close-white.svg"
+      />
     </md-button>
   </div>
 </template>
