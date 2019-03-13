@@ -7,6 +7,7 @@ export default {
   CANCELLED: 5,
   EXPIRED: 6,
   PENDING_TO_CLAIM: 7,
+  PENDING_TO_APPROVE: 8,
   properties: {
     0: {
       messageId: 'message.transaction.pending',
@@ -31,6 +32,9 @@ export default {
     },
     7: {
       messageId: 'message.transaction.pendingToClaim',
+    },
+    8: {
+      messageId: 'message.transaction.pendingToApprove',
     },
   },
 };
