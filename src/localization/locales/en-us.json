@@ -130,6 +130,7 @@
     "refund": "Refund",
     "cancelled": "Cancelled",
     "pendingToClaim": "Pending...",
+    "pendingToApprove": "Pending...",
     "problemWithTransation" : "Problem with this transaction?",
     "problemDidNotMakeIt": "I did not make this transaction.",
     "problemMakeItAccidentally": "I made this transaction by mistake.",

@@ -130,6 +130,7 @@
     "refund": "退款",
     "cancelled": "已取消",
     "pendingToClaim": "处理中...",
+    "pendingToApprove": "处理中...",
     "problemWithTransation": "此次交易的问题？",
     "problemDidNotMakeIt": "我没有进行此交易。",
     "problemMakeItAccidentally": "我错误地进行了此交易。",
