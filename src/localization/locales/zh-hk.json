@@ -52,7 +52,7 @@
     "sessionExpired": "您的使用期限已過"
   },
   "home": {
-    "total_balance": "總余額",
+    "total_balance": "總積分", 
     "title": "簡信積分",
     "settings": "設定",
     "tutorial": "教學",
@@ -80,7 +80,7 @@
     "notelbl": "備註",
     "note_placeholder": "選填. 最多{num}字",
     "transferlist_emailtitle": "發送 MDT 到其它郵箱地址",
-    "transferlist_ethtitle": "發送 MDT 到以太坊坊錢包",
+    "transferlist_ethtitle": "發送 MDT 至我的錢包地址",
     "transfer": "轉帳",
     "transaction_fee": "手續費",
     "min_amount": "最少轉帳數量",
@@ -247,7 +247,7 @@
     "slide_2_title": "如何做？",
     "slide_2_description": "完成指定任務例如發郵件，添加賬號，即可輕松獲得獎勵! ",
     "slide_3_title": "獎勵",
-    "slide_3_description": "簡信積分系統中的獎勵將以數字貨幣 MDT 的形式發送至您的賬號。您可選擇將所獲得的MDT 獎勵轉賬至交易所或其他數字錢包。",
+    "slide_3_description": "簡信積分系統中的獎勵將以 MDT 的形式發送至您的賬號。",
     "slide_4_title": "保障交易安全",
     "slide_4_description": "所有的交易必須通過您所設置的 PIN 碼才能驗證。請牢記自己的 PIN 碼，並綁定手機號碼，使交易更安全。"
   },
