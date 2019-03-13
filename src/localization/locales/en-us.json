@@ -80,7 +80,7 @@
     "notelbl": "Note",
     "note_placeholder": "Optional note. Up to {num} characters",
     "transferlist_emailtitle": "Transfer MDT to Another Email Account",
-    "transferlist_ethtitle": "Transfer MDT to Ethereum Wallet",
+    "transferlist_ethtitle": "Send MDT to your own wallet address",
     "transfer": "transfer",
     "transaction_fee": "Transaction Fee",
     "min_amount": "Minimum Amount",
@@ -248,7 +248,7 @@
     "slide_2_title": "How it works?",
     "slide_2_description": "All you need to do is to finish specific tasks while using the  app like sending out an email, or adding another email account.",
     "slide_3_title": "Benefits",
-    "slide_3_description": "Your rewards in this program will be counted as MDT, a cryptocurrency that can be traded and spent like Bitcoin. ",
+    "slide_3_description": "Your rewards in this program will be counted as MDT, which can be traded and spent in the MailTime ecosystem in the future.",
     "slide_4_title": "Security",
     "slide_4_description": "All transactions are authorised by your PIN. Add your phone number for more security."
   },
