@@ -52,7 +52,7 @@
     "sessionExpired": "您的使用期限已过"
   },
   "home": {
-    "total_balance": "总余额",
+    "total_balance": "总积分",
     "title": "简信积分",
     "settings": "设定",
     "tutorial": "教学",
@@ -80,7 +80,7 @@
     "notelbl": "备注",
     "note_placeholder": "选填. 最多{num}字",
     "transferlist_emailtitle": "发送 MDT 到其它邮箱地址",
-    "transferlist_ethtitle": "发送 MDT 到以太坊坊钱包",
+    "transferlist_ethtitle": "发送 MDT 至我的钱包地址",
     "transfer": "转帐",
     "transaction_fee": "手续费",
     "min_amount": "最少转帐数量",
@@ -248,7 +248,7 @@
     "slide_2_title": "如何做？",
     "slide_2_description": "完成指定任务例如发邮件，添加账号，即可轻松获得奖励! ",
     "slide_3_title": "奖励",
-    "slide_3_description": "简信积分系统中的奖励将以数字货币 MDT 的形式发送至您的账号。您可选择将所获得的MDT 奖励转账至交易所或其他数字钱包。",
+    "slide_3_description": "简信积分系统中的奖励将以 MDT 的形式发送至您的账号。",
     "slide_4_title": "保障交易安全",
     "slide_4_description": "所有的交易必须通过您所设置的 PIN 码才能验证。请牢记自己的 PIN 码，并绑定手机号码，使交易更安全。"
   },
