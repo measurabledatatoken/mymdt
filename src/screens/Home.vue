@@ -5,7 +5,6 @@
       <div class="balance-count">{{ formatAmount(totalMDTBalance) }} MDT</div>
 
       <div class="account-content">
-        <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }} {{ priceUnit }} </div>
         <div class="accountnum">{{ accountNumStr }}</div>
       </div>
     </div>
@@ -341,18 +340,12 @@ export default {
   margin-top: -40px; //To make the background image to move upward
 }
 
-.balance-value {
-  font-size: 16px;
-  color: white;
-  line-height: 70px;
-  padding-top: 20px;
-}
-
 .accountnum {
   font-size: 14px;
   min-height: 24px;
   font-weight: bold;
   margin-left: 16px;
+  padding-top: 40px;
   padding-bottom: 4px;
   text-align: left;
   color: white;
