@@ -1,21 +1,14 @@
 version: '3.1'
 
 services:
-  mdtwallet-app:
+  mdtwallet-webapp:
     build:
       context: .
       dockerfile: docker/alpha/Dockerfile
-    image: mdtwallet/app:alpha
+    image: mdtwallet-webapp
     networks:
-      - mdtwallet-api_api
-    ports:
-      - '8443:443'
-    volumes:
-      - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
-      - /docker-volumes/etc/letsencrypt/live/measurable.ai/fullchain.pem:/etc/letsencrypt/live/measurable.ai/fullchain.pem
-      - /docker-volumes/etc/letsencrypt/live/measurable.ai/privkey.pem:/etc/letsencrypt/live/measurable.ai/privkey.pem
+      - mdtwallet-webapp
     restart: always
 
 networks:
-  mdtwallet-api_api:
-    external: true
+  mdtwallet-webapp:
