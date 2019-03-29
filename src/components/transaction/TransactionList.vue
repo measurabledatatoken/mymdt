@@ -94,6 +94,7 @@ export default {
         loadingText: this.$t('message.transaction.listing.loadingText'),
         doneText: this.$t('message.transaction.listing.doneText'),
         failText: this.$t('message.transaction.listing.failText'),
+        triggerDistance: 10,
       },
       showBottomText: false,
     };
