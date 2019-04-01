@@ -26,12 +26,23 @@
 
 
     <MDTConfirmPopup 
-      :md-active.sync="showSetupPinDialog" 
-      :md-title="$t('message.passcode.pin_setup_remind_title')"
-      :md-content="$t('message.passcode.pin_setup_remind_content')" 
-      :md-confirm-text="$t('message.common.setup')"
-      :md-cancel-text="$t('message.common.cancel')" 
+      :md-active.sync="showSetupPinDialog"
+      :md-title="$t('message.passcode.pin_setup_remind_title')" 
+      :md-content="$t('message.passcode.pin_setup_remind_content')"
+      :md-confirm-text="$t('message.common.setup')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      data-cy="setup-pin-dialog" 
       @md-confirm="onConfirmSetupPinDialogClick"
+    />
+
+    <MDTConfirmPopup 
+      :md-active.sync="showSetupPhoneDialog"
+      :md-title="$t('message.phone.add_phone_title')" 
+      :md-content="$t('message.phone.add_phone_content')"
+      :md-confirm-text="$t('message.common.setup')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      data-cy="setup-phone-dialog" 
+      @md-confirm="onConfirmSetupPhoneDialogClick"
     />
   </div>
 
@@ -71,6 +82,7 @@ export default {
   data() {
     return {
       showSetupPinDialog: false,
+      showSetupPhoneDialog: false,
     };
   },
   computed: {
@@ -97,6 +109,8 @@ export default {
       trackEvent('Click on Transfer to an email account');
       if (!this.transferFromAccount.isPasscodeSet) {
         this.showSetupPinDialog = true;
+      } else if (!this.transferFromAccount.isPhoneConfirmed) {
+        this.showSetupPhoneDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEmail.path);
       }
@@ -105,6 +119,8 @@ export default {
       trackEvent('Click on transfer to an ETH wallet');
       if (!this.transferFromAccount.isPasscodeSet) {
         this.showSetupPinDialog = true;
+      } else if (!this.transferFromAccount.isPhoneConfirmed) {
+        this.showSetupPhoneDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEthWallet.path);
       }
@@ -119,6 +135,13 @@ export default {
       this.setDoneCallbackPath(this.$router.currentRoute.path);
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
+      });
+    },
+    onConfirmSetupPhoneDialogClick() {
+      trackEvent('Start Setting up Phone from the popup');
+      this.setDoneCallbackPath(this.$router.currentRoute.path);
+      this.$router.push({
+        name: RouteDef.AddPhoneNumberInput.name,
       });
     },
   },
