@@ -58,9 +58,10 @@
 
       </div>
     </div>
-
+    <MDTSmartCaptcha @callback="handleRecaptchaVerify" />
     <MDTPrimaryButton 
       :bottom="true" 
+      :disabled="!isCaptchaPassed"
       @click="transferMDT"
     >
       {{ $t('message.common.transferbtn') }}
@@ -94,6 +95,7 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import BasePage from '@/screens/BasePage';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import PaddedContainer from '@/components/containers/PaddedContainer';
+import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
 
@@ -102,6 +104,7 @@ export default {
     MDTPrimaryButton,
     PinCodeInputPopup,
     PaddedContainer,
+    MDTSmartCaptcha,
   },
   extends: BasePage,
   metaInfo() {
@@ -113,6 +116,7 @@ export default {
     return {
       TransferType,
       showPinCodeInput: false,
+      isVerified: false,
     };
   },
   computed: {
@@ -147,6 +151,9 @@ export default {
       }
       return false;
     },
+    isCaptchaPassed() {
+      return process.env.NODE_ENV === 'development' || this.isVerified;
+    },
   },
   created() {
     trackEvent('View "Transfer review" Page', {
@@ -164,6 +171,10 @@ export default {
       validatePIN: VALIDATE_PIN,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
+    handleRecaptchaVerify() {
+      this.isVerified = true;
+      // TODO: pass token, sig and sessionId with the form and do server side verification
+    },
     async goToSMSVerify(pinCode) {
       this.setCountryDialCode(this.selectedSecurityUser.countryDialCode);
       this.setPhoneNumber(this.selectedSecurityUser.phoneNumber);
@@ -212,10 +223,12 @@ export default {
       }
     },
     transferMDT() {
-      trackEvent('Click on Transfer button', {
-        'Transfer Mode': this.TransferType,
-      });
-      this.showPinCodeInput = true;
+      if (this.isCaptchaPassed) {
+        trackEvent('Click on Transfer button', {
+          'Transfer Mode': this.TransferType,
+        });
+        this.showPinCodeInput = true;
+      }
     },
     async onPinCodeFilled(pinCode) {
       try {
