@@ -2,7 +2,7 @@
   <PaddedContainer class="transfer-review">
     <div class="review-content">
       <div class="from-lbl">{{ $t('message.transfer.fromlbl') }}</div>
-      <div class="from-value">{{ transferFromAccount.emailAddress }}</div>
+      <div class="from-value">{{ selectedUser.emailAddress }}</div>
       <div class="to-lbl">{{ $t('message.transfer.tolbl') }}</div>
       <div class="to-value">{{ transferToStr }}</div>
       <div
@@ -130,8 +130,7 @@ export default {
     ...mapGetters({
       transactionFee: 'transactionFee',
       finalAmount: 'finalAmount',
-      transferFromAccount: 'transferFromAccount',
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
@@ -143,7 +142,7 @@ export default {
       return this.finalAmount <= 0 ? '--' : formatAmount(this.finalAmount);
     },
     isWalletAmountValid() {
-      return this.transferAmount < this.transferFromAccount.mdtBalance;
+      return this.transferAmount < this.selectedUser.mdtBalance;
     },
     isFinalAmountSmallerThanZero() {
       if (this.finalAmount <= 0) {
@@ -176,8 +175,8 @@ export default {
       // TODO: pass token, sig and sessionId with the form and do server side verification
     },
     async goToSMSVerify(pinCode) {
-      this.setCountryDialCode(this.selectedSecurityUser.countryDialCode);
-      this.setPhoneNumber(this.selectedSecurityUser.phoneNumber);
+      this.setCountryDialCode(this.selectedUser.countryDialCode);
+      this.setPhoneNumber(this.selectedUser.phoneNumber);
       try {
         await this.requestVerificationCode({
           action: OTPActionType.TransferAction,
@@ -195,12 +194,10 @@ export default {
       }
     },
     start2FAVerify(pinCode) {
-      if (
-        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.SMS
-      ) {
+      if (this.selectedUser.twofaMethod === TwoFactorOption.METHOD.SMS) {
         this.goToSMSVerify(pinCode);
       } else if (
-        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
+        this.selectedUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
       ) {
         this.$router.push({
           name: RouteDef.TransferVerifyGoogleAuthPage.name,
@@ -241,11 +238,11 @@ export default {
 
       try {
         if (
-          this.transferFromAccount.isTwofaEnabled &&
+          this.selectedUser.isTwofaEnabled &&
           [
             TwoFactorOption.USAGE.TRANSACTION,
             TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN,
-          ].includes(this.transferFromAccount.twofaUsage)
+          ].includes(this.selectedUser.twofaUsage)
         ) {
           this.start2FAVerify(pinCode);
         } else {

@@ -30,7 +30,6 @@ import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
 
 import { RouteDef } from '@/constants';
 import { SET_SELECTED_USER } from '@/store/modules/home';
-import { SET_SELECTED_SECURITY_USER } from '@/store/modules/security';
 
 export default {
   components: {
@@ -57,7 +56,6 @@ export default {
   created() {
     const emailAddress = this.$route.params.account_id;
     this.setSelectedUser(emailAddress);
-    this.setSelectedSecurityUser(emailAddress);
     this.fetchApplications({
       userId: this.selectedUser.emailAddress,
     });
@@ -65,7 +63,6 @@ export default {
   methods: {
     ...mapMutations({
       setSelectedUser: SET_SELECTED_USER,
-      setSelectedSecurityUser: SET_SELECTED_SECURITY_USER,
     }),
     goToTransfer() {
       trackEvent('Click on transfer from account page');
