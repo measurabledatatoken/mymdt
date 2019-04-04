@@ -82,7 +82,7 @@ export default {
       doneCallBackPath: state => state.security.doneCallBackPath,
     }),
     ...mapGetters({
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
   },
   methods: {
@@ -134,7 +134,7 @@ export default {
       }
     },
     onPopupDoneClicked() {
-      if (!this.selectedSecurityUser.isPhoneConfirmed) {
+      if (!this.selectedUser.isPhoneConfirmed) {
         this.setDoneCallbackPath(this.doneCallBackPath);
         this.$router.push({
           name: RouteDef.AddPhoneNumberInput.name,

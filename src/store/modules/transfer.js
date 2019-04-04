@@ -9,7 +9,6 @@ import {
 // mutation
 export const SET_TRANSFER_AMOUNT = 'transfer/SET_TRANSFER_AMOUNT';
 export const SET_TRANSFER_TYPE = 'transfer/SET_TRANSFER_TYPE';
-export const SET_TRANSFER_FROM_ACCOUNT = 'transfer/SET_TRANSFER_FROM_ACCOUNT';
 export const SET_TRANSFER_TO_ACCOUNT = 'transfer/SET_TRANSFER_TO_ACCOUNT';
 export const SET_TRANSFER_TO_WALLETADDRESS =
   'transfer/SET_TRANSFER_TO_WALLETADDRESS';
@@ -25,7 +24,6 @@ export const START_TRANSFER = 'transfer/START_TRANSFER';
 const clearState = state => {
   state.transferAmount = null;
   state.transferType = null;
-  state.transferFromUserId = null;
   state.transferToAccount = null;
   state.transferToWalletAddress = null;
   state.transferNote = null;
@@ -34,22 +32,16 @@ const clearState = state => {
 const state = {
   transferAmount: null,
   transferType: null,
-  // transferFromAccount: null,
   transferToAccount: null,
   transferToWalletAddress: null,
   transferNote: null,
   transferToEmailHistory: [],
-  transferFromUserId: null,
 };
 
 const getters = {
-  // eslint-disable-next-line
-  transferFromAccount: (state, getters, rootState, rootGetters) => rootGetters.getUser(state.transferFromUserId),
   transferToAccounts: (state, getters, rootState, rootGetters) => {
     const tempAccounts = rootGetters.getAllUsers.filter(
-      user =>
-        !state.transferFromUserId ||
-        user.emailAddress !== state.transferFromUserId,
+      user => user.emailAddress !== rootGetters.getSelectedUser.emailAddress,
     );
 
     for (let i = 0; i < state.transferToEmailHistory.length; i += 1) {
@@ -90,9 +82,6 @@ const mutations = {
   [SET_TRANSFER_TYPE](state, transferType) {
     state.transferType = transferType;
   },
-  [SET_TRANSFER_FROM_ACCOUNT](state, transferFromUserId) {
-    state.transferFromUserId = transferFromUserId;
-  },
   [SET_TRANSFER_TO_ACCOUNT](state, transferToAccount) {
     state.transferToAccount = transferToAccount;
   },
@@ -131,7 +120,7 @@ const actions = {
     { dispatch, rootState, rootGetters, commit },
     { pin, verificationCode },
   ) {
-    const transferFromAccount = rootGetters.transferFromAccount;
+    const transferFromAccount = rootGetters.getSelectedUser;
     const transferType = rootState.transfer.transferType;
     const transferNote = rootState.transfer.transferNote;
 

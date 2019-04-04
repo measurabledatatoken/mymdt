@@ -11,7 +11,7 @@
 
     <md-dialog-title>
       <div class="title">{{ title }}</div>
-      <div class="subtitle">{{ selectedSecurityUser.emailAddress }}</div>
+      <div class="subtitle">{{ selectedUser.emailAddress }}</div>
     </md-dialog-title>
     <div class="content">
       <template v-if="!validatingPIN">
@@ -75,7 +75,7 @@ export default {
       validatingPIN: state => state.security.validatingPIN,
     }),
     ...mapGetters({
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
     getCallbackPath() {
       return this.callbackPath || this.$router.currentRoute.path;
