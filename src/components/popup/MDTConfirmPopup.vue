@@ -11,6 +11,7 @@ export default {};
 
 <style lang="scss" scoped>
 .md-dialog {
+  z-index: 2147483647;
   /deep/ .md-dialog-actions {
     justify-content: space-between;
     padding-right: 24px;

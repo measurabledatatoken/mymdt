@@ -74,6 +74,27 @@
       @codefilled="onPinCodeFilled" 
       @close-click="showPinCodeInput = false"
     />
+
+    <MDTConfirmPopup 
+      :md-active.sync="showSetupPinDialog"
+      :md-title="$t('message.passcode.pin_setup_remind_title')" 
+      :md-content="$t('message.passcode.pin_setup_remind_content')"
+      :md-confirm-text="$t('message.common.setup')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      data-cy="setup-pin-dialog" 
+      @md-confirm="onConfirmSetupPinDialogClick"
+    />
+
+    <MDTConfirmPopup 
+      :md-active.sync="showSetupPhoneDialog"
+      :md-title="$t('message.phone.add_phone_title')" 
+      :md-content="$t('message.phone.add_phone_content')"
+      :md-confirm-text="$t('message.common.setup')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      data-cy="setup-phone-dialog" 
+      @md-confirm="onConfirmSetupPhoneDialogClick"
+    />
+
   </PaddedContainer>
 </template>
 
@@ -91,11 +112,14 @@ import {
   VALIDATE_PIN,
   REQUEST_VERIFICATION_CODE,
 } from '@/store/modules/security';
-import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+
 import BasePage from '@/screens/BasePage';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
+
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
 
@@ -105,6 +129,7 @@ export default {
     PinCodeInputPopup,
     PaddedContainer,
     MDTSmartCaptcha,
+    MDTConfirmPopup,
   },
   extends: BasePage,
   metaInfo() {
@@ -117,6 +142,8 @@ export default {
       TransferType,
       showPinCodeInput: false,
       isVerified: false,
+      showSetupPinDialog: false,
+      showSetupPhoneDialog: false,
     };
   },
   computed: {
@@ -174,6 +201,22 @@ export default {
       this.isVerified = true;
       // TODO: pass token, sig and sessionId with the form and do server side verification
     },
+    onConfirmSetupPinDialogClick() {
+      trackEvent('Start Setting up PIN from the popup on transfer review page');
+      this.setDoneCallbackPath(this.$router.currentRoute.path);
+      this.$router.push({
+        name: RouteDef.PinCodeSetup.name,
+      });
+    },
+    onConfirmSetupPhoneDialogClick() {
+      trackEvent(
+        'Start Setting up Phone from the popup on transfer review page',
+      );
+      this.setDoneCallbackPath(this.$router.currentRoute.path);
+      this.$router.push({
+        name: RouteDef.AddPhoneNumberInput.name,
+      });
+    },
     async goToSMSVerify(pinCode) {
       this.setCountryDialCode(this.selectedUser.countryDialCode);
       this.setPhoneNumber(this.selectedUser.phoneNumber);
@@ -224,7 +267,13 @@ export default {
         trackEvent('Click on Transfer button', {
           'Transfer Mode': this.TransferType,
         });
-        this.showPinCodeInput = true;
+        if (!this.selectedUser.isPasscodeSet) {
+          this.showSetupPinDialog = true;
+        } else if (!this.selectedUser.isPhoneConfirmed) {
+          this.showSetupPhoneDialog = true;
+        } else {
+          this.showPinCodeInput = true;
+        }
       }
     },
     async onPinCodeFilled(pinCode) {
