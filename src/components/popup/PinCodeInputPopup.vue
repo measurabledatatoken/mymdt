@@ -113,7 +113,7 @@ export default {
 .md-dialog {
   width: 80%;
   height: 196px;
-  z-index: 2147483647;
+  z-index: 10000;
   .md-dialog-title {
     background-color: #f4f6f8;
     height: 88px;

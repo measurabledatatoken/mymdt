@@ -199,12 +199,12 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
   expect(otp).to.have.lengthOf(6);
 
   cy.location('pathname').should('oneOf', [
-    '/home/transfer/transfererifysms',
     '/home/settings/phone/setup-phone/verify',
     '/home/settings/phone/verify-phone/verify',
     '/home/settings/phone/change-phone/verify',
     '/home/settings/phone/reset-passcode/verify',
-    '/home/2fa/disable2faverifysms',
+    '/home/settings/phone/disable-2fa/verify',
+    '/home/settings/phone/transfer/verify',
   ]);
 
   cy.getCurrentContentRouterView()

@@ -24,8 +24,10 @@ import {
   CHANGE_PHONE_NUMBER,
   VERIFY_VERIFICATION_CODE,
   SET_VERIFICATION_CODE_FOR_SECURITY,
+  DISABLE_2FA,
 } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
+import { START_TRANSFER } from '@/store/modules/transfer';
 import BasePhoneNumberVerifyPage from '@/screens/phone/BasePhoneNumberVerifyPage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 import { trackEvent } from '@/utils';
@@ -60,6 +62,8 @@ export default {
       changePhoneNumber: CHANGE_PHONE_NUMBER,
       verifyVerificationCode: VERIFY_VERIFICATION_CODE,
       backToPath: BACK_TO_PATH,
+      disable2FA: DISABLE_2FA,
+      startTransfer: START_TRANSFER,
     }),
     onEditClicked() {
       this.$router.back();
@@ -98,7 +102,6 @@ export default {
             verificationCode,
             action,
           });
-          console.log(verificationCode);
           this.setVerificationCodeForSecurity(verificationCode);
           this.$router.push({
             name: RouteDef.PinCodeSetup.name,
@@ -107,6 +110,32 @@ export default {
             },
           });
           trackEvent('Phone number successfully verify for forgot PIN');
+          break;
+        case OTPActionType.DisableTwoFAAction:
+          await this.verifyVerificationCode({
+            verificationCode,
+            action,
+          });
+          await this.disable2FA({
+            pin: this.pin,
+            verificationCode: verificationCode,
+          });
+          this.backToPath(this.doneCallBackPath);
+          trackEvent('Phone number successfully verify for disable 2fa');
+          break;
+        case OTPActionType.TransferAction:
+          await this.verifyVerificationCode({
+            verificationCode,
+            action,
+          });
+          await this.startTransfer({
+            pin: this.pin,
+            verificationCode: verificationCode,
+          });
+          this.$router.push({
+            name: RouteDef.TransferSuccess.name,
+          });
+          trackEvent('Phone number successfully verify for transfer ');
           break;
         default:
           break;

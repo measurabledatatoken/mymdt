@@ -49,16 +49,12 @@ const QrCodeScanPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/QRCodeScanPage');
 const TransferVerifyGoogleAuthPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/googleAuth/TransferVerifyGoogleAuthPage');
-const TransferVerifySMSPage = () =>
-  import(/* webpackChunkName: "transfer" */ '@/screens/phone/TransferVerifySMSPage');
 const EarnMDT = () => import('@/screens/EarnMDT');
 const WebView = () => import('@/screens/WebView');
 const TwoFactorAuthenticationSettingPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
 const DisableTwoFactorAuthenticationVerifyGoogleAuthPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/googleAuth/DisableTwoFactorAuthenticationVerifyGoogleAuthPage');
-const DisableTwoFactorAuthenticationVerifySMSPage = () =>
-  import(/* webpackChunkName: "2fa" */ '@/screens/phone/DisableTwoFactorAuthenticationVerifySMSPage');
 const GoogleAuthSettingStep1 = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep1');
 const GoogleAuthSettingStep2 = () =>
@@ -231,12 +227,6 @@ const router = new Router({
           component: TransferVerifyGoogleAuthPage,
           props: true,
         },
-        {
-          path: RouteDef.TransferVerifySMSPage.path,
-          name: RouteDef.TransferVerifySMSPage.name,
-          component: TransferVerifySMSPage,
-          props: true,
-        },
         // Earn MDT Route
         {
           path: RouteDef.EarnMDT.path,
@@ -284,12 +274,6 @@ const router = new Router({
           name:
             RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.name,
           component: DisableTwoFactorAuthenticationVerifyGoogleAuthPage,
-        },
-        {
-          path: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.path,
-          name: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.name,
-          component: DisableTwoFactorAuthenticationVerifySMSPage,
-          props: true,
         },
         // Route to Home page for route not defined
         {

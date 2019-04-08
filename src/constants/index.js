@@ -35,10 +35,6 @@ const RouteDef = {
     path: '/home/2fa/disable2faverifygoogleauth',
     name: 'DisableTwoFactorAuthenticationVerifyGoogleAuth',
   },
-  DisableTwoFactorAuthenticationVerifySMSPage: {
-    path: '/home/2fa/disable2faverifysms',
-    name: 'DisableTwoFactorAuthenticationVerifySMS',
-  },
   TwoFactorAuthenticationSetting: {
     path: '/home/2fa/setting',
     name: 'TwoFactorAuthentication',
@@ -68,10 +64,6 @@ const RouteDef = {
   TransferVerifyGoogleAuthPage: {
     path: '/home/transfer/transferverifygoogleauth',
     name: 'TransferVerifyGoogleAuth',
-  },
-  TransferVerifySMSPage: {
-    path: '/home/transfer/transfererifysms',
-    name: 'TransferVerifySMS',
   },
   EarnMDT: { path: '/home/earn', name: 'earnMDT' },
   AccountDetail: {
