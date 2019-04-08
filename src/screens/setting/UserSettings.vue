@@ -190,7 +190,6 @@ import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
-import { convertToPath } from '@/helpers/routerUtil';
 
 export default {
   components: {
@@ -213,6 +212,7 @@ export default {
       showPinCodeInput: false,
       pinCodePopupTitle: '',
       nextRouteNameAfterPINFilled: '',
+      nextRouteParamsAfterPINFilled: {},
       showSetPinDialog: false,
       pinSetupPopupDescription: '',
       showDisableGoogleAuthPopup: false,
@@ -316,7 +316,10 @@ export default {
           }
           break;
         default:
-          this.$router.push(this.nextRouteNameAfterPINFilled);
+          this.$router.push({
+            name: this.nextRouteNameAfterPINFilled,
+            params: this.nextRouteParamsAfterPINFilled,
+          });
       }
     },
     onSetupPhoneNumberClicked() {
@@ -335,12 +338,10 @@ export default {
       }
 
       this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
-      this.nextRouteNameAfterPINFilled = convertToPath(
-        RouteDef.PhoneNumberInput.path,
-        {
-          action: OTPActionType.SetupPhoneNumberAction,
-        },
-      );
+      this.nextRouteNameAfterPINFilled = RouteDef.PhoneNumberInput.name;
+      this.nextRouteParamsAfterPINFilled = {
+        action: OTPActionType.SetupPhoneNumberAction,
+      };
       this.showPinCodeInput = true;
     },
     onConfirmChangePhoneNumber() {

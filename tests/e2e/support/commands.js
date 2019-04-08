@@ -40,7 +40,11 @@ const fillPinCode = (pin = '111111') => {
 
 Cypress.Commands.add('inputPINForSetup', (pin = '111111') => {
   // setup pin page
-  cy.location('pathname').should('eq', '/home/settings/pincode/setup');
+  cy.location('pathname').should('oneOf', [
+    '/home/settings/pincode/setup/setup',
+    '/home/settings/pincode/change/setup',
+    '/home/settings/pincode/reset/setup',
+  ]);
 
   fillPinCode(pin);
   cy.getCurrentContentRouterView()
@@ -196,10 +200,11 @@ Cypress.Commands.add('inputSMSVerificationCode', (otp = '111111') => {
 
   cy.location('pathname').should('oneOf', [
     '/home/transfer/transfererifysms',
-    '/home/settings/phone/add/verify',
-    '/home/settings/phone/change/verify',
+    '/home/settings/phone/setup-phone/verify',
+    '/home/settings/phone/verify-phone/verify',
+    '/home/settings/phone/change-phone/verify',
+    '/home/settings/phone/reset-passcode/verify',
     '/home/2fa/disable2faverifysms',
-    '/home/settings/phone/verify',
   ]);
 
   cy.getCurrentContentRouterView()
@@ -243,8 +248,8 @@ Cypress.Commands.add(
     );
     cy.route('POST', '/api/security/phonenumber/add', createAPIResponse());
     cy.location('pathname').should('oneOf', [
-      '/home/settings/phone/add',
-      '/home/settings/phone/change',
+      '/home/settings/phone/setup-phone/add',
+      '/home/settings/phone/change-phone/add',
     ]);
 
     // input mobile number
