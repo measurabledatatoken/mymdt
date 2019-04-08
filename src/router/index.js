@@ -20,14 +20,8 @@ const ReportProblem = () =>
 const ReportProblemSuccess = () =>
   import(/* webpackChunkName: "report-problem" */ '@/screens/setting/ReportProblemSuccess');
 const LegalAndPrivacy = () => import('@/screens/setting/LegalAndPrivacy');
-const AddPhoneNumberInputPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/AddPhoneNumberInputPage');
-const ChangePhoneNumberInputPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/ChangePhoneNumberInputPage');
-const AddPhoneNumberVerifyPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/AddPhoneNumberVerifyPage');
-const ChangePhoneNumberVerifyPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/ChangePhoneNumberVerifyPage');
+const PhoneNumberInputPage = () =>
+  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/PhoneNumberInputPage');
 const PhoneNumberVerifyPage = () =>
   import(/* webpackChunkName: "phone-number" */ '@/screens/phone/PhoneNumberVerifyPage');
 const PinCodeSetup = () =>
@@ -141,27 +135,9 @@ const router = new Router({
         },
         // phone
         {
-          path: RouteDef.AddPhoneNumberInput.path,
-          name: RouteDef.AddPhoneNumberInput.name,
-          component: AddPhoneNumberInputPage,
-          props: true,
-        },
-        {
-          path: RouteDef.ChangePhoneNumberInput.path,
-          name: RouteDef.ChangePhoneNumberInput.name,
-          component: ChangePhoneNumberInputPage,
-          props: true,
-        },
-        {
-          path: RouteDef.AddPhoneNumberVerify.path,
-          name: RouteDef.AddPhoneNumberVerify.name,
-          component: AddPhoneNumberVerifyPage,
-          props: true,
-        },
-        {
-          path: RouteDef.ChangePhoneNumberVerify.path,
-          name: RouteDef.ChangePhoneNumberVerify.name,
-          component: ChangePhoneNumberVerifyPage,
+          path: RouteDef.PhoneNumberInput.path,
+          name: RouteDef.PhoneNumberInput.name,
+          component: PhoneNumberInputPage,
           props: true,
         },
         {

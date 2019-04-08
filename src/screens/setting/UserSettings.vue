@@ -187,8 +187,10 @@ import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
+
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
+import { convertToPath } from '@/helpers/routerUtil';
 
 export default {
   components: {
@@ -298,7 +300,7 @@ export default {
             },
           });
           break;
-        case RouteDef.ChangePhoneNumberInput.name:
+        case RouteDef.PhoneNumberVerify.name:
           try {
             await this.requestVerificationCode({
               action: OTPActionType.VerifyPhoneNumberAction,
@@ -306,9 +308,6 @@ export default {
             this.$router.push({
               name: RouteDef.PhoneNumberVerify.name,
               params: {
-                emailAddress: this.selectedUser.emailAddress,
-                nextPagePathName: RouteDef.ChangePhoneNumberInput.name,
-                payloadForNextPage: { pin: pinCode },
                 action: OTPActionType.VerifyPhoneNumberAction,
               },
             });
@@ -319,12 +318,7 @@ export default {
           }
           break;
         default:
-          this.$router.push({
-            name: this.nextRouteNameAfterPINFilled,
-            params: {
-              pin: pinCode,
-            },
-          });
+          this.$router.push(this.nextRouteNameAfterPINFilled);
       }
     },
     onSetupPhoneNumberClicked() {
@@ -343,12 +337,17 @@ export default {
       }
 
       this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
-      this.nextRouteNameAfterPINFilled = RouteDef.AddPhoneNumberInput.name;
+      this.nextRouteNameAfterPINFilled = convertToPath(
+        RouteDef.PhoneNumberInput.path,
+        {
+          action: OTPActionType.SetupPhoneNumberAction,
+        },
+      );
       this.showPinCodeInput = true;
     },
     onConfirmChangePhoneNumber() {
       this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
-      this.nextRouteNameAfterPINFilled = RouteDef.ChangePhoneNumberInput.name;
+      this.nextRouteNameAfterPINFilled = RouteDef.PhoneNumberVerify.name;
       this.showPinCodeInput = true;
     },
     onPasscodeForgotClicked() {

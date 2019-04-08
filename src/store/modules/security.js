@@ -12,6 +12,8 @@ export const FLUSH_PHONE_STATE = 'phoneVerifyScreen/FLUSH_STATE';
 export const SET_SECURITY_USER_PHONE_INFO =
   'security/SET_SECURITY_USER_PHONE_INFO';
 export const SET_PIN_FOR_SECURITY = 'security/SET_PIN_FOR_SECURITY';
+export const SET_VERIFICATION_CODE_FOR_SECURITY =
+  'security/SET_VERIFICATION_CODE_FOR_SECURITY';
 // export const SET_2FA_STATUS = 'security/SET_2FA_STATUS';
 export const SET_VALIDATING_PIN = 'security/SET_VALIDATING_PIN';
 
@@ -45,6 +47,7 @@ const state = {
   phoneNumber: null,
   doneCallBackPath: null,
   validatingPIN: false,
+  verificationCode: null,
   pin: null,
 };
 
@@ -76,6 +79,9 @@ const mutations = {
   },
   [SET_PIN_FOR_SECURITY](state, pin) {
     state.pin = pin;
+  },
+  [SET_VERIFICATION_CODE_FOR_SECURITY](state, verificationCode) {
+    state.verificationCode = verificationCode;
   },
 };
 

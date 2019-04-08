@@ -11,6 +11,7 @@ import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import { trackEvent } from '@/utils';
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -27,14 +28,15 @@ export default {
       type: String,
       default: null,
     },
-    verificationCode: {
-      type: String,
-      default: null,
-    },
     mode: {
       type: String,
       default: null,
     },
+  },
+  computed: {
+    ...mapState({
+      verificationCode: state => state.security.verificationCode,
+    }),
   },
   methods: {
     onNextClicked(pincode) {
