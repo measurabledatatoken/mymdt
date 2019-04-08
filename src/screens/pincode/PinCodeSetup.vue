@@ -11,7 +11,6 @@ import { RouteDef } from '@/constants';
 import BasePage from '@/screens/BasePage';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import { trackEvent } from '@/utils';
-import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -23,31 +22,15 @@ export default {
       title: 'PIN',
     };
   },
-  props: {
-    oldPIN: {
-      type: String,
-      default: null,
-    },
-    mode: {
-      type: String,
-      default: null,
-    },
-  },
-  computed: {
-    ...mapState({
-      verificationCode: state => state.security.verificationCode,
-    }),
-  },
   methods: {
     onNextClicked(pincode) {
       trackEvent('Enter PIN for the first time');
+      const mode = this.$route.params.mode;
       this.$router.push({
         name: RouteDef.PinCodeConfirm.name,
         params: {
           setupedPin: pincode,
-          oldPIN: this.oldPIN,
-          mode: this.mode,
-          verificationCode: this.verificationCode,
+          mode,
         },
       });
     },

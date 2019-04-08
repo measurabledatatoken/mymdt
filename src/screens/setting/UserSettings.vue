@@ -269,7 +269,6 @@ export default {
         name: RouteDef.PinCodeSetup.name,
         params: {
           mode: SetupPINMode.SETUP,
-          doneCallBackPath: RouteDef.UserSettings.path,
         },
       });
     },
@@ -296,7 +295,6 @@ export default {
             name: RouteDef.PinCodeSetup.name,
             params: {
               mode: SetupPINMode.CHANGE,
-              oldPIN: pinCode,
             },
           });
           break;

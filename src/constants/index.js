@@ -91,7 +91,7 @@ const RouteDef = {
     name: 'PhoneNumberVerify',
   },
   PinCodeSetup: {
-    path: '/home/settings/pincode/setup',
+    path: '/home/settings/pincode/:mode/setup',
     name: 'pinCodeSetup',
   },
   PinCodeConfirm: {
