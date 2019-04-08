@@ -36,7 +36,16 @@ import { RouteDef } from '@/constants';
 import SetupPINMode from '@/enum/setupPINMode';
 
 export default {
-  metaInfo() {},
+  metaInfo() {
+    const action = this.$route.params.action;
+    switch (action) {
+      case OTPActionType.TransferAction:
+      case OTPActionType.DisableTwoFAAction:
+        return this.$t('message.twoFactorAuthentication.setupTitle');
+      default:
+        break;
+    }
+  },
   components: {
     BasePhoneNumberVerifyPage,
     SuccessPopup,
