@@ -33,7 +33,6 @@ import {
   REQUEST_VERIFICATION_CODE,
   SET_SECURITY_USER_PHONE_INFO,
 } from '@/store/modules/security';
-import SetupPINMode from '@/enum/setupPINMode';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BasePage from '@/screens/BasePage';
 import MDSubtleButton from '@/components/button/MDTSubtleButton';
@@ -84,12 +83,7 @@ export default {
         this.$router.push({
           name: RouteDef.PhoneNumberVerify.name,
           params: {
-            emailAddress: this.selectedUser.emailAddress,
-            nextPagePathName: RouteDef.PinCodeSetup.name,
             action: OTPActionType.ResetPasscodeAction,
-            payloadForNextPage: {
-              mode: SetupPINMode.RESET,
-            },
           },
         });
       });

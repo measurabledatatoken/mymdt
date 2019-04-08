@@ -62,6 +62,7 @@ import ActionCard from '@/components/common/ActionCard';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
+import OTPActionType from '@/enum/otpActionType';
 
 export default {
   components: {
@@ -132,7 +133,10 @@ export default {
       trackEvent('Start Setting up Phone from the popup');
       this.setDoneCallbackPath(this.$router.currentRoute.path);
       this.$router.push({
-        name: RouteDef.AddPhoneNumberInput.name,
+        name: RouteDef.PhoneNumberInput.name,
+        params: {
+          action: OTPActionType.SetupPhoneNumberAction,
+        },
       });
     },
   },

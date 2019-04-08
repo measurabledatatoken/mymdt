@@ -31,6 +31,7 @@ import {
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
 import SetupPINMode from '@/enum/setupPINMode';
+import OTPActionType from '@/enum/otpActionType';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 import { trackEvent } from '@/utils';
@@ -137,10 +138,10 @@ export default {
       if (!this.selectedUser.isPhoneConfirmed) {
         this.setDoneCallbackPath(this.doneCallBackPath);
         this.$router.push({
-          name: RouteDef.AddPhoneNumberInput.name,
+          name: RouteDef.PhoneNumberInput.name,
           params: {
+            action: OTPActionType.SetupPhoneNumberAction,
             needSkip: true,
-            pin: this.setupedPin,
           },
         });
       } else {

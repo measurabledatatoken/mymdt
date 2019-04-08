@@ -82,25 +82,13 @@ const RouteDef = {
     path: '/home/accounts/:account_id/transactions/:transaction_id',
     name: 'transactionDetail',
   },
-  AddPhoneNumberInput: {
-    path: '/home/settings/phone/add',
-    name: 'AddPhoneNumberInput',
-  },
-  ChangePhoneNumberInput: {
-    path: '/home/settings/phone/change',
-    name: 'ChangePhoneNumberInput',
+  PhoneNumberInput: {
+    path: '/home/settings/phone/:action/add',
+    name: 'PhoneNumberInput',
   },
   PhoneNumberVerify: {
-    path: '/home/settings/phone/verify',
+    path: '/home/settings/phone/:action/verify',
     name: 'PhoneNumberVerify',
-  },
-  AddPhoneNumberVerify: {
-    path: '/home/settings/phone/add/verify',
-    name: 'AddPhoneNumberVerify',
-  },
-  ChangePhoneNumberVerify: {
-    path: '/home/settings/phone/change/verify',
-    name: 'ChangePhoneNumberVerify',
   },
   PinCodeSetup: {
     path: '/home/settings/pincode/setup',
