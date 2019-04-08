@@ -63,6 +63,7 @@ import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
 import OTPActionType from '@/enum/otpActionType';
+import SetupPINMode from '@/enum/setupPINMode';
 
 export default {
   components: {
@@ -127,6 +128,9 @@ export default {
       this.setDoneCallbackPath(this.$router.currentRoute.path);
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
+        params: {
+          mode: SetupPINMode.SETUP,
+        },
       });
     },
     onConfirmSetupPhoneDialogClick() {

@@ -122,6 +122,7 @@ import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
+import SetupPINMode from '@/enum/setupPINMode';
 
 export default {
   components: {
@@ -206,6 +207,9 @@ export default {
       this.setDoneCallbackPath(this.$router.currentRoute.path);
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
+        params: {
+          mode: SetupPINMode.SETUP,
+        },
       });
     },
     onConfirmSetupPhoneDialogClick() {
