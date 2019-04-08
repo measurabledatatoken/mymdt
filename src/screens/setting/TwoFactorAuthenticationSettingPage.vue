@@ -213,7 +213,10 @@ export default {
           action: OTPActionType.DisableTwoFAAction,
         });
         this.$router.push({
-          name: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.name,
+          name: RouteDef.PhoneNumberVerify.name,
+          params: {
+            action: OTPActionType.DisableTwoFAAction,
+          },
         });
       } catch (error) {
         console.error(

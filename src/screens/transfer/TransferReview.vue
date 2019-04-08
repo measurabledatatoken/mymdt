@@ -111,6 +111,7 @@ import {
   SET_PHONENUMBER,
   VALIDATE_PIN,
   REQUEST_VERIFICATION_CODE,
+  SET_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
 
 import BasePage from '@/screens/BasePage';
@@ -192,6 +193,7 @@ export default {
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setCountryDialCode: SET_COUNTRY_DIALCODE,
       setPhoneNumber: SET_PHONENUMBER,
+      setPinForSecuirty: SET_PIN_FOR_SECURITY,
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
@@ -221,7 +223,7 @@ export default {
         name: RouteDef.AddPhoneNumberInput.name,
       });
     },
-    async goToSMSVerify(pinCode) {
+    async goToSMSVerify() {
       this.setCountryDialCode(this.selectedUser.countryDialCode);
       this.setPhoneNumber(this.selectedUser.phoneNumber);
       try {
@@ -229,9 +231,9 @@ export default {
           action: OTPActionType.TransferAction,
         });
         this.$router.push({
-          name: RouteDef.TransferVerifySMSPage.name,
+          name: RouteDef.PhoneNumberVerify.name,
           params: {
-            pin: pinCode,
+            action: OTPActionType.TransferAction,
           },
         });
       } catch (error) {
@@ -283,6 +285,7 @@ export default {
     async onPinCodeFilled(pinCode) {
       try {
         await this.validatePIN(pinCode);
+        this.setPinForSecuirty(pinCode);
         this.showPinCodeInput = false;
       } catch (error) {
         this.$refs.pinCodeInputPopup.setInvalid();
