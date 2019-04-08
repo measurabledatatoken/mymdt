@@ -29,8 +29,6 @@ describe('Transfer MDT', () => {
         `/home/accounts/${fromUser}/transfer`,
       );
     });
-
-    // return cy.location('pathname').should('eq', '/home/transfer');
   };
 
   const clickTransferToEmailAccount = () => {
@@ -124,7 +122,33 @@ describe('Transfer MDT', () => {
 
       it('cannot transfer to neither email account nor ETH Wallet', () => {
         clickTransferToEmailAccount();
+        cy.get('[data-cy="setup-pin-dialog"]').should('exist');
+
+        // click cancel button
+        cy.get('.md-dialog-actions')
+          .find('button')
+          .first()
+          .click();
+
+        clickTransferToETHWallet();
         cy.get('.md-dialog').should('exist');
+      });
+    });
+
+    context('phone is not set', () => {
+      beforeEach(() => {
+        cy.server();
+        cy.get('@fromUser').then(fromUser => {
+          cy.stubUserListingAndDetail('user/passcodeSet', {
+            emailAddress: fromUser,
+          });
+        });
+        goToTransferScreen();
+      });
+
+      it('cannot transfer to neither email account nor ETH Wallet', () => {
+        clickTransferToEmailAccount();
+        cy.get('[data-cy="setup-phone-dialog"]').should('exist');
 
         // click cancel button
         cy.get('.md-dialog-actions')
@@ -171,7 +195,7 @@ describe('Transfer MDT', () => {
     context('pincode is set but 2fa is not enabled', () => {
       beforeEach(function() {
         cy.server();
-        cy.stubUserListingAndDetail('user/passcodeSet', {
+        cy.stubUserListingAndDetail('user/passcodeSetPhoneConfirmed', {
           emailAddresses: [this.fromUser, this.toUser],
         });
 
