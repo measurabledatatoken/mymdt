@@ -10,6 +10,7 @@
       :bottom-load-method="getOldTransactions" 
       :top-config="PULLTO_TOP_CONFIG"
       :bottom-config="PULLTO_BOTTOM_CONFIG"
+      @scroll="onScroll"
       @bottom-state-change="bottomStateChange"
     >
       <div
@@ -146,6 +147,11 @@ export default {
     ...mapActions({
       fetchTransactions: FETCH_TRANSACTIONS,
     }),
+    onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
+      if (scrollTop + clientHeight >= scrollHeight) {
+        this.getOldTransactions();
+      }
+    },
     onTransactionItemClicked(transaction) {
       trackEvent('Click on one transction to view transaction details');
       this.$router.push({
@@ -159,7 +165,9 @@ export default {
         cursorDirection: 'before',
         limit: this.numberOfItemsPerPage,
       });
-      loaded('done');
+      if (loaded) {
+        loaded('done');
+      }
     },
     async getOldTransactions(loaded) {
       await this.fetchTransactions({
@@ -167,7 +175,9 @@ export default {
         cursorDirection: 'after',
         limit: this.numberOfItemsPerPage,
       });
-      loaded('done');
+      if (loaded) {
+        loaded('done');
+      }
     },
     bottomStateChange(state) {
       this.showBottomText = [
