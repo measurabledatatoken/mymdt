@@ -20,7 +20,7 @@
               <price-unit-list-item 
                 :selected="method === TwoFactorOption.METHOD.SMS" 
                 :title="$t('message.twoFactorAuthentication.methods.sms')" 
-                :disabled="!selectedSecurityUser.isPhoneConfirmed"
+                :disabled="!selectedUser.isPhoneConfirmed"
                 data-cy="method-sms"
                 @click="set2FAMethod(TwoFactorOption.METHOD.SMS)"
               />
@@ -28,7 +28,7 @@
               <price-unit-list-item 
                 :selected="method === TwoFactorOption.METHOD.GOOGLE" 
                 :title="$t('message.twoFactorAuthentication.methods.google')" 
-                :disabled="!selectedSecurityUser.isGoogleAuthEnabled"
+                :disabled="!selectedUser.isGoogleAuthEnabled"
                 data-cy="method-google"
                 @click="set2FAMethod(TwoFactorOption.METHOD.GOOGLE)"
               />
@@ -133,17 +133,17 @@ export default {
       doneCallBackPath: state => state.security.doneCallBackPath,
     }),
     ...mapGetters({
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
     method() {
-      return this.selectedSecurityUser.twofaMethod;
+      return this.selectedUser.twofaMethod;
     },
     usage() {
-      return this.selectedSecurityUser.twofaUsage;
+      return this.selectedUser.twofaUsage;
     },
     enabled: {
       get() {
-        return this.selectedSecurityUser.isTwofaEnabled;
+        return this.selectedUser.isTwofaEnabled;
       },
       set(value) {
         if (value) {
@@ -168,22 +168,22 @@ export default {
     isSelectedSMS(method) {
       return (
         method === TwoFactorOption.METHOD.SMS &&
-        this.selectedSecurityUser.isPhoneConfirmed
+        this.selectedUser.isPhoneConfirmed
       );
     },
     isSelectedGoogleAuth(method) {
       return (
         method === TwoFactorOption.METHOD.GOOGLE &&
-        this.selectedSecurityUser.isGoogleAuthEnabled
+        this.selectedUser.isGoogleAuthEnabled
       );
     },
     set2FAMethod(method) {
       if (
         method !== this.method &&
         ((method === TwoFactorOption.METHOD.GOOGLE &&
-          this.selectedSecurityUser.isGoogleAuthEnabled) ||
+          this.selectedUser.isGoogleAuthEnabled) ||
           (method === TwoFactorOption.METHOD.SMS &&
-            this.selectedSecurityUser.isPhoneConfirmed))
+            this.selectedUser.isPhoneConfirmed))
       ) {
         this.set2FAOption({ method: method, usage: this.usage });
       }
@@ -213,7 +213,10 @@ export default {
           action: OTPActionType.DisableTwoFAAction,
         });
         this.$router.push({
-          name: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.name,
+          name: RouteDef.PhoneNumberVerify.name,
+          params: {
+            action: OTPActionType.DisableTwoFAAction,
+          },
         });
       } catch (error) {
         console.error(

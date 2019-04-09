@@ -25,12 +25,12 @@ import {
   SETUP_PIN,
   CHANGE_PIN,
   RESET_PIN,
-  SET_DONE_CALLBACK_PATH,
   SET_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
 import { BACK_TO_PATH } from '@/store/modules/common';
 import BasePage from '@/screens/BasePage';
 import SetupPINMode from '@/enum/setupPINMode';
+import OTPActionType from '@/enum/otpActionType';
 import PinCodeEnterBasePage from '@/screens/pincode/PinCodeEnterBasePage';
 import SuccessPopup from '@/components/popup/SuccessPopup';
 import { trackEvent } from '@/utils';
@@ -48,14 +48,6 @@ export default {
   },
   props: {
     // pin enter in the setup pin page
-    oldPIN: {
-      type: String,
-      default: null,
-    },
-    verificationCode: {
-      type: String,
-      default: null,
-    },
     mode: {
       type: String,
       required: true,
@@ -80,14 +72,15 @@ export default {
   computed: {
     ...mapState({
       doneCallBackPath: state => state.security.doneCallBackPath,
+      verificationCode: state => state.security.verificationCode,
+      oldPin: state => state.security.pin,
     }),
     ...mapGetters({
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
   },
   methods: {
     ...mapMutations({
-      setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setPinForSecuirty: SET_PIN_FOR_SECURITY,
     }),
     ...mapActions({
@@ -96,51 +89,45 @@ export default {
       resetPIN: RESET_PIN,
       backToPath: BACK_TO_PATH,
     }),
-    onDoneClicked(pincode) {
+    async onDoneClicked(pincode) {
       trackEvent('Enter PIN for the second time');
-      this.setPinForSecuirty(pincode);
       switch (this.mode) {
-        case SetupPINMode.RESET: {
-          this.resetPIN({
+        case SetupPINMode.RESET:
+          await this.resetPIN({
             pin: this.setupedPin,
             confirmedPIN: pincode,
             verificationCode: this.verificationCode,
-          }).then(() => {
-            trackEvent('PIN successfully reset');
-            this.showPinSetupSuccessPopup = true;
           });
+          trackEvent('PIN successfully reset');
+          this.showPinSetupSuccessPopup = true;
           break;
-        }
-        case SetupPINMode.CHANGE: {
-          this.changePIN({
-            oldPIN: this.oldPIN,
+        case SetupPINMode.CHANGE:
+          await this.changePIN({
+            oldPIN: this.oldPin,
             newPIN: this.setupedPin,
             confirmedPIN: pincode,
-          }).then(() => {
-            trackEvent('PIN successfully change');
-            this.showPinSetupSuccessPopup = true;
           });
+          trackEvent('PIN successfully change');
+          this.showPinSetupSuccessPopup = true;
           break;
-        }
-        default: {
-          this.setupPIN({ pin: this.setupedPin, confirmedPIN: pincode }).then(
-            () => {
-              trackEvent('PIN successfully set');
-              this.showPinSetupSuccessPopup = true;
-            },
-          );
+        default:
+          await this.setupPIN({
+            pin: this.setupedPin,
+            confirmedPIN: pincode,
+          });
+          this.setPinForSecuirty(pincode);
+          trackEvent('PIN successfully set');
+          this.showPinSetupSuccessPopup = true;
           break;
-        }
       }
     },
     onPopupDoneClicked() {
-      if (!this.selectedSecurityUser.isPhoneConfirmed) {
-        this.setDoneCallbackPath(this.doneCallBackPath);
+      if (!this.selectedUser.isPhoneConfirmed) {
         this.$router.push({
-          name: RouteDef.AddPhoneNumberInput.name,
+          name: RouteDef.PhoneNumberInput.name,
           params: {
+            action: OTPActionType.SetupPhoneNumberAction,
             needSkip: true,
-            pin: this.setupedPin,
           },
         });
       } else {

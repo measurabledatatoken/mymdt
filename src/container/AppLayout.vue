@@ -318,7 +318,7 @@ export default {
 
 .md-dialog {
   text-align: left;
-  z-index: 99;
+  z-index: 10001;
   /deep/ .md-dialog-container {
     width: 100%;
   }

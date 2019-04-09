@@ -22,30 +22,15 @@ export default {
       title: 'PIN',
     };
   },
-  props: {
-    oldPIN: {
-      type: String,
-      default: null,
-    },
-    verificationCode: {
-      type: String,
-      default: null,
-    },
-    mode: {
-      type: String,
-      default: null,
-    },
-  },
   methods: {
     onNextClicked(pincode) {
       trackEvent('Enter PIN for the first time');
+      const mode = this.$route.params.mode;
       this.$router.push({
         name: RouteDef.PinCodeConfirm.name,
         params: {
           setupedPin: pincode,
-          oldPIN: this.oldPIN,
-          mode: this.mode,
-          verificationCode: this.verificationCode,
+          mode,
         },
       });
     },

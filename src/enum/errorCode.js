@@ -68,6 +68,8 @@ const errorCode = {
   SMSDailyLimitReached: 1106,
   SMSOtpInvalid: 1107,
   SMSOtpExpired: 1108,
+  PhoneNumberAlreadyBinded: 1109,
+  PhoneNotBinded: 1110,
 
   TransactionNotFound: 1200,
   TransactionNotCancelable: 1201,
@@ -140,6 +142,9 @@ errorCode.properties = {
   },
   [errorCode.SMSOtpExpired]: {
     messageId: 'message.error.otpExpired',
+  },
+  [errorCode.PhoneNumberAlreadyBinded]: {
+    messageId: 'message.error.phoneNumberAlreadyBinded',
   },
   [errorCode.DeviceIsAlreadyRegistered]: {
     messageId: 'message.error.deviceIsAlreadyRegistered',

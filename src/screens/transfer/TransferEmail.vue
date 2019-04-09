@@ -2,17 +2,17 @@
   <PaddedContainer class="transfer-email">
     <MDTInputField 
       :amount="transferAmount" 
-      :max-amount="transferFromAccount.mdtBalance" 
+      :max-amount="selectedUser.mdtBalance" 
       class="mdtinput"
       @amountEntered="onAmountEntered"
       @amountInvalid="transferAmountInvalid"
     />
     <AccountSelector 
       :label="$t('message.transfer.fromlbl')"
-      :accounts="fromUserAccounts" 
-      :selected-account="transferFromAccount"
+      :accounts="allUsers" 
+      :selected-account="selectedUser"
       class="transfer-from" 
-      @accountSelected="onTransferFromAccountSelected"
+      @accountSelected="onAccountSelected"
       @menuOpened="onTransferFromMenuOpened"
     />
     <AccountSelector 
@@ -51,10 +51,10 @@ import { isValidEmailAddress, trackEvent } from '@/utils';
 import {
   SET_TRANSFER_AMOUNT,
   SET_TRANSFER_TYPE,
-  SET_TRANSFER_FROM_ACCOUNT,
   SET_TRANSFER_TO_ACCOUNT,
   SET_TRANSFER_NOTE,
 } from '@/store/modules/transfer';
+import { SET_SELECTED_USER } from '@/store/modules/home';
 
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
@@ -63,7 +63,6 @@ import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
-import { SET_SELECTED_SECURITY_USER } from '@/store/modules/security';
 
 const eventProperties = { 'Transfer Mode': TransferType.Email };
 
@@ -93,9 +92,9 @@ export default {
       transferNote: state => state.transfer.transferNote,
     }),
     ...mapGetters({
-      transferFromAccount: 'transferFromAccount',
+      selectedUser: 'getSelectedUser',
       transferToAccounts: 'transferToAccounts',
-      fromUserAccounts: 'getAllUsers',
+      allUsers: 'getAllUsers',
     }),
     isValidEmailAddress() {
       if (!this.transferToAccount || !this.transferToAccount.emailAddress) {
@@ -115,7 +114,7 @@ export default {
       return true;
     },
     isWalletAmountValid() {
-      return this.transferAmount <= this.transferFromAccount.mdtBalance;
+      return this.transferAmount <= this.selectedUser.mdtBalance;
     },
   },
   created() {
@@ -126,9 +125,8 @@ export default {
       setTransferAmount: SET_TRANSFER_AMOUNT,
       setTransferType: SET_TRANSFER_TYPE,
       setTransferNote: SET_TRANSFER_NOTE,
-      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
       setTransferToAccount: SET_TRANSFER_TO_ACCOUNT,
-      setSelectedSecurityUser: SET_SELECTED_SECURITY_USER,
+      setSelectedUser: SET_SELECTED_USER,
     }),
     transferAmountInvalid() {
       this.setTransferAmount(0);
@@ -137,10 +135,15 @@ export default {
       trackEvent('Enter amount', eventProperties);
       this.setTransferAmount(amount);
     },
-    onTransferFromAccountSelected(account) {
+    onAccountSelected(account) {
       trackEvent('Choose account for "from"', eventProperties);
-      this.setTransferFromAccount(account.emailAddress);
-      this.setSelectedSecurityUser(account.emailAddress);
+      this.setSelectedUser(account.emailAddress);
+      if (
+        this.transferToAccount &&
+        account.emailAddress === this.transferToAccount.emailAddress
+      ) {
+        this.setTransferToAccount(null);
+      }
     },
     onTransferFromMenuOpened() {
       trackEvent('Click on the dropdown arrow for "from"', eventProperties);

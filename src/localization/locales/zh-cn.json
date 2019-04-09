@@ -49,7 +49,8 @@
     "accessCodeIsNotValid": "代码无效。",
     "accessCodeIsUsed": "代码已被使用。",
     "googleAuthTokenInvalid": "谷歌身份验证令牌无效",
-    "sessionExpired": "您的使用期限已过"
+    "sessionExpired": "您的使用期限已过",
+    "phoneNumberAlreadyBinded" : "电话号码已与另一个帐户绑定"
   },
   "home": {
     "total_balance": "总积分",
