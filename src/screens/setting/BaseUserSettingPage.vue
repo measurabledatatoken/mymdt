@@ -2,7 +2,7 @@
   <div class="base-usersettingpage">
     <PaddedContainer>
       <UserInfo 
-        :user="selectedSecurityUser" 
+        :user="selectedUser" 
         :show-mdt="false"
       />
       <md-divider/>
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
   },
 };

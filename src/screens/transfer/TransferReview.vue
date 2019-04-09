@@ -2,7 +2,7 @@
   <PaddedContainer class="transfer-review">
     <div class="review-content">
       <div class="from-lbl">{{ $t('message.transfer.fromlbl') }}</div>
-      <div class="from-value">{{ transferFromAccount.emailAddress }}</div>
+      <div class="from-value">{{ selectedUser.emailAddress }}</div>
       <div class="to-lbl">{{ $t('message.transfer.tolbl') }}</div>
       <div class="to-value">{{ transferToStr }}</div>
       <div
@@ -74,6 +74,27 @@
       @codefilled="onPinCodeFilled" 
       @close-click="showPinCodeInput = false"
     />
+
+    <MDTConfirmPopup 
+      :md-active.sync="showSetupPinDialog"
+      :md-title="$t('message.passcode.pin_setup_remind_title')" 
+      :md-content="$t('message.passcode.pin_setup_remind_content')"
+      :md-confirm-text="$t('message.common.setup')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      data-cy="setup-pin-dialog" 
+      @md-confirm="onConfirmSetupPinDialogClick"
+    />
+
+    <MDTConfirmPopup 
+      :md-active.sync="showSetupPhoneDialog"
+      :md-title="$t('message.phone.add_phone_title')" 
+      :md-content="$t('message.phone.add_phone_content')"
+      :md-confirm-text="$t('message.common.setup')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      data-cy="setup-phone-dialog" 
+      @md-confirm="onConfirmSetupPhoneDialogClick"
+    />
+
   </PaddedContainer>
 </template>
 
@@ -90,14 +111,19 @@ import {
   SET_PHONENUMBER,
   VALIDATE_PIN,
   REQUEST_VERIFICATION_CODE,
+  SET_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
-import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+
 import BasePage from '@/screens/BasePage';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 import MDTSmartCaptcha from '@/components/input/MDTSmartCaptcha';
+import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
+
 import OTPActionType from '@/enum/otpActionType';
 import TwoFactorOption from '@/enum/twoFactorOption';
+import SetupPINMode from '@/enum/setupPINMode';
 
 export default {
   components: {
@@ -105,6 +131,7 @@ export default {
     PinCodeInputPopup,
     PaddedContainer,
     MDTSmartCaptcha,
+    MDTConfirmPopup,
   },
   extends: BasePage,
   metaInfo() {
@@ -117,6 +144,8 @@ export default {
       TransferType,
       showPinCodeInput: false,
       isVerified: false,
+      showSetupPinDialog: false,
+      showSetupPhoneDialog: false,
     };
   },
   computed: {
@@ -130,8 +159,7 @@ export default {
     ...mapGetters({
       transactionFee: 'transactionFee',
       finalAmount: 'finalAmount',
-      transferFromAccount: 'transferFromAccount',
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
     transferToStr() {
       if (this.transferType === TransferType.EthWallet) {
@@ -143,7 +171,7 @@ export default {
       return this.finalAmount <= 0 ? '--' : formatAmount(this.finalAmount);
     },
     isWalletAmountValid() {
-      return this.transferAmount < this.transferFromAccount.mdtBalance;
+      return this.transferAmount < this.selectedUser.mdtBalance;
     },
     isFinalAmountSmallerThanZero() {
       if (this.finalAmount <= 0) {
@@ -165,6 +193,7 @@ export default {
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
       setCountryDialCode: SET_COUNTRY_DIALCODE,
       setPhoneNumber: SET_PHONENUMBER,
+      setPinForSecuirty: SET_PIN_FOR_SECURITY,
     }),
     ...mapActions({
       startTransfer: START_TRANSFER,
@@ -175,17 +204,36 @@ export default {
       this.isVerified = true;
       // TODO: pass token, sig and sessionId with the form and do server side verification
     },
-    async goToSMSVerify(pinCode) {
-      this.setCountryDialCode(this.selectedSecurityUser.countryDialCode);
-      this.setPhoneNumber(this.selectedSecurityUser.phoneNumber);
+    onConfirmSetupPinDialogClick() {
+      trackEvent('Start Setting up PIN from the popup on transfer review page');
+      this.setDoneCallbackPath(this.$router.currentRoute.path);
+      this.$router.push({
+        name: RouteDef.PinCodeSetup.name,
+        params: {
+          mode: SetupPINMode.SETUP,
+        },
+      });
+    },
+    onConfirmSetupPhoneDialogClick() {
+      trackEvent(
+        'Start Setting up Phone from the popup on transfer review page',
+      );
+      this.setDoneCallbackPath(this.$router.currentRoute.path);
+      this.$router.push({
+        name: RouteDef.AddPhoneNumberInput.name,
+      });
+    },
+    async goToSMSVerify() {
+      this.setCountryDialCode(this.selectedUser.countryDialCode);
+      this.setPhoneNumber(this.selectedUser.phoneNumber);
       try {
         await this.requestVerificationCode({
           action: OTPActionType.TransferAction,
         });
         this.$router.push({
-          name: RouteDef.TransferVerifySMSPage.name,
+          name: RouteDef.PhoneNumberVerify.name,
           params: {
-            pin: pinCode,
+            action: OTPActionType.TransferAction,
           },
         });
       } catch (error) {
@@ -195,12 +243,10 @@ export default {
       }
     },
     start2FAVerify(pinCode) {
-      if (
-        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.SMS
-      ) {
+      if (this.selectedUser.twofaMethod === TwoFactorOption.METHOD.SMS) {
         this.goToSMSVerify(pinCode);
       } else if (
-        this.selectedSecurityUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
+        this.selectedUser.twofaMethod === TwoFactorOption.METHOD.GOOGLE
       ) {
         this.$router.push({
           name: RouteDef.TransferVerifyGoogleAuthPage.name,
@@ -227,12 +273,19 @@ export default {
         trackEvent('Click on Transfer button', {
           'Transfer Mode': this.TransferType,
         });
-        this.showPinCodeInput = true;
+        if (!this.selectedUser.isPasscodeSet) {
+          this.showSetupPinDialog = true;
+        } else if (!this.selectedUser.isPhoneConfirmed) {
+          this.showSetupPhoneDialog = true;
+        } else {
+          this.showPinCodeInput = true;
+        }
       }
     },
     async onPinCodeFilled(pinCode) {
       try {
         await this.validatePIN(pinCode);
+        this.setPinForSecuirty(pinCode);
         this.showPinCodeInput = false;
       } catch (error) {
         this.$refs.pinCodeInputPopup.setInvalid();
@@ -241,11 +294,11 @@ export default {
 
       try {
         if (
-          this.transferFromAccount.isTwofaEnabled &&
+          this.selectedUser.isTwofaEnabled &&
           [
             TwoFactorOption.USAGE.TRANSACTION,
             TwoFactorOption.USAGE.TRANSACTION_AND_LOGIN,
-          ].includes(this.transferFromAccount.twofaUsage)
+          ].includes(this.selectedUser.twofaUsage)
         ) {
           this.start2FAVerify(pinCode);
         } else {

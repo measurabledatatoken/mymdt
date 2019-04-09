@@ -20,14 +20,8 @@ const ReportProblem = () =>
 const ReportProblemSuccess = () =>
   import(/* webpackChunkName: "report-problem" */ '@/screens/setting/ReportProblemSuccess');
 const LegalAndPrivacy = () => import('@/screens/setting/LegalAndPrivacy');
-const AddPhoneNumberInputPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/AddPhoneNumberInputPage');
-const ChangePhoneNumberInputPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/ChangePhoneNumberInputPage');
-const AddPhoneNumberVerifyPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/AddPhoneNumberVerifyPage');
-const ChangePhoneNumberVerifyPage = () =>
-  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/ChangePhoneNumberVerifyPage');
+const PhoneNumberInputPage = () =>
+  import(/* webpackChunkName: "phone-number" */ '@/screens/phone/PhoneNumberInputPage');
 const PhoneNumberVerifyPage = () =>
   import(/* webpackChunkName: "phone-number" */ '@/screens/phone/PhoneNumberVerifyPage');
 const PinCodeSetup = () =>
@@ -55,16 +49,12 @@ const QrCodeScanPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/QRCodeScanPage');
 const TransferVerifyGoogleAuthPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/googleAuth/TransferVerifyGoogleAuthPage');
-const TransferVerifySMSPage = () =>
-  import(/* webpackChunkName: "transfer" */ '@/screens/phone/TransferVerifySMSPage');
 const EarnMDT = () => import('@/screens/EarnMDT');
 const WebView = () => import('@/screens/WebView');
 const TwoFactorAuthenticationSettingPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
 const DisableTwoFactorAuthenticationVerifyGoogleAuthPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/googleAuth/DisableTwoFactorAuthenticationVerifyGoogleAuthPage');
-const DisableTwoFactorAuthenticationVerifySMSPage = () =>
-  import(/* webpackChunkName: "2fa" */ '@/screens/phone/DisableTwoFactorAuthenticationVerifySMSPage');
 const GoogleAuthSettingStep1 = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep1');
 const GoogleAuthSettingStep2 = () =>
@@ -141,27 +131,9 @@ const router = new Router({
         },
         // phone
         {
-          path: RouteDef.AddPhoneNumberInput.path,
-          name: RouteDef.AddPhoneNumberInput.name,
-          component: AddPhoneNumberInputPage,
-          props: true,
-        },
-        {
-          path: RouteDef.ChangePhoneNumberInput.path,
-          name: RouteDef.ChangePhoneNumberInput.name,
-          component: ChangePhoneNumberInputPage,
-          props: true,
-        },
-        {
-          path: RouteDef.AddPhoneNumberVerify.path,
-          name: RouteDef.AddPhoneNumberVerify.name,
-          component: AddPhoneNumberVerifyPage,
-          props: true,
-        },
-        {
-          path: RouteDef.ChangePhoneNumberVerify.path,
-          name: RouteDef.ChangePhoneNumberVerify.name,
-          component: ChangePhoneNumberVerifyPage,
+          path: RouteDef.PhoneNumberInput.path,
+          name: RouteDef.PhoneNumberInput.name,
+          component: PhoneNumberInputPage,
           props: true,
         },
         {
@@ -255,12 +227,6 @@ const router = new Router({
           component: TransferVerifyGoogleAuthPage,
           props: true,
         },
-        {
-          path: RouteDef.TransferVerifySMSPage.path,
-          name: RouteDef.TransferVerifySMSPage.name,
-          component: TransferVerifySMSPage,
-          props: true,
-        },
         // Earn MDT Route
         {
           path: RouteDef.EarnMDT.path,
@@ -308,12 +274,6 @@ const router = new Router({
           name:
             RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.name,
           component: DisableTwoFactorAuthenticationVerifyGoogleAuthPage,
-        },
-        {
-          path: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.path,
-          name: RouteDef.DisableTwoFactorAuthenticationVerifySMSPage.name,
-          component: DisableTwoFactorAuthenticationVerifySMSPage,
-          props: true,
         },
         // Route to Home page for route not defined
         {

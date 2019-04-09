@@ -3,7 +3,7 @@
     <div class="account">
       <AccountSelector 
         :accounts="allUsers" 
-        :selected-account="transferFromAccount" 
+        :selected-account="selectedUser" 
         @accountSelected="onAccountSelected"
       />
     </div>
@@ -52,11 +52,9 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import { trackEvent } from '@/utils';
-import { SET_TRANSFER_FROM_ACCOUNT } from '@/store/modules/transfer';
-import {
-  SET_DONE_CALLBACK_PATH,
-  SET_SELECTED_SECURITY_USER,
-} from '@/store/modules/security';
+import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
+import { SET_SELECTED_USER } from '@/store/modules/home';
+
 import { RouteDef } from '@/constants';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import AccountSelector from '@/components/common/AccountSelector';
@@ -64,7 +62,8 @@ import ActionCard from '@/components/common/ActionCard';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import BasePage from '@/screens/BasePage';
-import { SET_SELECTED_USER } from '@/store/modules/home';
+import OTPActionType from '@/enum/otpActionType';
+import SetupPINMode from '@/enum/setupPINMode';
 
 export default {
   components: {
@@ -89,27 +88,22 @@ export default {
     ...mapGetters({
       allUsers: 'getAllUsers',
       selectedUser: 'getSelectedUser',
-      transferFromAccount: 'transferFromAccount',
     }),
   },
   created() {
     const emailAddress = this.$route.params.account_id;
     this.setSelectedUser(emailAddress);
-    this.setSelectedSecurityUser(emailAddress);
-    this.setTransferFromAccount(emailAddress);
   },
   methods: {
     ...mapMutations({
-      setTransferFromAccount: SET_TRANSFER_FROM_ACCOUNT,
-      setSelectedSecurityUser: SET_SELECTED_SECURITY_USER,
       setSelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
     onTransferToEmailClicked() {
       trackEvent('Click on Transfer to an email account');
-      if (!this.transferFromAccount.isPasscodeSet) {
+      if (!this.selectedUser.isPasscodeSet) {
         this.showSetupPinDialog = true;
-      } else if (!this.transferFromAccount.isPhoneConfirmed) {
+      } else if (!this.selectedUser.isPhoneConfirmed) {
         this.showSetupPhoneDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEmail.path);
@@ -117,9 +111,9 @@ export default {
     },
     onTransferToEthWalletClicked() {
       trackEvent('Click on transfer to an ETH wallet');
-      if (!this.transferFromAccount.isPasscodeSet) {
+      if (!this.selectedUser.isPasscodeSet) {
         this.showSetupPinDialog = true;
-      } else if (!this.transferFromAccount.isPhoneConfirmed) {
+      } else if (!this.selectedUser.isPhoneConfirmed) {
         this.showSetupPhoneDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEthWallet.path);
@@ -127,21 +121,26 @@ export default {
     },
     onAccountSelected(account) {
       trackEvent('Switch accounts on Transfer Methods Select');
-      this.setTransferFromAccount(account.emailAddress);
-      this.setSelectedSecurityUser(account.emailAddress);
+      this.setSelectedUser(account.emailAddress);
     },
     onConfirmSetupPinDialogClick() {
       trackEvent('Start Setting up PIN from the popup');
       this.setDoneCallbackPath(this.$router.currentRoute.path);
       this.$router.push({
         name: RouteDef.PinCodeSetup.name,
+        params: {
+          mode: SetupPINMode.SETUP,
+        },
       });
     },
     onConfirmSetupPhoneDialogClick() {
       trackEvent('Start Setting up Phone from the popup');
       this.setDoneCallbackPath(this.$router.currentRoute.path);
       this.$router.push({
-        name: RouteDef.AddPhoneNumberInput.name,
+        name: RouteDef.PhoneNumberInput.name,
+        params: {
+          action: OTPActionType.SetupPhoneNumberAction,
+        },
       });
     },
   },

@@ -4,14 +4,14 @@
 
       <div class="phone-title"> {{ $t('message.settings.phoneNumber') }}</div>
       <div 
-        :class="{'none': !selectedSecurityUser.phoneNumber}"
+        :class="{'none': !selectedUser.phoneNumber}"
         class="phone-num"
       >
-        {{ selectedSecurityUser.phoneNumber ? maskedPhoneNumber : $t('message.common.none') }}
+        {{ selectedUser.phoneNumber ? maskedPhoneNumber : $t('message.common.none') }}
       </div>
 
       <MDSubtleButton 
-        :disabled="!selectedSecurityUser.phoneNumber"
+        :disabled="!selectedUser.phoneNumber"
         class="resend"
         data-cy="resend"
         @click="onSendVerificationCodePressed"
@@ -33,7 +33,6 @@ import {
   REQUEST_VERIFICATION_CODE,
   SET_SECURITY_USER_PHONE_INFO,
 } from '@/store/modules/security';
-import SetupPINMode from '@/enum/setupPINMode';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BasePage from '@/screens/BasePage';
 import MDSubtleButton from '@/components/button/MDTSubtleButton';
@@ -58,17 +57,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      selectedSecurityUser: 'getSelectedSecurityUser',
+      selectedUser: 'getSelectedUser',
     }),
     maskedPhoneNumber() {
-      const fullPhone = `${this.selectedSecurityUser.countryDialCode} ${
-        this.selectedSecurityUser.phoneNumber
+      const fullPhone = `${this.selectedUser.countryDialCode} ${
+        this.selectedUser.phoneNumber
       }`;
       return maskFullPhoneNumber(fullPhone);
     },
   },
   created() {
-    this.setSecurityUserInfo(this.selectedSecurityUser);
+    this.setSecurityUserInfo(this.selectedUser);
   },
   methods: {
     ...mapMutations({
@@ -84,12 +83,7 @@ export default {
         this.$router.push({
           name: RouteDef.PhoneNumberVerify.name,
           params: {
-            emailAddress: this.selectedSecurityUser.emailAddress,
-            nextPagePathName: RouteDef.PinCodeSetup.name,
             action: OTPActionType.ResetPasscodeAction,
-            payloadForNextPage: {
-              mode: SetupPINMode.RESET,
-            },
           },
         });
       });
