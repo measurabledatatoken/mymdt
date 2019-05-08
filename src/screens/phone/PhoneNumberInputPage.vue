@@ -28,17 +28,17 @@ export default {
     ...mapActions({
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
     }),
-    onNextClicked() {
+    async onNextClicked() {
       const action = this.$route.params.action;
-      this.requestVerificationCode({
+      await this.requestVerificationCode({
         action,
-      }).then(() => {
-        this.$router.push({
-          name: RouteDef.PhoneNumberVerify.name,
-          params: {
-            action,
-          },
-        });
+      });
+      this.$router.push({
+        name: RouteDef.PhoneNumberVerify.name,
+        params: {
+          action,
+          editable: true,
+        },
       });
     },
   },

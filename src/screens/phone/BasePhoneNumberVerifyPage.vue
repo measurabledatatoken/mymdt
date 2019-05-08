@@ -98,7 +98,7 @@ export default {
       default: null,
     },
     editable: {
-      default: true,
+      default: false,
       type: Boolean,
     },
   },
