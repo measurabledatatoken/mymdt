@@ -31,7 +31,7 @@ const state = {
   isLoading: false,
   navigationTitle: '',
   hideNavigationBackButton: false,
-  locale: null,
+  locale: 'en-us',
   navigationStack: [],
 
   showHomeLoadingEnd: false,
