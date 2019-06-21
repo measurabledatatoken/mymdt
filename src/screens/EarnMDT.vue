@@ -16,6 +16,19 @@
       <md-list 
         class="account-task-list"
       >
+        <WebViewItem
+          :title="$t('message.earnMDT.redeemTitle')"
+          :caption="$t('message.earnMDT.redeem')"
+          :url="redeemURL"
+        />
+        <md-divider />
+      </md-list>
+      <md-divider />
+    </padded-container>
+    <padded-container>
+      <md-list 
+        class="account-task-list"
+      >
         <template v-if="uiState.users[selectedUser.emailAddress].isFetchingRewards">
           <template v-for="n in numberOfRewardLoadingItems">
             <EarnMDTLoadingItem :key="`reward-loading-${n}`" />
@@ -65,6 +78,7 @@ import AccountSelector from '@/components/common/AccountSelector';
 import EarnMDTLoadingItem from '@/components/task/EarnMDTLoadingItem';
 import RewardItem from '@/components/task/RewardItem';
 import TaskItem from '@/components/task/TaskItem';
+import WebViewItem from '@/components/task/WebViewItem';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import { FETCH_TASKS } from '@/store/modules/entities/users';
@@ -80,6 +94,7 @@ export default {
     EarnMDTLoadingItem,
     RewardItem,
     TaskItem,
+    WebViewItem,
   },
   extends: BasePage,
   metaInfo() {
@@ -97,12 +112,29 @@ export default {
   computed: {
     ...mapState({
       uiState: state => state.ui.earnMDTScreen,
+      locale: state => state.common.locale,
     }),
     ...mapGetters({
       selectedUser: 'getSelectedUser',
       allUsers: 'getAllUsers',
       getRewards: 'getRewards',
     }),
+    redeemURL() {
+      const emailAddress = this.selectedUser.emailAddress;
+
+      const localeTolangMap = {
+        'zh-cn': 'cn',
+        'zh-hk': 'zh',
+        'en-us': 'en',
+      };
+      const lang = localeTolangMap[this.locale];
+
+      if (!emailAddress || !lang) {
+        return '';
+      }
+
+      return `https://redpacket.mdt.co/?email=${emailAddress}&lang=${lang}`;
+    },
   },
   created() {
     this.fetchData(this.selectedUser.emailAddress);
