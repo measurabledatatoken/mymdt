@@ -240,7 +240,9 @@
         "LyftReceiptType": "Lyft Receipt",
         "GrabReceiptType": "Grab Receipt"
       }
-    }
+    },
+    "redeemTitle": "You got a MDT redeem code?",
+    "redeem": "Redeem"
   },
   "tutorial": {
     "get_started": "Get Started",

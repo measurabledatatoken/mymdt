@@ -239,7 +239,9 @@
         "LyftReceiptType": "Lyft 收據",
         "GrabReceiptType": "Grab 收據"
       }
-    }
+    },
+    "redeemTitle": "你有 MDT 的兌換代碼？",
+    "redeem": "兌換"
   },
   "tutorial": {
     "get_started": "開始",

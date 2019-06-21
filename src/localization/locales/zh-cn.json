@@ -240,7 +240,9 @@
         "LyftReceiptType": "Lyft 收据",
         "GrabReceiptType": "Grab 收据"
       }
-    }
+    },
+    "redeemTitle": "你有 MDT 的兑换代码？",
+    "redeem": "兑换"
   },
   "tutorial": {
     "get_started": "开始",
