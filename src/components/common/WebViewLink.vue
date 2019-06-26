@@ -20,6 +20,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    inApp: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     handleClick() {
@@ -28,9 +32,13 @@ export default {
       }
 
       if (this.external) {
-        window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
-          this.to,
-        )}`;
+        if (this.inApp) {
+          window.location.href = this.to;
+        } else {
+          window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
+            this.to,
+          )}`;
+        }
       } else {
         this.$router.push({
           name: RouteDef.WebView.name,

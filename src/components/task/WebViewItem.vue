@@ -7,7 +7,11 @@
   >
     <template slot="action">
       <div class="earn-mdt-task-item__action">
-        <WebViewLink :to="url">
+        <WebViewLink 
+          :to="url"
+          in-app
+          external
+        >
           <MDTSecondaryButton class="earn-mdt-task-item-action__claim-button">
             {{ caption }}
           </MDTSecondaryButton>
