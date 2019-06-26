@@ -133,7 +133,9 @@ export default {
         return '';
       }
 
-      return `https://redpacket.mdt.co/?email=${emailAddress}&lang=${lang}`;
+      return `https://redpacket.mdt.co/?email=${emailAddress}&lang=${lang}&redirect_uri=${encodeURIComponent(
+        window.location.href,
+      )}`;
     },
   },
   created() {
