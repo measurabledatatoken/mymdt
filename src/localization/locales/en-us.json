@@ -243,22 +243,26 @@
     },
     "redeemTitle": "You got a MDT redeem code?",
     "redeem": "Redeem",
-    "followWeChatTitle": "Official WeChat Account",
-    "followWeChatFormTitle": "Enter Redeem Code",
-    "followWeChatSteps": "Steps to follow us in WeChat",
-    "followInWeChatStep1": "1. Follow {0} / {1} / {2} in WeChat",
-    "followInWeChatStep2": "2. Open keyboard",
-    "followInWeChatStep3": "3. Enter word \"MyMDT\" to receive redeem code",
-    "followInWeChatStep4": "4. Enter the redeem code in MyMDT",
-    "MailTime": "MailTime",
-    "MDT": "MDT",
-    "MAI": "Measurable AI",
-    "success": "Success",
-    "thankYouForFollowing": "Thank you for following official WeChat account. Please go back to Earn Rewards page to earn reward.",
-    "goBack": "Back",
-    "incorrectRedeemCode": "Incorrect Redeem Code",
-    "pleaseFollowSteps": "Please follow below steps to get a redeem code.",
-    "confirm": "Confirm"
+    "follow": {
+      "formTitle": "Enter Redeem Code",
+      "success": "Success",
+      "incorrectRedeemCode": "Incorrect Redeem Code",
+      "MailTime": "MailTime",
+      "MDT": "MDT",
+      "MAI": "Measurable AI",
+      "goBack": "Back",
+      "confirm": "Confirm",
+      "wechat": {
+        "screenTitle": "Official WeChat Account",
+        "stepTitle": "Steps to follow us in WeChat",
+        "step1": "1. Follow {0} / {1} / {2} in WeChat",
+        "step2": "2. Open keyboard",
+        "step3": "3. Enter word \"MyMDT\" to receive redeem code",
+        "step4": "4. Enter the redeem code in MyMDT",
+        "successDescription": "Thank you for following official WeChat account. Please go back to Earn Rewards page to earn reward.",
+        "failureDescription": "Please follow below steps to get a redeem code."
+      }
+    }
   },
   "tutorial": {
     "get_started": "Get Started",

@@ -243,22 +243,26 @@
     },
     "redeemTitle": "你有 MDT 的兑换代码？",
     "redeem": "兑换",
-    "followWeChatTitle": "官方微信号",
-    "followWeChatFormTitle": "输入魔法口令",
-    "followWeChatSteps": "关注官方微信号教学",
-    "followInWeChatStep1": "1. 在微信关注 {0} / {1} / {2} 公众号",
-    "followInWeChatStep2": "2. 呼叫键盘输入",
-    "followInWeChatStep3": "3. 输入口令 \"MyMDT\" 获取魔法口令",
-    "followInWeChatStep4": "4. 回到 MyMDT 输入魔法口令，获得 MDT 奖励",
-    "MailTime": "MailTime",
-    "MDT": "MDT 量数",
-    "MAI": "量数 AI",
-    "success": "成功",
-    "thankYouForFollowing": "感谢你关注官方微信号，请到任务页面获取 MDT 奖励。",
-    "goBack": "返回任務頁",
-    "incorrectRedeemCode": "不正确的魔法口令",
-    "pleaseFollowSteps": "请你依照教学关注官方微信号，然后获取魔法口令。",
-    "confirm": "确认"
+    "follow": {
+      "formTitle": "输入魔法口令",
+      "success": "成功",
+      "incorrectRedeemCode": "不正确的魔法口令",
+      "MailTime": "MailTime",
+      "MDT": "MDT 量数",
+      "MAI": "量数 AI",
+      "goBack": "返回任务页",
+      "confirm": "确认",
+      "wechat": {
+        "screenTitle": "官方微信号",
+        "stepTitle": "关注官方微信号教学",
+        "step1": "1. 在微信关注 {0} / {1} / {2} 公众号",
+        "step2": "2. 呼叫键盘输入",
+        "step3": "3. 输入口令 \"MyMDT\" 获取魔法口令",
+        "step4": "4. 回到 MyMDT 输入魔法口令，获得 MDT 奖励",
+        "successDescription": "感谢你关注官方微信号，请到任务页面获取 MDT 奖励。",
+        "failureDescription": "请你依照教学关注官方微信号，然后获取魔法口令。"
+      }
+    }
   },
   "tutorial": {
     "get_started": "开始",
