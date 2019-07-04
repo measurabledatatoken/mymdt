@@ -80,7 +80,7 @@ import BasePopup from '@/components/popup/BasePopup';
 
 import { REDEEM_SNS_CODE } from '@/store/modules/entities/users';
 
-const Foo = {
+const Step1Description = {
   components: {
     WebViewLink,
   },
@@ -138,7 +138,7 @@ export default {
           stepTitle: this.$t('message.earnMDT.follow.wechat.stepTitle'),
           steps: [
             {
-              component: Foo,
+              component: Step1Description,
               src: '/static/earnMDT/step-1.png',
               srcset:
                 '/static/earnMDT/step-1@2x.png 2x, /static/earnMDT/step-1@3x.png 3x',
