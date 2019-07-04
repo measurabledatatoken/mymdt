@@ -50,7 +50,7 @@ const QrCodeScanPage = () =>
 const TransferVerifyGoogleAuthPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/googleAuth/TransferVerifyGoogleAuthPage');
 const EarnMDT = () => import('@/screens/EarnMDT');
-const FollowWeChat = () => import('@/screens/earnMDT/FollowWeChat');
+const FollowSocialMedia = () => import('@/screens/earnMDT/FollowSocialMedia');
 const WebView = () => import('@/screens/WebView');
 const TwoFactorAuthenticationSettingPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
@@ -235,9 +235,9 @@ const router = new Router({
           component: EarnMDT,
         },
         {
-          path: RouteDef.FollowWeChat.path,
-          name: RouteDef.FollowWeChat.name,
-          component: FollowWeChat,
+          path: RouteDef.FollowSocialMedia.path,
+          name: RouteDef.FollowSocialMedia.name,
+          component: FollowSocialMedia,
         },
 
         {

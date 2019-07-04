@@ -26,4 +26,17 @@ export default {
 
     return handleGeneralResponse(promise, 'No tasks');
   },
+  redeemSNSCode(code = '', accessToken) {
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/user/snscoderedeem/`,
+      {
+        code,
+      },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+
+    return handleGeneralResponse(promise, { allowEmptyData: true });
+  },
 };

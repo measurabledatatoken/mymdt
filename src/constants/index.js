@@ -66,7 +66,10 @@ const RouteDef = {
     name: 'TransferVerifyGoogleAuth',
   },
   EarnMDT: { path: '/home/earn', name: 'earnMDT' },
-  FollowWeChat: { path: '/home/earn/follow-wechat', name: 'follow-wechat' },
+  FollowSocialMedia: {
+    path: '/home/earn/:account_id/follow/:source',
+    name: 'follow-social-media',
+  },
   AccountDetail: {
     path: '/home/accounts/:account_id',
     name: 'accountDetail',

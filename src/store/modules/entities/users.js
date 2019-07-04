@@ -17,6 +17,8 @@ export const FETCH_USER = 'users/FETCH_USER';
 export const FETCH_ALL_TASKS = 'users/FETCH_ALL_TASKS';
 export const FETCH_TASKS = 'users/FETCH_TASKS';
 
+export const REDEEM_SNS_CODE = 'users/REDEEM_SNS_CODE';
+
 const state = {
   byId: {},
   allIds: [],
@@ -176,6 +178,17 @@ const actions = {
         error,
       });
     }
+  },
+  // let caller handles error thrown
+  async [REDEEM_SNS_CODE]({ dispatch, getters }, { code, userId }) {
+    await dispatch(REQUEST, {
+      api: api.task.redeemSNSCode,
+      args: [code, getters.getUser(userId).accessToken],
+    });
+
+    await dispatch(FETCH_USER, {
+      userId,
+    });
   },
 };
 
