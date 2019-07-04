@@ -255,12 +255,16 @@
       "wechat": {
         "screenTitle": "Official WeChat Account",
         "stepTitle": "Steps to follow us in WeChat",
-        "step1": "1. Follow {0} / {1} / {2} in WeChat",
-        "step2": "2. Open keyboard",
-        "step3": "3. Enter word \"MyMDT\" to receive redeem code",
-        "step4": "4. Enter the redeem code in MyMDT",
+        "step1": "1. Download MailTime / MDT / Measurable AI WeChat QR Code to Photos",
+        "step2": "2. 打开微信，点击首页右上角的“+”号，然后选择“扫一扫”",
+        "step3": "3. 点击右上角的“相册”，然后选择 简信 / MDT 量数 / 量数 AI 公众号二维码",
+        "step4": "4. 点击关注 简信 / MDT 量数 / 量数 AI 公众号",
+        "step5": "5. Open keyboard",
+        "step6": "6. Enter word \"MyMDT\" to receive redeem code",
+        "step7": "7. Enter the redeem code in MyMDT",
         "successDescription": "Thank you for following official WeChat account. Please go back to Earn Rewards page to earn reward.",
-        "failureDescription": "Please follow below steps to get a redeem code."
+        "failureDescription": "Please follow below steps to get a redeem code.",
+        "downloadQRCOde": "Download"
       }
     }
   },
