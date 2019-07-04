@@ -1,6 +1,8 @@
 <template>
   <md-button 
-    :class="['md-raised', 'medium-button']" 
+    :class="['md-raised', 'medium-button', {
+      'medium-button-small': small
+    }]" 
     v-bind="$attrs" 
     v-on="$listeners"
   >
@@ -14,6 +16,10 @@ export default {
     color: {
       type: String,
       default: '',
+    },
+    small: {
+      type: Boolean,
+      default: false,
     },
   },
 };
@@ -44,6 +50,12 @@ export default {
 
     /deep/ .md-ripple {
       padding: 0.5rem 1.5rem;
+    }
+
+    &.medium-button-small {
+      /deep/ .md-ripple {
+        padding: 0.25rem 0.5rem;
+      }
     }
   }
 }

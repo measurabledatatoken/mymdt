@@ -247,7 +247,7 @@
       "formTitle": "输入魔法口令",
       "success": "成功",
       "incorrectRedeemCode": "不正确的魔法口令",
-      "MailTime": "MailTime",
+      "MailTime": "简信",
       "MDT": "MDT 量数",
       "MAI": "量数 AI",
       "goBack": "返回任务页",
@@ -255,12 +255,16 @@
       "wechat": {
         "screenTitle": "官方微信号",
         "stepTitle": "关注官方微信号教学",
-        "step1": "1. 在微信关注 {0} / {1} / {2} 公众号",
-        "step2": "2. 呼叫键盘输入",
-        "step3": "3. 输入口令 \"MyMDT\" 获取魔法口令",
-        "step4": "4. 回到 MyMDT 输入魔法口令，获得 MDT 奖励",
+        "step1": "1. 保存 简信 / MDT 量数 / 量数 AI 公众号二维码到相册",
+        "step2": "2. 打开微信，点击首页右上角的“+”号，然后选择“扫一扫”",
+        "step3": "3. 点击右上角的“相册”，然后选择 简信 / MDT 量数 / 量数 AI 公众号二维码",
+        "step4": "4. 点击关注 简信 / MDT 量数 / 量数 AI 公众号",
+        "step5": "5. 呼叫键盘输入",
+        "step6": "6. 输入口令 \"MyMDT\" 获取魔法口令",
+        "step7": "7. 回到 MyMDT 输入魔法口令，获得 MDT 奖励",
         "successDescription": "感谢你关注官方微信号，请到任务页面获取 MDT 奖励。",
-        "failureDescription": "请你依照教学关注官方微信号，然后获取魔法口令。"
+        "failureDescription": "请你依照教学关注官方微信号，然后获取魔法口令。",
+        "downloadQRCOde": "下载二维码"
       }
     }
   },

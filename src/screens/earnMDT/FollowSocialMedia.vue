@@ -41,9 +41,16 @@
         <p v-else-if="step.description">
           {{ step.description }}
         </p>
-        <div class="step-picture">
+        <component
+          v-if="step.pictureComponent"
+          :is="step.pictureComponent"
+          class="step-picture"
+        />
+        <div
+          v-else-if="step.src"
+          class="step-picture"
+        >
           <img
-            v-if="step.src"
             :src="step.src"
             :srcset="step.srcset"
             :alt="step.alt"
@@ -77,39 +84,9 @@ import BaseField from '@/components/input/BaseField';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
 import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
+import FollowWeChatStep1Instruction from '@/components/earnMDT/FollowWeChatStep1Instruction';
 
 import { REDEEM_SNS_CODE } from '@/store/modules/entities/users';
-
-const Step1Description = {
-  components: {
-    WebViewLink,
-  },
-  template: `
-    <i18n 
-      path="message.earnMDT.follow.wechat.step1" 
-      tag="p"
-    >
-      <WebViewLink 
-        to="https://www.google.com"
-        external
-      >
-        {{ $t('message.earnMDT.follow.MailTime') }}
-      </WebViewLink>
-      <WebViewLink 
-        to="https://www.google.com"
-        external
-      >
-        {{ $t('message.earnMDT.follow.MDT') }}
-      </WebViewLink>
-      <WebViewLink 
-        to="https://www.google.com"
-        external
-      >
-        {{ $t('message.earnMDT.follow.MAI') }}
-      </WebViewLink>
-    </i18n>
-  `,
-};
 
 export default {
   components: {
@@ -138,28 +115,46 @@ export default {
           stepTitle: this.$t('message.earnMDT.follow.wechat.stepTitle'),
           steps: [
             {
-              component: Step1Description,
-              src: '/static/earnMDT/step-1.png',
-              srcset:
-                '/static/earnMDT/step-1@2x.png 2x, /static/earnMDT/step-1@3x.png 3x',
-              alt: 'Step 1',
+              description: this.$t('message.earnMDT.follow.wechat.step1'),
+              pictureComponent: FollowWeChatStep1Instruction,
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step2'),
-              src: '/static/earnMDT/step-2.png',
+              src: '/static/earnMDT/wechat/step-2.png',
               srcset:
-                '/static/earnMDT/step-2@2x.png 2x, /static/earnMDT/step-2@3x.png 3x',
+                '/static/earnMDT/wechat/step-2@2x.png 2x, /static/earnMDT/wechat/step-2@3x.png 3x',
               alt: 'Step 2',
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step3'),
-              src: '/static/earnMDT/step-3.png',
+              src: '/static/earnMDT/wechat/step-3.jpg',
               srcset:
-                '/static/earnMDT/step-3@2x.png 2x, /static/earnMDT/step-3@3x.png 3x',
+                '/static/earnMDT/wechat/step-3@2x.jpg 2x, /static/earnMDT/wechat/step-3@3x.jpg 3x',
               alt: 'Step 3',
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step4'),
+              src: '/static/earnMDT/wechat/step-4.jpg',
+              srcset:
+                '/static/earnMDT/wechat/step-4@2x.jpg 2x, /static/earnMDT/wechat/step-4@3x.jpg 3x',
+              alt: 'Step 3',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.wechat.step5'),
+              src: '/static/earnMDT/wechat/step-5.png',
+              srcset:
+                '/static/earnMDT/wechat/step-5@2x.png 2x, /static/earnMDT/wechat/step-5@3x.png 3x',
+              alt: 'Step 3',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.wechat.step6'),
+              src: '/static/earnMDT/wechat/step-6.png',
+              srcset:
+                '/static/earnMDT/wechat/step-6@2x.png 2x, /static/earnMDT/wechat/step-6@3x.png 3x',
+              alt: 'Step 3',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.wechat.step7'),
             },
           ],
           successDescription: this.$t(
