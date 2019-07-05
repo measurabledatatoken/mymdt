@@ -70,6 +70,7 @@ const RouteDef = {
     path: '/home/earn/:account_id/follow/:source',
     name: 'follow-social-media',
   },
+  InviteFriend: { path: '/home/earn/invite-friend', name: 'invite-friend' },
   AccountDetail: {
     path: '/home/accounts/:account_id',
     name: 'accountDetail',

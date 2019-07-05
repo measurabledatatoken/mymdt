@@ -40,6 +40,11 @@ export default {
     &.secondary-button__color--secondary {
       background-color: $theme-secondary-color;
     }
+
+    &[disabled] {
+      color: $plainbtn-wordcolor-disabled;
+      background-color: #eaeaea;
+    }
   }
 }
 </style>

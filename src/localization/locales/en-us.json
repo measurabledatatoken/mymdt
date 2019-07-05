@@ -24,7 +24,10 @@
     "startOver": "Start Over",
     "total": "Total",
     "detail" : "Detail",
-    "other" : "Other"
+    "other" : "Other",
+    "earned": "Earned",
+    "claimed": "Claimed",
+    "unclaimed": "Unclaimed"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -309,6 +312,23 @@
         "failureDescription": "Please follow below steps to get a Magic code.",
         "followTelegram": "Join Telegram Group"
       }
+    },
+    "inviteFriend": {
+      "screenTitle": "Invite Friend",
+      "cardTitle": "Invite Friend to use MailTime",
+      "cardDescription": "Invite friends to download MailTime and enter invitation code during login. Both of you can earn MDT as reward.",
+      "invitationCode": "Invitation Code",
+      "copy": "Copy",
+      "shareDownloadLinkAndCode": "Share download link and code",
+      "share": "Share",
+      "earnRewards": "Earn Rewards",
+      "expiredAfter": "Expired after {number} days",
+      "expired": "Expired",
+      "history": "History",
+      "status": "Status",
+      "loginDate": "Login Date",
+      "sharedDataPoints": "Shared Data Points",
+      "noDataPoint": "No Data Point"
     }
   },
   "tutorial": {
