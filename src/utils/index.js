@@ -60,20 +60,29 @@ function formatAmount(amount, options) {
   // eslint-disable-next-line
   options = {
     type: 'short',
+    suffix: '',
+    prefix: '',
     ...options,
   };
 
+  let result;
   switch (options.type) {
     case 'short': {
-      return numeral(amount).format('0,0.00');
+      result = numeral(amount).format('0,0.00');
+      break;
     }
     case 'medium': {
-      return numeral(amount).format('0,0.0000');
+      result = numeral(amount).format('0,0.0000');
+      break;
     }
     default: {
-      return numeral(amount).format('0,0.0000[00000000000000]');
+      result = numeral(amount).format('0,0.0000[00000000000000]');
     }
   }
+
+  result = `${options.prefix}${result}${options.suffix}`;
+
+  return result;
 }
 
 function extractNameInitials(name) {
