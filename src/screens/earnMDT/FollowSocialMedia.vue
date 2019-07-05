@@ -85,6 +85,7 @@ import MDTMediumButton from '@/components/button/MDTMediumButton';
 import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
 import FollowWeChatStep1Instruction from '@/components/earnMDT/FollowWeChatStep1Instruction';
+import FollowWeiboStep1Instruction from '@/components/earnMDT/FollowWeiboStep1Instruction';
 
 import { REDEEM_SNS_CODE } from '@/store/modules/entities/users';
 
@@ -98,6 +99,11 @@ export default {
   extends: BasePage,
   metaInfo() {
     switch (this.$route.params.source) {
+      case 'weibo': {
+        return {
+          title: this.$t('message.earnMDT.follow.weibo.screenTitle'),
+        };
+      }
       case 'wechat':
       default: {
         return {
@@ -109,6 +115,41 @@ export default {
   data() {
     let data = null;
     switch (this.$route.params.source) {
+      case 'weibo': {
+        data = {
+          stepTitle: this.$t('message.earnMDT.follow.weibo.stepTitle'),
+          steps: [
+            {
+              description: this.$t('message.earnMDT.follow.weibo.step1'),
+              pictureComponent: FollowWeiboStep1Instruction,
+            },
+            {
+              description: this.$t('message.earnMDT.follow.weibo.step2'),
+              src: '/static/earnMDT/weibo/step-2.jpg',
+              srcset:
+                '/static/earnMDT/weibo/step-2@2x.jpg 2x, /static/earnMDT/weibo/step-2@3x.jpg 3x',
+              alt: 'Step 2',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.weibo.step3'),
+              src: '/static/earnMDT/weibo/step-3.jpg',
+              srcset:
+                '/static/earnMDT/weibo/step-3@2x.jpg 2x, /static/earnMDT/weibo/step-3@3x.jpg 3x',
+              alt: 'Step 3',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.weibo.step4'),
+            },
+          ],
+          successDescription: this.$t(
+            'message.earnMDT.follow.weibo.successDescription',
+          ),
+          failureDescription: this.$t(
+            'message.earnMDT.follow.weibo.failureDescription',
+          ),
+        };
+        break;
+      }
       case 'wechat':
       default: {
         data = {
