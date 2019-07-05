@@ -309,7 +309,15 @@
         "failureDescription": "Please follow below steps to get a Magic code.",
         "followTelegram": "Join Telegram Group"
       }
-    }
+    },
+    "inviteFriendTitle": "Invite Friend",
+    "inviteFriendCardTitle": "Invite Friend to use MailTime",
+    "inviteFriendCardDescription": "Invite friends to download MailTime and enter invitation code during login. Both of you can earn MDT as reward.",
+    "invitationCode": "Invitation Code",
+    "copy": "Copy",
+    "shareDownloadLinkAndCode": "Share download link and code",
+    "share": "Share",
+    "earnRewards": "Earn Rewards"
   },
   "tutorial": {
     "get_started": "Get Started",

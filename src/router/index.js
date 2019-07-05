@@ -51,6 +51,7 @@ const TransferVerifyGoogleAuthPage = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/googleAuth/TransferVerifyGoogleAuthPage');
 const EarnMDT = () => import('@/screens/EarnMDT');
 const FollowSocialMedia = () => import('@/screens/earnMDT/FollowSocialMedia');
+const InviteFriend = () => import('@/screens/earnMDT/InviteFriend');
 const WebView = () => import('@/screens/WebView');
 const TwoFactorAuthenticationSettingPage = () =>
   import(/* webpackChunkName: "2fa" */ '@/screens/setting/TwoFactorAuthenticationSettingPage');
@@ -238,6 +239,11 @@ const router = new Router({
           path: RouteDef.FollowSocialMedia.path,
           name: RouteDef.FollowSocialMedia.name,
           component: FollowSocialMedia,
+        },
+        {
+          path: RouteDef.InviteFriend.path,
+          name: RouteDef.InviteFriend.name,
+          component: InviteFriend,
         },
 
         {
