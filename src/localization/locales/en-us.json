@@ -265,6 +265,17 @@
         "successDescription": "Thank you for following official WeChat account. Please go back to Earn Rewards page to earn reward.",
         "failureDescription": "Please follow below steps to get a redeem code.",
         "downloadQRCOde": "Download"
+      },
+      "weibo": {
+        "screenTitle": "Official Weibo Account",
+        "stepTitle": "Steps to follow us in Weibo",
+        "step1": "1. 打开微博，点击左下角的“＋关注”关注 MDT 量数官微",
+        "step2": "2. 关注后，点击“聊天”",
+        "step3": "3. 输入“MyMDT”获取魔法口令",
+        "step4": "4. 回到 简信积分 输入魔法口令，获得 MDT 奖励",
+        "successDescription": "Thank you for following official Weibo account. Please go back to Earn Rewards page to earn reward.",
+        "failureDescription": "Please follow below steps to get a redeem code.",
+        "followMDTWeibo": "Follow Official MDT Weibo Account"
       }
     }
   },
