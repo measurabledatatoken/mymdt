@@ -1,9 +1,14 @@
 <template>
   <div class="container">
     <div class="button-wrapper">
-      <MDTMediumButton>
-        {{ $t('message.earnMDT.follow.weibo.followMDTWeibo') }}
-      </MDTMediumButton>
+      <WebViewLink
+        :to="url"
+        external
+      >
+        <MDTMediumButton>
+          {{ $t('message.earnMDT.follow.weibo.followMDTWeibo') }}
+        </MDTMediumButton>
+      </WebViewLink>
     </div>
     <img
       :src="$t('message.earnMDT.follow.weibo.step1Src')"
@@ -15,10 +20,18 @@
 
 <script>
 import MDTMediumButton from '@/components/button/MDTMediumButton';
+import WebViewLink from '@/components/common/WebViewLink';
 
 export default {
   components: {
     MDTMediumButton,
+    WebViewLink,
+  },
+  props: {
+    url: {
+      type: String,
+      default: '',
+    },
   },
 };
 </script>
