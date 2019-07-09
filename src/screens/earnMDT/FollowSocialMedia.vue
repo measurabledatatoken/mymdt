@@ -41,16 +41,17 @@
         <p v-else-if="step.description">
           {{ step.description }}
         </p>
-        <component
-          v-if="step.pictureComponent"
-          :is="step.pictureComponent"
-          class="step-picture"
-        />
         <div
-          v-else-if="step.src"
+          v-if="step.pictureComponent || step.src"
           class="step-picture"
         >
+          <component
+            v-if="step.pictureComponent"
+            :is="step.pictureComponent"
+            class="step-picture"
+          />
           <img
+            v-else
             :src="step.src"
             :srcset="step.srcset"
             :alt="step.alt"
@@ -84,7 +85,7 @@ import BaseField from '@/components/input/BaseField';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
 import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
-import FollowWeChatStep1Instruction from '@/components/earnMDT/FollowWeChatStep1Instruction';
+import QRCode from '@/components/earnMDT/QRCode';
 import FollowWeiboStep1Instruction from '@/components/earnMDT/FollowWeiboStep1Instruction';
 
 import { REDEEM_SNS_CODE } from '@/store/modules/entities/users';
@@ -152,12 +153,24 @@ export default {
       }
       case 'wechat':
       default: {
+        const QR =
+          typeof this.$route.query.url === 'string'
+            ? {
+                components: {
+                  QRCode,
+                },
+                template: `
+                  <QRCode value="${this.$route.query.url}" />
+                `,
+              }
+            : null;
+
         data = {
           stepTitle: this.$t('message.earnMDT.follow.wechat.stepTitle'),
           steps: [
             {
               description: this.$t('message.earnMDT.follow.wechat.step1'),
-              pictureComponent: FollowWeChatStep1Instruction,
+              pictureComponent: QR,
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step2'),
