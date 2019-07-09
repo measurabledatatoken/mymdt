@@ -6,9 +6,9 @@
       </MDTMediumButton>
     </div>
     <img
-      src="/static/earnMDT/weibo/step-1.jpg"
-      srcset="/static/earnMDT/weibo/step-1@2x.jpg 2x, /static/earnMDT/weibo/step-1@3x.jpg 3x"
-      alt="Step 2"
+      :src="$t('message.earnMDT.follow.weibo.step1Src')"
+      :srcset="$t('message.earnMDT.follow.weibo.step1Srcset')"
+      alt="Step 1"
     >
   </div>
 </template>

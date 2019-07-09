@@ -126,16 +126,14 @@ export default {
             },
             {
               description: this.$t('message.earnMDT.follow.weibo.step2'),
-              src: '/static/earnMDT/weibo/step-2.jpg',
-              srcset:
-                '/static/earnMDT/weibo/step-2@2x.jpg 2x, /static/earnMDT/weibo/step-2@3x.jpg 3x',
+              src: this.$t('message.earnMDT.follow.weibo.step2Src'),
+              srcset: this.$t('message.earnMDT.follow.weibo.step2Srcset'),
               alt: 'Step 2',
             },
             {
               description: this.$t('message.earnMDT.follow.weibo.step3'),
-              src: '/static/earnMDT/weibo/step-3.jpg',
-              srcset:
-                '/static/earnMDT/weibo/step-3@2x.jpg 2x, /static/earnMDT/weibo/step-3@3x.jpg 3x',
+              src: this.$t('message.earnMDT.follow.weibo.step3Src'),
+              srcset: this.$t('message.earnMDT.follow.weibo.step3Srcset'),
               alt: 'Step 3',
             },
             {
@@ -174,23 +172,20 @@ export default {
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step2'),
-              src: '/static/earnMDT/wechat/step-2.png',
-              srcset:
-                '/static/earnMDT/wechat/step-2@2x.png 2x, /static/earnMDT/wechat/step-2@3x.png 3x',
+              src: this.$t('message.earnMDT.follow.wechat.step2Src'),
+              srcset: this.$t('message.earnMDT.follow.wechat.step2Srcset'),
               alt: 'Step 2',
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step3'),
-              src: '/static/earnMDT/wechat/step-3.jpg',
-              srcset:
-                '/static/earnMDT/wechat/step-3@2x.jpg 2x, /static/earnMDT/wechat/step-3@3x.jpg 3x',
+              src: this.$t('message.earnMDT.follow.wechat.step3Src'),
+              srcset: this.$t('message.earnMDT.follow.wechat.step3Srcset'),
               alt: 'Step 3',
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step4'),
-              src: '/static/earnMDT/wechat/step-4.jpg',
-              srcset:
-                '/static/earnMDT/wechat/step-4@2x.jpg 2x, /static/earnMDT/wechat/step-4@3x.jpg 3x',
+              src: this.$t('message.earnMDT.follow.wechat.step4Src'),
+              srcset: this.$t('message.earnMDT.follow.wechat.step4Srcset'),
               alt: 'Step 3',
             },
             {
