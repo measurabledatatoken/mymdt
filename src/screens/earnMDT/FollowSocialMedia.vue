@@ -83,7 +83,6 @@ import BasePage from '@/screens/BasePage';
 
 import BaseField from '@/components/input/BaseField';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
-import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
 import QRCode from '@/components/earnMDT/QRCode';
 import FollowWeiboStep1Instruction from '@/components/earnMDT/FollowWeiboStep1Instruction';
@@ -94,7 +93,6 @@ export default {
   components: {
     BaseField,
     MDTMediumButton,
-    WebViewLink,
     BasePopup,
   },
   extends: BasePage,
@@ -117,12 +115,21 @@ export default {
     let data = null;
     switch (this.$route.params.source) {
       case 'weibo': {
+        const pictureComponent = {
+          components: {
+            FollowWeiboStep1Instruction,
+          },
+          template: `
+            <FollowWeiboStep1Instruction url="${this.$route.query.url}" />
+          `,
+        };
+
         data = {
           stepTitle: this.$t('message.earnMDT.follow.weibo.stepTitle'),
           steps: [
             {
               description: this.$t('message.earnMDT.follow.weibo.step1'),
-              pictureComponent: FollowWeiboStep1Instruction,
+              pictureComponent: pictureComponent,
             },
             {
               description: this.$t('message.earnMDT.follow.weibo.step2'),
