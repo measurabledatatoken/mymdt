@@ -1,30 +1,24 @@
 <template>
   <div class="app-view">
-    <div class="header">
-      <div class="header-wrapper">
-        <div class="header__background"/>
-        <md-card>
-          <form
-            class="form"
-            @submit.prevent="handleSubmit"
-          >
-            <div class="md-title">{{ $t('message.earnMDT.follow.formTitle') }}</div>
-            <BaseField md-clearable>
-              <md-input
-                v-model="$v.code.$model"
-                data-cy="code"
-              />
-            </BaseField>
-            <MDTMediumButton
-              :disabled="submiting || !$v.code.$dirty || $v.$anyError"
-              type="submit"
-            >
-              {{ $t('message.reportProblem.submit') }}
-            </MDTMediumButton>
-          </form>
-        </md-card>
-      </div>
-    </div>
+    <CardInExtendedHeader :title="$t('message.earnMDT.follow.formTitle')">
+      <form
+        class="form"
+        @submit.prevent="handleSubmit"
+      >
+        <BaseField md-clearable>
+          <md-input
+            v-model="$v.code.$model"
+            data-cy="code"
+          />
+        </BaseField>
+        <MDTMediumButton
+          :disabled="submiting || !$v.code.$dirty || $v.$anyError"
+          type="submit"
+        >
+          {{ $t('message.reportProblem.submit') }}
+        </MDTMediumButton>
+      </form>
+    </CardInExtendedHeader>
     <div class="steps">
       <h3 class="md-title">{{ stepTitle }}</h3>
       <div
@@ -80,7 +74,7 @@ import { mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 
 import BasePage from '@/screens/BasePage';
-
+import CardInExtendedHeader from '@/components/common/CardInExtendedHeader';
 import BaseField from '@/components/input/BaseField';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
 import BasePopup from '@/components/popup/BasePopup';
@@ -94,6 +88,7 @@ export default {
     BaseField,
     MDTMediumButton,
     BasePopup,
+    CardInExtendedHeader,
   },
   extends: BasePage,
   metaInfo() {
@@ -266,8 +261,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$header-padding-top: 0.5rem;
-
 .app-view {
   display: flex;
   flex-direction: column;
@@ -284,29 +277,14 @@ $header-padding-top: 0.5rem;
   }
 }
 
-.header {
-  .header-wrapper {
-    padding-top: $header-padding-top;
-    position: relative;
-  }
-
-  .header__background {
-    background-color: $home-bgcolor;
-    height: calc(8em + 0.5em + #{$header-padding-top});
-    width: 100%;
-    position: absolute;
-    top: 0;
-  }
-}
-
 .md-card {
-  border-radius: 0.5em;
-  background-color: white;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-  margin: 0 0.5em 0.5em 0.5em;
+  .md-card-header {
+    padding-bottom: 0;
+  }
 
   .form {
-    padding: 1.5rem;
+    margin-top: -1rem;
+    padding: 0 0.5rem;
   }
 
   .base-field {
