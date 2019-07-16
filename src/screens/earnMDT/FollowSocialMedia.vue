@@ -80,6 +80,8 @@ import MDTMediumButton from '@/components/button/MDTMediumButton';
 import BasePopup from '@/components/popup/BasePopup';
 import QRCode from '@/components/earnMDT/QRCode';
 import FollowWeiboStep1Instruction from '@/components/earnMDT/FollowWeiboStep1Instruction';
+import FollowTelegramStep1Instruction from '@/components/earnMDT/FollowTelegramStep1Instruction';
+import FollowTelegramStep2Instruction from '@/components/earnMDT/FollowTelegramStep2Instruction';
 
 import { REDEEM_SNS_CODE } from '@/store/modules/entities/users';
 
@@ -96,6 +98,11 @@ export default {
       case 'weibo': {
         return {
           title: this.$t('message.earnMDT.follow.weibo.screenTitle'),
+        };
+      }
+      case 'telegram': {
+        return {
+          title: this.$t('message.earnMDT.follow.telegram.screenTitle'),
         };
       }
       case 'wechat':
@@ -147,6 +154,52 @@ export default {
           ),
           failureDescription: this.$t(
             'message.earnMDT.follow.weibo.failureDescription',
+          ),
+        };
+        break;
+      }
+      case 'telegram': {
+        const pictureComponent = {
+          components: {
+            FollowTelegramStep1Instruction,
+          },
+          template: `
+            <FollowTelegramStep1Instruction url="${this.$route.query.url}" />
+          `,
+        };
+
+        data = {
+          stepTitle: this.$t('message.earnMDT.follow.telegram.stepTitle'),
+          steps: [
+            {
+              description: this.$t('message.earnMDT.follow.telegram.step1'),
+              pictureComponent: pictureComponent,
+            },
+            {
+              description: this.$t('message.earnMDT.follow.telegram.step2'),
+              pictureComponent: FollowTelegramStep2Instruction,
+            },
+            {
+              description: this.$t('message.earnMDT.follow.telegram.step3'),
+              src: this.$t('message.earnMDT.follow.telegram.step3Src'),
+              srcset: this.$t('message.earnMDT.follow.telegram.step3Srcset'),
+              alt: 'Step 3',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.telegram.step4'),
+              src: this.$t('message.earnMDT.follow.telegram.step4Src'),
+              srcset: this.$t('message.earnMDT.follow.telegram.step4Srcset'),
+              alt: 'Step 4',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.telegram.step5'),
+            },
+          ],
+          successDescription: this.$t(
+            'message.earnMDT.follow.telegram.successDescription',
+          ),
+          failureDescription: this.$t(
+            'message.earnMDT.follow.telegram.failureDescription',
           ),
         };
         break;
