@@ -7,6 +7,7 @@ import security from './security';
 import reward from './reward';
 import transaction from './transaction';
 import application from './application';
+import inviteFriend from './inviteFriend';
 
 export default {
   account,
@@ -18,4 +19,5 @@ export default {
   reward,
   transaction,
   application,
+  inviteFriend,
 };

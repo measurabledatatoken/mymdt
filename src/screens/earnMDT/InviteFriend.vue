@@ -20,79 +20,118 @@
         </MDTMediumButton>
       </div>
     </CardInExtendedHeader>
-    <md-card class="reward-card">
-      <md-card-header>
-        <div class="label">总额</div>
-        <div class="md-title">120.00 MDT</div>
-      </md-card-header>
-      <hr >
-      <md-card-content>
-        <div class="box">
-          <div class="box-row label">
-            已领取
+    <pull-to
+      ref="rewardHistoryContainer"
+      :top-load-method="foo" 
+      :bottom-load-method="getOldRewardHistory" 
+      :top-config="PULLTO_TOP_CONFIG"
+      :bottom-config="PULLTO_BOTTOM_CONFIG"
+      :top-block-height="26"
+      @scroll="foo"
+      @bottom-state-change="foo"
+    >
+      <md-card class="reward-card">
+        <md-card-header>
+          <div class="label">总额</div>
+          <Skeleton v-if="uiState.isFetching" />
+          <div 
+            v-if="!uiState.isFetching && !!rewardHistory"
+            class="md-title"
+          >
+            {{ formatMDTAmount(rewardHistory.total_reward_value) }}
           </div>
-          <div class="box-row amount">
-            100.00 MDT
-          </div>
-        </div>
-        <div class="box">
-          <div class="box-row label">
-            未领取
-          </div>
-          <div class="box-row amount">
-            20.00 MDT
-          </div>
-        </div>
-      </md-card-content>
-    </md-card>
-    <div class="history-section">
-      <h3 class="md-caption history-section-title">奖励历史</h3>
-      <hr >
-      <template
-        v-for="(item, index) in items"
-      >
-        <div
-          :key="`item-${index}`"
-          class="history-item"
-        >
-          <div class="item-row item-row-email">{{ item.email }}</div>
-          <div class="item-row item-row-info">
-            <div class="item-row-info-status">
-              <span class="item-col-title">狀態</span>
-              <span>{{ getStatusText(item.status) }}</span>
+        </md-card-header>
+        <hr >
+        <md-card-content>
+          <div class="box">
+            <div class="box-row label">
+              已领取
             </div>
-            <div class="item-row-info-day">
-              <span class="item-col-title">登录日期</span>
-              <span>{{ item.loginDate }}</span>
-            </div>
-          </div>
-          <div class="item-row item-row-action">
-            <div class="action-info">
-              <div class="action-info-amount">
-                {{ formatAmount(item.amount) }} MDT
-              </div>
-              <div class="action-info-day">
-                {{ item.expiryDay }}
-              </div>
-            </div>
-            <MDTSecondaryButton 
-              :disabled="!!item.redeemed" 
-              color="secondary"
+            <Skeleton v-if="uiState.isFetching" />
+            <div 
+              v-if="!uiState.isFetching && !!rewardHistory"
+              class="box-row amount"
             >
-              {{ getButtonText(item.redeemed) }}
-            </MDTSecondaryButton>
+              {{ formatMDTAmount(rewardHistory.claimed_reward_value) }}
+            </div>
           </div>
+          <div class="box">
+            <div class="box-row label">
+              未领取
+            </div>
+            <Skeleton v-if="uiState.isFetching" />
+            <div 
+              v-if="!uiState.isFetching && !!rewardHistory"
+              class="box-row amount"
+            >
+              {{ formatMDTAmount(rewardHistory.claimable_reward_value) }}
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+      <div class="history-section">
+        <h3 class="md-caption history-section-title">奖励历史</h3>
+        <hr class="history-section-line">
+        <div class="history-section-main">
+          <template v-if="!uiState.isFetching && !!rewardHistory && rewardHistory.reward_history">
+            <template v-for="(item, index) in rewardHistory.reward_history">
+              <div
+                :key="item.id"
+                class="history-item"
+              >
+                <div>
+                  <div class="item-row-email">{{ item.email_address }}</div>
+                  <div class="item-row-info">
+                    <div class="item-row-info-status label-info">
+                      <span class="item-col-title">狀態</span>
+                      <span>{{ getStatusText(item.status) }}</span>
+                    </div>
+                  </div>
+                  <div class="item-row-info">
+                    <div class="item-row-info-day label-info">
+                      <span class="item-col-title">登录日期</span>
+                      <span>{{ $d(new Date(item.created_at), 'short') }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="history-item-right">
+                  <div :class="['action-info-amount', { 'action-info-amount-claimable': item.claimable }]">
+                    {{ formatClaimableAmount(item.value, item.claimable) }}
+                  </div>
+                  <div 
+                    v-if="item.reward_id && item.expiry_time"
+                    class="label-info"
+                  >
+                    {{ getExpiryText(item.status, item.expiry_time) }}
+                  </div>
+                  <!-- <div class="action-info-day">
+                    {{ item.expiry_time }}
+                  </div> -->
+                  <MDTSecondaryButton 
+                    v-if="item.claimable" 
+                    class="action-claim"
+                    color="secondary"
+                  >
+                    {{ getButtonText(item.claimable) }}
+                  </MDTSecondaryButton>
+                </div>
+              </div>
+              <hr 
+                :key="`hr-${index}`" 
+                class="history-line"
+              >
+            </template>
+
+          </template>
         </div>
-        <hr 
-          :key="`hr-${index}`" 
-          class="history-line"
-        >
-      </template>
-    </div>
+      </div>
+    </pull-to>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from 'vuex';
+
 import BasePage from '@/screens/BasePage';
 
 import CardInExtendedHeader from '@/components/common/CardInExtendedHeader';
@@ -100,8 +139,12 @@ import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
 import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
+import Skeleton from '@/components/common/Skeleton';
+import PullTo from 'vue-pull-to';
 
 import { formatAmount } from '@/utils';
+
+import { FETCH_INVITE_FRIEND_REWARD_HISTORIES } from '@/store/modules/inviteFriend';
 
 export default {
   components: {
@@ -110,6 +153,8 @@ export default {
     MDTSecondaryButton,
     WebViewLink,
     BasePopup,
+    Skeleton,
+    PullTo,
   },
   extends: BasePage,
   metaInfo() {
@@ -119,6 +164,7 @@ export default {
   },
   data() {
     return {
+      numberOfItemsPerPage: 5,
       items: [
         {
           email: 'yon***@g***.com',
@@ -137,9 +183,45 @@ export default {
           redeemed: true,
         },
       ],
+      PULLTO_TOP_CONFIG: {
+        pullText: this.$t('message.transaction.listing.pullDownText'),
+        triggerText: this.$t('message.transaction.listing.triggerText'),
+        loadingText: this.$t('message.transaction.listing.loadingText'),
+        doneText: this.$t('message.transaction.listing.doneText'),
+        failText: this.$t('message.transaction.listing.failText'),
+      },
+      PULLTO_BOTTOM_CONFIG: {
+        pullText: this.$t('message.transaction.listing.pullUpText'),
+        triggerText: this.$t('message.transaction.listing.triggerText'),
+        loadingText: this.$t('message.transaction.listing.loadingText'),
+        doneText: this.$t('message.transaction.listing.doneText'),
+        failText: this.$t('message.transaction.listing.failText'),
+        triggerDistance: 10,
+      },
     };
   },
+  computed: {
+    ...mapState({
+      uiState: state => state.ui.inviteFriend,
+    }),
+    ...mapGetters({
+      selectedUser: 'getSelectedUser',
+      getRewardHistory: 'getRewardHistory',
+    }),
+    rewardHistory() {
+      return this.getRewardHistory(this.selectedUser.emailAddress);
+    },
+  },
+  mounted() {
+    this.fetchRewardHistory({
+      userId: this.selectedUser.emailAddress,
+      limit: this.numberOfItemsPerPage,
+    });
+  },
   methods: {
+    ...mapActions({
+      fetchRewardHistory: FETCH_INVITE_FRIEND_REWARD_HISTORIES,
+    }),
     getStatusText(status) {
       if (status) {
         return '已数据分享';
@@ -147,14 +229,58 @@ export default {
 
       return '未有数据分享';
     },
-    getButtonText(redeemed) {
-      if (redeemed) {
-        return '已领取';
+    getButtonText(claimable) {
+      if (claimable) {
+        return '领取';
       }
 
-      return '领取';
+      return '已领取';
     },
-    formatAmount,
+    formatMDTAmount(amount) {
+      return formatAmount(amount, { suffix: ' MDT' });
+    },
+    formatClaimableAmount(amount, claimable) {
+      if (claimable) {
+        return formatAmount(amount, { prefix: '+', suffix: ' MDT' });
+      }
+
+      return this.formatMDTAmount(amount);
+    },
+    getExpiryText(rewardStatus, dateTime) {
+      // if (rewardStatus === ) {
+
+      // }
+      const expiryDate = new Date(dateTime);
+      const now = new Date();
+      const utc1 = Date.UTC(
+        expiryDate.getFullYear(),
+        expiryDate.getMonth(),
+        expiryDate.getDate(),
+      );
+      const utc2 = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+
+      // https://stackoverflow.com/a/15289883
+      const dateDiffInDays = Math.floor((utc1 - utc2) / (1000 * 60 * 60 * 24));
+
+      if (dateDiffInDays >= 0) {
+        return this.$t('message.earnMDT.expiredAfter', {
+          number: dateDiffInDays,
+        });
+      }
+
+      return this.$t('message.earnMDT.expired');
+    },
+    foo(loaded) {
+      if (typeof loaded === 'function') {
+        loaded('done');
+      }
+    },
+    getOldRewardHistory(loaded) {
+      this.items = [...this.items, ...this.items.slice(0, 2)];
+      if (typeof loaded === 'function') {
+        loaded('done');
+      }
+    },
   },
 };
 </script>
@@ -255,6 +381,10 @@ hr {
     margin: 0;
   }
 
+  .history-section-line {
+    margin: 0.5rem 1rem 1rem 1rem;
+  }
+
   .history-section-title {
     font-size: 0.875rem;
     color: #aab1c0;
@@ -266,15 +396,27 @@ hr {
   .history-item {
     text-align: left;
     padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
 
-    .item-row {
-      margin: 0.5rem 0;
+    .history-item-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .item-row-email {
+      font-size: 16px;
+      font-weight: 600;
+      color: $primary-text-color;
+      margin-bottom: 0.5rem;
+      line-height: normal;
     }
 
     .item-row-info {
       display: flex;
-      color: $theme-placeholder-color;
-      font-size: 0.75rem;
+      margin: 0.25rem 0;
 
       .item-row-info-status {
         flex: 3;
@@ -290,30 +432,62 @@ hr {
       }
     }
 
-    .item-row-action {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .label-info {
+      color: $theme-placeholder-color;
+      font-size: 0.75rem;
+      line-height: normal;
+    }
 
-      .action-info {
-        line-height: normal;
+    .action-info-amount {
+      font-size: 1rem;
+      font-weight: bold;
+      color: $theme-disable-color-font;
 
-        .action-info-amount {
-          font-size: 0.875rem;
-          font-weight: bold;
-          color: $theme-secondary-color;
-        }
-
-        .action-info-day {
-          font-size: 0.75rem;
-          color: $theme-placeholder-color;
-        }
+      &.action-info-amount-claimable {
+        color: $theme-secondary-color;
       }
+    }
+
+    .action-claim {
+      margin-top: 0.5rem;
     }
   }
 
   .history-line {
-    margin-left: 1rem;
+    margin: 1rem;
+  }
+
+  .history-section-main {
+    position: relative;
+
+    .scrolling-placeholder {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      white-space: pre;
+
+      &::before {
+        content: ' ';
+      }
+    }
+  }
+}
+
+/deep/ .md-card {
+  z-index: 2;
+}
+
+/deep/ .default-text {
+  line-height: 20px;
+  margin: 0;
+}
+
+.foo {
+  width: 100%;
+  white-space: pre;
+
+  &::before {
+    content: ' ';
   }
 }
 </style>

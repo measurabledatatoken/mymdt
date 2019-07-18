@@ -14,6 +14,7 @@ import reportProblem from './modules/reportProblem';
 import ui from './modules/ui';
 import entities from './modules/entities';
 import security from './modules/security';
+import inviteFriend from './modules/inviteFriend';
 
 Vue.use(Vuex);
 
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     qrcode,
     reportProblem,
     security,
+    inviteFriend,
   },
   strict: debug,
   plugins: debug ? [createLogger(), persistedState] : [persistedState],

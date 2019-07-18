@@ -317,7 +317,9 @@
     "copy": "Copy",
     "shareDownloadLinkAndCode": "Share download link and code",
     "share": "Share",
-    "earnRewards": "Earn Rewards"
+    "earnRewards": "Earn Rewards",
+    "expiredAfter": "Expired after {number} days",
+    "expired": "Expired"
   },
   "tutorial": {
     "get_started": "Get Started",

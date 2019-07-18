@@ -290,7 +290,18 @@ export default {
     },
     onEarnClicked() {
       trackEvent('Click on Earn MDT button from home page');
-      this.$router.push(RouteDef.EarnMDT.path);
+      // this.$router.push({
+      //   name: RouteDef.FollowSocialMedia.name,
+      //   params: {
+      //     source: 'telegram',
+      //     account_id: 'testmailtime001@gmail.com',
+      //   },
+      //   query: {
+      //     url: 'https://www.gopgle.com',
+      //   },
+      // });
+      this.$router.push(RouteDef.InviteFriend.path);
+      // this.$router.push(RouteDef.EarnMDT.path);
     },
     formatAmount,
   },
