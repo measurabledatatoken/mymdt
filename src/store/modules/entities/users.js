@@ -180,10 +180,10 @@ const actions = {
     }
   },
   // let caller handles error thrown
-  async [REDEEM_SNS_CODE]({ dispatch, getters }, { code, userId }) {
+  async [REDEEM_SNS_CODE]({ dispatch, getters }, { code, taskId, userId }) {
     await dispatch(REQUEST, {
       api: api.task.redeemSNSCode,
-      args: [code, getters.getUser(userId).accessToken],
+      args: [code, taskId, getters.getUser(userId).accessToken],
     });
 
     await dispatch(FETCH_USER, {
