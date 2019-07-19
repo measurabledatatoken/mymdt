@@ -1,22 +1,22 @@
 <template>
   <div class="app-view">
     <CardInExtendedHeader
-      :title="$t('message.earnMDT.inviteFriendCardTitle')"
-      :subheading="$t('message.earnMDT.inviteFriendCardDescription')"
+      :title="$t('message.earnMDT.inviteFriend.cardTitle')"
+      :subheading="$t('message.earnMDT.inviteFriend.cardDescription')"
     >
       <div class="card-content-row">
-        <span class="md-subheading">{{ $t('message.earnMDT.invitationCode') }}</span>
+        <span class="md-subheading">{{ $t('message.earnMDT.inviteFriend.invitationCode') }}</span>
         <div class="card-content-copy">
           <span class="md-subheading">Ft2p0m5</span>
           <MDTMediumButton>
-            {{ $t('message.earnMDT.copy') }}
+            {{ $t('message.earnMDT.inviteFriend.copy') }}
           </MDTMediumButton>
         </div>
       </div>
       <div class="card-content-row">
-        <span class="md-subheading">{{ $t('message.earnMDT.shareDownloadLinkAndCode') }}</span>
+        <span class="md-subheading">{{ $t('message.earnMDT.inviteFriend.shareDownloadLinkAndCode') }}</span>
         <MDTMediumButton>
-          {{ $t('message.earnMDT.share') }}
+          {{ $t('message.earnMDT.inviteFriend.share') }}
         </MDTMediumButton>
       </div>
     </CardInExtendedHeader>
@@ -32,7 +32,7 @@
     >
       <md-card class="reward-card">
         <md-card-header>
-          <div class="label">总额</div>
+          <div class="label">{{ $t('message.earnMDT.inviteFriend.total') }}</div>
           <Skeleton v-if="uiState.isFetching" />
           <div 
             v-if="!uiState.isFetching && !!rewardHistory"
@@ -45,7 +45,7 @@
         <md-card-content>
           <div class="box">
             <div class="box-row label">
-              已领取
+              {{ $t('message.earnMDT.inviteFriend.claimed') }}
             </div>
             <Skeleton v-if="uiState.isFetching" />
             <div 
@@ -57,7 +57,7 @@
           </div>
           <div class="box">
             <div class="box-row label">
-              未领取
+              {{ $t('message.earnMDT.inviteFriend.unclaimed') }}
             </div>
             <Skeleton v-if="uiState.isFetching" />
             <div 
@@ -70,7 +70,7 @@
         </md-card-content>
       </md-card>
       <div class="history-section">
-        <h3 class="md-caption history-section-title">奖励历史</h3>
+        <h3 class="md-caption history-section-title">{{ $t('message.earnMDT.inviteFriend.history') }}</h3>
         <hr class="history-section-line">
         <div class="history-section-main">
           <template v-if="!uiState.isFetching && !!rewardHistory && rewardHistory.reward_history">
@@ -83,30 +83,27 @@
                   <div class="item-row-email">{{ item.email_address }}</div>
                   <div class="item-row-info">
                     <div class="item-row-info-status label-info">
-                      <span class="item-col-title">狀態</span>
-                      <span>{{ getStatusText(item.status) }}</span>
+                      <span class="item-col-title">{{ $t('message.earnMDT.inviteFriend.status') }}</span>
+                      <span>{{ getStatusText(!!item.reward_id) }}</span>
                     </div>
                   </div>
                   <div class="item-row-info">
                     <div class="item-row-info-day label-info">
-                      <span class="item-col-title">登录日期</span>
+                      <span class="item-col-title">{{ $t('message.earnMDT.inviteFriend.loginDate') }}</span>
                       <span>{{ $d(new Date(item.created_at), 'short') }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="history-item-right">
                   <div :class="['action-info-amount', { 'action-info-amount-claimable': item.claimable }]">
-                    {{ formatClaimableAmount(item.value, item.claimable) }}
+                    {{ formatClaimableAmount(item.value, item.status, item.claimable) }}
                   </div>
                   <div 
-                    v-if="item.reward_id && item.expiry_time"
+                    v-if="item.reward_id"
                     class="label-info"
                   >
                     {{ getExpiryText(item.status, item.expiry_time) }}
                   </div>
-                  <!-- <div class="action-info-day">
-                    {{ item.expiry_time }}
-                  </div> -->
                   <MDTSecondaryButton 
                     v-if="item.claimable" 
                     class="action-claim"
@@ -131,6 +128,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
+import PullTo from 'vue-pull-to';
 
 import BasePage from '@/screens/BasePage';
 
@@ -140,11 +138,12 @@ import MDTMediumButton from '@/components/button/MDTMediumButton';
 import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
 import Skeleton from '@/components/common/Skeleton';
-import PullTo from 'vue-pull-to';
 
 import { formatAmount } from '@/utils';
 
 import { FETCH_INVITE_FRIEND_REWARD_HISTORIES } from '@/store/modules/inviteFriend';
+
+import RewardStatus from '@/enum/rewardStatus';
 
 export default {
   components: {
@@ -159,30 +158,12 @@ export default {
   extends: BasePage,
   metaInfo() {
     return {
-      title: this.$t('message.earnMDT.inviteFriendTitle'),
+      title: this.$t('message.earnMDT.inviteFriend.screenTitle'),
     };
   },
   data() {
     return {
       numberOfItemsPerPage: 5,
-      items: [
-        {
-          email: 'yon***@g***.com',
-          status: 1,
-          loginDate: '2019年4月12日',
-          amount: 50,
-          expiryDay: 30,
-          redeemed: false,
-        },
-        {
-          email: 'yon***@g***.com',
-          status: 0,
-          loginDate: '2019年4月12日',
-          amount: 50,
-          expiryDay: 30,
-          redeemed: true,
-        },
-      ],
       PULLTO_TOP_CONFIG: {
         pullText: this.$t('message.transaction.listing.pullDownText'),
         triggerText: this.$t('message.transaction.listing.triggerText'),
@@ -222,12 +203,12 @@ export default {
     ...mapActions({
       fetchRewardHistory: FETCH_INVITE_FRIEND_REWARD_HISTORIES,
     }),
-    getStatusText(status) {
-      if (status) {
-        return '已数据分享';
+    getStatusText(hasReward) {
+      if (hasReward) {
+        return this.$t('message.earnMDT.inviteFriend.sharedDataPoints');
       }
 
-      return '未有数据分享';
+      return this.$t('message.earnMDT.inviteFriend.noDataPoint');
     },
     getButtonText(claimable) {
       if (claimable) {
@@ -239,36 +220,61 @@ export default {
     formatMDTAmount(amount) {
       return formatAmount(amount, { suffix: ' MDT' });
     },
-    formatClaimableAmount(amount, claimable) {
-      if (claimable) {
-        return formatAmount(amount, { prefix: '+', suffix: ' MDT' });
+    formatClaimableAmount(amount, rewardStatus, claimable) {
+      switch (rewardStatus) {
+        case RewardStatus.ACTIVE: {
+          if (claimable) {
+            return formatAmount(amount, { prefix: '+', suffix: ' MDT' });
+          }
+          return this.formatMDTAmount(amount);
+        }
+        default: {
+          return this.formatMDTAmount(amount);
+        }
       }
-
-      return this.formatMDTAmount(amount);
     },
     getExpiryText(rewardStatus, dateTime) {
-      // if (rewardStatus === ) {
+      switch (rewardStatus) {
+        case RewardStatus.ACTIVE: {
+          if (!dateTime) {
+            return '';
+          }
 
-      // }
-      const expiryDate = new Date(dateTime);
-      const now = new Date();
-      const utc1 = Date.UTC(
-        expiryDate.getFullYear(),
-        expiryDate.getMonth(),
-        expiryDate.getDate(),
-      );
-      const utc2 = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+          const expiryDate = new Date(dateTime);
+          const now = new Date();
+          const utc1 = Date.UTC(
+            expiryDate.getFullYear(),
+            expiryDate.getMonth(),
+            expiryDate.getDate(),
+          );
+          const utc2 = Date.UTC(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+          );
 
-      // https://stackoverflow.com/a/15289883
-      const dateDiffInDays = Math.floor((utc1 - utc2) / (1000 * 60 * 60 * 24));
+          // https://stackoverflow.com/a/15289883
+          const dateDiffInDays = Math.floor(
+            (utc1 - utc2) / (1000 * 60 * 60 * 24),
+          );
 
-      if (dateDiffInDays >= 0) {
-        return this.$t('message.earnMDT.expiredAfter', {
-          number: dateDiffInDays,
-        });
+          if (dateDiffInDays >= 0) {
+            return this.$t('message.earnMDT.inviteFriend.expiredAfter', {
+              number: dateDiffInDays,
+            });
+          }
+
+          return this.$t('message.earnMDT.inviteFriend.expired');
+        }
+        case RewardStatus.CLAIMED: {
+          return '';
+        }
+        case RewardStatus.EXPIRED: {
+          return this.$t('message.earnMDT.inviteFriend.expired');
+        }
       }
 
-      return this.$t('message.earnMDT.expired');
+      return this.$t('message.earnMDT.inviteFriend.expired');
     },
     foo(loaded) {
       if (typeof loaded === 'function') {
@@ -276,7 +282,6 @@ export default {
       }
     },
     getOldRewardHistory(loaded) {
-      this.items = [...this.items, ...this.items.slice(0, 2)];
       if (typeof loaded === 'function') {
         loaded('done');
       }
@@ -291,6 +296,7 @@ $header-padding-top: 0.5rem;
 .app-view {
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
 }
 
 .md-card {
@@ -339,6 +345,7 @@ $header-padding-top: 0.5rem;
     font-size: 0.625rem;
     font-weight: 600;
     color: #aab1c0;
+    text-transform: uppercase;
   }
 
   hr {
@@ -398,6 +405,7 @@ hr {
     padding: 0 1rem;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 
     .history-item-right {
       text-align: right;
