@@ -22,12 +22,12 @@
     </CardInExtendedHeader>
     <pull-to
       ref="rewardHistoryContainer"
-      :top-load-method="foo" 
-      :bottom-load-method="getOldRewardHistory" 
+      :top-load-method="topLoad" 
+      :bottom-load-method="bottomLoad" 
       :top-config="PULLTO_TOP_CONFIG"
       :bottom-config="PULLTO_BOTTOM_CONFIG"
       :top-block-height="26"
-      @scroll="foo"
+      @infinite-scroll="getOldRewardHistory"
       @bottom-state-change="foo"
     >
       <md-card class="reward-card">
@@ -90,7 +90,8 @@
                   <div class="item-row-info">
                     <div class="item-row-info-day label-info">
                       <span class="item-col-title">{{ $t('message.earnMDT.inviteFriend.loginDate') }}</span>
-                      <span>{{ $d(new Date(item.created_at), 'short') }}</span>
+                      <span>{{ item.created_at }}</span>
+                      <!-- <span>{{ $d(new Date(item.created_at), 'short') }}</span> -->
                     </div>
                   </div>
                 </div>
@@ -129,6 +130,7 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 import PullTo from 'vue-pull-to';
+import throttle from 'lodash.throttle';
 
 import BasePage from '@/screens/BasePage';
 
@@ -281,10 +283,33 @@ export default {
         loaded('done');
       }
     },
-    getOldRewardHistory(loaded) {
-      if (typeof loaded === 'function') {
-        loaded('done');
-      }
+    async topLoad(loaded) {
+      await this.getNewRewardHistory();
+      loaded('done');
+    },
+    async bottomLoad(loaded) {
+      await this.getOldRewardHistory();
+      loaded('done');
+    },
+    getOldRewardHistory: throttle(
+      async function() {
+        return this.fetchRewardHistory({
+          userId: this.selectedUser.emailAddress,
+          cursorDirection: 'after',
+          limit: this.numberOfItemsPerPage,
+        });
+      },
+      1000,
+      {
+        trailing: false,
+      },
+    ),
+    getNewRewardHistory() {
+      return this.fetchRewardHistory({
+        userId: this.selectedUser.emailAddress,
+        cursorDirection: 'before',
+        limit: this.numberOfItemsPerPage,
+      });
     },
   },
 };

@@ -17,6 +17,7 @@
     "@chenfengyuan/vue-qrcode": "^1.0.1",
     "axios": "^0.18.0",
     "echarts": "^4.2.0-rc.2",
+    "lodash.throttle": "^4.1.1",
     "mixpanel-browser": "^2.22.4",
     "normalize.css": "^8.0.0",
     "normalizr": "^3.2.4",

@@ -19,7 +19,7 @@ const state = {
 
 const moduleGetters = {
   getCursors: state => userId =>
-    state.byUserId[userId] && state.byUserId[userId].cursor,
+    state.byUserId[userId] && state.byUserId[userId].cursors,
   getRewardHistory: state => userId => state.byUserId[userId],
 };
 
@@ -31,17 +31,41 @@ const mutations = {
       ? state.byUserId[userId].reward_history
       : [];
 
+    const existingCursors = state.byUserId[userId]
+      ? state.byUserId[userId].cursors
+      : null;
+
     let newRewardHistory = data.reward_history;
+    const newCursors =
+      (data.meta && data.meta.paging && data.meta.paging.cursors) || {};
+
+    let resultCursors = existingCursors;
+
     if (cursorDirection === 'before') {
       newRewardHistory = [...data.reward_history, ...existingRewardHistory];
+      if (existingCursors && newCursors && newCursors.before) {
+        resultCursors = {
+          ...existingCursors,
+          before: newCursors.before,
+        };
+      }
     } else if (cursorDirection === 'after') {
       newRewardHistory = [...existingRewardHistory, ...data.reward_history];
+      if (existingCursors && newCursors && newCursors.after) {
+        resultCursors = {
+          ...existingCursors,
+          after: newCursors.after,
+        };
+      }
+    } else {
+      resultCursors = newCursors;
     }
 
     state.byUserId = {
       ...state.byUserId,
       [userId]: {
         ...data,
+        cursors: resultCursors,
         reward_history: newRewardHistory,
       },
     };
@@ -84,8 +108,20 @@ const actions = {
         userId,
       });
     }
-    let { after, before } = getters.getCursors || {};
     try {
+      const { after, before } = getters.getCursors(userId) || {};
+
+      const cursors = {};
+      switch (cursorDirection) {
+        case 'after': {
+          cursors.after = after;
+          break;
+        }
+        case 'before': {
+          cursors.before = before;
+          break;
+        }
+      }
       await delay(750);
       const data = await dispatch(REQUEST, {
         api: api.inviteFriend.getRewardHistory,
@@ -95,7 +131,7 @@ const actions = {
             sortby,
             order,
             limit,
-            cursors: cursorDirection === 'before' ? { before } : { after },
+            cursors,
           },
         ],
       });
@@ -129,6 +165,7 @@ const actions = {
         cursorDirection,
       });
     } catch (error) {
+      console.log('error', error);
       commit(FETCHING_INVITE_FRIEND_REWARD_HISTORIES_FAILURE, {
         userId,
         error,
