@@ -51,7 +51,17 @@ export default {
       if (!this.task.task_url) {
         return '';
       }
-      return this.task.task_url.replace('[email]', this.userId);
+      const taskUrl = this.task.task_url.replace('[email]', this.userId);
+      try {
+        // add qs task_id to url
+        const url = new URL(taskUrl, window.location.origin);
+        const searchParams = url.searchParams;
+        searchParams.append('task_id', this.task.task_id);
+        url.search = `?${searchParams.toString()}`;
+        return url.toString().replace(url.origin, '');
+      } catch (error) {
+        return taskUrl;
+      }
     },
     description() {
       return this.task.max_completion > 1
@@ -82,6 +92,7 @@ export default {
         'Task Name': this.task.name,
         'Task ID': this.task.task_id,
       });
+
       if (this.isExternalUrl) {
         window.location = this.taskUrl;
       } else {

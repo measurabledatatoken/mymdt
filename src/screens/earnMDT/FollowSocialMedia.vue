@@ -298,6 +298,7 @@ export default {
         try {
           await this.redeemSNSCode({
             code: this.code,
+            taskId: this.$route.query.task_id,
             userId: this.$route.params.account_id,
           });
 
