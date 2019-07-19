@@ -1,57 +1,52 @@
 <template>
   <div class="app-view">
-    <div class="header">
-      <div class="header-wrapper">
-        <div class="header__background"/>
-        <md-card>
-          <md-card-header>
-            <div class="md-title">{{ $t('message.earnMDT.inviteFriendCardTitle') }}</div>
-            <div class="md-subhead">{{ $t('message.earnMDT.inviteFriendCardDescription') }}</div>
-          </md-card-header>
-          <md-card-content>
-            <div class="card-content-row">
-              <span class="md-subheading">{{ $t('message.earnMDT.invitationCode') }}</span>
-              <div class="card-content-copy">
-                <span class="md-subheading">Ft2p0m5</span>
-                <MDTMediumButton>
-                  {{ $t('message.earnMDT.copy') }}
-                </MDTMediumButton>
-              </div>
-            </div>
-            <div class="card-content-row">
-              <span class="md-subheading">{{ $t('message.earnMDT.shareDownloadLinkAndCode') }}</span>
-              <MDTMediumButton>
-                {{ $t('message.earnMDT.share') }}
-              </MDTMediumButton>
-            </div>
-          </md-card-content>
-        </md-card>
+    <CardInExtendedHeader
+      :title="$t('message.earnMDT.inviteFriendCardTitle')"
+      :subheading="$t('message.earnMDT.inviteFriendCardDescription')"
+    >
+      <div class="card-content-row">
+        <span class="md-subheading">{{ $t('message.earnMDT.invitationCode') }}</span>
+        <div class="card-content-copy">
+          <span class="md-subheading">Ft2p0m5</span>
+          <MDTMediumButton>
+            {{ $t('message.earnMDT.copy') }}
+          </MDTMediumButton>
+        </div>
       </div>
-    </div>
-    <div class="reward-section">
-      <h3 class="md-title">{{ $t('message.earnMDT.earnRewards') }}</h3>
-      <h2 class="reward-main-number">120.00 MDT</h2>
-      <div class="reward-sub-numbers">
+      <div class="card-content-row">
+        <span class="md-subheading">{{ $t('message.earnMDT.shareDownloadLinkAndCode') }}</span>
+        <MDTMediumButton>
+          {{ $t('message.earnMDT.share') }}
+        </MDTMediumButton>
+      </div>
+    </CardInExtendedHeader>
+    <md-card class="reward-card">
+      <md-card-header>
+        <div class="label">总额</div>
+        <div class="md-title">120.00 MDT</div>
+      </md-card-header>
+      <hr >
+      <md-card-content>
         <div class="box">
+          <div class="box-row label">
+            已领取
+          </div>
           <div class="box-row amount">
             100.00 MDT
           </div>
-          <div class="box-row caption">
-            已领取奖励
-          </div>
         </div>
         <div class="box">
-          <div class="box-row amount">
-            100.00 MDT
+          <div class="box-row label">
+            未领取
           </div>
-          <div class="box-row caption">
-            已领取奖励
+          <div class="box-row amount">
+            20.00 MDT
           </div>
         </div>
-      </div>
-    </div>
+      </md-card-content>
+    </md-card>
     <div class="history-section">
-      <h3 class="md-title history-section-title">奖励历史</h3>
+      <h3 class="md-caption history-section-title">奖励历史</h3>
       <hr >
       <template
         v-for="(item, index) in items"
@@ -81,10 +76,10 @@
               </div>
             </div>
             <MDTSecondaryButton 
-              :disabled="item.redeemed" 
+              :disabled="!!item.redeemed" 
               color="secondary"
             >
-              {{ getButtonText(item.status) }}
+              {{ getButtonText(item.redeemed) }}
             </MDTSecondaryButton>
           </div>
         </div>
@@ -100,7 +95,7 @@
 <script>
 import BasePage from '@/screens/BasePage';
 
-import BaseField from '@/components/input/BaseField';
+import CardInExtendedHeader from '@/components/common/CardInExtendedHeader';
 import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
 import WebViewLink from '@/components/common/WebViewLink';
@@ -110,7 +105,7 @@ import { formatAmount } from '@/utils';
 
 export default {
   components: {
-    BaseField,
+    CardInExtendedHeader,
     MDTMediumButton,
     MDTSecondaryButton,
     WebViewLink,
@@ -172,33 +167,7 @@ $header-padding-top: 0.5rem;
   flex-direction: column;
 }
 
-.header {
-  .header-wrapper {
-    padding-top: $header-padding-top;
-    position: relative;
-  }
-
-  .header__background {
-    background-color: $home-bgcolor;
-    height: calc(8em + 0.5em + #{$header-padding-top});
-    width: 100%;
-    position: absolute;
-    top: 0;
-  }
-}
-
 .md-card {
-  border-radius: 0.5em;
-  background-color: white;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-  margin: 0 0.5em 0.5em 0.5em;
-
-  .md-card-header {
-    .md-title {
-      margin-bottom: 0.5rem;
-    }
-  }
-
   .md-card-content {
     .card-content-row {
       display: flex;
@@ -231,28 +200,32 @@ $header-padding-top: 0.5rem;
   }
 }
 
-.reward-section {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+.reward-card {
+  margin: 0.5rem 0.5rem 1rem 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
 
   .md-title {
-    margin: 0 0 0.5rem 0;
+    font-size: 1.75rem;
   }
 
-  .reward-main-number {
-    margin: 0.5rem 0 1rem 0;
-    font-size: 26px;
-    line-height: 1.5;
+  .label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #aab1c0;
   }
 
-  .reward-sub-numbers {
+  hr {
+    border: solid 1px #eef3f8;
+    margin: 0 1rem;
+  }
+
+  .md-card-content {
     display: flex;
     justify-content: center;
-    padding: 0 1.5rem;
+    padding: 1rem;
 
     .box {
-      background-color: #f3f6fb;
-      padding: 0.25rem;
       margin: 0 0.25rem;
       border-radius: 0.25rem;
       flex: 1;
@@ -261,13 +234,8 @@ $header-padding-top: 0.5rem;
         margin: 0.25rem 0;
 
         &.amount {
-          font-size: $primary-font-size;
-        }
-
-        &.caption {
-          font-size: 0.75rem;
-          color: #5d6c89;
-          line-height: 1.75;
+          font-size: 1.25rem;
+          font-weight: bold;
         }
       }
     }
@@ -288,6 +256,8 @@ hr {
   }
 
   .history-section-title {
+    font-size: 0.875rem;
+    color: #aab1c0;
     margin: 0;
     text-align: left;
     padding: 0 1rem;
