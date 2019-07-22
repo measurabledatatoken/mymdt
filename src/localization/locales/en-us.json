@@ -24,7 +24,10 @@
     "startOver": "Start Over",
     "total": "Total",
     "detail" : "Detail",
-    "other" : "Other"
+    "other" : "Other",
+    "earned": "Earned",
+    "claimed": "Claimed",
+    "unclaimed": "Unclaimed"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -321,9 +324,6 @@
       "earnRewards": "Earn Rewards",
       "expiredAfter": "Expired after {number} days",
       "expired": "Expired",
-      "total": "Total",
-      "claimed": "Claimed",
-      "unclaimed": "Unclaimed",
       "history": "History",
       "status": "Status",
       "loginDate": "Login Date",

@@ -1,0 +1,122 @@
+<template>
+  <md-card class="reward-card">
+    <md-card-header>
+      <div class="label">{{ $t('message.common.unclaimed') }}</div>
+      <Skeleton v-if="isLoading" />
+      <div 
+        v-if="!isLoading"
+        class="md-title"
+      >
+        {{ formatMDTAmount(unclaimed) }}
+      </div>
+    </md-card-header>
+    <hr >
+    <md-card-content>
+      <div class="box">
+        <div class="box-row label">
+          {{ $t('message.common.earned') }}
+        </div>
+        <Skeleton v-if="isLoading" />
+        <div 
+          v-if="!isLoading"
+          class="box-row amount"
+        >
+          {{ formatMDTAmount(earned) }}
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-row label">
+          {{ $t('message.common.claimed') }}
+        </div>
+        <Skeleton v-if="isLoading" />
+        <div 
+          v-if="!isLoading"
+          class="box-row amount"
+        >
+          {{ formatMDTAmount(claimed) }}
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
+</template>
+
+<script>
+import Skeleton from '@/components/common/Skeleton';
+
+import { formatAmount } from '@/utils';
+
+export default {
+  components: {
+    Skeleton,
+  },
+  props: {
+    unclaimed: {
+      type: Number,
+      default: 0,
+    },
+    earned: {
+      type: Number,
+      default: 0,
+    },
+    claimed: {
+      type: Number,
+      default: 0,
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    formatMDTAmount(amount) {
+      return formatAmount(amount, { suffix: ' MDT' });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.reward-card {
+  margin: 0.5rem 0.5rem 1rem 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
+
+  .md-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+  }
+
+  .label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #aab1c0;
+    text-transform: uppercase;
+  }
+
+  hr {
+    border: solid 1px #eef3f8;
+    margin: 0 1rem;
+  }
+
+  .md-card-content {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+
+    .box {
+      margin: 0 0.25rem;
+      border-radius: 0.25rem;
+      flex: 1;
+
+      .box-row {
+        margin: 0.25rem 0;
+
+        &.amount {
+          font-size: 1.25rem;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+</style>

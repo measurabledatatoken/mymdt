@@ -30,45 +30,12 @@
       @infinite-scroll="getOldRewardHistory"
       @bottom-state-change="foo"
     >
-      <md-card class="reward-card">
-        <md-card-header>
-          <div class="label">{{ $t('message.earnMDT.inviteFriend.total') }}</div>
-          <Skeleton v-if="uiState.isFetching" />
-          <div 
-            v-if="!uiState.isFetching && !!rewardHistory"
-            class="md-title"
-          >
-            {{ formatMDTAmount(rewardHistory.total_reward_value) }}
-          </div>
-        </md-card-header>
-        <hr >
-        <md-card-content>
-          <div class="box">
-            <div class="box-row label">
-              {{ $t('message.earnMDT.inviteFriend.claimed') }}
-            </div>
-            <Skeleton v-if="uiState.isFetching" />
-            <div 
-              v-if="!uiState.isFetching && !!rewardHistory"
-              class="box-row amount"
-            >
-              {{ formatMDTAmount(rewardHistory.claimed_reward_value) }}
-            </div>
-          </div>
-          <div class="box">
-            <div class="box-row label">
-              {{ $t('message.earnMDT.inviteFriend.unclaimed') }}
-            </div>
-            <Skeleton v-if="uiState.isFetching" />
-            <div 
-              v-if="!uiState.isFetching && !!rewardHistory"
-              class="box-row amount"
-            >
-              {{ formatMDTAmount(rewardHistory.claimable_reward_value) }}
-            </div>
-          </div>
-        </md-card-content>
-      </md-card>
+      <ClaimMDTCard
+        :is-loading="uiState.isFetching"
+        :unclaimed="rewardHistory ? rewardHistory.claimable_reward_value : 0"
+        :earned="rewardHistory ? rewardHistory.total_reward_value : 0"
+        :claimed="rewardHistory ? rewardHistory.claimed : 0"
+      />
       <div class="history-section">
         <h3 class="md-caption history-section-title">{{ $t('message.earnMDT.inviteFriend.history') }}</h3>
         <hr class="history-section-line">
@@ -90,8 +57,7 @@
                   <div class="item-row-info">
                     <div class="item-row-info-day label-info">
                       <span class="item-col-title">{{ $t('message.earnMDT.inviteFriend.loginDate') }}</span>
-                      <span>{{ item.created_at }}</span>
-                      <!-- <span>{{ $d(new Date(item.created_at), 'short') }}</span> -->
+                      <span>{{ $d(new Date(item.created_at), 'short') }}</span>
                     </div>
                   </div>
                 </div>
@@ -119,7 +85,6 @@
                 class="history-line"
               >
             </template>
-
           </template>
         </div>
       </div>
@@ -140,6 +105,7 @@ import MDTMediumButton from '@/components/button/MDTMediumButton';
 import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
 import Skeleton from '@/components/common/Skeleton';
+import ClaimMDTCard from '@/components/common/ClaimMDTCard';
 
 import { formatAmount } from '@/utils';
 
@@ -156,6 +122,7 @@ export default {
     BasePopup,
     Skeleton,
     PullTo,
+    ClaimMDTCard,
   },
   extends: BasePage,
   metaInfo() {
@@ -353,49 +320,6 @@ $header-padding-top: 0.5rem;
 
     .md-subheading {
       color: $secondary-text-color;
-    }
-  }
-}
-
-.reward-card {
-  margin: 0.5rem 0.5rem 1rem 0.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
-
-  .md-title {
-    font-size: 1.75rem;
-  }
-
-  .label {
-    font-size: 0.625rem;
-    font-weight: 600;
-    color: #aab1c0;
-    text-transform: uppercase;
-  }
-
-  hr {
-    border: solid 1px #eef3f8;
-    margin: 0 1rem;
-  }
-
-  .md-card-content {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-
-    .box {
-      margin: 0 0.25rem;
-      border-radius: 0.25rem;
-      flex: 1;
-
-      .box-row {
-        margin: 0.25rem 0;
-
-        &.amount {
-          font-size: 1.25rem;
-          font-weight: bold;
-        }
-      }
     }
   }
 }
