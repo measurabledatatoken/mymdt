@@ -27,13 +27,14 @@ export default {
     );
   },
   // App Credentials should included display_name, email_address, token
-  autoLogin(appCredentials, appID, locale) {
+  autoLogin(appCredentials, appID, locale, { inviterCode = '' } = {}) {
     const promise = axios.post(
       `${APIScheme}://${APIEndPoint}/account/autologin`,
       {
         app_id: appID,
         app_credentials: appCredentials,
         locale,
+        inviter_invite_code: inviterCode,
       },
     );
     return handleGeneralResponse(

@@ -81,7 +81,7 @@ const actions = {
   },
   async [REQUEST_AUTO_LOGIN](
     { commit, dispatch, rootState },
-    { authTokens, emails, appID },
+    { authTokens, emails, appID, inviteCodes, inviteUrls, inviterCode },
   ) {
     // commit(SET_IS_LOADING, true);
 
@@ -95,9 +95,24 @@ const actions = {
       );
     }
 
+    if (inviteCodes && inviteUrls) {
+      if (
+        authTokens.length !== inviteCodes.length ||
+        authTokens.length !== inviteUrls.length
+      ) {
+        return Promise.reject(
+          new Error(
+            'inviteCodes and inviteUrls should be of same length as authTokens',
+          ),
+        );
+      }
+    }
+
     const appCredentials = authTokens.map((authToken, i) => ({
       token: authToken,
       email_address: emails[i],
+      invite_code: inviteCodes ? inviteCodes[i] : '',
+      invite_url: inviteUrls ? inviteUrls[i] : '',
     }));
 
     const locale = rootState.common.locale;
@@ -105,7 +120,7 @@ const actions = {
     try {
       const data = await dispatch(REQUEST, {
         api: api.auth.autoLogin,
-        args: [appCredentials, appID, locale],
+        args: [appCredentials, appID, locale, { inviterCode }],
         setLoading: true,
         persistLoading: true,
       });
