@@ -24,7 +24,10 @@
     "startOver": "Start Over",
     "total": "Total",
     "detail": "Detail",
-    "other": "Other"
+    "other": "Other",
+    "earned": "Earned",
+    "claimed": "Claimed",
+    "unclaimed": "Unclaimed"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -310,6 +313,30 @@
         "followTelegram": "Join Telegram Group"
       }
     }
+  },
+  "dataPointRewards": {
+    "dataRewards": "Data Rewards",
+    "bindWithETH": "Bind with your ETH wallet address",
+    "nextDataReward": "Next Data Reward will be distributed in",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "trustWalletRequired": "Trust Wallet required",
+    "trustWalletDescription": "MyMDT requires Trust Wallet to work. If you havenot installed yet, please download it from App Store or Google.",
+    "openTrustWalletToClaim": "Open Trust Wallet to Claim",
+    "openTrustWallet": "Open Trust Wallet",
+    "history": "History",
+    "noDataPointReward": "No data point reward",
+    "earnedOn": "Earned on {date}",
+    "pending": "Pending",
+    "claimable": "Claimable",
+    "claimed": "Claimed",
+    "expired": "Expired",
+    "distributeOn": "Distribute on {date}",
+    "dueOn": "Due on {date}",
+    "claimedOn": "Claimed on {date}",
+    "expiredOn": "Expired on {date}"
   },
   "tutorial": {
     "get_started": "Get Started",
