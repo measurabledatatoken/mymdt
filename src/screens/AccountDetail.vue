@@ -10,10 +10,16 @@
       </div>
     </div>
     <TransactionList/>
-    <MDTPrimaryButton 
-      :bottom="true"
-      @click="goToEarn()"
-    >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+    <div class="buttons">
+      <MDTPrimaryButton
+        :style-type="1"
+        @click="goToEarn()"
+      >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+      <MDTPrimaryButton 
+        @click="goToEarn()"
+      >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+
+    </div>
   </div>
 </template>
 
@@ -104,6 +110,22 @@ $header-padding-top: 2rem;
       height: 80px;
       width: 100%;
       flex-shrink: 0;
+    }
+  }
+
+  .buttons {
+    position: fixed;
+    bottom: 1.5rem;
+    @include center_horizontal;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    padding: 0 8px;
+
+    .md-button {
+      flex: 1;
+      margin: 0 8px;
     }
   }
 }

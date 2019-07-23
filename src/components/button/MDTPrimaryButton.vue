@@ -1,7 +1,7 @@
 <template>
   <MDTBaseButton 
     v-bind="$attrs" 
-    :class="['md-raised', 'primary', { 'primary--bottom': bottom }]" 
+    :class="['md-raised', { 'primary--bottom': bottom }, { primary: styleType === 0, white: styleType === 1 }]" 
     v-on="$listeners"
   >
     <slot v-if="!loading" />
@@ -28,14 +28,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    styleType: {
+      type: Number,
+      default: 0,
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.md-button.md-raised.primary {
-  background-color: $bluebtn-backgroundcolor;
-  color: $bluebtn-wordcolor;
+.md-button.md-raised {
   border-radius: 8px;
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.25);
   font-size: 20px;
@@ -50,6 +52,16 @@ export default {
 
   &:active {
     box-shadow: none;
+  }
+
+  &.primary {
+    background-color: $bluebtn-backgroundcolor;
+    color: $bluebtn-wordcolor;
+  }
+
+  &.white {
+    background-color: white;
+    color: black;
   }
 
   &.primary--bottom {

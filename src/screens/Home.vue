@@ -300,7 +300,7 @@ export default {
       //     url: 'https://www.gopgle.com',
       //   },
       // });
-      this.$router.push(RouteDef.InviteFriend.path);
+      this.$router.push(RouteDef.DataPointRewards.path);
       // this.$router.push(RouteDef.EarnMDT.path);
     },
     formatAmount,

@@ -7,6 +7,10 @@ const RouteDef = {
   TransactionHistory: { path: '/account/:id/transactionhistory' },
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
+  DataPointRewards: {
+    path: '/home/data-point-rewards',
+    name: 'data-point-rewards',
+  },
   DataPointRewardDetail: {
     path: '/account/:userId/datapointreward/:rewardId',
     name: 'DataPointRewardDetail',

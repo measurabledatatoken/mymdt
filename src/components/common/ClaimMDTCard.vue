@@ -9,6 +9,8 @@
       >
         {{ formatMDTAmount(unclaimed) }}
       </div>
+      <slot name="header-caption"/>
+
     </md-card-header>
     <hr >
     <md-card-content>
