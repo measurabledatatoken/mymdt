@@ -267,6 +267,7 @@ export default {
   flex-direction: column;
   -webkit-overflow-scrolling: touch;
   background-color: white;
+  overflow: hidden;
 }
 
 .content-router-view {

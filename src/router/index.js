@@ -14,6 +14,7 @@ const ForgetPassword = () => import('@/screens/ForgetPassword');
 const Settings = () => import('@/screens/setting/Settings');
 const UserSettings = () => import('@/screens/setting/UserSettings');
 const PriceUnits = () => import('@/screens/setting/PriceUnits');
+const DataPointRewards = () => import('@/screens/DataPointRewards');
 const DataPointRewardDetail = () => import('@/screens/reward/DataPointDetail');
 const ReportProblem = () =>
   import(/* webpackChunkName: "report-problem" */ '@/screens/setting/ReportProblem');
@@ -117,6 +118,11 @@ const router = new Router({
         {
           path: RouteDef.Settings.path,
           component: Settings,
+        },
+        {
+          path: RouteDef.DataPointRewards.path,
+          name: RouteDef.DataPointRewards.name,
+          component: DataPointRewards,
         },
         {
           path: RouteDef.DataPointRewardDetail.path,

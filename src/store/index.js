@@ -10,6 +10,7 @@ import forgetPassword from './modules/forgetpassword';
 import login from './modules/login';
 import transfer from './modules/transfer';
 import qrcode from './modules/qrcode';
+import dataPoint from './modules/dataPoint';
 import reportProblem from './modules/reportProblem';
 import ui from './modules/ui';
 import entities from './modules/entities';
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     qrcode,
     reportProblem,
     security,
+    dataPoint,
   },
   strict: debug,
   plugins: debug ? [createLogger(), persistedState] : [persistedState],
