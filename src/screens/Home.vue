@@ -157,12 +157,19 @@ export default {
       const tokensStr = this.$route.query.tokens;
       const emailsStr = this.$route.query.emails;
       const needExit = this.$route.query.needexit;
+      const inviteCodeStr = this.$route.query.invitecodes;
+      const inviteUrlStr = this.$route.query.inviteurls;
+      const inviterCode = this.$route.query.invitercode;
 
       // clear url
       this.$router.replace(RouteDef.Home);
 
       this.setNeedExitBtn(needExit);
-      this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
+      this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale, {
+        inviteCodeStr,
+        inviteUrlStr,
+        inviterCode,
+      });
     } else {
       // navigate from other pages
       await this.requestAppConfig();
@@ -217,7 +224,13 @@ export default {
     invalidUserClicked(user) {
       window.location.href = `mdtwallet://relogin?email=${user.emailAddress}`;
     },
-    async autoLogin(appID, tokensStr, emailsStr) {
+    async autoLogin(
+      appID,
+      tokensStr,
+      emailsStr,
+      locale,
+      { inviteCodeStr = null, inviteUrlStr = null, inviterCode = null } = {},
+    ) {
       if (appID === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
         this.setErrorMessage('Need to define appid in url parameter');
@@ -241,11 +254,20 @@ export default {
 
       const authTokens = tokensStr.split(',');
       const emails = emailsStr.split(',');
+      let inviteCodes = null,
+        inviteUrls = null;
+      if (inviteCodeStr && inviteUrlStr) {
+        inviteCodes = inviteCodeStr.split(',');
+        inviteUrls = inviteUrlStr.split(',');
+      }
       try {
         await this.requestAutoLogin({
           authTokens,
           emails,
           appID,
+          inviteCodes,
+          inviteUrls,
+          inviterCode,
         });
         trackEvent('Successfully logged in ');
 
