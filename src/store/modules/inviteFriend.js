@@ -9,31 +9,46 @@ export const FETCHING_INVITE_FRIEND_REWARD_HISTORIES_SUCCESS =
   'inviteFriendRewardHistory/FETCHING_INVITE_FRIEND_REWARD_HISTORIES_SUCCESS';
 export const FETCHING_INVITE_FRIEND_REWARD_HISTORIES_FAILURE =
   'inviteFriendRewardHistory/FETCHING_INVITE_FRIEND_REWARD_HISTORIES_FAILURE';
-
 export const FETCH_INVITE_FRIEND_REWARD_HISTORIES =
   'inviteFriendRewardHistory/FETCH_INVITE_FRIEND_REWARD_HISTORIES';
+
+export const FETCHING_INVITE_INFO =
+  'inviteFriendRewardHistory/FETCHING_INVITE_INFO';
+export const FETCHING_INVITE_INFO_SUCCESS =
+  'inviteFriendRewardHistory/FETCHING_INVITE_INFO_SUCCESS';
+export const FETCHING_INVITE_INFO_FAILURE =
+  'inviteFriendRewardHistory/FETCHING_INVITE_INFO_FAILURE';
+export const FETCH_INVITE_INFO = 'inviteFriendRewardHistory/FETCH_INVITE_INFO';
 
 const state = {
   byUserId: {},
 };
 
 const moduleGetters = {
-  getCursors: state => userId =>
-    state.byUserId[userId] && state.byUserId[userId].cursors,
-  getRewardHistory: state => userId => state.byUserId[userId],
+  getRewardHistoryCursors: state => userId =>
+    (state.byUserId[userId] &&
+      state.byUserId[userId].rewardSummary &&
+      state.byUserId[userId].rewardSummary.cursors) ||
+    null,
+  getRewardSummary: state => userId =>
+    (state.byUserId[userId] && state.byUserId[userId].rewardSummary) || null,
+  getInviteInfo: state => userId =>
+    (state.byUserId[userId] && state.byUserId[userId].inviteInfo) || null,
 };
 
 const mutations = {
   [FETCHING_INVITE_FRIEND_REWARD_HISTORIES_SUCCESS](state, payload) {
     const { data, userId, cursorDirection } = payload;
 
-    const existingRewardHistory = state.byUserId[userId]
-      ? state.byUserId[userId].reward_history
-      : [];
+    const existingRewardHistory =
+      (state.byUserId[userId] &&
+        state.byUserId[userId].rewardSummary &&
+        state.byUserId[userId].rewardSummary.reward_history) ||
+      [];
 
-    const existingCursors = state.byUserId[userId]
-      ? state.byUserId[userId].cursors
-      : null;
+    const existingCursors = moduleGetters.getRewardHistoryCursors(state)(
+      userId,
+    );
 
     let newRewardHistory = data.reward_history;
     const newCursors =
@@ -64,44 +79,32 @@ const mutations = {
     state.byUserId = {
       ...state.byUserId,
       [userId]: {
-        ...data,
-        cursors: resultCursors,
-        reward_history: newRewardHistory,
+        ...state.byUserId[userId],
+        rewardSummary: {
+          ...data,
+          cursors: resultCursors,
+          reward_history: newRewardHistory,
+        },
+      },
+    };
+  },
+  [FETCHING_INVITE_INFO_SUCCESS](state, payload) {
+    const { data, userId } = payload;
+
+    state.byUserId = {
+      ...state.byUserId,
+      [userId]: {
+        ...state.byUserId[userId],
+        inviteInfo: data,
       },
     };
   },
 };
 
-// function getLatestTimeFromInviteFriendRewardHistories(
-//   inviteFriendRewardHistories,
-// ) {
-//   return inviteFriendRewardHistories.reduce(
-//     (latestTime, inviteFriendRewardHistory) => {
-//       const inviteFriendRewardHistoryTime = new Date(
-//         inviteFriendRewardHistory.inviteFriendRewardHistory_time,
-//       );
-//       if (inviteFriendRewardHistoryTime > latestTime) {
-//         return inviteFriendRewardHistoryTime;
-//       }
-
-//       return latestTime;
-//     },
-//     new Date(0),
-//   );
-// }
-
 const actions = {
   async [FETCH_INVITE_FRIEND_REWARD_HISTORIES](
     { commit, dispatch, getters, rootGetters },
-    {
-      userId,
-      sortby,
-      order = 'desc',
-      // sortby = 'inviteFriendRewardHistory_time',
-      // order = 'desc',
-      cursorDirection,
-      limit = 2,
-    },
+    { userId, sortby, order = 'desc', cursorDirection, limit = 2 },
   ) {
     if (!cursorDirection) {
       commit(FETCHING_INVITE_FRIEND_REWARD_HISTORIES, {
@@ -109,7 +112,7 @@ const actions = {
       });
     }
     try {
-      const { after, before } = getters.getCursors(userId) || {};
+      const { after, before } = getters.getRewardHistoryCursors(userId) || {};
 
       const cursors = {};
       switch (cursorDirection) {
@@ -124,7 +127,7 @@ const actions = {
       }
       await delay(750);
       const data = await dispatch(REQUEST, {
-        api: api.inviteFriend.getRewardHistory,
+        api: api.inviteFriend.getRewardSummary,
         args: [
           rootGetters.getUser(userId).accessToken,
           {
@@ -136,29 +139,6 @@ const actions = {
         ],
       });
 
-      // const currentInviteFriendRewardHistoryIds = rootGetters.getUser(userId)
-      //   .inviteFriendRewardHistories;
-      // const currentInviteFriendRewardHistories = getters
-      //   .getInviteFriendRewardHistories(currentInviteFriendRewardHistoryIds)
-      //   .filter(inviteFriendRewardHistories => inviteFriendRewardHistories);
-      // const currentLatestTime = getLatestTimeFromInviteFriendRewardHistories(
-      //   currentInviteFriendRewardHistories,
-      // );
-      // const fetchedInviteFriendRewardHistories = data.result.map(
-      //   tranactionId => data.entities.inviteFriendRewardHistories[tranactionId],
-      // );
-      // const fetchedLatestTime = getLatestTimeFromInviteFriendRewardHistories(
-      //   fetchedInviteFriendRewardHistories,
-      // );
-
-      // if (fetchedLatestTime > currentLatestTime) {
-      //   dispatch(FETCH_USER, {
-      //     userId,
-      //   });
-      // }
-
-      // console.log('data', data);
-
       commit(FETCHING_INVITE_FRIEND_REWARD_HISTORIES_SUCCESS, {
         userId,
         data,
@@ -167,6 +147,28 @@ const actions = {
     } catch (error) {
       console.log('error', error);
       commit(FETCHING_INVITE_FRIEND_REWARD_HISTORIES_FAILURE, {
+        userId,
+        error,
+      });
+    }
+  },
+  async [FETCH_INVITE_INFO]({ commit, dispatch, rootGetters }, { userId }) {
+    commit(FETCHING_INVITE_INFO, {
+      userId,
+    });
+    try {
+      const data = await dispatch(REQUEST, {
+        api: api.inviteFriend.getInviteInfo,
+        args: [rootGetters.getUser(userId).accessToken],
+      });
+
+      commit(FETCHING_INVITE_INFO_SUCCESS, {
+        userId,
+        data,
+      });
+    } catch (error) {
+      console.log('error', error);
+      commit(FETCHING_INVITE_INFO_FAILURE, {
         userId,
         error,
       });
