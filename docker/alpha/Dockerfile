@@ -2,7 +2,7 @@ FROM node:9.11.1-alpine as builder
 LABEL maintainer "Gary Lau <gary@mailtime.com>"
 
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh
+    apk add --no-cache bash git openssh make gcc g++ python
 
 COPY package.json package-lock.json /tmp/
 
