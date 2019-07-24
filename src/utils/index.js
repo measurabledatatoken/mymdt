@@ -130,6 +130,9 @@ function regTrackingSuperProperties(properties) {
 }
 
 const mapLocale = originalLocale => {
+  if (typeof originalLocale != 'string') {
+    originalLocale = 'en-us';
+  }
   originalLocale = originalLocale.toLowerCase();
   switch (originalLocale) {
     case 'zh-hk':
