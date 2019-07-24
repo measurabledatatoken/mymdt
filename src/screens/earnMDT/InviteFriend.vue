@@ -7,15 +7,18 @@
       <div class="card-content-row">
         <span class="md-subheading">{{ $t('message.earnMDT.inviteFriend.invitationCode') }}</span>
         <div class="card-content-copy">
-          <span class="md-subheading">Ft2p0m5</span>
-          <MDTMediumButton>
+          <span
+            v-if="!!inviteInfo" 
+            class="md-subheading"
+          >{{ inviteInfo.invite_code }}</span>
+          <MDTMediumButton v-clipboard="inviteInfo ? inviteInfo.invite_code : null">
             {{ $t('message.earnMDT.inviteFriend.copy') }}
           </MDTMediumButton>
         </div>
       </div>
       <div class="card-content-row">
         <span class="md-subheading">{{ $t('message.earnMDT.inviteFriend.shareDownloadLinkAndCode') }}</span>
-        <MDTMediumButton>
+        <MDTMediumButton @click="onClickShareButton">
           {{ $t('message.earnMDT.inviteFriend.share') }}
         </MDTMediumButton>
       </div>
@@ -110,6 +113,7 @@ import ClaimMDTCard from '@/components/common/ClaimMDTCard';
 import { formatAmount } from '@/utils';
 
 import { FETCH_INVITE_FRIEND_REWARD_HISTORIES } from '@/store/modules/inviteFriend';
+import { FETCH_INVITE_INFO } from '@/store/modules/inviteFriend';
 
 import RewardStatus from '@/enum/rewardStatus';
 
@@ -156,21 +160,30 @@ export default {
     }),
     ...mapGetters({
       selectedUser: 'getSelectedUser',
-      getRewardHistory: 'getRewardHistory',
+      getRewardSummary: 'getRewardSummary',
+      getInviteInfo: 'getInviteInfo',
     }),
     rewardHistory() {
-      return this.getRewardHistory(this.selectedUser.emailAddress);
+      return this.getRewardSummary(this.selectedUser.emailAddress);
+    },
+    inviteInfo() {
+      return this.getInviteInfo(this.selectedUser.emailAddress);
     },
   },
   mounted() {
-    this.fetchRewardHistory({
+    this.fetchRewardSummary({
       userId: this.selectedUser.emailAddress,
       limit: this.numberOfItemsPerPage,
+    });
+
+    this.fetchInviteInfo({
+      userId: this.selectedUser.emailAddress,
     });
   },
   methods: {
     ...mapActions({
-      fetchRewardHistory: FETCH_INVITE_FRIEND_REWARD_HISTORIES,
+      fetchRewardSummary: FETCH_INVITE_FRIEND_REWARD_HISTORIES,
+      fetchInviteInfo: FETCH_INVITE_INFO,
     }),
     getStatusText(hasReward) {
       if (hasReward) {
@@ -260,7 +273,7 @@ export default {
     },
     getOldRewardHistory: throttle(
       async function() {
-        return this.fetchRewardHistory({
+        return this.fetchRewardSummary({
           userId: this.selectedUser.emailAddress,
           cursorDirection: 'after',
           limit: this.numberOfItemsPerPage,
@@ -272,11 +285,18 @@ export default {
       },
     ),
     getNewRewardHistory() {
-      return this.fetchRewardHistory({
+      return this.fetchRewardSummary({
         userId: this.selectedUser.emailAddress,
         cursorDirection: 'before',
         limit: this.numberOfItemsPerPage,
       });
+    },
+    onClickShareButton() {
+      if (this.inviteInfo) {
+        window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
+          this.inviteInfo.invite_url,
+        )}`;
+      }
     },
   },
 };
@@ -301,6 +321,7 @@ $header-padding-top: 0.5rem;
 
       .md-subheading {
         margin-right: 0.5rem;
+        line-height: normal;
       }
     }
 

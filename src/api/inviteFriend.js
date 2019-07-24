@@ -4,7 +4,7 @@ import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  getRewardHistory(accessToken, paginationOptions) {
+  getRewardSummary(accessToken, paginationOptions) {
     const {
       sortby,
       order,
@@ -22,5 +22,15 @@ export default {
     return handleGeneralResponse(promise, {
       includeMeta: true,
     });
+  },
+  getInviteInfo(accessToken) {
+    const promise = axios.get(
+      `${APIScheme}://${APIEndPoint}/user/invitefriend/invitecode`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+
+    return handleGeneralResponse(promise);
   },
 };
