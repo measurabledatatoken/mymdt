@@ -88,12 +88,8 @@
 
 <script>
 import BasePage from '@/screens/BasePage';
-import WebViewLink from '@/components/common/WebViewLink';
 
 export default {
-  components: {
-    WebViewLink,
-  },
   extends: BasePage,
   metaInfo() {
     return {

@@ -233,6 +233,7 @@
     "rewardErrorMessage": "未能認領獎勵。請刷新並重試",
     "rewardExpiresOn" : "獎勵將於{time}到期",
     "dataPointsReward": {
+      "description": "簡信積分幫助用戶獲得匿名數據收益。所有的數據均為不可識別到個人的聚合大數據，它們被加密、脫敏、匿名地存儲。數據收益每月定期發送至用戶的賬號中，詳情請查閱下圖。",
       "dataPointsType" : {
         "AppleReceiptItemType" : "應用程序內購買收據",
         "UberReceiptType": "Uber 收據", 
@@ -241,7 +242,74 @@
       }
     },
     "redeemTitle": "你有 MDT 的兌換代碼？",
-    "redeem": "兌換"
+    "redeem": "兌換",
+    "follow": {
+      "formTitle": "輸入魔法口令",
+      "success": "成功",
+      "incorrectRedeemCode": "錯誤的魔法口令",
+      "MailTime": "簡信",
+      "MDT": "MDT 量數",
+      "MAI": "量數 AI",
+      "goBack": "返回任務頁",
+      "confirm": "確認",
+      "wechat": {
+        "screenTitle": "關注官方公眾號",
+        "stepTitle": "關注官方公眾號教學",
+        "step1": "1. 保存 簡信 / MDT 量數 / 量數 AI 公眾號二維碼到相冊",
+        "step2": "2. 打開微信，點擊首頁右上角的“+”號，然後選擇“掃一掃”",
+        "step2Src": "/static/earnMDT/wechat/step-2.jpg",
+        "step2Srcset": "/static/earnMDT/wechat/step-2@2x.jpg 2x, /static/earnMDT/wechat/step-2@3x.jpg 3x",
+        "step3": "3. 點擊右上角的“相冊”，然後選擇 簡信 / MDT 量數 / 量數 AI 公眾號二維碼",
+        "step3Src": "/static/earnMDT/wechat/step-3.jpg",
+        "step3Srcset": "/static/earnMDT/wechat/step-3@2x.jpg 2x, /static/earnMDT/wechat/step-3@3x.jpg 3x",
+        "step4": "4. 點擊關注 簡信 / MDT 量數 / 量數 AI 公眾號",
+        "step4Src": "/static/earnMDT/wechat/step-4.jpg",
+        "step4Srcset": "/static/earnMDT/wechat/step-4@2x.jpg 2x, /static/earnMDT/wechat/step-4@3x.jpg 3x",
+        "step5": "5. 呼叫鍵盤輸入",
+        "step6": "6. 輸入口令 \"MyMDT\" 獲取魔法口令",
+        "step7": "7. 回到 MyMDT 輸入魔法口令，獲得 MDT 獎勵",
+        "successDescription": "感謝你關注官方微信號，請到任務頁面獲取 MDT 獎勵。",
+        "failureDescription": "請你依照教學關注官方公眾號，然後獲取魔法口令。",
+        "downloadQRCOde": "下載二維碼"
+      },
+      "weibo": {
+        "screenTitle": "關注官方微博",
+        "stepTitle": "關注官方微博教學",
+        "step1": "1. 打開微博，點擊左下角的“＋關注”關注 MDT 量數官微",
+        "step1Src": "/static/earnMDT/weibo/step-1.jpg",
+        "step1Srcset": "/static/earnMDT/weibo/step-1@2x.jpg 2x, /static/earnMDT/weibo/step-1@3x.jpg 3x",
+        "step2": "2. 關注後，點擊“聊天”",
+        "step2Src": "/static/earnMDT/weibo/step-2.jpg",
+        "step2Srcset": "/static/earnMDT/weibo/step-2@2x.jpg 2x, /static/earnMDT/weibo/step-2@3x.jpg 3x",
+        "step3": "3. 輸入“MyMDT”獲取魔法口令",
+        "step3Src": "/static/earnMDT/weibo/step-3.jpg",
+        "step3Srcset": "/static/earnMDT/weibo/step-3@2x.jpg 2x, /static/earnMDT/weibo/step-3@3x.jpg 3x",
+        "step4": "4. 回到 簡信積分 輸入魔法口令，獲得 MDT 獎勵",
+        "successDescription": "感謝你關注官方微博，請到任務頁面獲取 MDT 獎勵。",
+        "failureDescription": "請你依照教學關注官方微博，然後獲取魔法口令。",
+        "followMDTWeibo": "關注 MDT 量數官微"
+      },
+      "telegram": {
+        "screenTitle": "加入電報群",
+        "stepTitle": "加入電報群教學",
+        "step1": "1. 點擊 Telegram 電報群鏈接",
+        "step2": "2. 點擊“View in Telegram”，在系統彈窗裡打開 Telegram",
+        "step2Src1": "/static/earnMDT/telegram/step-2-1.jpg",
+        "step2Srcset1": "/static/earnMDT/telegram/step-2-1@2x.jpg 2x, /static/earnMDT/telegram/step-2-1@3x.jpg 3x",
+        "step2Src2": "/static/earnMDT/telegram/step-2-2.jpg",
+        "step2Srcset2": "/static/earnMDT/telegram/step-2-2@2x.jpg 2x, /static/earnMDT/telegram/step-2-2@3x.jpg 3x",
+        "step3": "3. 點擊下方的“Join”加入電報群",
+        "step3Src": "/static/earnMDT/telegram/step-3.jpg",
+        "step3Srcset": "/static/earnMDT/telegram/step-3@2x.jpg 2x, /static/earnMDT/telegram/step-3@3x.jpg 3x",
+        "step4": "4. 輸入“MyMDT”獲取魔法口令",
+        "step4Src": "/static/earnMDT/telegram/step-4.jpg",
+        "step4Srcset": "/static/earnMDT/telegram/step-4@2x.jpg 2x, /static/earnMDT/telegram/step-4@3x.jpg 3x",
+        "step5": "5. 回到 簡信積分 輸入魔法口令，獲得 MDT 獎勵",
+        "successDescription": "感謝你加入電報群，請到任務頁面獲取 MDT 獎勵。",
+        "failureDescription": "請你依照教學加入電報群，然後獲取魔法口令。",
+        "followTelegram": "加入 Telegram 電報群"
+      }
+    }
   },
   "tutorial": {
     "get_started": "開始",
