@@ -31,20 +31,19 @@
       :bottom-config="PULLTO_BOTTOM_CONFIG"
       :top-block-height="26"
       @infinite-scroll="getOldRewardHistory"
-      @bottom-state-change="foo"
     >
       <ClaimMDTCard
         :is-loading="uiState.isFetching"
-        :unclaimed="rewardHistory ? rewardHistory.claimable_reward_value : 0"
-        :earned="rewardHistory ? rewardHistory.total_reward_value : 0"
-        :claimed="rewardHistory ? rewardHistory.claimed : 0"
+        :unclaimed="rewardSummary ? rewardSummary.claimable_reward_value : 0"
+        :earned="rewardSummary ? rewardSummary.total_reward_value : 0"
+        :claimed="rewardSummary ? rewardSummary.claimed : 0"
       />
       <div class="history-section">
         <h3 class="md-caption history-section-title">{{ $t('message.earnMDT.inviteFriend.history') }}</h3>
         <hr class="history-section-line">
         <div class="history-section-main">
-          <template v-if="!uiState.isFetching && !!rewardHistory && rewardHistory.reward_history">
-            <template v-for="(item, index) in rewardHistory.reward_history">
+          <template v-if="!uiState.isFetching && rewardHisotories">
+            <template v-for="(item, index) in rewardHisotories">
               <div
                 :key="item.id"
                 class="history-item"
@@ -65,22 +64,15 @@
                   </div>
                 </div>
                 <div class="history-item-right">
-                  <div :class="['action-info-amount', { 'action-info-amount-claimable': item.claimable }]">
-                    {{ formatClaimableAmount(item.value, item.status, item.claimable) }}
-                  </div>
-                  <div 
-                    v-if="item.reward_id"
-                    class="label-info"
-                  >
-                    {{ getExpiryText(item.status, item.expiry_time) }}
-                  </div>
-                  <MDTSecondaryButton 
-                    v-if="item.claimable" 
-                    class="action-claim"
-                    color="secondary"
-                  >
-                    {{ getButtonText(item.claimable) }}
-                  </MDTSecondaryButton>
+                  <ClaimButton 
+                    :reward-status="item.status"
+                    :amount="item.value"
+                    :expired-in-days="item.remain_days"
+                    :expiry-time="item.expiry_time"
+                    :centered="true"
+                    :no-reward="!item.reward_id"
+                    @click.stop="() => handleClickClaimButton(item.id, item.reward_id)"
+                  />
                 </div>
               </div>
               <hr 
@@ -109,10 +101,14 @@ import WebViewLink from '@/components/common/WebViewLink';
 import BasePopup from '@/components/popup/BasePopup';
 import Skeleton from '@/components/common/Skeleton';
 import ClaimMDTCard from '@/components/common/ClaimMDTCard';
+import ClaimButton from '@/components/button/ClaimButton';
 
-import { formatAmount } from '@/utils';
+import { formatAmount, trackEvent } from '@/utils';
 
-import { FETCH_INVITE_FRIEND_REWARD_HISTORIES } from '@/store/modules/inviteFriend';
+import {
+  FETCH_INVITE_FRIEND_REWARD_HISTORIES,
+  CLAIM_REWARD,
+} from '@/store/modules/inviteFriend';
 import { FETCH_INVITE_INFO } from '@/store/modules/inviteFriend';
 
 import RewardStatus from '@/enum/rewardStatus';
@@ -127,6 +123,7 @@ export default {
     Skeleton,
     PullTo,
     ClaimMDTCard,
+    ClaimButton,
   },
   extends: BasePage,
   metaInfo() {
@@ -162,12 +159,23 @@ export default {
       selectedUser: 'getSelectedUser',
       getRewardSummary: 'getRewardSummary',
       getInviteInfo: 'getInviteInfo',
+      getRewardHisotories: 'getRewardHisotories',
     }),
-    rewardHistory() {
+    rewardSummary() {
       return this.getRewardSummary(this.selectedUser.emailAddress);
     },
     inviteInfo() {
       return this.getInviteInfo(this.selectedUser.emailAddress);
+    },
+    rewardHisotories() {
+      if (
+        this.rewardSummary &&
+        Array.isArray(this.rewardSummary.rewardHistoryIds)
+      ) {
+        return this.getRewardHisotories(this.rewardSummary.rewardHistoryIds);
+      }
+
+      return [];
     },
   },
   mounted() {
@@ -184,6 +192,7 @@ export default {
     ...mapActions({
       fetchRewardSummary: FETCH_INVITE_FRIEND_REWARD_HISTORIES,
       fetchInviteInfo: FETCH_INVITE_INFO,
+      claimReward: CLAIM_REWARD,
     }),
     getStatusText(hasReward) {
       if (hasReward) {
@@ -213,54 +222,6 @@ export default {
         default: {
           return this.formatMDTAmount(amount);
         }
-      }
-    },
-    getExpiryText(rewardStatus, dateTime) {
-      switch (rewardStatus) {
-        case RewardStatus.ACTIVE: {
-          if (!dateTime) {
-            return '';
-          }
-
-          const expiryDate = new Date(dateTime);
-          const now = new Date();
-          const utc1 = Date.UTC(
-            expiryDate.getFullYear(),
-            expiryDate.getMonth(),
-            expiryDate.getDate(),
-          );
-          const utc2 = Date.UTC(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-          );
-
-          // https://stackoverflow.com/a/15289883
-          const dateDiffInDays = Math.floor(
-            (utc1 - utc2) / (1000 * 60 * 60 * 24),
-          );
-
-          if (dateDiffInDays >= 0) {
-            return this.$t('message.earnMDT.inviteFriend.expiredAfter', {
-              number: dateDiffInDays,
-            });
-          }
-
-          return this.$t('message.earnMDT.inviteFriend.expired');
-        }
-        case RewardStatus.CLAIMED: {
-          return '';
-        }
-        case RewardStatus.EXPIRED: {
-          return this.$t('message.earnMDT.inviteFriend.expired');
-        }
-      }
-
-      return this.$t('message.earnMDT.inviteFriend.expired');
-    },
-    foo(loaded) {
-      if (typeof loaded === 'function') {
-        loaded('done');
       }
     },
     async topLoad(loaded) {
@@ -293,10 +254,20 @@ export default {
     },
     onClickShareButton() {
       if (this.inviteInfo) {
-        window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
+        window.location.href = `mdtwallet://share?url=${encodeURIComponent(
           this.inviteInfo.invite_url,
         )}`;
       }
+    },
+    handleClickClaimButton(rewardHistoryId, rewardId) {
+      trackEvent('Click on InviteFriend page', {
+        'Reward id': rewardId,
+      });
+      this.claimReward({
+        rewardHistoryId,
+        rewardId,
+        userId: this.selectedUser.emailAddress,
+      });
     },
   },
 };
@@ -375,6 +346,7 @@ hr {
     padding: 0 1rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
 
     .history-item-right {
@@ -458,14 +430,5 @@ hr {
 /deep/ .default-text {
   line-height: 20px;
   margin: 0;
-}
-
-.foo {
-  width: 100%;
-  white-space: pre;
-
-  &::before {
-    content: ' ';
-  }
 }
 </style>
