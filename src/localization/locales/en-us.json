@@ -323,6 +323,7 @@
       "share": "Share",
       "earnRewards": "Earn Rewards",
       "expiredAfter": "Expired after {number} days",
+      "expiredOn": "Expired on {date}",
       "expired": "Expired",
       "history": "History",
       "status": "Status",

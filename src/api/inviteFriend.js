@@ -4,7 +4,7 @@ import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
 
 export default {
-  getRewardSummary(accessToken, paginationOptions) {
+  getRewardSummary(accessToken, paginationOptions = {}) {
     const {
       sortby,
       order,
