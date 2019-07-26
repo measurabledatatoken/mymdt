@@ -23,8 +23,11 @@
     "continue": "繼續",
     "startOver": "重新開始",
     "total": "總計",
-    "detail" : "詳情",
-    "other" : "其他"
+    "detail": "詳情",
+    "other": "其他",
+    "earned": "已賺取",
+    "claimed": "已認領",
+    "unclaimed": "未認領"
   },
   "error": {
     "userNotExist": "用戶郵箱不存在。",
@@ -50,10 +53,10 @@
     "accessCodeIsUsed": "代碼已被使用。",
     "googleAuthTokenInvalid": "谷歌身份驗證令牌無效",
     "sessionExpired": "您的使用期限已過",
-    "phoneNumberAlreadyBinded" : "電話號碼已與另一個帳戶綁定"
+    "phoneNumberAlreadyBinded": "電話號碼已與另一個帳戶綁定"
   },
   "home": {
-    "total_balance": "總積分", 
+    "total_balance": "總積分",
     "title": "簡信積分",
     "settings": "設定",
     "tutorial": "教學",
@@ -137,7 +140,7 @@
     "problemMakeItAccidentally": "我錯誤地進行了此交易。",
     "popupCancelTitle": "您的交易將被取消",
     "popupCancelDescription": "我們不會在您取消交易時向收件人發送郵件通知。",
-    "listing" : {
+    "listing": {
       "pullDownText": "下拉刷新",
       "pullUpText": "上拉加載",
       "triggerText": "釋放更新",
@@ -145,8 +148,8 @@
       "doneText": "加載完成",
       "failText": "加載失敗"
     },
-    "dataPointReward" : "我的數據收益",
-    "viewRewardDetail" : "查看獎勵詳情"
+    "dataPointReward": "我的數據收益",
+    "viewRewardDetail": "查看獎勵詳情"
   },
   "settings": {
     "title": "設置",
@@ -231,12 +234,12 @@
     "invite": "邀請",
     "maximumAmountToEarn": "最多 {amount} {currency}",
     "rewardErrorMessage": "未能認領獎勵。請刷新並重試",
-    "rewardExpiresOn" : "獎勵將於{time}到期",
+    "rewardExpiresOn": "獎勵將於{time}到期",
     "dataPointsReward": {
       "description": "簡信積分幫助用戶獲得匿名數據收益。所有的數據均為不可識別到個人的聚合大數據，它們被加密、脫敏、匿名地存儲。數據收益每月定期發送至用戶的賬號中，詳情請查閱下圖。",
-      "dataPointsType" : {
-        "AppleReceiptItemType" : "應用程序內購買收據",
-        "UberReceiptType": "Uber 收據", 
+      "dataPointsType": {
+        "AppleReceiptItemType": "應用程序內購買收據",
+        "UberReceiptType": "Uber 收據",
         "LyftReceiptType": "Lyft 收據",
         "GrabReceiptType": "Grab 收據"
       }
@@ -309,6 +312,24 @@
         "failureDescription": "請你依照教學加入電報群，然後獲取魔法口令。",
         "followTelegram": "加入 Telegram 電報群"
       }
+    },
+    "inviteFriend": {
+      "screenTitle": "邀請朋友",
+      "cardTitle": "邀請朋友使用 簡信",
+      "cardDescription": "邀請朋友下載 簡信，在登入時輸入邀請碼，你跟你的朋友都能獲得 MDT 獎勵",
+      "invitationCode": "邀請碼",
+      "copy": "複制",
+      "shareDownloadLinkAndCode": "分享包含邀請碼的下載地址",
+      "share": "分享",
+      "earnRewards": "獲得獎勵",
+      "expiredAfter": "{number}天後過期",
+      "expiredOn": "已在{date}過期",
+      "expired": "已過期",
+      "history": "記錄",
+      "status": "狀態",
+      "loginDate": "登入日期",
+      "sharedDataPoints": "已分享數據",
+      "noDataPoint": "未分享數據"
     }
   },
   "tutorial": {
@@ -358,10 +379,10 @@
   },
   "welcome": {
     "title": "歡迎來到 簡信積分",
-    "description" : "妳的數據，由妳做主。",
+    "description": "妳的數據，由妳做主。",
     "agreementCheckbox1": "我同意有關 簡信積分 的{0}",
     "agreementCheckbox2": "使用條款",
-    "OSNotSupported":"抱歉您的設備不支持此功能。\n簡信積分 需要安卓系統版本4.4及以上。",
+    "OSNotSupported": "抱歉您的設備不支持此功能。\n簡信積分 需要安卓系統版本4.4及以上。",
     "agreementDetail": "點擊“導入郵箱賬號”，您在 MailTime 簡信積分簡信中登錄的郵箱賬號將自動登入 簡信積分。",
     "importAccounts": "導入郵箱賬號"
   },
@@ -408,8 +429,8 @@
     "continueSetupPopupTitle": "繼續安裝？",
     "continueSetupPopupDescription": "您正在設置谷歌身份驗證器。<br/>點擊“繼續”繼續設置您的谷歌身份驗證器。系統會要求您輸入6位數的驗證碼。<br/ > <br/>點擊“重新開始”以放棄當前進度,您將獲得壹個新密鑰。",
     "setupSuccess": "谷歌身份驗證器\n設置成功！"
-  }, 
-  "maintenance" : {
-    "description" : "維護進行中"
+  },
+  "maintenance": {
+    "description": "維護進行中"
   }
 }
