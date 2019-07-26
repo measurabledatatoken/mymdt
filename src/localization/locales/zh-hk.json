@@ -23,8 +23,8 @@
     "continue": "繼續",
     "startOver": "重新開始",
     "total": "總計",
-    "detail" : "詳情",
-    "other" : "其他"
+    "detail": "詳情",
+    "other": "其他"
   },
   "error": {
     "userNotExist": "用戶郵箱不存在。",
@@ -50,10 +50,10 @@
     "accessCodeIsUsed": "代碼已被使用。",
     "googleAuthTokenInvalid": "谷歌身份驗證令牌無效",
     "sessionExpired": "您的使用期限已過",
-    "phoneNumberAlreadyBinded" : "電話號碼已與另一個帳戶綁定"
+    "phoneNumberAlreadyBinded": "電話號碼已與另一個帳戶綁定"
   },
   "home": {
-    "total_balance": "總積分", 
+    "total_balance": "總積分",
     "title": "簡信積分",
     "settings": "設定",
     "tutorial": "教學",
@@ -137,7 +137,7 @@
     "problemMakeItAccidentally": "我錯誤地進行了此交易。",
     "popupCancelTitle": "您的交易將被取消",
     "popupCancelDescription": "我們不會在您取消交易時向收件人發送郵件通知。",
-    "listing" : {
+    "listing": {
       "pullDownText": "下拉刷新",
       "pullUpText": "上拉加載",
       "triggerText": "釋放更新",
@@ -145,8 +145,8 @@
       "doneText": "加載完成",
       "failText": "加載失敗"
     },
-    "dataPointReward" : "我的數據收益",
-    "viewRewardDetail" : "查看獎勵詳情"
+    "dataPointReward": "我的數據收益",
+    "viewRewardDetail": "查看獎勵詳情"
   },
   "settings": {
     "title": "設置",
@@ -231,12 +231,12 @@
     "invite": "邀請",
     "maximumAmountToEarn": "最多 {amount} {currency}",
     "rewardErrorMessage": "未能認領獎勵。請刷新並重試",
-    "rewardExpiresOn" : "獎勵將於{time}到期",
+    "rewardExpiresOn": "獎勵將於{time}到期",
     "dataPointsReward": {
       "description": "簡信積分幫助用戶獲得匿名數據收益。所有的數據均為不可識別到個人的聚合大數據，它們被加密、脫敏、匿名地存儲。數據收益每月定期發送至用戶的賬號中，詳情請查閱下圖。",
-      "dataPointsType" : {
-        "AppleReceiptItemType" : "應用程序內購買收據",
-        "UberReceiptType": "Uber 收據", 
+      "dataPointsType": {
+        "AppleReceiptItemType": "應用程序內購買收據",
+        "UberReceiptType": "Uber 收據",
         "LyftReceiptType": "Lyft 收據",
         "GrabReceiptType": "Grab 收據"
       }
@@ -255,14 +255,14 @@
       "wechat": {
         "screenTitle": "關注官方公眾號",
         "stepTitle": "關注官方公眾號教學",
-        "step1": "1. 保存 簡信 / MDT 量數 / 量數 AI 公眾號二維碼到相冊",
+        "step1": "1. 保存以下公眾號二維碼到相冊",
         "step2": "2. 打開微信，點擊首頁右上角的“+”號，然後選擇“掃一掃”",
         "step2Src": "/static/earnMDT/wechat/step-2.jpg",
         "step2Srcset": "/static/earnMDT/wechat/step-2@2x.jpg 2x, /static/earnMDT/wechat/step-2@3x.jpg 3x",
-        "step3": "3. 點擊右上角的“相冊”，然後選擇 簡信 / MDT 量數 / 量數 AI 公眾號二維碼",
+        "step3": "3. 點擊右上角的“相冊”，然後選擇已儲存的公眾號二維碼",
         "step3Src": "/static/earnMDT/wechat/step-3.jpg",
         "step3Srcset": "/static/earnMDT/wechat/step-3@2x.jpg 2x, /static/earnMDT/wechat/step-3@3x.jpg 3x",
-        "step4": "4. 點擊關注 簡信 / MDT 量數 / 量數 AI 公眾號",
+        "step4": "4. 點擊關注該公眾號",
         "step4Src": "/static/earnMDT/wechat/step-4.jpg",
         "step4Srcset": "/static/earnMDT/wechat/step-4@2x.jpg 2x, /static/earnMDT/wechat/step-4@3x.jpg 3x",
         "step5": "5. 呼叫鍵盤輸入",
@@ -358,10 +358,10 @@
   },
   "welcome": {
     "title": "歡迎來到 簡信積分",
-    "description" : "妳的數據，由妳做主。",
+    "description": "妳的數據，由妳做主。",
     "agreementCheckbox1": "我同意有關 簡信積分 的{0}",
     "agreementCheckbox2": "使用條款",
-    "OSNotSupported":"抱歉您的設備不支持此功能。\n簡信積分 需要安卓系統版本4.4及以上。",
+    "OSNotSupported": "抱歉您的設備不支持此功能。\n簡信積分 需要安卓系統版本4.4及以上。",
     "agreementDetail": "點擊“導入郵箱賬號”，您在 MailTime 簡信積分簡信中登錄的郵箱賬號將自動登入 簡信積分。",
     "importAccounts": "導入郵箱賬號"
   },
@@ -408,8 +408,8 @@
     "continueSetupPopupTitle": "繼續安裝？",
     "continueSetupPopupDescription": "您正在設置谷歌身份驗證器。<br/>點擊“繼續”繼續設置您的谷歌身份驗證器。系統會要求您輸入6位數的驗證碼。<br/ > <br/>點擊“重新開始”以放棄當前進度,您將獲得壹個新密鑰。",
     "setupSuccess": "谷歌身份驗證器\n設置成功！"
-  }, 
-  "maintenance" : {
-    "description" : "維護進行中"
+  },
+  "maintenance": {
+    "description": "維護進行中"
   }
 }
