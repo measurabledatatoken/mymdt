@@ -23,8 +23,8 @@
     "continue": "Continue",
     "startOver": "Start Over",
     "total": "Total",
-    "detail" : "Detail",
-    "other" : "Other",
+    "detail": "Detail",
+    "other": "Other",
     "earned": "Earned",
     "claimed": "Claimed",
     "unclaimed": "Unclaimed"
@@ -53,7 +53,7 @@
     "accessCodeIsUsed": "Access Code is already used.",
     "googleAuthTokenInvalid": "Google authentication token is invalid",
     "sessionExpired": "Your session has expired",
-    "phoneNumberAlreadyBinded" : "Phone number is already binded with another account"
+    "phoneNumberAlreadyBinded": "Phone number is already binded with another account"
   },
   "home": {
     "total_balance": "Total Balance",
@@ -135,12 +135,12 @@
     "cancelled": "Cancelled",
     "pendingToClaim": "Pending...",
     "pendingToApprove": "Pending...",
-    "problemWithTransation" : "Problem with this transaction?",
+    "problemWithTransation": "Problem with this transaction?",
     "problemDidNotMakeIt": "I did not make this transaction.",
     "problemMakeItAccidentally": "I made this transaction by mistake.",
     "popupCancelTitle": "Your transaction will be canceled",
     "popupCancelDescription": "We will not send the recipient an email notification when you cancel your transaction.",
-    "listing" : {
+    "listing": {
       "pullDownText": "Pull down to Refresh",
       "pullUpText": "Pull up to Load More",
       "triggerText": "Release to Update",
@@ -148,8 +148,8 @@
       "doneText": "Load completed",
       "failText": "Load failed"
     },
-    "dataPointReward" : "Data Monetization Reward",
-    "viewRewardDetail" : "Detail"
+    "dataPointReward": "Data Monetization Reward",
+    "viewRewardDetail": "Detail"
   },
   "settings": {
     "title": "Settings",
@@ -234,11 +234,11 @@
     "invite": "Invite",
     "maximumAmountToEarn": "Maximum {amount} {currency}",
     "rewardErrorMessage": "Failed to claim reward. Please refresh and try again.",
-    "rewardExpiresOn" : "Reward expires on {time}",
+    "rewardExpiresOn": "Reward expires on {time}",
     "dataPointsReward": {
-      "description" : "MailTime rewards users for aggregated anonymous data, which means no personal, identifiable data will be shared. All the rewards from anonymous data sharing are distributed on a monthly basis.",
-      "dataPointsType" : {
-        "AppleReceiptItemType" : "In App Purchase Receipt",
+      "description": "MailTime rewards users for aggregated anonymous data, which means no personal, identifiable data will be shared. All the rewards from anonymous data sharing are distributed on a monthly basis.",
+      "dataPointsType": {
+        "AppleReceiptItemType": "In App Purchase Receipt",
         "UberReceiptType": "Uber Receipt",
         "LyftReceiptType": "Lyft Receipt",
         "GrabReceiptType": "Grab Receipt"
@@ -379,10 +379,10 @@
   },
   "welcome": {
     "title": "Welcome to MailTime Rewards Program!",
-    "description" : "",
+    "description": "",
     "agreementCheckbox1": "I agree to {0} of MailTime Rewards Program",
     "agreementCheckbox2": "the Terms of Use",
-    "OSNotSupported":"Sorry, this feature is not supported on your device.\nMailTime Rewards Program requires Android version 4.4 and above.",
+    "OSNotSupported": "Sorry, this feature is not supported on your device.\nMailTime Rewards Program requires Android version 4.4 and above.",
     "agreementDetail": "By clicking the button below, your email accounts in MailTime will automatically be imported into MailTime Rewards Program.",
     "importAccounts": "Import Account(s)"
   },
@@ -391,8 +391,7 @@
   },
   "twoFactorAuthentication": {
     "setupTitle": "Two-Factor Authentication",
-    "setupDescription":
-      "Two-factor authentication (2FA) is a security feature. It is recommended to be turned on to keep your account secure. When 2FA is turned on, whenever you sign in your account or make transactions, a code will be sent to your phone via text, voice call, or mobile app.",
+    "setupDescription": "Two-factor authentication (2FA) is a security feature. It is recommended to be turned on to keep your account secure. When 2FA is turned on, whenever you sign in your account or make transactions, a code will be sent to your phone via text, voice call, or mobile app.",
     "turnOn2FA": "Turn 2FA on?",
     "setupMethodTitle": "2FA Method",
     "methods": {
@@ -406,32 +405,32 @@
       "transactionAndLogin": "Transaction and Unknown Logins"
     },
     "pinSetupPopupDescription": "To turn on two-factor authentication, you need to either finish setting up PIN and phone number or setting up Google Authenticator first.",
-    "disable2FAPopupTitle" : "Turning off 2FA?",
-    "disable2FAPopupDescription" : "2FA is strongly recommended to protect your account and assets.<br/>By turning off 2FA, you agree that you  understand the risk of not enabling this security feature.",
-    "turnOff2FA" : "Turn off 2FA",
-    "verifyTitle" : "Enter Verification Code"
+    "disable2FAPopupTitle": "Turning off 2FA?",
+    "disable2FAPopupDescription": "2FA is strongly recommended to protect your account and assets.<br/>By turning off 2FA, you agree that you  understand the risk of not enabling this security feature.",
+    "turnOff2FA": "Turn off 2FA",
+    "verifyTitle": "Enter Verification Code"
   },
   "googleAuth": {
-    "setupTitle" : "Google Authenticator",
+    "setupTitle": "Google Authenticator",
     "pinSetupPopupDescription": "You can set up Google Authenticator after you set up your PIN.<br/><br/>What is Google Authenticator?<br/>Google Authenticator adds a second layer of security to your account. When two-factor authentication is on, you will asked to enter your PIN and a verification code from the Google Authenticator when making transactions or logging into the account. ",
-    "step1Title" : "Step 1 Get Google Authenticator App:",
-    "step1Remark" : "Please make sure that your Google Authenticator app is installed.",
-    "step2Title" : "Step 2 In Google Authenticator:",
-    "step2Procedure1" : "If you are new to Google Authenticator, tap on “<b>BEGIN</b>” or “<b>BEGIN SETUP</b>”<br/><br/>If you have used the app before, tap “<b>+</b>” to add an account.",
-    "step2Procedure2" : "Select “<b>Manual entry</b>” or “<b>Enter a provided key”</b>.",
-    "step2Procedure3" : "Use the following as your key.",
-    "step2Procedure3Remark" : "You can screenshot this page to keep a copy",
-    "step2Procedure4" : "Make sure “<b>Time Based</b>” is selected and tap “<b>Add</b>” to complete.",
-    "step3Title" : "Step 3 Enter Verification Code ",
-    "disablePopupTitle" : "Disable your Google Authenticator?",
-    "disablePopupContentCase1" : "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA will switch to SMS if you proceed.",
-    "disablePopupContentCase2" : "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA be disabled if you proceed. You can set up your phone number and turn on 2FA again.",
-    "disablePopupContentCase3" : "You have already set up your Google Authenticator. Do you want to disable it?",
-    "continueSetupPopupTitle" : "Continue Setup?",
+    "step1Title": "Step 1 Get Google Authenticator App:",
+    "step1Remark": "Please make sure that your Google Authenticator app is installed.",
+    "step2Title": "Step 2 In Google Authenticator:",
+    "step2Procedure1": "If you are new to Google Authenticator, tap on “<b>BEGIN</b>” or “<b>BEGIN SETUP</b>”<br/><br/>If you have used the app before, tap “<b>+</b>” to add an account.",
+    "step2Procedure2": "Select “<b>Manual entry</b>” or “<b>Enter a provided key”</b>.",
+    "step2Procedure3": "Use the following as your key.",
+    "step2Procedure3Remark": "You can screenshot this page to keep a copy",
+    "step2Procedure4": "Make sure “<b>Time Based</b>” is selected and tap “<b>Add</b>” to complete.",
+    "step3Title": "Step 3 Enter Verification Code ",
+    "disablePopupTitle": "Disable your Google Authenticator?",
+    "disablePopupContentCase1": "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA will switch to SMS if you proceed.",
+    "disablePopupContentCase2": "You have already set up your Google Authenticator. Do you want to disable it?<br/><br/>Your current 2FA is using Google Authenticator. Your 2FA be disabled if you proceed. You can set up your phone number and turn on 2FA again.",
+    "disablePopupContentCase3": "You have already set up your Google Authenticator. Do you want to disable it?",
+    "continueSetupPopupTitle": "Continue Setup?",
     "continueSetupPopupDescription": "You are halfway setting up your Google Authenticator. <br/><br/>Click “Continue” to continue setting up your Google Authenticator. You will be asked to input the 6-digit verification code.<br/><br/>Click “Start Over” to discard current progress and you will be provided with a new key.",
-    "setupSuccess" : "Google Authenticator\nSuccessfully Set! "
+    "setupSuccess": "Google Authenticator\nSuccessfully Set! "
   },
-  "maintenance" : {
-    "description" : "Maintenance in Progress"
+  "maintenance": {
+    "description": "Maintenance in Progress"
   }
 }
