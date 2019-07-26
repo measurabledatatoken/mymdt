@@ -52,14 +52,19 @@ export default {
         return '';
       }
       const taskUrl = this.task.task_url.replace('[email]', this.userId);
-      try {
-        // add qs task_id to url
-        const url = new URL(taskUrl, window.location.origin);
-        const searchParams = url.searchParams;
-        searchParams.append('task_id', this.task.task_id);
-        url.search = `?${searchParams.toString()}`;
-        return url.toString().replace(url.origin, '');
-      } catch (error) {
+
+      if (taskUrl.startsWith('/')) {
+        // add qs task_id to relative url
+        try {
+          const url = new URL(taskUrl, window.location.origin);
+          const searchParams = url.searchParams;
+          searchParams.append('task_id', this.task.task_id);
+          url.search = `?${searchParams.toString()}`;
+          return url.toString().replace(url.origin, '');
+        } catch (error) {
+          return taskUrl;
+        }
+      } else {
         return taskUrl;
       }
     },
