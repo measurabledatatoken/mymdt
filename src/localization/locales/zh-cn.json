@@ -23,8 +23,8 @@
     "continue": "继续",
     "startOver": "重新开始",
     "total": "总计",
-    "detail" : "详情",
-    "other" : "其他"
+    "detail": "详情",
+    "other": "其他"
   },
   "error": {
     "userNotExist": "用户邮箱不存在。",
@@ -50,7 +50,7 @@
     "accessCodeIsUsed": "代码已被使用。",
     "googleAuthTokenInvalid": "谷歌身份验证令牌无效",
     "sessionExpired": "您的使用期限已过",
-    "phoneNumberAlreadyBinded" : "电话号码已与另一个帐户绑定"
+    "phoneNumberAlreadyBinded": "电话号码已与另一个帐户绑定"
   },
   "home": {
     "total_balance": "总积分",
@@ -137,7 +137,7 @@
     "problemMakeItAccidentally": "我错误地进行了此交易。",
     "popupCancelTitle": "您的交易将被取消",
     "popupCancelDescription": "我们不会在您取消交易时向收件人发送邮件通知。",
-    "listing" : {
+    "listing": {
       "pullDownText": "下拉刷新",
       "pullUpText": "上拉加载",
       "triggerText": "释放更新",
@@ -145,8 +145,8 @@
       "doneText": "加载完成",
       "failText": "加载失败"
     },
-    "dataPointReward" : "我的数据收益",
-    "viewRewardDetail" : "查看奖励详情"
+    "dataPointReward": "我的数据收益",
+    "viewRewardDetail": "查看奖励详情"
   },
   "settings": {
     "title": "设置",
@@ -231,12 +231,12 @@
     "invite": "邀请",
     "maximumAmountToEarn": "最多 {amount} {currency}",
     "rewardErrorMessage": "未能认领奖励。请刷新并重试",
-    "rewardExpiresOn" : "奖励将于{time}到期",
+    "rewardExpiresOn": "奖励将于{time}到期",
     "dataPointsReward": {
       "description": "简信积分帮助用户获得匿名数据收益。所有的数据均为不可识别到个人的聚合大数据，它们被加密、脱敏、匿名地存储。数据收益每月定期发送至用户的账号中，详情请查阅下图。",
-      "dataPointsType" : {
-        "AppleReceiptItemType" : "应用程序内购买收据",
-        "UberReceiptType": "Uber 收据", 
+      "dataPointsType": {
+        "AppleReceiptItemType": "应用程序内购买收据",
+        "UberReceiptType": "Uber 收据",
         "LyftReceiptType": "Lyft 收据",
         "GrabReceiptType": "Grab 收据"
       }
@@ -255,14 +255,14 @@
       "wechat": {
         "screenTitle": "关注官方公众号",
         "stepTitle": "关注官方公众号教学",
-        "step1": "1. 保存 简信 / MDT 量数 / 量数 AI 公众号二维码到相册",
+        "step1": "1. 保存以下公众号二维码到相册",
         "step2": "2. 打开微信，点击首页右上角的“+”号，然后选择“扫一扫”",
         "step2Src": "/static/earnMDT/wechat/step-2.jpg",
         "step2Srcset": "/static/earnMDT/wechat/step-2@2x.jpg 2x, /static/earnMDT/wechat/step-2@3x.jpg 3x",
-        "step3": "3. 点击右上角的“相册”，然后选择 简信 / MDT 量数 / 量数 AI 公众号二维码",
+        "step3": "3. 点击右上角的“相册”，然后选择已储存的公众号二维码",
         "step3Src": "/static/earnMDT/wechat/step-3.jpg",
         "step3Srcset": "/static/earnMDT/wechat/step-3@2x.jpg 2x, /static/earnMDT/wechat/step-3@3x.jpg 3x",
-        "step4": "4. 点击关注 简信 / MDT 量数 / 量数 AI 公众号",
+        "step4": "4. 点击关注该公众号",
         "step4Src": "/static/earnMDT/wechat/step-4.jpg",
         "step4Srcset": "/static/earnMDT/wechat/step-4@2x.jpg 2x, /static/earnMDT/wechat/step-4@3x.jpg 3x",
         "step5": "5. 呼叫键盘输入",
@@ -358,10 +358,10 @@
   },
   "welcome": {
     "title": "欢迎来到 简信积分",
-    "description" : "你的数据，由你做主。",
+    "description": "你的数据，由你做主。",
     "agreementCheckbox1": "我同意有关 简信积分 的{0}",
     "agreementCheckbox2": "使用条款",
-    "OSNotSupported":"抱歉您的设备不支持此功能。\n简信积分 需要安卓系统版本4.4及以上。",
+    "OSNotSupported": "抱歉您的设备不支持此功能。\n简信积分 需要安卓系统版本4.4及以上。",
     "agreementDetail": "点击“导入邮箱账号”，您在 MailTime 简信积分简信中登录的邮箱账号将自动登入 简信积分。",
     "importAccounts": "导入邮箱账号"
   },
@@ -409,7 +409,7 @@
     "continueSetupPopupDescription": "您正在设置谷歌身份验证器。<br/>点击“继续”继续设置您的谷歌身份验证器。系统会要求您输入6位数的验证码。<br/> <br/>点击“重新开始”以放弃当前进度,您将获得一个新密钥。",
     "setupSuccess": "谷歌身份验证器\n设置成功！"
   },
-  "maintenance" : {
-    "description" : "维护进行中"
+  "maintenance": {
+    "description": "维护进行中"
   }
 }
