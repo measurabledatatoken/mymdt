@@ -112,8 +112,9 @@ export default {
 .earn-mdt-task-item {
   .earn-mdt-task-item__action {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    padding-left: 26px; // equals width + margin of base-earn-mdt-item__icon in BaseEarnMDTItem
 
     .earn-mdt-task-item-action__amount-to-earn {
       font-size: 0.875rem;
