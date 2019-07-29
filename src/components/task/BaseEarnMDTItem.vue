@@ -2,7 +2,6 @@
   <md-list-item 
     v-bind="$attrs"
     class="base-earn-mdt-item"
-    @click="onClick"
   >
     <div class="base-earn-mdt-item__info">
       <md-icon 
@@ -16,13 +15,19 @@
         >
           <span>{{ title }}</span>
           <template v-if="isDataPointReward">
-            <md-icon 
-              class="base-earn-mdt-item__icon-details"
-              md-src="/static/icons/settings-incomplete.svg"
-            />
-            <span
-              class="base-earn-mdt-item__info-details"
-            >{{ $t('message.common.detail') }}</span>
+            <md-button 
+              v-if="isDataPointReward"
+              class="base-earn-mdt-item__info-button"
+              @click="onClick"
+            >
+              <span
+                class="base-earn-mdt-item__info-details"
+              >{{ $t('message.common.detail') }}</span>
+              <img
+                class="base-earn-mdt-item__icon-details"
+                src="/static/icons/arrow-go-to-detail.svg"
+              >
+            </md-button>
           </template>
         </div> 
         <span 
@@ -125,13 +130,18 @@ export default {
       min-width: 0;
       margin-right: 0.625rem;
     }
-    .base-earn-mdt-item__icon-details {
+
+    .base-earn-mdt-item__info-button {
+      height: auto;
+      min-width: auto;
       margin-left: 0.5rem;
-      margin-right: 0.25rem;
-    }
-    .base-earn-mdt-item__info-details {
-      color: $secondary-text-color;
-      font-weight: normal;
+
+      .base-earn-mdt-item__info-details {
+        color: $secondary-text-color;
+        margin-right: 0.25rem;
+        font-size: 12px;
+        font-weight: 600;
+      }
     }
 
     /deep/ .md-list-item-text {
