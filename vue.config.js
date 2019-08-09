@@ -20,9 +20,17 @@ module.exports = {
       return args;
     });
 
-    config.plugin("html").tap(args => {
-      args[0].chunksSortMode = "none";
-      return args;
+    // Use vue inspect --plugins to find corresponding plugins for each bundle
+    // and amend it accordingly
+    ['index', 'dapp'].forEach(page => {
+      config.plugin(`html-${page}`).tap(args => {
+        args[0].chunksSortMode = "none";
+        return args;
+      })
     })
+  },
+  pages: {
+    index: 'src/main.js',
+    dapp: 'src/dapp.js'
   }
 };
