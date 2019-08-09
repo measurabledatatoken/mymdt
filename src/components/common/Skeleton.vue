@@ -32,6 +32,8 @@ export default {
   border-radius: 0.125rem;
   margin-top: 0.375rem;
   margin-bottom: 0.375rem;
+  margin-left: auto;
+  margin-right: auto;
 
   .content-placeholder__background {
     animation: content-placeholder-animation 1s linear infinite;
