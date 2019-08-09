@@ -2,12 +2,25 @@
   <md-card class="reward-card">
     <div class="card-header">
       <div class="label">{{ $t('message.common.unclaimed') }}</div>
-      <Skeleton v-if="isLoading" />
+      <Skeleton 
+        v-if="isLoading"
+        width="200px"
+        height="32px"
+      />
       <div 
         v-if="!isLoading"
         class="md-title"
       >
         {{ formatMDTAmount(unclaimed) }}
+      </div>
+      <div class="claim-button-container">
+        <MDTMediumButton 
+          :style-type="1"
+          :disabled="isLoading"
+          @click="onClick"
+        >
+          Claim All
+        </MDTMediumButton>
       </div>
     </div>
     <hr >
@@ -16,7 +29,11 @@
         <div class="box-row label">
           {{ $t('message.common.claimed') }}
         </div>
-        <Skeleton v-if="isLoading" />
+        <Skeleton 
+          v-if="isLoading"
+          width="200px"
+          height="32px"
+        />
         <div 
           v-if="!isLoading"
           class="box-row amount"
@@ -30,12 +47,14 @@
 
 <script>
 import Skeleton from '@/components/common/Skeleton';
+import MDTMediumButton from '@/components/button/MDTMediumButton';
 
 import { formatAmount } from '@/utils';
 
 export default {
   components: {
     Skeleton,
+    MDTMediumButton,
   },
   props: {
     unclaimed: {
@@ -55,6 +74,9 @@ export default {
     formatMDTAmount(amount) {
       return formatAmount(amount, { suffix: ' MDT' });
     },
+    onClick() {
+      this.$emit('click');
+    },
   },
 };
 </script>
@@ -72,11 +94,17 @@ export default {
   .md-title {
     font-size: 2.625rem;
     font-weight: bold;
+    line-height: normal;
+  }
+
+  .claim-button-container {
+    margin-top: 0.5rem;
   }
 
   .label {
     font-size: 0.75rem;
     font-weight: 600;
+    line-height: normal;
     color: #aab1c0;
     text-transform: uppercase;
   }
@@ -100,8 +128,9 @@ export default {
         margin: 0.25rem 0;
 
         &.amount {
-          font-size: 1.25rem;
+          font-size: 1.5rem;
           font-weight: bold;
+          line-height: normal;
         }
       }
     }
