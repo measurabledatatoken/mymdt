@@ -46,6 +46,9 @@ import lottie from 'lottie-web';
 import ClaimMDTInDappCard from '@/components/common/ClaimMDTInDappCard';
 import ClaimDataPointRewardsPopup from '@/components/popup/ClaimDataPointRewardsPopup';
 
+import MDTokenLockupContract from '@/dapp/contracts/MDTokenLockup.json';
+import getWeb3 from '@/dapp/utils/getWeb3';
+
 export default {
   components: {
     ClaimMDTInDappCard,
@@ -68,13 +71,37 @@ export default {
       this.anim.destroy();
     }
   },
-  created() {
+  async created() {
     this.isLoading = true;
 
-    // TODO: replace with data fetching
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 1000);
+    try {
+      const web3 = await getWeb3();
+
+      const accounts = await web3.eth.getAccounts();
+
+      const networkId = await web3.eth.net.getId();
+
+      const deployedNetwork = MDTokenLockupContract.networks[networkId];
+      if (!deployedNetwork) {
+        throw new Error(`No contract deployed on current network ${networkId}`);
+      }
+
+      const contract = new web3.eth.Contract(
+        MDTokenLockupContract.abi,
+        deployedNetwork.address,
+      );
+
+      // TODO: replace with correct contract method
+      const response = await contract.methods
+        .privateSaleTokenLockup(accounts[0])
+        .call({ from: accounts[0] });
+      console.log('response', response);
+    } catch (error) {
+      console.log('Failed to init Web3', error);
+      this.openErrorPopup();
+    }
+
+    this.isLoading = false;
   },
   methods: {
     async onClick() {
@@ -94,26 +121,34 @@ export default {
       );
       this.showClaimingPopup = false;
 
-      let title = this.$t('message.earnMDT.dataPointReards.successPopupTitle');
-      let description = this.$t(
+      if (isSuccessful) {
+        this.openSuccessPopup();
+      } else {
+        this.openErrorPopup();
+      }
+    },
+    openErrorPopup() {
+      this.finishClaimingPopupTitle = this.$t(
+        'message.earnMDT.dataPointReards.errorPopupTitle',
+      );
+      this.finishClaimingPopupDescription = this.$t(
+        'message.earnMDT.dataPointReards.errorPopupDescription',
+      );
+      this.finishClaimingPopupImageSrc = '/static/dapp/claiming-error.jpg';
+      this.finishClaimingPopupImageSrcset =
+        '/static/dapp/claiming-error@2x.jpg 2x, /static/dapp/claiming-error@3x.jpg 3x';
+      this.showFinishClaimingPopup = true;
+    },
+    openSuccessPopup() {
+      this.finishClaimingPopupTitle = this.$t(
+        'message.earnMDT.dataPointReards.successPopupTitle',
+      );
+      this.finishClaimingPopupDescription = this.$t(
         'message.earnMDT.dataPointReards.successPopupDescription',
       );
-      let imageSrc = '/static/dapp/claiming-success.jpg';
-      let imageSrcset =
+      this.finishClaimingPopupImageSrc = '/static/dapp/claiming-success.jpg';
+      this.finishClaimingPopupImageSrcset =
         '/static/dapp/claiming-success@2x.jpg 2x, /static/dapp/claiming-success@3x.jpg 3x';
-      if (!isSuccessful) {
-        title = this.$t('message.earnMDT.dataPointReards.errorPopupTitle');
-        description = this.$t(
-          'message.earnMDT.dataPointReards.errorPopupDescription',
-        );
-        imageSrc = '/static/dapp/claiming-error.jpg';
-        imageSrcset =
-          '/static/dapp/claiming-error@2x.jpg 2x, /static/dapp/claiming-error@3x.jpg 3x';
-      }
-      this.finishClaimingPopupTitle = title;
-      this.finishClaimingPopupDescription = description;
-      this.finishClaimingPopupImageSrc = imageSrc;
-      this.finishClaimingPopupImageSrcset = imageSrcset;
       this.showFinishClaimingPopup = true;
     },
   },
