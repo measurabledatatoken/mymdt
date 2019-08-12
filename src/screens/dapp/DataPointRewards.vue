@@ -12,10 +12,11 @@
         @click="onClick"
       />
       <md-dialog 
-        :md-active.sync="showClaiming"
+        :md-active.sync="showClaimingPopup"
         :md-fullscreen="false"
         :md-close-on-esc="false"
         :md-click-outside-to-close="false"
+        class="claiming-dialog"
       >
         <div class="dialog-content">
           <div class="animation-container">
@@ -24,6 +25,13 @@
           <p class="label">Claiming...</p>
         </div>
       </md-dialog>
+      <ClaimDataPointRewardsPopup 
+        :md-active.sync="showFinishClaimingPopup"
+        :title="finishClaimingPopupTitle"
+        :description="finishClaimingPopupDescription"
+        :image-src="finishClaimingPopupImageSrc"
+        :image-srcset="finishClaimingPopupImageSrcset"
+      />
     </div>
     <img 
       src="/static/background/data-point-rewards-background.svg"
@@ -36,15 +44,22 @@
 import lottie from 'lottie-web';
 
 import ClaimMDTInDappCard from '@/components/common/ClaimMDTInDappCard';
+import ClaimDataPointRewardsPopup from '@/components/popup/ClaimDataPointRewardsPopup';
 
 export default {
   components: {
     ClaimMDTInDappCard,
+    ClaimDataPointRewardsPopup,
   },
   data() {
     return {
       isLoading: false,
-      showClaiming: false,
+      showClaimingPopup: false,
+      showFinishClaimingPopup: false,
+      finishClaimingPopupTitle: '',
+      finishClaimingPopupDescription: '',
+      finishClaimingPopupImageSrc: '',
+      finishClaimingPopupImageSrcset: '',
       anim: null,
     };
   },
@@ -62,9 +77,9 @@ export default {
     }, 1000);
   },
   methods: {
-    onClick() {
+    async onClick() {
       // TODO: replace with api calling
-      this.showClaiming = true;
+      this.showClaimingPopup = true;
       this.$nextTick(() => {
         lottie.loadAnimation({
           container: this.$refs.loading,
@@ -74,9 +89,32 @@ export default {
           path: '/static/animation/mymdt-loading.json',
         });
       });
-      setTimeout(() => {
-        this.showClaiming = false;
-      }, 1000);
+      const isSuccessful = await new Promise(resolve =>
+        setTimeout(() => resolve(true), 1000),
+      );
+      this.showClaimingPopup = false;
+
+      let title = this.$t('message.earnMDT.dataPointReards.successPopupTitle');
+      let description = this.$t(
+        'message.earnMDT.dataPointReards.successPopupDescription',
+      );
+      let imageSrc = '/static/dapp/claiming-success.jpg';
+      let imageSrcset =
+        '/static/dapp/claiming-success@2x.jpg 2x, /static/dapp/claiming-success@3x.jpg 3x';
+      if (!isSuccessful) {
+        title = this.$t('message.earnMDT.dataPointReards.errorPopupTitle');
+        description = this.$t(
+          'message.earnMDT.dataPointReards.errorPopupDescription',
+        );
+        imageSrc = '/static/dapp/claiming-error.jpg';
+        imageSrcset =
+          '/static/dapp/claiming-error@2x.jpg 2x, /static/dapp/claiming-error@3x.jpg 3x';
+      }
+      this.finishClaimingPopupTitle = title;
+      this.finishClaimingPopupDescription = description;
+      this.finishClaimingPopupImageSrc = imageSrc;
+      this.finishClaimingPopupImageSrcset = imageSrcset;
+      this.showFinishClaimingPopup = true;
     },
   },
 };
@@ -99,7 +137,7 @@ export default {
   margin-bottom: 1rem;
 }
 
-.md-dialog {
+.claiming-dialog {
   border-radius: 8px;
   width: 240px;
   min-width: 240px;
