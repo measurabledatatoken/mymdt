@@ -312,6 +312,13 @@
         "failureDescription": "Please follow below steps to get a Magic code.",
         "followTelegram": "Join Telegram Group"
       }
+    },
+    "dataPointReards": {
+      "okay": "Okay",
+      "successPopupTitle": "Success!",
+      "successPopupDescription": "The Data Point Reward is transferred to your ETH wallet. Please check your wallet.",
+      "errorPopupTitle": "Oops! Something went wrong",
+      "errorPopupDescription": "Please try again."
     }
   },
   "dataPointRewards": {

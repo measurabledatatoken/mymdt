@@ -83,7 +83,6 @@ export default {
 
 <style lang="scss" scoped>
 .reward-card {
-  margin: 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
 
