@@ -312,6 +312,13 @@
         "failureDescription": "请你依照教学加入电报群，然后获取魔法口令。",
         "followTelegram": "加入 Telegram 电报群"
       }
+    },
+    "dataPointReards": {
+      "okay": "Okay",
+      "successPopupTitle": "成功!",
+      "successPopupDescription": "数据奖励已发送到你的 ETH 钱包，请检查。",
+      "errorPopupTitle": "出错了！",
+      "errorPopupDescription": "请再尝试。"
     }
   },
   "dataPointRewards": {
