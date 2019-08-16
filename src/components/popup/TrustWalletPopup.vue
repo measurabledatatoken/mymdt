@@ -19,17 +19,24 @@
     <md-dialog-title>{{ $t('message.dataPointRewards.trustWalletRequired') }}</md-dialog-title>
     <md-dialog-content>{{ $t('message.dataPointRewards.trustWalletDescription') }}</md-dialog-content>
     <md-dialog-actions>
-      <MDTMediumButton>{{ $t('message.dataPointRewards.openTrustWallet') }}</MDTMediumButton>
+      <WebViewLink
+        :to="dappUrl"
+        external
+      >
+        <MDTMediumButton>{{ $t('message.dataPointRewards.openTrustWallet') }}</MDTMediumButton>
+      </WebViewLink>
     </md-dialog-actions>
   </md-dialog>
 </template>
 
 <script>
 import MDTMediumButton from '@/components/button/MDTMediumButton';
+import WebViewLink from '@/components/common/WebViewLink';
 
 export default {
   components: {
     MDTMediumButton,
+    WebViewLink,
   },
   props: {
     title: {
@@ -44,6 +51,11 @@ export default {
       type: String,
       default: '',
     },
+  },
+  data() {
+    return {
+      dappUrl: process.env.VUE_APP_TRUST_WALLET_DAPP_URL,
+    };
   },
   methods: {
     onClickCloseButton() {
