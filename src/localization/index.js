@@ -41,6 +41,11 @@ const dateTimeFormats = {
       timeZoneName: 'short',
       hour12: false,
     },
+    'long-date': {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    },
   },
   'zh-hk': {
     short: {
@@ -50,13 +55,18 @@ const dateTimeFormats = {
     },
     long: {
       year: 'numeric',
-      month: 'short',
+      month: 'long',
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
       timeZoneName: 'short',
       hour12: false,
+    },
+    'long-date': {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     },
   },
   'zh-cn': {
@@ -67,13 +77,18 @@ const dateTimeFormats = {
     },
     long: {
       year: 'numeric',
-      month: 'short',
+      month: 'long',
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
       timeZoneName: 'short',
       hour12: false,
+    },
+    'long-date': {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     },
   },
   numeric: {

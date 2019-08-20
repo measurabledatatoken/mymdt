@@ -2,7 +2,7 @@
   <md-button 
     :class="['md-raised', 'medium-button', {
       'medium-button-small': small
-    }]" 
+    }, { secondary: styleType === 1 }]" 
     v-bind="$attrs" 
     v-on="$listeners"
   >
@@ -21,6 +21,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    styleType: {
+      type: Number,
+      default: 0,
+    },
   },
 };
 </script>
@@ -28,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 .md-button {
   &.medium-button.md-raised {
-    height: auto;
+    height: 2.25rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
     margin: 0;
@@ -56,6 +60,11 @@ export default {
       /deep/ .md-ripple {
         padding: 0.25rem 0.5rem;
       }
+    }
+
+    &.secondary {
+      border-radius: 1rem;
+      font-weight: bold;
     }
   }
 }

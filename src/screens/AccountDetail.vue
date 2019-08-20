@@ -10,10 +10,16 @@
       </div>
     </div>
     <TransactionList/>
-    <MDTPrimaryButton 
-      :bottom="true"
-      @click="goToEarn()"
-    >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+    <div class="buttons">
+      <MDTPrimaryButton
+        :style-type="1"
+        @click="goToDataPointRewards()"
+      >{{ $t('message.dataPointRewards.dataRewards') }}</MDTPrimaryButton>
+      <MDTPrimaryButton 
+        @click="goToEarn()"
+      >{{ $t('message.home.earn_mdt') }}</MDTPrimaryButton>
+
+    </div>
   </div>
 </template>
 
@@ -82,6 +88,11 @@ export default {
         },
       });
     },
+    goToDataPointRewards() {
+      this.$router.push({
+        name: RouteDef.DataPointRewards.name,
+      });
+    },
     ...mapActions({
       fetchApplications: FETCH_APPLICATIONS,
     }),
@@ -104,6 +115,22 @@ $header-padding-top: 2rem;
       height: 80px;
       width: 100%;
       flex-shrink: 0;
+    }
+  }
+
+  .buttons {
+    position: fixed;
+    bottom: 1.5rem;
+    @include center_horizontal;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    padding: 0 8px;
+
+    .md-button {
+      flex: 1;
+      margin: 0 8px;
     }
   }
 }
