@@ -24,7 +24,10 @@
     "startOver": "重新开始",
     "total": "总计",
     "detail": "详情",
-    "other": "其他"
+    "other": "其他",
+    "earned": "已赚取",
+    "claimed": "已认领",
+    "unclaimed": "未认领"
   },
   "error": {
     "userNotExist": "用户邮箱不存在。",
@@ -310,6 +313,30 @@
         "followTelegram": "加入 Telegram 电报群"
       }
     }
+  },
+  "dataPointRewards": {
+    "dataRewards": "数据奖励",
+    "bindWithETH": "绑定您的 ETH 钱包地址",
+    "nextDataReward": "距离下次数据奖励派发还有",
+    "days": "日",
+    "hours": "小时",
+    "minutes": "分钟",
+    "seconds": "秒",
+    "trustWalletRequired": "需要 Trust Wallet",
+    "trustWalletDescription": "MyMDT 需要 Trust Wallet 才能运作。如果您尚未安装，请从 App Store 或 Google 下载。",
+    "openTrustWalletToClaim": "打开 Trust Wallet 认领",
+    "openTrustWallet": "打开 Trust Wallet",
+    "history": "记录",
+    "noDataPointReward": "沒有数据奖励",
+    "earnedOn": "在 {date} 赚取",
+    "pending": "等候中",
+    "claimable": "可认领",
+    "claimed": "已认领",
+    "expired": "已过期",
+    "distributeOn": "在 {date} 派发",
+    "dueOn": "在 {date} 过期",
+    "claimedOn": "已在 {date} 认领",
+    "expiredOn": "已在 {date} 过期"
   },
   "tutorial": {
     "get_started": "开始",
