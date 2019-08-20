@@ -1,17 +1,17 @@
 <template>
   <div class="app-view">
     <CardInExtendedHeader :title="$t('message.earnMDT.follow.formTitle')">
-      <form
+      <form 
         class="form"
         @submit.prevent="handleSubmit"
       >
         <BaseField md-clearable>
-          <md-input
+          <md-input 
             v-model="$v.code.$model"
             data-cy="code"
           />
         </BaseField>
-        <MDTMediumButton
+        <MDTMediumButton 
           :disabled="submiting || !$v.code.$dirty || $v.$anyError"
           type="submit"
         >
@@ -21,13 +21,13 @@
     </CardInExtendedHeader>
     <div class="steps">
       <h3 class="md-title">{{ stepTitle }}</h3>
-      <div
-        v-for="(step, index) in steps" 
+      <div 
+        v-for="(step, index) in steps"
         :key="`step-${index}`"
         :data-key="`step-${index}`"
         class="step"
       >
-        <component
+        <component 
           v-if="step.component"
           :is="step.component"
           class="step-description"
@@ -35,16 +35,16 @@
         <p v-else-if="step.description">
           {{ step.description }}
         </p>
-        <div
+        <div 
           v-if="step.pictureComponent || step.src"
           class="step-picture"
         >
-          <component
+          <component 
             v-if="step.pictureComponent"
             :is="step.pictureComponent"
             class="step-picture"
           />
-          <img
+          <img 
             v-else
             :src="step.src"
             :srcset="step.srcset"
@@ -140,7 +140,9 @@ export default {
               alt: 'Step 2',
             },
             {
-              description: this.$t('message.earnMDT.follow.weibo.step3'),
+              description: this.$t('message.earnMDT.follow.weibo.step3', {
+                code: this.$route.query.code,
+              }),
               src: this.$t('message.earnMDT.follow.weibo.step3Src'),
               srcset: this.$t('message.earnMDT.follow.weibo.step3Srcset'),
               alt: 'Step 3',
@@ -186,7 +188,9 @@ export default {
               alt: 'Step 3',
             },
             {
-              description: this.$t('message.earnMDT.follow.telegram.step4'),
+              description: this.$t('message.earnMDT.follow.telegram.step4', {
+                code: this.$route.query.code,
+              }),
               src: this.$t('message.earnMDT.follow.telegram.step4Src'),
               srcset: this.$t('message.earnMDT.follow.telegram.step4Srcset'),
               alt: 'Step 4',
@@ -241,21 +245,23 @@ export default {
               description: this.$t('message.earnMDT.follow.wechat.step4'),
               src: this.$t('message.earnMDT.follow.wechat.step4Src'),
               srcset: this.$t('message.earnMDT.follow.wechat.step4Srcset'),
-              alt: 'Step 3',
+              alt: 'Step 4',
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step5'),
               src: '/static/earnMDT/wechat/step-5.png',
               srcset:
                 '/static/earnMDT/wechat/step-5@2x.png 2x, /static/earnMDT/wechat/step-5@3x.png 3x',
-              alt: 'Step 3',
+              alt: 'Step 5',
             },
             {
-              description: this.$t('message.earnMDT.follow.wechat.step6'),
+              description: this.$t('message.earnMDT.follow.wechat.step6', {
+                code: this.$route.query.code,
+              }),
               src: '/static/earnMDT/wechat/step-6.png',
               srcset:
                 '/static/earnMDT/wechat/step-6@2x.png 2x, /static/earnMDT/wechat/step-6@3x.png 3x',
-              alt: 'Step 3',
+              alt: 'Step 6',
             },
             {
               description: this.$t('message.earnMDT.follow.wechat.step7'),
