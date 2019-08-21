@@ -54,15 +54,18 @@
       icon-src="/static/icons/claim-popup.svg"
       @md-confirm="onEarnClicked"
     />
-
-    <MDTPrimaryButton
-      :bottom="true"
-      :class="[' btn-earn-mdt', { 'mdt-claimable' : loginClaimableMDT > 0 }]"
-      @click="onEarnClicked"
-    >
-      <span class="btn-content">{{ $t('message.home.earn_mdt') }} </span>
-    </MDTPrimaryButton>
-
+    <div class="buttons">
+      <MDTPrimaryButton
+        :style-type="1"
+        @click="goToDataPointRewards"
+      >{{ $t('message.dataPointRewards.dataRewards') }}</MDTPrimaryButton>
+      <MDTPrimaryButton
+        :class="[' btn-earn-mdt', { 'mdt-claimable' : loginClaimableMDT > 0 }]"
+        @click="onEarnClicked"
+      >
+        <span class="btn-content">{{ $t('message.home.earn_mdt') }} </span>
+      </MDTPrimaryButton>
+    </div>
   </div>
 </template>
 
@@ -292,6 +295,11 @@ export default {
       trackEvent('Click on Earn MDT button from home page');
       this.$router.push(RouteDef.EarnMDT.path);
     },
+    goToDataPointRewards() {
+      this.$router.push({
+        name: RouteDef.DataPointRewards.name,
+      });
+    },
     formatAmount,
   },
 };
@@ -363,6 +371,23 @@ export default {
     right: -20px;
     top: 50%;
     transform: translateY(-50%);
+  }
+}
+
+.buttons {
+  position: fixed;
+  bottom: 1.5rem;
+  @include center_horizontal;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  padding: 0 8px;
+  z-index: 2;
+
+  .md-button {
+    flex: 1;
+    margin: 0 8px;
   }
 }
 </style>
