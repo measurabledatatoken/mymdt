@@ -340,6 +340,7 @@
     "noDataPointReward": "No data point reward",
     "earnedOn": "Earned on {date}",
     "pending": "Pending",
+    "processing": "Processing",
     "claimable": "Claimable",
     "claimed": "Claimed",
     "expired": "Expired",

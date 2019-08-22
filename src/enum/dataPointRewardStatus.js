@@ -1,6 +1,7 @@
 export default {
   PENDING: 1,
-  CLAIMABLE: 2,
-  CLAIMED: 3,
-  EXPIRED: 4,
+  PROCESSING: 2,
+  CLAIMABLE: 3,
+  CLAIMED: 4,
+  EXPIRED: 5,
 };
