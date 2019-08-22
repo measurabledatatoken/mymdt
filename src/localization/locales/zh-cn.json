@@ -340,6 +340,7 @@
     "noDataPointReward": "沒有数据奖励",
     "earnedOn": "在 {date} 赚取",
     "pending": "等候中",
+    "processing": "处理中",
     "claimable": "可认领",
     "claimed": "已认领",
     "expired": "已过期",
