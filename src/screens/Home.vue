@@ -385,7 +385,7 @@ export default {
   padding: 0 8px;
   z-index: 2;
 
-  .md-button {
+  .md-button.md-raised {
     flex: 1;
     margin: 0 8px;
   }
