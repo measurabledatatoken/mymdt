@@ -18,7 +18,15 @@
       </md-button>
     </div>
     <md-dialog-title>{{ title }}</md-dialog-title>
-    <md-dialog-content>{{ description }}</md-dialog-content>
+    <md-dialog-content>
+      {{ description }}
+      <a
+        v-show="!!link"
+        :href="link"
+        class="link"
+        target="_blank"
+      >{{ link }}</a>
+    </md-dialog-content>
     <md-dialog-actions>
       <MDTMediumButton @click="onClickCloseButton">{{ $t('message.earnMDT.dataPointReards.okay') }}</MDTMediumButton>
     </md-dialog-actions>
@@ -38,6 +46,10 @@ export default {
       default: '',
     },
     description: {
+      type: String,
+      default: '',
+    },
+    link: {
       type: String,
       default: '',
     },
@@ -71,6 +83,7 @@ export default {
   padding: 1.5rem 1.5rem 1rem;
 
   /deep/ .md-dialog-container {
+    max-width: 100%;
     background-color: white;
     border-radius: 8px;
   }
@@ -89,8 +102,8 @@ export default {
   margin: 0;
 }
 
-.content {
-  padding: 1.875rem 1.5rem 1rem;
+.link {
+  overflow-wrap: break-word;
 }
 
 .md-dialog-title {

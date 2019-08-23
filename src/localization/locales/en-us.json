@@ -315,6 +315,9 @@
     },
     "dataPointReards": {
       "okay": "Okay",
+      "processingPopupTitle": "Processing",
+      "processingPopupDescription1": "The transaction is processing. Please refer to following link:",
+      "processingPopupDescription2": "The transaction is processing.",
       "successPopupTitle": "Success!",
       "successPopupDescription": "The Data Point Reward is transferred to your ETH wallet. Please check your wallet.",
       "errorPopupTitle": "Oops! Something went wrong",

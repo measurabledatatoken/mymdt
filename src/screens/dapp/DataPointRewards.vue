@@ -9,6 +9,9 @@
       </div>
       <ClaimMDTInDappCard 
         :is-loading="isLoading"
+        :disabled="claimButtonDisabled || isProcessing"
+        :unclaimed="unclaimed"
+        :claimed="claimed"
         @click="onClick"
       />
       <md-dialog 
@@ -29,8 +32,10 @@
         :md-active.sync="showFinishClaimingPopup"
         :title="finishClaimingPopupTitle"
         :description="finishClaimingPopupDescription"
+        :link="finishClaimingPopupLink"
         :image-src="finishClaimingPopupImageSrc"
         :image-srcset="finishClaimingPopupImageSrcset"
+        @update:mdActive="onUpdateMdActive"
       />
     </div>
     <img 
@@ -41,12 +46,12 @@
 </template>
 
 <script>
-import lottie from 'lottie-web';
+// import lottie from 'lottie-web';
 
 import ClaimMDTInDappCard from '@/components/common/ClaimMDTInDappCard';
 import ClaimDataPointRewardsPopup from '@/components/popup/ClaimDataPointRewardsPopup';
 
-import MDTokenLockupContract from '@/dapp/contracts/MDTokenLockup.json';
+import MDTDataRewardContract from '@/dapp/contracts/MDTDataReward.json';
 import getWeb3 from '@/dapp/utils/getWeb3';
 
 export default {
@@ -56,13 +61,20 @@ export default {
   },
   data() {
     return {
+      mainAccount: '',
+      contract: null,
       isLoading: false,
+      isProcessing: false,
       showClaimingPopup: false,
       showFinishClaimingPopup: false,
       finishClaimingPopupTitle: '',
       finishClaimingPopupDescription: '',
+      finishClaimingPopupLink: '',
       finishClaimingPopupImageSrc: '',
       finishClaimingPopupImageSrcset: '',
+      unclaimed: 0,
+      claimed: 0,
+      claimButtonDisabled: true,
       anim: null,
     };
   },
@@ -81,21 +93,20 @@ export default {
 
       const networkId = await web3.eth.net.getId();
 
-      const deployedNetwork = MDTokenLockupContract.networks[networkId];
+      const deployedNetwork = MDTDataRewardContract.networks[networkId];
       if (!deployedNetwork) {
         throw new Error(`No contract deployed on current network ${networkId}`);
       }
 
       const contract = new web3.eth.Contract(
-        MDTokenLockupContract.abi,
+        MDTDataRewardContract.abi,
         deployedNetwork.address,
       );
 
-      // TODO: replace with correct contract method
-      const response = await contract.methods
-        .privateSaleTokenLockup(accounts[0])
-        .call({ from: accounts[0] });
-      console.log('response', response);
+      this.contract = contract;
+      this.mainAccount = accounts[0];
+
+      await this.loadData();
     } catch (error) {
       console.log('Failed to init Web3', error);
       this.openErrorPopup();
@@ -104,27 +115,81 @@ export default {
     this.isLoading = false;
   },
   methods: {
+    async loadData() {
+      if (this.contract) {
+        const [
+          claimableValue,
+          totalTokensClaimed,
+          canClaimRecord,
+        ] = await Promise.all([
+          this.contract.methods
+            .getClaimableValue()
+            .call({ from: this.mainAccount }),
+          this.contract.methods
+            .getTotalTokensClaimed()
+            .call({ from: this.mainAccount }),
+          this.contract.methods
+            .canClaimReward()
+            .call({ from: this.mainAccount }),
+        ]);
+
+        this.claimed = Number(totalTokensClaimed) / 1e18;
+        this.unclaimed = Number(claimableValue) / 1e18;
+        this.claimButtonDisabled = !canClaimRecord;
+      }
+    },
     async onClick() {
-      // TODO: replace with api calling
-      this.showClaimingPopup = true;
-      this.$nextTick(() => {
-        lottie.loadAnimation({
-          container: this.$refs.loading,
-          renderer: 'svg',
-          loop: true,
-          autoplay: true,
-          path: '/static/animation/mymdt-loading.json',
-        });
-      });
-      const isSuccessful = await new Promise(resolve =>
-        setTimeout(() => resolve(true), 1000),
-      );
-      this.showClaimingPopup = false;
+      this.isProcessing = true;
+
+      // this.$nextTick(() => {
+      //   lottie.loadAnimation({
+      //     container: this.$refs.loading,
+      //     renderer: 'svg',
+      //     loop: true,
+      //     autoplay: true,
+      //     path: '/static/animation/mymdt-loading.json',
+      //   });
+      // });
+
+      let isSuccessful = false;
+      try {
+        await this.contract.methods
+          .claimReward()
+          .send({ from: this.mainAccount }, params => {
+            console.log('params', params);
+            this.openProcessingPopup(params);
+          });
+
+        isSuccessful = true;
+      } catch (error) {
+        console.error('Cannot claim rewards: ', error);
+      }
+
+      // In case the pending popup is still showing
+      if (this.showFinishClaimingPopup) {
+        this.showFinishClaimingPopup = false;
+        // wait for animation finish
+        await new Promise(resolve => setTimeout(() => resolve(true), 1000));
+      }
 
       if (isSuccessful) {
         this.openSuccessPopup();
       } else {
         this.openErrorPopup();
+      }
+
+      this.isProcessing = false;
+    },
+    async onUpdateMdActive(mdActive) {
+      if (!mdActive) {
+        this.isLoading = true;
+        try {
+          await this.loadData();
+        } catch (error) {
+          console.error('Cannot reload data: ', error);
+        }
+
+        this.isLoading = false;
       }
     },
     openErrorPopup() {
@@ -146,6 +211,25 @@ export default {
       this.finishClaimingPopupDescription = this.$t(
         'message.earnMDT.dataPointReards.successPopupDescription',
       );
+      this.finishClaimingPopupImageSrc = '/static/dapp/claiming-success.jpg';
+      this.finishClaimingPopupImageSrcset =
+        '/static/dapp/claiming-success@2x.jpg 2x, /static/dapp/claiming-success@3x.jpg 3x';
+      this.showFinishClaimingPopup = true;
+    },
+    openProcessingPopup(transactionHash) {
+      this.finishClaimingPopupTitle = this.$t(
+        'message.earnMDT.dataPointReards.processingPopupTitle',
+      );
+      if (typeof transactionHash === 'string') {
+        this.finishClaimingPopupDescription = this.$t(
+          'message.earnMDT.dataPointReards.processingPopupDescription1',
+        );
+        this.finishClaimingPopupLink = `https://etherscan.io/tx/${transactionHash}`;
+      } else {
+        this.finishClaimingPopupDescription = this.$t(
+          'message.earnMDT.dataPointReards.processingPopupDescription2',
+        );
+      }
       this.finishClaimingPopupImageSrc = '/static/dapp/claiming-success.jpg';
       this.finishClaimingPopupImageSrcset =
         '/static/dapp/claiming-success@2x.jpg 2x, /static/dapp/claiming-success@3x.jpg 3x';

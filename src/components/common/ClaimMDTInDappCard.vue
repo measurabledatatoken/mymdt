@@ -16,7 +16,7 @@
       <div class="claim-button-container">
         <MDTMediumButton 
           :style-type="1"
-          :disabled="isLoading"
+          :disabled="isLoading || disabled"
           @click="onClick"
         >
           Claim All
@@ -66,6 +66,10 @@ export default {
       default: 0,
     },
     isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       default: false,
     },
