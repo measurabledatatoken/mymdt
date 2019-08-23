@@ -55,8 +55,12 @@ export default {
     },
   },
   data() {
+    const now = new Date();
+    const initialRemainingTime =
+      this.initialRemainingTime > 0 ? this.initialRemainingTime : 0;
     return {
-      remainingTime: this.initialRemainingTime,
+      nowSeconds: Math.round(now.getTime() / 1000),
+      remainingTime: initialRemainingTime,
       intervalId: null,
     };
   },
@@ -96,7 +100,11 @@ export default {
   },
   watch: {
     initialRemainingTime: function(val) {
-      this.remainingTime = val;
+      if (val > 0) {
+        const now = new Date();
+        this.nowSeconds = Math.round(now.getTime() / 1000);
+        this.remainingTime = val;
+      }
     },
   },
   beforeDestroy() {
@@ -106,8 +114,19 @@ export default {
   },
   created() {
     this.intervalId = setInterval(() => {
+      const now = new Date();
+      const nowSeconds = Math.round(now.getTime() / 1000);
+
       if (this.remainingTime > 0) {
-        this.remainingTime -= 1;
+        const nextRemainingTime =
+          this.remainingTime - (nowSeconds - this.nowSeconds);
+
+        if (nextRemainingTime > 0) {
+          this.remainingTime = nextRemainingTime;
+        } else {
+          this.remainingTime = 0;
+        }
+        this.nowSeconds = nowSeconds;
       }
     }, 1000);
   },
