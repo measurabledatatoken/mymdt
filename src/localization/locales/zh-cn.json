@@ -316,6 +316,9 @@
     "dataPointReards": {
       "okay": "Okay",
       "successPopupTitle": "成功!",
+      "processingPopupTitle": "处理中",
+      "processingPopupDescription1": "交易正在处理中。请参考以下链接：",
+      "processingPopupDescription2": "交易正在处理中。",
       "successPopupDescription": "数据奖励已发送到你的 ETH 钱包，请检查。",
       "errorPopupTitle": "出错了！",
       "errorPopupDescription": "请再尝试。"
