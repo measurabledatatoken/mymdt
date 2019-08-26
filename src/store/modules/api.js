@@ -72,7 +72,7 @@ const actions = {
      * Define `openErrorPromptForErrorCodes` to specify error prompt behavior for specific `error_code`.
      * It is expected to be an object of signature
      * {
-     *    [error_code]: false | true | 'default'
+     *    [error_code]: false | true | string | 'default'
      * }
      */
     const {
@@ -137,7 +137,17 @@ const actions = {
             break;
           }
           default: {
-            shouldOpen = !!openErrorPrompt;
+            if (
+              typeof errorPromptBehaviour === 'string' &&
+              errorPromptBehaviour != 'default'
+            ) {
+              title = {
+                messageId: errorPromptBehaviour,
+              };
+              shouldOpen = true;
+            } else {
+              shouldOpen = !!openErrorPrompt;
+            }
             break;
           }
         }
