@@ -8,6 +8,7 @@ const errorCode = {
   UnAuthorizedAccess: 104,
   InvalidExpiryTime: 105,
   APINotFound: 106,
+  ActionNotAvaliable: 107,
 
   ApplicationNotFound: 200,
   ApplicationInsufficientFund: 201,

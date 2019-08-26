@@ -53,7 +53,9 @@
     "accessCodeIsUsed": "Access Code is already used.",
     "googleAuthTokenInvalid": "Google authentication token is invalid",
     "sessionExpired": "Your session has expired",
-    "phoneNumberAlreadyBinded": "Phone number is already binded with another account"
+    "phoneNumberAlreadyBinded": "Phone number is already binded with another account",
+    "addressIsTheSame": "Provided address is the same as before",
+    "cannotSetETHAddress": "Failed to set ETH wallet address. Please try again later."
   },
   "home": {
     "total_balance": "Total Balance",
@@ -161,7 +163,9 @@
     "phoneNumber": "Phone Number",
     "setUpNow": "Set Up Now",
     "accountSecurity": "Account Security",
-    "stillNeedHelp": "Still Need Help?"
+    "stillNeedHelp": "Still Need Help?",
+    "dataPointRewards": "Data Point Rewards",
+    "ethWalletBinding": "ETH Wallet Binding"
   },
   "priceUnit": {
     "title": "Price Unit"
@@ -449,5 +453,11 @@
   },
   "maintenance": {
     "description": "Maintenance in Progress"
+  },
+  "ethBinding": {
+    "pinSetupPopupDescription": "You can bind your ETH wallet address after you set up your PIN.",
+    "notBindedYet": "Not binded yet",
+    "binded": "Binded",
+    "errorMessage": "Failed to set ETH wallet address"
   }
 }

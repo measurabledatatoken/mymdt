@@ -99,6 +99,14 @@
             @click="onPasscodeForgotClicked"
           />
           <md-divider/>
+          <setting-list-section-header class="non-top-section-header">{{ $t('message.settings.dataPointRewards') }}</setting-list-section-header>
+          <md-divider/>
+          <ETHBindingListItem
+            :disabled="!selectedUser.isPasscodeSet"
+            :binded="!!selectedUser.smartContractETHAddress"
+            @click="onETHBindingClicked"
+          />
+          <md-divider/>
         </md-list>
 
         <MDTConfirmPopup
@@ -184,6 +192,7 @@ import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
 import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import BaseSettingListItem from '@/components/setting/BaseSettingListItem';
+import ETHBindingListItem from '@/components/setting/ETHBindingListItem';
 import SettingListSectionHeader from '@/components/setting/SettingListSectionHeader';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
@@ -195,6 +204,7 @@ export default {
   components: {
     BaseUserSettingPage,
     BaseSettingListItem,
+    ETHBindingListItem,
     SettingListSectionHeader,
     MDTConfirmPopup,
     PinCodeInputPopup,
@@ -433,6 +443,20 @@ export default {
       }
       this.showPinCodeInput = true;
     },
+    onETHBindingClicked() {
+      trackEvent('Click on ETH Binding');
+      if (!this.selectedUser.isPasscodeSet) {
+        this.pinSetupPopupDescription = this.$t(
+          'message.ethBinding.pinSetupPopupDescription',
+        );
+        this.showSetPinDialog = true;
+        return;
+      }
+
+      this.pinCodePopupTitle = this.$t('message.passcode.pin_popup_title');
+      this.nextRouteNameAfterPINFilled = RouteDef.ETHBinding.name;
+      this.showPinCodeInput = true;
+    },
   },
 };
 </script>
@@ -442,5 +466,9 @@ export default {
   /deep/ .md-dialog-content {
     font-size: 14px;
   }
+}
+
+.non-top-section-header {
+  margin-top: 24px;
 }
 </style>
