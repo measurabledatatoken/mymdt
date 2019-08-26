@@ -44,12 +44,6 @@ export default {
   text-transform: none;
   min-height: 3rem;
 
-  &[disabled] {
-    background-color: $bluebtn-backgroundcolor-disabled;
-    color: $bluebtn-wordcolor-disabled;
-    box-shadow: none;
-  }
-
   &:active {
     box-shadow: none;
   }
@@ -62,6 +56,12 @@ export default {
   &.white {
     background-color: white;
     color: black;
+  }
+
+  &[disabled] {
+    background-color: $bluebtn-backgroundcolor-disabled;
+    color: $bluebtn-wordcolor-disabled;
+    box-shadow: none;
   }
 
   &.primary--bottom {
