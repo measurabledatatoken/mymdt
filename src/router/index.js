@@ -65,6 +65,8 @@ const GoogleAuthSettingStep3 = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep3');
 const DisableGoogleAuthVerifyPage = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/DisableGoogleAuthVerifyPage');
+const ETHBinding = () =>
+  import(/* webpackChunkName: "ETH binding" */ '@/screens/setting/ETHBinding');
 /**
  *  example code to fail async loading of route
  * 
@@ -286,6 +288,11 @@ const router = new Router({
           name:
             RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.name,
           component: DisableTwoFactorAuthenticationVerifyGoogleAuthPage,
+        },
+        {
+          path: RouteDef.ETHBinding.path,
+          name: RouteDef.ETHBinding.name,
+          component: ETHBinding,
         },
         // Route to Home page for route not defined
         {

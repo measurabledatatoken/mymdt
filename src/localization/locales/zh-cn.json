@@ -53,7 +53,9 @@
     "accessCodeIsUsed": "代码已被使用。",
     "googleAuthTokenInvalid": "谷歌身份验证令牌无效",
     "sessionExpired": "您的使用期限已过",
-    "phoneNumberAlreadyBinded": "电话号码已与另一个帐户绑定"
+    "phoneNumberAlreadyBinded": "电话号码已与另一个帐户绑定",
+    "addressIsTheSame": "ETH 钱包地址与之前所用的相同。",
+    "cannotSetETHAddress": "设定失败，请稍后再试。"
   },
   "home": {
     "total_balance": "总积分",
@@ -161,7 +163,9 @@
     "phoneNumber": "电话号码",
     "setUpNow": "现在设定",
     "accountSecurity": "账号安全",
-    "stillNeedHelp": "仍需要帮助?"
+    "stillNeedHelp": "仍需要帮助?",
+    "dataPointRewards": "数据奖励",
+    "ethWalletBinding": "ETH 钱包地址绑定"
   },
   "priceUnit": {
     "title": "价格单位"
@@ -449,5 +453,11 @@
   },
   "maintenance": {
     "description": "维护进行中"
+  },
+  "ethBinding": {
+    "pinSetupPopupDescription": "您可以在设置 PIN 码后绑定 ETH 钱包地址",
+    "notBindedYet": "未绑定",
+    "binded": "已绑定",
+    "errorMessage": "设定失败"
   }
 }

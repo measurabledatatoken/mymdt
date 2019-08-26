@@ -102,6 +102,10 @@ const RouteDef = {
     path: '/home/settings/pincode/forgot',
     name: 'pinCodeForgot',
   },
+  ETHBinding: {
+    path: '/home/settings/eth-binding',
+    name: 'ETHBinding',
+  },
 };
 
 const ExitFromWalletWebviewURL = 'mdtwallet://exit';
