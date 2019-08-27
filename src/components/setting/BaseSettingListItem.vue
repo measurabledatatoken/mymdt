@@ -15,6 +15,7 @@
     >
       <slot name="action-data" />
       <md-icon 
+        v-if="!!$listeners.click"
         class="action-icon" 
         md-src="/static/icons/setting-arrow-gray.svg"
       />

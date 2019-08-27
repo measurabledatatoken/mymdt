@@ -101,6 +101,17 @@
           <md-divider/>
           <setting-list-section-header class="non-top-section-header">{{ $t('message.settings.dataPointRewards') }}</setting-list-section-header>
           <md-divider/>
+          <base-setting-list-item :title="$t('message.settings.dataSharing')">
+            <template 
+              slot="action-data"
+            >
+              <md-switch 
+                :value="dataSharingEnableForApp"
+                @change="onDataSharingSwitchChanged"
+              />
+            </template>
+          </base-setting-list-item>
+          <md-divider/>
           <ETHBindingListItem
             :disabled="!selectedUser.isPasscodeSet"
             :binded="!!selectedUser.smartContractETHAddress"
@@ -177,7 +188,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions, mapState } from 'vuex';
 import { trackEvent } from '@/utils';
 import { RouteDef } from '@/constants';
 import {
@@ -187,6 +198,7 @@ import {
   REQUEST_VERIFICATION_CODE,
   SET_PIN_FOR_SECURITY,
 } from '@/store/modules/security';
+import { SET_DATA_SHARING } from '@/store/modules/dataSharing';
 import { SET_SELECTED_USER } from '@/store/modules/home';
 import SetupPINMode from '@/enum/setupPINMode';
 import BasePage from '@/screens/BasePage';
@@ -231,6 +243,10 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      appID: state => state.home.appID,
+      appConfig: state => state.home.appConfig,
+    }),
     ...mapGetters({
       selectedUser: 'getSelectedUser',
       getUser: 'getUser',
@@ -246,6 +262,16 @@ export default {
       return (
         !this.selectedUser.isPhoneConfirmed && this.selectedUser.isPasscodeSet
       );
+    },
+    dataSharingEnableForApp() {
+      const enabled = this.selectedUser.userDataShares.some(
+        userDataShare =>
+          userDataShare.application_id === this.appID &&
+          !!userDataShare.is_data_sharing,
+      );
+
+      // return negated value due to how md-switch works without v-model
+      return !enabled;
     },
   },
   created() {
@@ -264,6 +290,7 @@ export default {
     ...mapActions({
       validatePIN: VALIDATE_PIN,
       requestVerificationCode: REQUEST_VERIFICATION_CODE,
+      setDataSharing: SET_DATA_SHARING,
     }),
     onSetupPINClicked() {
       trackEvent('Click on PIN');
@@ -442,6 +469,10 @@ export default {
           break;
       }
       this.showPinCodeInput = true;
+    },
+    onDataSharingSwitchChanged(event) {
+      trackEvent('Click on data sharing');
+      this.setDataSharing(event);
     },
     onETHBindingClicked() {
       trackEvent('Click on ETH Binding');

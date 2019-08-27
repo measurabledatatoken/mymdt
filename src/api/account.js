@@ -46,6 +46,7 @@ export default {
           ethWalletAddress: user.eth_wallet_address,
           mdtBalance: user.mdtbalance,
           isWalletEnabled: user.is_wallet_enabled,
+          userDataShares: user.user_data_shares || [],
           smartContractETHAddress: user.smart_contract_eth_address,
           accessToken: userCredential ? userCredential.access_token : '',
         };
@@ -83,6 +84,7 @@ export default {
         ethWalletAddress: user.eth_wallet_address,
         mdtBalance: user.mdtbalance,
         isWalletEnabled: user.is_wallet_enabled,
+        userDataShares: user.user_data_shares || [],
         smartContractETHAddress: user.smart_contract_eth_address,
         accessToken,
       };
@@ -93,6 +95,17 @@ export default {
   reportProblem(appId, payload, accessToken) {
     const promise = axios.post(
       `${APIScheme}://${APIEndPoint}/user/apps/${appId}/problems`,
+      payload,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+
+    return handleGeneralResponse(promise);
+  },
+  setDataSharing(payload, accessToken) {
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/user/data-share`,
       payload,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
