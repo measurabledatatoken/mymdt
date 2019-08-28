@@ -312,6 +312,16 @@
         "failureDescription": "請你依照教學加入電報群，然後獲取魔法口令。",
         "followTelegram": "加入 Telegram 電報群"
       }
+    },
+    "dataPointReards": {
+      "okay": "Okay",
+      "successPopupTitle": "成功!",
+      "processingPopupTitle": "處理中",
+      "processingPopupDescription1": "交易正在處理中。請參考以下鏈接：",
+      "processingPopupDescription2": "交易正在處理中。",
+      "successPopupDescription": "數據獎勵已發送到你的 ETH 錢包，請檢查。",
+      "errorPopupTitle": "出錯了！",
+      "errorPopupDescription": "請再嘗試。"
     }
   },
   "dataPointRewards": {
