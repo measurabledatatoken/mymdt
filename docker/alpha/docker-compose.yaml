@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.1"
 
 services:
   mdtwallet-webapp:
@@ -9,6 +9,8 @@ services:
     networks:
       - mdtwallet-webapp
     restart: always
+    environment:
+      VUE_APP_TRUST_WALLET_DAPP_URL: https://link.trustwallet.com/open_url?coin_id=60&url=https://mymdt-alpha.measurable.ai:8443/dapp/data-point-rewards
 
 networks:
   mdtwallet-webapp:
