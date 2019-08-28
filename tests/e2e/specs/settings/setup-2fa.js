@@ -68,6 +68,7 @@ describe('Setup Google Authenticator', () => {
 
   it('can enable google authenticator', () => {
     enable2FA();
+    cy.wait('@enable2fa');
     backToUserSetting();
     cy.get('[data-cy="setting-setup-2fa"]')
       .find('[data-cy="icon-complete"]')
@@ -79,6 +80,7 @@ describe('Setup Google Authenticator', () => {
     enable2FA('sms');
     disable2FA();
     cy.inputSMSVerificationCode();
+    cy.wait('@disable2fa');
     backToUserSetting();
     cy.get('[data-cy="setting-setup-2fa"]')
       .find('[data-cy="icon-complete"]')
@@ -90,6 +92,7 @@ describe('Setup Google Authenticator', () => {
     enable2FA('google');
     disable2FA();
     cy.inputGoogleAuthVerificationCode();
+    cy.wait('@disable2fa');
     backToUserSetting();
     cy.get('[data-cy="setting-setup-2fa"]')
       .find('[data-cy="icon-complete"]')
