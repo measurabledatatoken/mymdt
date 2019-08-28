@@ -297,7 +297,7 @@ export default {
     },
     goToDataPointRewards() {
       this.$router.push({
-        name: RouteDef.DataPointRewards.name,
+        name: RouteDef.DataPointRewardListing.name,
       });
     },
     formatAmount,

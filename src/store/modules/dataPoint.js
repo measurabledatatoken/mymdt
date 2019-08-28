@@ -35,8 +35,8 @@ const state = {
 };
 
 const moduleGetters = {
-  getDataPointRewards: state => userId =>
-    (state.byUserId[userId] && state.byUserId[userId].data) || null,
+  getDataPointRewardIdsByUser: state => userId =>
+    (state.byUserId[userId] && state.byUserId[userId].ids) || [],
   getDataPointConfig: state => userId =>
     (state.byUserId[userId] && state.byUserId[userId].config) || {},
   getDataPointSummary: state => userId =>
@@ -47,20 +47,25 @@ const moduleGetters = {
 
 const mutations = {
   [FETCHING_DATA_POINT_REWARDS_SUCCESS](state, payload) {
-    const { data, userId, meta, cursorDirection } = payload;
+    const {
+      data: { result },
+      userId,
+      meta,
+      cursorDirection,
+    } = payload;
 
     const existingData =
-      (state.byUserId[userId] && state.byUserId[userId].data) || [];
+      (state.byUserId[userId] && state.byUserId[userId].ids) || [];
 
     const existingCursors = moduleGetters.getDataPointRewardCursors(state)(
       userId,
     );
 
-    let newData = data;
+    let newIds = result;
     let newCursors = (meta && meta.paging && meta.paging.cursors) || {};
 
     if (cursorDirection === 'before') {
-      newData = [...data, ...existingData];
+      newIds = [...result, ...existingData];
       if (existingCursors && newCursors && newCursors.before) {
         newCursors = {
           ...existingCursors,
@@ -70,7 +75,7 @@ const mutations = {
         newCursors = existingCursors;
       }
     } else if (cursorDirection === 'after') {
-      newData = [...existingData, ...data];
+      newIds = [...existingData, ...result];
       if (existingCursors && newCursors && newCursors.after) {
         newCursors = {
           ...existingCursors,
@@ -85,7 +90,7 @@ const mutations = {
       ...state.byUserId,
       [userId]: {
         ...state.byUserId[userId],
-        data: newData,
+        ids: newIds,
         cursors: newCursors,
       },
     };
