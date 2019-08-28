@@ -247,7 +247,8 @@
         "UberReceiptType": "Uber 收據",
         "LyftReceiptType": "Lyft 收據",
         "GrabReceiptType": "Grab 收據"
-      }
+      },
+      "reachMaximumRemark": "*每月最多能賺取 {amount}。"
     },
     "redeemTitle": "你有 MDT 的兌換代碼？",
     "redeem": "兌換",
