@@ -43,9 +43,13 @@
 
 <script>
 import PinCodeField from '@/components/common/PinCodeField';
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import { RouteDef } from '@/constants';
-import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
+import {
+  SET_PIN_FOR_SECURITY,
+  SET_DONE_CALLBACK_PATH,
+  VALIDATE_PIN,
+} from '@/store/modules/security';
 
 export default {
   components: {
@@ -63,6 +67,10 @@ export default {
     callbackPath: {
       type: String,
       default: '',
+    },
+    autoValidate: {
+      default: false,
+      type: Boolean,
     },
   },
   data() {
@@ -84,13 +92,28 @@ export default {
   methods: {
     ...mapMutations({
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
+      setPinForSecuirty: SET_PIN_FOR_SECURITY,
+    }),
+    ...mapActions({
+      validatePIN: VALIDATE_PIN,
     }),
     setInvalid() {
       this.$refs.pinCodeField.setInvalid();
       this.shouldShake = true;
     },
-    onCodeFilled(pinCode) {
+    async onCodeFilled(pinCode) {
       this.shouldShake = false;
+      if (this.autoValidate) {
+        try {
+          await this.validatePIN(pinCode);
+          this.setPinForSecuirty(pinCode);
+        } catch (error) {
+          console.error(`error in validating: ${error.message}`);
+          this.setInvalid();
+          return;
+        }
+      }
+
       this.$emit('codefilled', pinCode);
     },
     onMDOpened() {
