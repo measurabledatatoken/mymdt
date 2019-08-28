@@ -71,9 +71,10 @@
           </template>
           <template v-if="!rewardsUiState.isFetching && rewards && rewards.length > 0">
             <template v-for="(item, index) in rewards">
-              <div 
+              <md-list-item
                 :key="index" 
                 class="history-item"
+                @click="onItemClick(item.id)"
               >
                 <div class="history-item-section">
                   <div class="section-title">{{ getItemTitle(item.start_date) }}</div>
@@ -90,7 +91,8 @@
                     }]"
                   >{{ getStatusText(item.status) }}</div>
                 </div>
-              </div>
+                <!-- <span>testing</span> -->
+              </md-list-item>
               <hr 
                 :key="`hr-${index}`" 
                 class="history-line"
@@ -189,8 +191,9 @@ export default {
     }),
     ...mapGetters({
       selectedUser: 'getSelectedUser',
-      getDataPointConfig: 'getDataPointConfig',
       getDataPointRewards: 'getDataPointRewards',
+      getDataPointRewardIdsByUser: 'getDataPointRewardIdsByUser',
+      getDataPointConfig: 'getDataPointConfig',
       getDataPointSummary: 'getDataPointSummary',
       getDataPointRewardsUiState: 'getDataPointRewardsUiState',
       getDataPointConfigUiState: 'getDataPointConfigUiState',
@@ -198,7 +201,9 @@ export default {
       allUsers: 'getAllUsers',
     }),
     rewards() {
-      return this.getDataPointRewards(this.selectedUser.emailAddress);
+      return this.getDataPointRewards(
+        this.getDataPointRewardIdsByUser(this.selectedUser.emailAddress),
+      );
     },
     config() {
       return this.getDataPointConfig(this.selectedUser.emailAddress);
@@ -374,6 +379,12 @@ export default {
         name: RouteDef.ETHBinding.name,
       });
     },
+    onItemClick(id) {
+      this.$router.push({
+        name: RouteDef.DataPointRewardDetailNew.name,
+        params: { userId: this.selectedUser.emailAddress, rewardId: id },
+      });
+    },
   },
 };
 </script>
@@ -468,7 +479,7 @@ hr {
   }
 
   .history-section-line {
-    margin: 0.5rem 1rem 1rem 1rem;
+    margin: 0.5rem 1rem 0rem 1rem;
   }
 
   .history-section-title {
@@ -480,7 +491,7 @@ hr {
   }
 
   .history-line {
-    margin: 1rem 0;
+    margin: 0;
   }
 
   .history-section-main {
@@ -493,6 +504,10 @@ hr {
   display: flex;
   justify-content: space-between;
 
+  /deep/ .md-list-item-content {
+    padding: 1rem 0;
+  }
+
   .history-item-section {
     .section-title {
       font-size: 1rem;
@@ -503,6 +518,7 @@ hr {
     .section-description {
       font-size: 0.75rem;
       color: #9b9b9b;
+      text-align: right;
     }
 
     &:first-child {

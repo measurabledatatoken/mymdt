@@ -1,7 +1,11 @@
 import axios from 'axios';
+import { schema } from 'normalizr';
 
 import handleGeneralResponse from './helper';
 import { APIEndPoint, APIScheme } from './constants';
+
+const dataPointRewardSchema = new schema.Entity('dataPointRewards');
+const dataPointRewardsSchema = [dataPointRewardSchema];
 
 export default {
   getRewards(accessToken, paginationOptions = {}) {
@@ -21,6 +25,7 @@ export default {
 
     return handleGeneralResponse(promise, {
       includeMeta: true,
+      schema: dataPointRewardsSchema,
     });
   },
   getConfig(appId, accessToken) {
