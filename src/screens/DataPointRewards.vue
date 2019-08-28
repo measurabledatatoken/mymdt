@@ -40,8 +40,9 @@
         </template>
       </ClaimMDTCard>
       <md-button 
-        v-show="false" 
+        v-show="!selectedUser.smartContractETHAddress" 
         class="bind-button"
+        @click="onBindingButtonClick"
       >
         <div class="bind-button-content">
           <div class="bind-button-content-left">
@@ -104,6 +105,11 @@
       </div>
     </pull-to>
     <TrustWalletPopup :md-active.sync="showTrustWalletPopup" />
+    <PinCodePopup
+      :md-active.sync="showPinCode"
+      :pin-setup-content="$t('message.ethBinding.pinSetupPopupDescription')"
+      @codefilled="onPinCodeFilled"
+    />
   </div>
 </template>
 
@@ -122,6 +128,7 @@ import MDTMediumButton from '@/components/button/MDTMediumButton';
 import TrustWalletPopup from '@/components/popup/TrustWalletPopup';
 import RewardLoadingItem from '@/components/dataPointRewards/RewardLoadingItem';
 import ListEmptyItem from '@/components/common/ListEmptyItem';
+import PinCodePopup from '@/components/popup/PinCodePopup';
 
 import {
   FETCH_DATA_POINT_REWARDS,
@@ -131,6 +138,7 @@ import {
 import { SET_SELECTED_USER } from '@/store/modules/home';
 import { trackEvent, formatAmount } from '@/utils';
 import dataPointRewardStatus from '@/enum/dataPointRewardStatus';
+import { RouteDef } from '@/constants';
 
 export default {
   components: {
@@ -144,6 +152,7 @@ export default {
     TrustWalletPopup,
     RewardLoadingItem,
     ListEmptyItem,
+    PinCodePopup,
   },
   extends: BasePage,
   metaInfo() {
@@ -156,6 +165,7 @@ export default {
       dataPointRewardStatus,
       numberOfItemsPerPage: 5,
       showTrustWalletPopup: false,
+      showPinCode: false,
       PULLTO_TOP_CONFIG: {
         pullText: this.$t('message.transaction.listing.pullDownText'),
         triggerText: this.$t('message.transaction.listing.triggerText'),
@@ -356,6 +366,14 @@ export default {
         trailing: false,
       },
     ),
+    onBindingButtonClick() {
+      this.showPinCode = true;
+    },
+    onPinCodeFilled() {
+      this.$router.push({
+        name: RouteDef.ETHBinding.name,
+      });
+    },
   },
 };
 </script>
