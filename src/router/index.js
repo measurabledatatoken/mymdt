@@ -69,7 +69,7 @@ const GoogleAuthSettingStep3 = () =>
 const DisableGoogleAuthVerifyPage = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/DisableGoogleAuthVerifyPage');
 const ETHBinding = () =>
-  import(/* webpackChunkName: "ETH binding" */ '@/screens/setting/ETHBinding');
+  import(/* webpackChunkName: "eth-binding" */ '@/screens/setting/ETHBinding');
 /**
  *  example code to fail async loading of route
  * 
