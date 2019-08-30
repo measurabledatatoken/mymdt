@@ -1,37 +1,37 @@
 <template>
   <div class="rewards-container">
     <padded-container class="account-selector-container">
-      <AccountSelector 
-        :accounts="allUsers" 
-        :selected-account="selectedUser" 
+      <AccountSelector
+        :accounts="allUsers"
+        :selected-account="selectedUser"
         @accountSelected="onAccountSelected"
       />
     </padded-container>
     <md-divider />
     <pull-to
       ref="rewardHistoryContainer"
-      :top-load-method="topLoad" 
-      :bottom-load-method="bottomLoad" 
+      :top-load-method="topLoad"
+      :bottom-load-method="bottomLoad"
       :top-config="PULLTO_TOP_CONFIG"
       :bottom-config="PULLTO_BOTTOM_CONFIG"
       @infinite-scroll="getOldDataPointRewards"
     >
-      <ClaimMDTCard 
+      <ClaimMDTCard
         :is-loading="summaryUiState.isFetching && Object.keys(summary).length === 0"
-        :unclaimed="unclaimed" 
+        :unclaimed="unclaimed"
         :earned="earned"
-        :claimed="claimed" 
+        :claimed="claimed"
       >
         <template slot="header-caption">
           <div class="trust-wallet-button-container">
-            <MDTMediumButton 
+            <MDTMediumButton
               :style-type="1"
               class="trust-wallet-button"
               @click="handleClickTrustWalletButton"
             >
               <img
                 class="header-caption-icon"
-                src="/static/icons/logo-trust-wallet.svg" 
+                src="/static/icons/logo-trust-wallet.svg"
                 alt="Trust Wallet"
               >
               {{ $t('message.dataPointRewards.openTrustWalletToClaim') }}
@@ -40,12 +40,13 @@
         </template>
       </ClaimMDTCard>
       <md-button 
-        v-show="false"
+        v-show="!selectedUser.smartContractETHAddress" 
         class="bind-button"
+        @click="onBindingButtonClick"
       >
         <div class="bind-button-content">
           <div class="bind-button-content-left">
-            <md-icon md-src="/static/icons/ic-info.svg"/>
+            <md-icon md-src="/static/icons/ic-info.svg" />
             {{ $t('message.dataPointRewards.bindWithETH') }}
           </div>
           <img 
@@ -54,16 +55,14 @@
           >
         </div>
       </md-button>
-      <CountdownCard 
+      <CountdownCard
         :is-loading="configUiState.isFetching && Object.keys(config).length === 0"
-        :initial-remaining-time="config.time_left" 
+        :initial-remaining-time="config.time_left"
         :total-time="config.time_length"
       />
       <div class="history-section">
-        <h3 class="md-caption history-section-title">
-          {{ $t('message.dataPointRewards.history') }}
-        </h3>
-        <hr class="history-section-line">
+        <h3 class="md-caption history-section-title">{{ $t('message.dataPointRewards.history') }}</h3>
+        <hr class="history-section-line" >
         <md-list class="history-section-main">
           <template v-if="rewardsUiState.isFetching">
             <template v-for="n in 4">
@@ -72,27 +71,28 @@
           </template>
           <template v-if="!rewardsUiState.isFetching && rewards && rewards.length > 0">
             <template v-for="(item, index) in rewards">
-              <div
-                :key="index"
+              <md-list-item
+                :key="index" 
                 class="history-item"
+                @click="onItemClick(item.id)"
               >
                 <div class="history-item-section">
-                  <div class="section-title">
-                    {{ getItemTitle(item.start_date) }}
-                  </div>
-                  <div class="section-description">
-                    {{ getItemDate(item.status, item.claimed_date, item.expiry_time) }}
-                  </div>
+                  <div class="section-title">{{ getItemTitle(item.start_date) }}</div>
+                  <div
+                    class="section-description"
+                  >{{ getItemDate(item.status, item.claimed_date, item.expiry_time) }}</div>
                 </div>
                 <div class="history-item-section">
-                  <div class="section-title">
-                    {{ getAmount(item.value) }}
-                  </div>
-                  <div :class="['section-description', 'item-status', { pending: item.status === dataPointRewardStatus.PENDING, claimable: item.status === dataPointRewardStatus.CLAIMABLE }]">
-                    {{ getStatusText(item.status) }}
-                  </div>
+                  <div class="section-title">{{ getAmount(item.value) }}</div>
+                  <div
+                    :class="['section-description', 'item-status', {
+                      pending: item.status === dataPointRewardStatus.PENDING || dataPointRewardStatus.PROCESSING,
+                      claimable: item.status === dataPointRewardStatus.CLAIMABLE
+                    }]"
+                  >{{ getStatusText(item.status) }}</div>
                 </div>
-              </div>
+                <!-- <span>testing</span> -->
+              </md-list-item>
               <hr 
                 :key="`hr-${index}`" 
                 class="history-line"
@@ -107,6 +107,11 @@
       </div>
     </pull-to>
     <TrustWalletPopup :md-active.sync="showTrustWalletPopup" />
+    <PinCodePopup
+      :md-active.sync="showPinCode"
+      :pin-setup-content="$t('message.ethBinding.pinSetupPopupDescription')"
+      @codefilled="onPinCodeFilled"
+    />
   </div>
 </template>
 
@@ -125,6 +130,7 @@ import MDTMediumButton from '@/components/button/MDTMediumButton';
 import TrustWalletPopup from '@/components/popup/TrustWalletPopup';
 import RewardLoadingItem from '@/components/dataPointRewards/RewardLoadingItem';
 import ListEmptyItem from '@/components/common/ListEmptyItem';
+import PinCodePopup from '@/components/popup/PinCodePopup';
 
 import {
   FETCH_DATA_POINT_REWARDS,
@@ -134,6 +140,7 @@ import {
 import { SET_SELECTED_USER } from '@/store/modules/home';
 import { trackEvent, formatAmount } from '@/utils';
 import dataPointRewardStatus from '@/enum/dataPointRewardStatus';
+import { RouteDef } from '@/constants';
 
 export default {
   components: {
@@ -147,6 +154,7 @@ export default {
     TrustWalletPopup,
     RewardLoadingItem,
     ListEmptyItem,
+    PinCodePopup,
   },
   extends: BasePage,
   metaInfo() {
@@ -159,6 +167,7 @@ export default {
       dataPointRewardStatus,
       numberOfItemsPerPage: 5,
       showTrustWalletPopup: false,
+      showPinCode: false,
       PULLTO_TOP_CONFIG: {
         pullText: this.$t('message.transaction.listing.pullDownText'),
         triggerText: this.$t('message.transaction.listing.triggerText'),
@@ -182,8 +191,9 @@ export default {
     }),
     ...mapGetters({
       selectedUser: 'getSelectedUser',
-      getDataPointConfig: 'getDataPointConfig',
       getDataPointRewards: 'getDataPointRewards',
+      getDataPointRewardIdsByUser: 'getDataPointRewardIdsByUser',
+      getDataPointConfig: 'getDataPointConfig',
       getDataPointSummary: 'getDataPointSummary',
       getDataPointRewardsUiState: 'getDataPointRewardsUiState',
       getDataPointConfigUiState: 'getDataPointConfigUiState',
@@ -191,7 +201,9 @@ export default {
       allUsers: 'getAllUsers',
     }),
     rewards() {
-      return this.getDataPointRewards(this.selectedUser.emailAddress);
+      return this.getDataPointRewards(
+        this.getDataPointRewardIdsByUser(this.selectedUser.emailAddress),
+      );
     },
     config() {
       return this.getDataPointConfig(this.selectedUser.emailAddress);
@@ -256,7 +268,8 @@ export default {
     },
     getItemDate(status, claimedDateStr, expiryStr) {
       switch (status) {
-        case dataPointRewardStatus.PENDING: {
+        case dataPointRewardStatus.PENDING:
+        case dataPointRewardStatus.PROCESSING: {
           if (!this.config.last_distribute_date) {
             return '';
           }
@@ -295,6 +308,9 @@ export default {
       switch (status) {
         case dataPointRewardStatus.PENDING: {
           return this.$t('message.dataPointRewards.pending');
+        }
+        case dataPointRewardStatus.PROCESSING: {
+          return this.$t('message.dataPointRewards.processing');
         }
         case dataPointRewardStatus.CLAIMABLE: {
           return this.$t('message.dataPointRewards.claimable');
@@ -355,6 +371,20 @@ export default {
         trailing: false,
       },
     ),
+    onBindingButtonClick() {
+      this.showPinCode = true;
+    },
+    onPinCodeFilled() {
+      this.$router.push({
+        name: RouteDef.ETHBinding.name,
+      });
+    },
+    onItemClick(id) {
+      this.$router.push({
+        name: RouteDef.DataPointRewardDetailNew.name,
+        params: { userId: this.selectedUser.emailAddress, rewardId: id },
+      });
+    },
   },
 };
 </script>
@@ -449,7 +479,7 @@ hr {
   }
 
   .history-section-line {
-    margin: 0.5rem 1rem 1rem 1rem;
+    margin: 0.5rem 1rem 0rem 1rem;
   }
 
   .history-section-title {
@@ -461,7 +491,7 @@ hr {
   }
 
   .history-line {
-    margin: 1rem 0;
+    margin: 0;
   }
 
   .history-section-main {
@@ -474,6 +504,10 @@ hr {
   display: flex;
   justify-content: space-between;
 
+  /deep/ .md-list-item-content {
+    padding: 1rem 0;
+  }
+
   .history-item-section {
     .section-title {
       font-size: 1rem;
@@ -484,6 +518,7 @@ hr {
     .section-description {
       font-size: 0.75rem;
       color: #9b9b9b;
+      text-align: right;
     }
 
     &:first-child {

@@ -7,13 +7,17 @@ const RouteDef = {
   TransactionHistory: { path: '/account/:id/transactionhistory' },
   Home: { path: '/' },
   Settings: { path: '/home/settings' },
-  DataPointRewards: {
+  DataPointRewardListing: {
     path: '/home/data-point-rewards',
     name: 'data-point-rewards',
   },
   DataPointRewardDetail: {
     path: '/account/:userId/datapointreward/:rewardId',
     name: 'DataPointRewardDetail',
+  },
+  DataPointRewardDetailNew: {
+    path: '/account/:userId/data-point-rewards/:rewardId',
+    name: 'DataPointRewardDetailNew',
   },
   UserSettings: {
     path: '/home/usersettings/:account_id',
@@ -101,6 +105,10 @@ const RouteDef = {
   PinCodeForgot: {
     path: '/home/settings/pincode/forgot',
     name: 'pinCodeForgot',
+  },
+  ETHBinding: {
+    path: '/home/settings/eth-binding',
+    name: 'ETHBinding',
   },
 };
 

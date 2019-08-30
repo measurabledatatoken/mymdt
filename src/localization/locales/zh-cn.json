@@ -53,7 +53,9 @@
     "accessCodeIsUsed": "代码已被使用。",
     "googleAuthTokenInvalid": "谷歌身份验证令牌无效",
     "sessionExpired": "您的使用期限已过",
-    "phoneNumberAlreadyBinded": "电话号码已与另一个帐户绑定"
+    "phoneNumberAlreadyBinded": "电话号码已与另一个帐户绑定",
+    "addressIsTheSame": "ETH 钱包地址与之前所用的相同。",
+    "cannotSetETHAddress": "设定失败，请稍后再试。"
   },
   "home": {
     "total_balance": "总积分",
@@ -161,7 +163,10 @@
     "phoneNumber": "电话号码",
     "setUpNow": "现在设定",
     "accountSecurity": "账号安全",
-    "stillNeedHelp": "仍需要帮助?"
+    "stillNeedHelp": "仍需要帮助?",
+    "dataPointRewards": "数据奖励",
+    "dataSharing": "数据分享",
+    "ethWalletBinding": "ETH 钱包地址绑定"
   },
   "priceUnit": {
     "title": "价格单位"
@@ -242,7 +247,8 @@
         "UberReceiptType": "Uber 收据",
         "LyftReceiptType": "Lyft 收据",
         "GrabReceiptType": "Grab 收据"
-      }
+      },
+      "reachMaximumRemark": "*每月最多能赚取 {amount}。"
     },
     "redeemTitle": "你有 MDT 的兑换代码？",
     "redeem": "兑换",
@@ -340,6 +346,7 @@
     "noDataPointReward": "沒有数据奖励",
     "earnedOn": "在 {date} 赚取",
     "pending": "等候中",
+    "processing": "处理中",
     "claimable": "可认领",
     "claimed": "已认领",
     "expired": "已过期",
@@ -448,5 +455,11 @@
   },
   "maintenance": {
     "description": "维护进行中"
+  },
+  "ethBinding": {
+    "pinSetupPopupDescription": "您可以在设置 PIN 码后绑定 ETH 钱包地址",
+    "notBindedYet": "未绑定",
+    "binded": "已绑定",
+    "errorMessage": "设定失败"
   }
 }

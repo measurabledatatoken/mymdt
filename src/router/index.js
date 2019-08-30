@@ -14,8 +14,11 @@ const ForgetPassword = () => import('@/screens/ForgetPassword');
 const Settings = () => import('@/screens/setting/Settings');
 const UserSettings = () => import('@/screens/setting/UserSettings');
 const PriceUnits = () => import('@/screens/setting/PriceUnits');
-const DataPointRewards = () => import('@/screens/DataPointRewards');
+const DataPointRewardListing = () =>
+  import('@/screens/dataPointReward/DataPointRewardListing');
 const DataPointRewardDetail = () => import('@/screens/reward/DataPointDetail');
+const DataPointRewardDetailNew = () =>
+  import('@/screens/dataPointReward/DataPointRewardDetail');
 const ReportProblem = () =>
   import(/* webpackChunkName: "report-problem" */ '@/screens/setting/ReportProblem');
 const ReportProblemSuccess = () =>
@@ -65,6 +68,8 @@ const GoogleAuthSettingStep3 = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/GoogleAuthSettingStep3');
 const DisableGoogleAuthVerifyPage = () =>
   import(/* webpackChunkName: "google-auth" */ '@/screens/googleAuth/DisableGoogleAuthVerifyPage');
+const ETHBinding = () =>
+  import(/* webpackChunkName: "ETH binding" */ '@/screens/setting/ETHBinding');
 /**
  *  example code to fail async loading of route
  * 
@@ -120,14 +125,20 @@ const router = new Router({
           component: Settings,
         },
         {
-          path: RouteDef.DataPointRewards.path,
-          name: RouteDef.DataPointRewards.name,
-          component: DataPointRewards,
+          path: RouteDef.DataPointRewardListing.path,
+          name: RouteDef.DataPointRewardListing.name,
+          component: DataPointRewardListing,
         },
         {
           path: RouteDef.DataPointRewardDetail.path,
           name: RouteDef.DataPointRewardDetail.name,
           component: DataPointRewardDetail,
+          props: true,
+        },
+        {
+          path: RouteDef.DataPointRewardDetailNew.path,
+          name: RouteDef.DataPointRewardDetailNew.name,
+          component: DataPointRewardDetailNew,
           props: true,
         },
         {
@@ -286,6 +297,11 @@ const router = new Router({
           name:
             RouteDef.DisableTwoFactorAuthenticationVerifyGoogleAuthPage.name,
           component: DisableTwoFactorAuthenticationVerifyGoogleAuthPage,
+        },
+        {
+          path: RouteDef.ETHBinding.path,
+          name: RouteDef.ETHBinding.name,
+          component: ETHBinding,
         },
         // Route to Home page for route not defined
         {
