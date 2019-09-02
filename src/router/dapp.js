@@ -11,7 +11,7 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/dapp/data-point-rewards',
+      path: '/dapp',
       component: DataPointRewards,
     },
   ],
