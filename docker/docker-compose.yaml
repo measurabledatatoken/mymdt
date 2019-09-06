@@ -1,0 +1,18 @@
+version: "3.1"
+
+services:
+  mdtwallet-webapp:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        API_SCHEME: ${API_SCHEME}
+        API_ENDPOINT: ${API_ENDPOINT}
+        VUE_APP_TRUST_WALLET_DAPP_URL: ${VUE_APP_TRUST_WALLET_DAPP_URL}
+    image: mdtwallet-webapp
+    networks:
+      - mdtwallet-webapp
+    restart: always
+
+networks:
+  mdtwallet-webapp:
