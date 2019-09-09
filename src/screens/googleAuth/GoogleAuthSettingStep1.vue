@@ -58,7 +58,7 @@ import BaseUserSettingPage from '@/screens/setting/BaseUserSettingPage';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import GoogleAuthStep from '@/components/googleAuth/GoogleAuthSettingStep';
 
-const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+import { isIOS, isAndroid } from '@/utils';
 
 export default {
   components: {
@@ -67,15 +67,11 @@ export default {
     GoogleAuthStep,
   },
   extends: BasePage,
-  computed: {
-    isIOS() {
-      return (
-        /ipad|iphone|ipod/.test(userAgent.toLowerCase()) && !window.MSStream
-      );
-    },
-    isAndroid() {
-      return /android/.test(userAgent.toLowerCase()) && !window.MSStream;
-    },
+  data() {
+    return {
+      isIOS,
+      isAndroid,
+    };
   },
   metaInfo() {
     return {
