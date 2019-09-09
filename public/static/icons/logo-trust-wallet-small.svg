@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+    <defs>
+        <filter id="a" width="277.1%" height="357%" x="-88.5%" y="-123%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" radius="3.5" result="shadowSpreadOuter1"/>
+            <feOffset dy="11" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="7.5"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
+            <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="shadowSpreadOuter2"/>
+            <feOffset dy="9" in="shadowSpreadOuter2" result="shadowOffsetOuter2"/>
+            <feGaussianBlur in="shadowOffsetOuter2" result="shadowBlurOuter2" stdDeviation="23"/>
+            <feColorMatrix in="shadowBlurOuter2" result="shadowMatrixOuter2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="shadowSpreadOuter3"/>
+            <feOffset dy="24" in="shadowSpreadOuter3" result="shadowOffsetOuter3"/>
+            <feGaussianBlur in="shadowOffsetOuter3" result="shadowBlurOuter3" stdDeviation="19"/>
+            <feColorMatrix in="shadowBlurOuter3" result="shadowMatrixOuter3" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="shadowMatrixOuter2"/>
+                <feMergeNode in="shadowMatrixOuter3"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <path fill="#3375BB" fill-rule="evenodd" d="M11.266 10.936c.254-.523.465-1.247.625-2.286.191-1.242.31-2.929.363-5.226-1.218-.035-3.312-.27-5.308-1.613-1.997 1.34-4.09 1.574-5.305 1.613.042 1.898.128 3.375.265 4.535.156 1.32.38 2.215.656 2.844.184.418.387.72.63.985.324.355.734.648 1.292.984.232.14.488.284.766.441.495.28 1.062.601 1.696 1.004.621-.396 1.18-.714 1.67-.992.147-.084.29-.164.423-.242.688-.395 1.196-.723 1.575-1.106.254-.26.461-.546.652-.94zm1.816-9.13a.819.819 0 0 1 .813.825c-.039 2.328-.129 4.11-.297 5.52-.164 1.41-.41 2.457-.78 3.305a5.234 5.234 0 0 1-.923 1.433c-.488.527-1.047.91-1.656 1.274-.26.155-.532.31-.816.471-.606.344-1.273.722-2.028 1.228a.81.81 0 0 1-.902 0 32.072 32.072 0 0 0-2.055-1.242l-.399-.227c-.715-.414-1.359-.809-1.922-1.379a4.903 4.903 0 0 1-.957-1.375c-.352-.726-.59-1.605-.766-2.743C.16 7.377.044 5.39 0 2.631a.814.814 0 0 1 .23-.582.829.829 0 0 1 .582-.243h.336C2.183 1.811 4.47 1.708 6.446.17a.816.816 0 0 1 .996 0c1.976 1.54 4.261 1.642 5.301 1.637h.34z" filter="url(#a)" transform="translate(2 1)"/>
+</svg>

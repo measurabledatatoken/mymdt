@@ -13,5 +13,9 @@ if [[ -z "${VUE_APP_TRUST_WALLET_DAPP_URL}" ]]; then
   unset VUE_APP_TRUST_WALLET_DAPP_URL
 fi
 
+if [[ -z "${VUE_APP_METAMASK_DAPP_URL}" ]]; then
+  unset VUE_APP_METAMASK_DAPP_URL
+fi
+
 npm run build-docker
 npm run run-docker

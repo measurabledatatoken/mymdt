@@ -338,10 +338,6 @@
     "hours": "小时",
     "minutes": "分钟",
     "seconds": "秒",
-    "trustWalletRequired": "需要 Trust Wallet",
-    "trustWalletDescription": "MyMDT 需要 Trust Wallet 才能运作。如果您尚未安装，请从 App Store 或 Google 下载。",
-    "openTrustWalletToClaim": "打开 Trust Wallet 认领",
-    "openTrustWallet": "打开 Trust Wallet",
     "history": "记录",
     "noDataPointReward": "沒有数据奖励",
     "earnedOn": "在 {date} 赚取",
@@ -353,7 +349,13 @@
     "distributeOn": "在 {date} 派发",
     "dueOn": "在 {date} 过期",
     "claimedOn": "已在 {date} 认领",
-    "expiredOn": "已在 {date} 过期"
+    "expiredOn": "已在 {date} 过期",
+    "ethWalletAddressRequired": "需要 ETH 地址",
+    "youHaveToBind": "你需要绑定 ETH 地址才能认领数据奖励。",
+    "bindNow": "立刻绑定",
+    "chooseAWalletToClaim": "选择一個钱包以认领奖励",
+    "trustWallet": "Trust Wallet",
+    "metaMask": "MetaMask Mobile"
   },
   "tutorial": {
     "get_started": "开始",

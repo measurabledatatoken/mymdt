@@ -16,29 +16,6 @@
       :bottom-config="PULLTO_BOTTOM_CONFIG"
       @infinite-scroll="getOldDataPointRewards"
     >
-      <ClaimMDTCard
-        :is-loading="summaryUiState.isFetching && Object.keys(summary).length === 0"
-        :unclaimed="unclaimed"
-        :earned="earned"
-        :claimed="claimed"
-      >
-        <template slot="header-caption">
-          <div class="trust-wallet-button-container">
-            <MDTMediumButton
-              :style-type="1"
-              class="trust-wallet-button"
-              @click="handleClickTrustWalletButton"
-            >
-              <img
-                class="header-caption-icon"
-                src="/static/icons/logo-trust-wallet.svg"
-                alt="Trust Wallet"
-              >
-              {{ $t('message.dataPointRewards.openTrustWalletToClaim') }}
-            </MDTMediumButton>
-          </div>
-        </template>
-      </ClaimMDTCard>
       <md-button 
         v-show="!selectedUser.smartContractETHAddress" 
         class="bind-button"
@@ -55,6 +32,24 @@
           >
         </div>
       </md-button>
+      <ClaimMDTCard
+        :is-loading="summaryUiState.isFetching && Object.keys(summary).length === 0"
+        :unclaimed="unclaimed"
+        :earned="earned"
+        :claimed="claimed"
+      >
+        <template slot="header-caption">
+          <div class="claim-button-container">
+            <MDTMediumButton
+              :style-type="1"
+              class="claim-button"
+              @click="handleClickClaimButton"
+            >
+              {{ $t('message.common.claim') }}
+            </MDTMediumButton>
+          </div>
+        </template>
+      </ClaimMDTCard>
       <CountdownCard
         :is-loading="configUiState.isFetching && Object.keys(config).length === 0"
         :initial-remaining-time="config.time_left"
@@ -106,7 +101,41 @@
         </md-list>
       </div>
     </pull-to>
-    <TrustWalletPopup :md-active.sync="showTrustWalletPopup" />
+    <BasePopup2
+      :md-active.sync="showBindETHPopup"
+      :title="$t('message.dataPointRewards.ethWalletAddressRequired')"
+      :description="$t('message.dataPointRewards.youHaveToBind')"
+    >
+      <MDTMediumButton
+        class="bind-now-button"
+        @click="onClickBindNowButton"
+      >
+        {{ $t('message.dataPointRewards.bindNow') }}
+      </MDTMediumButton>
+    </BasePopup2>
+    <BasePopup2
+      :md-active.sync="showChooseWalletPopup"
+      :title="$t('message.dataPointRewards.chooseAWalletToClaim')"
+    >
+      <div>
+        <WebViewLink
+          v-for="item in walletData"
+          :key="item.title"
+          :to="item.url"
+          external
+        >
+          <MDTMediumButton class="wallet-button">
+            <div class="wallet-button-content">
+              <img
+                :src="item.src"
+                class="wallet-button-icon"
+              >
+              {{ item.title }}
+            </div>
+          </MDTMediumButton>
+        </WebViewLink>
+      </div>
+    </BasePopup2>
     <PinCodePopup
       :md-active.sync="showPinCode"
       :pin-setup-content="$t('message.ethBinding.pinSetupPopupDescription')"
@@ -127,10 +156,11 @@ import PaddedContainer from '@/components/containers/PaddedContainer';
 import ClaimMDTCard from '@/components/common/ClaimMDTCard';
 import CountdownCard from '@/components/earnMDT/CountdownCard';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
-import TrustWalletPopup from '@/components/popup/TrustWalletPopup';
 import RewardLoadingItem from '@/components/dataPointRewards/RewardLoadingItem';
 import ListEmptyItem from '@/components/common/ListEmptyItem';
 import PinCodePopup from '@/components/popup/PinCodePopup';
+import BasePopup2 from '@/components/popup/BasePopup2';
+import WebViewLink from '@/components/common/WebViewLink';
 
 import {
   FETCH_DATA_POINT_REWARDS,
@@ -151,10 +181,11 @@ export default {
     ClaimMDTCard,
     CountdownCard,
     MDTMediumButton,
-    TrustWalletPopup,
     RewardLoadingItem,
     ListEmptyItem,
     PinCodePopup,
+    BasePopup2,
+    WebViewLink,
   },
   extends: BasePage,
   metaInfo() {
@@ -166,8 +197,21 @@ export default {
     return {
       dataPointRewardStatus,
       numberOfItemsPerPage: 5,
-      showTrustWalletPopup: false,
+      showChooseWalletPopup: false,
       showPinCode: false,
+      showBindETHPopup: false,
+      walletData: [
+        {
+          src: '/static/icons/logo-trust-wallet-small.svg',
+          title: this.$t('message.dataPointRewards.trustWallet'),
+          url: process.env.VUE_APP_TRUST_WALLET_DAPP_URL,
+        },
+        {
+          src: '/static/icons/logo-metamask-small.svg',
+          title: this.$t('message.dataPointRewards.metaMask'),
+          url: process.env.VUE_APP_METAMASK_DAPP_URL,
+        },
+      ],
       PULLTO_TOP_CONFIG: {
         pullText: this.$t('message.transaction.listing.pullDownText'),
         triggerText: this.$t('message.transaction.listing.triggerText'),
@@ -249,8 +293,12 @@ export default {
       this.setSelectedUser(account.emailAddress);
       this.fetchData();
     },
-    handleClickTrustWalletButton() {
-      this.showTrustWalletPopup = true;
+    handleClickClaimButton() {
+      if (this.selectedUser.smartContractETHAddress) {
+        this.showChooseWalletPopup = true;
+      } else {
+        this.showBindETHPopup = true;
+      }
     },
     async topLoad(loaded) {
       await this.fetchNewData();
@@ -374,6 +422,10 @@ export default {
     onBindingButtonClick() {
       this.showPinCode = true;
     },
+    onClickBindNowButton() {
+      this.showBindETHPopup = false;
+      this.onBindingButtonClick();
+    },
     onPinCodeFilled() {
       this.$router.push({
         name: RouteDef.ETHBinding.name,
@@ -421,11 +473,11 @@ export default {
   }
 }
 
-.trust-wallet-button-container {
+.claim-button-container {
   margin-top: 0.5rem;
 
-  .trust-wallet-button {
-    text-transform: initial;
+  .claim-button {
+    text-transform: uppercase;
   }
 }
 
@@ -541,6 +593,30 @@ hr {
     &.claimable {
       color: #75ce4a;
     }
+  }
+}
+
+.bind-now-button {
+  width: 100%;
+}
+
+.wallet-button.md-button.medium-button.md-raised {
+  width: 100%;
+  border-radius: 4px;
+  border: solid 1px #eef3f8;
+  background-color: #ffffff;
+  color: $primary-text-color;
+  font-weight: bold;
+  margin: 0.125rem 0;
+  text-transform: initial;
+}
+
+.wallet-button-content {
+  display: flex;
+  align-items: center;
+
+  .wallet-button-icon {
+    margin-right: 0.5rem;
   }
 }
 </style>

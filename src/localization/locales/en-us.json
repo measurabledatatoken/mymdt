@@ -338,10 +338,6 @@
     "hours": "Hours",
     "minutes": "Minutes",
     "seconds": "Seconds",
-    "trustWalletRequired": "Trust Wallet required",
-    "trustWalletDescription": "MyMDT requires Trust Wallet to work. If you have not installed yet, please download it from App Store or Google.",
-    "openTrustWalletToClaim": "Open Trust Wallet to Claim",
-    "openTrustWallet": "Open Trust Wallet",
     "history": "History",
     "noDataPointReward": "No data point reward",
     "earnedOn": "Earned on {date}",
@@ -353,7 +349,13 @@
     "distributeOn": "Distribute on {date}",
     "dueOn": "Due on {date}",
     "claimedOn": "Claimed on {date}",
-    "expiredOn": "Expired on {date}"
+    "expiredOn": "Expired on {date}",
+    "ethWalletAddressRequired": "ETH wallet address required",
+    "youHaveToBind": "You have to bind ETH wallet address before claiming Data Rewards.",
+    "bindNow": "Bind Now",
+    "chooseAWalletToClaim": "Choose A Wallet to Claim Rewards",
+    "trustWallet": "Trust Wallet",
+    "metaMask": "MetaMask Mobile"
   },
   "tutorial": {
     "get_started": "Get Started",
