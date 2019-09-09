@@ -125,4 +125,12 @@ export default {
 
     return handleGeneralResponse(promise);
   },
+  checkAccountsExist(emails) {
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/account/exist`,
+      emails,
+    );
+
+    return handleGeneralResponse(promise);
+  },
 };

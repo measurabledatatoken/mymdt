@@ -19,6 +19,7 @@ export const SET_HEADER_BACKGROUND_COLOR = 'home/SET_HEADER_BACKGROUND_COLOR';
 export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
 export const REQUEST_APP_CONFIG = 'home/REQUEST_APP_CONFIG';
 export const REQUEST_USER_ACCOUNTS = 'home/REQUEST_USER_ACCOUNTS';
+export const CHECK_ACCOUNTS_EXIST = 'home/CHECK_ACCOUNTS_EXIST';
 
 const state = {
   mdtPrice: 0,
@@ -124,6 +125,20 @@ const actions = {
     } catch (error) {
       console.error(`error in REQUEST_USER_ACCOUNTS${error}`);
     }
+  },
+  async [CHECK_ACCOUNTS_EXIST]({ dispatch }, emails) {
+    try {
+      const result = await dispatch(REQUEST, {
+        api: api.account.checkAccountsExist,
+        args: [emails],
+      });
+
+      // return false if there is email which does not exist
+      return !Object.keys(result).some(key => !result[key]);
+    } catch (error) {
+      console.error(`error in CHECK_ACCOUNTS_EXIST${error}`);
+    }
+    return false;
   },
 };
 

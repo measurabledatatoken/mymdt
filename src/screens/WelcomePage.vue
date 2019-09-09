@@ -102,6 +102,7 @@ import {
   SET_NDA_AGREEMENT,
   REQUEST_APP_CONFIG,
   SET_HEADER_BACKGROUND_COLOR,
+  CHECK_ACCOUNTS_EXIST,
 } from '@/store/modules/home';
 
 const checked = value => !helpers.req(value) || value === true;
@@ -170,6 +171,17 @@ export default {
       this.setHeaderBackgroundColor(null);
       this.goToHome();
     } else {
+      if (this.$route.query.emails) {
+        const result = await this.checkAccountsExist(
+          this.$route.query.emails.split(','),
+        );
+        // if all accounts exist, go to home page
+        if (result) {
+          this.setHeaderBackgroundColor(null);
+          this.goToHome();
+          return;
+        }
+      }
       this.showScreen = true;
     }
     trackEvent('Open Welcome Page');
@@ -181,6 +193,7 @@ export default {
     }),
     ...mapActions({
       requestAppConfig: REQUEST_APP_CONFIG,
+      checkAccountsExist: CHECK_ACCOUNTS_EXIST,
     }),
     goToHome() {
       this.$router.replace({
