@@ -158,6 +158,11 @@ const mapLocale = originalLocale => {
   }
 };
 
+const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+const isIOS =
+  /ipad|iphone|ipod/.test(userAgent.toLowerCase()) && !window.MSStream;
+const isAndroid = /android/.test(userAgent.toLowerCase()) && !window.MSStream;
+
 export {
   isRouteHomePath,
   isRouteChangeBack,
@@ -172,4 +177,6 @@ export {
   trackEvent,
   regTrackingSuperProperties,
   mapLocale,
+  isIOS,
+  isAndroid,
 };

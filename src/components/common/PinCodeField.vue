@@ -5,6 +5,10 @@
         v-for="(item, index) in length" 
         :key="index"
       >
+        <div
+          v-show="!isIOS && pinCodeChars[index].display === '●'"
+          class="placeholder"
+        >{{ pinCodeChars[index].display }}</div>
         <input
           ref="pinCodeItem"
           :type="type"
@@ -26,6 +30,7 @@
 </template>
 
 <script>
+import { isIOS } from '@/utils';
 export default {
   props: {
     length: {
@@ -54,12 +59,13 @@ export default {
       type: String,
     },
     type: {
-      default: 'password',
+      default: isIOS ? 'text' : 'number',
       type: String,
     },
   },
   data() {
     return {
+      isIOS: isIOS,
       invalid: false,
       pinCodeChars:
         this.initPinCodeChars ||
@@ -121,6 +127,11 @@ export default {
       }
     },
     onCharInput(index, char) {
+      // maxlength has no effect when type === "number". Skip it here
+      if (char.length > 1) {
+        return;
+      }
+
       this.invalid = false;
       this.updatePincodeChar(index, char);
 
@@ -193,6 +204,7 @@ export default {
   > li {
     list-style: none;
     display: inline-block;
+    position: relative;
 
     .pin-code-input {
       height: 2.5rem;
@@ -262,5 +274,11 @@ export default {
 .invalid-description {
   color: $error-color;
   @include no-flick;
+}
+
+.placeholder {
+  position: absolute;
+  pointer-events: none;
+  @include center_horizontal_and_Vertical;
 }
 </style>
