@@ -355,7 +355,8 @@
     "bindNow": "立刻綁定",
     "chooseAWalletToClaim": "選擇一個錢包以認領獎勵",
     "trustWallet": "Trust Wallet",
-    "metaMask": "MetaMask Mobile"
+    "metaMask": "MetaMask Mobile",
+    "imToken": "imToken"
   },
   "tutorial": {
     "get_started": "開始",

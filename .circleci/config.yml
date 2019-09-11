@@ -117,6 +117,7 @@ jobs:
             API_ENDPOINT=${ALPHA_API_ENDPOINT} \
             VUE_APP_TRUST_WALLET_DAPP_URL=${ALPHA_VUE_APP_TRUST_WALLET_DAPP_URL} \
             VUE_APP_METAMASK_DAPP_URL=${ALPHA_VUE_APP_METAMASK_DAPP_URL} \
+            VUE_APP_IMTOKEN_DAPP_URL=${ALPHA_VUE_APP_IMTOKEN_DAPP_URL} \
             bash .circleci/deploy.sh"
 
   deploy-beta:
@@ -133,6 +134,7 @@ jobs:
             API_ENDPOINT=${BETA_API_ENDPOINT} \
             VUE_APP_TRUST_WALLET_DAPP_URL=${BETA_VUE_APP_TRUST_WALLET_DAPP_URL} \
             VUE_APP_METAMASK_DAPP_URL=${BETA_VUE_APP_METAMASK_DAPP_URL} \
+            VUE_APP_IMTOKEN_DAPP_URL=${BETA_VUE_APP_IMTOKEN_DAPP_URL} \
             bash .circleci/deploy.sh"
 
 workflows:

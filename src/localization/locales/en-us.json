@@ -355,7 +355,8 @@
     "bindNow": "Bind Now",
     "chooseAWalletToClaim": "Choose A Wallet to Claim Rewards",
     "trustWallet": "Trust Wallet",
-    "metaMask": "MetaMask Mobile"
+    "metaMask": "MetaMask Mobile",
+    "imToken": "imToken"
   },
   "tutorial": {
     "get_started": "Get Started",
