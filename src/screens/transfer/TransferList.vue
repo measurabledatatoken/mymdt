@@ -9,6 +9,7 @@
     </div>
     <PaddedContainer class="action-card-list">
       <ActionCard 
+        v-if="enableTransferByEmail"
         :title="$t('message.transfer.transferlist_emailtitle')" 
         :action-name="$t('message.common.transferbtn')" 
         class="left"
@@ -65,6 +66,8 @@ import BasePage from '@/screens/BasePage';
 import OTPActionType from '@/enum/otpActionType';
 import SetupPINMode from '@/enum/setupPINMode';
 
+import { enableTransferByEmail } from '@/constants';
+
 export default {
   components: {
     AccountSelector,
@@ -80,6 +83,7 @@ export default {
   },
   data() {
     return {
+      enableTransferByEmail,
       showSetupPinDialog: false,
       showSetupPhoneDialog: false,
     };

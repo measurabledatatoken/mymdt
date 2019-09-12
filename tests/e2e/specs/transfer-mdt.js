@@ -202,16 +202,19 @@ describe('Transfer MDT', () => {
         goToTransferScreen();
       });
 
-      it(`can transfer to email address`, () => {
-        goToTransferToEmailScreenAndInputRelatedInfo();
+      (Cypress.env('VUE_APP_FEATURE_TRANSFER_BY_EMAIL') ? it : xit)(
+        `can transfer to email address`,
+        () => {
+          goToTransferToEmailScreenAndInputRelatedInfo();
 
-        goToTransferReviewScreenAndInputPin();
+          goToTransferReviewScreenAndInputPin();
 
-        cy.location('pathname').should(
-          'eq',
-          '/home/transfer/ethwallet/review/success',
-        );
-      });
+          cy.location('pathname').should(
+            'eq',
+            '/home/transfer/ethwallet/review/success',
+          );
+        },
+      );
 
       it(`can transfer to ETH wallet`, () => {
         goToTransferToETHWalletScreenAndInputRelatedInfo();
@@ -239,20 +242,23 @@ describe('Transfer MDT', () => {
           goToTransferScreen();
         });
 
-        it(`can transfer to email address`, () => {
-          goToTransferToEmailScreenAndInputRelatedInfo();
+        (Cypress.env('VUE_APP_FEATURE_TRANSFER_BY_EMAIL') ? it : xit)(
+          `can transfer to email address`,
+          () => {
+            goToTransferToEmailScreenAndInputRelatedInfo();
 
-          goToTransferReviewScreenAndInputPin();
+            goToTransferReviewScreenAndInputPin();
 
-          cy.inputGoogleAuthVerificationCode();
+            cy.inputGoogleAuthVerificationCode();
 
-          cy.wait('@postTransferToEmail');
+            cy.wait('@postTransferToEmail');
 
-          cy.location('pathname').should(
-            'eq',
-            '/home/transfer/ethwallet/review/success',
-          );
-        });
+            cy.location('pathname').should(
+              'eq',
+              '/home/transfer/ethwallet/review/success',
+            );
+          },
+        );
 
         it(`can transfer to ETH wallet`, () => {
           goToTransferToETHWalletScreenAndInputRelatedInfo();
@@ -285,20 +291,23 @@ describe('Transfer MDT', () => {
           goToTransferScreen();
         });
 
-        it(`can transfer to email address`, () => {
-          goToTransferToEmailScreenAndInputRelatedInfo();
+        (Cypress.env('VUE_APP_FEATURE_TRANSFER_BY_EMAIL') ? it : xit)(
+          `can transfer to email address`,
+          () => {
+            goToTransferToEmailScreenAndInputRelatedInfo();
 
-          goToTransferReviewScreenAndInputPin();
+            goToTransferReviewScreenAndInputPin();
 
-          cy.inputSMSVerificationCode();
+            cy.inputSMSVerificationCode();
 
-          cy.wait('@postTransferToEmail');
+            cy.wait('@postTransferToEmail');
 
-          cy.location('pathname').should(
-            'eq',
-            '/home/transfer/ethwallet/review/success',
-          );
-        });
+            cy.location('pathname').should(
+              'eq',
+              '/home/transfer/ethwallet/review/success',
+            );
+          },
+        );
 
         it(`can transfer to ETH wallet`, () => {
           goToTransferToETHWalletScreenAndInputRelatedInfo();

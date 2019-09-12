@@ -4,6 +4,7 @@
     "TOKENS": "AA3sx3rvtfedy5327smh11uppeu,a9d323flfos38tydaio6tz261,ctnxz4pbthrjob9ivu3hefzc4,exdmch39wyp64upo2g6auc1ny,9sn72u7630a31s815onxd08gx,AAcgmay7gvspdaqiq1jxy5x8o0q",
     "EMAILS": "test001@jianxinapp.com,test002@jianxinapp.com,mailtimeai@yahoo.com,appmailtime@163.com,testmailtime001@gmail.com,gem@mailtime.com",
     "LANG": "en-us",
-    "NEED_EXIT": "true"
+    "NEED_EXIT": "true",
+    "VUE_APP_FEATURE_TRANSFER_BY_EMAIL": false
   }
 }

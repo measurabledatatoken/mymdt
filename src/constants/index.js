@@ -119,10 +119,14 @@ const HeaderHeight = 52;
 
 const LoadingPopupDelayInMillisecond = 200;
 
+const enableTransferByEmail =
+  process.env.VUE_APP_FEATURE_TRANSFER_BY_EMAIL === 'true';
+
 export {
   RouteDef,
   ExitFromWalletWebviewURL,
   HeaderHeight,
   accessTokenExpiredUrl,
   LoadingPopupDelayInMillisecond,
+  enableTransferByEmail,
 };
