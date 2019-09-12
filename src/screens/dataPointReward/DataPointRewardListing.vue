@@ -211,6 +211,11 @@ export default {
           title: this.$t('message.dataPointRewards.metaMask'),
           url: process.env.VUE_APP_METAMASK_DAPP_URL,
         },
+        {
+          src: '/static/icons/logo-imtoken-small.svg',
+          title: this.$t('message.dataPointRewards.imToken'),
+          url: process.env.VUE_APP_IMTOKEN_DAPP_URL,
+        },
       ],
       PULLTO_TOP_CONFIG: {
         pullText: this.$t('message.transaction.listing.pullDownText'),
