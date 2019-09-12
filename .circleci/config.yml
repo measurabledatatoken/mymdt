@@ -113,6 +113,7 @@ jobs:
             ssh -o "StrictHostKeyChecking no" ${ALPHA_DEPLOY_DESTINATION} "\
             cd mdtwallet-webapp && \
             CIRCLE_SHA1=$CIRCLE_SHA1 \
+            bash .circleci/checkout.sh && \
             API_SCHEME=${ALPHA_API_SCHEME} \
             API_ENDPOINT=${ALPHA_API_ENDPOINT} \
             VUE_APP_TRUST_WALLET_DAPP_URL=${ALPHA_VUE_APP_TRUST_WALLET_DAPP_URL} \
@@ -130,6 +131,7 @@ jobs:
             ssh -o "StrictHostKeyChecking no" ${BETA_DEPLOY_DESTINATION} "\
             cd mdtwallet-webapp && \
             CIRCLE_SHA1=$CIRCLE_SHA1 \
+            bash .circleci/checkout.sh && \
             API_SCHEME=${BETA_API_SCHEME} \
             API_ENDPOINT=${BETA_API_ENDPOINT} \
             VUE_APP_TRUST_WALLET_DAPP_URL=${BETA_VUE_APP_TRUST_WALLET_DAPP_URL} \
