@@ -1,6 +1,3 @@
-git fetch --all
-git checkout --force $CIRCLE_SHA1
-
 if [[ -z "${API_SCHEME}" ]]; then
   unset API_SCHEME
 fi
