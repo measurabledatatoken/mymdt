@@ -1,25 +1,35 @@
 <template>
   <div class="pin-code-field">
-    <ul :class="['pin-code-container', { 'pin-code-container--invalid': invalid } ]">
+    <input
+      ref="pinCodeItem"
+      :type="type"
+      :maxlength="length"
+      :pattern="pattern"
+      :value="value"
+      :min="0"
+      autocomplete="off"
+      class="pin-code-input"
+      @input="onInput"
+      @keydown="onKeydown"
+    >
+    <ul
+      :class="['pin-code-container', { 'pin-code-container--invalid': invalid } ]"
+      tabindex="0"
+      @focus="focus"
+    >
       <li 
         v-for="(item, index) in length" 
         :key="index"
+        :class="['character', { 'character-focus': index === value.length } ]"
       >
         <div
-          v-show="!isIOS && pinCodeChars[index].display === '●'"
+          v-show="index === value.length"
+          class="placeholder cursor"
+        />
+        <div
+          v-show="index < value.length"
           class="placeholder"
-        >{{ pinCodeChars[index].display }}</div>
-        <input
-          ref="pinCodeItem"
-          :type="type"
-          :pattern="pattern"
-          :value="pinCodeChars[index].display"
-          class="pin-code-input"
-          maxlength="1"
-          @input="onCharInput(index, $event.target.value)"
-          @keydown="onCharKeyDown(index, $event)"
-          @focus="onCharFocus(index)"
-        >
+        >●</div>
       </li>
     </ul>
     <div 
@@ -30,17 +40,13 @@
 </template>
 
 <script>
-import { isIOS } from '@/utils';
+import { isAndroid } from '@/utils';
 export default {
   props: {
     length: {
       default: 6,
       type: Number,
       required: true,
-    },
-    initPinCodeChars: {
-      type: Array,
-      default: null,
     },
     correctPinCode: {
       type: String,
@@ -59,39 +65,25 @@ export default {
       type: String,
     },
     type: {
-      default: isIOS ? 'text' : 'number',
+      default: 'number',
       type: String,
     },
   },
   data() {
     return {
-      isIOS: isIOS,
+      value: '',
       invalid: false,
-      pinCodeChars:
-        this.initPinCodeChars ||
-        Array.from(Array(this.length)).map(() => ({
-          value: undefined,
-          display: undefined,
-        })),
     };
   },
   computed: {
     filled() {
-      return this.pinCodeChars.every(char => this.isValidChar(char.value));
-    },
-    pinCode() {
-      return this.pinCodeChars.reduce((partial, char) => {
-        if (this.isValidChar(char.value)) {
-          return `${partial}${char.value.toString()}`;
-        }
-        return partial;
-      }, '');
+      return this.value.length === this.length;
     },
   },
   watch: {
     filled(val) {
       if (val) {
-        this.$emit('filled', this.pinCode);
+        this.$emit('filled', this.value);
       } else {
         this.$emit('unfilled');
       }
@@ -101,101 +93,91 @@ export default {
     if (this.shouldAutoFocus) {
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$refs.pinCodeItem[0].focus();
+          this.focus();
         }, 750);
       });
     }
   },
   methods: {
-    isValidChar(char) {
-      return !!(char || char === 0);
+    focus() {
+      this.$refs.pinCodeItem.focus();
     },
-    updatePincodeChar(index, char, options) {
-      // eslint-disable-next-line
-      options = {
-        updateValue: true,
-        updateDisplay: true,
-        ...options,
-      };
+    onKeydown(event) {
+      if (this.value.length <= this.length) {
+        let isPressBackspace = false;
+        let isNumber = false;
+        if (event.key !== undefined) {
+          const key = event.key.toLowerCase();
+          isPressBackspace = key === 'backspace' || key === 'delete';
+          isNumber = [
+            '0',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+          ].includes(key);
+        } else if (event.which || event.keyCode) {
+          const keyCode = event.which || event.keyCode;
+          isPressBackspace = keyCode === 8 || keyCode === 46;
+          isNumber =
+            (event.keyCode > 95 && event.keyCode < 106) ||
+            (event.keyCode > 47 && event.keyCode < 58);
+        }
 
-      if (options.updateValue) {
-        this.pinCodeChars[index].value = char;
-      }
-
-      if (options.updateDisplay) {
-        this.pinCodeChars[index].display = char;
-      }
-    },
-    onCharInput(index, char) {
-      // maxlength has no effect when type === "number". Skip it here
-      if (char.length > 1) {
-        return;
-      }
-
-      this.invalid = false;
-      this.updatePincodeChar(index, char);
-
-      if (index > 0 && this.isValidChar(this.pinCodeChars[index - 1].value)) {
-        this.$refs.pinCodeItem[index - 1].value = '●';
-        this.updatePincodeChar(index - 1, '●', {
-          updateValue: false,
-        });
-      }
-
-      if (
-        this.isValidChar(char) &&
-        index < this.length - 1 &&
-        !this.isValidChar(this.pinCodeChars[index + 1].value)
-      ) {
-        this.$refs.pinCodeItem[index + 1].focus();
-      }
-
-      if (
-        this.filled &&
-        this.correctPinCode &&
-        this.correctPinCode !== this.pinCode
-      ) {
-        this.setInvalid();
-      }
-    },
-    onCharFocus(index) {
-      this.updatePincodeChar(index, undefined);
-    },
-    onCharKeyDown(index, event) {
-      let isPressBackspace = false;
-      if (event.key !== undefined) {
-        const key = event.key.toLowerCase();
-        isPressBackspace = key === 'backspace' || key === 'delete';
-      } else if (event.which || event.keyCode) {
-        const keyCode = event.which || event.keyCode;
-        isPressBackspace = keyCode === 8 || keyCode === 46;
-      }
-
-      if (isPressBackspace) {
-        const currentChar = this.pinCodeChars[index].value;
-        if (index > 0 && !this.isValidChar(currentChar)) {
-          this.$refs.pinCodeItem[index - 1].focus();
+        if (!isPressBackspace && !isNumber) {
+          event.preventDefault();
+          return;
         }
       }
     },
-    focus(index) {
-      this.$refs.pinCodeItem[index].focus();
+    onInput(event) {
+      // workaround minus sign input problem on Android
+      if (
+        isAndroid &&
+        event.inputType === 'insertText' &&
+        event.target.value === ''
+      ) {
+        const oldValue = this.value;
+        this.value = '';
+        this.value = oldValue;
+        return;
+      }
+
+      if (!event.isComposing) {
+        if (event.target.value.length < this.length) {
+          this.value = event.target.value;
+        } else {
+          if (
+            this.correctPinCode &&
+            this.correctPinCode !== event.target.value
+          ) {
+            this.setInvalid();
+          } else {
+            this.value = event.target.value;
+          }
+        }
+      }
     },
     setInvalid() {
       this.invalid = true;
-
-      for (let i = 0; i < this.length; i += 1) {
-        this.$refs.pinCodeItem[i].value = '';
-        this.updatePincodeChar(i, '');
-      }
-
-      this.$refs.pinCodeItem[0].focus();
+      this.value = '';
+      this.focus();
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.pin-code-input {
+  position: absolute;
+  opacity: 0;
+  -webkit-user-select: initial;
+}
 .pin-code-container {
   display: inline-block;
   padding: 0px;
@@ -206,40 +188,34 @@ export default {
     display: inline-block;
     position: relative;
 
-    .pin-code-input {
-      height: 2.5rem;
-      width: 2.5rem;
-      line-height: 1;
-      font-size: 1rem;
-      text-align: center;
-      border: none;
-      border: solid 1px #aaaaaa;
-      border-right: 0px;
-      outline: none;
-      border-radius: 0px 0px 0px 0px;
-      appearance: none;
+    height: 2.5rem;
+    width: 2.5rem;
+    line-height: 1;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    border: solid 1px #aaaaaa;
+    border-right: 0px;
+    outline: none;
+    border-radius: 0px 0px 0px 0px;
+    appearance: none;
 
-      &:focus {
-        border-color: $theme-font-color-btn;
-        border-width: 2px;
-        border-right: solid 2px $theme-font-color-btn;
-      }
+    &.character-focus {
+      border-color: $theme-font-color-btn;
+      border-width: 2px;
+      border-right: solid 2px $theme-font-color-btn;
     }
 
     &:first-child {
-      .pin-code-input {
-        border-radius: 4px 0px 0px 4px;
-      }
+      border-radius: 4px 0px 0px 4px;
     }
 
     &:last-child {
-      .pin-code-input {
-        border-radius: 0px 4px 4px 0px;
-        border-right: solid 1px #aaaaaa;
+      border-radius: 0px 4px 4px 0px;
+      border-right: solid 1px #aaaaaa;
 
-        &:focus {
-          border-right: solid 2px $theme-font-color-btn;
-        }
+      &.character-focus {
+        border-right: solid 2px $theme-font-color-btn;
       }
     }
   }
@@ -280,5 +256,28 @@ export default {
   position: absolute;
   pointer-events: none;
   @include center_horizontal_and_Vertical;
+}
+
+.cursor {
+  height: 1.25rem;
+  width: 1px;
+  background-color: rgb(0, 122, 255);
+  animation-duration: 1s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 </style>

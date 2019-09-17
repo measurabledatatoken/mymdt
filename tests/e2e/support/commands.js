@@ -31,11 +31,7 @@ const fillPinCode = (pin = '111111') => {
   cy.wait(750); // there is auto-focus logic in PinCodeInputPopup which excute with a timeout 750ms. Workaround it by forcing waiting 750ms here
   cy.get('.pin-code-field')
     .find('input')
-    .then($input => {
-      Cypress._.each($input, (el, index) => {
-        cy.wrap(el).type(pin[index]);
-      });
-    });
+    .type(pin);
 };
 
 Cypress.Commands.add('inputPINForSetup', (pin = '111111') => {
