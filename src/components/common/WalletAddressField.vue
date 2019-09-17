@@ -5,9 +5,8 @@
   >
     <md-textarea 
       :placeholder="$t('message.transfer.wallet_address_placeholder')" 
-      :value="walletAddress" 
+      v-model="walletAddress"
       md-autogrow
-      @change="valueChanged($event.target.value)"
     />
     <!-- <md-button class="md-icon-button" :to="RouteDef.TransferEthWalletQrCode.path">
       <md-icon md-src="/static/icons/qr-blue.svg"></md-icon>

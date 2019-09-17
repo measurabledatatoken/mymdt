@@ -54,6 +54,7 @@ export default {
 
   .md-title {
     font-weight: bold;
+    flex: 1;
   }
 
   .close-icon-button {
