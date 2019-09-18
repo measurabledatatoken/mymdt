@@ -22,6 +22,8 @@ describe('Setup Google Authenticator', () => {
     cy.getCurrentContentRouterView()
       .find('[data-cy="switch"]')
       .click();
+
+    cy.wait('@enable2fa');
   };
 
   const disable2FA = () => {
@@ -68,7 +70,6 @@ describe('Setup Google Authenticator', () => {
 
   it('can enable google authenticator', () => {
     enable2FA();
-    cy.wait('@enable2fa');
     backToUserSetting();
     cy.get('[data-cy="setting-setup-2fa"]')
       .find('[data-cy="icon-complete"]')
