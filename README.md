@@ -1,6 +1,8 @@
 # MDT Wallet Web App
 
-> Measurable Data Token Wallet is a VueJS app for earning MDT, transfering MDT and redeeming rewards. It can be integrated into mobile app or used as a web application.
+> MyMDT is a VueJS Web App and Data Wallet front-end for Measurable Data Token (MDT). MDT measures the value of anonymous data points contributed by users and distributes Data Rewards via the MyMDT App. Users can earn, transfer and redeem MDT rewards. It can be integrated into a mobile app or used as a web application.
+Learn more about Measurable Data Token and its Decentralized Data Exchange Economy, please visit https://mdt.io.
+
 
 ## Localhost Setup
 
