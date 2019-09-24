@@ -9,19 +9,12 @@
     </div>
     <PaddedContainer class="action-card-list">
       <ActionCard 
-        v-if="enableTransferByEmail"
-        :title="$t('message.transfer.transferlist_emailtitle')" 
-        :action-name="$t('message.common.transferbtn')" 
-        class="left"
-        img-src="/static/icons/transfer-to-email.svg" 
-        @actionClick="onTransferToEmailClicked()"
-      />
-      <ActionCard 
-        :title="$t('message.transfer.transferlist_ethtitle')" 
-        :action-name="$t('message.common.transferbtn')" 
-        class="right"
-        img-src="/static/icons/transfer-to-eth.svg" 
-        @actionClick="onTransferToEthWalletClicked()"
+        v-for="(item, index) in transferData"
+        :key="`${index}`"
+        :title="item.title" 
+        :action-name="item.actionName" 
+        :img-src="item.imgSrc" 
+        @actionClick="item.onClick()"
       />
     </PaddedContainer>
 
@@ -67,6 +60,7 @@ import OTPActionType from '@/enum/otpActionType';
 import SetupPINMode from '@/enum/setupPINMode';
 
 import { enableTransferByEmail } from '@/constants';
+import { openExternalBrowser } from '@/utils';
 
 export default {
   components: {
@@ -82,10 +76,35 @@ export default {
     };
   },
   data() {
+    const transferData = [
+      ...(enableTransferByEmail
+        ? [
+            {
+              title: this.$t('message.transfer.transferlist_emailtitle'),
+              actionName: this.$t('message.common.transferbtn'),
+              imgSrc: '/static/icons/transfer-to-email.svg',
+              onClick: this.onTransferToEmailClicked,
+            },
+          ]
+        : []),
+      {
+        title: this.$t('message.transfer.transferlist_ethtitle'),
+        actionName: this.$t('message.common.transferbtn'),
+        imgSrc: '/static/icons/transfer-to-eth.svg',
+        onClick: this.onTransferToEthWalletClicked,
+      },
+      {
+        title: this.$t('message.transfer.transferlist_okextitle'),
+        actionName: this.$t('message.common.go'),
+        imgSrc: '/static/icons/logo-okex.svg',
+        onClick: this.onOKEXClick,
+      },
+    ];
+
     return {
-      enableTransferByEmail,
       showSetupPinDialog: false,
       showSetupPhoneDialog: false,
+      transferData: transferData,
     };
   },
   computed: {
@@ -147,6 +166,9 @@ export default {
         },
       });
     },
+    onOKEXClick() {
+      openExternalBrowser('https://www.okex.com/market?product=mdt_usdt');
+    },
   },
 };
 </script>
@@ -176,11 +198,7 @@ export default {
 .action-card {
   width: 44%;
   height: 210px;
-  margin: 4% 2% 4% 4%;
   float: left;
-
-  &.right {
-    margin: 4% 4% 4% 2%;
-  }
+  margin: 3%;
 }
 </style>

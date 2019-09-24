@@ -163,6 +163,12 @@ const isIOS =
   /ipad|iphone|ipod/.test(userAgent.toLowerCase()) && !window.MSStream;
 const isAndroid = /android/.test(userAgent.toLowerCase()) && !window.MSStream;
 
+function openExternalBrowser(url) {
+  window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
+    url,
+  )}`;
+}
+
 export {
   isRouteHomePath,
   isRouteChangeBack,
@@ -179,4 +185,5 @@ export {
   mapLocale,
   isIOS,
   isAndroid,
+  openExternalBrowser,
 };

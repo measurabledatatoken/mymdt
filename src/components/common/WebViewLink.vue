@@ -9,6 +9,7 @@
 
 <script>
 import { RouteDef } from '@/constants';
+import { openExternalBrowser } from '@/utils';
 
 export default {
   props: {
@@ -35,9 +36,7 @@ export default {
         if (this.inApp) {
           window.location.href = this.to;
         } else {
-          window.location.href = `mdtwallet://open-external-browser?url=${encodeURIComponent(
-            this.to,
-          )}`;
+          openExternalBrowser(this.to);
         }
       } else {
         this.$router.push({

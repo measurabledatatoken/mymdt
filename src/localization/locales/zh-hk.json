@@ -27,7 +27,8 @@
     "other": "其他",
     "earned": "已賺取",
     "claimed": "已認領",
-    "unclaimed": "未認領"
+    "unclaimed": "未認領",
+    "go": "前往"
   },
   "error": {
     "userNotExist": "用戶郵箱不存在。",
@@ -87,6 +88,7 @@
     "note_placeholder": "選填. 最多{num}字",
     "transferlist_emailtitle": "發送 MDT 到其它郵箱地址",
     "transferlist_ethtitle": "發送 MDT 至我的錢包地址",
+    "transferlist_okextitle": "在 OKEX 中交易 MDT",
     "transfer": "轉帳",
     "transaction_fee": "手續費",
     "min_amount": "最少轉帳數量",

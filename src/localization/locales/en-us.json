@@ -27,7 +27,8 @@
     "other": "Other",
     "earned": "Earned",
     "claimed": "Claimed",
-    "unclaimed": "Unclaimed"
+    "unclaimed": "Unclaimed",
+    "go": "Go"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -87,6 +88,7 @@
     "note_placeholder": "Optional note. Up to {num} characters",
     "transferlist_emailtitle": "Transfer MDT to Another Email Account",
     "transferlist_ethtitle": "Send MDT to your own wallet address",
+    "transferlist_okextitle": "Exchange MDT in OKEX",
     "transfer": "transfer",
     "transaction_fee": "Transaction Fee",
     "min_amount": "Minimum Amount",
