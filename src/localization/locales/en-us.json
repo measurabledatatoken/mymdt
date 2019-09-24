@@ -65,7 +65,12 @@
     "accountnum": "{num} Accounts",
     "earn_mdt": "Earn MDT",
     "claimed_mdt": "You have claimed {num} MDT",
-    "claimable_mdt": "You have {num} MDT to claim today!"
+    "claimable_mdt": "You have {num} MDT to claim today!",
+    "mailtimeWallet": "Mailtime Wallet",
+    "ethWallet": "ETH Wallet",
+    "ethWalletWithHash": "ETH Wallet ({hash})",
+    "ethWalletUpdating": "ETH Wallet (Updating)",
+    "bindWallet": "Bind Wallet"
   },
   "transfer": {
     "title": "Transfer Out",

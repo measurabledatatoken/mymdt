@@ -65,7 +65,12 @@
     "accountnum": "{num} 個帳號",
     "earn_mdt": "賺取 MDT",
     "claimed_mdt": "您已認領 {num}MDT",
-    "claimable_mdt": "您今天有 {num}MDT可認領！"
+    "claimable_mdt": "您今天有 {num}MDT可認領！",
+    "mailtimeWallet": "簡信錢包",
+    "ethWallet": "以太坊錢包",
+    "ethWalletWithHash": "以太坊錢包 ({hash})",
+    "ethWalletUpdating": "以太坊錢包（更新中）",
+    "bindWallet": "綁定錢包"
   },
   "transfer": {
     "title": "轉帳",

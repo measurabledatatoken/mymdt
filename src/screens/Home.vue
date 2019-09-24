@@ -17,11 +17,11 @@
         v-for="user in allUsers"
         :key="user.emailAddress"
       >
-        <UserInfoCard
+        <UserHomeSummaryCard
           :user="user"
           :hover="false"
           @transfer="goToTransfer(user)"
-          @goToAccountDetail="goToAccountDetail(user)"
+          @clickMailtimeWallet="goToAccountDetail(user)"
         />
       </div>
 
@@ -29,12 +29,12 @@
         v-for="user in invalidUser"
         :key="user.emailAddress"
       >
-        <UserInfoCard
+        <UserHomeSummaryCard
           :user="user"
           :hover="false"
           disabled
           @transfer="invalidUserClicked(user)"
-          @goToAccountDetail="invalidUserClicked(user)"
+          @clickMailtimeWallet="invalidUserClicked(user)"
         />
       </div>
     </div>
@@ -87,7 +87,7 @@ import {
   SET_NEED_EXIT_BTN,
 } from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
-import UserInfoCard from '@/components/common/UserInfoCard';
+import UserHomeSummaryCard from '@/components/common/UserHomeSummaryCard';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import LoadingPopup from '@/components/common/LoadingPopup';
 import { RouteDef } from '@/constants';
@@ -98,7 +98,7 @@ import { FETCH_ALL_REWARDS } from '@/store/modules/entities/rewards';
 
 export default {
   components: {
-    UserInfoCard,
+    UserHomeSummaryCard,
     MDTPrimaryButton,
     LoadingPopup,
     SuccessPopup,
