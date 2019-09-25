@@ -100,12 +100,12 @@ export default {
   },
   computed: {
     ethWalletTitle() {
-      if (this.user.smartContractETHAddress) {
+      if (this.user.smartContractPendingETHAddress) {
+        return this.$t('message.home.ethWalletUpdating');
+      } else if (this.user.smartContractETHAddress) {
         return this.$t('message.home.ethWalletWithHash', {
           hash: this.user.smartContractETHAddress.slice(-4),
         });
-      } else if (this.user.smartContractPendingETHAddress) {
-        return this.$t('message.home.ethWalletUpdating');
       } else {
         return this.$t('message.home.ethWallet');
       }

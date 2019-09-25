@@ -16,6 +16,15 @@
       :bottom-config="PULLTO_BOTTOM_CONFIG"
       @infinite-scroll="getOldDataPointRewards"
     >
+      <ETHUpdatingCard 
+        v-if="!!selectedUser.smartContractETHAddress && !!selectedUser.smartContractPendingETHAddress"
+        :user="selectedUser"
+      />
+      <ETHCard 
+        v-else-if="!!selectedUser.smartContractETHAddress"
+        :user="selectedUser"
+        @editClick="onBindingButtonClick"
+      />
       <md-button 
         v-show="!selectedUser.smartContractETHAddress" 
         class="bind-button"
@@ -161,12 +170,15 @@ import ListEmptyItem from '@/components/common/ListEmptyItem';
 import PinCodePopup from '@/components/popup/PinCodePopup';
 import BasePopup2 from '@/components/popup/BasePopup2';
 import WebViewLink from '@/components/common/WebViewLink';
+import ETHCard from '@/components/common/ETHCard';
+import ETHUpdatingCard from '@/components/common/ETHUpdatingCard';
 
 import {
   FETCH_DATA_POINT_REWARDS,
   FETCH_DATA_POINT_CONFIG,
   FETCH_DATA_POINT_SUMMARY,
 } from '@/store/modules/dataPoint';
+import { FETCH_USER } from '@/store/modules/entities/users';
 import { SET_SELECTED_USER } from '@/store/modules/home';
 import { trackEvent, formatAmount } from '@/utils';
 import dataPointRewardStatus from '@/enum/dataPointRewardStatus';
@@ -186,6 +198,8 @@ export default {
     PinCodePopup,
     BasePopup2,
     WebViewLink,
+    ETHCard,
+    ETHUpdatingCard,
   },
   extends: BasePage,
   metaInfo() {
@@ -292,6 +306,7 @@ export default {
       fetchDataPointConfig: FETCH_DATA_POINT_CONFIG,
       fetchDataPointRewards: FETCH_DATA_POINT_REWARDS,
       fetchDataPointSummary: FETCH_DATA_POINT_SUMMARY,
+      fetchUser: FETCH_USER,
     }),
     onAccountSelected(account) {
       trackEvent('Switch accounts on data point reward List');
@@ -383,6 +398,10 @@ export default {
       return formatAmount(amount, { prefix: '+ ', suffix: ' MDT' });
     },
     fetchData() {
+      this.fetchUser({
+        userId: this.selectedUser.emailAddress,
+      });
+
       this.fetchDataPointConfig({
         userId: this.selectedUser.emailAddress,
       });

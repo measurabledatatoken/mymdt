@@ -361,7 +361,9 @@
     "chooseAWalletToClaim": "Choose A Wallet to Claim Rewards",
     "trustWallet": "Trust Wallet",
     "metaMask": "MetaMask Mobile",
-    "imToken": "imToken"
+    "imToken": "imToken",
+    "updatingYourETHWalletAddress": "Updating your ETH wallet address",
+    "ethWalletBound": "ETH Wallet Bound"
   },
   "tutorial": {
     "get_started": "Get Started",
