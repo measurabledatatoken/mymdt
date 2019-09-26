@@ -43,7 +43,7 @@
       </md-button>
       <ClaimMDTCard
         :is-loading="summaryUiState.isFetching && Object.keys(summary).length === 0"
-        :unclaimed="unclaimed"
+        :unclaimed="claimable"
         :earned="earned"
         :claimed="claimed"
       >
@@ -56,6 +56,18 @@
             >
               {{ $t('message.common.claim') }}
             </MDTMediumButton>
+            <md-button 
+              class="md-icon-button"
+              @click="onHelpClick"
+            >
+              <img src="/static/icons/icon-help.svg" >
+            </md-button>
+            <BasePopup 
+              :title="$t('message.dataPointRewards.claimYourDataRewards')"
+              :description="$t('message.dataPointRewards.claimHelp')"
+              :md-active.sync="showHelpPopup"
+              :confirm-text="$t('message.common.okay')"
+            />
           </div>
         </template>
       </ClaimMDTCard>
@@ -95,7 +107,6 @@
                     }]"
                   >{{ getStatusText(item.status) }}</div>
                 </div>
-                <!-- <span>testing</span> -->
               </md-list-item>
               <hr 
                 :key="`hr-${index}`" 
@@ -168,6 +179,7 @@ import MDTMediumButton from '@/components/button/MDTMediumButton';
 import RewardLoadingItem from '@/components/dataPointRewards/RewardLoadingItem';
 import ListEmptyItem from '@/components/common/ListEmptyItem';
 import PinCodePopup from '@/components/popup/PinCodePopup';
+import BasePopup from '@/components/popup/BasePopup';
 import BasePopup2 from '@/components/popup/BasePopup2';
 import WebViewLink from '@/components/common/WebViewLink';
 import ETHCard from '@/components/common/ETHCard';
@@ -196,6 +208,7 @@ export default {
     RewardLoadingItem,
     ListEmptyItem,
     PinCodePopup,
+    BasePopup,
     BasePopup2,
     WebViewLink,
     ETHCard,
@@ -214,6 +227,7 @@ export default {
       showChooseWalletPopup: false,
       showPinCode: false,
       showBindETHPopup: false,
+      showHelpPopup: false,
       walletData: [
         {
           src: '/static/icons/logo-trust-wallet-small.svg',
@@ -283,7 +297,7 @@ export default {
     summaryUiState() {
       return this.getDataPointSummaryUiState(this.selectedUser.emailAddress);
     },
-    unclaimed() {
+    claimable() {
       return this.summary[dataPointRewardStatus.CLAIMABLE] || 0;
     },
     earned() {
@@ -461,6 +475,9 @@ export default {
         params: { userId: this.selectedUser.emailAddress, rewardId: id },
       });
     },
+    onHelpClick() {
+      this.showHelpPopup = true;
+    },
   },
 };
 </script>
@@ -498,6 +515,9 @@ export default {
 }
 
 .claim-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 0.5rem;
 
   .claim-button {

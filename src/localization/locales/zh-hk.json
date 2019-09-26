@@ -363,7 +363,9 @@
     "metaMask": "MetaMask Mobile",
     "imToken": "imToken",
     "updatingYourETHWalletAddress": "正在更新你的以太坊錢包地址",
-    "ethWalletBound": "已綁定以太坊錢包"
+    "ethWalletBound": "已綁定以太坊錢包",
+    "claimYourDataRewards": "認領你的數據獎勵",
+    "claimHelp": "MDT 已被轉移到以太坊網絡中的智能合約。這會將您重定向到您選擇的錢包，您可以通過該錢包領取。"
   },
   "tutorial": {
     "get_started": "開始",

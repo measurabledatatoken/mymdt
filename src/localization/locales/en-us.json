@@ -363,7 +363,9 @@
     "metaMask": "MetaMask Mobile",
     "imToken": "imToken",
     "updatingYourETHWalletAddress": "Updating your ETH wallet address",
-    "ethWalletBound": "ETH Wallet Bound"
+    "ethWalletBound": "ETH Wallet Bound",
+    "claimYourDataRewards": "Claim your data rewards",
+    "claimHelp": "MDT has been transfered to Smart Contract in Ethereum Network. This will redirect you to wallet you chosen which you can claim through the wallet."
   },
   "tutorial": {
     "get_started": "Get Started",
