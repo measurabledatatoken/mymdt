@@ -338,7 +338,8 @@
   "dataPointRewards": {
     "dataRewards": "數據獎勵",
     "bindWithETH": "綁定您的 ETH 錢包地址",
-    "nextDataReward": "距離下次數據獎勵派發還有",
+    "nextDataReward": "下次數據獎勵",
+    "willBeDistributedIn": "派發時間尚餘",
     "days": "日",
     "hours": "小時",
     "minutes": "分鐘",

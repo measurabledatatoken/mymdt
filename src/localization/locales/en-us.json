@@ -338,7 +338,8 @@
   "dataPointRewards": {
     "dataRewards": "Data Rewards",
     "bindWithETH": "Bind with your ETH wallet address",
-    "nextDataReward": "Next Data Reward will be distributed in",
+    "nextDataReward": "Next Data Reward",
+    "willBeDistributedIn": "will be distributed in",
     "days": "Days",
     "hours": "Hours",
     "minutes": "Minutes",

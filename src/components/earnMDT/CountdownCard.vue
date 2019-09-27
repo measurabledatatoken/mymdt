@@ -1,6 +1,8 @@
 <template>
   <div class="countdown-card">
-    <p class="title">{{ $t('message.dataPointRewards.nextDataReward') }}</p>
+    <div class="title">{{ $t('message.dataPointRewards.nextDataReward') }}</div>
+    <div class="amount">{{ formattedAmount }}</div>
+    <p class="label">{{ $t('message.dataPointRewards.willBeDistributedIn') }}</p>
     <div 
       v-if="isLoading" 
       class="loading-bar"
@@ -36,6 +38,8 @@
 <script>
 import Skeleton from '@/components/common/Skeleton';
 
+import { formatAmount } from '@/utils';
+
 export default {
   components: {
     Skeleton,
@@ -52,6 +56,10 @@ export default {
     isLoading: {
       type: Boolean,
       default: false,
+    },
+    amount: {
+      type: Number,
+      default: 0,
     },
   },
   data() {
@@ -96,6 +104,9 @@ export default {
       } else {
         return 0;
       }
+    },
+    formattedAmount() {
+      return formatAmount(this.amount, { suffix: ' MDT' });
     },
   },
   watch: {
@@ -148,6 +159,20 @@ export default {
 }
 
 .title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #488bf7;
+}
+
+.amount {
+  font-size: 1.75rem;
+  font-weight: bold;
+  line-height: normal;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.label {
   font-size: 0.875rem;
   line-height: normal;
   margin-top: 0;
@@ -167,7 +192,7 @@ export default {
   margin: 0 0.75rem;
 
   .time-number {
-    font-size: 2.625rem;
+    font-size: 1.5rem;
     line-height: normal;
     font-weight: bold;
     color: $primary-text-color;

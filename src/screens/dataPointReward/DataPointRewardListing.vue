@@ -75,6 +75,7 @@
         :is-loading="configUiState.isFetching && Object.keys(config).length === 0"
         :initial-remaining-time="config.time_left"
         :total-time="config.time_length"
+        :amount="pendingAmount"
       />
       <div class="history-section">
         <h3 class="md-caption history-section-title">{{ $t('message.dataPointRewards.history') }}</h3>
@@ -299,6 +300,9 @@ export default {
     },
     claimable() {
       return this.summary[dataPointRewardStatus.CLAIMABLE] || 0;
+    },
+    pendingAmount() {
+      return this.summary[dataPointRewardStatus.PENDING] || 0;
     },
     earned() {
       return Object.keys(this.summary).reduce((prev, curr) => {
