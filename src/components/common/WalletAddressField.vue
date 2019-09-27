@@ -4,7 +4,7 @@
     :error="!isAddressValid && $t('message.qrcode.eth_address_invalid')"
   >
     <md-textarea 
-      :placeholder="$t('message.transfer.wallet_address_placeholder')" 
+      :placeholder="placeholder || $t('message.transfer.wallet_address_placeholder')" 
       v-model="walletAddress"
       md-autogrow
     />
@@ -25,6 +25,10 @@ export default {
   },
   props: {
     label: {
+      type: String,
+      default: '',
+    },
+    placeholder: {
       type: String,
       default: '',
     },

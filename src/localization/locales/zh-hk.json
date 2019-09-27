@@ -27,7 +27,8 @@
     "other": "其他",
     "earned": "已賺取",
     "claimed": "已認領",
-    "unclaimed": "未認領"
+    "unclaimed": "未認領",
+    "submit": "提交"
   },
   "error": {
     "userNotExist": "用戶郵箱不存在。",
@@ -171,7 +172,8 @@
     "stillNeedHelp": "仍需要幫助?",
     "dataPointRewards": "數據獎勵",
     "dataSharing": "匿名數據分享",
-    "ethWalletBinding": "ETH 錢包地址綁定"
+    "ethWalletBinding": "ETH 錢包地址綁定",
+    "mymdtWouldNotVerify": "MyMDT 不會驗證以太坊錢包地址的所有權。請確保您是以太坊錢包的所有者。您可以稍後更改以太坊錢包地址。"
   },
   "priceUnit": {
     "title": "價格單位"

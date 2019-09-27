@@ -27,7 +27,8 @@
     "other": "Other",
     "earned": "Earned",
     "claimed": "Claimed",
-    "unclaimed": "Unclaimed"
+    "unclaimed": "Unclaimed",
+    "submit": "Submit"
   },
   "error": {
     "userNotExist": "User email does not exist.",
@@ -171,7 +172,8 @@
     "stillNeedHelp": "Still Need Help?",
     "dataPointRewards": "Data Point Rewards",
     "dataSharing": "Anonymous Data Sharing",
-    "ethWalletBinding": "ETH Wallet Binding"
+    "ethWalletBinding": "ETH Wallet Binding",
+    "mymdtWouldNotVerify": "MyMDT would not verify the ownership of the ETH wallet address. Please make sure you are the owner of the ETH wallet in order to claim the Data Rewards. You may change the ETH wallet address later."
   },
   "priceUnit": {
     "title": "Price Unit"

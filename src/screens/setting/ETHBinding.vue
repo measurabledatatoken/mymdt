@@ -3,15 +3,17 @@
     <template slot="content">
       <WalletAddressField 
         :init-wallet-address="selectedUser.smartContractETHAddress"
-        class="address-field"
+        label="ETH wallet address"
+        placeholder="0x"
         @walletAddressEntered="walletAddressEntered"
         @walletAddressInvalid="walletAddressInvalid"
       />
+      <p class="description">{{ $t('message.settings.mymdtWouldNotVerify') }}</p>
       <MDTPrimaryButton 
         :disabled="!isWalletAddressValid"
         @click="onDoneClick"
       >
-        {{ $t('message.common.done') }}
+        {{ $t('message.common.submit') }}
       </MDTPrimaryButton>
     </template>
   </BaseUserSettingPage>
@@ -76,3 +78,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.description {
+  font-size: 0.75rem;
+  line-height: normal;
+  color: #8f8f8f;
+  text-align: left;
+}
+</style>
