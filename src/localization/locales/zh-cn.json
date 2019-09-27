@@ -173,7 +173,9 @@
     "dataPointRewards": "数据奖励",
     "dataSharing": "匿名数据分享",
     "ethWalletBinding": "ETH 钱包地址绑定",
-    "mymdtWouldNotVerify": "MyMDT 不会验证以太坊钱包地址的所有权。请确保您是以太坊钱包的所有者。您可以稍后更改以太坊钱包地址。"
+    "mymdtWouldNotVerify": "MyMDT 不会验证以太坊钱包地址的所有权。请确保您是以太坊钱包的所有者。您可以稍后更改以太坊钱包地址。",
+    "confirmToUpdate": "確認更改？",
+    "itWillTakeTimeToUpdate": "更改以太坊钱包地址需要花一段时间。"
   },
   "priceUnit": {
     "title": "价格单位"

@@ -173,7 +173,9 @@
     "dataPointRewards": "Data Point Rewards",
     "dataSharing": "Anonymous Data Sharing",
     "ethWalletBinding": "ETH Wallet Binding",
-    "mymdtWouldNotVerify": "MyMDT would not verify the ownership of the ETH wallet address. Please make sure you are the owner of the ETH wallet in order to claim the Data Rewards. You may change the ETH wallet address later."
+    "mymdtWouldNotVerify": "MyMDT would not verify the ownership of the ETH wallet address. Please make sure you are the owner of the ETH wallet in order to claim the Data Rewards. You may change the ETH wallet address later.",
+    "confirmToUpdate": "Confirm to update?",
+    "itWillTakeTimeToUpdate": "It will take times to update your ETH wallet address."
   },
   "priceUnit": {
     "title": "Price Unit"
