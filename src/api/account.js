@@ -129,7 +129,7 @@ export default {
     return handleGeneralResponse(promise);
   },
   checkAccountsExist(emails) {
-    const promise = axios.post(
+    const promise = axios.get(
       `${APIScheme}://${APIEndPoint}/account/exist`,
       emails,
     );
