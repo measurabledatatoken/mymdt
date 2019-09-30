@@ -23,6 +23,12 @@
         animated
       />
     </div>
+    <div 
+      v-if="showMdt && !small"
+      class="label"
+    >
+      Total balance
+    </div>
     <UserInfoMDTAmount 
       v-if="showMdt && !small"
       :disabled="disabled"
@@ -126,7 +132,7 @@ export default {
   }
 
   .user-info__amount {
-    margin-top: 1.25rem;
+    margin-top: 0.25rem;
   }
 
   &.user-info--small {
@@ -137,6 +143,16 @@ export default {
         font-size: 1rem;
       }
     }
+  }
+
+  .label {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: normal;
+    color: #8f8f8f;
+    text-align: left;
+    text-transform: uppercase;
   }
 }
 </style>
