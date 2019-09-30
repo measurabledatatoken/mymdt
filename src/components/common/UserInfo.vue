@@ -27,7 +27,7 @@
       v-if="showMdt && !small"
       class="label"
     >
-      Total balance
+      {{ $t('message.home.total_balance') }}
     </div>
     <UserInfoMDTAmount 
       v-if="showMdt && !small"
