@@ -40,6 +40,10 @@ const state = {
 
 const getters = {
   transferToAccounts: (state, getters, rootState, rootGetters) => {
+    if (!rootGetters.getSelectedUser) {
+      return [];
+    }
+
     const tempAccounts = rootGetters.getAllUsers.filter(
       user => user.emailAddress !== rootGetters.getSelectedUser.emailAddress,
     );
