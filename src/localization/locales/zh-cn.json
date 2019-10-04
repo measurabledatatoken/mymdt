@@ -478,5 +478,14 @@
     "notBindedYet": "未绑定",
     "binded": "已绑定",
     "errorMessage": "设定失败"
+  },
+  "ethWallet": {
+    "transferFrom": "由转帐",
+    "transferTo": "转帐至",
+    "block": "Block",
+    "gasPrice": "Gas price",
+    "gasUsed": "Gas used",
+    "transactionFee": "交易费",
+    "transactionHash": "交易杂凑"
   }
 }

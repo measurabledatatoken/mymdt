@@ -478,5 +478,14 @@
     "notBindedYet": "Not binded yet",
     "binded": "Binded",
     "errorMessage": "Failed to set ETH wallet address"
+  },
+  "ethWallet": {
+    "transferFrom": "Transfer From",
+    "transferTo": "Transfer To",
+    "block": "Block",
+    "gasPrice": "Gas price",
+    "gasUsed": "Gas used",
+    "transactionFee": "Transaction fee",
+    "transactionHash": "Transaction hash"
   }
 }

@@ -1,0 +1,97 @@
+<template>
+  <md-list-item 
+    v-bind="$attrs" 
+    v-on="$listeners"
+  >
+    <div class="item-info">
+      <span class="title">
+        {{ title }}
+      </span>
+      <WalletAddressBlock
+        :hash="address"
+        class="wallet-address"
+      />
+      <span class="description">{{ $d(new Date(transaction.timestamp), 'long') }}</span>
+    </div>
+    <div class="action">
+      <span>{{ amount }}</span>
+    </div>
+  </md-list-item>
+</template>
+
+<script>
+import WalletAddressBlock from '@/components/common/WalletAddressBlock';
+
+import { formatAmount } from '@/utils';
+
+export default {
+  components: {
+    WalletAddressBlock,
+  },
+  props: {
+    transaction: {
+      type: Object,
+      default: null,
+    },
+    description: {
+      type: String,
+      default: '',
+    },
+    label: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    title() {
+      return this.transaction.is_transfer_in
+        ? this.$t('message.ethWallet.transferFrom')
+        : this.$t('message.ethWallet.transferTo');
+    },
+    address() {
+      return this.transaction.is_transfer_in
+        ? this.transaction.from
+        : this.transaction.to;
+    },
+    amount() {
+      return formatAmount(Number(this.transaction.value) / 1e18, {
+        prefix: this.transaction.is_transfer_in ? '+ ' : '- ',
+        suffix: ' MDT',
+      });
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: bold;
+  color: var(
+    --md-theme-default-text-primary-on-background,
+    rgba(0, 0, 0, 0.87)
+  );
+}
+
+.wallet-address {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.description {
+  font-size: 12px;
+  color: $secondary-text-color;
+}
+
+.action {
+  margin-left: 16px;
+  color: $label-color;
+  font-weight: bold;
+}
+</style>

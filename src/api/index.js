@@ -8,6 +8,7 @@ import reward from './reward';
 import transaction from './transaction';
 import application from './application';
 import dataPoint from './dataPoint';
+import ethWallet from './ethWallet';
 
 export default {
   account,
@@ -20,4 +21,5 @@ export default {
   transaction,
   application,
   dataPoint,
+  ethWallet,
 };

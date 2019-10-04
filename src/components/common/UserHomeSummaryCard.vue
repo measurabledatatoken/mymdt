@@ -131,11 +131,10 @@ export default {
     },
     onETHWalletClick() {
       if (!this.disabled) {
-        // TODO
         this.$router.push({
-          name: RouteDef.AccountDetail.name,
+          name: RouteDef.ETHWalletDetail.name,
           params: {
-            account_id: this.user.emailAddress,
+            wallet_address: this.user.smartContractETHAddress,
           },
         });
       }

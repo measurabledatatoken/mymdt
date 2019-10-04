@@ -36,12 +36,20 @@
           wallet-class="card-text"
         />
       </div>
-      <div 
+      <div
+        v-if="hasEditClickListener"
         class="edit-button"
         @click="$emit('editClick')"
       >
         <img src="/static/icons/icon-edit.svg">
       </div>
+    </div>
+    <div 
+      v-if="showBalance"
+      class="balance"
+    >
+      <div class="card-text balance-title">{{ $t('message.home.total_balance') }}</div>
+      <div class="balance-amount">{{ formatMDTAmount(user.eth_wallet_balance) }}</div>
     </div>
     <transition name="footer">
       <div 
@@ -57,6 +65,8 @@
 <script>
 import WalletAddressBlock from '@/components/common/WalletAddressBlock';
 
+import { formatAmount } from '@/utils';
+
 export default {
   components: {
     WalletAddressBlock,
@@ -65,6 +75,14 @@ export default {
     user: {
       type: Object,
       default: null,
+    },
+    compact: {
+      type: Boolean,
+      default: false,
+    },
+    showBalance: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -97,10 +115,18 @@ export default {
       }
       return this.user.displayName;
     },
+    hasEditClickListener() {
+      return this.$listeners && this.$listeners.editClick;
+    },
   },
   methods: {
     onCardClick() {
-      this.expanded = !this.expanded;
+      if (!this.compact) {
+        this.expanded = !this.expanded;
+      }
+    },
+    formatMDTAmount(amount) {
+      return formatAmount(amount || 0, { suffix: ' MDT' });
     },
   },
 };
@@ -194,6 +220,23 @@ export default {
 
 .name {
   font-size: 0.875rem;
+}
+
+.balance {
+  margin-top: 1.5rem;
+
+  .balance-title {
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .balance-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: normal;
+    text-align: right;
+    color: #ffffff;
+  }
 }
 
 .logo-enter-active,
