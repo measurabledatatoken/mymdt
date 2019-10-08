@@ -48,7 +48,10 @@
           @click="onBindingButtonClick"
         >
           <div class="bind-button-content">
-            <img src="/static/icons/icon-bind.svg" >
+            <img
+              class="bind-button-icon"
+              src="/static/icons/icon-bind.svg"
+            >
             {{ $t("message.home.bindWallet") }}
           </div>
         </MDTMediumButton>
@@ -202,6 +205,13 @@ export default {
 
   .bind-button-content {
     display: flex;
+    align-items: center;
+
+    .bind-button-icon {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.25rem;
+    }
   }
 }
 </style>
