@@ -168,6 +168,7 @@ export default {
 }
 
 .card-title-expanded {
+  display: inline; // require for safari https://stackoverflow.com/questions/44963978/safari-on-ios-not-displaying-text-when-using-background-clip-and-text-fill-color
   background-image: linear-gradient(124deg, #bbccef, #ffffff 44%, #e6b5e6);
   font-size: 1.5rem;
   font-weight: 500;
