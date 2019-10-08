@@ -1,5 +1,14 @@
 <template>
   <div>
+    <md-list class="top-list">
+      <base-setting-list-item 
+        :title="$t('message.settings.martketPriceUnit')" 
+        @click="onPriceUnitClicked"
+      >
+        <span slot="action-data">{{ priceUnit }}</span>
+      </base-setting-list-item>
+      <md-divider />
+    </md-list>
     <md-list class="md-double-line">
       <setting-list-section-header>{{ $t('message.settings.security') }}</setting-list-section-header>
       <md-divider />
@@ -80,6 +89,10 @@ export default {
           account_id: emailAddress,
         },
       });
+    },
+    onPriceUnitClicked() {
+      trackEvent('Click on Price Unit');
+      this.$router.push(RouteDef.PriceUnits.path);
     },
     onReportProblemClick() {
       trackEvent('Click on report a problem');
