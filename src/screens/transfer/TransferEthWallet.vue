@@ -47,6 +47,7 @@
     />
     <WalletAddressField 
       :label="$t('message.transfer.tolbl')"
+      :placeholder="walletAddressFieldPlaceholder"
       :init-wallet-address="transferToWalletAddress"
       class="address-field"
       @walletAddressEntered="walletAddressEntered"
@@ -117,6 +118,9 @@ export default {
       RouteDef,
       isWalletAddressValid: false,
       showTutorial: false,
+      walletAddressFieldPlaceholder: this.$route.query.okex
+        ? this.$t('message.transfer.wallet_address_placeholder_for_okex')
+        : '',
     };
   },
   computed: {

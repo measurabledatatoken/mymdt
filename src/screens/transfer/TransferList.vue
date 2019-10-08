@@ -60,7 +60,6 @@ import OTPActionType from '@/enum/otpActionType';
 import SetupPINMode from '@/enum/setupPINMode';
 
 import { enableTransferByEmail } from '@/constants';
-import { openExternalBrowser } from '@/utils';
 
 export default {
   components: {
@@ -95,7 +94,7 @@ export default {
       },
       {
         title: this.$t('message.transfer.transferlist_okextitle'),
-        actionName: this.$t('message.common.go'),
+        actionName: this.$t('message.common.transferbtn'),
         imgSrc: '/static/icons/logo-okex.svg',
         onClick: this.onOKEXClick,
       },
@@ -167,7 +166,12 @@ export default {
       });
     },
     onOKEXClick() {
-      openExternalBrowser('https://www.okex.com/market?product=mdt_usdt');
+      this.$router.push({
+        path: RouteDef.TransferEthWallet.path,
+        query: {
+          okex: true,
+        },
+      });
     },
   },
 };

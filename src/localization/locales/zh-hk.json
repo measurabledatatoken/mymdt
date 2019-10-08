@@ -88,6 +88,7 @@
     "amountlbl": "數量",
     "select_account_placeholder": "請選擇帳號",
     "wallet_address_placeholder": "填寫錢包地址",
+    "wallet_address_placeholder_for_okex": "OKEx 的 MDT 充值地址",
     "other_emailaddress": "其它郵箱地址...",
     "enter_emailaddress": "輸人郵箱地址",
     "notelbl": "備註",

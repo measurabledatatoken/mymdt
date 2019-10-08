@@ -88,6 +88,7 @@
     "tolbl": "To",
     "select_account_placeholder": "Please Select Account",
     "wallet_address_placeholder": "Paste wallet address here",
+    "wallet_address_placeholder_for_okex": "Deposit address for MDT on OKEx",
     "other_emailaddress": "Other email addresses...",
     "enter_emailaddress": "Type an email address",
     "notelbl": "Note",
