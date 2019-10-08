@@ -94,7 +94,7 @@ export default {
       },
       {
         title: this.$t('message.transfer.transferlist_okextitle'),
-        actionName: this.$t('message.common.go'),
+        actionName: this.$t('message.common.transferbtn'),
         imgSrc: '/static/icons/logo-okex.svg',
         onClick: this.onOKEXClick,
       },
