@@ -77,7 +77,6 @@ export default {
 
 .md-card-media {
   img {
-    width: 80px;
     height: 80px;
   }
 }
