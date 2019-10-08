@@ -11,12 +11,12 @@
       />
     </div>
     <md-list :class="['wallet-list', { 'wallet-list-disabled': disabled }]">
-      <md-list-item class="wallet-list-item">
+      <md-list-item
+        class="wallet-list-item"
+        @click="$emit('clickMailtimeWallet')"
+      >
         <span class="md-caption wallet-name">{{ $t("message.home.mailtimeWallet") }}</span>
-        <md-button
-          class="wallet-button"
-          @click="$emit('clickMailtimeWallet')"
-        >
+        <md-button class="wallet-button">
           <div class="wallet-action">
             <span>{{ formatMDTAmount(user.mdtBalance) }}</span>
             <md-icon 
@@ -26,13 +26,15 @@
         </md-button>
       </md-list-item>
       <md-divider />
-      <md-list-item>
+      <md-list-item 
+        :disabled="!hasAnyAddress"
+        @click="hasAnyAddress ? onETHWalletClick() : null"
+      >
         <span class="md-caption wallet-name">{{ ethWalletTitle }}</span>
         <md-button
           v-if="hasAnyAddress"
           :disabled="disabled"
           class="wallet-button"
-          @click="onETHWalletClick"
         >
           <div class="wallet-action">
             <span>{{ ethWalletAmount }}</span>
@@ -58,6 +60,7 @@
       </md-list-item>
     </md-list>
     <PinCodePopup
+      :user="user"
       :md-active.sync="showPinCode"
       :pin-setup-content="$t('message.ethBinding.pinSetupPopupDescription')"
       @codefilled="onPinCodeFilled"
