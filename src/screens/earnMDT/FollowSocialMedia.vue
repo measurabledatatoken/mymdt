@@ -37,18 +37,18 @@
         </p>
         <div 
           v-if="step.pictureComponent || step.src"
-          class="step-picture"
+          class="step-picture-container"
         >
           <component 
             v-if="step.pictureComponent"
             :is="step.pictureComponent"
-            class="step-picture"
           />
           <img 
             v-else
             :src="step.src"
             :srcset="step.srcset"
             :alt="step.alt"
+            class="step-picture"
           >
         </div>
       </div>
@@ -140,9 +140,7 @@ export default {
               alt: 'Step 2',
             },
             {
-              description: this.$t('message.earnMDT.follow.weibo.step3', {
-                code: this.$route.query.code,
-              }),
+              description: this.$t('message.earnMDT.follow.weibo.step3'),
               src: this.$t('message.earnMDT.follow.weibo.step3Src'),
               srcset: this.$t('message.earnMDT.follow.weibo.step3Srcset'),
               alt: 'Step 3',
@@ -188,9 +186,7 @@ export default {
               alt: 'Step 3',
             },
             {
-              description: this.$t('message.earnMDT.follow.telegram.step4', {
-                code: this.$route.query.code,
-              }),
+              description: this.$t('message.earnMDT.follow.telegram.step4'),
               src: this.$t('message.earnMDT.follow.telegram.step4Src'),
               srcset: this.$t('message.earnMDT.follow.telegram.step4Srcset'),
               alt: 'Step 4',
@@ -375,8 +371,13 @@ export default {
       margin-bottom: 1rem;
     }
 
-    .step-picture {
+    .step-picture-container {
       text-align: center;
+    }
+
+    .step-picture {
+      max-width: 230px;
+      margin: auto;
     }
   }
 }
