@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!!selectedUser">
     <MDTConfirmPopup
       :md-active="showSetPinDialog"
       :md-title="$t('message.passcode.please_setup_pin_title')"
@@ -52,10 +52,14 @@ export default {
       selectedUser: 'getSelectedUser',
     }),
     showSetPinDialog() {
-      return !this.selectedUser.isPasscodeSet && this.mdActive;
+      return (
+        this.selectedUser && !this.selectedUser.isPasscodeSet && this.mdActive
+      );
     },
     showPinCodeInput() {
-      return this.selectedUser.isPasscodeSet && this.mdActive;
+      return (
+        this.selectedUser && this.selectedUser.isPasscodeSet && this.mdActive
+      );
     },
   },
   methods: {

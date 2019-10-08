@@ -1,14 +1,11 @@
 <template>
   <div class="app-view">
-    <div class="header">
-      <div class="header-wrapper">
-        <div class="header__background"/>
-        <user-info-card 
-          :user="selectedUser" 
-          @transfer="goToTransfer()"
-        />
-      </div>
-    </div>
+    <ExtendedHeaderContainer>
+      <user-info-card 
+        :user="selectedUser" 
+        @transfer="goToTransfer()"
+      />
+    </ExtendedHeaderContainer>
     <TransactionList/>
     <div class="buttons">
       <MDTPrimaryButton
@@ -31,6 +28,7 @@ import BasePage from '@/screens/BasePage';
 import UserInfoCard from '@/components/common/UserInfoCard';
 import TransactionList from '@/components/transaction/TransactionList';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import ExtendedHeaderContainer from '@/components/containers/ExtendedHeaderContainer';
 
 import { FETCH_APPLICATIONS } from '@/store/modules/entities/applications';
 
@@ -42,6 +40,7 @@ export default {
     UserInfoCard,
     TransactionList,
     MDTPrimaryButton,
+    ExtendedHeaderContainer,
   },
   extends: BasePage,
   metaInfo() {
@@ -101,8 +100,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$header-padding-top: 2rem;
-
 .app-view {
   display: flex;
   flex-direction: column;
@@ -132,23 +129,6 @@ $header-padding-top: 2rem;
       flex: 1;
       margin: 0 8px;
     }
-  }
-}
-
-.header {
-  .header-wrapper {
-    padding-top: $header-padding-top;
-    position: relative;
-  }
-
-  .header__background {
-    background-color: $home-bgcolor;
-    height: calc(
-      8em + 0.5em + #{$header-padding-top}
-    ); // height of UserInfoCard content + UserInfoCard margin top + header padding
-    width: 100%;
-    position: absolute;
-    top: 0;
   }
 }
 </style>

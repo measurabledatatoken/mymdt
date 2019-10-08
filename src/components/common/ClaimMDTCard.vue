@@ -1,7 +1,7 @@
 <template>
   <md-card class="reward-card">
     <div class="card-header">
-      <div class="label">{{ $t('message.common.unclaimed') }}</div>
+      <div class="label label-highlight">{{ $t('message.common.unclaimed') }}</div>
       <Skeleton v-if="isLoading" />
       <div 
         v-if="!isLoading"
@@ -13,29 +13,17 @@
     </div>
     <hr >
     <md-card-content>
-      <div class="box">
-        <div class="box-row label">
-          {{ $t('message.common.earned') }}
-        </div>
-        <Skeleton v-if="isLoading" />
-        <div 
-          v-if="!isLoading"
-          class="box-row amount"
-        >
-          {{ formatMDTAmount(earned) }}
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-row label">
+      <Skeleton v-if="isLoading" />
+      <div 
+        v-else
+        class="box"
+      >
+        <span class="label">
           {{ $t('message.common.claimed') }}
-        </div>
-        <Skeleton v-if="isLoading" />
-        <div 
-          v-if="!isLoading"
-          class="box-row amount"
-        >
+        </span>
+        <span class="amount">
           {{ formatMDTAmount(claimed) }}
-        </div>
+        </span>
       </div>
     </md-card-content>
   </md-card>
@@ -89,13 +77,17 @@ export default {
   .md-title {
     font-size: 1.75rem;
     font-weight: bold;
+    line-height: normal;
   }
 
   .label {
-    font-size: 0.625rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: #aab1c0;
-    text-transform: uppercase;
+    color: #8f8f8f;
+
+    &.label-highlight {
+      color: #488bf7;
+    }
   }
 
   hr {
@@ -104,22 +96,17 @@ export default {
   }
 
   .md-card-content {
-    display: flex;
-    justify-content: center;
     padding: 1rem;
 
     .box {
-      margin: 0 0.25rem;
-      border-radius: 0.25rem;
-      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-      .box-row {
-        margin: 0.25rem 0;
-
-        &.amount {
-          font-size: 1.25rem;
-          font-weight: bold;
-        }
+      .amount {
+        font-size: 1rem;
+        font-weight: bold;
+        color: $primary-text-color;
       }
     }
   }

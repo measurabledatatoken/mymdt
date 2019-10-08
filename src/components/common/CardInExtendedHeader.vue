@@ -1,22 +1,23 @@
 <template>
-  <div class="header">
-    <div class="header-wrapper">
-      <div class="header__background"/>
-      <md-card>
-        <md-card-header>
-          <div class="md-title">{{ title }}</div>
-          <div class="md-subhead">{{ subheading }}</div>
-        </md-card-header>
-        <md-card-content>
-          <slot />
-        </md-card-content>
-      </md-card>
-    </div>
-  </div>
+  <ExtendedHeaderContainer>
+    <md-card>
+      <md-card-header>
+        <div class="md-title">{{ title }}</div>
+        <div class="md-subhead">{{ subheading }}</div>
+      </md-card-header>
+      <md-card-content>
+        <slot />
+      </md-card-content>
+    </md-card>
+  </ExtendedHeaderContainer>
 </template>
 
 <script>
+import ExtendedHeaderContainer from '@/components/containers/ExtendedHeaderContainer';
 export default {
+  components: {
+    ExtendedHeaderContainer,
+  },
   props: {
     title: {
       type: String,
@@ -31,23 +32,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$header-padding-top: 0.5rem;
-
-.header {
-  .header-wrapper {
-    padding-top: $header-padding-top;
-    position: relative;
-  }
-
-  .header__background {
-    background-color: $home-bgcolor;
-    height: calc(8em + 0.5em + #{$header-padding-top});
-    width: 100%;
-    position: absolute;
-    top: 0;
-  }
-}
-
 .md-card {
   border-radius: 0.5em;
   background-color: white;

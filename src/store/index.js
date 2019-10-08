@@ -17,6 +17,7 @@ import entities from './modules/entities';
 import security from './modules/security';
 import dataSharing from './modules/dataSharing';
 import ethBinding from './modules/ethBinding';
+import ethWallet from './modules/ethWallet';
 
 Vue.use(Vuex);
 
@@ -40,6 +41,7 @@ export default new Vuex.Store({
     dataPoint,
     dataSharing,
     ethBinding,
+    ethWallet,
   },
   strict: debug,
   plugins: debug ? [createLogger(), persistedState] : [persistedState],

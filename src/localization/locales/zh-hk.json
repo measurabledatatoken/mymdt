@@ -28,7 +28,8 @@
     "earned": "已賺取",
     "claimed": "已認領",
     "unclaimed": "未認領",
-    "go": "前往"
+    "go": "前往",
+    "submit": "提交"
   },
   "error": {
     "userNotExist": "用戶郵箱不存在。",
@@ -66,7 +67,12 @@
     "accountnum": "{num} 個帳號",
     "earn_mdt": "賺取 MDT",
     "claimed_mdt": "您已認領 {num}MDT",
-    "claimable_mdt": "您今天有 {num}MDT可認領！"
+    "claimable_mdt": "您今天有 {num}MDT可認領！",
+    "mailtimeWallet": "簡信錢包",
+    "ethWallet": "以太坊錢包",
+    "ethWalletWithHash": "以太坊錢包 ({hash})",
+    "ethWalletUpdating": "以太坊錢包（更新中）",
+    "bindWallet": "綁定錢包"
   },
   "transfer": {
     "title": "轉帳",
@@ -168,7 +174,10 @@
     "stillNeedHelp": "仍需要幫助?",
     "dataPointRewards": "數據獎勵",
     "dataSharing": "匿名數據分享",
-    "ethWalletBinding": "ETH 錢包地址綁定"
+    "ethWalletBinding": "ETH 錢包地址綁定",
+    "mymdtWouldNotVerify": "MyMDT 不會驗證以太坊錢包地址的所有權。請確保您是以太坊錢包的所有者。您可以稍後更改以太坊錢包地址。",
+    "confirmToUpdate": "確認更改？",
+    "itWillTakeTimeToUpdate": "更改以太坊錢包地址需要花一段時間。"
   },
   "priceUnit": {
     "title": "價格單位"
@@ -335,7 +344,8 @@
   "dataPointRewards": {
     "dataRewards": "數據獎勵",
     "bindWithETH": "綁定您的 ETH 錢包地址",
-    "nextDataReward": "距離下次數據獎勵派發還有",
+    "nextDataReward": "下次數據獎勵",
+    "willBeDistributedIn": "派發時間尚餘",
     "days": "日",
     "hours": "小時",
     "minutes": "分鐘",
@@ -358,7 +368,11 @@
     "chooseAWalletToClaim": "選擇一個錢包以認領獎勵",
     "trustWallet": "Trust Wallet",
     "metaMask": "MetaMask Mobile",
-    "imToken": "imToken"
+    "imToken": "imToken",
+    "updatingYourETHWalletAddress": "正在更新你的以太坊錢包地址",
+    "ethWalletBound": "已綁定以太坊錢包",
+    "claimYourDataRewards": "認領你的數據獎勵",
+    "claimHelp": "MDT 已被轉移到以太坊網絡中的智能合約。這會將您重定向到您選擇的錢包，您可以通過該錢包領取。"
   },
   "tutorial": {
     "get_started": "開始",
@@ -466,5 +480,14 @@
     "notBindedYet": "未綁定",
     "binded": "已綁定",
     "errorMessage": "設定失敗"
+  },
+  "ethWallet": {
+    "transferFrom": "由轉帳",
+    "transferTo": "轉帳至",
+    "block": "Block",
+    "gasPrice": "Gas price",
+    "gasUsed": "Gas used",
+    "transactionFee": "交易費",
+    "transactionHash": "交易雜湊"
   }
 }

@@ -7,6 +7,7 @@
     <div class="md-title-container">
       <span class="md-title">{{ title }}</span>
       <div
+        v-if="showCloseButton"
         class="close-icon-button"
         @click="$emit('update:mdActive', false)"
       >
@@ -33,6 +34,10 @@ export default {
     description: {
       type: String,
       default: '',
+    },
+    showCloseButton: {
+      type: Boolean,
+      default: false,
     },
   },
 };

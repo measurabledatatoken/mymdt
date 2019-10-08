@@ -40,6 +40,10 @@ const AccountDetail = () =>
   import(/* webpackChunkName: "account-detail" */ '@/screens/AccountDetail');
 const TransactionDetail = () =>
   import(/* webpackChunkName: "account-detail" */ '@/screens/TransactionDetail');
+const ETHWalletDetail = () =>
+  import(/* webpackChunkName: "account-detail" */ '@/screens/ETHWalletDetail');
+const ETHWalletTransactionDetail = () =>
+  import(/* webpackChunkName: "account-detail" */ '@/screens/ETHWalletTransactionDetail');
 const TransferList = () =>
   import(/* webpackChunkName: "transfer" */ '@/screens/transfer/TransferList');
 const TransferEmail = () =>
@@ -243,6 +247,16 @@ const subRoutes = [
     name: RouteDef.TransactionDetail.name,
     component: TransactionDetail,
     props: true,
+  },
+  {
+    path: RouteDef.ETHWalletDetail.path,
+    name: RouteDef.ETHWalletDetail.name,
+    component: ETHWalletDetail,
+  },
+  {
+    path: RouteDef.ETHWalletTransactionDetail.path,
+    name: RouteDef.ETHWalletTransactionDetail.name,
+    component: ETHWalletTransactionDetail,
   },
   ...transferRoutes,
   // Earn MDT Route

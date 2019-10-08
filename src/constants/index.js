@@ -110,6 +110,14 @@ const RouteDef = {
     path: '/home/settings/eth-binding',
     name: 'ETHBinding',
   },
+  ETHWalletDetail: {
+    path: '/home/eth-wallets/:wallet_address',
+    name: 'ETHwalletDetail',
+  },
+  ETHWalletTransactionDetail: {
+    path: '/home/eth-wallets/:wallet_address/transactions/:transaction_hash',
+    name: 'ETHWalletTransactionDetail',
+  },
 };
 
 const ExitFromWalletWebviewURL = 'mdtwallet://exit';

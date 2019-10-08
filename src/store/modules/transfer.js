@@ -40,6 +40,10 @@ const state = {
 
 const getters = {
   transferToAccounts: (state, getters, rootState, rootGetters) => {
+    if (!rootGetters.getSelectedUser) {
+      return [];
+    }
+
     const tempAccounts = rootGetters.getAllUsers.filter(
       user => user.emailAddress !== rootGetters.getSelectedUser.emailAddress,
     );
@@ -50,6 +54,10 @@ const getters = {
     return tempAccounts;
   },
   minAmount: (state, getters, rootState) => {
+    if (!rootState.home.appConfig) {
+      return 0;
+    }
+
     return parseFloat(rootState.home.appConfig.mdt_min_transfer_amount);
   },
   // eslint-disable-next-line

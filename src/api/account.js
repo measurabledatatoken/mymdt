@@ -48,6 +48,8 @@ export default {
           isWalletEnabled: user.is_wallet_enabled,
           userDataShares: user.user_data_shares || [],
           smartContractETHAddress: user.smart_contract_eth_address,
+          smartContractPendingETHAddress:
+            user.smart_contract_pending_eth_address,
           accessToken: userCredential ? userCredential.access_token : '',
         };
       });
@@ -86,6 +88,7 @@ export default {
         isWalletEnabled: user.is_wallet_enabled,
         userDataShares: user.user_data_shares || [],
         smartContractETHAddress: user.smart_contract_eth_address,
+        smartContractPendingETHAddress: user.smart_contract_pending_eth_address,
         accessToken,
       };
 
@@ -126,7 +129,7 @@ export default {
     return handleGeneralResponse(promise);
   },
   checkAccountsExist(emails) {
-    const promise = axios.post(
+    const promise = axios.get(
       `${APIScheme}://${APIEndPoint}/account/exist`,
       emails,
     );
