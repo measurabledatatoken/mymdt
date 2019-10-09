@@ -57,6 +57,7 @@
     />
     <div class="buttons">
       <MDTPrimaryButton
+        v-if="hasUserWithDataSharingEnabled"
         :style-type="1"
         @click="goToDataPointRewards"
       >{{ $t('message.dataPointRewards.dataRewards') }}</MDTPrimaryButton>
@@ -132,6 +133,7 @@ export default {
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
+      allUsersWithDataSharing: 'getAllUsersWithDataSharing',
       getUser: 'getUser',
       getRewardsOfAllUsers: 'getRewardsOfAllUsers',
       invalidUser: 'getInvalidUser',
@@ -153,6 +155,9 @@ export default {
       return this.$t('message.home.accountnum', this.allUsers.length, {
         num: this.allUsers.length,
       });
+    },
+    hasUserWithDataSharingEnabled() {
+      return this.allUsersWithDataSharing.length > 0;
     },
   },
   async mounted() {

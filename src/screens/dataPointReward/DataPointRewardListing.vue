@@ -2,7 +2,8 @@
   <div class="rewards-container">
     <padded-container class="account-selector-container">
       <AccountSelector
-        :accounts="allUsers"
+        v-if="!!selectedUser"
+        :accounts="allUsersWithDataSharing"
         :selected-account="selectedUser"
         @accountSelected="onAccountSelected"
       />
@@ -246,6 +247,7 @@ export default {
           url: process.env.VUE_APP_IMTOKEN_DAPP_URL,
         },
       ],
+      selectedUserFromAccountSelector: null,
       PULLTO_TOP_CONFIG: {
         pullText: this.$t('message.transaction.listing.pullDownText'),
         triggerText: this.$t('message.transaction.listing.triggerText'),
@@ -268,7 +270,6 @@ export default {
       locale: state => state.common.locale,
     }),
     ...mapGetters({
-      selectedUser: 'getSelectedUser',
       getDataPointRewards: 'getDataPointRewards',
       getDataPointRewardIdsByUser: 'getDataPointRewardIdsByUser',
       getDataPointConfig: 'getDataPointConfig',
@@ -276,8 +277,13 @@ export default {
       getDataPointRewardsUiState: 'getDataPointRewardsUiState',
       getDataPointConfigUiState: 'getDataPointConfigUiState',
       getDataPointSummaryUiState: 'getDataPointSummaryUiState',
-      allUsers: 'getAllUsers',
+      allUsersWithDataSharing: 'getAllUsersWithDataSharing',
     }),
+    selectedUser() {
+      return (
+        this.selectedUserFromAccountSelector || this.allUsersWithDataSharing[0]
+      );
+    },
     rewards() {
       return this.getDataPointRewards(
         this.getDataPointRewardIdsByUser(this.selectedUser.emailAddress),
@@ -328,7 +334,7 @@ export default {
     }),
     onAccountSelected(account) {
       trackEvent('Switch accounts on data point reward List');
-      this.setSelectedUser(account.emailAddress);
+      this.selectedUserFromAccountSelector = account;
       this.fetchData();
     },
     handleClickClaimButton() {
