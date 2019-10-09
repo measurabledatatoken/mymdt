@@ -38,6 +38,7 @@
           @clickMailtimeWallet="invalidUserClicked(user)"
         />
       </div>
+      <div class="placeholder" />
     </div>
 
     <SuccessPopup 
@@ -329,8 +330,12 @@ export default {
   z-index: 1;
   background-color: $home-bgcolor;
   overflow-y: scroll;
-  padding-bottom: 80px;
   flex: 1;
+
+  .placeholder {
+    width: 100%;
+    height: 80px;
+  }
 }
 
 .balance-title {
