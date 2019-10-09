@@ -340,7 +340,9 @@
       "successPopupDescription": "The Data Point Reward is transferred to your ETH wallet. Please check your wallet.",
       "errorPopupTitle": "Oops! Something went wrong",
       "errorPopupDescription": "Please try again."
-    }
+    },
+    "turnOnDataSharing": "Turn On Data Sharing",
+    "getYourDataRewards": "Get Your Data Rewards"
   },
   "dataPointRewards": {
     "dataRewards": "Data Rewards",

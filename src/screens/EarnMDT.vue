@@ -4,14 +4,28 @@
     class="rewards-container"
   >
     <padded-container ref="accountSelectorContainer">
-      <AccountSelector 
-        
+      <AccountSelector
         :accounts="allUsers" 
         :selected-account="selectedUser" 
         @accountSelected="onAccountSelected"
       />
     </padded-container>
     <md-divider />
+    <padded-container v-if="showDataSharingBanner">
+      <div
+        class="data-sharing-banner"
+        @click="onDataSharingBannerClick"
+      >
+        <img
+          src="/static/background/banner-data-sharing.jpg"
+          srcset="/static/background/banner-data-sharing@2x.jpg 2x, /static/background/banner-data-sharing@3x.jpg 3x"
+        >
+        <div class="data-sharing-banner-text-block">
+          <div>{{ $t('message.earnMDT.turnOnDataSharing') }}</div>
+          <div class="banner-text-title">{{ $t('message.earnMDT.getYourDataRewards') }}</div>
+        </div>
+      </div>
+    </padded-container>
     <padded-container>
       <md-list 
         class="account-task-list"
@@ -84,7 +98,9 @@ import PaddedContainer from '@/components/containers/PaddedContainer';
 import { FETCH_TASKS } from '@/store/modules/entities/users';
 import { FETCH_REWARDS } from '@/store/modules/entities/rewards';
 import { SET_SELECTED_USER } from '@/store/modules/home';
+import { FETCH_DATA_POINT_SUMMARY } from '@/store/modules/dataPoint';
 import { trackEvent } from '@/utils';
+import { RouteDef } from '@/constants';
 
 export default {
   components: {
@@ -118,6 +134,7 @@ export default {
       selectedUser: 'getSelectedUser',
       allUsers: 'getAllUsers',
       getRewards: 'getRewards',
+      getDataPointSummary: 'getDataPointSummary',
     }),
     redeemURL() {
       const emailAddress = this.selectedUser.emailAddress;
@@ -136,6 +153,14 @@ export default {
       return `https://redpacket.mdt.co/?email=${emailAddress}&lang=${lang}&redirect_uri=${encodeURIComponent(
         window.location.href,
       )}`;
+    },
+    showDataSharingBanner() {
+      const summary = this.getDataPointSummary(this.selectedUser.emailAddress);
+      if (!summary) {
+        return false;
+      }
+
+      return Object.keys(summary).length === 0;
     },
   },
   created() {
@@ -159,6 +184,7 @@ export default {
     ...mapActions({
       fetchTasks: FETCH_TASKS,
       fetchRewards: FETCH_REWARDS,
+      fetchDataPointSummary: FETCH_DATA_POINT_SUMMARY,
     }),
     ...mapMutations({
       setSelectedUser: SET_SELECTED_USER,
@@ -170,17 +196,56 @@ export default {
       this.fetchRewards({
         userId,
       });
+      this.fetchDataPointSummary({
+        userId,
+      });
     },
     onAccountSelected(account) {
       trackEvent('Switch accounts on Reward List');
       this.setSelectedUser(account.emailAddress);
       this.fetchData(account.emailAddress);
     },
+    onDataSharingBannerClick() {
+      this.$router.push({
+        name: RouteDef.UserSettings.name,
+        params: {
+          account_id: this.selectedUser.emailAddress,
+        },
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.data-sharing-banner {
+  position: relative;
+  cursor: pointer;
+
+  .data-sharing-banner-text-block {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    width: 50%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-left: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: normal;
+
+    .banner-text-title {
+      margin-top: 0.24rem;
+      font-size: 1.5rem;
+    }
+  }
+}
+
 .rewards-container {
   /deep/ .md-divider {
     margin: 0;

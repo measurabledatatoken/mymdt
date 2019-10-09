@@ -340,7 +340,9 @@
       "successPopupDescription": "數據獎勵已發送到你的 ETH 錢包，請檢查。",
       "errorPopupTitle": "出錯了！",
       "errorPopupDescription": "請再嘗試。"
-    }
+    },
+    "turnOnDataSharing": "打開數據分享",
+    "getYourDataRewards": "取得您的數據獎勵"
   },
   "dataPointRewards": {
     "dataRewards": "數據獎勵",
