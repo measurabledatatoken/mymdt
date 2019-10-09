@@ -293,7 +293,7 @@ export default {
       return this.getDataPointConfig(this.selectedUser.emailAddress);
     },
     summary() {
-      return this.getDataPointSummary(this.selectedUser.emailAddress);
+      return this.getDataPointSummary(this.selectedUser.emailAddress) || {};
     },
     rewardsUiState() {
       return this.getDataPointRewardsUiState(this.selectedUser.emailAddress);

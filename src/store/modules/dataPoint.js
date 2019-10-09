@@ -40,7 +40,7 @@ const moduleGetters = {
   getDataPointConfig: state => userId =>
     (state.byUserId[userId] && state.byUserId[userId].config) || {},
   getDataPointSummary: state => userId =>
-    (state.byUserId[userId] && state.byUserId[userId].summary) || {},
+    (state.byUserId[userId] && state.byUserId[userId].summary) || null,
   getDataPointRewardCursors: state => userId =>
     (state.byUserId[userId] && state.byUserId[userId].cursors) || null,
 };

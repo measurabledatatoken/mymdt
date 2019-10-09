@@ -135,6 +135,7 @@ export default {
       allUsers: 'getAllUsers',
       getRewards: 'getRewards',
       getDataPointSummary: 'getDataPointSummary',
+      isUserDataSharingEnabled: 'isUserDataSharingEnabled',
     }),
     redeemURL() {
       const emailAddress = this.selectedUser.emailAddress;
@@ -156,8 +157,15 @@ export default {
     },
     showDataSharingBanner() {
       const summary = this.getDataPointSummary(this.selectedUser.emailAddress);
+      const isUserDataSharingEnabled = this.isUserDataSharingEnabled(
+        this.selectedUser,
+      );
       if (!summary) {
         return false;
+      }
+
+      if (!isUserDataSharingEnabled) {
+        return true;
       }
 
       return Object.keys(summary).length === 0;
@@ -219,6 +227,7 @@ export default {
 
 <style lang="scss" scoped>
 .data-sharing-banner {
+  display: inline-block;
   position: relative;
   cursor: pointer;
 
@@ -228,7 +237,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     text-align: left;
-    width: 50%;
     top: 0;
     bottom: 0;
     left: 0;
@@ -238,6 +246,7 @@ export default {
     color: #ffffff;
     font-size: 1rem;
     line-height: normal;
+    white-space: pre-line;
 
     .banner-text-title {
       margin-top: 0.24rem;
