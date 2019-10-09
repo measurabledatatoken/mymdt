@@ -27,16 +27,16 @@ const state = {
 const moduleGetters = {
   getUser: state => id => state.byId[id],
   getAllUsers: state => state.allIds.map(id => state.byId[id]),
-  getAllUsersWithDataSharing: (state, getters, rootState) =>
+  isUserDataSharingEnabled: (state, getters, rootState) => user =>
+    user.userDataShares.some(
+      userDataShare =>
+        userDataShare.application_id === rootState.home.appID &&
+        !!userDataShare.is_data_sharing,
+    ),
+  getAllUsersWithDataSharing: (state, getters) =>
     state.allIds
       .map(id => state.byId[id])
-      .filter(user =>
-        user.userDataShares.some(
-          userDataShare =>
-            userDataShare.application_id === rootState.home.appID &&
-            !!userDataShare.is_data_sharing,
-        ),
-      ),
+      .filter(getters.isUserDataSharingEnabled),
 };
 
 const mutations = {
