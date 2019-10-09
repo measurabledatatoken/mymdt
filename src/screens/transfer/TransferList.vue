@@ -166,12 +166,19 @@ export default {
       });
     },
     onOKEXClick() {
-      this.$router.push({
-        path: RouteDef.TransferEthWallet.path,
-        query: {
-          okex: true,
-        },
-      });
+      trackEvent('Click on transfer to OKEx');
+      if (!this.selectedUser.isPasscodeSet) {
+        this.showSetupPinDialog = true;
+      } else if (!this.selectedUser.isPhoneConfirmed) {
+        this.showSetupPhoneDialog = true;
+      } else {
+        this.$router.push({
+          path: RouteDef.TransferEthWallet.path,
+          query: {
+            okex: true,
+          },
+        });
+      }
     },
   },
 };

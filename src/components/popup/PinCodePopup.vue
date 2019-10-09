@@ -38,6 +38,10 @@ export default {
     PinCodeInputPopup,
   },
   props: {
+    user: {
+      type: Object,
+      default: null,
+    },
     mdActive: {
       type: Boolean,
       default: false,
@@ -49,7 +53,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      selectedUser: 'getSelectedUser',
+      selectedUserFromStore: 'getSelectedUser',
     }),
     showSetPinDialog() {
       return (
@@ -60,6 +64,9 @@ export default {
       return (
         this.selectedUser && this.selectedUser.isPasscodeSet && this.mdActive
       );
+    },
+    selectedUser() {
+      return this.user || this.selectedUserFromStore;
     },
   },
   methods: {

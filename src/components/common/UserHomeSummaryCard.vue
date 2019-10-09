@@ -11,12 +11,12 @@
       />
     </div>
     <md-list :class="['wallet-list', { 'wallet-list-disabled': disabled }]">
-      <md-list-item class="wallet-list-item">
+      <md-list-item
+        class="wallet-list-item"
+        @click="$emit('clickMailtimeWallet')"
+      >
         <span class="md-caption wallet-name">{{ $t("message.home.mailtimeWallet") }}</span>
-        <md-button
-          class="wallet-button"
-          @click="$emit('clickMailtimeWallet')"
-        >
+        <md-button class="wallet-button">
           <div class="wallet-action">
             <span>{{ formatMDTAmount(user.mdtBalance) }}</span>
             <md-icon 
@@ -26,13 +26,15 @@
         </md-button>
       </md-list-item>
       <md-divider />
-      <md-list-item>
+      <md-list-item 
+        :disabled="!hasAnyAddress"
+        @click="hasAnyAddress ? onETHWalletClick() : null"
+      >
         <span class="md-caption wallet-name">{{ ethWalletTitle }}</span>
         <md-button
           v-if="hasAnyAddress"
           :disabled="disabled"
           class="wallet-button"
-          @click="onETHWalletClick"
         >
           <div class="wallet-action">
             <span>{{ ethWalletAmount }}</span>
@@ -48,13 +50,17 @@
           @click="onBindingButtonClick"
         >
           <div class="bind-button-content">
-            <img src="/static/icons/icon-bind.svg" >
+            <img
+              class="bind-button-icon"
+              src="/static/icons/icon-bind.svg"
+            >
             {{ $t("message.home.bindWallet") }}
           </div>
         </MDTMediumButton>
       </md-list-item>
     </md-list>
     <PinCodePopup
+      :user="user"
       :md-active.sync="showPinCode"
       :pin-setup-content="$t('message.ethBinding.pinSetupPopupDescription')"
       @codefilled="onPinCodeFilled"
@@ -202,6 +208,13 @@ export default {
 
   .bind-button-content {
     display: flex;
+    align-items: center;
+
+    .bind-button-icon {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.25rem;
+    }
   }
 }
 </style>
