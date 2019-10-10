@@ -26,6 +26,7 @@ import { mapGetters, mapMutations } from 'vuex';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 
+import { SET_SELECTED_USER } from '@/store/modules/home';
 import { SET_DONE_CALLBACK_PATH } from '@/store/modules/security';
 
 import { trackEvent } from '@/utils';
@@ -69,8 +70,16 @@ export default {
       return this.user || this.selectedUserFromStore;
     },
   },
+  watch: {
+    mdActive(newValue) {
+      if (newValue && this.user) {
+        this.setSelectedUser(this.user.emailAddress);
+      }
+    },
+  },
   methods: {
     ...mapMutations({
+      setSelectedUser: SET_SELECTED_USER,
       setDoneCallbackPath: SET_DONE_CALLBACK_PATH,
     }),
     onSetupPINClicked() {

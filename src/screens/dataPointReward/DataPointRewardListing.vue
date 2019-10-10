@@ -270,6 +270,7 @@ export default {
       locale: state => state.common.locale,
     }),
     ...mapGetters({
+      selectedUser: 'getSelectedUser',
       getDataPointRewards: 'getDataPointRewards',
       getDataPointRewardIdsByUser: 'getDataPointRewardIdsByUser',
       getDataPointConfig: 'getDataPointConfig',
@@ -279,11 +280,6 @@ export default {
       getDataPointSummaryUiState: 'getDataPointSummaryUiState',
       allUsersWithDataSharing: 'getAllUsersWithDataSharing',
     }),
-    selectedUser() {
-      return (
-        this.selectedUserFromAccountSelector || this.allUsersWithDataSharing[0]
-      );
-    },
     rewards() {
       return this.getDataPointRewards(
         this.getDataPointRewardIdsByUser(this.selectedUser.emailAddress),
@@ -320,6 +316,14 @@ export default {
     },
   },
   created() {
+    if (
+      !this.allUsersWithDataSharing.some(
+        user => user.emailAddress === this.selectedUser.emailAddress,
+      )
+    ) {
+      this.setSelectedUser(this.allUsersWithDataSharing[0].emailAddress);
+    }
+
     this.fetchData();
   },
   methods: {
@@ -334,7 +338,7 @@ export default {
     }),
     onAccountSelected(account) {
       trackEvent('Switch accounts on data point reward List');
-      this.selectedUserFromAccountSelector = account;
+      this.setSelectedUser(account.emailAddress);
       this.fetchData();
     },
     handleClickClaimButton() {

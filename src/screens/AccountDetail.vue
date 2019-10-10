@@ -9,6 +9,7 @@
     <TransactionList/>
     <div class="buttons">
       <MDTPrimaryButton
+        v-if="showDataPointRewardsButton"
         :style-type="1"
         @click="goToDataPointRewards()"
       >{{ $t('message.dataPointRewards.dataRewards') }}</MDTPrimaryButton>
@@ -56,7 +57,11 @@ export default {
   computed: {
     ...mapGetters({
       selectedUser: 'getSelectedUser',
+      isUserDataSharingEnabled: 'isUserDataSharingEnabled',
     }),
+    showDataPointRewardsButton() {
+      return this.isUserDataSharingEnabled(this.selectedUser);
+    },
   },
   created() {
     const emailAddress = this.$route.params.account_id;
