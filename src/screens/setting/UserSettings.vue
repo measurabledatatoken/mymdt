@@ -107,6 +107,7 @@
             >
               <md-switch 
                 :value="dataSharingEnableForApp"
+                class="switch"
                 @change="onDataSharingSwitchChanged"
               />
             </template>
@@ -501,5 +502,19 @@ export default {
 
 .non-top-section-header {
   margin-top: 24px;
+}
+
+.md-switch.switch.md-checked {
+  /deep/ .md-switch-thumb {
+    background-color: $theme-secondary-color;
+  }
+
+  /deep/ .md-switch-container {
+    background-color: lighten($theme-secondary-color, 30%);
+  }
+
+  /deep/ .md-ripple {
+    color: $theme-secondary-color;
+  }
 }
 </style>
