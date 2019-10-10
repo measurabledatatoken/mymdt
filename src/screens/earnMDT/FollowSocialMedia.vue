@@ -140,7 +140,9 @@ export default {
               alt: 'Step 2',
             },
             {
-              description: this.$t('message.earnMDT.follow.weibo.step3'),
+              description: this.$t('message.earnMDT.follow.weibo.step3', {
+                code: this.$route.query.code,
+              }),
               src: this.$t('message.earnMDT.follow.weibo.step3Src'),
               srcset: this.$t('message.earnMDT.follow.weibo.step3Srcset'),
               alt: 'Step 3',
@@ -186,7 +188,9 @@ export default {
               alt: 'Step 3',
             },
             {
-              description: this.$t('message.earnMDT.follow.telegram.step4'),
+              description: this.$t('message.earnMDT.follow.telegram.step4', {
+                code: this.$route.query.code,
+              }),
               src: this.$t('message.earnMDT.follow.telegram.step4Src'),
               srcset: this.$t('message.earnMDT.follow.telegram.step4Srcset'),
               alt: 'Step 4',
