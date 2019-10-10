@@ -3,6 +3,11 @@
     :label="label"
     :error="!isAddressValid && $t('message.qrcode.eth_address_invalid')"
   >
+    <slot 
+      v-for="slot in Object.keys($slots)"
+      :name="slot"
+      :slot="slot"
+    />
     <md-textarea 
       :placeholder="placeholder || $t('message.transfer.wallet_address_placeholder')" 
       v-model="walletAddress"

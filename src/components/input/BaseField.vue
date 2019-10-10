@@ -1,9 +1,11 @@
 <template>
   <div class="base-field">
-    <div 
-      v-if="!!label" 
-      class="label"
-    >{{ label }}</div>
+    <slot name="label">
+      <div 
+        v-if="!!label" 
+        class="label"
+      >{{ label }}</div>
+    </slot>
     <md-field 
       :class="{ 'md-invalid': !!error}" 
       v-bind="$attrs"
