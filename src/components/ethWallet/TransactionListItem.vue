@@ -22,8 +22,6 @@
 <script>
 import WalletAddressBlock from '@/components/common/WalletAddressBlock';
 
-import { formatAmount } from '@/utils';
-
 export default {
   components: {
     WalletAddressBlock,
@@ -54,10 +52,7 @@ export default {
         : this.transaction.to;
     },
     amount() {
-      return formatAmount(Number(this.transaction.value) / 1e18, {
-        prefix: this.transaction.is_transfer_in ? '+ ' : '- ',
-        suffix: ' MDT',
-      });
+      return `${this.transaction.value}MDT`;
     },
   },
 };

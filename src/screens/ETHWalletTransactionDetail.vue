@@ -53,7 +53,7 @@ export default {
       return this.getTransaction(this.$route.params.transaction_hash);
     },
     gasPrice() {
-      return this.transaction.gas_price / 1e18;
+      return this.transaction.gas_price;
     },
     transactionFee() {
       return this.gasPrice * this.transaction.gas_used;
