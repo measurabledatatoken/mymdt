@@ -95,7 +95,7 @@
     "note_placeholder": "Optional note. Up to {num} characters",
     "transferlist_emailtitle": "Transfer MDT to Another Email Account",
     "transferlist_ethtitle": "Send MDT to your own wallet address",
-    "transferlist_okextitle": "Exchange MDT in OKEX",
+    "transferlist_okextitle": "Exchange MDT in OKEx",
     "transfer": "transfer",
     "transaction_fee": "Transaction Fee",
     "min_amount": "Minimum Amount",
@@ -103,7 +103,9 @@
     "tutorial_title": "Transaction Fee",
     "tutorial_description": "MDT is an ERC20 token. Transferring tokens to an Ethereum wallet requires gas which is paid in Ether. When you transfer your MDT to an Ethereum wallet, the gas is calculated in MDT and deducted from your transaction. Depending on how clogged the Ethereum network is, gas or transaction fee will fluctuate.",
     "insufficient_fund": "Insufficient fund",
-    "view_transactions": "View Transactions"
+    "view_transactions": "View Transactions",
+    "transferToOKExAddress": "Transfer to OKEx Address",
+    "registerOKExAccount": "Register OKEx Account"
   },
   "qrcode": {
     "title": "Scan QR Code",

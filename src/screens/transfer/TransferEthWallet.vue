@@ -45,14 +45,31 @@
       @accountSelected="onAccountSelected"
       @menuOpened="onTransferFromMenuOpened"
     />
-    <WalletAddressField 
+    <WalletAddressField
       :label="$t('message.transfer.tolbl')"
       :placeholder="walletAddressFieldPlaceholder"
       :init-wallet-address="transferToWalletAddress"
       class="address-field"
       @walletAddressEntered="walletAddressEntered"
       @walletAddressInvalid="walletAddressInvalid"
-    />
+    >
+      <template 
+        v-if="isOKEx"
+        slot="label"
+      >
+        <div class="wallet-address-header">
+          <span>{{ $t('message.transfer.tolbl') }}</span>
+          <WebViewLink
+            to="https://www.okex.com/account/register?flag=activity&channelId=1838164"
+            external
+          >
+            <MDTSecondaryButton class="wallet-button">
+              {{ $t('message.transfer.registerOKExAccount') }}
+            </MDTSecondaryButton>
+          </WebViewLink>
+        </div>
+      </template>
+    </WalletAddressField>
     <NoteInputField 
       :note="transferNote"
       class="note"
@@ -85,14 +102,16 @@ import {
   SET_TRANSFER_TO_WALLETADDRESS,
   SET_TRANSFER_NOTE,
 } from '@/store/modules/transfer';
-import { SET_SELECTED_USER } from '@/store/modules/home';
+import { SET_SELECTED_USER, SET_OKEX_ADDRESS } from '@/store/modules/home';
 
 import AccountSelector from '@/components/common/AccountSelector';
 import MDTInputField from '@/components/common/MDTInputField';
 import NoteInputField from '@/components/common/NoteInputField';
 import WalletAddressField from '@/components/common/WalletAddressField';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import MDTSecondaryButton from '@/components/button/MDTSecondaryButton';
 import PaddedContainer from '@/components/containers/PaddedContainer';
+import WebViewLink from '@/components/common/WebViewLink';
 
 import BasePage from '@/screens/BasePage';
 
@@ -105,12 +124,18 @@ export default {
     NoteInputField,
     WalletAddressField,
     MDTPrimaryButton,
+    MDTSecondaryButton,
     PaddedContainer,
+    WebViewLink,
   },
   extends: BasePage,
   metaInfo() {
     return {
-      title: this.$t('message.transfer.ethtitle'),
+      title: this.$t(
+        this.isOKEx
+          ? 'message.transfer.transferToOKExAddress'
+          : 'message.transfer.ethtitle',
+      ),
     };
   },
   data() {
@@ -118,9 +143,6 @@ export default {
       RouteDef,
       isWalletAddressValid: false,
       showTutorial: false,
-      walletAddressFieldPlaceholder: this.$route.query.okex
-        ? this.$t('message.transfer.wallet_address_placeholder_for_okex')
-        : '',
     };
   },
   computed: {
@@ -129,6 +151,7 @@ export default {
       transferToWalletAddress: state => state.transfer.transferToWalletAddress,
       transferNote: state => state.transfer.transferNote,
       ethAddressScanned: state => state.qrcode.ethAddressScanned,
+      okexAddress: state => state.home.okexAddress,
     }),
     ...mapGetters({
       allUsers: 'getAllUsers',
@@ -162,11 +185,21 @@ export default {
     isFinalAmountSmallerAndEqualZero() {
       return this.finalAmount <= 0;
     },
+    isOKEx() {
+      return !!this.$route.query.okex;
+    },
+    walletAddressFieldPlaceholder() {
+      return this.isOKEx
+        ? this.$t('message.transfer.wallet_address_placeholder_for_okex')
+        : '';
+    },
   },
   created() {
     this.setTransferType(TransferType.EthWallet);
 
-    if (this.ethAddressScanned != null) {
+    if (this.isOKEx && this.okexAddress) {
+      this.setTransferToWalletAddress(this.okexAddress);
+    } else if (this.ethAddressScanned != null) {
       this.setTransferToWalletAddress(this.ethAddressScanned);
     }
   },
@@ -177,6 +210,7 @@ export default {
       setTransferNote: SET_TRANSFER_NOTE,
       setSelectedUser: SET_SELECTED_USER,
       setTransferToWalletAddress: SET_TRANSFER_TO_WALLETADDRESS,
+      setOKExAddress: SET_OKEX_ADDRESS,
     }),
     transferAmountInvalid() {
       this.setTransferAmount(0);
@@ -185,6 +219,9 @@ export default {
       trackEvent('Enter ETH wallet address', eventProperties);
       this.isWalletAddressValid = true;
       this.setTransferToWalletAddress(value);
+      if (this.isOKEx) {
+        this.setOKExAddress(value);
+      }
     },
     walletAddressInvalid() {
       this.isWalletAddressValid = false;
@@ -298,5 +335,20 @@ export default {
 .md-button.md-raised.primary {
   margin-top: auto;
   margin-bottom: 30px;
+}
+
+.wallet-address-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: $label-color;
+
+  .wallet-button {
+    margin: 0;
+    text-transform: initial;
+  }
 }
 </style>

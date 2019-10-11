@@ -95,7 +95,7 @@
     "note_placeholder": "选填. 最多{num}字",
     "transferlist_emailtitle": "发送 MDT 到其它邮箱地址",
     "transferlist_ethtitle": "发送 MDT 至我的钱包地址",
-    "transferlist_okextitle": "在 OKEX 中交易 MDT",
+    "transferlist_okextitle": "在 OKEx 中交易 MDT",
     "transfer": "转帐",
     "transaction_fee": "手续费",
     "min_amount": "最少转帐数量",
@@ -103,7 +103,9 @@
     "tutorial_title": "转帐手续费",
     "tutorial_description": "MDT 为 ERC20 代币。转帐至 ETH 钱包需要支付转账费。当您将 MDT 转移到 ETH 钱包时，转账费会以 MDT 计算并从您的交易中扣除。根据网络的拥堵情况，转账费将会有所波动。",
     "insufficient_fund": "该帐号 MDT 数量不够",
-    "view_transactions": "查看转帐详情"
+    "view_transactions": "查看转帐详情",
+    "transferToOKExAddress": "转帐至 OKEx 地址",
+    "registerOKExAccount": "登记 OKEx 帐号"
   },
   "qrcode": {
     "title": "扫描二维码",
