@@ -16,14 +16,12 @@
         @click="$emit('clickMailtimeWallet')"
       >
         <span class="md-caption wallet-name">{{ $t("message.home.mailtimeWallet") }}</span>
-        <md-button class="wallet-button">
-          <div class="wallet-action">
-            <span>{{ formatMDTAmount(user.mdtBalance) }}</span>
-            <md-icon 
-              md-src="/static/icons/setting-arrow-gray.svg"
-            />
-          </div>
-        </md-button>
+        <div class="wallet-action">
+          <span>{{ formatMDTAmount(user.mdtBalance) }}</span>
+          <md-icon 
+            md-src="/static/icons/setting-arrow-gray.svg"
+          />
+        </div>
       </md-list-item>
       <md-divider />
       <md-list-item 
@@ -31,18 +29,15 @@
         @click="hasAnyAddress ? onETHWalletClick() : null"
       >
         <span class="md-caption wallet-name">{{ ethWalletTitle }}</span>
-        <md-button
+        <div
           v-if="hasAnyAddress"
-          :disabled="disabled"
-          class="wallet-button"
+          class="wallet-action"
         >
-          <div class="wallet-action">
-            <span>{{ ethWalletAmount }}</span>
-            <md-icon 
-              md-src="/static/icons/setting-arrow-gray.svg"
-            />
-          </div>
-        </md-button>
+          <span>{{ ethWalletAmount }}</span>
+          <md-icon 
+            md-src="/static/icons/setting-arrow-gray.svg"
+          />
+        </div>
         <MDTMediumButton
           v-else
           :disabled="disabled"
@@ -69,10 +64,15 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 import UserInfo from '@/components/common/UserInfo';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
 import PinCodePopup from '@/components/popup/PinCodePopup';
+
+import { FETCH_BALANCE } from '@/store/modules/ethWallet';
+import { GET_BALANCE } from '@/store/modules/entities/ethWallet';
 
 import { formatAmount } from '@/utils';
 
@@ -105,6 +105,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      getBalance: GET_BALANCE,
+    }),
     ethWalletTitle() {
       if (this.user.smartContractPendingETHAddress) {
         return this.$t('message.home.ethWalletUpdating');
@@ -117,11 +120,14 @@ export default {
       }
     },
     ethWalletAmount() {
-      if (this.user.smartContractPendingETHAddress) {
+      if (
+        this.user.smartContractPendingETHAddress ||
+        !this.user.smartContractETHAddress
+      ) {
         return 'N/A';
       } else {
-        // TODO: use correct property name after API is ready
-        return this.formatMDTAmount(this.user.eth_wallet_balance);
+        const balanceInStr = this.getBalance(this.user.smartContractETHAddress);
+        return `${balanceInStr || '0'} MDT`;
       }
     },
     hasAnyAddress() {
@@ -131,7 +137,15 @@ export default {
       );
     },
   },
+  mounted() {
+    if (this.user.smartContractETHAddress) {
+      this.fetchBalance(this.user.smartContractETHAddress);
+    }
+  },
   methods: {
+    ...mapActions({
+      fetchBalance: FETCH_BALANCE,
+    }),
     formatMDTAmount(amount) {
       return formatAmount(amount || 0, { suffix: ' MDT' });
     },
@@ -183,18 +197,18 @@ export default {
     font-weight: bold;
   }
 
-  .wallet-button {
-    height: 24px;
-    margin: 0;
-    min-width: auto;
-  }
-
   .wallet-action {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     line-height: 24px;
     font-size: 1rem;
     font-weight: bold;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+    flex: 1;
+    margin-left: 0.5rem;
   }
 
   .bind-button.medium-button {
