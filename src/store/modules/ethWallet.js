@@ -1,18 +1,17 @@
 import api from '@/api';
-// import { delay } from '@/utils';
 
 import { REQUEST } from '@/store/modules/api';
-// import { FETCH_USER } from '@/store/modules/entities/users';
 
-export const FETCHING_TRANSACTIONS =
-  'ethWalletTransaction/FETCHING_TRANSACTIONS';
+export const FETCHING_TRANSACTIONS = 'ethWallet/FETCHING_TRANSACTIONS';
 export const FETCHING_TRANSACTIONS_SUCCESS =
-  'ethWalletTransaction/FETCHING_TRANSACTIONS_SUCCESS';
+  'ethWallet/FETCHING_TRANSACTIONS_SUCCESS';
 export const FETCHING_TRANSACTIONS_FAILURE =
-  'ethWalletTransaction/FETCHING_TRANSACTIONS_FAILURE';
+  'ethWallet/FETCHING_TRANSACTIONS_FAILURE';
 
-export const FETCH_TRANSACTIONS = 'ethWalletTransaction/FETCH_TRANSACTIONS';
-export const CANCEL_TRANSACTION = 'ethWalletTransaction/CANCEL_TRANSACTION';
+export const FETCHING_BALANCE_SUCCESS = 'ethWallet/FETCHING_BALANCE_SUCCESS';
+
+export const FETCH_TRANSACTIONS = 'ethWallet/FETCH_TRANSACTIONS';
+export const FETCH_BALANCE = 'ethWallet/FETCH_BALANCE';
 
 const state = {
   byId: {},
@@ -57,6 +56,20 @@ const actions = {
         error,
       });
     }
+  },
+  async [FETCH_BALANCE]({ commit, dispatch }, walletAddress) {
+    try {
+      const data = await dispatch(REQUEST, {
+        api: api.ethWallet.getBalance,
+        args: [walletAddress],
+      });
+
+      commit(FETCHING_BALANCE_SUCCESS, {
+        walletAddress,
+        balance: data.balance,
+      });
+      // eslint-disable-next-line
+    } catch {}
   },
 };
 

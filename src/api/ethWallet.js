@@ -23,4 +23,11 @@ export default {
       schema: transactionsSchema,
     });
   },
+  getBalance(walletAddress) {
+    const promise = axios.get(
+      `${APIScheme}://${APIEndPoint}/mdt/balance/${walletAddress}`,
+    );
+
+    return handleGeneralResponse(promise);
+  },
 };
