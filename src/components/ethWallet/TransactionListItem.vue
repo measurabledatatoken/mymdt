@@ -11,7 +11,7 @@
         :hash="address"
         class="wallet-address"
       />
-      <span class="description">{{ $d(new Date(transaction.timestamp), 'long') }}</span>
+      <span class="description">{{ dateDescription }}</span>
     </div>
     <div class="action">
       <span>{{ amount }}</span>
@@ -53,6 +53,13 @@ export default {
     },
     amount() {
       return `${this.transaction.value} MDT`;
+    },
+    dateDescription() {
+      if (!this.transaction.timestamp) {
+        return '';
+      }
+
+      return this.$d(new Date(this.transaction.timestamp * 1000), 'long');
     },
   },
 };
