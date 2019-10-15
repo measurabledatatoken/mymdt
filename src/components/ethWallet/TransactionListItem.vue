@@ -13,7 +13,7 @@
       />
       <span class="description">{{ dateDescription }}</span>
     </div>
-    <div class="action">
+    <div :class="['action', {'transfer-in': transaction.is_transfer_in } ]">
       <span>{{ amount }}</span>
     </div>
   </md-list-item>
@@ -52,7 +52,9 @@ export default {
         : this.transaction.to;
     },
     amount() {
-      return `${this.transaction.value} MDT`;
+      return `${this.transaction.is_transfer_in ? '+' : '-'}${
+        this.transaction.value
+      } MDT`;
     },
     dateDescription() {
       if (!this.transaction.timestamp) {
@@ -100,5 +102,9 @@ export default {
   word-break: break-word;
   white-space: normal;
   flex: 1;
+
+  &.transfer-in {
+    color: $theme-font-color-btn;
+  }
 }
 </style>
