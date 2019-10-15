@@ -52,7 +52,7 @@ export default {
         : this.transaction.to;
     },
     amount() {
-      return `${this.transaction.value}MDT`;
+      return `${this.transaction.value} MDT`;
     },
   },
 };
@@ -88,5 +88,10 @@ export default {
   margin-left: 16px;
   color: $label-color;
   font-weight: bold;
+  text-align: right;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  flex: 1;
 }
 </style>
