@@ -366,30 +366,33 @@ export default {
       switch (status) {
         case dataPointRewardStatus.PENDING:
         case dataPointRewardStatus.PROCESSING: {
-          if (!this.config.last_distribute_date) {
+          return '';
+        }
+        case dataPointRewardStatus.CLAIMABLE: {
+          if (!expiryStr) {
             return '';
           }
 
-          return this.$t('message.dataPointRewards.distributeOn', {
-            date: this.$d(
-              new Date(this.config.last_distribute_date),
-              'long-date',
-            ),
-          });
-        }
-        case dataPointRewardStatus.CLAIMABLE: {
           const expiryDate = new Date(expiryStr);
           return this.$t('message.dataPointRewards.dueOn', {
             date: this.$d(expiryDate, 'long-date'),
           });
         }
         case dataPointRewardStatus.CLAIMED: {
+          if (!claimedDateStr) {
+            return '';
+          }
+
           const claimedDate = new Date(claimedDateStr);
           return this.$t('message.dataPointRewards.claimedOn', {
             date: this.$d(claimedDate, 'long-date'),
           });
         }
         case dataPointRewardStatus.EXPIRED: {
+          if (!expiryStr) {
+            return '';
+          }
+
           const expiryDate = new Date(expiryStr);
           return this.$t('message.dataPointRewards.expiredOn', {
             date: this.$d(expiryDate, 'long-date'),
@@ -628,7 +631,6 @@ hr {
     .section-description {
       font-size: 0.75rem;
       color: #9b9b9b;
-      text-align: right;
     }
 
     &:first-child {
@@ -637,6 +639,15 @@ hr {
 
     &:last-child {
       text-align: right;
+      overflow-wrap: break-word;
+      word-break: break-all;
+      white-space: normal;
+      flex: 1;
+      margin-left: 0.5rem;
+
+      .section-description {
+        text-align: right;
+      }
     }
   }
 
