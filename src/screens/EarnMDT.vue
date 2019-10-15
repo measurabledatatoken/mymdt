@@ -151,9 +151,7 @@ export default {
         return '';
       }
 
-      return `https://redpacket.mdt.co/?email=${emailAddress}&lang=${lang}&redirect_uri=${encodeURIComponent(
-        window.location.href,
-      )}`;
+      return `https://redpacket.mdt.co/?email=${emailAddress}&lang=${lang}&app=true`;
     },
     showDataSharingBanner() {
       const summary = this.getDataPointSummary(this.selectedUser.emailAddress);
