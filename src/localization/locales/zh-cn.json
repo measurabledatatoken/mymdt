@@ -346,8 +346,8 @@
       "errorPopupTitle": "出错了！",
       "errorPopupDescription": "请再尝试。"
     },
-    "turnOnDataSharing": "打开数据分享",
-    "getYourDataRewards": "取得\n您的数据奖励"
+    "dataSharing": "数据分享",
+    "getYourDataRewards": "如何赚取\n您的数据奖励"
   },
   "dataPointRewards": {
     "dataRewards": "数据奖励",
