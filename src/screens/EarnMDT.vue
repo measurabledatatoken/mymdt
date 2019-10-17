@@ -186,7 +186,7 @@ export default {
         }
       }
 
-      return `https://mdt.io/${part}data-rewards#supported-receipts`;
+      return `https://mdt.io/${part}data-rewards#earn-rewards`;
     },
   },
   created() {
