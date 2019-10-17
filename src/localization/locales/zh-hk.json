@@ -250,6 +250,9 @@
     "amountPerTime": "{amount}/次",
     "go": "去完成",
     "claim": "認領",
+    "expiredAfter": "{number}天後過期",
+    "expiredOn": "已在{date}過期",
+    "expired": "已過期",
     "invite": "邀請",
     "maximumAmountToEarn": "最多 {amount} {currency}",
     "rewardErrorMessage": "未能認領獎勵。請刷新並重試",
@@ -343,8 +346,8 @@
       "errorPopupTitle": "出錯了！",
       "errorPopupDescription": "請再嘗試。"
     },
-    "turnOnDataSharing": "打開數據分享",
-    "getYourDataRewards": "取得\n您的數據獎勵"
+    "dataSharing": "數據分享",
+    "getYourDataRewards": "如何賺取\n您的數據獎勵"
   },
   "dataPointRewards": {
     "dataRewards": "數據獎勵",

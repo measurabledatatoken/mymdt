@@ -250,6 +250,9 @@
     "amountPerTime": "{amount}/time",
     "go": "Go",
     "claim": "Claim",
+    "expiredAfter": "Expired after {number} days",
+    "expiredOn": "Expired on {date}",
+    "expired": "Expired",
     "invite": "Invite",
     "maximumAmountToEarn": "Maximum {amount} {currency}",
     "rewardErrorMessage": "Failed to claim reward. Please refresh and try again.",
@@ -343,7 +346,7 @@
       "errorPopupTitle": "Oops! Something went wrong",
       "errorPopupDescription": "Please try again."
     },
-    "turnOnDataSharing": "Turn On Data Sharing",
+    "dataSharing": "Data Sharing",
     "getYourDataRewards": "Get Your\nData Rewards"
   },
   "dataPointRewards": {

@@ -57,18 +57,11 @@
             >
               {{ $t('message.common.claim') }}
             </MDTMediumButton>
-            <md-button 
-              class="md-icon-button"
-              @click="onHelpClick"
-            >
-              <img src="/static/icons/icon-help.svg" >
-            </md-button>
-            <BasePopup 
-              :title="$t('message.dataPointRewards.claimYourDataRewards')"
-              :description="$t('message.dataPointRewards.claimHelp')"
-              :md-active.sync="showHelpPopup"
-              :confirm-text="$t('message.common.okay')"
-            />
+            <WebViewLink :to="helpUrl">
+              <md-button class="md-icon-button">
+                <img src="/static/icons/icon-help.svg" >
+              </md-button>
+            </WebViewLink>
           </div>
         </template>
       </ClaimMDTCard>
@@ -196,6 +189,7 @@ import { FETCH_USER } from '@/store/modules/entities/users';
 import { SET_SELECTED_USER } from '@/store/modules/home';
 import { trackEvent, formatAmount } from '@/utils';
 import dataPointRewardStatus from '@/enum/dataPointRewardStatus';
+import localeEnum from '@/enum/locale';
 import { RouteDef } from '@/constants';
 
 export default {
@@ -229,7 +223,6 @@ export default {
       showChooseWalletPopup: false,
       showPinCode: false,
       showBindETHPopup: false,
-      showHelpPopup: false,
       walletData: [
         {
           src: '/static/icons/logo-trust-wallet-small.svg',
@@ -314,6 +307,24 @@ export default {
     claimed() {
       return this.summary[dataPointRewardStatus.CLAIMED] || 0;
     },
+    helpUrl() {
+      let part = '';
+      switch (this.locale) {
+        case localeEnum.ZH_HK: {
+          part = 'zh-hk/';
+          break;
+        }
+        case localeEnum.ZH_CN: {
+          part = 'zh-cn/';
+          break;
+        }
+        default: {
+          part = '';
+        }
+      }
+
+      return `https://mdt.io/${part}data-rewards#claim-rewards`;
+    },
   },
   created() {
     if (
@@ -366,30 +377,33 @@ export default {
       switch (status) {
         case dataPointRewardStatus.PENDING:
         case dataPointRewardStatus.PROCESSING: {
-          if (!this.config.last_distribute_date) {
+          return '';
+        }
+        case dataPointRewardStatus.CLAIMABLE: {
+          if (!expiryStr) {
             return '';
           }
 
-          return this.$t('message.dataPointRewards.distributeOn', {
-            date: this.$d(
-              new Date(this.config.last_distribute_date),
-              'long-date',
-            ),
-          });
-        }
-        case dataPointRewardStatus.CLAIMABLE: {
           const expiryDate = new Date(expiryStr);
           return this.$t('message.dataPointRewards.dueOn', {
             date: this.$d(expiryDate, 'long-date'),
           });
         }
         case dataPointRewardStatus.CLAIMED: {
+          if (!claimedDateStr) {
+            return '';
+          }
+
           const claimedDate = new Date(claimedDateStr);
           return this.$t('message.dataPointRewards.claimedOn', {
             date: this.$d(claimedDate, 'long-date'),
           });
         }
         case dataPointRewardStatus.EXPIRED: {
+          if (!expiryStr) {
+            return '';
+          }
+
           const expiryDate = new Date(expiryStr);
           return this.$t('message.dataPointRewards.expiredOn', {
             date: this.$d(expiryDate, 'long-date'),
@@ -488,9 +502,6 @@ export default {
         name: RouteDef.DataPointRewardDetailNew.name,
         params: { userId: this.selectedUser.emailAddress, rewardId: id },
       });
-    },
-    onHelpClick() {
-      this.showHelpPopup = true;
     },
   },
 };
@@ -628,7 +639,6 @@ hr {
     .section-description {
       font-size: 0.75rem;
       color: #9b9b9b;
-      text-align: right;
     }
 
     &:first-child {
@@ -637,6 +647,15 @@ hr {
 
     &:last-child {
       text-align: right;
+      overflow-wrap: break-word;
+      word-break: break-all;
+      white-space: normal;
+      flex: 1;
+      margin-left: 0.5rem;
+
+      .section-description {
+        text-align: right;
+      }
     }
   }
 

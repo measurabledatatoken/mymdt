@@ -12,19 +12,18 @@
     </padded-container>
     <md-divider />
     <padded-container v-if="showDataSharingBanner">
-      <div
-        class="data-sharing-banner"
-        @click="onDataSharingBannerClick"
-      >
-        <img
-          src="/static/background/banner-data-sharing.jpg"
-          srcset="/static/background/banner-data-sharing@2x.jpg 2x, /static/background/banner-data-sharing@3x.jpg 3x"
-        >
-        <div class="data-sharing-banner-text-block">
-          <div>{{ $t('message.earnMDT.turnOnDataSharing') }}</div>
-          <div class="banner-text-title">{{ $t('message.earnMDT.getYourDataRewards') }}</div>
+      <WebViewLink :to="bannerUrl">
+        <div class="data-sharing-banner">
+          <img
+            src="/static/background/banner-data-sharing.jpg"
+            srcset="/static/background/banner-data-sharing@2x.jpg 2x, /static/background/banner-data-sharing@3x.jpg 3x"
+          >
+          <div class="data-sharing-banner-text-block">
+            <div>{{ $t('message.earnMDT.dataSharing') }}</div>
+            <div class="banner-text-title">{{ $t('message.earnMDT.getYourDataRewards') }}</div>
+          </div>
         </div>
-      </div>
+      </WebViewLink>
     </padded-container>
     <padded-container>
       <md-list 
@@ -93,6 +92,7 @@ import EarnMDTLoadingItem from '@/components/task/EarnMDTLoadingItem';
 import RewardItem from '@/components/task/RewardItem';
 import TaskItem from '@/components/task/TaskItem';
 import WebViewItem from '@/components/task/WebViewItem';
+import WebViewLink from '@/components/common/WebViewLink';
 import PaddedContainer from '@/components/containers/PaddedContainer';
 
 import { FETCH_TASKS } from '@/store/modules/entities/users';
@@ -101,6 +101,7 @@ import { SET_SELECTED_USER } from '@/store/modules/home';
 import { FETCH_DATA_POINT_SUMMARY } from '@/store/modules/dataPoint';
 import { trackEvent } from '@/utils';
 import { RouteDef } from '@/constants';
+import localeEnum from '@/enum/locale';
 
 export default {
   components: {
@@ -111,6 +112,7 @@ export default {
     RewardItem,
     TaskItem,
     WebViewItem,
+    WebViewLink,
   },
   extends: BasePage,
   metaInfo() {
@@ -141,9 +143,9 @@ export default {
       const emailAddress = this.selectedUser.emailAddress;
 
       const localeTolangMap = {
-        'zh-cn': 'cn',
-        'zh-hk': 'zh',
-        'en-us': 'en',
+        [localeEnum.ZH_CN]: 'cn',
+        [localeEnum.ZH_HK]: 'zh',
+        [localeEnum.EN_US]: 'en',
       };
       const lang = localeTolangMap[this.locale];
 
@@ -167,6 +169,24 @@ export default {
       }
 
       return Object.keys(summary).length === 0;
+    },
+    bannerUrl() {
+      let part = '';
+      switch (this.locale) {
+        case localeEnum.ZH_HK: {
+          part = 'zh-hk/';
+          break;
+        }
+        case localeEnum.ZH_CN: {
+          part = 'zh-cn/';
+          break;
+        }
+        default: {
+          part = '';
+        }
+      }
+
+      return `https://mdt.io/${part}data-rewards#supported-receipts`;
     },
   },
   created() {
