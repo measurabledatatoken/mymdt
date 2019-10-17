@@ -45,11 +45,11 @@
       </div>
     </div>
     <div 
-      v-if="showBalance"
+      v-if="showBalance && !!ethWalletAmount"
       class="balance"
     >
       <div class="card-text balance-title">{{ $t('message.home.total_balance') }}</div>
-      <div class="balance-amount">{{ formatMDTAmount(user.eth_wallet_balance) }}</div>
+      <div class="balance-amount">{{ ethWalletAmount }}</div>
     </div>
     <transition name="footer">
       <div 
@@ -63,7 +63,12 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 import WalletAddressBlock from '@/components/common/WalletAddressBlock';
+
+import { FETCH_BALANCE } from '@/store/modules/ethWallet';
+import { GET_BALANCE } from '@/store/modules/entities/ethWallet';
 
 import { formatAmount } from '@/utils';
 
@@ -92,6 +97,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      getBalance: GET_BALANCE,
+    }),
     hashes() {
       const hashes = [];
       for (
@@ -118,8 +126,24 @@ export default {
     hasEditClickListener() {
       return this.$listeners && this.$listeners.editClick;
     },
+    ethWalletAmount() {
+      if (!this.user.smartContractETHAddress) {
+        return '';
+      }
+
+      const balanceInStr = this.getBalance(this.user.smartContractETHAddress);
+      return `${balanceInStr || '0'} MDT`;
+    },
+  },
+  mounted() {
+    if (this.user.smartContractETHAddress) {
+      this.fetchBalance(this.user.smartContractETHAddress);
+    }
   },
   methods: {
+    ...mapActions({
+      fetchBalance: FETCH_BALANCE,
+    }),
     onCardClick() {
       if (!this.compact) {
         this.expanded = !this.expanded;

@@ -11,9 +11,9 @@
         :hash="address"
         class="wallet-address"
       />
-      <span class="description">{{ $d(new Date(transaction.timestamp), 'long') }}</span>
+      <span class="description">{{ dateDescription }}</span>
     </div>
-    <div class="action">
+    <div :class="['action', {'transfer-in': transaction.is_transfer_in } ]">
       <span>{{ amount }}</span>
     </div>
   </md-list-item>
@@ -52,7 +52,16 @@ export default {
         : this.transaction.to;
     },
     amount() {
-      return `${this.transaction.value}MDT`;
+      return `${this.transaction.is_transfer_in ? '+' : '-'}${
+        this.transaction.value
+      } MDT`;
+    },
+    dateDescription() {
+      if (!this.transaction.timestamp) {
+        return '';
+      }
+
+      return this.$d(new Date(this.transaction.timestamp * 1000), 'long');
     },
   },
 };
@@ -88,5 +97,14 @@ export default {
   margin-left: 16px;
   color: $label-color;
   font-weight: bold;
+  text-align: right;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  flex: 1;
+
+  &.transfer-in {
+    color: $theme-font-color-btn;
+  }
 }
 </style>

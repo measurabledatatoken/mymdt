@@ -8,20 +8,33 @@
     />
     <TransactionDetailItem 
       :title="$t('message.ethWallet.gasPrice')"
-      :description="String(gasPrice)"
+      :description="`${transaction.gas_price} ETH`"
     />
     <TransactionDetailItem 
       :title="$t('message.ethWallet.gasUsed')"
-      :description="String(transaction.gas_used)"
+      :description="transaction.gas_used"
     />
     <TransactionDetailItem 
       :title="$t('message.ethWallet.transactionFee')"
-      :description="String(transactionFee)"
+      :description="`${transaction.transaction_fee} ETH`"
     />
     <TransactionDetailItem 
       :title="$t('message.ethWallet.transactionHash')"
       :description="transaction.transaction_hash"
     />
+    <TransactionDetailItem
+      v-if="etherscanUrl"
+      :title="$t('message.transaction.transactionRecord')"
+    >
+      <template
+        slot="description"
+      >
+        <WebViewLink
+          :to="etherscanUrl"
+          external
+        >{{ etherscanUrl }}</WebViewLink>
+      </template>
+    </TransactionDetailItem>
   </md-list>
 </template>
 <script>
@@ -30,6 +43,7 @@ import BasePage from '@/screens/BasePage';
 import TransactionDetailItem from '@/components/transaction/TransactionDetailItem';
 
 import TransactionListItem from '@/components/ethWallet/TransactionListItem';
+import WebViewLink from '@/components/common/WebViewLink';
 
 import { GET_TRANSACTION_BY_ID } from '@/store/modules/entities/ethWalletTransaction';
 
@@ -37,6 +51,7 @@ export default {
   components: {
     TransactionListItem,
     TransactionDetailItem,
+    WebViewLink,
   },
   extends: BasePage,
   metaInfo() {
@@ -55,8 +70,12 @@ export default {
     gasPrice() {
       return this.transaction.gas_price;
     },
-    transactionFee() {
-      return this.gasPrice * this.transaction.gas_used;
+    etherscanUrl() {
+      if (!this.transaction.transaction_hash) {
+        return '';
+      }
+
+      return `https://etherscan.io/tx/${this.transaction.transaction_hash}`;
     },
   },
 };
@@ -64,6 +83,6 @@ export default {
 
 <style lang="scss" scoped>
 .transaction-detail-list {
-  padding-top: 0;
+  padding-top: 0.25rem;
 }
 </style>

@@ -59,7 +59,10 @@ export default {
   computed: {
     ...mapGetters(['getApplication']),
     formattedAmount() {
-      return formatAmount(this.transaction.delta, { type: 'short' });
+      return formatAmount(Math.abs(this.transaction.delta), {
+        type: 'short',
+        prefix: this.transaction.delta < 0 ? '-' : '+',
+      });
     },
     getStatusText() {
       return this.$t(

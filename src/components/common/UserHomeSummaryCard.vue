@@ -204,8 +204,9 @@ export default {
     line-height: 24px;
     font-size: 1rem;
     font-weight: bold;
+    text-align: right;
     overflow-wrap: break-word;
-    word-break: break-all;
+    word-break: break-word;
     white-space: normal;
     flex: 1;
     margin-left: 0.5rem;
