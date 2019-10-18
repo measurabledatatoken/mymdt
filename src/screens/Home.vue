@@ -2,7 +2,7 @@
   <div class="home">
     <div class="top-content">
       <div class="balance-title">{{ $t('message.home.total_balance') }}</div>
-      <div class="balance-count">{{ formatAmount(totalMDTBalance) }} MDT</div>
+      <div class="balance-count">{{ formatAmount(totalMDTBalance + totalETHWalletBalance) }} MDT</div>
 
       <div class="account-content">
         <div class="balance-value">≈ {{ formatAmount(totalMDTValues, { type: 'short' }) }} {{ priceUnit }} </div>
@@ -74,7 +74,12 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-import { trackEvent, delay } from '@/utils';
+
+import BasePage from '@/screens/BasePage';
+import UserHomeSummaryCard from '@/components/common/UserHomeSummaryCard';
+import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
+import LoadingPopup from '@/components/common/LoadingPopup';
+import SuccessPopup from '@/components/popup/SuccessPopup';
 
 import {
   SET_ERROR_MESSAGE,
@@ -90,14 +95,13 @@ import {
   SET_NEED_EXIT_BTN,
 } from '@/store/modules/home';
 import { REQUEST_AUTO_LOGIN } from '@/store/modules/login';
-import UserHomeSummaryCard from '@/components/common/UserHomeSummaryCard';
-import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
-import LoadingPopup from '@/components/common/LoadingPopup';
-import { RouteDef } from '@/constants';
-import BasePage from '@/screens/BasePage';
-import { formatAmount } from '@/utils';
-import SuccessPopup from '@/components/popup/SuccessPopup';
 import { FETCH_ALL_REWARDS } from '@/store/modules/entities/rewards';
+import { FETCH_BALANCE } from '@/store/modules/ethWallet';
+import { GET_BALANCE } from '@/store/modules/entities/ethWallet';
+
+import { RouteDef } from '@/constants';
+import { trackEvent, delay } from '@/utils';
+import { formatAmount } from '@/utils';
 
 export default {
   components: {
@@ -138,6 +142,7 @@ export default {
       getUser: 'getUser',
       getRewardsOfAllUsers: 'getRewardsOfAllUsers',
       invalidUser: 'getInvalidUser',
+      getBalance: GET_BALANCE,
     }),
     totalMDTBalance() {
       let totalMDTBalance = 0;
@@ -145,6 +150,17 @@ export default {
         totalMDTBalance += userAccount.mdtBalance;
       });
       return totalMDTBalance;
+    },
+    totalETHWalletBalance() {
+      let balance = 0;
+      const walletAddressMap = {};
+      this.allUsers.forEach(user => {
+        const walletAddress = user.smartContractETHAddress;
+        if (walletAddress && !walletAddressMap[walletAddress]) {
+          balance += Number(this.getBalance(walletAddress));
+        }
+      });
+      return balance;
     },
     totalMDTValues() {
       return this.totalMDTBalance * this.mdtPrice;
@@ -172,7 +188,7 @@ export default {
       this.$router.replace(RouteDef.Home);
 
       this.setNeedExitBtn(needExit);
-      this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
+      await this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
     } else {
       // navigate from other pages
       await this.requestAppConfig();
@@ -187,6 +203,8 @@ export default {
       this.requestUserAccounts();
       this.setIsUserAcctionsDirty(false);
     }
+
+    this.fetchAllETHWalletsBalance();
 
     trackEvent('Home view', { 'Email Number': this.allUsers.length });
   },
@@ -205,6 +223,7 @@ export default {
       requestAppConfig: REQUEST_APP_CONFIG,
       requestUserAccounts: REQUEST_USER_ACCOUNTS,
       fetchAllRewards: FETCH_ALL_REWARDS,
+      fetchETHWalletBalance: FETCH_BALANCE,
     }),
     goToTransfer(user) {
       trackEvent('Click on transfer from Home');
@@ -297,6 +316,13 @@ export default {
         this.setErrorMessage(this.$t('message.common.unknow_error'));
         this.setShowErrorPrompt(true);
       }
+    },
+    fetchAllETHWalletsBalance() {
+      this.allUsers.forEach(user => {
+        if (user.smartContractETHAddress) {
+          this.fetchETHWalletBalance(user.smartContractETHAddress);
+        }
+      });
     },
     onEarnClicked() {
       trackEvent('Click on Earn MDT button from home page');
