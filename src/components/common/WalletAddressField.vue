@@ -51,19 +51,24 @@ export default {
   },
   watch: {
     walletAddress(newValue) {
-      const ethAddress = getEthAddressFromString(newValue);
-      if (ethAddress == null) {
-        this.isAddressValid = false;
-        this.$emit('walletAddressInvalid', newValue);
-      } else {
-        this.isAddressValid = true;
-        this.$emit('walletAddressEntered', newValue);
-      }
+      this.valueChanged(newValue);
     },
+  },
+  mounted() {
+    if (this.initWalletAddress) {
+      this.valueChanged(this.initWalletAddress);
+    }
   },
   methods: {
     valueChanged(value) {
-      this.walletAddress = value;
+      const ethAddress = getEthAddressFromString(value);
+      if (ethAddress == null) {
+        this.isAddressValid = false;
+        this.$emit('walletAddressInvalid', value);
+      } else {
+        this.isAddressValid = true;
+        this.$emit('walletAddressEntered', value);
+      }
     },
   },
 };
