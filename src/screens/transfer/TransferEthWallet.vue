@@ -199,6 +199,10 @@ export default {
 
     if (this.isOKEx && this.okexAddress) {
       this.setTransferToWalletAddress(this.okexAddress);
+    } else if (this.selectedUser.smartContractETHAddress) {
+      this.setTransferToWalletAddress(
+        this.selectedUser.smartContractETHAddress,
+      );
     } else if (this.ethAddressScanned != null) {
       this.setTransferToWalletAddress(this.ethAddressScanned);
     }
@@ -233,6 +237,9 @@ export default {
     onAccountSelected(account) {
       trackEvent('Choose account for "from"', eventProperties);
       this.setSelectedUser(account.emailAddress);
+      if (account.smartContractETHAddress) {
+        this.setTransferToWalletAddress(account.smartContractETHAddress);
+      }
     },
     onTransferFromMenuOpened() {
       trackEvent('Click on the dropdown arrow for "from"', eventProperties);

@@ -53,6 +53,9 @@ export default {
     walletAddress(newValue) {
       this.valueChanged(newValue);
     },
+    initWalletAddress(newValue) {
+      this.walletAddress = newValue;
+    },
   },
   mounted() {
     if (this.initWalletAddress) {
