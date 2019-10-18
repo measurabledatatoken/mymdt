@@ -139,6 +139,25 @@ jobs:
             VUE_APP_IMTOKEN_DAPP_URL=${BETA_VUE_APP_IMTOKEN_DAPP_URL} \
             bash .circleci/deploy.sh"
 
+
+  deploy-beta-hk:
+    docker:
+      - image: circleci/node:9.11.1-browsers
+    steps:
+      - run:
+          name: Deploy to beta hk server
+          command: |
+            ssh -o "StrictHostKeyChecking no" ${BETA_HK_DEPLOY_DESTINATION} "\
+            cd mdtwallet-webapp && \
+            git fetch --all &&
+            git checkout --force $CIRCLE_SHA1 && \
+            API_SCHEME=${BETA_API_SCHEME} \
+            API_ENDPOINT=${BETA_API_ENDPOINT} \
+            VUE_APP_TRUST_WALLET_DAPP_URL=${BETA_VUE_APP_TRUST_WALLET_DAPP_URL} \
+            VUE_APP_METAMASK_DAPP_URL=${BETA_VUE_APP_METAMASK_DAPP_URL} \
+            VUE_APP_IMTOKEN_DAPP_URL=${BETA_VUE_APP_IMTOKEN_DAPP_URL} \
+            bash .circleci/deploy.sh"
+
 workflows:
   version: 2
   test-and-deploy:
@@ -171,3 +190,13 @@ workflows:
             branches:
               only:
                 - beta
+
+
+
+  test-and-deploy-beta-hk:
+    jobs:
+      - deploy-beta-hk:
+          filters:
+            branches:
+              only:
+                - beta-hk
