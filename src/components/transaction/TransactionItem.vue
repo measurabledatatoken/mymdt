@@ -1,41 +1,35 @@
 <template>
-  <md-list-item 
-    v-bind="$attrs" 
+  <TransactionItem
+    :title="title"
+    :description="description"
+    :avatar-url="avatarUrl"
     v-on="$listeners"
   >
-    <md-avatar v-if="showAvatar && application && application.avatar_url">
-      <img 
-        :src="application.avatar_url" 
-        alt="Avatar"
-      >
-    </md-avatar>
-    <div class="md-list-item-text">
-      <TransactionTitle :transaction="transaction" />
-      <span>{{ (showApplication && application) ? application.name : $d(new Date(transaction.transaction_time), 'long') }}</span>
-    </div>
-    <div :class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
-      <span>{{ formattedAmount }} MDT</span>
-      <span
-        v-if="showStatus"
-        :class="[ 'action-status', { 'action-status-danger' : transaction.status === transactionStatus.CANCELLED}]"
-      >
-        {{ getStatusText }}
-      </span>
-    </div>
-  </md-list-item>
+    <template slot="action">
+      <div :class="['action', getStatusClass(), { 'action--amount-negative': transaction.delta < 0 }]">
+        <span>{{ formattedAmount }} MDT</span>
+        <span
+          v-if="showStatus"
+          :class="[ 'action-status', { 'action-status-danger' : transaction.status === transactionStatus.CANCELLED}]"
+        >
+          {{ getStatusText }}
+        </span>
+      </div>
+    </template>
+  </TransactionItem>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
-import TransactionTitle from '@/components/transaction/TransactionTitle';
+import TransactionItem from '@/components/common/TransactionItem';
 
-import { transactionStatus } from '@/enum';
+import { transactionStatus, transactionType } from '@/enum';
 import { formatAmount } from '@/utils';
 
 export default {
   components: {
-    TransactionTitle,
+    TransactionItem,
   },
   props: {
     transaction: {
@@ -77,6 +71,52 @@ export default {
     },
     application() {
       return this.getApplication(this.transaction.application_id);
+    },
+    title() {
+      switch (this.transaction.transaction_type) {
+        case transactionType.REWARD: {
+          return this.$t('message.transaction.reward');
+        }
+        case transactionType.REDEEM: {
+          return this.$t('message.transaction.redeem');
+        }
+        case transactionType.INTERNAL_TRANSFER: {
+          if (this.transaction.is_transfer_out) {
+            return this.$t('message.transaction.transferOutToEmail', {
+              email: this.transaction.to_email,
+            });
+          }
+
+          return this.$t('message.transaction.transferInFromEmail', {
+            email: this.transaction.from_email,
+          });
+        }
+        case transactionType.EXTERNAL_TRANSFER: {
+          return this.$t('message.transaction.transferOutToETHWallet');
+        }
+        case transactionType.DEPOSIT: {
+          return this.$t('message.transaction.deposit');
+        }
+        case transactionType.REFUND: {
+          return this.$t('message.transaction.refund');
+        }
+        default: {
+          return 'title';
+        }
+      }
+    },
+    description() {
+      return this.showApplication && this.application
+        ? this.application.name
+        : this.$d(new Date(this.transaction.transaction_time), 'long');
+    },
+    avatarUrl() {
+      return (
+        (this.showAvatar &&
+          !!this.application &&
+          this.application.avatar_url) ||
+        ''
+      );
     },
   },
   methods: {

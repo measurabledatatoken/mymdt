@@ -36,8 +36,6 @@ export default {
 .item {
   .transaction-detail-item__text {
     flex: 1;
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
     white-space: nowrap;
@@ -65,6 +63,7 @@ export default {
     }
 
     .transaction-detail-item__text {
+      display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
