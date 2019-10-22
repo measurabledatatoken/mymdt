@@ -158,6 +158,7 @@ export default {
         const walletAddress = user.smartContractETHAddress;
         if (walletAddress && !walletAddressMap[walletAddress]) {
           balance += Number(this.getBalance(walletAddress));
+          walletAddressMap[walletAddress] = true;
         }
       });
       return balance;
