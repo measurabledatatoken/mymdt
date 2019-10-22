@@ -64,14 +64,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import UserInfo from '@/components/common/UserInfo';
 import MDTSubtleButton from '@/components/button/MDTSubtleButton';
 import MDTMediumButton from '@/components/button/MDTMediumButton';
 import PinCodePopup from '@/components/popup/PinCodePopup';
 
-import { FETCH_BALANCE } from '@/store/modules/ethWallet';
 import { GET_BALANCE } from '@/store/modules/entities/ethWallet';
 
 import { formatAmount } from '@/utils';
@@ -126,8 +125,10 @@ export default {
       ) {
         return 'N/A';
       } else {
-        const balanceInStr = this.getBalance(this.user.smartContractETHAddress);
-        return `${balanceInStr || '0'} MDT`;
+        const balance = this.getBalance(this.user.smartContractETHAddress);
+        return formatAmount(Number(balance), {
+          suffix: ` MDT`,
+        });
       }
     },
     hasAnyAddress() {
@@ -137,15 +138,7 @@ export default {
       );
     },
   },
-  mounted() {
-    if (this.user.smartContractETHAddress) {
-      this.fetchBalance(this.user.smartContractETHAddress);
-    }
-  },
   methods: {
-    ...mapActions({
-      fetchBalance: FETCH_BALANCE,
-    }),
     formatMDTAmount(amount) {
       return formatAmount(amount || 0, { suffix: ' MDT' });
     },

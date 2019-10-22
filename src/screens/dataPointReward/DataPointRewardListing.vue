@@ -52,6 +52,7 @@
           <div class="claim-button-container">
             <MDTMediumButton
               :style-type="1"
+              :disabled="!claimable"
               class="claim-button"
               @click="handleClickClaimButton"
             >
