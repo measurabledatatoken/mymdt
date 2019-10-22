@@ -85,4 +85,8 @@ export default {
 .transaction-detail-list {
   padding-top: 0.25rem;
 }
+
+.md-divider {
+  margin-top: 0.25rem;
+}
 </style>
