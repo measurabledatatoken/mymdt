@@ -164,7 +164,9 @@ export default {
       return balance;
     },
     totalMDTValues() {
-      return this.totalMDTBalance * this.mdtPrice;
+      return (
+        (this.totalMDTBalance + this.totalETHWalletBalance) * this.mdtPrice
+      );
     },
     accountNumStr() {
       if (this.allUsers.length <= 1) {
