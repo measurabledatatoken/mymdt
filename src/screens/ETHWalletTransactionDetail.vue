@@ -2,6 +2,18 @@
   <md-list class="transaction-detail-list md-double-line">
     <TransactionListItem :transaction="transaction" />
     <md-divider />
+    <TransactionDetailItem
+      :title="$t(transaction.is_transfer_in ? 'message.ethWallet.transferFrom' : 'message.ethWallet.transferTo')"
+    >
+      <template
+        slot="description"
+      >
+        <WalletAddressBlock
+          :hash="transaction.is_transfer_in ? transaction.from : transaction.to"
+          class="wallet-address"
+        />
+      </template>
+    </TransactionDetailItem>
     <TransactionDetailItem 
       :title="$t('message.ethWallet.block')"
       :description="String(transaction.block)"
@@ -41,6 +53,7 @@
 import { mapGetters } from 'vuex';
 import BasePage from '@/screens/BasePage';
 import TransactionDetailItem from '@/components/transaction/TransactionDetailItem';
+import WalletAddressBlock from '@/components/common/WalletAddressBlock';
 
 import TransactionListItem from '@/components/ethWallet/TransactionListItem';
 import WebViewLink from '@/components/common/WebViewLink';
@@ -52,6 +65,7 @@ export default {
     TransactionListItem,
     TransactionDetailItem,
     WebViewLink,
+    WalletAddressBlock,
   },
   extends: BasePage,
   metaInfo() {
@@ -88,5 +102,11 @@ export default {
 
 .md-divider {
   margin-top: 0.25rem;
+}
+
+.wallet-address {
+  display: table;
+  font-weight: normal;
+  margin-left: auto;
 }
 </style>

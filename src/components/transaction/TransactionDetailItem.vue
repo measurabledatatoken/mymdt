@@ -3,11 +3,9 @@
     <div class="transaction-detail-item__text">
       <span class="transaction-detail-item__text-title">{{ title }}</span>
       <div class="transaction-detail-item__text-description">
-        <span>{{ description }}</span>
-        <slot
-          v-if="!description"
-          name="description"
-        />
+        <slot name="description">
+          <span>{{ description }}</span>
+        </slot>
       </div>
     </div>
   </md-list-item>

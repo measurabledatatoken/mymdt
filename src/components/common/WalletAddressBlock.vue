@@ -2,18 +2,14 @@
   <div :class="['wallet-address', walletClass]">
     <div class="wallet-address-line">
       <div class="wallet-address-part">
-        <span class="card-text">
-          0x
-        </span>
+        <span class="card-text">0x</span>
       </div>
       <div
         v-for="(part, index) in hashParts.slice(0, 5)"
         :key="index"
         class="wallet-address-part"
       >
-        <span class="card-text">
-          {{ part }}
-        </span>
+        <span class="card-text">{{ part }}</span>
       </div>
     </div>
     <div class="wallet-address-line">
@@ -23,9 +19,7 @@
         :key="index"
         class="wallet-address-part"
       >
-        <span class="card-text">
-          {{ part }}
-        </span>
+        <span class="card-text">{{ part }}</span>
       </div>
     </div>
   </div>

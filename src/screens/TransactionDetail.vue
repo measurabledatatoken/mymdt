@@ -14,16 +14,36 @@
         :title="$t('message.transaction.time')" 
         :description="$d(new Date(transaction.transaction_time), 'long')"
       />
-      <TransactionDetailItem 
+      <TransactionDetailItem
         v-if="!!from" 
-        :title="$t('message.transaction.from')" 
+        :title="$t('message.transaction.from')"
         :description="from"
-      />
+      >
+        <template
+          v-if="isExternalTransfer"
+          slot="description"
+        >
+          <WalletAddressBlock
+            :hash="transaction.from_eth_wallet"
+            class="wallet-address"
+          />
+        </template>
+      </TransactionDetailItem>
       <TransactionDetailItem 
         v-if="!!to" 
         :title="$t('message.transaction.to')" 
         :description="to"
-      />
+      >
+        <template
+          v-if="isExternalTransfer"
+          slot="description"
+        >
+          <WalletAddressBlock
+            :hash="transaction.to_eth_wallet"
+            class="wallet-address"
+          />
+        </template>
+      </TransactionDetailItem>
       <TransactionDetailItem 
         v-if="!!transaction.note" 
         :title="$t('message.transaction.note')" 
@@ -110,6 +130,7 @@ import WebViewLink from '@/components/common/WebViewLink';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import PinCodeInputPopup from '@/components/popup/PinCodeInputPopup';
 import MDTConfirmPopup from '@/components/popup/MDTConfirmPopup';
+import WalletAddressBlock from '@/components/common/WalletAddressBlock';
 import { REPORT_PROBLEM } from '@/store/modules/reportProblem';
 import { transactionType, transactionStatus } from '@/enum';
 import { formatAmount } from '@/utils';
@@ -127,6 +148,7 @@ export default {
     MDTPrimaryButton,
     MDTConfirmPopup,
     PinCodeInputPopup,
+    WalletAddressBlock,
   },
   extends: BasePage,
   metaInfo() {
@@ -181,6 +203,11 @@ export default {
           return null;
         }
       }
+    },
+    isExternalTransfer() {
+      return (
+        this.transaction.transaction_type === transactionType.EXTERNAL_TRANSFER
+      );
     },
   },
   methods: {
@@ -256,6 +283,12 @@ export default {
         min-height: 48px;
       }
     }
+  }
+
+  .wallet-address {
+    display: table;
+    font-weight: normal;
+    margin-left: auto;
   }
 }
 .md-dialog {
