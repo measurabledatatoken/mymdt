@@ -158,12 +158,15 @@ export default {
         const walletAddress = user.smartContractETHAddress;
         if (walletAddress && !walletAddressMap[walletAddress]) {
           balance += Number(this.getBalance(walletAddress));
+          walletAddressMap[walletAddress] = true;
         }
       });
       return balance;
     },
     totalMDTValues() {
-      return this.totalMDTBalance * this.mdtPrice;
+      return (
+        (this.totalMDTBalance + this.totalETHWalletBalance) * this.mdtPrice
+      );
     },
     accountNumStr() {
       if (this.allUsers.length <= 1) {
