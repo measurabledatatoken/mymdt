@@ -1,31 +1,20 @@
 <template>
-  <md-list-item 
-    v-bind="$attrs" 
+  <TransactionItem
+    :title="title"
+    :subtitle="address"
+    :description="dateDescription"
+    :amount="amount"
+    :positive="positive"
     v-on="$listeners"
-  >
-    <div class="item-info">
-      <span class="title">
-        {{ title }}
-      </span>
-      <WalletAddressBlock
-        :hash="address"
-        class="wallet-address"
-      />
-      <span class="description">{{ dateDescription }}</span>
-    </div>
-    <div :class="['action', {'transfer-in': transaction.is_transfer_in } ]">
-      <span>{{ amount }}</span>
-    </div>
-  </md-list-item>
+  />
 </template>
 
 <script>
-import WalletAddressBlock from '@/components/common/WalletAddressBlock';
-import { formatAmount } from '@/utils';
+import TransactionItem from '@/components/common/TransactionItem';
 
 export default {
   components: {
-    WalletAddressBlock,
+    TransactionItem,
   },
   props: {
     transaction: {
@@ -48,15 +37,22 @@ export default {
         : this.$t('message.ethWallet.transferTo');
     },
     address() {
-      return this.transaction.is_transfer_in
+      if (!this.transaction) {
+        return '';
+      }
+
+      const adddress = this.transaction.is_transfer_in
         ? this.transaction.from
         : this.transaction.to;
+
+      return `${adddress.slice(0, 6)}...${adddress.slice(-6)}`;
     },
     amount() {
-      return formatAmount(this.transaction.value, {
-        prefix: this.transaction.is_transfer_in ? '+' : '',
-        suffix: ` MDT`,
-      });
+      if (!this.transaction) {
+        return 0;
+      }
+
+      return this.transaction.value;
     },
     dateDescription() {
       if (!this.transaction.timestamp) {
@@ -65,48 +61,13 @@ export default {
 
       return this.$d(new Date(this.transaction.timestamp * 1000), 'long');
     },
+    positive() {
+      if (!this.transaction) {
+        return false;
+      }
+
+      return this.transaction.is_transfer_in;
+    },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.item-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.title {
-  font-weight: bold;
-  color: var(
-    --md-theme-default-text-primary-on-background,
-    rgba(0, 0, 0, 0.87)
-  );
-}
-
-.wallet-address {
-  font-size: 0.75rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-}
-
-.description {
-  font-size: 12px;
-  color: $secondary-text-color;
-}
-
-.action {
-  margin-left: 16px;
-  color: $label-color;
-  font-weight: bold;
-  text-align: right;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  white-space: normal;
-  flex: 1;
-
-  &.transfer-in {
-    color: $theme-font-color-btn;
-  }
-}
-</style>

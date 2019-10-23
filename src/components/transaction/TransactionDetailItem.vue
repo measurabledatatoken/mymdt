@@ -3,11 +3,9 @@
     <div class="transaction-detail-item__text">
       <span class="transaction-detail-item__text-title">{{ title }}</span>
       <div class="transaction-detail-item__text-description">
-        <span>{{ description }}</span>
-        <slot
-          v-if="!description"
-          name="description"
-        />
+        <slot name="description">
+          <span>{{ description }}</span>
+        </slot>
       </div>
     </div>
   </md-list-item>
@@ -36,8 +34,6 @@ export default {
 .item {
   .transaction-detail-item__text {
     flex: 1;
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
     white-space: nowrap;
@@ -65,6 +61,7 @@ export default {
     }
 
     .transaction-detail-item__text {
+      display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
