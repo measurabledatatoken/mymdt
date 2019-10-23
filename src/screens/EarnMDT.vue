@@ -42,23 +42,6 @@
       <md-list 
         class="account-task-list"
       >
-        <template v-if="uiState.users[selectedUser.emailAddress].isFetchingRewards">
-          <template v-for="n in numberOfRewardLoadingItems">
-            <EarnMDTLoadingItem :key="`reward-loading-${n}`" />
-            <md-divider :key="`reward-loading-divider-${n}`" />
-          </template>
-        </template>
-        <template
-          v-for="reward in getRewards(selectedUser.rewards).filter(reward => reward)"
-          v-else-if="Array.isArray(selectedUser.rewards) && selectedUser.rewards.length > 0"
-        >
-          <RewardItem
-            :key="reward.id"
-            :reward="reward"
-            :user-id="selectedUser.emailAddress"
-          />
-          <md-divider :key="`${reward.id}-divider`" />
-        </template>
         <template v-if="uiState.users[selectedUser.emailAddress].isFetchingTasks">
           <template v-for="n in numberOfTaskLoadingItems">
             <EarnMDTLoadingItem :key="`task-loading-${n}`"/>
@@ -75,6 +58,23 @@
             :user-id="selectedUser.emailAddress"
           />
           <md-divider :key="`${task.task_id}-divider`" />
+        </template>
+        <template v-if="uiState.users[selectedUser.emailAddress].isFetchingRewards">
+          <template v-for="n in numberOfRewardLoadingItems">
+            <EarnMDTLoadingItem :key="`reward-loading-${n}`" />
+            <md-divider :key="`reward-loading-divider-${n}`" />
+          </template>
+        </template>
+        <template
+          v-for="reward in getRewards(selectedUser.rewards).filter(reward => reward)"
+          v-else-if="Array.isArray(selectedUser.rewards) && selectedUser.rewards.length > 0"
+        >
+          <RewardItem
+            :key="reward.id"
+            :reward="reward"
+            :user-id="selectedUser.emailAddress"
+          />
+          <md-divider :key="`${reward.id}-divider`" />
         </template>
       </md-list>
     </padded-container>
