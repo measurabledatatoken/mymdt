@@ -188,6 +188,9 @@ export default {
   .wallet-name {
     color: $primary-text-color;
     font-weight: bold;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
   }
 
   .wallet-action {
@@ -198,9 +201,6 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     text-align: right;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    white-space: normal;
     flex: 1;
     margin-left: 0.5rem;
   }
