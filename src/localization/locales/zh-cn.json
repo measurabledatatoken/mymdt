@@ -442,7 +442,7 @@
   "twoFactorAuthentication": {
     "setupTitle": "二次验证",
     "setupDescription": "二次验证（二次验证）是一项安全功能。建议将其打开以使您的帐户更安全。启用二次验证后,系统会要求您输入短信代码或使用谷歌二次验证执行记录等操作来确认未知设备或进行交易。",
-    "turnOn二次验证": "打开二次验证？",
+    "turnOn2FA": "打开二次验证？",
     "setupMethodTitle": "二次验证方法",
     "methods": {
       "sms": "短信",
@@ -455,9 +455,9 @@
       "transactionAndLogin": "交易和未知登录"
     },
     "pinSetupPopupDescription": "您可以在设置 PIN 码并添加电话号码或设置谷歌身份验证器后设置双智能验证。",
-    "disable二次验证PopupTitle": "关闭二次验证？",
-    "disable二次验证PopupDescription": "强烈建议使用二次验证保护您的帐户和资产。<br/>通过关闭二次验证,即表示您同意您了解未启用此安全功能的风险。",
-    "turnOff二次验证": "关闭二次验证",
+    "disable2FAPopupTitle": "关闭二次验证？",
+    "disable2FAPopupDescription": "强烈建议使用二次验证保护您的帐户和资产。<br/>通过关闭二次验证,即表示您同意您了解未启用此安全功能的风险。",
+    "turnOff2FA": "关闭二次验证",
     "verifyTitle": "输入验证码"
   },
   "googleAuth": {
