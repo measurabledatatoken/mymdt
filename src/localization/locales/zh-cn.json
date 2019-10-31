@@ -105,7 +105,7 @@
     "insufficient_fund": "该帐号 MDT 数量不够",
     "view_transactions": "查看转帐详情",
     "transferToOKExAddress": "转帐至 OKEx 地址",
-    "registerOKExAccount": "登记 OKEx 帐号"
+    "registerOKExAccount": "注冊 OKEx 帐号"
   },
   "qrcode": {
     "title": "扫描二维码",

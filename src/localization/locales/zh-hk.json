@@ -105,7 +105,7 @@
     "insufficient_fund": "該帳號 MDT 數量不夠",
     "view_transactions": "查看轉帳詳情",
     "transferToOKExAddress": "轉帳至 OKEx 地址",
-    "registerOKExAccount": "登記 OKEx 帳號"
+    "registerOKExAccount": "註冊 OKEx 帳號"
   },
   "qrcode": {
     "title": "掃描二維碼",
