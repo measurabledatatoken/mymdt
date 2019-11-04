@@ -80,9 +80,9 @@ export default {
       type: Number,
       default: 0,
     },
-    expiredInDays: {
-      type: Number,
-      default: 0,
+    expiryInDays: {
+      type: Number || null,
+      default: null,
     },
     expiryTime: {
       type: String || null,
@@ -133,8 +133,12 @@ export default {
     expiryText() {
       switch (this.rewardStatus) {
         case RewardStatus.ACTIVE: {
+          if (typeof this.expiryInDays != 'number') {
+            return '';
+          }
+
           return this.$t('message.earnMDT.expiredAfter', {
-            number: this.expiredInDays >= 0 ? this.expiredInDays : 0,
+            number: this.expiryInDays >= 0 ? this.expiryInDays : 0,
           });
         }
         case RewardStatus.SUSPENDED:
