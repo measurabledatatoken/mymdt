@@ -324,7 +324,7 @@ export default {
         }
       }
 
-      return `https://mdt.io/${part}data-rewards#claim-rewards`;
+      return `https://mdt.io/${part}data-rewards?force=true#claim-rewards`;
     },
   },
   created() {
