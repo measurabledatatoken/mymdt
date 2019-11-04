@@ -55,7 +55,7 @@ export default {
   computed: {
     expiryInDays() {
       if (!this.reward.expiry_time) {
-        return '';
+        return null;
       }
 
       const expiryDate = new Date(this.reward.expiry_time);
