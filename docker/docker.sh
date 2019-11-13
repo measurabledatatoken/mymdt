@@ -1,6 +1,7 @@
 #/bin/bash
 
 command=$1
+options=$2
 
 dockerComposerYamlFile="$PWD/docker/docker-compose.yaml"
 projectDir="$PWD"
@@ -10,16 +11,16 @@ init)
 	sh create-docker-volumes.sh
 	;;
 build)
-	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir build
+	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir build $options
 	;;
 run)
-	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir up -d
+	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir up -d $options
 	;;
 clean)
-	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir down
+	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir down $options
 	;;
 logs)
-	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir logs -f
+	docker-compose -f $dockerComposerYamlFile --project-directory $projectDir logs -f $options
 	;;
 *)
 	echo "Usage: ./docker.sh command"
