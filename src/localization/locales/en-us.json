@@ -434,7 +434,8 @@
     "agreementCheckbox2": "the Terms of Use",
     "OSNotSupported": "Sorry, this feature is not supported on your device.\nMailTime Rewards Program requires Android version 4.4 and above.",
     "agreementDetail": "By clicking the button below, your email accounts in MailTime will automatically be imported into MailTime Rewards Program.",
-    "importAccounts": "Import Account(s)"
+    "importAccounts": "Import Account(s)",
+    "serviceRestrictionMessage": "Measurable Data Token currently does not serve customers in the following countries/regions/territories: China (Mainland), United States, Cuba, Iran, Korea (North), Crimea, Sudan, Syria, Bangladesh, Bolivia, Ecuador, and Kyrgyzstan."
   },
   "termsOfUse": {
     "title": "Terms of Use"

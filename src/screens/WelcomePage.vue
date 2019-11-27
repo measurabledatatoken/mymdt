@@ -82,7 +82,13 @@
           />
         </div>
       </div>
-    </div> 
+    </div>
+    <BasePopup 
+      :description="$t('message.welcome.serviceRestrictionMessage')"
+      :md-active="showScreen && showServiceRestrictionMessage"
+      :confirm-text="$t('message.common.okay')"
+      @update:mdActive="showServiceRestrictionMessage = $event"
+    />
   </form>
 </template>
 
@@ -96,6 +102,7 @@ import { helpers } from 'vuelidate/lib/validators';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import Checkbox from '@/components/input/Checkbox';
 import TutorialItem from '@/components/tutorial/TutorialItem';
+import BasePopup from '@/components/popup/BasePopup';
 
 import { RouteDef } from '@/constants';
 import {
@@ -114,6 +121,7 @@ export default {
     Checkbox,
     swiper,
     swiperSlide,
+    BasePopup,
   },
   data() {
     return {
@@ -127,6 +135,7 @@ export default {
           clickable: true,
         },
       },
+      showServiceRestrictionMessage: false,
     };
   },
   validations: {
@@ -183,6 +192,7 @@ export default {
         }
       }
       this.showScreen = true;
+      this.showServiceRestrictionMessage = true;
     }
     trackEvent('Open Welcome Page');
   },
