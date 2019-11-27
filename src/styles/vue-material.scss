@@ -36,3 +36,7 @@
 .md-button:not([disabled]):hover:before {
     background-color: transparent;
 }
+
+.md-overlay {
+    z-index: 9; // Set it higher to header's z-index 8
+}

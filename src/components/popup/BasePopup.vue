@@ -4,8 +4,8 @@
     :md-fullscreen="false"
     v-on="$listeners"
   >
-    <md-dialog-title>{{ title }}</md-dialog-title>
-    <md-dialog-content>{{ description }}</md-dialog-content>
+    <md-dialog-title v-if="!!title">{{ title }}</md-dialog-title>
+    <md-dialog-content v-if="!!description">{{ description }}</md-dialog-content>
     <md-dialog-actions>
       <MDTSubtleButton 
         data-cy="confirm"

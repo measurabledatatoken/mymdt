@@ -434,7 +434,8 @@
     "agreementCheckbox2": "使用條款",
     "OSNotSupported": "抱歉您的設備不支持此功能。\n簡信積分 需要安卓系統版本4.4及以上。",
     "agreementDetail": "點擊“導入郵箱賬號”，您在 MailTime 簡信積分簡信中登錄的郵箱賬號將自動登入 簡信積分。",
-    "importAccounts": "導入郵箱賬號"
+    "importAccounts": "導入郵箱賬號",
+    "serviceRestrictionMessage": "量數通證(MDT) 目前不能為以下國家/地區的客戶提供服務：中國(大陸)，美國，古巴，伊朗，朝鮮，克里米亞，蘇丹，敘利亞，孟加拉國，玻利維亞，厄瓜多爾和吉爾吉斯斯坦。"
   },
   "termsOfUse": {
     "title": "使用條款"
