@@ -8,6 +8,7 @@ node_modules
 /tests/e2e/__generatedFixtures__/
 
 # local env files
+.env
 .env.local
 .env.*.local
 
