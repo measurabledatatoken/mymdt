@@ -128,10 +128,10 @@ export default {
 
     return handleGeneralResponse(promise);
   },
-  checkAccountsExist(emails) {
+  // emailsStr with email with , seperator
+  checkAccountsExist(emailsStr) {
     const promise = axios.get(
-      `${APIScheme}://${APIEndPoint}/account/exist`,
-      emails,
+      `${APIScheme}://${APIEndPoint}/account/exist?emails=${emailsStr}`,
     );
 
     return handleGeneralResponse(promise);

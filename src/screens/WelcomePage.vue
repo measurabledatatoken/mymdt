@@ -181,9 +181,7 @@ export default {
       this.goToHome();
     } else {
       if (this.$route.query.emails) {
-        const result = await this.checkAccountsExist(
-          this.$route.query.emails.split(','),
-        );
+        const result = await this.checkAccountsExist(this.$route.query.emails);
         // if all accounts exist, go to home page
         if (result) {
           this.setHeaderBackgroundColor(null);
