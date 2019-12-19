@@ -73,7 +73,11 @@ const getters = {
     );
     const minFeeByPercentage =
       state.transferAmount * parseFloat(feePercentage, 10);
-    const finalFee = minFeeByPercentage < minFee ? minFee : minFeeByPercentage;
+    const maxFeeInMDT = rootState.home.appConfig.mdt_transaction_max_fee_in_mdt;
+    const finalFee = Math.min(
+      Math.max(minFeeByPercentage, minFee),
+      maxFeeInMDT,
+    );
     return finalFee;
   },
   // eslint-disable-next-line
