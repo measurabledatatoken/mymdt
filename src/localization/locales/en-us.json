@@ -486,8 +486,8 @@
   },
   "ethBinding": {
     "pinSetupPopupDescription": "You can bind your ETH wallet address after you set up your PIN.",
-    "notBindedYet": "Not binded yet",
-    "binded": "Binded",
+    "notBindedYet": "Not bound yet",
+    "binded": "Bound",
     "errorMessage": "Failed to set ETH wallet address"
   },
   "ethWallet": {
