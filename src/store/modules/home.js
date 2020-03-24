@@ -84,12 +84,7 @@ const actions = {
         api: api.misc.getMDTPrice,
         args: [priceUnit],
       });
-      if (!priceUnit) {
-        commit(SET_MDT_PRICE, data.price_usd);
-      } else {
-        const priceUnitKey = `price_${priceUnit.toLowerCase()}`;
-        commit(SET_MDT_PRICE, data[priceUnitKey]);
-      }
+      commit(SET_MDT_PRICE, data);
     } catch (error) {
       console.error('getMDTPrice failed', error);
     }

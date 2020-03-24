@@ -135,7 +135,7 @@
     "transactionFee": "手續費",
     "accountBalance": "帳戶余額",
     "taskReward": "任務獎勵",
-    "redeem": "兌換",
+    "redeem": "領取獎勵",
     "internalTransfer": "轉帳",
     "externalTransfer": "轉帳",
     "transferOutToEmail": "轉出至{email}",
@@ -268,7 +268,7 @@
       "reachMaximumRemark": "*每月最多能賺取 {amount}。"
     },
     "redeemTitle": "你有 MDT 的兌換代碼？",
-    "redeem": "兌換",
+    "redeem": "領取獎勵",
     "follow": {
       "formTitle": "輸入魔法口令",
       "success": "成功",

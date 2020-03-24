@@ -135,7 +135,7 @@
     "transactionFee": "手续费",
     "accountBalance": "帐户余额",
     "taskReward": "任务奖励",
-    "redeem": "兑换",
+    "redeem": "领取奖励",
     "internalTransfer": "转帐",
     "externalTransfer": "转帐",
     "transferOutToEmail": "转出至{email}",
@@ -268,7 +268,7 @@
       "reachMaximumRemark": "*每月最多能赚取 {amount}。"
     },
     "redeemTitle": "你有 MDT 的兑换代码？",
-    "redeem": "兑换",
+    "redeem": "领取奖励",
     "follow": {
       "formTitle": "输入魔法口令",
       "success": "成功",
