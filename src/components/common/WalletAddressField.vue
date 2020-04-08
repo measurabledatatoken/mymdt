@@ -21,7 +21,7 @@
 
 <script>
 import BaseField from '@/components/input/BaseField';
-import { getEthAddressFromString } from '@/utils';
+import { isStringEthAddress } from '@/utils';
 import { RouteDef } from '@/constants';
 
 export default {
@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     valueChanged(value) {
-      const ethAddress = getEthAddressFromString(value);
-      if (ethAddress == null) {
+      const ethAddress = isStringEthAddress(value);
+      if (ethAddress == false) {
         this.isAddressValid = false;
         this.$emit('walletAddressInvalid', value);
       } else {

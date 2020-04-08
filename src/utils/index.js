@@ -52,6 +52,22 @@ const getEthAddressFromString = str => {
   return substr;
 };
 
+const isStringEthAddress = str => {
+  if (typeof str !== 'string') {
+    return false;
+  }
+
+  const index = str.indexOf('0x');
+  if (index !== 0) {
+    return false;
+  }
+
+  if (!isValidEthAddress(str)) {
+    return false;
+  }
+  return true;
+};
+
 function formatAmount(amount, options) {
   if (typeof amount !== 'number') {
     return '';
@@ -176,6 +192,7 @@ export {
   isValidPhoneNumber,
   isValidEmailAddress,
   getEthAddressFromString,
+  isStringEthAddress,
   formatAmount,
   extractNameInitials,
   delay,
