@@ -1,14 +1,20 @@
 <template>
   <md-dialog 
     v-bind="$attrs" 
-    :md-fullscreen="true"
+    :md-fullscreen="true" 
     v-on="$listeners"
   >
-    <WebViewLink
-      :to="actionUrl"
+    <md-button 
+      class="md-icon-button" 
+      @click="$emit('close');"
+    >
+      <md-icon md-src="/static/icons/close-white.svg" />
+    </md-button>
+    <WebViewLink 
+      :to="actionUrl" 
       external
     >
-      <img :src="url">
+      <img :src="url" >
     </WebViewLink>
   </md-dialog>
 </template>
@@ -50,7 +56,13 @@ export default {
   img {
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
+  }
+
+  .md-icon-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }
 </style>

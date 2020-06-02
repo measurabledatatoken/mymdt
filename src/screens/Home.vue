@@ -61,6 +61,7 @@
       :md-active="showBinance"
       :url="binanceImgUrl"
       :action-url="binanceUrl"
+      @close="hideBinance"
     />
     <div class="buttons">
       <MDTPrimaryButton
@@ -133,7 +134,7 @@ export default {
       showTotalClaimedPopup: false,
       showTotalClaimablePopup: false,
       claimablePopupContent: '',
-      showBinance: false,
+      showBinance: true,
     };
   },
   computed: {
@@ -368,6 +369,9 @@ export default {
       this.$router.push({
         name: RouteDef.DataPointRewardListing.name,
       });
+    },
+    hideBinance() {
+      this.showBinance = false;
     },
     formatAmount,
   },
