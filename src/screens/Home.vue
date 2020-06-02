@@ -56,6 +56,12 @@
       icon-src="/static/icons/claim-popup.svg"
       @md-confirm="onEarnClicked"
     />
+
+    <ImagePopup
+      :md-active="showBinance"
+      :url="binanceImgUrl"
+      :action-url="binanceUrl"
+    />
     <div class="buttons">
       <MDTPrimaryButton
         v-if="hasUserWithDataSharingEnabled"
@@ -80,6 +86,7 @@ import UserHomeSummaryCard from '@/components/common/UserHomeSummaryCard';
 import MDTPrimaryButton from '@/components/button/MDTPrimaryButton';
 import LoadingPopup from '@/components/common/LoadingPopup';
 import SuccessPopup from '@/components/popup/SuccessPopup';
+import ImagePopup from '@/components/popup/ImagePopup';
 
 import {
   SET_ERROR_MESSAGE,
@@ -109,6 +116,7 @@ export default {
     MDTPrimaryButton,
     LoadingPopup,
     SuccessPopup,
+    ImagePopup,
   },
   extends: BasePage,
   metaInfo() {
@@ -125,6 +133,7 @@ export default {
       showTotalClaimedPopup: false,
       showTotalClaimablePopup: false,
       claimablePopupContent: '',
+      showBinance: false,
     };
   },
   computed: {
@@ -179,6 +188,20 @@ export default {
     hasUserWithDataSharingEnabled() {
       return this.allUsersWithDataSharing.length > 0;
     },
+    binanceImgUrl() {
+      if (this.$i18n.locale === 'en-us') {
+        return '/static/binance/en.png';
+      } else {
+        return '/static/binance/cn.png';
+      }
+    },
+    binanceUrl() {
+      if (this.$i18n.locale === 'en-us') {
+        return 'https://www.binance.com/en/vote';
+      } else {
+        return 'https://www.binance.com/en/vote';
+      }
+    },
   },
   async mounted() {
     if (this.$route.query.appid && this.$route.query.tokens) {
@@ -210,6 +233,16 @@ export default {
     this.fetchAllETHWalletsBalance();
 
     trackEvent('Home view', { 'Email Number': this.allUsers.length });
+
+    const isBinanceShown = this.$cookies.get('isBinanceShown');
+    console.log('isBinanceShown: ' + isBinanceShown);
+    if (!isBinanceShown) {
+      this.showBinance = true;
+      this.$cookies.set('isBinanceShown', true);
+      document.addEventListener('click', () => {
+        this.showBinance = false;
+      });
+    }
   },
   methods: {
     ...mapMutations({

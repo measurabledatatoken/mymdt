@@ -37,6 +37,7 @@ import inobounce from './helpers/inobounce';
 
 import { RouteDef } from '@/constants';
 import { SET_IS_LOADING, OPEN_ERROR_PROMPT } from '@/store/modules/common';
+import VueCookies from 'vue-cookies';
 
 Vue.config.productionTip = false;
 Vue.use(VueMaterial);
@@ -55,6 +56,7 @@ Vue.use(VueMaterial);
 
 Vue.use(Vuelidate);
 Vue.use(VueClipboard);
+Vue.use(VueCookies);
 
 mixpanel.init('c5e652bf9ccc28d929ee1c8184a0f76b');
 
