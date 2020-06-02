@@ -37,8 +37,8 @@ export default {
 
 <style lang="scss" scoped>
 .md-dialog {
-  height: 80%;
-  width: 80%;
+  height: 86%;
+  width: 90%;
   min-width: 0px;
   background: transparent;
   a {
