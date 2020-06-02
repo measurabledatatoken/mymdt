@@ -5,14 +5,14 @@
   >
     <header class="header">
       <transition :name=" 'header-' + transitionName">
-        <HomeHeader 
-          v-if="showHomeHeader && !showCustomHeader" 
-          class="header-view" 
+        <HomeHeader
+          v-if="showHomeHeader && !showCustomHeader"
+          class="header-view"
           @tutorialClick="onTutorialClicked"
         />
-        <NavigationHeader 
-          v-if="!showHomeHeader && !showCustomHeader" 
-          :title="navigationTitle" 
+        <NavigationHeader
+          v-if="!showHomeHeader && !showCustomHeader"
+          :title="navigationTitle"
           :hide-back-button="hideNavigationBackButton"
           class="header-view"
         />
@@ -25,15 +25,22 @@
     </header>
     <main class="content">
       <transition :name="'content-' + transitionName">
-        <router-view class="content-router-view"/>
+        <router-view class="content-router-view" />
       </transition>
     </main>
 
-    <md-dialog-alert 
-      :md-active.sync="showErrorPrompt" 
-      :md-title="errorTitle" 
+    <md-dialog-alert
+      :md-active.sync="showErrorPrompt"
+      :md-title="errorTitle"
       :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')"
+    />
+
+    <ImagePopup
+      :md-active="showBinance"
+      :url="binanceImgUrl"
+      :action-url="binanceUrl"
+      @close="hideBinance"
     />
 
     <LoadingPopup 
@@ -41,8 +48,8 @@
       src="/static/threedotsloader.gif"
     />
 
-    <LoadingPopup
-      v-if="showHomeLoadingEnd"
+    <LoadingPopup 
+      v-if="showHomeLoadingEnd" 
       src="static/loadersecondhalf.gif"
     />
 
@@ -68,6 +75,7 @@ import {
 import HomeHeader from '@/components/header/HomeHeader';
 import NavigationHeader from '@/components/header/NavigationHeader';
 import LoadingPopup from '@/components/common/LoadingPopup';
+import ImagePopup from '@/components/popup/ImagePopup';
 
 const HomeTutorial = loadComponent('HomeTutorial');
 
@@ -77,6 +85,7 @@ export default {
     NavigationHeader,
     LoadingPopup,
     HomeTutorial,
+    ImagePopup,
   },
   data() {
     return {
@@ -85,6 +94,7 @@ export default {
       showTutorial: false,
       screenHeight: 0,
       setFixHeight: false,
+      showBinance: false,
     };
   },
   computed: {
@@ -153,6 +163,20 @@ export default {
       }
       return style;
     },
+    binanceImgUrl() {
+      if (this.$i18n.locale === 'en-us') {
+        return '/static/binance/en.png';
+      } else {
+        return '/static/binance/cn.png';
+      }
+    },
+    binanceUrl() {
+      if (this.$i18n.locale === 'en-us') {
+        return 'https://www.binance.com/en/vote';
+      } else {
+        return 'https://www.binance.com/en/vote';
+      }
+    },
   },
   watch: {
     $route(to, from) {
@@ -202,6 +226,15 @@ export default {
   mounted() {
     this.prepareMetaData();
     this.checkRouteMeta();
+
+    const isBinanceShown = this.$cookies.get('isBinanceShown');
+    if (!isBinanceShown) {
+      this.showBinance = true;
+      this.$cookies.set('isBinanceShown', true);
+      document.addEventListener('click', () => {
+        this.showBinance = false;
+      });
+    }
   },
   methods: {
     ...mapMutations({
@@ -226,6 +259,9 @@ export default {
     },
     checkRouteMeta() {
       this.setFixHeight = !!this.$route.meta.setFixHeight;
+    },
+    hideBinance() {
+      this.showBinance = false;
     },
   },
 };

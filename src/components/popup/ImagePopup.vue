@@ -58,8 +58,8 @@ export default {
     width: 100%;
     object-fit: cover;
   }
-
   .md-icon-button {
+    width: 40px !important;
     position: absolute;
     top: 10px;
     right: 10px;
