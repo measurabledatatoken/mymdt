@@ -35,14 +35,7 @@
       :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')"
     />
-
-    <ImagePopup
-      :md-active="showBinance"
-      :url="binanceImgUrl"
-      :action-url="binanceUrl"
-      @close="hideBinance"
-    />
-
+    
     <LoadingPopup 
       v-if="isLoading" 
       src="/static/threedotsloader.gif"
