@@ -119,17 +119,18 @@ export default {
       }
     },
     ethWalletAmount() {
-      if (
-        this.user.smartContractPendingETHAddress ||
-        !this.user.smartContractETHAddress
-      ) {
-        return 'N/A';
-      } else {
-        const balance = this.getBalance(this.user.smartContractETHAddress);
-        return formatAmount(Number(balance), {
-          suffix: ` MDT`,
-        });
-      }
+      // if (
+      //   this.user.smartContractPendingETHAddress ||
+      //   !this.user.smartContractETHAddress
+      // ) {
+      //   return 'N/A';
+      // } else {
+      //   const balance = this.getBalance(this.user.smartContractETHAddress);
+      //   return formatAmount(Number(balance), {
+      //     suffix: ` MDT`,
+      //   });
+      // }
+      return 'N/A';
     },
     hasAnyAddress() {
       return (
