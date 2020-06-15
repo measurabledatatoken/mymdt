@@ -60,6 +60,7 @@ import OTPActionType from '@/enum/otpActionType';
 import SetupPINMode from '@/enum/setupPINMode';
 
 import { enableTransferByEmail } from '@/constants';
+import { openExternalBrowser } from '@/utils';
 
 export default {
   components: {
@@ -94,9 +95,21 @@ export default {
       },
       {
         title: this.$t('message.transfer.transferlist_okextitle'),
-        actionName: this.$t('message.common.transferbtn'),
+        actionName: this.$t('message.common.registerbtn'),
         imgSrc: '/static/icons/logo-okex.svg',
         onClick: this.onOKEXClick,
+      },
+      {
+        title: this.$t('message.transfer.transferlist_binancetitle'),
+        actionName: this.$t('message.common.registerbtn'),
+        imgSrc: '/static/icons/logo-binance.svg',
+        onClick: this.onBinanceClick,
+      },
+      {
+        title: this.$t('message.transfer.transferlist_digifinextitle'),
+        actionName: this.$t('message.common.registerbtn'),
+        imgSrc: '/static/icons/logo-digifinex.svg',
+        onClick: this.onDigifinexClick,
       },
     ];
 
@@ -166,18 +179,29 @@ export default {
       });
     },
     onOKEXClick() {
-      trackEvent('Click on transfer to OKEx');
-      if (!this.selectedUser.isPasscodeSet) {
-        this.showSetupPinDialog = true;
-      } else if (!this.selectedUser.isPhoneConfirmed) {
-        this.showSetupPhoneDialog = true;
+      trackEvent('Click on register OKEx');
+      if (this.$i18n.locale === 'zh-cn') {
+        openExternalBrowser('https://www.digifinex.xyz/zh-cn/from/lpKlJk');
       } else {
-        this.$router.push({
-          path: RouteDef.TransferEthWallet.path,
-          query: {
-            okex: true,
-          },
-        });
+        openExternalBrowser('https://www.digifinex.com/en-ww/from/lpKlJk');
+      }
+    },
+    onBinanceClick() {
+      trackEvent('Click on register binance');
+      if (this.$i18n.locale === 'zh-cn') {
+        openExternalBrowser(
+          'https://www.binancezh.com/cn/register?ref=VXR61SQI',
+        );
+      } else {
+        openExternalBrowser('https://www.binance.com/en/register?ref=VXR61SQI');
+      }
+    },
+    onDigifinexClick() {
+      trackEvent('Click on register digifinex');
+      if (this.$i18n.locale === 'zh-cn') {
+        openExternalBrowser('https://www.okex.me/join/1838164');
+      } else {
+        openExternalBrowser('https://www.okex.com/join/1838164');
       }
     },
   },

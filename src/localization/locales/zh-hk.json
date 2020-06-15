@@ -1,6 +1,7 @@
 {
   "common": {
     "transferbtn": "轉帳",
+    "registerbtn": "登記",
     "okay": "確定",
     "unknow_error": "出錯了......請稍後再試",
     "error_title": "出錯了",
@@ -88,14 +89,15 @@
     "amountlbl": "數量",
     "select_account_placeholder": "請選擇帳號",
     "wallet_address_placeholder": "填寫錢包地址",
-    "wallet_address_placeholder_for_okex": "OKEx 的 MDT 充值地址",
     "other_emailaddress": "其它郵箱地址...",
     "enter_emailaddress": "輸人郵箱地址",
     "notelbl": "備註",
     "note_placeholder": "選填. 最多{num}字",
     "transferlist_emailtitle": "發送 MDT 到其它郵箱地址",
     "transferlist_ethtitle": "發送 MDT 至我的錢包地址",
-    "transferlist_okextitle": "在 OKEx 中交易 MDT",
+    "transferlist_okextitle": "登記 OKEx 帳號",
+    "transferlist_binancetitle": "登記 Binance 帳號",
+    "transferlist_digifinextitle": "登記 Digifinex 帳號",
     "transfer": "轉帳",
     "transaction_fee": "手續費",
     "min_amount": "最少轉帳數量",
@@ -103,9 +105,7 @@
     "tutorial_title": "轉帳手續費",
     "tutorial_description": "MDT 為 ERC20 代幣。轉帳至 ETH 錢包需要支付轉賬費。當您將 MDT 轉移到 ETH 錢包時，轉賬費會以 MDT 計算並從您的交易中扣除。根據網絡的擁堵情況，轉賬費將會有所波動。",
     "insufficient_fund": "該帳號 MDT 數量不夠",
-    "view_transactions": "查看轉帳詳情",
-    "transferToOKExAddress": "轉帳至 OKEx 地址",
-    "registerOKExAccount": "註冊 OKEx 帳號"
+    "view_transactions": "查看轉帳詳情"
   },
   "qrcode": {
     "title": "掃描二維碼",

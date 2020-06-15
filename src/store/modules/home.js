@@ -14,7 +14,6 @@ export const SET_IS_USER_ACCOUNTS_DIRTY = 'home/SET_IS_USER_ACCOUNTS_DIRTY';
 export const SET_APP_ID = 'home/SET_APP_ID';
 export const SET_NDA_AGREEMENT = 'home/SET_NDA_AGREEMENT';
 export const SET_HEADER_BACKGROUND_COLOR = 'home/SET_HEADER_BACKGROUND_COLOR';
-export const SET_OKEX_ADDRESS = 'home/SET_OKEX_ADDRESS';
 
 // Actions
 export const REQUEST_MDT_PRICE = 'home/SET_MDT_PRICE';
@@ -33,7 +32,6 @@ const state = {
   // AppConfig
   appConfig: null,
   headerBackgroundColor: null,
-  okexAddress: '',
 };
 
 const getters = {
@@ -70,9 +68,6 @@ const mutations = {
   },
   [SET_HEADER_BACKGROUND_COLOR](state, headerBackgroundColor) {
     state.headerBackgroundColor = headerBackgroundColor;
-  },
-  [SET_OKEX_ADDRESS](state, okexAddress) {
-    state.okexAddress = okexAddress;
   },
 };
 
