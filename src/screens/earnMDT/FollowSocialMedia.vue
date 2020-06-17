@@ -188,15 +188,27 @@ export default {
               alt: 'Step 3',
             },
             {
-              description: this.$t('message.earnMDT.follow.telegram.step4', {
-                code: this.$route.query.code,
-              }),
+              description: this.$t('message.earnMDT.follow.telegram.step4'),
               src: this.$t('message.earnMDT.follow.telegram.step4Src'),
               srcset: this.$t('message.earnMDT.follow.telegram.step4Srcset'),
               alt: 'Step 4',
             },
             {
               description: this.$t('message.earnMDT.follow.telegram.step5'),
+              src: this.$t('message.earnMDT.follow.telegram.step5Src'),
+              srcset: this.$t('message.earnMDT.follow.telegram.step5Srcset'),
+              alt: 'Step 5',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.telegram.step6', {
+                code: this.$route.query.code,
+              }),
+              src: this.$t('message.earnMDT.follow.telegram.step6Src'),
+              srcset: this.$t('message.earnMDT.follow.telegram.step6Srcset'),
+              alt: 'Step 6',
+            },
+            {
+              description: this.$t('message.earnMDT.follow.telegram.step7'),
             },
           ],
           successDescription: this.$t(
