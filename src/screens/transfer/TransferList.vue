@@ -38,6 +38,15 @@
       data-cy="setup-phone-dialog" 
       @md-confirm="onConfirmSetupPhoneDialogClick"
     />
+
+    <MDTConfirmPopup 
+      :md-active.sync="showSetup2faDialog"
+      :md-title="$t('message.twoFactorAuthentication.setupTitle')" 
+      :md-content="$t('message.twoFactorAuthentication.turn_on_2fa_content')"
+      :md-confirm-text="$t('message.common.setup')" 
+      :md-cancel-text="$t('message.common.cancel')"
+      @md-confirm="onConfirmSetup2faDialogClick"
+    />
   </div>
 
 
@@ -116,6 +125,7 @@ export default {
     return {
       showSetupPinDialog: false,
       showSetupPhoneDialog: false,
+      showSetup2faDialog: false,
       transferData: transferData,
     };
   },
@@ -140,6 +150,8 @@ export default {
         this.showSetupPinDialog = true;
       } else if (!this.selectedUser.isPhoneConfirmed) {
         this.showSetupPhoneDialog = true;
+      } else if (!this.selectedUser.isTwofaEnabled) {
+        this.showSetup2faDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEmail.path);
       }
@@ -150,6 +162,8 @@ export default {
         this.showSetupPinDialog = true;
       } else if (!this.selectedUser.isPhoneConfirmed) {
         this.showSetupPhoneDialog = true;
+      } else if (!this.selectedUser.isTwofaEnabled) {
+        this.showSetup2faDialog = true;
       } else {
         this.$router.push(RouteDef.TransferEthWallet.path);
       }
@@ -175,6 +189,15 @@ export default {
         name: RouteDef.PhoneNumberInput.name,
         params: {
           action: OTPActionType.SetupPhoneNumberAction,
+        },
+      });
+    },
+    onConfirmSetup2faDialogClick() {
+      trackEvent('Start Setting up 2fa from the popup on transfer list page');
+      this.$router.push({
+        name: RouteDef.UserSettings.name,
+        params: {
+          account_id: this.selectedUser.emailAddress,
         },
       });
     },

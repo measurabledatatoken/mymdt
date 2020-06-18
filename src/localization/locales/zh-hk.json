@@ -465,7 +465,8 @@
     "disable2FAPopupTitle": "關閉二次驗證？",
     "disable2FAPopupDescription": "強烈建議使用二次驗證保護您的帳戶和資產。<br/>通過關閉二次驗證,即表示您同意您了解未啟用此安全功能的風險。",
     "turnOff2FA": "關閉二次驗證",
-    "verifyTitle": "輸入驗證碼"
+    "verifyTitle": "輸入驗證碼",
+    "turn_on_2fa_content": "轉帳前需打開二次驗證以保護您的帳戶。"
   },
   "googleAuth": {
     "setupTitle": "谷歌身份驗證器",

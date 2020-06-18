@@ -465,7 +465,8 @@
     "disable2FAPopupTitle": "Turning off 2FA?",
     "disable2FAPopupDescription": "2FA is strongly recommended to protect your account and assets.<br/>By turning off 2FA, you agree that you  understand the risk of not enabling this security feature.",
     "turnOff2FA": "Turn off 2FA",
-    "verifyTitle": "Enter Verification Code"
+    "verifyTitle": "Enter Verification Code",
+    "turn_on_2fa_content": "You need to turn on 2FA to protect your account before transfer."
   },
   "googleAuth": {
     "setupTitle": "Google Authenticator",
