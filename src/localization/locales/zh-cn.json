@@ -58,7 +58,8 @@
     "sessionExpired": "您的使用期限已过",
     "phoneNumberAlreadyBinded": "电话号码已与另一个帐户绑定",
     "addressIsTheSame": "ETH 钱包地址与之前所用的相同。",
-    "cannotSetETHAddress": "设定失败，请稍后再试。"
+    "cannotSetETHAddress": "设定失败，请稍后再试。",
+    "newAccountsWarning": "您的帐户 {emails} 没有数据贡献，请稍后再试。"
   },
   "home": {
     "total_balance": "总积分",

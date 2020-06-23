@@ -100,7 +100,10 @@ export default {
         }
 
         if (state.common.errorMessage && state.common.errorMessage.messageId) {
-          return this.$t(state.common.errorMessage.messageId);
+          return this.$t(
+            state.common.errorMessage.messageId,
+            state.common.errorMessage.messageValues,
+          );
         }
 
         return '';
