@@ -2,6 +2,7 @@ import api from '@/api';
 import { ErrorCode } from '@/enum';
 import { REQUEST_USER_ACCOUNTS, SET_APP_ID } from '@/store/modules/home';
 import { HANDLE_ERROR_CODE, REQUEST } from '@/store/modules/api';
+import { OPEN_ERROR_PROMPT } from '@/store/modules/common';
 
 // mutations
 export const SET_LOGIN_ERRORCODE = 'login/SET_LOGIN_ERRORCODE';
@@ -117,7 +118,32 @@ const actions = {
         claimable_amount: dataItem.claimable_amount,
       }));
       commit(SET_CREDENTIALS, credentials);
-      commit(SET_INVALIDEMAILS, data.invalid);
+      if (Array.isArray(data.invalid) && data.invalid.length > 0) {
+        commit(
+          SET_INVALIDEMAILS,
+          data.invalid
+            .filter(dataItem => !dataItem.is_spam_email)
+            .map(dataItem => dataItem.email_address),
+        );
+
+        const newEmails = data.invalid
+          .filter(dataItem => dataItem.is_new_email)
+          .map(dataItem => dataItem.email_address);
+
+        if (newEmails.length > 0) {
+          dispatch(OPEN_ERROR_PROMPT, {
+            message: {
+              messageId: 'message.error.newAccountsWarning',
+              messageValues: {
+                emails: newEmails.join(', '),
+              },
+            },
+            title: {
+              messageId: 'message.common.error_title',
+            },
+          });
+        }
+      }
       await dispatch(REQUEST_USER_ACCOUNTS);
       commit(SET_APP_ID, appID);
     } catch (error) {
