@@ -82,7 +82,7 @@ const actions = {
   },
   async [REQUEST_AUTO_LOGIN](
     { commit, dispatch, rootState },
-    { authTokens, emails, appID },
+    { authTokens, emails, appID, deviceId },
   ) {
     // commit(SET_IS_LOADING, true);
 
@@ -106,7 +106,7 @@ const actions = {
     try {
       const data = await dispatch(REQUEST, {
         api: api.auth.autoLogin,
-        args: [appCredentials, appID, locale],
+        args: [appCredentials, appID, locale, deviceId],
         setLoading: true,
         persistLoading: true,
       });

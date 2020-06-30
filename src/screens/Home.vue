@@ -181,17 +181,22 @@ export default {
     },
   },
   async mounted() {
-    if (this.$route.query.appid && this.$route.query.tokens) {
+    if (
+      this.$route.query.appid &&
+      this.$route.query.tokens &&
+      this.$route.query.deviceid
+    ) {
       const appID = this.$route.query.appid;
       const tokensStr = this.$route.query.tokens;
       const emailsStr = this.$route.query.emails;
       const needExit = this.$route.query.needexit;
+      const deviceId = this.$route.query.deviceid;
 
       // clear url
       this.$router.replace(RouteDef.Home);
 
       this.setNeedExitBtn(needExit);
-      await this.autoLogin(appID, tokensStr, emailsStr, this.$i18n.locale);
+      await this.autoLogin(appID, tokensStr, emailsStr, deviceId);
     } else {
       // navigate from other pages
       await this.requestAppConfig();
@@ -249,7 +254,7 @@ export default {
     invalidUserClicked(user) {
       window.location.href = `mdtwallet://relogin?email=${user.emailAddress}`;
     },
-    async autoLogin(appID, tokensStr, emailsStr) {
+    async autoLogin(appID, tokensStr, emailsStr, deviceId) {
       if (appID === undefined) {
         this.setErrorTitle(this.$t('message.common.unknown_error'));
         this.setErrorMessage('Need to define appid in url parameter');
@@ -271,6 +276,13 @@ export default {
         return;
       }
 
+      if (deviceId === undefined) {
+        this.setErrorTitle(this.$t('message.common.unknown_error'));
+        this.setErrorMessage('Need to define device id in url parameter');
+        this.setShowErrorPrompt(true);
+        return;
+      }
+
       const authTokens = tokensStr.split(',');
       const emails = emailsStr.split(',');
       try {
@@ -278,6 +290,7 @@ export default {
           authTokens,
           emails,
           appID,
+          deviceId,
         });
         trackEvent('Successfully logged in ');
 
