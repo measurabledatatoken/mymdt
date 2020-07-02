@@ -204,9 +204,9 @@ export default {
     onOKEXClick() {
       trackEvent('Click on register OKEx');
       if (this.$i18n.locale === 'zh-cn') {
-        openExternalBrowser('https://www.digifinex.xyz/zh-cn/from/lpKlJk');
+        openExternalBrowser('https://www.okex.me/join/1838164');
       } else {
-        openExternalBrowser('https://www.digifinex.com/en-ww/from/lpKlJk');
+        openExternalBrowser('https://www.okex.com/join/1838164');
       }
     },
     onBinanceClick() {
@@ -222,9 +222,9 @@ export default {
     onDigifinexClick() {
       trackEvent('Click on register digifinex');
       if (this.$i18n.locale === 'zh-cn') {
-        openExternalBrowser('https://www.okex.me/join/1838164');
+        openExternalBrowser('https://www.digifinex.xyz/zh-cn/from/lpKlJk');
       } else {
-        openExternalBrowser('https://www.okex.com/join/1838164');
+        openExternalBrowser('https://www.digifinex.com/en-ww/from/lpKlJk');
       }
     },
   },
