@@ -235,12 +235,15 @@ export default {
     }),
     goToTransfer(user) {
       trackEvent('Click on transfer from Home');
-      this.$router.push({
-        name: RouteDef.TransferList.name,
-        params: {
-          account_id: user.emailAddress,
-        },
-      });
+
+      if (user) {
+        this.$router.push({
+          name: RouteDef.TransferList.name,
+          params: {
+            account_id: user.emailAddress,
+          },
+        });
+      }
     },
     goToAccountDetail(user) {
       trackEvent('Click on account cards from home page to account page');
@@ -295,7 +298,9 @@ export default {
         trackEvent('Successfully logged in ');
 
         let showPopup = null;
-
+        if (this.credentials.length === 0) {
+          return;
+        }
         this.loginTotalClaimed = this.credentials
           .map(credential => credential.claimed_amount)
           .reduce((a, b) => {

@@ -96,6 +96,10 @@ const actions = {
   },
   async [REQUEST_USER_ACCOUNTS]({ commit, rootState, dispatch }) {
     const credentials = rootState.login.credentials;
+    if (credentials.length === 0) {
+      return;
+    }
+
     const validCredentials = [];
     credentials.forEach(credential => {
       if (credential.access_token.length > 0) {

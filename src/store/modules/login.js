@@ -130,10 +130,28 @@ const actions = {
           .filter(dataItem => dataItem.is_new_email)
           .map(dataItem => dataItem.email_address);
 
+        const processingEmails = data.invalid
+          .filter(dataItem => dataItem.is_processing_email)
+          .map(dataItem => dataItem.email_address);
+
         if (newEmails.length > 0) {
           dispatch(OPEN_ERROR_PROMPT, {
             message: {
               messageId: 'message.error.newAccountsWarning',
+              messageValues: {
+                emails: newEmails.join(', '),
+              },
+            },
+            title: {
+              messageId: 'message.common.error_title',
+            },
+          });
+        }
+
+        if (processingEmails.length > 0) {
+          dispatch(OPEN_ERROR_PROMPT, {
+            message: {
+              messageId: 'message.error.processingEmailWarning',
               messageValues: {
                 emails: newEmails.join(', '),
               },

@@ -11,7 +11,7 @@
 
     <md-dialog-title>
       <div class="title">{{ title }}</div>
-      <div class="subtitle">{{ selectedUser.emailAddress }}</div>
+      <div class="subtitle">{{ selectedUser? selectedUser.emailAddress : "" }}</div>
     </md-dialog-title>
     <div class="content">
       <template v-if="!validatingPIN">

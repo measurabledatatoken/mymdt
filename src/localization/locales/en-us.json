@@ -59,7 +59,8 @@
     "phoneNumberAlreadyBinded": "Phone number is already binded with another account",
     "addressIsTheSame": "Provided address is the same as before",
     "cannotSetETHAddress": "Failed to set ETH wallet address. Please try again later.",
-    "newAccountsWarning": "Your accounts {emails} do not have valuable data contribution. Please try again later."
+    "newAccountsWarning": "Your accounts {emails} do not have valuable data contribution. Please try again later.",
+    "processingEmailWarning": "Your accounts {emails} is still processing by Mailtime. Please try again later."
   },
   "home": {
     "total_balance": "Total Balance",

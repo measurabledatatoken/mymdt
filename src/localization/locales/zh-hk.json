@@ -59,7 +59,8 @@
     "phoneNumberAlreadyBinded": "電話號碼已與另一個帳戶綁定",
     "addressIsTheSame": "ETH 錢包地址與之前所用的相同。",
     "cannotSetETHAddress": "設定失敗，請稍後再試。",
-    "newAccountsWarning": "您的帳戶 {emails} 沒有數據貢獻，請稍後再試。"
+    "newAccountsWarning": "您的帳戶 {emails} 沒有數據貢獻，請稍後再試。",
+    "processingEmailWarning": "您的帳戶 {emails} 正在等候簡信載入，請稍後再試。"
   },
   "home": {
     "total_balance": "總積分",
