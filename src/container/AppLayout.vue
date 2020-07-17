@@ -35,7 +35,14 @@
       :md-content="errorMessage"
       :md-confirm-text="$t('message.common.okay')"
     />
-    
+
+    <ImagePopup
+      :md-active="showAds"
+      :url="adImgUrl"
+      :action-url="adUrl"
+      @close="hideAd"
+    />
+
     <LoadingPopup 
       v-if="isLoading" 
       src="/static/threedotsloader.gif"
@@ -87,7 +94,7 @@ export default {
       showTutorial: false,
       screenHeight: 0,
       setFixHeight: false,
-      showBinance: false,
+      showAds: false,
     };
   },
   computed: {
@@ -159,18 +166,18 @@ export default {
       }
       return style;
     },
-    binanceImgUrl() {
+    adImgUrl() {
       if (this.$i18n.locale === 'en-us') {
-        return '/static/binance/en.png';
+        return '/static/userSurvey/en.png';
       } else {
-        return '/static/binance/cn.png';
+        return '/static/userSurvey/cn.png';
       }
     },
-    binanceUrl() {
+    adUrl() {
       if (this.$i18n.locale === 'en-us') {
-        return 'https://www.binance.com/en/vote';
+        return 'https://alternativedata.typeform.com/to/YUuIFm6A';
       } else {
-        return 'https://www.binance.com/en/vote';
+        return 'https://alternativedata.typeform.com/to/YUuIFm6A';
       }
     },
   },
@@ -223,12 +230,12 @@ export default {
     this.prepareMetaData();
     this.checkRouteMeta();
 
-    const isBinanceShown = this.$cookies.get('isBinanceShown');
-    if (!isBinanceShown) {
-      this.showBinance = true;
-      this.$cookies.set('isBinanceShown', true);
+    const isAdShown = this.$cookies.get('isAdShown');
+    if (!isAdShown) {
+      this.showAds = true;
+      this.$cookies.set('isAdShown', true);
       document.addEventListener('click', () => {
-        this.showBinance = false;
+        this.showAds = false;
       });
     }
   },
@@ -256,8 +263,8 @@ export default {
     checkRouteMeta() {
       this.setFixHeight = !!this.$route.meta.setFixHeight;
     },
-    hideBinance() {
-      this.showBinance = false;
+    hideAd() {
+      this.showAds = false;
     },
   },
 };

@@ -8,7 +8,7 @@
       class="md-icon-button" 
       @click="$emit('close');"
     >
-      <md-icon md-src="/static/icons/close-white.svg" />
+      <md-icon md-src="/static/icons/close-gray.svg" />
     </md-button>
     <WebViewLink 
       :to="actionUrl" 
