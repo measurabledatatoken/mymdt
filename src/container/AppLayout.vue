@@ -177,7 +177,7 @@ export default {
       if (this.$i18n.locale === 'en-us') {
         return 'https://alternativedata.typeform.com/to/YUuIFm6A';
       } else {
-        return 'https://alternativedata.typeform.com/to/YUuIFm6A';
+        return 'https://alternativedata.typeform.com/to/Gyhu6Evj';
       }
     },
   },
