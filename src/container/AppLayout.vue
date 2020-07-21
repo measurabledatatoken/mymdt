@@ -170,7 +170,7 @@ export default {
       if (this.$i18n.locale === 'en-us') {
         return '/static/userSurvey/en.png';
       } else {
-        return '/static/userSurvey/cn.png';
+        return '/static/userSurvey/zh.png';
       }
     },
     adUrl() {
