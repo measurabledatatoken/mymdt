@@ -67,10 +67,13 @@ const getters = {
     }
     const feePercentage =
       rootState.home.appConfig.mdt_transaction_fee_in_percentage / 100.0;
-    const minFee = Math.ceil(
-      parseFloat(rootState.home.appConfig.mdt_transaction_fee_in_usd) /
-        rootState.home.mdtPrice,
-    );
+    let minFee = 0;
+    if (rootState.home.mdtPriceUSD > 0) {
+      minFee = Math.ceil(
+        parseFloat(rootState.home.appConfig.mdt_transaction_fee_in_usd) /
+          rootState.home.mdtPriceUSD,
+      );
+    }
     const minFeeByPercentage =
       state.transferAmount * parseFloat(feePercentage, 10);
     const maxFeeInMDT = rootState.home.appConfig.mdt_transaction_max_fee_in_mdt;

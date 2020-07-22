@@ -23,6 +23,7 @@ export const CHECK_ACCOUNTS_EXIST = 'home/CHECK_ACCOUNTS_EXIST';
 
 const state = {
   mdtPrice: 0,
+  mdtPriceUSD: 0,
   needExit: false,
   appID: '',
   selectedUserId: null,
@@ -41,8 +42,9 @@ const getters = {
 };
 
 const mutations = {
-  [SET_MDT_PRICE](state, mdtPrice) {
-    state.mdtPrice = mdtPrice;
+  [SET_MDT_PRICE](state, data) {
+    state.mdtPrice = data.price;
+    state.mdtPriceUSD = data.usd_price;
   },
   [SET_NEED_EXIT_BTN](state, needExit) {
     state.needExit = needExit;
