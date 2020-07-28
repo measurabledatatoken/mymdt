@@ -226,11 +226,6 @@ export default {
       showBindETHPopup: false,
       walletData: [
         {
-          src: '/static/icons/logo-trust-wallet-small.svg',
-          title: this.$t('message.dataPointRewards.trustWallet'),
-          url: process.env.VUE_APP_TRUST_WALLET_DAPP_URL,
-        },
-        {
           src: '/static/icons/logo-metamask-small.svg',
           title: this.$t('message.dataPointRewards.metaMask'),
           url: process.env.VUE_APP_METAMASK_DAPP_URL,
