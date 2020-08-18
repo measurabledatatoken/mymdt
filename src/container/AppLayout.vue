@@ -37,7 +37,7 @@
     />
 
     <ImagePopup
-      :md-active="showAds"
+      :md-active="false"
       :url="adImgUrl"
       :action-url="adUrl"
       @close="hideAd"
