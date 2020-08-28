@@ -497,7 +497,9 @@
     "pinSetupPopupDescription": "您可以在設置 PIN 碼後綁定 ETH 錢包地址",
     "notBindedYet": "未綁定",
     "binded": "已綁定",
-    "errorMessage": "設定失敗"
+    "errorMessage": "地址設定失敗，請過一段時間再試。",
+    "changeFaileMsg": "轉換 ETH 地址失敗，請過一段時間再試。",
+    "changeSuccessMsg": "成功轉換 ETH 地址。"
   },
   "ethWallet": {
     "transferFrom": "由轉帳",

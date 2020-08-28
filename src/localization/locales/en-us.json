@@ -497,7 +497,9 @@
     "pinSetupPopupDescription": "You can bind your ETH wallet address after you set up your PIN.",
     "notBindedYet": "Not bound yet",
     "binded": "Bound",
-    "errorMessage": "Failed to set ETH wallet address"
+    "errorMessage": "Failed to set ETH wallet address, Please try again later.",
+    "changeFaileMsg": "Failed to change ETH wallet address, Please try again later.",
+    "changeSuccessMsg": "Change ETH wallet success"
   },
   "ethWallet": {
     "transferFrom": "Transfer From",

@@ -5,6 +5,8 @@ import { ErrorCode } from '@/enum';
 import { FETCH_USER } from '@/store/modules/entities/users';
 
 export const SET_ETH_ADDRESS = 'ethBinding/SET_ETH_ADDRESS';
+export const CONFIRM_ETH_ADDRESS_STATUS =
+  'ethBinding/CONFIRM_ETH_ADDRESS_STATUS';
 
 const state = null;
 
@@ -28,6 +30,24 @@ const actions = {
           [ErrorCode.InvalidParameterValue]: 'message.error.addressIsTheSame',
           [ErrorCode.ActionNotAvaliable]: 'message.error.cannotSetETHAddress',
         },
+      });
+
+      await dispatch(FETCH_USER, {
+        userId: rootState.home.selectedUserId,
+      });
+
+      return true;
+    } catch (error) {
+      return false;
+    }
+  },
+
+  async [CONFIRM_ETH_ADDRESS_STATUS]({ dispatch, rootState, rootGetters }) {
+    try {
+      await dispatch(REQUEST, {
+        api: api.account.confirmETHAddressStatus,
+        args: [rootGetters.getSelectedUser.accessToken],
+        openErrorPrompt: false,
       });
 
       await dispatch(FETCH_USER, {

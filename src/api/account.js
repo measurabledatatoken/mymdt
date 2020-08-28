@@ -50,6 +50,8 @@ export default {
           smartContractETHAddress: user.smart_contract_eth_address,
           smartContractPendingETHAddress:
             user.smart_contract_pending_eth_address,
+          smartContractPendingETHAddressStatus:
+            user.smart_contract_pending_eth_address_status,
           accessToken: userCredential ? userCredential.access_token : '',
         };
       });
@@ -89,6 +91,8 @@ export default {
         userDataShares: user.user_data_shares || [],
         smartContractETHAddress: user.smart_contract_eth_address,
         smartContractPendingETHAddress: user.smart_contract_pending_eth_address,
+        smartContractPendingETHAddressStatus:
+          user.smart_contract_pending_eth_address_status,
         accessToken,
       };
 
@@ -121,6 +125,17 @@ export default {
     const promise = axios.post(
       `${APIScheme}://${APIEndPoint}/account/setethaddress`,
       payload,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+
+    return handleGeneralResponse(promise);
+  },
+  confirmETHAddressStatus(accessToken) {
+    const promise = axios.post(
+      `${APIScheme}://${APIEndPoint}/account/ethaddress/status/confirm`,
+      {},
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       },

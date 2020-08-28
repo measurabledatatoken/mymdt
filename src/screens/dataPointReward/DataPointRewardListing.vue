@@ -17,17 +17,17 @@
       :bottom-config="PULLTO_BOTTOM_CONFIG"
       @infinite-scroll="getOldDataPointRewards"
     >
-      <ETHUpdatingCard 
+      <ETHUpdatingCard
         v-if="!!selectedUser.smartContractETHAddress && !!selectedUser.smartContractPendingETHAddress"
         :user="selectedUser"
       />
-      <ETHCard 
+      <ETHCard
         v-else-if="!!selectedUser.smartContractETHAddress"
         :user="selectedUser"
         @editClick="onBindingButtonClick"
       />
-      <md-button 
-        v-show="!selectedUser.smartContractETHAddress" 
+      <md-button
+        v-show="!selectedUser.smartContractETHAddress"
         class="bind-button"
         @click="onBindingButtonClick"
       >
@@ -55,9 +55,7 @@
               :disabled="!claimable"
               class="claim-button"
               @click="handleClickClaimButton"
-            >
-              {{ $t('message.common.claim') }}
-            </MDTMediumButton>
+            >{{ $t('message.common.claim') }}</MDTMediumButton>
             <WebViewLink :to="helpUrl">
               <md-button class="md-icon-button">
                 <img src="/static/icons/icon-help.svg" >
@@ -83,9 +81,9 @@
           </template>
           <template v-if="!rewardsUiState.isFetching && rewards && rewards.length > 0">
             <template v-for="(item, index) in rewards">
-              <md-list-item
+              <md-list-item 
                 :key="index" 
-                class="history-item"
+                class="history-item" 
                 @click="onItemClick(item.id)"
               >
                 <div class="history-item-section">
@@ -125,25 +123,35 @@
       <MDTMediumButton
         class="bind-now-button"
         @click="onClickBindNowButton"
-      >
-        {{ $t('message.dataPointRewards.bindNow') }}
-      </MDTMediumButton>
+      >{{ $t('message.dataPointRewards.bindNow') }}</MDTMediumButton>
     </BasePopup2>
+
+    <BasePopup2
+      :md-active.sync="showEthAddressStatus"
+      :title="ethStatusTitle"
+      :description="ethStatusDescription"
+    >
+      <MDTMediumButton
+        class="bind-now-button"
+        @click="onClickConfirmEthAddress"
+      >{{ $t('message.common.okay') }}</MDTMediumButton>
+    </BasePopup2>
+
     <BasePopup2
       :md-active.sync="showChooseWalletPopup"
       :title="$t('message.dataPointRewards.chooseAWalletToClaim')"
     >
       <div>
-        <WebViewLink
-          v-for="item in walletData"
-          :key="item.title"
-          :to="item.url"
+        <WebViewLink 
+          v-for="item in walletData" 
+          :key="item.title" 
+          :to="item.url" 
           external
         >
           <MDTMediumButton class="wallet-button">
             <div class="wallet-button-content">
-              <img
-                :src="item.src"
+              <img 
+                :src="item.src" 
                 class="wallet-button-icon"
               >
               {{ item.title }}
@@ -186,6 +194,8 @@ import {
   FETCH_DATA_POINT_CONFIG,
   FETCH_DATA_POINT_SUMMARY,
 } from '@/store/modules/dataPoint';
+import { CONFIRM_ETH_ADDRESS_STATUS } from '@/store/modules/ethBinding';
+
 import { FETCH_USER } from '@/store/modules/entities/users';
 import { SET_SELECTED_USER } from '@/store/modules/home';
 import { trackEvent, formatAmount } from '@/utils';
@@ -302,6 +312,20 @@ export default {
     },
     claimed() {
       return this.summary[dataPointRewardStatus.CLAIMED] || 0;
+    },
+    showEthAddressStatus() {
+      return (
+        this.selectedUser.smartContractPendingETHAddressStatus === 3 ||
+        this.selectedUser.smartContractPendingETHAddressStatus === 4
+      );
+    },
+    ethStatusTitle() {
+      return '';
+    },
+    ethStatusDescription() {
+      return this.selectedUser.smartContractPendingETHAddressStatus === 3
+        ? this.$t('message.ethBinding.changeSuccessMsg')
+        : this.$t('message.ethBinding.changeFaileMsg');
     },
     helpUrl() {
       let part = '';
@@ -487,6 +511,9 @@ export default {
     onClickBindNowButton() {
       this.showBindETHPopup = false;
       this.onBindingButtonClick();
+    },
+    onClickConfirmEthAddress() {
+      this.$store.dispatch(CONFIRM_ETH_ADDRESS_STATUS);
     },
     onPinCodeFilled() {
       this.$router.push({

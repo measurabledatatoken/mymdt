@@ -108,7 +108,10 @@ export default {
       getBalance: GET_BALANCE,
     }),
     ethWalletTitle() {
-      if (this.user.smartContractPendingETHAddress) {
+      if (
+        this.user.smartContractPendingETHAddress &&
+        this.user.smartContractPendingETHAddressStaus === 1
+      ) {
         return this.$t('message.home.ethWalletUpdating');
       } else if (this.user.smartContractETHAddress) {
         return this.$t('message.home.ethWalletWithHash', {
