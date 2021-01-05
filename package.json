@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "echarts": "^4.2.0-rc.2",
     "lodash.throttle": "^4.1.1",
     "lottie-web": "^5.5.7",
