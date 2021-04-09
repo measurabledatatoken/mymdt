@@ -37,7 +37,7 @@
     />
 
     <ImagePopup
-      :md-active="false"
+      :md-active="true"
       :url="adImgUrl"
       :action-url="adUrl"
       @close="hideAd"
@@ -94,7 +94,7 @@ export default {
       showTutorial: false,
       screenHeight: 0,
       setFixHeight: false,
-      showAds: false,
+      showAds: true,
     };
   },
   computed: {
@@ -168,17 +168,13 @@ export default {
     },
     adImgUrl() {
       if (this.$i18n.locale === 'en-us') {
-        return '/static/userSurvey/en.png';
+        return '/static/upgrade/en.gif';
       } else {
-        return '/static/userSurvey/zh.png';
+        return '/static/upgrade/zh.gif';
       }
     },
     adUrl() {
-      if (this.$i18n.locale === 'en-us') {
-        return 'https://alternativedata.typeform.com/to/YUuIFm6A';
-      } else {
-        return 'https://alternativedata.typeform.com/to/Gyhu6Evj';
-      }
+      return 'https://get.reward.me/PyXl9mhxUeb?r=F9nTio';
     },
   },
   watch: {
@@ -229,15 +225,6 @@ export default {
   mounted() {
     this.prepareMetaData();
     this.checkRouteMeta();
-
-    const isAdShown = this.$cookies.get('isAdShown');
-    if (!isAdShown) {
-      this.showAds = true;
-      this.$cookies.set('isAdShown', true);
-      document.addEventListener('click', () => {
-        this.showAds = false;
-      });
-    }
   },
   methods: {
     ...mapMutations({
